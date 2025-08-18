@@ -7,6 +7,7 @@ package com.sfc.sf2.vwfont.io;
 
 import com.sfc.sf2.core.io.AbstractRawImageProcessor;
 import com.sfc.sf2.core.io.DisassemblyException;
+import com.sfc.sf2.core.io.RawImageException;
 import com.sfc.sf2.vwfont.FontSymbol;
 import static com.sfc.sf2.vwfont.FontSymbol.PIXEL_HEIGHT;
 import static com.sfc.sf2.vwfont.FontSymbol.PIXEL_WIDTH;
@@ -21,7 +22,7 @@ import java.awt.image.WritableRaster;
 public class VWFontRawImageProcessor extends AbstractRawImageProcessor<FontSymbol, FontSymbolPackage> {
     
     @Override
-    protected FontSymbol parseImageData(WritableRaster raster, IndexColorModel icm, FontSymbolPackage pckg) throws DisassemblyException {
+    protected FontSymbol parseImageData(WritableRaster raster, IndexColorModel icm, FontSymbolPackage pckg) throws RawImageException {
         int symbolWidth = 0;
         int[] symbolPixels = new int[PIXEL_WIDTH*PIXEL_HEIGHT];
         int[] pixels = new int[PIXEL_WIDTH*PIXEL_HEIGHT];
@@ -38,7 +39,7 @@ public class VWFontRawImageProcessor extends AbstractRawImageProcessor<FontSymbo
     }
 
     @Override
-    protected BufferedImage packageImageData(FontSymbol item, FontSymbolPackage pckg) throws DisassemblyException {
+    protected BufferedImage packageImageData(FontSymbol item, FontSymbolPackage pckg) throws RawImageException {
         BufferedImage image = new BufferedImage(PIXEL_WIDTH, PIXEL_HEIGHT, BufferedImage.TYPE_BYTE_BINARY, item.getPalette().getIcm());
         WritableRaster raster = image.getRaster();
         int[] data = item.getPixels();
