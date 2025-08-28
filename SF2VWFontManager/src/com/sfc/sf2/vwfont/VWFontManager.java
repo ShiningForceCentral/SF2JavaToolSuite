@@ -61,10 +61,19 @@ public class VWFontManager extends AbstractManager {
         Console.logger().info(files.length + " font symbol images found.");
         ArrayList<FontSymbol> symbolsList = new ArrayList<>();
         int failedToLoad = 0;
+        //Symbol indexes are offset by 1 because engine is expecting a hidden value at 000. Old format exported to 000 so check for old format by finding 000
+        boolean oldFormat = false;
+        Path filePath = basePath.resolve("symbol000" + AbstractRawImageProcessor.GetFileExtensionString(format));
+        File index000 = filePath.toFile();
+        if (index000.exists()) {
+            oldFormat = true;
+        }
+        //Now load
         for (File file : files) {
             Path symbolPath = file.toPath();
             try {
                 int index = FileHelpers.getNumberFromFileName(file);
+                if (!oldFormat) index -= 1;  //Offset by 1 because engine is expecting a hidden value at 000
                 FontSymbol symbol = fontRawImageProcessor.importRawImage(symbolPath, new FontSymbolPackage(index));
                 symbolsList.add(symbol);
             } catch (Exception e) {
@@ -88,9 +97,17 @@ public class VWFontManager extends AbstractManager {
         int failedToSave = 0;
         Path filePath = null;
         int fileCount = 0;
+        //Remove index 000 (for preexisting exports)
+        filePath = basePath.resolve("symbol000" + AbstractRawImageProcessor.GetFileExtensionString(format));
+        File index000 = filePath.toFile();
+        if (index000.exists()) {
+            index000.delete();
+        }
+        //Now save
         for (FontSymbol symbol : symbols) {
             try {
-                filePath = basePath.resolve(String.format("symbol%03d%s", symbol.getId(), AbstractRawImageProcessor.GetFileExtensionString(format)));
+                int id = symbol.getId()+1;  //Offset by 1 because engine is expecting a hidden value at 000
+                filePath = basePath.resolve(String.format("symbol%03d%s", id, AbstractRawImageProcessor.GetFileExtensionString(format)));
                 fontRawImageProcessor.exportRawImage(filePath, symbol, null);
                 fileCount++;
             }catch (Exception e) {

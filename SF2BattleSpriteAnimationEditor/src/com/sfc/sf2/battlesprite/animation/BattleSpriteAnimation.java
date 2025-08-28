@@ -5,38 +5,34 @@
  */
 package com.sfc.sf2.battlesprite.animation;
 
-import com.sfc.sf2.battlesprite.animation.layout.BattleSpriteAnimationLayout;
+import com.sfc.sf2.battlesprite.BattleSprite.BattleSpriteType;
 
 /**
  *
  * @author wiz
  */
 public class BattleSpriteAnimation {
-    
-    public static final int TYPE_ALLY = 0;
-    public static final int TYPE_ENEMY = 1;
-    
-    private int type;
-    
+        
+    private BattleSpriteType type;    
     private BattleSpriteAnimationFrame[] frames;
     
-    private int frameNumber;
-    private int spellInitFrame;
-    private int spellAnim;
-    private int endSpellAnim;
-    
-    private int idle1WeaponFrame;
-    private int idle1WeaponZ;
-    private int idle1WeaponX;
-    private int idle1WeaponY;   
-    
-    private BattleSpriteAnimationLayout layout;
+    private byte spellInitFrame;
+    private byte spellAnim;
+    private boolean endSpellAnim;
 
-    public int getType() {
+    public BattleSpriteAnimation(BattleSpriteType type, BattleSpriteAnimationFrame[] frames, byte spellInitFrame, byte spellAnim, boolean endSpellAnim) {
+        this.type = type;
+        this.frames = frames;
+        this.spellInitFrame = spellInitFrame;
+        this.spellAnim = spellAnim;
+        this.endSpellAnim = endSpellAnim;
+    }
+
+    public BattleSpriteType getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(BattleSpriteType type) {
         this.type = type;
     }
 
@@ -48,75 +44,41 @@ public class BattleSpriteAnimation {
         this.frames = frames;
     }
 
-    public int getFrameNumber() {
-        return frameNumber;
+    public byte getFrameCount() {
+        return (byte)frames.length;
     }
 
-    public void setFrameNumber(int frameNumber) {
-        this.frameNumber = frameNumber;
-    }
-
-    public int getSpellInitFrame() {
+    public byte getSpellInitFrame() {
         return spellInitFrame;
     }
 
-    public void setSpellInitFrame(int spellInitFrame) {
+    public void setSpellInitFrame(byte spellInitFrame) {
         this.spellInitFrame = spellInitFrame;
     }
 
-    public int getSpellAnim() {
+    public byte getSpellAnim() {
         return spellAnim;
     }
 
-    public void setSpellAnim(int spellAnim) {
+    public void setSpellAnim(byte spellAnim) {
         this.spellAnim = spellAnim;
     }
 
-    public int getEndSpellAnim() {
+    public boolean getEndSpellAnim() {
         return endSpellAnim;
     }
 
-    public void setEndSpellAnim(int endSpellAnim) {
+    public void setEndSpellAnim(boolean endSpellAnim) {
         this.endSpellAnim = endSpellAnim;
     }
-
-    public int getIdle1WeaponFrame() {
-        return idle1WeaponFrame;
+    
+    @Override
+    public BattleSpriteAnimation clone() {
+        return new BattleSpriteAnimation(type, frames, spellInitFrame, spellAnim, endSpellAnim);
     }
-
-    public void setIdle1WeaponFrame(int idle1WeaponFrame) {
-        this.idle1WeaponFrame = idle1WeaponFrame;
-    }
-
-    public int getIdle1WeaponZ() {
-        return idle1WeaponZ;
-    }
-
-    public void setIdle1WeaponZ(int idle1WeaponZ) {
-        this.idle1WeaponZ = idle1WeaponZ;
-    }
-
-    public int getIdle1WeaponX() {
-        return idle1WeaponX;
-    }
-
-    public void setIdle1WeaponX(int idle1WeaponX) {
-        this.idle1WeaponX = idle1WeaponX;
-    }
-
-    public int getIdle1WeaponY() {
-        return idle1WeaponY;
-    }
-
-    public void setIdle1WeaponY(int idle1WeaponY) {
-        this.idle1WeaponY = idle1WeaponY;
-    }
-
-    public BattleSpriteAnimationLayout getLayout() {
-        return layout;
-    }
-
-    public void setLayout(BattleSpriteAnimationLayout layout) {
-        this.layout = layout;
+        
+    public static BattleSpriteAnimation EmptyAnimation(BattleSpriteType type) {
+        BattleSpriteAnimationFrame[] frames = new BattleSpriteAnimationFrame[] { BattleSpriteAnimationFrame.EmptyFrame() };
+        return new BattleSpriteAnimation(type, frames, (byte)0, (byte)0, true);
     }
 }

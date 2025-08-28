@@ -123,6 +123,11 @@ public class SettingsManager {
     
     private static void loadSettings(String specificId) {
         Console.logger().finest("ENTERING loadSettings");
+        //Initialise files
+        for (Map.Entry<String, AbstractSettings> entry : settingsStores.entrySet()) {
+            entry.getValue().initialiseNewUser();
+        }
+        //Load content
         String line = null;
         try {
             File file = getSettingsFilePath().toFile();

@@ -22,7 +22,8 @@ public class MapSpriteLayoutPanel extends AbstractLayoutPanel {
     
     public MapSpriteLayoutPanel() {
         super();
-        setGridDimensions(8, 8);
+        setGridDimensions(8, 8, 48, 24);
+        setCoordsDimensions(24, 24, 6);
     }
 
     @Override

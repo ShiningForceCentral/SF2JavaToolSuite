@@ -22,6 +22,9 @@ import java.awt.image.WritableRaster;
  */
 public abstract class AbstractTilesetRawImageProcessor<TType extends Object, TPackage extends Object> extends AbstractRawImageProcessor<TType, TPackage> {
     
+    /**
+     * Checks image dimensions to ensure that the image is multiple of {@code Tile} pixel width/height.
+     */
     protected void checkImageDimensions(WritableRaster raster) throws RawImageException {
         int imageWidth = raster.getWidth();
         int imageHeight = raster.getHeight();
@@ -30,6 +33,11 @@ public abstract class AbstractTilesetRawImageProcessor<TType extends Object, TPa
         }
     }
     
+    /**
+     * Checks image dimensions to ensure that the image is multiple of {@code Tile} pixel width/height as well as a multiple for the {@link Tileset} width/height.
+     * @param tileWidthOfTileset How many tiles wide is the tileset
+     * @param tileHeightOfTileset How many tiles in height is the tileset
+     */
     protected void checkImageDimensions(WritableRaster raster, int tileWidthOfTileset, int tileHeightOfTileset) throws RawImageException {
         checkImageDimensions(raster);
         if (raster.getWidth()%(tileWidthOfTileset*PIXEL_WIDTH) != 0) {
@@ -40,10 +48,19 @@ public abstract class AbstractTilesetRawImageProcessor<TType extends Object, TPa
         }
     }
     
+    /**
+     * Parses the image (raster) and outputs a {@link Tileset} from all pixels.
+     */
     protected Tileset parseTileset(WritableRaster raster, Palette palette) {
         return parseTileset(raster, 0, 0, raster.getWidth()/PIXEL_WIDTH, raster.getHeight()/PIXEL_HEIGHT, palette);
     }
     
+    /**
+     * Parses the image (raster) and outputs multiple {@link Tileset}s of size <i>tileWidthOfTileset</i> x <i>tileHeightOfTileset</i>.
+     * <br>Assumes that each tileset is the same dimensions.
+     * @param tileWidthOfTileset How many tiles in width is each {@code Tileset}
+     * @param tileHeightOfTileset How many tiles in height is each {@code Tileset}
+     */
     protected Tileset[] parseTileset(WritableRaster raster, int tileWidthOfTileset, int tileHeightOfTileset, Palette palette) {
         int tilesPerRow = raster.getWidth()/PIXEL_WIDTH;
         int tilesPerColumn = raster.getHeight()/PIXEL_HEIGHT;
@@ -60,6 +77,13 @@ public abstract class AbstractTilesetRawImageProcessor<TType extends Object, TPa
         return tilesets;
     }
     
+    /**
+     * Parses a segment of the image (raster) and outputs a {@link Tileset}.
+     * @param tileX How many tiles across is the top-left tile of the  {@code Tileset}
+     * @param tileY How many tiles down is the top-left tile of the {@code Tileset}
+     * @param tilesPerRow How many tiles in a row for the {@code Tileset} (not for the image)
+     * @param tilesPerColumn How many tiles in a column for the {@code Tileset} (not for the image)
+     */
     protected Tileset parseTileset(WritableRaster raster, int tileX, int tileY, int tilesPerRow, int tilesPerColumn, Palette palette) {
         Tile[] tiles = new Tile[tilesPerRow*tilesPerColumn];
         int tileId = 0;
@@ -81,19 +105,31 @@ public abstract class AbstractTilesetRawImageProcessor<TType extends Object, TPa
         return new Tileset(null, tiles, tilesPerRow);
     }
     
+    /**
+     * Creates a new {@code BufferedImage} based on the {@code tilesPerRow} and {@link Palette} of the {@link Tileset}
+     */
     protected BufferedImage setupImage(Tileset tileset) {
-        return setupImage(tileset.getTiles().length, tileset.getTilesPerRow(), tileset.getPalette().getIcm());
+        return setupImage(tileset.getTiles().length, tileset.getTilesPerRow(), 1, 1, tileset.getPalette().getIcm());
     }
     
-    protected BufferedImage setupImage(int tilesCount, int tilesPerRow, IndexColorModel icm) {
-        int imageWidth = tilesPerRow*PIXEL_WIDTH;
-        int imageHeight = tilesCount/tilesPerRow*PIXEL_HEIGHT;
-        if (tilesCount % tilesPerRow != 0) {
-            imageHeight += PIXEL_HEIGHT;
+    /**
+     * Creates a new {@code BufferedImage} based on the {@code tilesPerRow} and {@link Palette} of the {@link Tileset}
+     * @param itemsCount How many {@code Tiles} in total
+     * @param itemsPerRow How many {@code Tiles} per row for the image
+     * @param itemTileWidth How many {@code Tiles} high is the {@link Tileset}
+     */
+    protected BufferedImage setupImage(int itemsCount, int itemsPerRow, int itemTileWidth, int itemTileHeight, IndexColorModel icm) {
+        int imageWidth = itemsPerRow*itemTileWidth;
+        int imageHeight = (itemsCount/itemsPerRow)*itemTileHeight;
+        if (itemsCount % itemsPerRow != 0) {
+            imageHeight += itemTileHeight;
         }
-        return new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_BYTE_BINARY, icm);
+        return new BufferedImage(imageWidth*PIXEL_WIDTH, imageHeight*PIXEL_HEIGHT, BufferedImage.TYPE_BYTE_BINARY, icm);
     }
     
+    /**
+     * Creates a new {@code BufferedImage} based on a {@link Tileset} array and the number of {@code tilesPerRow} for the image
+     */
     protected BufferedImage setupImage(Tileset[] tilesets, int tilesetsPerRow) {
         Palette palette = null;
         int tilesetTilesWidth = 1;
@@ -119,10 +155,17 @@ public abstract class AbstractTilesetRawImageProcessor<TType extends Object, TPa
         return new BufferedImage(width*PIXEL_WIDTH, height*PIXEL_HEIGHT, BufferedImage.TYPE_BYTE_BINARY, palette.getIcm());
     }
     
+    /**
+     * Writes the {@link Tileset} to the image from the top-left corner
+     */
     protected void writeTileset(WritableRaster raster, Tileset tileset) {
         writeTileset(raster, tileset, 0, tileset.getTiles().length, 0, 0, tileset.getTilesPerRow());
     }
     
+    /**
+     * Writes the {@link Tileset} array to the image in order; left-to-right, top-to-bottom
+     * @param tilesetsPerRow How many {@code Tilesets} in a row in the image
+     */
     protected void writeTileset(WritableRaster raster, Tileset[] tilesets, int tilesetsPerRow) {
         int tilesetTilesWidth = 1;
         int tilesetTilesheight = 1;
@@ -146,9 +189,29 @@ public abstract class AbstractTilesetRawImageProcessor<TType extends Object, TPa
         }
     }
     
-    protected void writeTileset(WritableRaster raster, Tileset tileset, int tileStart, int tileEnd, int tileX, int tileY, int tilesPerRow) {
+    /**
+     * Writes the {@link Tileset} array to part of the image.
+     * <br>Good for drawing classes that contain {@code Tilesets} (i.e. where an array cannot simply be passed).
+     * @param tileX How many {@code Tiles} from the left to start drawing the {@code Tileset}
+     * @param tileY How many {@code Tiles} from the top to start drawing the {@code Tileset}
+     * @param tilesPerRow How many {@code Tiles} in a row in the image
+     */
+    protected void writeTileset(WritableRaster raster, Tileset tileset, int tileX, int tileY, int tilesPerRow) {
+        writeTileset(raster, tileset, 0, tileset.getTiles().length, tileX, tileY, tilesPerRow);
+    }
+    
+    /**
+     * Writes the {@link Tileset} array to part of the image.
+     * <br>Good for drawing part of a {@code Tileset}.
+     * @param tilesetIndexStart The index of the first {@code Tile} in the {@code Tileset} to draw
+     * @param tilesetIndexEnd The index of the first {@code Tile} in the {@code Tileset} to draw
+     * @param tileX How many {@code Tiles} from the left to start drawing the {@code Tileset}
+     * @param tileY How many {@code Tiles} from the top to start drawing the {@code Tileset}
+     * @param tilesPerRow How many {@code Tiles} in a row in the image
+     */
+    protected void writeTileset(WritableRaster raster, Tileset tileset, int tilesetIndexStart, int tilesetIndexEnd, int tileX, int tileY, int tilesPerRow) {
         Tile[] tiles = tileset.getTiles();
-        for (int t = tileStart; t < tileEnd; t++) {
+        for (int t = tilesetIndexStart; t < tilesetIndexEnd; t++) {
             if (tiles[t] != null) {
                 int x = (tileX + t%tilesPerRow)*PIXEL_WIDTH;
                 int y = (tileY + t/tilesPerRow)*PIXEL_HEIGHT;

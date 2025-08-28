@@ -21,7 +21,7 @@ import java.nio.file.Path;
  */
 public abstract class AbstractMetadataProcessor<TType extends Object> {
     
-    public TType importMetadata(Path filePath, TType item) throws DisassemblyException, IOException, FileNotFoundException {
+    public TType importMetadata(Path filePath, TType item) throws MetadataException, IOException, FileNotFoundException {
         Console.logger().finest("ENTERING importMetadata : " + filePath);
         File metaFile = filePath.toFile();
         if (!metaFile.exists()) {
@@ -34,9 +34,9 @@ public abstract class AbstractMetadataProcessor<TType extends Object> {
         return item;
     }
     
-    protected abstract void parseMetaData(BufferedReader reader, TType item) throws DisassemblyException, IOException;
+    protected abstract void parseMetaData(BufferedReader reader, TType item) throws IOException, MetadataException;
     
-    public void exportMetadata(Path filePath, TType item) throws IOException, DisassemblyException {
+    public void exportMetadata(Path filePath, TType item) throws IOException, MetadataException {
         Console.logger().finest("ENTERING exportMetadata : " + filePath);
         File metaFile = filePath.toFile();
         FileWriter writer = new FileWriter(metaFile, false);
@@ -45,5 +45,5 @@ public abstract class AbstractMetadataProcessor<TType extends Object> {
         Console.logger().finest("EXITING exportMetadata");
     }
 
-    protected abstract void packageMetaData(FileWriter writer, TType item) throws DisassemblyException, IOException;
+    protected abstract void packageMetaData(FileWriter writer, TType item) throws IOException, MetadataException;
 }

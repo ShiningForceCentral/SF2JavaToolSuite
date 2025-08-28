@@ -5,18 +5,8 @@
  */
 package com.sfc.sf2.text.io;
 
-import com.sfc.sf2.text.TextManager;
-import com.sfc.sf2.text.compression.TextDecoder;
-import com.sfc.sf2.text.compression.TextEncoder;
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -24,12 +14,12 @@ import java.util.logging.Logger;
  */
 public class AsmManager {
     
-    public static final String HUFFMANTREEOFFSETS_FILENAME = "huffmantreeoffsets.bin";
-    public static final String HUFFMANTREES_FILENAME = "huffmantrees.bin";
-    public static final String TEXTBANK_FILENAME = "textbankXX.bin";  
-    public static final int INVESTIGATION_LINE_BASE_INDEX = 0x1A7;
+    public final String HUFFMANTREEOFFSETS_FILENAME = "huffmantreeoffsets.bin";
+    public final String HUFFMANTREES_FILENAME = "huffmantrees.bin";
+    public final String TEXTBANK_FILENAME = "textbankXX.bin";  
+    public final int INVESTIGATION_LINE_BASE_INDEX = 0x1A7;
     
-    public static String[] importAsm(String path, String[] inputscript){
+    public String[] importAsm(String path, String[] inputscript){
         System.out.println("com.sfc.sf2.text.io.AsmManager.importAsm() - Importing ASM ...");
         String[] outputscript = inputscript;
         int textCursor=0;
@@ -128,7 +118,7 @@ public class AsmManager {
     }
 
     
-    private static String[] updateScript(String line, int index, String[] script){
+    private String[] updateScript(String line, int index, String[] script){
         if(index<script.length){
             script[index] = line;
         }else{
@@ -142,7 +132,7 @@ public class AsmManager {
     }
     
     
-    private static String getLineIndexString(int index){
+    private String getLineIndexString(int index){
         String indexString = Integer.toHexString(index);
         while(indexString.length()<4){
             indexString="0"+indexString;
@@ -150,7 +140,7 @@ public class AsmManager {
         return indexString;
     }
     
-    private static String removeName(String line){
+    private String removeName(String line){
         if(line.indexOf(":")>=0 && 
                 (
                 line.indexOf(":")<line.indexOf(" ")

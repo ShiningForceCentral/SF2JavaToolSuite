@@ -40,8 +40,9 @@ public abstract class AbstractAsmProcessor<TType extends Object> {
     public void exportAsmData(Path filePath, TType item) throws IOException, AsmException {
         Console.logger().finest("ENTERING exportAsmData : " + filePath);
         File asmFile = filePath.toFile();
-        FileWriter writer = new FileWriter(asmFile, false);writer.write("; ASM FILE ");
+        FileWriter writer = new FileWriter(asmFile, false);
         //Header
+        writer.write("; ASM FILE ");
         writer.write(PathHelpers.getIncbinPath().relativize(filePath).toString());
         writer.write(" :\n");
         writer.write("; --- : ");

@@ -12,6 +12,7 @@ import com.sfc.sf2.helpers.PathHelpers;
 import com.sfc.sf2.portrait.Portrait;
 import com.sfc.sf2.portrait.PortraitManager;
 import com.sfc.sf2.portrait.models.PortraitDataTableModel;
+import com.sfc.sf2.portrait.settings.PortraitSettings;
 import java.util.logging.Level;
 import java.nio.file.Path;
 
@@ -21,15 +22,17 @@ import java.nio.file.Path;
  */
 public class PortraitMainEditor extends AbstractMainEditor {
     
-    PortraitManager portraitManager = new PortraitManager();
+    private final PortraitSettings portraitSettings = new PortraitSettings();
+    private final PortraitManager portraitManager = new PortraitManager();
     
-    PortraitDataTableModel eyeTable;
-    PortraitDataTableModel mouthTable;
-    int selectedEyesRow;
-    int selectedMouthsRow;
+    private PortraitDataTableModel eyeTable;
+    private PortraitDataTableModel mouthTable;
+    private int selectedEyesRow;
+    private int selectedMouthsRow;
     
     public PortraitMainEditor() {
         super();
+        SettingsManager.registerSettingsStore("portrait", portraitSettings);
         initComponents();
         initCore(console1);
     }
@@ -46,6 +49,8 @@ public class PortraitMainEditor extends AbstractMainEditor {
         portraitLayoutPanel.setMouthAnimTable(mouthTable);
         tableEyes.addListSelectionListener(this::eyesListSelectionChanged);
         tableMouth.addListSelectionListener(this::mouthListSelectionChanged);
+        
+        jComboBox1.setSelectedIndex(portraitSettings.getZoom()-1);
     }
     
     @Override
@@ -83,6 +88,8 @@ public class PortraitMainEditor extends AbstractMainEditor {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        portraitDataModelEyes = new com.sfc.sf2.portrait.models.PortraitDataTableModel();
+        portraitDataModelMouth = new com.sfc.sf2.portrait.models.PortraitDataTableModel();
         jPanel13 = new javax.swing.JPanel();
         jSplitPane1 = new javax.swing.JSplitPane();
         jPanel15 = new javax.swing.JPanel();
@@ -129,7 +136,7 @@ public class PortraitMainEditor extends AbstractMainEditor {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SF2PortraitManager");
 
-        jSplitPane1.setDividerLocation(500);
+        jSplitPane1.setDividerLocation(505);
         jSplitPane1.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
         jSplitPane1.setOneTouchExpandable(true);
 
@@ -144,11 +151,11 @@ public class PortraitMainEditor extends AbstractMainEditor {
         portraitLayoutPanel.setLayout(portraitLayoutPanelLayout);
         portraitLayoutPanelLayout.setHorizontalGroup(
             portraitLayoutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 373, Short.MAX_VALUE)
+            .addGap(0, 370, Short.MAX_VALUE)
         );
         portraitLayoutPanelLayout.setVerticalGroup(
             portraitLayoutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 264, Short.MAX_VALUE)
+            .addGap(0, 269, Short.MAX_VALUE)
         );
 
         jScrollPane2.setViewportView(portraitLayoutPanel);
@@ -231,7 +238,7 @@ public class PortraitMainEditor extends AbstractMainEditor {
                 .addComponent(jCheckBox1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jCheckBox2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 113, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 118, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel55)
                     .addComponent(colorPicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -261,11 +268,11 @@ public class PortraitMainEditor extends AbstractMainEditor {
         );
 
         tableEyes.setBorder(javax.swing.BorderFactory.createTitledBorder("Eyes"));
-        tableEyes.setModel(new com.sfc.sf2.portrait.models.PortraitDataTableModel());
+        tableEyes.setModel(portraitDataModelEyes);
         tableEyes.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         tableMouth.setBorder(javax.swing.BorderFactory.createTitledBorder("Mouth"));
-        tableMouth.setModel(new com.sfc.sf2.portrait.models.PortraitDataTableModel());
+        tableMouth.setModel(portraitDataModelMouth);
         tableMouth.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
@@ -397,7 +404,7 @@ public class PortraitMainEditor extends AbstractMainEditor {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
         );
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Export to :"));
@@ -502,7 +509,7 @@ public class PortraitMainEditor extends AbstractMainEditor {
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane2)
+            .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
@@ -516,7 +523,7 @@ public class PortraitMainEditor extends AbstractMainEditor {
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -545,7 +552,7 @@ public class PortraitMainEditor extends AbstractMainEditor {
         );
         jPanel13Layout.setVerticalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane1)
+            .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -559,7 +566,7 @@ public class PortraitMainEditor extends AbstractMainEditor {
             .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        setSize(new java.awt.Dimension(953, 689));
+        setSize(new java.awt.Dimension(956, 708));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -628,9 +635,11 @@ public class PortraitMainEditor extends AbstractMainEditor {
     }//GEN-LAST:event_jButton18ActionPerformed
     
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        if (portraitLayoutPanel != null) {
+        if (portraitLayoutPanel != null && portraitSettings.getZoom() != jComboBox1.getSelectedIndex()+1) {
             portraitLayoutPanel.setDisplayScale(jComboBox1.getSelectedIndex()+1);
             repaintEditorLayout();
+            portraitSettings.setZoom(jComboBox1.getSelectedIndex()+1);
+            SettingsManager.saveSettingsFile();
         }
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
@@ -721,6 +730,8 @@ public class PortraitMainEditor extends AbstractMainEditor {
     private javax.swing.JSplitPane jSplitPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
+    private com.sfc.sf2.portrait.models.PortraitDataTableModel portraitDataModelEyes;
+    private com.sfc.sf2.portrait.models.PortraitDataTableModel portraitDataModelMouth;
     private com.sfc.sf2.portrait.gui.PortraitLayoutPanel portraitLayoutPanel;
     private com.sfc.sf2.core.gui.controls.Table tableEyes;
     private com.sfc.sf2.core.gui.controls.Table tableMouth;

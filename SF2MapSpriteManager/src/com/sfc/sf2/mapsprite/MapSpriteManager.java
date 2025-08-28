@@ -104,7 +104,7 @@ public class MapSpriteManager extends AbstractManager {
         mapSprites = new MapSprite[spritesList.size()];
         mapSprites = spritesList.toArray(mapSprites);
         Console.logger().info(mapSprites.length + " mapsprites with " + frameCount + " frames successfully imported from entries file : " + entriesPath);
-        Console.logger().info((entriesData.entriesCount() - entriesData.uniquePathsCount()) + " duplicate mapsprite entries found.");
+        Console.logger().info((entriesData.entriesCount() - entriesData.uniqueEntriesCount()) + " duplicate mapsprite entries found.");
         if (failedToLoad > 0) {
             Console.logger().severe(failedToLoad + " mapsprites failed to import. See logs above");
         }

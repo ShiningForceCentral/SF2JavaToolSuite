@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.8" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+  <NonVisualComponents>
+    <Component class="com.sfc.sf2.portrait.models.PortraitDataTableModel" name="portraitDataModelEyes">
+    </Component>
+    <Component class="com.sfc.sf2.portrait.models.PortraitDataTableModel" name="portraitDataModelMouth">
+    </Component>
+  </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
     <Property name="title" type="java.lang.String" value="SF2PortraitManager"/>
   </Properties>
   <SyntheticProperties>
-    <SyntheticProperty name="formSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,2,-79,0,0,3,-71"/>
+    <SyntheticProperty name="formSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,2,-60,0,0,3,-68"/>
     <SyntheticProperty name="formSizePolicy" type="int" value="0"/>
     <SyntheticProperty name="generateSize" type="boolean" value="true"/>
     <SyntheticProperty name="generateCenter" type="boolean" value="true"/>
@@ -46,14 +52,14 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="jSplitPane1" alignment="0" max="32767" attributes="0"/>
+              <Component id="jSplitPane1" alignment="0" pref="700" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
         <Container class="javax.swing.JSplitPane" name="jSplitPane1">
           <Properties>
-            <Property name="dividerLocation" type="int" value="500"/>
+            <Property name="dividerLocation" type="int" value="505"/>
             <Property name="orientation" type="int" value="0"/>
             <Property name="oneTouchExpandable" type="boolean" value="true"/>
           </Properties>
@@ -169,12 +175,12 @@
                                   <Layout>
                                     <DimensionLayout dim="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <EmptySpace min="0" pref="373" max="32767" attributes="0"/>
+                                          <EmptySpace min="0" pref="370" max="32767" attributes="0"/>
                                       </Group>
                                     </DimensionLayout>
                                     <DimensionLayout dim="1">
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <EmptySpace min="0" pref="264" max="32767" attributes="0"/>
+                                          <EmptySpace min="0" pref="269" max="32767" attributes="0"/>
                                       </Group>
                                     </DimensionLayout>
                                   </Layout>
@@ -220,7 +226,7 @@
                                           <Component id="jCheckBox1" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="jCheckBox2" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace pref="113" max="32767" attributes="0"/>
+                                          <EmptySpace pref="118" max="32767" attributes="0"/>
                                           <Group type="103" groupAlignment="2" attributes="0">
                                               <Component id="jLabel55" alignment="2" min="-2" max="-2" attributes="0"/>
                                               <Component id="colorPicker1" alignment="2" min="-2" max="-2" attributes="0"/>
@@ -321,7 +327,7 @@
                               </Border>
                             </Property>
                             <Property name="model" type="com.sfc.sf2.core.models.AbstractTableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                              <Connection code="new com.sfc.sf2.portrait.models.PortraitDataTableModel()" type="code"/>
+                              <Connection component="portraitDataModelEyes" type="bean"/>
                             </Property>
                             <Property name="selectionMode" type="int" value="0"/>
                           </Properties>
@@ -334,7 +340,7 @@
                               </Border>
                             </Property>
                             <Property name="model" type="com.sfc.sf2.core.models.AbstractTableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                              <Connection code="new com.sfc.sf2.portrait.models.PortraitDataTableModel()" type="code"/>
+                              <Connection component="portraitDataModelMouth" type="bean"/>
                             </Property>
                             <Property name="selectionMode" type="int" value="0"/>
                           </Properties>
@@ -359,7 +365,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="jPanel3" min="-2" pref="210" max="-2" attributes="0"/>
-                                  <EmptySpace pref="86" max="32767" attributes="0"/>
+                                  <EmptySpace pref="91" max="32767" attributes="0"/>
                                   <Component id="jPanel5" min="-2" pref="198" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
@@ -391,7 +397,7 @@
                             </DimensionLayout>
                             <DimensionLayout dim="1">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jTabbedPane1" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jTabbedPane1" alignment="0" pref="187" max="32767" attributes="0"/>
                               </Group>
                             </DimensionLayout>
                           </Layout>
@@ -565,7 +571,7 @@
                             </DimensionLayout>
                             <DimensionLayout dim="1">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jTabbedPane2" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jTabbedPane2" alignment="0" pref="175" max="32767" attributes="0"/>
                               </Group>
                             </DimensionLayout>
                           </Layout>

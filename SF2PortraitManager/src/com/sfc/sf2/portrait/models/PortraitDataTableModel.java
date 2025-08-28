@@ -35,7 +35,7 @@ public class PortraitDataTableModel extends AbstractTableModel<int[]>  {
     }
 
     @Override
-    protected Object getValue(int[] item, int col) {
+    protected Object getValue(int[] item, int row, int col) {
         return item[col];
     }
 

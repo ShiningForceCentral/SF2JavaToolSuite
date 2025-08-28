@@ -51,8 +51,8 @@ public class EntriesAsmData {
         return entryIndices.size();
     }
     
-    public int uniquePathsCount() {
-        return entryIndices.size();
+    public int uniqueEntriesCount() {
+        return uniqueEntryIndices.size();
     }
     
     public String getEntry(int index) {

@@ -6,7 +6,6 @@
 package com.sfc.sf2.vwfont.io;
 
 import com.sfc.sf2.core.io.AbstractRawImageProcessor;
-import com.sfc.sf2.core.io.DisassemblyException;
 import com.sfc.sf2.core.io.RawImageException;
 import com.sfc.sf2.vwfont.FontSymbol;
 import static com.sfc.sf2.vwfont.FontSymbol.PIXEL_HEIGHT;

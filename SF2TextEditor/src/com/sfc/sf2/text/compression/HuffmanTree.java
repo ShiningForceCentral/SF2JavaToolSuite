@@ -5,6 +5,9 @@
  */
 package com.sfc.sf2.text.compression;
 
+import com.sfc.sf2.core.gui.controls.Console;
+import java.util.Arrays;
+
 /**
  *
  * @author wiz
@@ -18,9 +21,9 @@ public class HuffmanTree {
     public HuffmanTree(int index, byte[] data, short offset){
         this.index = index;
         splitTree(data,offset);
-        /* System.out.println("sfc.segahr.HuffmanTree.<init>() - Created new HuffmanTree with following data :"
+        /*Console.logger().finest("sfc.segahr.HuffmanTree.<init>() - Created new HuffmanTree with following data :"
                 + "\nsymbols : " + Arrays.toString(symbols)
-                + "\ntree : " + Arrays.toString(tree)); */
+                + "\ntree : " + Arrays.toString(tree));*/
     }
     
     private void splitTree(byte[] data, short offset){
@@ -51,7 +54,7 @@ public class HuffmanTree {
     
     @Override
     public String toString(){
-        return "HuffmanTree " + index + " for symbol \'" + Symbols.TABLE[index] + "\' : "
+        return "HuffmanTree " + index + " for symbol \'" + Symbols.asciiToSymbol(index) + "\' : "
                 + "\n\tSymbols (" + symbols.length + ") : " + printSymbols()
                 + "\n\tTree : " + printTree();
     }
@@ -59,7 +62,7 @@ public class HuffmanTree {
     private String printSymbols(){
         StringBuilder sb = new StringBuilder();
         for(int i = 0;i<symbols.length;i++){
-            sb.append(symbols[i]).append(":\'").append(Symbols.TABLE[(int)symbols[i]&0xFF]).append("\' ");
+            sb.append(symbols[i]).append(":\'").append(Symbols.asciiToSymbol((int)symbols[i]&0xFF)).append("\' ");
         }
         return sb.toString();
     }

@@ -575,7 +575,7 @@ public class WeaponSpriteMainEditor extends AbstractMainEditor {
         Path paletteEntriesPath = PathHelpers.getBasePath().resolve(fileButton1.getFilePath());
         Path weaponSpritePath = PathHelpers.getBasePath().resolve(fileButton2.getFilePath());
         try {
-            weaponspriteManager.importDisassembly(paletteEntriesPath, weaponSpritePath);
+            weaponspriteManager.importDisassemblyAndPalettes(paletteEntriesPath, weaponSpritePath);
         } catch (Exception ex) {
             weaponspriteManager.clearData();
             Console.logger().log(Level.SEVERE, null, ex);

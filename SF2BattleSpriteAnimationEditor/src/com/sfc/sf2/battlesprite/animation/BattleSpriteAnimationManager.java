@@ -5,92 +5,107 @@
  */
 package com.sfc.sf2.battlesprite.animation;
 
+import com.sfc.sf2.background.Background;
 import com.sfc.sf2.background.BackgroundManager;
 import com.sfc.sf2.battlesprite.BattleSprite;
+import com.sfc.sf2.battlesprite.BattleSprite.BattleSpriteType;
 import com.sfc.sf2.battlesprite.BattleSpriteManager;
-import com.sfc.sf2.battlesprite.animation.io.DisassemblyManager;
+import com.sfc.sf2.battlesprite.animation.io.BattleSpriteAnimationDisassemblyProcessor;
+import com.sfc.sf2.battlesprite.animation.io.BattleSpriteAnimationPackage;
+import com.sfc.sf2.core.AbstractManager;
+import com.sfc.sf2.core.gui.controls.Console;
+import com.sfc.sf2.core.io.DisassemblyException;
+import com.sfc.sf2.core.io.asm.AsmException;
+import com.sfc.sf2.ground.Ground;
 import com.sfc.sf2.ground.GroundManager;
+import com.sfc.sf2.palette.Palette;
+import com.sfc.sf2.weaponsprite.WeaponSprite;
 import com.sfc.sf2.weaponsprite.WeaponSpriteManager;
+import java.io.IOException;
+import java.nio.file.Path;
 
 /**
  *
  * @author wiz
  */
-public class BattleSpriteAnimationManager {
+public class BattleSpriteAnimationManager extends AbstractManager {
        
-    private BackgroundManager backgroundManager = new BackgroundManager();
-    private GroundManager groundManager = new GroundManager();
-    private BattleSpriteManager battlespriteManager = new BattleSpriteManager();
-    private WeaponSpriteManager weaponspriteManager = new WeaponSpriteManager();
-    private BattleSpriteAnimation battlespriteanimation = new BattleSpriteAnimation();
+    private final BackgroundManager backgroundManager = new BackgroundManager();
+    private final GroundManager groundManager = new GroundManager();
+    private final BattleSpriteManager battlespriteManager = new BattleSpriteManager();
+    private final WeaponSpriteManager weaponspriteManager = new WeaponSpriteManager();
+    private final BattleSpriteAnimationDisassemblyProcessor battleSpriteAnimationDisassemblyProcessor = new BattleSpriteAnimationDisassemblyProcessor();
+    
+    private BattleSpriteAnimation battlespriteAnimation;
+
+    @Override
+    public void clearData() {
+        backgroundManager.clearData();
+        groundManager.clearData();
+        battlespriteManager.clearData();
+        weaponspriteManager.clearData();
+        battlespriteAnimation = null;
+    }
        
-    public void importDisassembly(String backgroundPath, String groundBasePalettePath, String groundPalettePath, String groundPath, String battlespritePath, String weaponPalettesPath, String weaponPath, String animationPath){
-        System.out.println("com.sfc.sf2.battlespriteanimation.BattleSpriteAnimationManager.importDisassembly() - Importing disassembly ...");
-        backgroundManager.importSingleDisassembly(backgroundPath);
-        groundManager.importDisassembly(groundBasePalettePath, groundPalettePath, groundPath);
-        battlespriteManager.importDisassembly(battlespritePath);
-        if(battlespriteManager.getBattleSprite().getType()==BattleSprite.TYPE_ALLY && !weaponPalettesPath.isEmpty() && !weaponPath.isEmpty()){
-            weaponspriteManager.importDisassembly(weaponPalettesPath, weaponPath);
+    public void importDisassembly(Path backgroundPath, Path groundBasePalettePath, Path groundPalettePath, Path groundPath, Path battlespritePath, Path weaponPalettesPath, Path weaponPath, Path animationPath) throws IOException, DisassemblyException, AsmException {
+        Console.logger().finest("ENTERING importDisassembly");
+        try {
+            backgroundManager.importDisassembly(backgroundPath);
+            groundManager.importDisassembly(groundBasePalettePath, groundPalettePath, groundPath);
+            Console.logger().info("Ground and background loaded");
+        } catch (Exception e) {
+            Console.logger().severe("ERROR Environment could not be imported : " + e);
         }
-        int animationType = (battlespriteManager.getBattleSprite().getType()==BattleSprite.TYPE_ALLY)?BattleSpriteAnimation.TYPE_ALLY:BattleSpriteAnimation.TYPE_ENEMY;
-        battlespriteanimation = DisassemblyManager.importDisassembly(animationPath, animationType);
-        System.out.println("com.sfc.sf2.battlespriteanimation.BattleSpriteAnimationManager.importDisassembly() - Disassembly imported.");
+        battlespriteManager.importDisassembly(battlespritePath);
+        BattleSpriteType type = battlespriteManager.getBattleSprite().getType();
+        try {
+            if(type == BattleSprite.BattleSpriteType.ALLY && weaponPalettesPath.getNameCount() > 0 && weaponPath.getNameCount() > 0) {
+                weaponspriteManager.importDisassemblyAndPalettes(weaponPalettesPath, weaponPath);
+                Console.logger().info("Weapon imported");
+            }
+        } catch (Exception e) {
+            Console.logger().severe("ERROR Weapon could not be loaded : " + e);
+        }
+        BattleSpriteAnimationPackage pckg = new BattleSpriteAnimationPackage(type);
+        battlespriteAnimation = battleSpriteAnimationDisassemblyProcessor.importDisassembly(animationPath, pckg);
+        Console.logger().info("Animation successfully imported from : " + animationPath);
+        Console.logger().finest("EXITING importDisassembly");
     }
     
-    public void exportDisassembly(String filepath){
-        System.out.println("com.sfc.sf2.battlespriteanimation.BattleSpriteAnimationManager.importDisassembly() - Exporting disassembly ...");
-        int animationType = (battlespriteManager.getBattleSprite().getType()==BattleSprite.TYPE_ALLY)?BattleSpriteAnimation.TYPE_ALLY:BattleSpriteAnimation.TYPE_ENEMY;
-        DisassemblyManager.exportDisassembly(battlespriteanimation, filepath, animationType);
-        System.out.println("com.sfc.sf2.battlespriteanimation.BattleSpriteAnimationManager.importDisassembly() - Disassembly exported.");        
+    public void exportDisassembly(Path filePath, BattleSpriteAnimation battlespriteanimation) throws IOException, DisassemblyException {
+        Console.logger().finest("ENTERING exportDisassembly");
+        this.battlespriteAnimation = battlespriteanimation;
+        BattleSpriteAnimationPackage pckg = new BattleSpriteAnimationPackage(battlespriteanimation.getType());
+        battleSpriteAnimationDisassemblyProcessor.exportDisassembly(filePath, battlespriteanimation, pckg);
+        Console.logger().info("Animation successfully exported to : " + filePath);
+        Console.logger().finest("EXITING exportDisassembly");
     }
 
     public BattleSpriteAnimation getBattleSpriteAnimation() {
-        return battlespriteanimation;
+        return battlespriteAnimation;
     }
 
     public void setBattleSpriteAnimation(BattleSpriteAnimation battlespriteanimation) {
-        this.battlespriteanimation = battlespriteanimation;
+        this.battlespriteAnimation = battlespriteanimation;
     }
 
-    public BackgroundManager getBackgroundManager() {
-        return backgroundManager;
+    public Background getBackground() {
+        return backgroundManager.getBackgrounds()[0];
     }
 
-    public void setBackgroundManager(BackgroundManager backgroundManager) {
-        this.backgroundManager = backgroundManager;
+    public Ground getGround() {
+        return groundManager.getGround();
     }
 
-    public GroundManager getGroundManager() {
-        return groundManager;
+    public BattleSprite getBattleSprite() {
+        return battlespriteManager.getBattleSprite();
     }
 
-    public void setGroundManager(GroundManager groundManager) {
-        this.groundManager = groundManager;
+    public Palette[] getWeaponPalettes() {
+        return weaponspriteManager.getPalettes();
     }
 
-    public BattleSpriteManager getBattlespriteManager() {
-        return battlespriteManager;
+    public WeaponSprite getWeaponsprite() {
+        return weaponspriteManager.getWeaponsprite();
     }
-
-    public void setBattlespriteManager(BattleSpriteManager battlespriteManager) {
-        this.battlespriteManager = battlespriteManager;
-    }
-
-    public WeaponSpriteManager getWeaponspriteManager() {
-        return weaponspriteManager;
-    }
-
-    public void setWeaponspriteManager(WeaponSpriteManager weaponspriteManager) {
-        this.weaponspriteManager = weaponspriteManager;
-    }
-
-    public BattleSpriteAnimation getBattlespriteanimation() {
-        return battlespriteanimation;
-    }
-
-    public void setBattlespriteanimation(BattleSpriteAnimation battlespriteanimation) {
-        this.battlespriteanimation = battlespriteanimation;
-    }
-
-    
 }

@@ -26,6 +26,7 @@ public class GraphicsHelpers {
     }
     
     public static void drawBackgroundTransparencyPattern(BufferedImage image, Color bgColor, int pixelGrid) {
+        if (bgColor == null) return;
         Color bgDarkerColor = bgColor.darker();
         int bgInt = bgColor.getRGB();
         int darkInt = bgDarkerColor.getRGB();

@@ -98,7 +98,7 @@ public class BackgroundManager extends AbstractManager {
                 bgPath = basePath.resolve(String.format("background%02d%s", background.getIndex(), ".bin"));
                 backgroundDisassemblyProcessor.exportDisassembly(bgPath, background, null);
                 fileCount++;
-            }catch (Exception e) {
+            } catch (Exception e) {
                 failedToSave++;
                 Console.logger().warning("Background could not be exported : " + bgPath + " : " + e);
             }

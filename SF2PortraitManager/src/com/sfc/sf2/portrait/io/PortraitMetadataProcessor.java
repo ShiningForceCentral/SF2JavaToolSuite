@@ -7,6 +7,7 @@ package com.sfc.sf2.portrait.io;
 
 import com.sfc.sf2.core.io.AbstractMetadataProcessor;
 import com.sfc.sf2.core.io.DisassemblyException;
+import com.sfc.sf2.core.io.MetadataException;
 import com.sfc.sf2.portrait.Portrait;
 import java.io.BufferedReader;
 import java.io.FileWriter;
@@ -19,7 +20,7 @@ import java.io.IOException;
 public class PortraitMetadataProcessor extends AbstractMetadataProcessor<Portrait> {
 
     @Override
-    protected void parseMetaData(BufferedReader reader, Portrait item) throws DisassemblyException, IOException {
+    protected void parseMetaData(BufferedReader reader, Portrait item) throws IOException, MetadataException {
         String data = reader.readLine();
         int eyesCount = Integer.parseInt(data.split(":")[1].trim());
         int[][] eyeTiles = new int[eyesCount][4];
@@ -45,7 +46,7 @@ public class PortraitMetadataProcessor extends AbstractMetadataProcessor<Portrai
     }
 
     @Override
-    protected void packageMetaData(FileWriter writer, Portrait item) throws DisassemblyException, IOException {
+    protected void packageMetaData(FileWriter writer, Portrait item) throws IOException, MetadataException {
         int[][] eyeTiles = item.getEyeTiles();
         writer.append(String.format("Eyes: %s\n", eyeTiles.length));
         for (int i = 0; i < eyeTiles.length; i++) {

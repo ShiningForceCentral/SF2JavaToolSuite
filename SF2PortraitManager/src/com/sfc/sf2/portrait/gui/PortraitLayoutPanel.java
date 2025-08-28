@@ -16,13 +16,12 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 
 /**
  *
  * @author wiz
  */
-public class PortraitLayoutPanel extends AbstractLayoutPanel implements MouseListener, MouseMotionListener{
+public class PortraitLayoutPanel extends AbstractLayoutPanel implements MouseListener {
     
     private Portrait portrait;
     
@@ -36,9 +35,10 @@ public class PortraitLayoutPanel extends AbstractLayoutPanel implements MouseLis
     private int selectedMouthTile = -1;
         
     public PortraitLayoutPanel() {
+        super();
         setGridDimensions(8, 8);
+        setCoordsDimensions(8, 8, 0);
         addMouseListener(this);
-        addMouseMotionListener(this);
     }
 
     @Override
@@ -138,20 +138,21 @@ public class PortraitLayoutPanel extends AbstractLayoutPanel implements MouseLis
     }
 
     @Override
-    public void mouseClicked(MouseEvent e) {
-    }
+    public void mouseClicked(MouseEvent e) { }
+    
     @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
+    public void mouseEntered(MouseEvent e) { }
+    
     @Override
-    public void mouseExited(MouseEvent e) {
-
-    }
+    public void mouseExited(MouseEvent e) { }
+    
     @Override
     public void mousePressed(MouseEvent e) {
-        int x = e.getX() / (getDisplayScale() * 8);
-        int y = e.getY() / (getDisplayScale() * 8);
+        Dimension coordsPadding = getCoordsPadding();
+        int x = e.getX() - coordsPadding.width;
+        int y = e.getY() - coordsPadding.height;
+        x /= (getDisplayScale() * PIXEL_WIDTH);
+        y /= (getDisplayScale() * PIXEL_HEIGHT);
         switch (e.getButton()) {
             case MouseEvent.BUTTON1:
                 if (selectedEyeTile >= 0) {
@@ -200,17 +201,9 @@ public class PortraitLayoutPanel extends AbstractLayoutPanel implements MouseLis
         redraw();
         Console.logger().finest("Portrait press "+e.getButton()+" -- "+x+" - "+y);
     }
+    
     @Override
     public void mouseReleased(MouseEvent e) {
        
-    }
-    
-    @Override
-    public void mouseDragged(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
-        
     }
 }

@@ -8,6 +8,7 @@ package com.sfc.sf2.portrait;
 import com.sfc.sf2.core.AbstractManager;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.core.io.DisassemblyException;
+import com.sfc.sf2.core.io.MetadataException;
 import com.sfc.sf2.core.io.RawImageException;
 import com.sfc.sf2.graphics.Tileset;
 import com.sfc.sf2.graphics.TilesetManager;
@@ -54,9 +55,9 @@ public class PortraitManager extends AbstractManager {
         Console.logger().finest("EXITING exportDisassembly");
     }
     
-    public void importImage(Path portraitPath, Path metadataPath) throws IOException, DisassemblyException, RawImageException {
+    public void importImage(Path portraitPath, Path metadataPath) throws IOException, MetadataException, RawImageException {
         Console.logger().finest("ENTERING importImage");
-        Tileset tileset = tilesetManager.importImage(portraitPath);
+        Tileset tileset = tilesetManager.importImage(portraitPath, true);
         portrait = new Portrait(tileset.getName(), tileset);
         Console.logger().info("Portrait successfully imported from : " + portraitPath);
         try {
@@ -68,7 +69,7 @@ public class PortraitManager extends AbstractManager {
         Console.logger().finest("EXITING importImage");
     }
     
-    public void exportImage(Path portraitPath, Path metadataPath, Portrait portrait) throws IOException, DisassemblyException, RawImageException {
+    public void exportImage(Path portraitPath, Path metadataPath, Portrait portrait) throws IOException, MetadataException, RawImageException {
         Console.logger().finest("ENTERING exportImage");
         this.portrait = portrait;
         tilesetManager.exportImage(portraitPath, portrait.getTileset());

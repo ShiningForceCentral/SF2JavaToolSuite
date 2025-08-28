@@ -5,7 +5,7 @@
  */
 package com.sfc.sf2.battlesprite;
 
-import com.sfc.sf2.graphics.Tile;
+import com.sfc.sf2.graphics.Tileset;
 import com.sfc.sf2.palette.Palette;
 
 /**
@@ -13,36 +13,60 @@ import com.sfc.sf2.palette.Palette;
  * @author wiz
  */
 public class BattleSprite {
+    public static final int BATTLE_SPRITE_TILE_HEIGHT = 12;
     
-    public static final int TYPE_ALLY = 0;
-    public static final int TYPE_ENEMY = 1;
+    public enum BattleSpriteType {
+        ALLY,
+        ENEMY,
+    }
     
-    private int type;
-    
-    private Tile[][] frames;    
+    private BattleSpriteType type;    
     private Palette[] palettes;
+    private Tileset[] frames;
     
-    private int animSpeed;    
+    private int animSpeed;
     private byte statusOffsetX;
     private byte statusOffsetY;
+    
+    public BattleSprite(BattleSpriteType type, Tileset[] frames, Palette[] palettes) {
+        this.type = type;
+        this.frames = frames;
+        this.palettes = palettes;
+        this.animSpeed = 0;
+        this.statusOffsetX = 0;
+        this.statusOffsetY = 0;
+    }
+    
+    public BattleSprite(BattleSpriteType type, Tileset[] frames, Palette[] palettes, int animSpeed, byte statusOffsetX, byte statusOffsetY) {
+        this.type = type;
+        this.frames = frames;
+        this.palettes = palettes;
+        this.animSpeed = animSpeed;
+        this.statusOffsetX = statusOffsetX;
+        this.statusOffsetY = statusOffsetY;
+    }
 
-    public int getType() {
+    public BattleSpriteType getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(BattleSpriteType type) {
         this.type = type;
     }
 
     public int getTilesPerRow() {
-        return type == TYPE_ALLY ? 12 : 16;
+        return getTilesPerRow(type);
+    }
+    
+    public static int getTilesPerRow(BattleSpriteType type) {
+        return type == BattleSpriteType.ALLY ? 12 : 16;
     }
 
-    public Tile[][] getFrames() {
+    public Tileset[] getFrames() {
         return frames;
     }
 
-    public void setFrames(Tile[][] frames) {
+    public void setFrames(Tileset[] frames) {
         this.frames = frames;
     }
 
@@ -76,5 +100,24 @@ public class BattleSprite {
 
     public void setStatusOffsetY(byte statusOffsetY) {
         this.statusOffsetY = statusOffsetY;
+    }
+    
+    public void setRenderPalette(Palette palette) {
+        if (frames == null || frames.length == 0) {
+            return;
+        }
+        for (int i = 0; i < frames.length; i++) {
+            frames[i].setPalette(palette);
+            frames[i].clearIndexedColorImage(true);
+        }
+    }
+    
+    public void clearIndexedColorImage(boolean alsoClearTiles) {
+        if (frames == null || frames.length == 0) {
+            return;
+        }
+        for (int i = 0; i < frames.length; i++) {
+            frames[i].clearIndexedColorImage(alsoClearTiles);
+        }
     }
 }

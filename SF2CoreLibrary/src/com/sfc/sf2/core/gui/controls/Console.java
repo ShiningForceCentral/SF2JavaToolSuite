@@ -22,6 +22,7 @@ public class Console extends javax.swing.JPanel {
     private static Logger logger = Logger.getGlobal();
     public static Logger logger() { return logger; }
     
+    TextAreaOutputStream stream;
     ConsoleHandler handler;
     int currentLevel;
     
@@ -32,7 +33,8 @@ public class Console extends javax.swing.JPanel {
     public Console() {
         initComponents();
         
-        PrintStream con=new PrintStream(new TextAreaOutputStream(jTextAreaConsole));
+        stream = new TextAreaOutputStream(jTextAreaConsole);
+        PrintStream con=new PrintStream(stream);
         System.setOut(con);
         System.setErr(con);
     }
@@ -81,6 +83,7 @@ public class Console extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jComboBoxLogLevel = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
         jScrollPaneConsole = new javax.swing.JScrollPane();
         jTextAreaConsole = new javax.swing.JTextArea();
 
@@ -98,6 +101,15 @@ public class Console extends javax.swing.JPanel {
             }
         });
 
+        jButton1.setText("Clear");
+        jButton1.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        jButton1.setPreferredSize(new java.awt.Dimension(33, 20));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -106,6 +118,8 @@ public class Console extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jComboBoxLogLevel, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
         );
@@ -115,6 +129,7 @@ public class Console extends javax.swing.JPanel {
                 .addGap(0, 0, 0)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jComboBoxLogLevel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addGap(0, 0, 0))
         );
@@ -133,7 +148,7 @@ public class Console extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPaneConsole, javax.swing.GroupLayout.DEFAULT_SIZE, 346, Short.MAX_VALUE)
+                    .addComponent(jScrollPaneConsole, javax.swing.GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, 0))
         );
@@ -143,7 +158,7 @@ public class Console extends javax.swing.JPanel {
                 .addGap(0, 0, 0)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jScrollPaneConsole, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
+                .addComponent(jScrollPaneConsole, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -160,7 +175,12 @@ public class Console extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jComboBoxLogLevelItemStateChanged
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        stream.clear();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBoxLogLevel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;

@@ -35,6 +35,10 @@ import java.nio.file.Path;
  */
 public class EntriesAsmProcessor extends AbstractAsmProcessor<EntriesAsmData> {
 
+    protected String listPrefix = "pt_";
+    protected String listItemPrefix = "dc.l";
+    protected String listPathPrefix = "incbin";
+    
     @Override
     protected EntriesAsmData parseAsmData(BufferedReader reader) throws IOException, AsmException {
         EntriesAsmData data = new EntriesAsmData();
@@ -49,7 +53,7 @@ public class EntriesAsmProcessor extends AbstractAsmProcessor<EntriesAsmData> {
                 continue;
             } else if (line.length() > 5 && !foundStart) {
                 foundStart = true;
-                if (line.startsWith("pt_")) {
+                if (line.startsWith(listPrefix)) {
                     int colonIndex = line.indexOf(':');
                     data.setPointerListName(line.substring(0, colonIndex));
                     line = line.substring(colonIndex+1);
@@ -58,14 +62,14 @@ public class EntriesAsmProcessor extends AbstractAsmProcessor<EntriesAsmData> {
 
             if (foundStart) {
                 line = StringHelpers.trimAndRemoveComments(line);
-                int incbinIndex = line.indexOf("incbin");
-                if (incbinIndex > 0) {          //Is item:path pair
+                int pathPrefixIndex = listPathPrefix == null ? -1 : line.indexOf(listPathPrefix);
+                if (pathPrefixIndex > 0) {          //Is item:path pair
                     String entry = line.substring(0, line.indexOf(':'));
-                    Path path = Path.of(line.substring(incbinIndex+8, line.length()-1));
+                    Path path = Path.of(line.substring(pathPrefixIndex+listPathPrefix.length()+2, line.length()-1));
                     data.addPath(entry, path);
                 }
-                if (line.startsWith("dc.")) {   //Is entry
-                    String entry = line.substring(5);
+                if (line.startsWith(listItemPrefix)) {   //Is entry
+                    String entry = line.substring(listItemPrefix.length()+1).replace("\"", "");
                     data.addEntry(entry);
                 }
             }
@@ -81,15 +85,19 @@ public class EntriesAsmProcessor extends AbstractAsmProcessor<EntriesAsmData> {
         if (item.getIsDoubleList()) {
             //Write list of entries first
             for (int i = 0; i < item.entriesCount(); i++) {
-                writer.write("/t/t/tdc.l ");
+                writer.write("/t/t/t");
+                writer.write(listItemPrefix);
+                writer.write(" ");
                 writer.write(item.getEntry(i));
                 writer.write("\n");
             }
         }
         //Write list of item:path pairs
-        for (int i = 0; i < item.uniquePathsCount(); i++) {
+        for (int i = 0; i < item.uniqueEntriesCount(); i++) {
             writer.write(item.getUniqueEntries(i));
-            writer.write(" incbin \"");
+                writer.write(" ");
+            writer.write(listPathPrefix);
+                writer.write(" \"");
             writer.write(item.getPathForUnique(i).toString());
             writer.write("\"\n");
         }
