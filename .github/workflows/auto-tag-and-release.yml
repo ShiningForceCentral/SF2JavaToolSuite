@@ -128,12 +128,17 @@ jobs:
               rel_path="${rel_path//\\//}"  # fix Windows-style slashes
               jar_path="$proj/$rel_path"
               echo "Copying prebuilt jar '$jar' from $jar_path"
-              if [ -f "$jar_path" ]; then
-                mkdir -p "$proj/lib"
-                cp "$jar_path" "$proj/lib/"
-              else
-                echo "Warning: Prebuilt jar not found at $jar_path"
-              fi
+                if [ -f "$jar_path" ]; then
+                  mkdir -p "$proj/lib"
+                  dest_path="$proj/lib/$(basename "$jar_path")"
+                  if [ "$jar_path" != "$dest_path" ]; then
+                    cp "$jar_path" "$dest_path"
+                  else
+                    echo "Skipping copy: source and destination are the same."
+                  fi
+                else
+                  echo "Warning: Prebuilt jar not found at $jar_path"
+                fi
             done
 
             # Step 4: Build the main project
