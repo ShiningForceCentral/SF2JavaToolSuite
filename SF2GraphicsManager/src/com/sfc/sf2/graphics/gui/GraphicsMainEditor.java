@@ -35,27 +35,22 @@ public class GraphicsMainEditor extends AbstractMainEditor {
     protected void initEditor() {
         super.initEditor();
         
+        tilesetLayoutPanel.setShowGrid(jCheckBox1.isSelected());
+        tilesetLayoutPanel.setDisplayScale(jComboBox7.getSelectedIndex()+1);
         colorPicker1.setColor(SettingsManager.getGlobalSettings().getTransparentBGColor());
+        tilesetLayoutPanel.setBGColor(colorPicker1.getBackground());
     }
     
     @Override
-    protected void updateEditorData() {
+    protected void onDataLoaded() {
+        super.onDataLoaded();
+        
         Tileset tileset = tilesetManager.getTileset();
         if (tileset != null) {
             int tileWidth = (int)jSpinner2.getValue();
-            tilesetLayoutPanel.setTilesPerRow(tileWidth);
+            tilesetLayoutPanel.setItemsPerRow(tileWidth);
             tilesetLayoutPanel.setTileset(tileset);
         }
-        
-        super.updateEditorData();
-    }
-    
-    @Override
-    protected void repaintEditorLayout() {
-        super.repaintEditorLayout();
-        
-        tilesetLayoutPanel.revalidate();
-        tilesetLayoutPanel.repaint();
     }
     
     /**
@@ -1091,7 +1086,7 @@ public class GraphicsMainEditor extends AbstractMainEditor {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Graphic image could not be imported from : " + graphicPath);
         }
-        updateEditorData();
+        onDataLoaded();
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
@@ -1106,7 +1101,7 @@ public class GraphicsMainEditor extends AbstractMainEditor {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Graphic disasm could not be imported from : " + graphicPath);
         }
-        updateEditorData();
+        onDataLoaded();
     }//GEN-LAST:event_jButton18ActionPerformed
 
     private void jButton37ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton37ActionPerformed
@@ -1152,12 +1147,10 @@ public class GraphicsMainEditor extends AbstractMainEditor {
 
     private void jComboBox7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox7ActionPerformed
         tilesetLayoutPanel.setDisplayScale(jComboBox7.getSelectedIndex()+1);
-        repaintEditorLayout();
     }//GEN-LAST:event_jComboBox7ActionPerformed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
         tilesetLayoutPanel.setShowGrid(jCheckBox1.isSelected());
-        repaintEditorLayout();
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
@@ -1245,7 +1238,7 @@ public class GraphicsMainEditor extends AbstractMainEditor {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Tileset/Layout could not be imported");
         }
-        updateEditorData();
+        onDataLoaded();
     }//GEN-LAST:event_jButton25ActionPerformed
 
     private void jComboBox5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox5ActionPerformed
@@ -1261,15 +1254,13 @@ public class GraphicsMainEditor extends AbstractMainEditor {
     }//GEN-LAST:event_jButton24ActionPerformed
 
     private void jSpinner2StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner2StateChanged
-        tilesetLayoutPanel.setTilesPerRow((int)jSpinner2.getValue());
-        repaintEditorLayout();
+        tilesetLayoutPanel.setItemsPerRow((int)jSpinner2.getValue());
     }//GEN-LAST:event_jSpinner2StateChanged
 
     private void colorPicker1ColorChanged(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorPicker1ColorChanged
         tilesetLayoutPanel.setBGColor(colorPicker1.getColor());
         SettingsManager.getGlobalSettings().setTransparentBGColor(colorPicker1.getColor());
         SettingsManager.saveGlobalSettingsFile();
-        repaintEditorLayout();
     }//GEN-LAST:event_colorPicker1ColorChanged
 
     /**

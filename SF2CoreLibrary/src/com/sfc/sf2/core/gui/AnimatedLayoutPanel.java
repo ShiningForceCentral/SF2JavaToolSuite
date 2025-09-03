@@ -24,6 +24,10 @@ public abstract class AnimatedLayoutPanel extends AbstractLayoutPanel implements
     private boolean loop;
     
     ActionListener animationUpdated;
+
+    public AnimatedLayoutPanel() {
+        super();
+    }
     
     public boolean isAnimating() {
         return animPlaying;

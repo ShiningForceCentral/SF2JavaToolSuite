@@ -31,24 +31,19 @@ public class SpecialSpriteMainEditor extends AbstractMainEditor {
     protected void initEditor() {
         super.initEditor();
         
+        specialSpriteLayoutPanel.setShowGrid(jCheckBox1.isSelected());                                           
+        specialSpriteLayoutPanel.setDisplayScale(jComboBox7.getSelectedIndex()+1);
         colorPicker1.setColor(SettingsManager.getGlobalSettings().getTransparentBGColor());
+        specialSpriteLayoutPanel.setBGColor(colorPicker1.getBackground());
+        specialSpriteLayoutPanel.setItemsPerRow((int)jSpinner1.getValue());
     }
     
     @Override
-    protected void updateEditorData() {
-        specialSpriteLayoutPanel.setTilesPerRow((int)jSpinner1.getValue());
+    protected void onDataLoaded() {
+        super.onDataLoaded();
+        
         specialSpriteLayoutPanel.setTileset(specialSpriteManager.getTileset());
-        
-        super.updateEditorData();
-    }
-    
-    @Override
-    protected void repaintEditorLayout() {
-        super.repaintEditorLayout();
-        
-        specialSpriteLayoutPanel.revalidate();
-        specialSpriteLayoutPanel.repaint();
-    }    
+    } 
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -672,7 +667,7 @@ public class SpecialSpriteMainEditor extends AbstractMainEditor {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Special sprite image could not be imported from : " + graphicPath);
         }
-        updateEditorData();
+        onDataLoaded();
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
@@ -692,22 +687,19 @@ public class SpecialSpriteMainEditor extends AbstractMainEditor {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Special sprite disasm could not be imported from : " + graphicPath);
         }
-        updateEditorData();
+        onDataLoaded();
     }//GEN-LAST:event_jButton18ActionPerformed
 
     private void jComboBox7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox7ActionPerformed
         specialSpriteLayoutPanel.setDisplayScale(jComboBox7.getSelectedIndex()+1);
-        repaintEditorLayout();
     }//GEN-LAST:event_jComboBox7ActionPerformed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
         specialSpriteLayoutPanel.setShowGrid(jCheckBox1.isSelected());
-        repaintEditorLayout();
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     private void jSpinner1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner1StateChanged
-        specialSpriteLayoutPanel.setTilesPerRow((int)jSpinner1.getValue());
-        repaintEditorLayout();
+        specialSpriteLayoutPanel.setItemsPerRow((int)jSpinner1.getValue());
     }//GEN-LAST:event_jSpinner1StateChanged
 
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
@@ -735,7 +727,6 @@ public class SpecialSpriteMainEditor extends AbstractMainEditor {
         specialSpriteLayoutPanel.setBGColor(colorPicker1.getColor());
         SettingsManager.getGlobalSettings().setTransparentBGColor(colorPicker1.getColor());
         SettingsManager.saveGlobalSettingsFile();
-        repaintEditorLayout();
     }//GEN-LAST:event_colorPicker1ColorChanged
 
     /**

@@ -44,17 +44,25 @@ public class SpellMainEditor extends AbstractMainEditor {
         
         colorPicker1.setColor(SettingsManager.getGlobalSettings().getTransparentBGColor());
         
+        spellLayoutPanel.setDisplayScale(jComboBox1.getSelectedIndex()+1);
+        spellLayoutPanel.setShowGrid(jCheckBox1.isSelected());
+        spellLayoutPanel.setItemsPerRow((int)jSpinner1.getValue());
+        spellLayoutPanel.setBGColor(colorPicker1.getColor());
+        
+        invocationLayoutPanel.setDisplayScale(jComboBox1.getSelectedIndex()+1);
+        invocationLayoutPanel.setShowGrid(jCheckBox1.isSelected());
+        invocationLayoutPanel.setBGColor(colorPicker1.getColor());
         invocationLayoutPanel.setVisible(false);
         jPanelInvocationData.setVisible(false);
     }
     
     @Override
-    protected void updateEditorData() {
+    protected void onDataLoaded() {
+        super.onDataLoaded();
+        
         if (invocationGraphicManager.getInvocationGraphic() == null) {
             Tileset spellTileset = spellGraphicManager.getSpellTileset();
             spellLayoutPanel.setTileset(spellTileset);
-            spellLayoutPanel.setDisplayScale(jComboBox1.getSelectedIndex()+1);
-            spellLayoutPanel.setShowGrid(jCheckBox1.isSelected());
             if (spellTileset != null) {
                 CRAMColor[] colors = spellTileset.getPalette().getColors();
                 jPanelColor9.setBackground(colors[9].CRAMColor());
@@ -68,8 +76,6 @@ public class SpellMainEditor extends AbstractMainEditor {
         } else {
             InvocationGraphic invocationGraphic = invocationGraphicManager.getInvocationGraphic();
             invocationLayoutPanel.setInvocationGraphic(invocationGraphic);
-            invocationLayoutPanel.setDisplayScale(jComboBox1.getSelectedIndex()+1);
-            invocationLayoutPanel.setShowGrid(jCheckBox1.isSelected());
             if (invocationGraphic != null) {
                 jSpinner2.setValue(invocationGraphic.getUnknown1());
                 jSpinner3.setValue(invocationGraphic.getUnknown2());
@@ -80,19 +86,6 @@ public class SpellMainEditor extends AbstractMainEditor {
             jPanelSpellData.setVisible(false);
             jPanelInvocationData.setVisible(true);
         }
-        super.updateEditorData();
-    }
-    
-    @Override
-    protected void repaintEditorLayout() {
-        if (spellLayoutPanel.isVisible()) {
-            spellLayoutPanel.revalidate();
-            spellLayoutPanel.repaint();
-        } else if (invocationLayoutPanel.isVisible()) {
-            invocationLayoutPanel.revalidate();
-            invocationLayoutPanel.repaint();
-        }
-        jScrollPane2.revalidate();
     }
     
     /**
@@ -1135,7 +1128,7 @@ public class SpellMainEditor extends AbstractMainEditor {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Spell image could not be imported from : " + spellPath);
         }
-        updateEditorData();
+        onDataLoaded();
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
@@ -1149,19 +1142,17 @@ public class SpellMainEditor extends AbstractMainEditor {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Spell disasm could not be imported from : " + spellPath);
         }
-        updateEditorData();
+        onDataLoaded();
     }//GEN-LAST:event_jButton18ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         spellLayoutPanel.setDisplayScale(jComboBox1.getSelectedIndex()+1);
         invocationLayoutPanel.setDisplayScale(jComboBox1.getSelectedIndex()+1);
-        repaintEditorLayout();
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
         spellLayoutPanel.setShowGrid(jCheckBox1.isSelected());
         invocationLayoutPanel.setShowGrid(jCheckBox1.isSelected());
-        repaintEditorLayout();
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     private void jButton21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton21ActionPerformed
@@ -1174,7 +1165,7 @@ public class SpellMainEditor extends AbstractMainEditor {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Invocation disasm could not be imported from : " + invocationPath);
         }
-        updateEditorData();
+        onDataLoaded();
     }//GEN-LAST:event_jButton21ActionPerformed
 
     private void jButton24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton24ActionPerformed
@@ -1187,7 +1178,7 @@ public class SpellMainEditor extends AbstractMainEditor {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Invocation images could not be imported from : " + invocationPath);
         }
-        updateEditorData();
+        onDataLoaded();
     }//GEN-LAST:event_jButton24ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -1213,7 +1204,7 @@ public class SpellMainEditor extends AbstractMainEditor {
     }//GEN-LAST:event_jButton33ActionPerformed
 
     private void jSpinner1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner1StateChanged
-        spellLayoutPanel.setTilesPerRow((int)jSpinner1.getValue());
+        spellLayoutPanel.setItemsPerRow((int)jSpinner1.getValue());
     }//GEN-LAST:event_jSpinner1StateChanged
 
     private void jPanelColor14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelColor14MouseClicked
@@ -1263,7 +1254,6 @@ public class SpellMainEditor extends AbstractMainEditor {
         invocationLayoutPanel.setBGColor(colorPicker1.getColor());
         SettingsManager.getGlobalSettings().setTransparentBGColor(colorPicker1.getColor());
         SettingsManager.saveGlobalSettingsFile();
-        repaintEditorLayout();
     }//GEN-LAST:event_colorPicker1ColorChanged
     
     private void updateSpellPaletteColor(int index, CRAMColor newColor) {
@@ -1277,7 +1267,6 @@ public class SpellMainEditor extends AbstractMainEditor {
                     spellTileset.clearIndexedColorImage(true);
                     palette.setColors(colors, true);
                     spellLayoutPanel.redraw();
-                    repaintEditorLayout();
                 }
             }
         }

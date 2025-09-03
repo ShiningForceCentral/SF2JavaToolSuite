@@ -34,7 +34,9 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
     
     protected void initCore(Console console) {
         //Console
-        console.initLogger("SF2 Java Suite");
+        if (console != null) {
+            console.initLogger("SF2 Java Suite");
+        }
         //Version
         if (!SettingsManager.isRunningInEditor()) {
             String version = Manifest.getProjectVersion();
@@ -45,7 +47,9 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
         SettingsManager.loadGlobalSettings();
         SettingsManager.loadSettingsFile();
         CoreSettings core = SettingsManager.getSettingsStore("core");
-        console.setLogLevel(core.getLogLevel());
+        if (console != null) {
+            console.setLogLevel(core.getLogLevel());
+        }
         if (!SettingsManager.isRunningInEditor()) {
             //Check if settings panel should be shown
             java.awt.EventQueue.invokeLater(() -> {
@@ -58,24 +62,11 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
     }
     
     protected void initEditor() {
-        //TODO define a default layout class (or support multiple in the main editor
-        //jPanel2.removeAll();
-        //jPanel2.setLayout(new GridLayout(1, 1));
-        //jPanel2.add(defaultLayout);
-    }
-    
-    protected void updateEditorData() {
-        //TODO define a default layout class (or support multiple in the main editor
-        //defaultLayout.setTilesPerRow(tileWidth);
-        //defaultLayout.setTiles(tiles);
         
-        repaintEditorLayout();
     }
     
-    protected void repaintEditorLayout() {
-        //TODO define a default layout class (or support multiple in the main editor
-        //defaultLayout.revalidate();
-        //defaultLayout.repaint();
+    protected void onDataLoaded() {
+        
     }
     
     public static void programSetup() {

@@ -16,7 +16,7 @@ import java.util.List;
  */
 public abstract class AbstractTableModel<T> extends javax.swing.table.AbstractTableModel {
 
-    protected String[] columns;
+    private String[] columns;
     
     private List<T> tableItems = new ArrayList();
     private int rowLimit;
@@ -52,9 +52,28 @@ public abstract class AbstractTableModel<T> extends javax.swing.table.AbstractTa
     public abstract Class<?> getColumnType(int col);
     protected abstract T createBlankItem(int row);
     protected abstract T cloneItem(T item);
-    protected abstract Object getValue(T item, int row, int col);    
+    protected abstract Object getValue(T item, int row, int col);
     protected abstract T setValue(T item, int col, Object value);
+    protected abstract Comparable<?> getMinLimit(T item, int col);
+    protected abstract Comparable<?> getMaxLimit(T item, int col);
     
+    public Number getSpinnerStep(int col) {
+        return 1;
+    }
+    
+    public Comparable<?> getMinValue(int row, int col) {
+        if (col < 0 || col >= columns.length) {
+            return null;
+        }
+        return getMinLimit(tableItems.get(row), col);
+    }
+    
+    public Comparable<?> getMaxValue(int row, int col) {
+        if (col < 0 || col >= columns.length) {
+            return null;
+        }
+        return getMaxLimit(tableItems.get(row), col);
+    }
     
     public T getRow(int row) {
         if (row < 0 || row >= tableItems.size()) {

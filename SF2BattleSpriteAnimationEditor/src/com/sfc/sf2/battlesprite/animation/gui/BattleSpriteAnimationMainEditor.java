@@ -8,6 +8,7 @@ package com.sfc.sf2.battlesprite.animation.gui;
 import com.sfc.sf2.battlesprite.BattleSprite;
 import com.sfc.sf2.battlesprite.animation.BattleSpriteAnimationManager;
 import com.sfc.sf2.battlesprite.animation.BattleSpriteAnimation;
+import com.sfc.sf2.battlesprite.animation.BattleSpriteAnimationFrame;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.helpers.PathHelpers;
@@ -42,6 +43,8 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
         
         accordionPanelEnvironment.setExpanded(false);
         accordionPanelWeapon.setExpanded(false);
+                                                
+        battleSpriteAnimationLayoutPanel.setDisplayScale(jComboBox4.getSelectedIndex()+1);
         
         battleSpriteAnimationLayoutPanel.setFrameUpdatedListener(this::onAnimationFrameUpdated);
         tableFrames.addTableModelListener(this::onTableFrameDataChanged);
@@ -51,7 +54,9 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
     }
     
     @Override
-    protected void updateEditorData() {
+    protected void onDataLoaded() {
+        super.onDataLoaded();
+        
         BattleSpriteAnimation animation = battlespriteanimationManager.getBattleSpriteAnimation();
         battleSpriteAnimationLayoutPanel.setBackground(battlespriteanimationManager.getBackground());
         battleSpriteAnimationLayoutPanel.setGround(battlespriteanimationManager.getGround());
@@ -59,7 +64,6 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
         battleSpriteAnimationLayoutPanel.setWeaponsprite(battlespriteanimationManager.getWeaponsprite());
         battleSpriteAnimationLayoutPanel.setAnimation(animation);
         battleSpriteAnimationLayoutPanel.setHideWeapon(jCheckBox1.isSelected());
-        battleSpriteAnimationLayoutPanel.setDisplayScale(jComboBox4.getSelectedIndex()+1);
         
         if (animation != null) {
             Palette[] battleSpritePalettes = battlespriteanimationManager.getBattleSprite().getPalettes();
@@ -82,16 +86,6 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
             jCheckBox3.setSelected(animation.getEndSpellAnim());
         }
         jSpinner1.setValue(0);
-        
-        super.updateEditorData();
-    }
-    
-    @Override
-    protected void repaintEditorLayout() {
-        super.repaintEditorLayout();
-        
-        battleSpriteAnimationLayoutPanel.revalidate();
-        battleSpriteAnimationLayoutPanel.repaint();
     }
     
     /**
@@ -669,6 +663,8 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
         tableFrames.setBorder(javax.swing.BorderFactory.createTitledBorder("Animation frames"));
         tableFrames.setModel(battleSpriteAnimationFramesModel);
         tableFrames.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tableFrames.setSingleClickText(false);
+        tableFrames.setSpinnerNumberEditor(true);
         tableFrames.setMinimumSize(new java.awt.Dimension(260, 150));
         tableFrames.setPreferredSize(new java.awt.Dimension(260, 200));
 
@@ -771,7 +767,7 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Animation disasm could not be imported from : " + animationPath);
         }
-        updateEditorData();
+        onDataLoaded();
     }//GEN-LAST:event_jButton18ActionPerformed
 
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
@@ -781,7 +777,6 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
                 Palette[] palettes = battlesprite.getPalettes();
                 battlesprite.setRenderPalette(palettes[jComboBox2.getSelectedIndex()]);
                 battleSpriteAnimationLayoutPanel.setBattlesprite(battlesprite);
-                repaintEditorLayout();
             }
         } 
     }//GEN-LAST:event_jComboBox2ActionPerformed
@@ -793,7 +788,6 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
                 Palette[] palettes = battlespriteanimationManager.getWeaponPalettes();
                 weaponsprite.setPalette(palettes[jComboBox3.getSelectedIndex()]);
                 battleSpriteAnimationLayoutPanel.setWeaponsprite(weaponsprite);
-                repaintEditorLayout();
             }
         }  
     }//GEN-LAST:event_jComboBox3ActionPerformed
@@ -801,7 +795,6 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
     private void jComboBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox4ActionPerformed
         if(jComboBox4.getSelectedIndex()>=0 && battleSpriteAnimationLayoutPanel!=null){
             battleSpriteAnimationLayoutPanel.setDisplayScale(jComboBox4.getSelectedIndex()+1);
-            repaintEditorLayout();
         }
     }//GEN-LAST:event_jComboBox4ActionPerformed
 
@@ -811,14 +804,12 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
             if (frame >= 0) {
                 battleSpriteAnimationLayoutPanel.setFrame(frame);
                 tableFrames.jTable.setRowSelectionInterval(frame, frame);
-                repaintEditorLayout();
             }
         }
     }//GEN-LAST:event_jSpinner1StateChanged
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
         battleSpriteAnimationLayoutPanel.setHideWeapon(jCheckBox1.isSelected());
-        repaintEditorLayout();
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox2ActionPerformed
@@ -872,15 +863,17 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
         int selection = ((ListSelectionModel)evt.getSource()).getAnchorSelectionIndex();
         if (selection != (int)jSpinner1.getValue()) {
             jSpinner1.setValue(selection);
-            repaintEditorLayout();
         }
     }
     
     private void onTableFrameDataChanged(TableModelEvent evt) {
-        int frame = battleSpriteAnimationLayoutPanel.getFrame();
-        if (frame >= evt.getFirstRow() && frame <= evt.getLastRow()) {
+        int row = tableFrames.jTable.getSelectedRow();
+        if (row >= evt.getFirstRow() && row <= evt.getLastRow()) {
             battleSpriteAnimationLayoutPanel.redraw();
-            repaintEditorLayout();
+        }
+        BattleSpriteAnimation animation = battleSpriteAnimationLayoutPanel.getAnimation();
+        if (battleSpriteAnimationFramesModel.getRowCount() != animation.getFrameCount()) {
+            animation.setFrames(battleSpriteAnimationFramesModel.getTableData(BattleSpriteAnimationFrame[].class));
         }
     }
     

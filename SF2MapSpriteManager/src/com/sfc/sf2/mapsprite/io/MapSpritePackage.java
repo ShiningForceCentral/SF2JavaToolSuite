@@ -12,4 +12,4 @@ import com.sfc.sf2.palette.Palette;
  * 
  * @author TiMMy
  */
-public record MapSpritePackage(String name, Palette palette, MapSpriteManager.MapSpriteExportMode exportMode) { }
+public record MapSpritePackage(String name, int[] indices, Palette palette, MapSpriteManager.MapSpriteExportMode exportMode) { }

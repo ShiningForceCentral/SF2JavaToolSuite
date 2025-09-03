@@ -5,8 +5,10 @@
  */
 package com.sfc.sf2.battlesprite.animation.models;
 
+import com.sfc.sf2.battlesprite.BattleSprite;
 import com.sfc.sf2.battlesprite.animation.BattleSpriteAnimationFrame;
 import com.sfc.sf2.core.models.AbstractTableModel;
+import com.sfc.sf2.weaponsprite.WeaponSprite;
 
 /**
  *
@@ -15,7 +17,7 @@ import com.sfc.sf2.core.models.AbstractTableModel;
 public class BattleSpriteAnimationFramesTableModel extends AbstractTableModel<BattleSpriteAnimationFrame> {
     
     public BattleSpriteAnimationFramesTableModel() {
-        super(new String[] { "Frame", "Battlesprite", "Duration", "X", "Y", "Weapon Frame", "H Flip", "V Flip", "Behind", "Weapon X", "Weapon Y" }, 255);
+        super(new String[] { "Frame", "Battlesprite", "Duration", "X", "Y", "Wpn Frame", "H.Flip", "V.Flip", "Behind", "Wpn X", "Wpn Y" }, 255);
     }
 
     @Override
@@ -32,7 +34,7 @@ public class BattleSpriteAnimationFramesTableModel extends AbstractTableModel<Ba
             return false;   //Cannot edit the index row
         } else if (row == 0 && column <= 4) {
             return false;   //Core data for first frame cannot be edited
-        } else if ((byte)getValueAt(row, 5) == -1 && column >= 5) {
+        } else if (column >= 5 && getRow(row).getType() == BattleSprite.BattleSpriteType.ENEMY) {
             return false;   //Enemy weapon data cannot be edited
         } else {
             return true;
@@ -88,5 +90,30 @@ public class BattleSpriteAnimationFramesTableModel extends AbstractTableModel<Ba
             case 10: item.setWeaponY((byte)value); break;
         }
         return item;
+    }
+
+    @Override
+    protected Comparable<?> getMinLimit(BattleSpriteAnimationFrame item, int col) {
+        switch (col) {
+            case 3:
+            case 4:
+            case 9:
+            case 10:
+                return Byte.MIN_VALUE;
+            default:
+                return (byte)0;
+        }
+    }
+
+    @Override
+    protected Comparable<?> getMaxLimit(BattleSpriteAnimationFrame item, int col) {
+        switch (col) {
+            case 1:
+                return (byte)(item.getBattleSpriteAnim().getFrameCount()-1);
+            case 5:
+                return (byte)(WeaponSprite.WEAPONSPRITE_FRAMES_LENGTH-1);
+            default:
+                return Byte.MAX_VALUE;
+        }
     }
 }

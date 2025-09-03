@@ -5,6 +5,8 @@
  */
 package com.sfc.sf2.specialSprites.gui;
 
+import com.sfc.sf2.core.gui.layout.*;
+import static com.sfc.sf2.graphics.Tile.PIXEL_WIDTH;
 import com.sfc.sf2.graphics.Tileset;
 import com.sfc.sf2.graphics.gui.TilesetLayoutPanel;
 
@@ -17,7 +19,15 @@ public class SpecialSpriteLayoutPanel extends TilesetLayoutPanel {
     @Override
     public void setTileset(Tileset tileset) {
         super.setTileset(tileset);
-        setGridDimensions(8, 8, tileset.getTilesPerRow()/2*8, -1);
     }
     
+    @Override
+    public void setItemsPerRow(int itemsPerRow) {
+        if (getItemsPerRow() != itemsPerRow) {
+            super.setItemsPerRow(itemsPerRow);
+            if (getTileset() != null && BaseLayoutComponent.IsEnabled(grid)) {
+                grid.setThickGridDimensions(getTileset().getTilesPerRow()/2*PIXEL_WIDTH, -1);
+            }
+        }
+    }
 }

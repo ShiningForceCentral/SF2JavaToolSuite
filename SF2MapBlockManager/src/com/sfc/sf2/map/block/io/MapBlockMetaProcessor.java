@@ -11,20 +11,15 @@ import java.io.File;
 import java.io.FileWriter;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author TiMMy
  */
-public class MetaManager {
-    
-    private static final Logger LOG = Logger.getLogger(com.sfc.sf2.graphics.io.RawImageManager.class.getName());
-    
+public class MapBlockMetaProcessor {
+        
     public static void importBlockHpTilesFile(String filepath, MapBlock[] blocks, int blocksPerRow) {
-        try {
+        /*try {
             Path path = Paths.get(filepath);
             if(path.toFile().exists() && !path.toFile().isDirectory()){
                 int lineIndex = 0;
@@ -50,11 +45,11 @@ public class MetaManager {
             System.out.println("Block HP Tiles file exported : " + path.toString());
         } catch (Exception ex) {
             Logger.getLogger(RawImageManager.class.getName()).log(Level.SEVERE, null, ex);
-        }       
+        }*/
     }
     
     public static void exportBlockHpTilesFile(MapBlock[] blocks, int blocksPerRow, String filepath) {
-        try {
+        /*try {
             LOG.entering(LOG.getName(),"export Block HP Tiles");
             File outputfile = new File(filepath);
             BufferedWriter bw = new BufferedWriter(new FileWriter(outputfile));
@@ -82,6 +77,6 @@ public class MetaManager {
             System.out.println("Block HP Tiles file exported : " + outputfile.getAbsolutePath());
         } catch (Exception ex) {
             Logger.getLogger(RawImageManager.class.getName()).log(Level.SEVERE, null, ex);
-        }       
+        }*/
     }
 }

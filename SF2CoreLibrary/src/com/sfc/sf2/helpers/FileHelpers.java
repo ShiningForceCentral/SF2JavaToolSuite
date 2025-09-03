@@ -30,12 +30,6 @@ public class FileHelpers {
     }
     
     public static int getNumberFromFileName(File file) {
-        try {
-            String fileNum = file.getName().replaceAll("[^0-9]", "");
-            return Integer.parseInt(fileNum);
-        } catch (NumberFormatException e) {
-            Console.logger().severe("File not formatted with numbers :" + file);
-            return -1;
-        }
+        return StringHelpers.getNumberFromString(file.getName());
     }
 }

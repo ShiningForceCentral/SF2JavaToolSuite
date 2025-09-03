@@ -11,6 +11,7 @@ import com.sfc.sf2.battlesprite.BattleSprite.BattleSpriteType;
 import com.sfc.sf2.battlesprite.animation.BattleSpriteAnimation;
 import com.sfc.sf2.battlesprite.animation.BattleSpriteAnimationFrame;
 import com.sfc.sf2.core.gui.AnimatedLayoutPanel;
+import com.sfc.sf2.core.gui.layout.*;
 import static com.sfc.sf2.graphics.Tile.PIXEL_HEIGHT;
 import static com.sfc.sf2.graphics.Tile.PIXEL_WIDTH;
 import com.sfc.sf2.graphics.Tileset;
@@ -39,20 +40,24 @@ public class BattleSpriteAnimationLayoutPanel extends AnimatedLayoutPanel {
     private static final int WEAPONSPRITE_BASE_X = 136;
     private static final int WEAPONSPRITE_BASE_Y = 64;
         
-    private Background background;
+    private Background bg;
     private Ground ground;
     private BattleSprite battlesprite;
     private WeaponSprite weaponsprite;
     private BattleSpriteAnimation animation;
     
     private int currentAnimationFrame = 0;
-    private int currentBattleSpriteFrame = 0;
     private boolean hideWeapon = false;
     
     public BattleSpriteAnimationLayoutPanel() {
         super();
-        bgCheckerPattern = false;
-        setBGColor(Color.BLACK);
+        background = new LayoutBackground(Color.BLACK);
+        scale = new LayoutScale(1);
+        grid = null;
+        coordsGrid = null;
+        coordsHeader = null;
+        mouseInput = null;
+        scroller = new LayoutScrollNormaliser(this);
     }
 
     @Override
@@ -66,11 +71,11 @@ public class BattleSpriteAnimationLayoutPanel extends AnimatedLayoutPanel {
     }
 
     @Override
-    protected void buildImage(Graphics graphics) {
+    protected void drawImage(Graphics graphics) {
         BattleSpriteAnimationFrame animFrame = animation.getFrames()[currentAnimationFrame];
         Tileset spriteFrame = null;
-        spriteFrame = battlesprite.getFrames()[currentBattleSpriteFrame];   
-        graphics.drawImage(background.getTileset().getIndexedColorImage(), BACKGROUND_BASE_X, BACKGROUND_BASE_Y, null);
+        spriteFrame = battlesprite.getFrames()[animFrame.getBattleSpriteIndex()];   
+        graphics.drawImage(bg.getTileset().getIndexedColorImage(), BACKGROUND_BASE_X, BACKGROUND_BASE_Y, null);
         graphics.drawImage(ground.getTileset().getIndexedColorImage(), GROUND_BASE_X, GROUND_BASE_Y, null);
         if (battlesprite.getType() == BattleSpriteType.ENEMY) {
             drawBattleSpriteFrame(graphics, spriteFrame, BATTLESPRITE_ENEMY_BASE_X+animFrame.getX(), BATTLESPRITE_ENEMY_BASE_Y+animFrame.getY());
@@ -124,7 +129,7 @@ public class BattleSpriteAnimationLayoutPanel extends AnimatedLayoutPanel {
     }
 
     public void setBackground(Background background) {
-        this.background = background;
+        this.bg = background;
         redraw();
     }
 
@@ -159,7 +164,6 @@ public class BattleSpriteAnimationLayoutPanel extends AnimatedLayoutPanel {
         if (animation == null || currentFrame < 0) return;
         if (this.currentAnimationFrame != currentFrame) {
             currentAnimationFrame = currentFrame;
-            this.currentBattleSpriteFrame = animation.getFrames()[currentFrame].getBattleSpriteIndex();
             redraw();
         }
     }

@@ -19,8 +19,8 @@ import java.awt.image.BufferedImage;
 public class Tileset {
     
     private String name;
-    private Tile[] tiles;
-    private int tilesPerRow;
+    protected Tile[] tiles;
+    protected int tilesPerRow;
     
     private BufferedImage indexedColorImage = null;
     
@@ -124,6 +124,20 @@ public class Tileset {
                 tiles[i].clearIndexedColorImage();
             }
         }
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (obj == this) return true;
+        if (!(obj instanceof Tileset)) return false;
+        Tileset tileset = (Tileset)obj;
+        for (int i=0; i < this.tiles.length; i++) {
+            if (!this.tiles[i].equals(tileset.getTiles()[i])) {
+                return false;
+            }
+        }
+        return true;
     }
     
     public Tileset clone() {

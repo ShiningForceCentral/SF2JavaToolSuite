@@ -9,7 +9,6 @@ import com.sfc.sf2.background.BackgroundManager;
 import com.sfc.sf2.background.settings.BackgroundSettings;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
-import com.sfc.sf2.core.io.AbstractRawImageProcessor;
 import com.sfc.sf2.core.io.AbstractRawImageProcessor.FileFormat;
 import com.sfc.sf2.core.settings.SettingsManager;
 import com.sfc.sf2.helpers.PathHelpers;
@@ -38,6 +37,9 @@ public class BackgroundMainEditor extends AbstractMainEditor {
     protected void initEditor() {
         super.initEditor();
         
+        backgroundLayoutPanel.setShowGrid(jCheckBox6.isSelected());
+        backgroundLayoutPanel.setDisplayScale(jComboBox6.getSelectedIndex()+1);
+        
         jRadioButton1.setSelected(backgroundSettings.getExportFileFormat() == FileFormat.PNG);
         jRadioButton2.setSelected(backgroundSettings.getExportFileFormat() != FileFormat.PNG);
         jRadioButton3.setSelected(backgroundSettings.getExportFileFormat() == FileFormat.PNG);
@@ -45,20 +47,10 @@ public class BackgroundMainEditor extends AbstractMainEditor {
     }
     
     @Override
-    protected void updateEditorData() {
+    protected void onDataLoaded() {
+        super.onDataLoaded();
+        
         backgroundLayoutPanel.setBackgrounds(backgroundManager.getBackgrounds());
-        backgroundLayoutPanel.setShowGrid(jCheckBox6.isSelected());
-        backgroundLayoutPanel.setDisplayScale(jComboBox6.getSelectedIndex()+1);
-        
-        super.updateEditorData();
-    }
-    
-    @Override
-    protected void repaintEditorLayout() {
-        super.repaintEditorLayout();
-        
-        backgroundLayoutPanel.revalidate();
-        backgroundLayoutPanel.repaint();
     }
     
     /**
@@ -569,7 +561,7 @@ public class BackgroundMainEditor extends AbstractMainEditor {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Background images could not be imported from : " + directoryPath);
         }
-        updateEditorData();
+        onDataLoaded();
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
@@ -581,17 +573,15 @@ public class BackgroundMainEditor extends AbstractMainEditor {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Background disasms could not be imported from : " + directoryPath);
         }
-        updateEditorData(); 
+        onDataLoaded(); 
     }//GEN-LAST:event_jButton18ActionPerformed
 
     private void jComboBox6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox6ActionPerformed
         backgroundLayoutPanel.setDisplayScale(jComboBox6.getSelectedIndex()+1);
-        repaintEditorLayout();
     }//GEN-LAST:event_jComboBox6ActionPerformed
 
     private void jCheckBox6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox6ActionPerformed
         backgroundLayoutPanel.setShowGrid(jCheckBox6.isSelected());
-        repaintEditorLayout();
     }//GEN-LAST:event_jCheckBox6ActionPerformed
 
     private void RadioStateChanged_Png(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_RadioStateChanged_Png

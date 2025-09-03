@@ -6,9 +6,12 @@
 package com.sfc.sf2.mapsprite.gui;
 
 import com.sfc.sf2.core.gui.AbstractLayoutPanel;
+import com.sfc.sf2.core.gui.layout.*;
+import com.sfc.sf2.graphics.Block;
 import static com.sfc.sf2.graphics.Tile.PIXEL_HEIGHT;
 import static com.sfc.sf2.graphics.Tile.PIXEL_WIDTH;
 import com.sfc.sf2.mapsprite.MapSprite;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 
@@ -22,8 +25,13 @@ public class MapSpriteLayoutPanel extends AbstractLayoutPanel {
     
     public MapSpriteLayoutPanel() {
         super();
-        setGridDimensions(8, 8, 48, 24);
-        setCoordsDimensions(24, 24, 6);
+        background = new LayoutBackground(Color.LIGHT_GRAY, PIXEL_WIDTH);
+        scale = new LayoutScale(1);
+        grid = new LayoutGrid(PIXEL_WIDTH, PIXEL_HEIGHT, Block.PIXEL_WIDTH, Block.PIXEL_HEIGHT);
+        coordsGrid = new LayoutCoordsGridDisplay(Block.PIXEL_WIDTH, Block.PIXEL_HEIGHT, false, 0, PIXEL_WIDTH, 1);
+        coordsHeader = new LayoutCoordsHeader(this, Block.PIXEL_WIDTH, Block.PIXEL_HEIGHT);
+        mouseInput = null;
+        scroller = new LayoutScrollNormaliser(this);
     }
 
     @Override
@@ -43,7 +51,7 @@ public class MapSpriteLayoutPanel extends AbstractLayoutPanel {
     }
 
     @Override
-    protected void buildImage(Graphics graphics) {
+    protected void drawImage(Graphics graphics) {
         for (int i = 0; i < mapsprites.length; i++) {
             if (mapsprites[i] != null) {
                 graphics.drawImage(mapsprites[i].getIndexedColorImage(), 0, i*3*PIXEL_HEIGHT, null);
@@ -51,11 +59,11 @@ public class MapSpriteLayoutPanel extends AbstractLayoutPanel {
         }
     }
 
-    public MapSprite[] getMapSprite() {
+    public MapSprite[] getMapSprites() {
         return mapsprites;
     }
 
-    public void setMapSprite(MapSprite[] mapsprites) {
+    public void setMapSprites(MapSprite[] mapsprites) {
         this.mapsprites = mapsprites;
     }
 }

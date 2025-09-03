@@ -7,6 +7,7 @@ package com.sfc.sf2.text.io;
 
 import com.sfc.sf2.core.io.AbstractMetadataProcessor;
 import com.sfc.sf2.core.io.MetadataException;
+import com.sfc.sf2.helpers.StringHelpers;
 import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -23,6 +24,7 @@ public class AsciiReplaceProcessor extends AbstractMetadataProcessor<HashMap<Cha
         String line;
         while ((line = reader.readLine()) != null) {
             if (line.length() == 0 || line.charAt(0) == ';') continue;
+            line = StringHelpers.trimAndRemoveComments(line);
             String[] split = line.split(" ");
             char key = parseChar(split[0]);
             char val = parseChar(split[1]);

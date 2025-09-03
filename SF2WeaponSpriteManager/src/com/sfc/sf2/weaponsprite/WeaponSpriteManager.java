@@ -127,7 +127,7 @@ public class WeaponSpriteManager extends AbstractManager {
         palettes = new Palette[palettesList.size()];
         palettes = palettesList.toArray(palettes);
         Console.logger().info(palettes.length + " palettes with " + palettesCount + " frames successfully imported from entries file : " + entriesPath);
-        Console.logger().info((entriesData.entriesCount() - entriesData.uniquePathsCount()) + " duplicate palette entries found.");
+        Console.logger().info((entriesData.entriesCount() - entriesData.uniqueEntriesCount()) + " duplicate palette entries found.");
         if (failedToLoad > 0) {
             Console.logger().severe(failedToLoad + " palettes failed to import. See logs above");
         }

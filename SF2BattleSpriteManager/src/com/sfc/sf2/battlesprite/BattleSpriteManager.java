@@ -13,6 +13,7 @@ import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.core.io.AbstractRawImageProcessor;
 import com.sfc.sf2.core.io.AbstractRawImageProcessor.FileFormat;
 import com.sfc.sf2.core.io.DisassemblyException;
+import com.sfc.sf2.core.io.MetadataException;
 import com.sfc.sf2.core.io.RawImageException;
 import com.sfc.sf2.graphics.Tileset;
 import com.sfc.sf2.graphics.TilesetManager;
@@ -20,6 +21,7 @@ import com.sfc.sf2.helpers.FileHelpers;
 import com.sfc.sf2.palette.Palette;
 import com.sfc.sf2.palette.PaletteManager;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Path;
 
@@ -62,23 +64,16 @@ public class BattleSpriteManager extends AbstractManager {
         Console.logger().finest("EXITING exportDisassembly");
     }
     
-    public BattleSprite importImage(Path filePath, boolean useImagePalette) throws IOException, RawImageException, DisassemblyException {
+    public BattleSprite importImage(Path filePath, boolean useImagePalette) throws IOException, RawImageException, DisassemblyException, FileNotFoundException, MetadataException {
         Console.logger().finest("ENTERING importImage");
-        String filename = filePath.getFileName().toString();
-        filePath = filePath.getParent();
         FileFormat format = AbstractRawImageProcessor.fileExtensionToFormat(filePath);
         if (format == FileFormat.UNKNOWN) {
             format = FileFormat.PNG;
         }
-        int dotIndex = filename.indexOf('.');
-        int frameIndex = filename.indexOf("-frame-");
-        if (frameIndex >= 0) {
-            filename = filename.substring(0, frameIndex);
-        } else if (dotIndex >= 0) {
-            filename = filename.substring(0, dotIndex);
-        }
+        String filename = getImageName(filePath.getFileName().toString());
+        filePath = filePath.getParent();
         File[] files = FileHelpers.findAllFilesInDirectory(filePath, filename + "-palette-", ".bin");
-        Palette[] palettes = new Palette[useImagePalette ? files.length+1 : files.length];
+        Palette[] palettes = new Palette[useImagePalette || files.length == 0 ? files.length+1 : files.length];
         for (int f=0; f < files.length; f++) {
             Palette palette = paletteManager.importDisassembly(files[f].toPath(), true);
             palettes[f] = palette;
@@ -89,10 +84,15 @@ public class BattleSpriteManager extends AbstractManager {
         Tileset[] frames = new Tileset[files.length];
         for (int f=0; f < files.length; f++) {
             Tileset frame = tilesetManager.importImage(files[f].toPath(), true);
-            if (useImagePalette && defaultPalette == null) {
+            if (defaultPalette == null) {
                 defaultPalette = frame.getPalette();
-                palettes[palettes.length-1] = defaultPalette;
-                defaultPalette.setName("From Image");
+                if (useImagePalette) {
+                    palettes[palettes.length-1] = defaultPalette;
+                    defaultPalette.setName("From Image");
+                } else if (palettes[0] == null) {
+                    palettes[palettes.length-1] = defaultPalette;
+                    defaultPalette.setName("0");
+                }
             }
             frame.setPalette(defaultPalette);
             frames[f] = frame;
@@ -107,7 +107,7 @@ public class BattleSpriteManager extends AbstractManager {
         return battlesprite;
     }
     
-    public void exportImage(Path filePath, BattleSprite battlesprite, int selectedPalette) throws IOException, DisassemblyException, RawImageException {
+    public void exportImage(Path filePath, BattleSprite battlesprite, int selectedPalette) throws IOException, DisassemblyException, RawImageException, MetadataException {
         Console.logger().finest("ENTERING exportImage");
         this.battlesprite = battlesprite;
         FileFormat format = AbstractRawImageProcessor.fileExtensionToFormat(filePath);
@@ -115,17 +115,8 @@ public class BattleSpriteManager extends AbstractManager {
             format = FileFormat.PNG;
         }
         Tileset[] frames = battlesprite.getFrames();
-        String filename = filePath.getFileName().toString();
+        String filename = getImageName(filePath.getFileName().toString());
         filePath = filePath.getParent();
-        int frameIndex = filename.indexOf("-frame-");
-        if (frameIndex >= 0) {
-            filename = filename.substring(0, frameIndex);
-        } else {
-            int dotIndex = filename.indexOf('.');
-            if (dotIndex >= 0) {
-                filename = filename.substring(0, dotIndex);
-            }
-        }
         for (int i=0; i < frames.length; i++) {
             Path framePath = filePath.resolve(filename + "-frame-" + String.valueOf(i) + AbstractRawImageProcessor.GetFileExtensionString(format));
             tilesetManager.exportImage(framePath, frames[i]);
@@ -143,6 +134,20 @@ public class BattleSpriteManager extends AbstractManager {
         Console.logger().info("Battle Sprite metadata successfully exported to : " + metaPath);
         Console.logger().info("Battle Sprite successfully exported to : " + filePath);
         Console.logger().finest("EXITING exportImage");
+    }
+    
+    private String getImageName(String filename) {
+        int dotIndex = filename.indexOf('.');
+        int frameIndex = filename.indexOf("-frame");
+        int paletteIndex = filename.indexOf("-palette");
+        if (frameIndex >= 0) {
+            return filename.substring(0, frameIndex);
+        } else if (paletteIndex >= 0) {
+            return filename.substring(0, paletteIndex);
+        } else if (dotIndex >= 0) {
+            return filename.substring(0, dotIndex);
+        }
+        return filename;
     }
 
     public BattleSprite getBattleSprite() {

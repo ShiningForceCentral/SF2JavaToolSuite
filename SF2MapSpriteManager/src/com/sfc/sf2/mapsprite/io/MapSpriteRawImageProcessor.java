@@ -6,6 +6,7 @@
 package com.sfc.sf2.mapsprite.io;
 
 import com.sfc.sf2.core.io.RawImageException;
+import com.sfc.sf2.graphics.Block;
 import com.sfc.sf2.graphics.Tileset;
 import com.sfc.sf2.graphics.io.AbstractTilesetRawImageProcessor;
 import com.sfc.sf2.mapsprite.MapSpriteManager;
@@ -18,24 +19,26 @@ import java.awt.image.WritableRaster;
  *
  * @author TiMMy
  */
-public class MapSpriteRawImageProcessor extends AbstractTilesetRawImageProcessor<Tileset[], MapSpritePackage> {
+public class MapSpriteRawImageProcessor extends AbstractTilesetRawImageProcessor<Block[], MapSpritePackage> {
 
     @Override
-    protected Tileset[] parseImageData(WritableRaster raster, IndexColorModel icm, MapSpritePackage pckg) throws RawImageException {
+    protected Block[] parseImageData(WritableRaster raster, IndexColorModel icm, MapSpritePackage pckg) throws RawImageException {
         checkImageDimensions(raster);
         Palette palette = pckg.palette();
         if (palette == null) {
             palette = new Palette(pckg.name(), Palette.fromICM(icm), true);
         }
-        Tileset[] frames = parseTileset(raster, 3, 3, palette);
-        for (int i = 0; i < frames.length; i++) {
-            frames[i].setName(pckg.name());
+        Tileset[] tilesets = parseTileset(raster, Block.PIXEL_WIDTH, Block.PIXEL_HEIGHT, palette);
+        Block[] frames = new Block[tilesets.length];
+        for (int i = 0; i < tilesets.length; i++) {
+            int index = pckg.indices()[0]*6 + (pckg.indices()[1] == -1 ? 0 : pckg.indices()[1]*2) + (pckg.indices()[2] == -1 ? 0 : pckg.indices()[2]);
+            frames[i] = new Block(index, tilesets[i]);
         }        
         return frames;
     }
 
     @Override
-    protected BufferedImage packageImageData(Tileset[] item, MapSpritePackage pckg) throws RawImageException {
+    protected BufferedImage packageImageData(Block[] item, MapSpritePackage pckg) throws RawImageException {
         MapSpriteManager.MapSpriteExportMode exportMode = pckg.exportMode();
         BufferedImage image = null;
         if (exportMode == exportMode.INDIVIDUAL_FILES) {

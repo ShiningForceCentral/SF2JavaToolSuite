@@ -103,6 +103,7 @@ public class TilesetDisassemblyProcessor extends AbstractDisassemblyProcessor<Ti
             int tileId = (layoutValue&0x7FF);
             if(tileId>=0&&tileId<vRamTiles.length){
                 Tile outputTile = vRamTiles[tileId];
+                outputTile.setHighPriority(priority!=0);
                 if(outputTile!=null&&palette!=0){
                     outputTile = Tile.paletteSwap(outputTile,palettes[palette]);
                 }

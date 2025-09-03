@@ -32,25 +32,17 @@ public class GroundMainEditor extends AbstractMainEditor {
     protected void initEditor() {
         super.initEditor();
         
-        colorPicker1.setColor(SettingsManager.getGlobalSettings().getTransparentBGColor());
-    }
-    
-    @Override
-    protected void updateEditorData() {
-        groundLayoutPanel.setGround(groundManager.getGround());
         groundLayoutPanel.setShowGrid(jCheckBox1.isSelected());
         groundLayoutPanel.setDisplayScale(jComboBox7.getSelectedIndex()+1);
-        repaintEditorLayout();
-        
-        super.updateEditorData();
+        colorPicker1.setColor(SettingsManager.getGlobalSettings().getTransparentBGColor());
+        groundLayoutPanel.setBGColor(colorPicker1.getBackground());
     }
     
     @Override
-    protected void repaintEditorLayout() {
-        super.repaintEditorLayout();
+    protected void onDataLoaded() {
+        super.onDataLoaded();
         
-        groundLayoutPanel.revalidate();
-        groundLayoutPanel.repaint();
+        groundLayoutPanel.setGround(groundManager.getGround());
     }
     
     /**
@@ -279,9 +271,7 @@ public class GroundMainEditor extends AbstractMainEditor {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton3)
-                    .addGroup(jPanel11Layout.createSequentialGroup()
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(fileButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -327,9 +317,7 @@ public class GroundMainEditor extends AbstractMainEditor {
                 .addComponent(fileButton6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel14Layout.createSequentialGroup()
-                        .addComponent(jButton13)
-                        .addContainerGap())
+                    .addComponent(jButton13)
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
@@ -443,6 +431,7 @@ public class GroundMainEditor extends AbstractMainEditor {
         });
 
         jComboBox7.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "x1", "x2", "x3", "x4" }));
+        jComboBox7.setSelectedIndex(1);
         jComboBox7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox7ActionPerformed(evt);
@@ -594,7 +583,7 @@ public class GroundMainEditor extends AbstractMainEditor {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Ground image could not be imported from : " + graphicPath);
         }
-        updateEditorData();
+        onDataLoaded();
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
@@ -609,7 +598,7 @@ public class GroundMainEditor extends AbstractMainEditor {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Ground disasm could not be imported from : " + graphicPath);
         }
-        updateEditorData();
+        onDataLoaded();
     }//GEN-LAST:event_jButton18ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -624,25 +613,21 @@ public class GroundMainEditor extends AbstractMainEditor {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jSpinner2StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner2StateChanged
-        groundLayoutPanel.setTilesPerRow((int)jSpinner2.getValue());
-        repaintEditorLayout();
+        groundLayoutPanel.setItemsPerRow((int)jSpinner2.getValue());
     }//GEN-LAST:event_jSpinner2StateChanged
 
     private void colorPicker1ColorChanged(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorPicker1ColorChanged
         groundLayoutPanel.setBGColor(colorPicker1.getColor());
         SettingsManager.getGlobalSettings().setTransparentBGColor(colorPicker1.getColor());
         SettingsManager.saveGlobalSettingsFile();
-        repaintEditorLayout();
     }//GEN-LAST:event_colorPicker1ColorChanged
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
         groundLayoutPanel.setShowGrid(jCheckBox1.isSelected());
-        repaintEditorLayout();
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     private void jComboBox7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox7ActionPerformed
         groundLayoutPanel.setDisplayScale(jComboBox7.getSelectedIndex()+1);
-        repaintEditorLayout();
     }//GEN-LAST:event_jComboBox7ActionPerformed
     
     /**

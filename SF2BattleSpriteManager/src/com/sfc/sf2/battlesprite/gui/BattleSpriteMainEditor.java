@@ -33,11 +33,16 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
     protected void initEditor() {
         super.initEditor();
         
+        battleSpriteLayoutPanel.setShowGrid(jCheckBox5.isSelected());                                           
+        battleSpriteLayoutPanel.setDisplayScale(jComboBox2.getSelectedIndex()+1);
         colorPicker1.setColor(SettingsManager.getGlobalSettings().getTransparentBGColor());
+        battleSpriteLayoutPanel.setBGColor(colorPicker1.getBackground());
     }
     
     @Override
-    protected void updateEditorData() {
+    protected void onDataLoaded() {
+        super.onDataLoaded();
+        
         jComboBox1.removeAllItems();
         BattleSprite battleSprite = battleSpriteManager.getBattleSprite();
         battleSpriteLayoutPanel.setBattleSprite(battleSprite);
@@ -53,16 +58,6 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
             jSpinner3.setValue(battleSprite.getStatusOffsetX());
             jSpinner2.setValue(battleSprite.getStatusOffsetY());
         }
-        
-        super.updateEditorData();
-    }
-    
-    @Override
-    protected void repaintEditorLayout() {
-        super.repaintEditorLayout();
-        
-        battleSpriteLayoutPanel.revalidate();
-        battleSpriteLayoutPanel.repaint();
     }
     
     /**
@@ -681,7 +676,7 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Battle Sprite image could not be imported from : " + spritePath);
         }
-        updateEditorData();
+        onDataLoaded();
         if (useImagePalette && battleSpriteManager.getBattleSprite() != null) {
             jComboBox1.setSelectedIndex(battleSpriteManager.getBattleSprite().getPalettes().length-1);
         }
@@ -696,19 +691,17 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Battle Sprite disasm could not be imported from : " + imagePath);
         }
-        updateEditorData();
+        onDataLoaded();
     }//GEN-LAST:event_jButton18ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         if(jComboBox1.getSelectedItem()!=null){
             battleSpriteLayoutPanel.setCurrentPalette(jComboBox1.getSelectedIndex());
-            repaintEditorLayout();
         }  
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jCheckBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox4ActionPerformed
         battleSpriteLayoutPanel.setShowStatusMarker(jCheckBox4.isSelected());
-        repaintEditorLayout();
     }//GEN-LAST:event_jCheckBox4ActionPerformed
 
     private void jCheckBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox3ActionPerformed
@@ -716,21 +709,19 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
         if (battleSprite != null) {
             if (jCheckBox3.isSelected()) {
                 battleSpriteLayoutPanel.startAnimation(battleSprite.getAnimSpeed(), 1, true);
-                repaintEditorLayout();
             } else {
                 battleSpriteLayoutPanel.stopAnimation();
+                battleSpriteLayoutPanel.redraw();
             }
         }
     }//GEN-LAST:event_jCheckBox3ActionPerformed
 
     private void jCheckBox5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox5ActionPerformed
         battleSpriteLayoutPanel.setShowGrid(jCheckBox5.isSelected());
-        repaintEditorLayout();
     }//GEN-LAST:event_jCheckBox5ActionPerformed
 
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
         battleSpriteLayoutPanel.setDisplayScale(jComboBox2.getSelectedIndex()+1);
-        repaintEditorLayout();
     }//GEN-LAST:event_jComboBox2ActionPerformed
 
     private void jSpinner4StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner4StateChanged
@@ -750,7 +741,6 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
             battleSprite.setStatusOffsetX((byte)jSpinner3.getValue());
             if (jCheckBox4.isSelected()) {
                 battleSpriteLayoutPanel.redraw();
-                repaintEditorLayout();
             }
         }
     }//GEN-LAST:event_jSpinner3StateChanged
@@ -761,7 +751,6 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
             battleSprite.setStatusOffsetY((byte)jSpinner2.getValue());
             if (jCheckBox4.isSelected()) {
                 battleSpriteLayoutPanel.redraw();
-                repaintEditorLayout();
             }
         }
     }//GEN-LAST:event_jSpinner2StateChanged
@@ -770,7 +759,6 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
         battleSpriteLayoutPanel.setBGColor(colorPicker1.getColor());
         SettingsManager.getGlobalSettings().setTransparentBGColor(colorPicker1.getColor());
         SettingsManager.saveGlobalSettingsFile();
-        repaintEditorLayout();
     }//GEN-LAST:event_colorPicker1ColorChanged
 
     /**

@@ -13,6 +13,7 @@ import com.sfc.sf2.core.io.DisassemblyException;
 import com.sfc.sf2.core.io.asm.AsmException;
 import com.sfc.sf2.core.io.asm.EntriesAsmData;
 import com.sfc.sf2.core.io.asm.EntriesAsmProcessor;
+import com.sfc.sf2.graphics.Block;
 import com.sfc.sf2.graphics.Tileset;
 import com.sfc.sf2.helpers.FileHelpers;
 import com.sfc.sf2.helpers.PathHelpers;
@@ -62,8 +63,8 @@ public class MapSpriteManager extends AbstractManager {
         mapSprites = new MapSprite[1];
         Palette palette = paletteManager.importDisassembly(paletteFilePath, true);
         int[] indices = getIndicesFromFilename(graphicsFilePath.getFileName());
-        MapSpritePackage pckg = new MapSpritePackage(graphicsFilePath.getFileName().toString(), palette, null);
-        Tileset[] frames = mapSpriteDisassemblyProcessor.importDisassembly(graphicsFilePath, pckg);
+        MapSpritePackage pckg = new MapSpritePackage(graphicsFilePath.getFileName().toString(), indices, palette, null);
+        Block[] frames = mapSpriteDisassemblyProcessor.importDisassembly(graphicsFilePath, pckg);
         MapSprite newSprite = new MapSprite(indices[0]);
         newSprite.addFrame(frames[0], indices[1], 0);
         newSprite.addFrame(frames[1], indices[1], 1);
@@ -87,8 +88,8 @@ public class MapSpriteManager extends AbstractManager {
             Path tilesetPath = PathHelpers.getIncbinPath().resolve(entriesData.getPathForEntry(i));
             try {
                 int[] indices = getIndicesFromFilename(tilesetPath.getFileName());
-                MapSpritePackage pckg = new MapSpritePackage(tilesetPath.getFileName().toString(), palette, null);
-                Tileset[] frames = mapSpriteDisassemblyProcessor.importDisassembly(tilesetPath, pckg);
+                MapSpritePackage pckg = new MapSpritePackage(tilesetPath.getFileName().toString(), indices, palette, null);
+                Block[] frames = mapSpriteDisassemblyProcessor.importDisassembly(tilesetPath, pckg);
                 frameCount+=2;
                 if (lastMapSprite == null || lastMapSprite.getIndex() != indices[0]) {
                     lastMapSprite = new MapSprite(indices[0]);
@@ -112,11 +113,12 @@ public class MapSpriteManager extends AbstractManager {
         return mapSprites;
     }
     
-    public void exportAllDisassemblies(Path basePath) {
+    public void exportAllDisassemblies(Path basePath, MapSprite[] mapSprites) {
         Console.logger().finest("ENTERING exportDisassembly");
+        this.mapSprites = mapSprites;
         int failedToSave = 0;
         Path filePath = null;
-        Tileset[] frames = new Tileset[2];
+        Block[] frames = new Block[2];
         for (MapSprite mapSprite : mapSprites) {
             try {
                 int index = mapSprite.getIndex();
@@ -153,8 +155,8 @@ public class MapSpriteManager extends AbstractManager {
             Path tilesetPath = file.toPath();
             try {
                 int[] indices = getIndicesFromFilename(tilesetPath.getFileName());
-                MapSpritePackage pckg = new MapSpritePackage(tilesetPath.getFileName().toString(), palette, null);
-                Tileset[] frames = mapSpriteRawImageProcessor.importRawImage(tilesetPath, pckg);
+                MapSpritePackage pckg = new MapSpritePackage(tilesetPath.getFileName().toString(), indices, palette, null);
+                Block[] frames = mapSpriteRawImageProcessor.importRawImage(tilesetPath, pckg);
                 frameCount+=frames.length;
                 if (lastMapSprite == null || lastMapSprite.getIndex() != indices[0]) {
                     lastMapSprite = new MapSprite(indices[0]);
@@ -184,19 +186,20 @@ public class MapSpriteManager extends AbstractManager {
         return mapSprites;
     }
     
-    public void exportAllImages(Path basePath, MapSpriteExportMode exportMode, FileFormat format) {
+    public void exportAllImages(Path basePath, MapSprite[] mapSprites, MapSpriteExportMode exportMode, FileFormat format) {
         Console.logger().finest("ENTERING exportImage");
+        this.mapSprites = mapSprites;
         int failedToSave = 0;
         Path filePath = null;
         int files = 0;
         for (MapSprite mapSprite : mapSprites) {
             try {
                 int index = mapSprite.getIndex();
-                MapSpritePackage pckg = new MapSpritePackage(null, mapSprite.getPalette(), exportMode);
+                MapSpritePackage pckg = new MapSpritePackage(null, new int[] { index }, mapSprite.getPalette(), exportMode);
                 switch (exportMode) {
                     case INDIVIDUAL_FILES:
                         for (int i = 0; i < 6; i++) {
-                            Tileset[] frames = new Tileset[1];
+                            Block[] frames = new Block[1];
                             frames[0] = mapSprite.getFrame(i/2, i%2);
                             if (frames[0] != null) {
                                 files++;
@@ -207,7 +210,7 @@ public class MapSpriteManager extends AbstractManager {
                     break;
                     case FILE_PER_DIRECTION:
                         for (int i = 0; i < 3; i++) {
-                            Tileset[] frames = new Tileset[2];
+                            Block[] frames = new Block[2];
                             frames[0] = mapSprite.getFrame(i, 0);
                             frames[1] = mapSprite.getFrame(i, 1);
                             if (frames[0] != null && frames[1] != null) {

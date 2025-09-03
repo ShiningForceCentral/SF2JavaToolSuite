@@ -61,5 +61,14 @@ public class TextTableModel extends AbstractTableModel<String> {
         }
         return item;
     }
-    
+
+    @Override
+    protected Comparable<?> getMinLimit(String item, int col) {
+        return Integer.MIN_VALUE;
+    }
+
+    @Override
+    protected Comparable<?> getMaxLimit(String item, int col) {
+        return Integer.MAX_VALUE;
+    }
 }

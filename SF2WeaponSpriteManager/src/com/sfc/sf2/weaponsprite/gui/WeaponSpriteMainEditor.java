@@ -32,11 +32,16 @@ public class WeaponSpriteMainEditor extends AbstractMainEditor {
     protected void initEditor() {
         super.initEditor();
         
+        weaponSpriteLayoutPanel.setShowGrid(jCheckBox1.isSelected());                                           
+        weaponSpriteLayoutPanel.setDisplayScale(jComboBox7.getSelectedIndex()+1);
         colorPicker1.setColor(SettingsManager.getGlobalSettings().getTransparentBGColor());
+        weaponSpriteLayoutPanel.setBGColor(colorPicker1.getBackground());
     }
     
     @Override
-    protected void updateEditorData() {
+    protected void onDataLoaded() {
+        super.onDataLoaded();
+        
         jComboBox1.removeAllItems();
         Palette[] palettes = weaponspriteManager.getPalettes();
         for (int i = 0; i < palettes.length; i++) {
@@ -49,16 +54,6 @@ public class WeaponSpriteMainEditor extends AbstractMainEditor {
         }
         weaponSpriteLayoutPanel.setWeaponSprite(weaponspriteManager.getWeaponsprite());
         weaponSpriteLayoutPanel.setPalette(weaponspriteManager.getPalettes()[selectedPalette]);
-        
-        super.updateEditorData();
-    }
-    
-    @Override
-    protected void repaintEditorLayout() {
-        super.repaintEditorLayout();
-        
-        weaponSpriteLayoutPanel.revalidate();
-        weaponSpriteLayoutPanel.repaint();
     }
     
     /**
@@ -568,7 +563,7 @@ public class WeaponSpriteMainEditor extends AbstractMainEditor {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Weapon sprite image could not be imported from : " + weaponSpritePath);
         }
-        updateEditorData();
+        onDataLoaded();
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
@@ -581,30 +576,26 @@ public class WeaponSpriteMainEditor extends AbstractMainEditor {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Weapon sprite disasm could not be imported from : " + weaponSpritePath);
         }
-        updateEditorData();
+        onDataLoaded();
     }//GEN-LAST:event_jButton18ActionPerformed
 
     private void jComboBox7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox7ActionPerformed
         weaponSpriteLayoutPanel.setDisplayScale(jComboBox7.getSelectedIndex()+1);
-        repaintEditorLayout();
     }//GEN-LAST:event_jComboBox7ActionPerformed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
         weaponSpriteLayoutPanel.setShowGrid(jCheckBox1.isSelected());
-        repaintEditorLayout();
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     private void colorPicker1ColorChanged(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorPicker1ColorChanged
         weaponSpriteLayoutPanel.setBGColor(colorPicker1.getColor());
         SettingsManager.getGlobalSettings().setTransparentBGColor(colorPicker1.getColor());
         SettingsManager.saveGlobalSettingsFile();
-        repaintEditorLayout();
     }//GEN-LAST:event_colorPicker1ColorChanged
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         if (jComboBox1.getSelectedItem() != null) {
             weaponSpriteLayoutPanel.setPalette(weaponspriteManager.getPalettes()[jComboBox1.getSelectedIndex()]);
-            repaintEditorLayout();
         }
     }//GEN-LAST:event_jComboBox1ActionPerformed
     

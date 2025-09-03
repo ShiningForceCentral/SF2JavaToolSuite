@@ -7,15 +7,19 @@ package com.sfc.sf2.core.gui.controls;
 
 import com.sfc.sf2.core.models.AbstractTableModel;
 import com.sfc.sf2.core.models.SelectionInterval;
+import com.sfc.sf2.core.models.spinner.SpinnerTableEditor;
+import com.sfc.sf2.core.models.spinner.SpinnerTableRenderer;
 import java.beans.BeanProperty;
 import java.util.ArrayList;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelListener;
 
 /**
  *
  * @author TiMMy
- * TODO: Can we add some improved interactions? 1) Drag to reorder 2) Deselect by clicking empty space
  */
 public class Table extends javax.swing.JPanel {
 
@@ -47,6 +51,37 @@ public class Table extends javax.swing.JPanel {
         preferred = true, visualUpdate = true, description = "The selection mode used by the row and column selection models.")
     public void setSelectionMode(int mode) {
         jTable.setSelectionMode(mode);
+    }
+    
+    @BeanProperty(preferred = true, visualUpdate = false, description = "Sets text fields in the table as single-click to edit, rather than having to double-click.")
+    public void setSingleClickText(boolean singleClick) {
+        if (singleClick) {
+            JTextField textField = new JTextField();
+            DefaultCellEditor singleclick = new DefaultCellEditor(textField);
+            singleclick.setClickCountToStart(1);
+            jTable.setDefaultEditor(String.class, singleclick);
+        } else {
+            jTable.setDefaultEditor(Byte.class, null);
+        }
+    }
+    
+    @BeanProperty(preferred = true, visualUpdate = false, description = "Sets number fields in the table as spinners, rather than just numbers.")
+    public void setSpinnerNumberEditor(boolean useSpinner) {
+        if (useSpinner) {
+            SpinnerNumberModel model = new SpinnerNumberModel(0, Integer.MIN_VALUE, Integer.MAX_VALUE, 1);
+            jTable.setDefaultEditor(Integer.class, new SpinnerTableEditor(model));
+            model = new SpinnerNumberModel(0, Integer.MIN_VALUE, Integer.MAX_VALUE, 1);
+            jTable.setDefaultRenderer(Integer.class, new SpinnerTableRenderer(model));
+            model = new SpinnerNumberModel(Byte.valueOf((byte)0), Byte.valueOf(Byte.MIN_VALUE), Byte.valueOf(Byte.MAX_VALUE), Byte.valueOf((byte)1));
+            jTable.setDefaultEditor(Byte.class, new SpinnerTableEditor(model));
+            model = new SpinnerNumberModel(Byte.valueOf((byte)0), Byte.valueOf(Byte.MIN_VALUE), Byte.valueOf(Byte.MAX_VALUE), Byte.valueOf((byte)1));
+            jTable.setDefaultRenderer(Byte.class, new SpinnerTableRenderer(model));
+        } else {
+            jTable.setDefaultEditor(Integer.class, null);
+            jTable.setDefaultEditor(Byte.class, null);
+            jTable.setDefaultRenderer(Integer.class, null);
+            jTable.setDefaultRenderer(Byte.class, null);
+        }
     }
 
     /**

@@ -38,7 +38,13 @@ public class IconsMainEditor extends AbstractMainEditor {
     protected void initEditor() {
         super.initEditor();
         
+        iconsLayoutPanel.setDisplayScale(jComboBox8.getSelectedIndex()+1);
+        iconsLayoutPanel.setShowGrid(jCheckBox2.isSelected());
+        jSpinner2.setValue(iconSettings.getItemsPerRow());
+        iconsLayoutPanel.setItemsPerRow((int)jSpinner2.getValue());
         colorPicker1.setColor(SettingsManager.getGlobalSettings().getTransparentBGColor());
+        iconsLayoutPanel.setBGColor(colorPicker1.getBackground());
+        
         jComboBox2.removeAllItems();
         IconExportMode mode = iconSettings.getExportMode();
         IconExportMode[] exportModes = IconExportMode.values();
@@ -53,19 +59,10 @@ public class IconsMainEditor extends AbstractMainEditor {
     }
     
     @Override
-    protected void updateEditorData() {
+    protected void onDataLoaded() {
+        super.onDataLoaded();
+        
         iconsLayoutPanel.setIcons(iconManager.getIcons());
-        iconsLayoutPanel.setTilesPerRow((int)jSpinner2.getValue());
-        
-        super.updateEditorData();
-    }
-    
-    @Override
-    protected void repaintEditorLayout() {
-        super.repaintEditorLayout();
-        
-        iconsLayoutPanel.revalidate();
-        iconsLayoutPanel.repaint();
     }
     
     /**
@@ -684,7 +681,7 @@ public class IconsMainEditor extends AbstractMainEditor {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Icons images could not be imported from : " + graphicPath);
         }
-        updateEditorData();
+        onDataLoaded();
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
@@ -697,24 +694,21 @@ public class IconsMainEditor extends AbstractMainEditor {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Icons disasm could not be imported from : " + graphicPath);
         }
-        updateEditorData();
+        onDataLoaded();
     }//GEN-LAST:event_jButton18ActionPerformed
 
     private void jComboBox8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox8ActionPerformed
         iconsLayoutPanel.setDisplayScale(jComboBox8.getSelectedIndex()+1);
-        repaintEditorLayout();
     }//GEN-LAST:event_jComboBox8ActionPerformed
 
     private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox2ActionPerformed
         iconsLayoutPanel.setShowGrid(jCheckBox2.isSelected());
-        repaintEditorLayout();
     }//GEN-LAST:event_jCheckBox2ActionPerformed
 
     private void colorPicker1ColorChanged(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorPicker1ColorChanged
         iconsLayoutPanel.setBGColor(colorPicker1.getColor());
         SettingsManager.getGlobalSettings().setTransparentBGColor(colorPicker1.getColor());
         SettingsManager.saveGlobalSettingsFile();
-        repaintEditorLayout();
     }//GEN-LAST:event_colorPicker1ColorChanged
 
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
@@ -757,8 +751,12 @@ public class IconsMainEditor extends AbstractMainEditor {
     }//GEN-LAST:event_jRadioStateChanged_Gif
 
     private void jSpinner2StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner2StateChanged
-        iconsLayoutPanel.setTilesPerRow((int)jSpinner2.getValue());
-        repaintEditorLayout();
+        int itemsPerRow = (int)jSpinner2.getValue();
+        if (itemsPerRow != iconSettings.getItemsPerRow()) {
+            iconsLayoutPanel.setItemsPerRow(itemsPerRow);
+            iconSettings.setItemsPerRow(itemsPerRow);
+            SettingsManager.saveSettingsFile();
+        }
     }//GEN-LAST:event_jSpinner2StateChanged
 
     /**

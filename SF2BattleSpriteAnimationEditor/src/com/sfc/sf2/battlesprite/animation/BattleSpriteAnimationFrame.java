@@ -5,12 +5,17 @@
  */
 package com.sfc.sf2.battlesprite.animation;
 
+import com.sfc.sf2.battlesprite.BattleSprite.BattleSpriteType;
+
 /**
  *
  * @author wiz
  */
 public class BattleSpriteAnimationFrame {
     
+    private BattleSpriteAnimation battleSpriteAnim;
+    
+    private BattleSpriteType type;
     private byte battleSpriteIndex;
     private byte duration;
     private byte x;
@@ -37,6 +42,7 @@ public class BattleSpriteAnimationFrame {
         this.weaponBehind = weaponBehind;
         this.weaponX = weaponX;
         this.weaponY = weaponY;
+        type = weaponFrame == -1 ? BattleSpriteType.ENEMY : BattleSpriteType.ALLY;
     }
     
     /**
@@ -53,6 +59,19 @@ public class BattleSpriteAnimationFrame {
         this.weaponBehind = false;
         this.weaponX = -1;
         this.weaponY = -1;
+        type = BattleSpriteType.ENEMY;
+    }
+    
+    public BattleSpriteAnimation getBattleSpriteAnim() {
+        return battleSpriteAnim;
+    }
+
+    public void setBattleSpriteAnim(BattleSpriteAnimation battleSpriteAnim) {
+        this.battleSpriteAnim = battleSpriteAnim;
+    }
+    
+    public BattleSpriteType getType() {
+        return type;
     }
     
     public byte getBattleSpriteIndex() {

@@ -18,7 +18,7 @@ public class StringTableModel extends AbstractTableModel<String> {
     @Override
     public Class<?> getColumnType(int col) {
         switch (col) {
-            case 0: return String.class;
+            case 1: return String.class;
             default: return Integer.class;
         }
     }
@@ -54,5 +54,15 @@ public class StringTableModel extends AbstractTableModel<String> {
             case 1: return (String)value;
         }
         return null;
+    }
+
+    @Override
+    protected Comparable<?> getMinLimit(String item, int col) {
+        return -1;
+    }
+
+    @Override
+    protected Comparable<?> getMaxLimit(String item, int col) {
+        return -1;
     }
 }

@@ -46,7 +46,7 @@ public class Symbols {
     private static HashMap<Character, Character> reverseReplaceMap;
     
     public static int charToSymbol(char c) {
-        if (reverseReplaceMap.containsKey(c)) {
+        if (reverseReplaceMap != null && reverseReplaceMap.containsKey(c)) {
             return asciiToSymbol((int)reverseReplaceMap.get(c));
         } else {
             return asciiToSymbol((int)c);
@@ -113,7 +113,7 @@ public class Symbols {
                 putSymbol(i, i, TAGS_SYMBOL_TABLE[i-238]);  //For tags, use default table
             } else if (importedTable[i] != 1) {
                 c = (char)i;
-                if (replaceMap.containsKey(c)) {
+                if (replaceMap != null && replaceMap.containsKey(c)) {
                     c = replaceMap.get(c);
                 }
                 putSymbol(i, importedTable[i], Character.toString(c));

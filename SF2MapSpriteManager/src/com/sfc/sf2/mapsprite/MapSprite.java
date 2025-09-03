@@ -5,6 +5,7 @@
  */
 package com.sfc.sf2.mapsprite;
 
+import com.sfc.sf2.graphics.Block;
 import com.sfc.sf2.graphics.Tile;
 import static com.sfc.sf2.graphics.Tile.PIXEL_HEIGHT;
 import static com.sfc.sf2.graphics.Tile.PIXEL_WIDTH;
@@ -20,7 +21,7 @@ import java.awt.image.BufferedImage;
 public class MapSprite {
     
     private int index;
-    private Tileset[] frames = new Tileset[6];    //2x up, left, down frames
+    private Block[] frames = new Block[6];    //2x up, left, down frames
     
     private BufferedImage indexedColorImage = null;
     
@@ -28,7 +29,7 @@ public class MapSprite {
         this.index = index;
     }
     
-    public MapSprite(int index, Tileset[] frames) {
+    public MapSprite(int index, Block[] frames) {
         this.index = index;
         this.frames = frames;
     }
@@ -41,23 +42,23 @@ public class MapSprite {
         this.index = index;
     }
     
-    public Tileset[] getFrames() {
+    public Block[] getFrames() {
         return frames;
     }
     
-    public Tileset getFrame(int[] indices) {
+    public Block getFrame(int[] indices) {
         return getFrame(indices[1], indices[2]);
     }
     
-    public Tileset getFrame(int facingIndex, int frameIndex) {
+    public Block getFrame(int facingIndex, int frameIndex) {
         return frames[facingIndex*2 + frameIndex];
     }
     
-    public void addFrame(Tileset tileset, int[] indices) {
+    public void addFrame(Block tileset, int[] indices) {
         addFrame(tileset, indices[1], indices[2]);
     }
     
-    public void addFrame(Tileset tileset, int facingIndex, int frameIndex) {
+    public void addFrame(Block tileset, int facingIndex, int frameIndex) {
         frames[facingIndex*2 + frameIndex] = tileset;
     }
     

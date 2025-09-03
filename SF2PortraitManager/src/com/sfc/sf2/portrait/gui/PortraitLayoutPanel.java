@@ -6,22 +6,25 @@
 package com.sfc.sf2.portrait.gui;
 
 import com.sfc.sf2.core.gui.AbstractLayoutPanel;
-import com.sfc.sf2.core.gui.controls.Console;
+import com.sfc.sf2.core.gui.layout.*;
+import com.sfc.sf2.core.gui.layout.BaseMouseCoordsComponent.GridMousePressedEvent;
 import static com.sfc.sf2.graphics.Tile.PIXEL_HEIGHT;
 import static com.sfc.sf2.graphics.Tile.PIXEL_WIDTH;
 import com.sfc.sf2.portrait.Portrait;
+import static com.sfc.sf2.portrait.Portrait.PORTRAIT_TILES_FULL_WIDTH;
+import static com.sfc.sf2.portrait.Portrait.PORTRAIT_TILES_HEIGHT;
+import static com.sfc.sf2.portrait.Portrait.PORTRAIT_TILES_WIDTH;
 import com.sfc.sf2.portrait.models.PortraitDataTableModel;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 /**
  *
  * @author wiz
  */
-public class PortraitLayoutPanel extends AbstractLayoutPanel implements MouseListener {
+public class PortraitLayoutPanel extends AbstractLayoutPanel {
     
     private Portrait portrait;
     
@@ -33,12 +36,17 @@ public class PortraitLayoutPanel extends AbstractLayoutPanel implements MouseLis
     
     private int selectedEyeTile = -1;
     private int selectedMouthTile = -1;
+    private int clickIndicator;
         
     public PortraitLayoutPanel() {
         super();
-        setGridDimensions(8, 8);
-        setCoordsDimensions(8, 8, 0);
-        addMouseListener(this);
+        background = new LayoutBackground(Color.LIGHT_GRAY, PIXEL_WIDTH/2);
+        scale = new LayoutScale(1);
+        grid = new LayoutGrid(PIXEL_WIDTH, PIXEL_HEIGHT, PORTRAIT_TILES_WIDTH*PIXEL_WIDTH, -1);
+        coordsGrid = new LayoutCoordsGridDisplay(PIXEL_WIDTH, PIXEL_HEIGHT, false);
+        coordsHeader = null;
+        mouseInput = new LayoutMouseInput(this, this::onMouseInput, PIXEL_WIDTH, PIXEL_HEIGHT);
+        scroller = null;
     }
 
     @Override
@@ -48,13 +56,13 @@ public class PortraitLayoutPanel extends AbstractLayoutPanel implements MouseLis
 
     @Override
     protected Dimension getImageDimensions() {
-        int width = Portrait.PORTRAIT_TILES_FULL_WIDTH*PIXEL_WIDTH;
-        int height = Portrait.PORTRAIT_TILES_HEIGHT*PIXEL_HEIGHT;
+        int width = PORTRAIT_TILES_FULL_WIDTH*PIXEL_WIDTH;
+        int height = PORTRAIT_TILES_HEIGHT*PIXEL_HEIGHT;
         return new Dimension(width, height);
     }
 
     @Override
-    protected void buildImage(Graphics graphics) {
+    protected void drawImage(Graphics graphics) {
         portrait.clearIndexedColorImage();
         graphics.drawImage(portrait.getIndexedColorImage(true, blinking, speaking), 0, 0, null);
         graphics.setColor(Color.YELLOW);
@@ -136,74 +144,52 @@ public class PortraitLayoutPanel extends AbstractLayoutPanel implements MouseLis
             redraw();
         }
     }
-
-    @Override
-    public void mouseClicked(MouseEvent e) { }
     
-    @Override
-    public void mouseEntered(MouseEvent e) { }
-    
-    @Override
-    public void mouseExited(MouseEvent e) { }
-    
-    @Override
-    public void mousePressed(MouseEvent e) {
-        Dimension coordsPadding = getCoordsPadding();
-        int x = e.getX() - coordsPadding.width;
-        int y = e.getY() - coordsPadding.height;
-        x /= (getDisplayScale() * PIXEL_WIDTH);
-        y /= (getDisplayScale() * PIXEL_HEIGHT);
-        switch (e.getButton()) {
-            case MouseEvent.BUTTON1:
-                if (selectedEyeTile >= 0) {
-                    int[] item = eyeAnimTable.getRow(selectedEyeTile);
-                    if (x < 6) {
-                        item[0] = x;
-                        item[1] = y;
-                        eyeAnimTable.fireTableCellUpdated(selectedEyeTile, 0);
-                        eyeAnimTable.fireTableCellUpdated(selectedEyeTile, 1);
-                    } else {
-                        item[2] = x;
-                        item[3] = y;
-                        eyeAnimTable.fireTableCellUpdated(selectedEyeTile, 2);
-                        eyeAnimTable.fireTableCellUpdated(selectedEyeTile, 3);
-                    }
-                    redraw();
-                    revalidate();
-                    repaint();
-                    
-                }
-                if (selectedMouthTile >= 0) {
-                    int[] item = mouthAnimTable.getRow(selectedMouthTile);
-                    if (x < 6) {
-                        item[0] = x;
-                        item[1] = y;
-                        mouthAnimTable.fireTableCellUpdated(selectedMouthTile, 0);
-                        mouthAnimTable.fireTableCellUpdated(selectedMouthTile, 1);
-                    } else {
-                        item[2] = x;
-                        item[3] = y;
-                        mouthAnimTable.fireTableCellUpdated(selectedMouthTile, 2);
-                        mouthAnimTable.fireTableCellUpdated(selectedMouthTile, 3);
-                    }
-                    redraw();
-                    revalidate();
-                    repaint();
-                }
-                break;
-            case MouseEvent.BUTTON2:
-                break;
-            case MouseEvent.BUTTON3:
-                break;
-            default:
-                break;
+    private void onMouseInput(GridMousePressedEvent e) {
+        if (e.mouseButton() != MouseEvent.BUTTON1) {
+            if (e.mouseButton() == MouseEvent.NOBUTTON) {
+                clickIndicator = 0;
+            }
+            return;
         }
-        redraw();
-        Console.logger().finest("Portrait press "+e.getButton()+" -- "+x+" - "+y);
-    }
-    
-    @Override
-    public void mouseReleased(MouseEvent e) {
-       
+        if (e.x() < 0 || e.x() >= PORTRAIT_TILES_FULL_WIDTH || e.y() < 0 || e.y() >= PORTRAIT_TILES_HEIGHT) return;
+        if (e.x() < 6 && clickIndicator >= 1 || e.x() >= 6 && clickIndicator <= -1) return; //Cannot drag between left/right regions
+        clickIndicator = e.x() < 6 ? -1 : 1;
+        if (selectedEyeTile >= 0) {
+            int[] item = eyeAnimTable.getRow(selectedEyeTile);
+            if (e.x() < 6) {
+                item[0] = e.x();
+                item[1] = e.y();
+                eyeAnimTable.fireTableCellUpdated(selectedEyeTile, 0);
+                eyeAnimTable.fireTableCellUpdated(selectedEyeTile, 1);
+            } else {
+                item[2] = e.x();
+                item[3] = e.y();
+                eyeAnimTable.fireTableCellUpdated(selectedEyeTile, 2);
+                eyeAnimTable.fireTableCellUpdated(selectedEyeTile, 3);
+            }
+            redraw();
+            revalidate();
+            repaint();
+
+        }
+        else if (selectedMouthTile >= 0) {
+            int[] item = mouthAnimTable.getRow(selectedMouthTile);
+            if (e.x() < 6) {
+                item[0] = e.x();
+                item[1] = e.y();
+                mouthAnimTable.fireTableCellUpdated(selectedMouthTile, 0);
+                mouthAnimTable.fireTableCellUpdated(selectedMouthTile, 1);
+            } else {
+                item[2] = e.x();
+                item[3] = e.y();
+                mouthAnimTable.fireTableCellUpdated(selectedMouthTile, 2);
+                mouthAnimTable.fireTableCellUpdated(selectedMouthTile, 3);
+            }
+            redraw();
+            revalidate();
+            repaint();
+        }
+        //Console.logger().finest("Portrait press "+e.mouseButton()+" -- "+e.x()+" - "+e.y());
     }
 }

@@ -36,16 +36,10 @@ public class PaletteMainEditor extends AbstractMainEditor {
     }
     
     @Override
-    protected void updateEditorData() {
-        palettePane1.setPalette(paletteManager.getPalette());
+    protected void onDataLoaded() {
+        super.onDataLoaded();
         
-        super.updateEditorData();
-    }
-    
-    @Override
-    protected void repaintEditorLayout() {
-        super.repaintEditorLayout();
-        palettePane1.revalidate();
+        palettePane1.setPalette(paletteManager.getPalette());
     }
 
     /**
@@ -360,7 +354,7 @@ public class PaletteMainEditor extends AbstractMainEditor {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Palette disasm could not be imported from : " + palettePath);
         }
-        updateEditorData();
+        onDataLoaded();
     }//GEN-LAST:event_jButton18ActionPerformed
 
     private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
@@ -372,7 +366,7 @@ public class PaletteMainEditor extends AbstractMainEditor {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Palette image could not be imported from : " + palettePath);
         }
-        updateEditorData();
+        onDataLoaded();
     }//GEN-LAST:event_jButton20ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed

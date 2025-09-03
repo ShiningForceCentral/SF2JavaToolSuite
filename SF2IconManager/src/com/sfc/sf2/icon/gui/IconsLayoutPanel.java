@@ -6,6 +6,7 @@
 package com.sfc.sf2.icon.gui;
 
 import com.sfc.sf2.core.gui.AbstractLayoutPanel;
+import com.sfc.sf2.core.gui.layout.*;
 import static com.sfc.sf2.graphics.Tile.PIXEL_HEIGHT;
 import static com.sfc.sf2.graphics.Tile.PIXEL_WIDTH;
 import com.sfc.sf2.icon.Icon;
@@ -13,6 +14,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import static com.sfc.sf2.icon.Icon.ICON_TILE_HEIGHT;
 import static com.sfc.sf2.icon.Icon.ICON_TILE_WIDTH;
+import java.awt.Color;
 
 /**
  *
@@ -24,8 +26,13 @@ public class IconsLayoutPanel extends AbstractLayoutPanel {
     
     public IconsLayoutPanel() {
         super();
-        setGridDimensions(ICON_TILE_WIDTH*PIXEL_WIDTH, ICON_TILE_HEIGHT*PIXEL_HEIGHT);
-        setCoordsDimensions(ICON_TILE_WIDTH*PIXEL_WIDTH, ICON_TILE_HEIGHT*PIXEL_HEIGHT, 6);
+        background = new LayoutBackground(Color.LIGHT_GRAY, PIXEL_WIDTH/2);
+        scale = new LayoutScale(1);
+        grid = new LayoutGrid(ICON_TILE_WIDTH*PIXEL_WIDTH, ICON_TILE_HEIGHT*PIXEL_HEIGHT);
+        coordsGrid = new LayoutCoordsGridDisplay(ICON_TILE_WIDTH*PIXEL_WIDTH, ICON_TILE_HEIGHT*PIXEL_HEIGHT, true);
+        coordsHeader = new LayoutCoordsHeader(this, ICON_TILE_WIDTH*PIXEL_WIDTH, ICON_TILE_HEIGHT*PIXEL_HEIGHT, true);
+        mouseInput = null;
+        scroller = new LayoutScrollNormaliser(this);
     }
     
     @Override
@@ -35,7 +42,7 @@ public class IconsLayoutPanel extends AbstractLayoutPanel {
 
     @Override
     protected Dimension getImageDimensions() {
-        int iconsPerRow = this.tilesPerRow;
+        int iconsPerRow = this.getItemsPerRow();
         int width = icons.length > iconsPerRow ? iconsPerRow : icons.length;
         int height = icons.length/iconsPerRow;
         if (icons.length%iconsPerRow != 0) {
@@ -45,8 +52,8 @@ public class IconsLayoutPanel extends AbstractLayoutPanel {
     }
 
     @Override
-    protected void buildImage(Graphics graphics) {
-        int iconsPerRow = this.tilesPerRow;
+    protected void drawImage(Graphics graphics) {
+        int iconsPerRow = this.getItemsPerRow();
         int width = icons.length > iconsPerRow ? iconsPerRow : icons.length;
         for (int i = 0; i < icons.length; i++) {
             int x = (i%width)*ICON_TILE_WIDTH*PIXEL_WIDTH;
@@ -61,5 +68,6 @@ public class IconsLayoutPanel extends AbstractLayoutPanel {
     
     public void setIcons(Icon[] icons) {
         this.icons = icons;
+        redraw();
     }
 }

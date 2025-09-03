@@ -5,7 +5,7 @@
  */
 package com.sfc.sf2.core.gui;
 
-import com.sfc.sf2.core.gui.AbstractLayoutPanel;
+import com.sfc.sf2.core.gui.layout.*;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -18,9 +18,13 @@ public class TestLayoutPanel extends AbstractLayoutPanel {
 
     public TestLayoutPanel() {
         super();
-        setGridDimensions(8, 8, 24, 24);
-        setCoordsDimensions(24, 24, 0);
-        setShowGrid(true);
+        background = new LayoutBackground(Color.LIGHT_GRAY, 8);
+        scale = new LayoutScale(1);
+        grid = new LayoutGrid(8, 8, 24, 24);
+        coordsGrid = new LayoutCoordsGridDisplay(24, 24, true, 4, 10, 2);
+        coordsHeader = new LayoutCoordsHeader(this, 24, 24);
+        mouseInput = null;
+        scroller = null;
     }
     
     @Override
@@ -34,7 +38,7 @@ public class TestLayoutPanel extends AbstractLayoutPanel {
     }
 
     @Override
-    protected void buildImage(Graphics graphics) {
+    protected void drawImage(Graphics graphics) {
         Dimension d = getSize();
         int halfHeight = d.height/2;
         Color c = null;

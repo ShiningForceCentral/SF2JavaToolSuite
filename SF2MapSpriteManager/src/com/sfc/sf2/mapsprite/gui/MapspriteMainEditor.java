@@ -39,7 +39,11 @@ public class MapspriteMainEditor extends AbstractMainEditor {
     protected void initEditor() {
         super.initEditor();
         
+        mapSpriteLayoutPanel.setDisplayScale(jComboBox1.getSelectedIndex()+1);
+        mapSpriteLayoutPanel.setShowGrid(jCheckBox1.isSelected());
         colorPicker1.setColor(SettingsManager.getGlobalSettings().getTransparentBGColor());
+        mapSpriteLayoutPanel.setBGColor(colorPicker1.getColor());
+        
         jComboBox2.removeAllItems();
         MapSpriteExportMode mode = mapspriteSettings.getExportMode();
         MapSpriteExportMode[] exportModes = MapSpriteExportMode.values();
@@ -54,20 +58,11 @@ public class MapspriteMainEditor extends AbstractMainEditor {
     }
     
     @Override
-    protected void updateEditorData() {
-        mapSpriteLayoutPanel.setMapSprite(mapSpriteManager.getMapSprites());
-        mapSpriteLayoutPanel.setDisplayScale(jComboBox1.getSelectedIndex()+1);
-        mapSpriteLayoutPanel.setShowGrid(jCheckBox1.isSelected());
+    protected void onDataLoaded() {
+        super.onDataLoaded();
         
-        super.updateEditorData();
-    }
-    
-    @Override
-    protected void repaintEditorLayout() {
-        super.repaintEditorLayout();
+        mapSpriteLayoutPanel.setMapSprites(mapSpriteManager.getMapSprites());
         
-        mapSpriteLayoutPanel.revalidate();
-        mapSpriteLayoutPanel.repaint();
     }
     
     /**
@@ -650,7 +645,7 @@ public class MapspriteMainEditor extends AbstractMainEditor {
         Path directoryPath = PathHelpers.getBasePath().resolve(directoryButton2.getDirectoryPath());
         if (!PathHelpers.createPathIfRequred(directoryPath)) return;
         try {
-            mapSpriteManager.exportAllDisassemblies(directoryPath);
+            mapSpriteManager.exportAllDisassemblies(directoryPath, mapSpriteLayoutPanel.getMapSprites());
         } catch (Exception ex) {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Map Sprite disasm could not be exported to : " + directoryPath);
@@ -663,7 +658,7 @@ public class MapspriteMainEditor extends AbstractMainEditor {
         try {
             FileFormat format = jRadioButton1.isSelected() ? FileFormat.PNG : FileFormat.GIF;
             MapSpriteExportMode exportMode = mapspriteSettings.getExportMode();
-            mapSpriteManager.exportAllImages(directoryPath, exportMode, format);
+            mapSpriteManager.exportAllImages(directoryPath, mapSpriteLayoutPanel.getMapSprites(), exportMode, format);
         } catch (Exception ex) {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Map Sprite images could not be exported to : " + directoryPath);
@@ -681,7 +676,7 @@ public class MapspriteMainEditor extends AbstractMainEditor {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Map Sprite images could not be imported from directory : " + directoryPath);
         }
-        updateEditorData();
+        onDataLoaded();
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
@@ -695,24 +690,21 @@ public class MapspriteMainEditor extends AbstractMainEditor {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Map Sprite disasm could not be imported from entries file : " + entriesPath);
         }
-        updateEditorData();
+        onDataLoaded();
     }//GEN-LAST:event_jButton18ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         mapSpriteLayoutPanel.setDisplayScale(jComboBox1.getSelectedIndex()+1);
-        repaintEditorLayout();
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
         mapSpriteLayoutPanel.setShowGrid(jCheckBox1.isSelected());
-        repaintEditorLayout();
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     private void colorPicker1ColorChanged(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorPicker1ColorChanged
         mapSpriteLayoutPanel.setBGColor(colorPicker1.getColor());
         SettingsManager.getGlobalSettings().setTransparentBGColor(colorPicker1.getColor());
         SettingsManager.saveGlobalSettingsFile();
-        repaintEditorLayout();
     }//GEN-LAST:event_colorPicker1ColorChanged
 
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed

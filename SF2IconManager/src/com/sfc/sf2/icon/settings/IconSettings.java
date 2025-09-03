@@ -20,6 +20,8 @@ public class IconSettings implements AbstractSettings {
     private IconExportMode exportMode;
     private FileFormat exportFileFormat;
     
+    private int itemsPerRow;
+    
     public IconExportMode getExportMode() {
         return exportMode;
     }
@@ -35,22 +37,36 @@ public class IconSettings implements AbstractSettings {
     public void setExportFileFormat(FileFormat exportFileFormat) {
         this.exportFileFormat = exportFileFormat;
     }
+
+    public int getItemsPerRow() {
+        return itemsPerRow;
+    }
+
+    public void setItemsPerRow(int itemsPerRow) {
+        this.itemsPerRow = itemsPerRow;
+    }
     
     @Override
     public void initialiseNewUser() {
         exportMode = IconExportMode.INDIVIDUAL_FILES;
         exportFileFormat = exportFileFormat.PNG;
+        itemsPerRow = 10;
     }
 
     @Override
     public void decodeSettings(HashMap<String, String> data) {
-        if (data.containsKey("exportMode")) {
-            try {
-                exportMode = IconExportMode.valueOf((String)data.get("exportMode"));
-                exportFileFormat = FileFormat.valueOf((String)data.get("exportFileFormat"));
-            } catch (Exception e) {
-                initialiseNewUser();
+        try {
+            if (data.containsKey("exportMode")) {
+                exportMode = IconExportMode.valueOf(data.get("exportMode"));
             }
+            if (data.containsKey("exportFileFormat")) {
+                exportFileFormat = FileFormat.valueOf(data.get("exportFileFormat"));
+            }
+        } catch (Exception e) {
+            initialiseNewUser();
+        }
+        if (data.containsKey("itemsPerRow")) {
+            itemsPerRow = Integer.parseInt(data.get("itemsPerRow"));
         }
     }
 
@@ -58,5 +74,6 @@ public class IconSettings implements AbstractSettings {
     public void encodeSettings(HashMap<String, String> data) {
         data.put("exportMode", exportMode.toString());
         data.put("exportFileFormat", exportFileFormat.toString());
+        data.put("itemsPerRow", Integer.toString(itemsPerRow));
     }
 }

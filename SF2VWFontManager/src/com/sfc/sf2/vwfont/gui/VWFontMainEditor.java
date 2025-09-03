@@ -35,25 +35,17 @@ public class VWFontMainEditor extends AbstractMainEditor {
     protected void initEditor() {
         super.initEditor();
         
-        colorPicker1.setColor(fontSettings.getTransparentBGColor());
-    }
-    
-    @Override
-    protected void updateEditorData() {
-        fontSymbolLayoutPanel.setFontSymbols(fontManager.getFontSymbols());
         fontSymbolLayoutPanel.setDisplayScale(jComboBox1.getSelectedIndex()+1);
         fontSymbolLayoutPanel.setShowGrid(jCheckBox1.isSelected());
+        colorPicker1.setColor(fontSettings.getTransparentBGColor());
         fontSymbolLayoutPanel.setBGColor(colorPicker1.getColor());
-        
-        super.updateEditorData();
     }
     
     @Override
-    protected void repaintEditorLayout() {
-        super.repaintEditorLayout();
+    protected void onDataLoaded() {
+        super.onDataLoaded();
         
-        fontSymbolLayoutPanel.revalidate();
-        fontSymbolLayoutPanel.repaint(); 
+        fontSymbolLayoutPanel.setFontSymbols(fontManager.getFontSymbols());
     }
 
     /**
@@ -134,7 +126,7 @@ public class VWFontMainEditor extends AbstractMainEditor {
                     .addComponent(fileButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton18)))
                 .addContainerGap())
@@ -176,7 +168,7 @@ public class VWFontMainEditor extends AbstractMainEditor {
                         .addComponent(directoryButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
                             .addGap(6, 6, 6)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jButton12)))
                     .addContainerGap())
@@ -234,9 +226,9 @@ public class VWFontMainEditor extends AbstractMainEditor {
                 .addGroup(jPanel11Layout.createSequentialGroup()
                     .addContainerGap()
                     .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(fileButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE)
+                        .addComponent(fileButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
                         .addGroup(jPanel11Layout.createSequentialGroup()
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jButton2)))
                     .addContainerGap())
@@ -277,7 +269,7 @@ public class VWFontMainEditor extends AbstractMainEditor {
                         .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(directoryButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
-                                .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
+                                .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jButton13)))
                         .addContainerGap())
@@ -319,8 +311,8 @@ public class VWFontMainEditor extends AbstractMainEditor {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 371, Short.MAX_VALUE)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 371, Short.MAX_VALUE))
+                            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE))
                         .addContainerGap())
                 );
                 jPanel2Layout.setVerticalGroup(
@@ -335,17 +327,17 @@ public class VWFontMainEditor extends AbstractMainEditor {
 
                 jSplitPane2.setLeftComponent(jPanel2);
 
-                jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder("Symbols :"));
+                jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder("Symbols"));
 
                 javax.swing.GroupLayout fontSymbolLayoutPanelLayout = new javax.swing.GroupLayout(fontSymbolLayoutPanel);
                 fontSymbolLayoutPanel.setLayout(fontSymbolLayoutPanelLayout);
                 fontSymbolLayoutPanelLayout.setHorizontalGroup(
                     fontSymbolLayoutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGap(0, 296, Short.MAX_VALUE)
+                    .addGap(0, 385, Short.MAX_VALUE)
                 );
                 fontSymbolLayoutPanelLayout.setVerticalGroup(
                     fontSymbolLayoutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGap(0, 332, Short.MAX_VALUE)
+                    .addGap(0, 371, Short.MAX_VALUE)
                 );
 
                 jScrollPane2.setViewportView(fontSymbolLayoutPanel);
@@ -423,7 +415,7 @@ public class VWFontMainEditor extends AbstractMainEditor {
                     .addComponent(jPanel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addContainerGap())
                 );
                 jPanel10Layout.setVerticalGroup(
@@ -442,7 +434,7 @@ public class VWFontMainEditor extends AbstractMainEditor {
                 jPanel1.setLayout(jPanel1Layout);
                 jPanel1Layout.setHorizontalGroup(
                     jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGap(0, 681, Short.MAX_VALUE)
+                    .addGap(0, 805, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jSplitPane2))
                 );
@@ -469,7 +461,7 @@ public class VWFontMainEditor extends AbstractMainEditor {
                     .addComponent(jSplitPane1)
                 );
 
-                setSize(new java.awt.Dimension(697, 685));
+                setSize(new java.awt.Dimension(821, 685));
                 setLocationRelativeTo(null);
             }// </editor-fold>//GEN-END:initComponents
 
@@ -505,7 +497,7 @@ public class VWFontMainEditor extends AbstractMainEditor {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Font symbol images could not be imported from : " + directoryPath);
         }
-        updateEditorData();
+        onDataLoaded();
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
@@ -517,24 +509,21 @@ public class VWFontMainEditor extends AbstractMainEditor {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Font symbol disasm could not be imported from : " + disasmPath);
         }
-        updateEditorData();
+        onDataLoaded();
     }//GEN-LAST:event_jButton18ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         fontSymbolLayoutPanel.setDisplayScale(jComboBox1.getSelectedIndex()+1);
-        repaintEditorLayout();
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
         fontSymbolLayoutPanel.setShowGrid(jCheckBox1.isSelected());
-        repaintEditorLayout();
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     private void colorPicker1ColorChanged(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorPicker1ColorChanged
         fontSymbolLayoutPanel.setBGColor(colorPicker1.getColor());
         fontSettings.setTransparentBGColor(colorPicker1.getColor());
         SettingsManager.saveSettingsFile();
-        repaintEditorLayout();
     }//GEN-LAST:event_colorPicker1ColorChanged
     
     /**

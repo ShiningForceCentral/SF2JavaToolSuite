@@ -6,6 +6,7 @@
 package com.sfc.sf2.text.gui;
 
 import com.sfc.sf2.core.gui.AbstractLayoutPanel;
+import com.sfc.sf2.core.gui.layout.*;
 import com.sfc.sf2.graphics.Tile;
 import static com.sfc.sf2.graphics.Tile.PIXEL_HEIGHT;
 import static com.sfc.sf2.graphics.Tile.PIXEL_WIDTH;
@@ -38,8 +39,8 @@ public class TextPreviewLayoutPanel extends AbstractLayoutPanel {
     
     private static final int FONT_START_HEIGHT = PIXEL_HEIGHT;
     private static final int FONT_LINE_HEIGHT = PIXEL_HEIGHT*2;
-    private static final int FONT_START_X = 10;
-    private static final int FONT_END_X = PREVIEW_WIDTH-10;
+    private static final int FONT_START_X = PIXEL_WIDTH+2;
+    private static final int FONT_END_X = PREVIEW_WIDTH-FONT_START_X;
     private static final FontSymbol EMPTY_SYMBOL = FontSymbol.EmptySymbol();
     private static final Palette PREVIEW_PALETTE = new Palette(new CRAMColor[] { CRAMColor.BLACK, CRAMColor.WHITE, CRAMColor.LIGHT_GRAY }, true);
     
@@ -57,9 +58,13 @@ public class TextPreviewLayoutPanel extends AbstractLayoutPanel {
     
     public TextPreviewLayoutPanel() {
         super();
-        setBackground(Color.BLACK);
-        bgCheckerPattern = false;
-        this.setDisplayScale(2);
+        background = null;
+        scale = new LayoutScale(2);
+        grid = null;
+        coordsGrid = null;
+        coordsHeader = null;
+        mouseInput = null;
+        scroller = null;
     }
     
     @Override
@@ -73,8 +78,8 @@ public class TextPreviewLayoutPanel extends AbstractLayoutPanel {
     }
 
     @Override
-    protected void buildImage(Graphics graphics) {
-        buildFrame(graphics);
+    protected void drawImage(Graphics graphics) {
+        drawFrame(graphics);
         if (text != null) {
             writeText(graphics);
             graphics.setColor(Color.LIGHT_GRAY);
@@ -87,7 +92,7 @@ public class TextPreviewLayoutPanel extends AbstractLayoutPanel {
         }
     }
     
-    void buildFrame(Graphics graphics) {
+    void drawFrame(Graphics graphics) {
         Tile[] tiles = baseTiles.getTiles();
         drawTile(graphics, tiles[PANEL_TILE_CORNER], 0, 0, PIXEL_WIDTH, PIXEL_HEIGHT, false, false);
         drawTile(graphics, tiles[PANEL_TILE_CORNER], PREVIEW_WIDTH-PIXEL_WIDTH, 0, PIXEL_WIDTH, PIXEL_HEIGHT, true, false);
@@ -179,15 +184,25 @@ public class TextPreviewLayoutPanel extends AbstractLayoutPanel {
         int tagEnd;
         int i = tagStart;
         do {
-            i++;
             c = text.charAt(i);
-        } while (c != '}' && i < text.length());
-        tagEnd = i+1;
-        String replace = parseTag(text.substring(tagStart+1, tagEnd-1));
-        text = text.substring(0, tagStart) + replace + text.substring(tagEnd);
-        i = tagStart+replace.length();
-        if (text.charAt(text.length()-1) == '\n') {
-            text = text.substring(0, text.length()-1);
+            i++;
+        } while (c != ' ' && c != '}' && (c != '{' || i == tagStart+1) && i < text.length());
+        tagEnd = i;
+        if (c == ' ' || c == '{' || (c != '}' && tagEnd >= text.length())) {
+            //No closing tag
+            if (tagEnd >= text.length()) {
+                return text.substring(0, tagStart) + "##";
+            } else {
+                text = text.substring(0, tagStart) + "##" + text.substring(tagEnd-1);
+            }
+        } else {
+            //Properly formed tag
+            String replace = parseTag(text.substring(tagStart+1, tagEnd-1));
+            text = text.substring(0, tagStart) + replace + text.substring(tagEnd);
+            i = tagStart+replace.length();
+            if (text.charAt(text.length()-1) == '\n') {
+                text = text.substring(0, text.length()-1);
+            }
         }
         return text;
     }
@@ -241,16 +256,16 @@ public class TextPreviewLayoutPanel extends AbstractLayoutPanel {
             case "W1":
                 return "\n";
             case "W2":
-                return "";
-            case "DICT":
-                return "item 1, item 2, item 3...";
             case "D1":
             case "D2":
             case "D3":
+                return "";
+            case "DICT":
+                return "item 1, item 2, item 3...";
             case "CLEAR":
             case "START/EOL)":
             default:
-                return "";
+                return "##";
         }
     }
     
@@ -268,8 +283,10 @@ public class TextPreviewLayoutPanel extends AbstractLayoutPanel {
     
     public void setFontSymbols(FontSymbol[] fontSymbols) {
         this.fontSymbols = fontSymbols;
-        for (int i = 0; i < fontSymbols.length; i++) {
-            fontSymbols[i].setpalette(PREVIEW_PALETTE);
+        if (this.fontSymbols != null) {
+            for (int i = 0; i < fontSymbols.length; i++) {
+                fontSymbols[i].setpalette(PREVIEW_PALETTE);
+            }
         }
     }
     

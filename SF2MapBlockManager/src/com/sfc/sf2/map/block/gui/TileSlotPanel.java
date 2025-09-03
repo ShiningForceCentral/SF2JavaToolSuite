@@ -5,30 +5,32 @@
  */
 package com.sfc.sf2.map.block.gui;
 
+import com.sfc.sf2.core.gui.AbstractBasicPanel;
 import com.sfc.sf2.graphics.Tile;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import javax.swing.JPanel;
 
 /**
  *
  * @author TiMMy
  */
-public class TileSlotPanel extends JPanel {
+public class TileSlotPanel extends AbstractBasicPanel {
     
     Tile tile;
-    
+
     @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        if (tile != null) {
-            g.drawImage(tile.getIndexedColorImage(), 0, 0, this.getWidth(), this.getHeight(), null);
-        }
+    protected boolean hasData() {
+        return tile != null;
     }
-    
+
     @Override
-    public Dimension getPreferredSize() {
-        return new Dimension(getWidth(), getHeight());
+    protected Dimension getImageDimensions() {
+        return getSize();
+    }
+
+    @Override
+    protected void paintImage(Graphics graphics) {
+        graphics.drawImage(tile.getIndexedColorImage(), 0, 0, this.getWidth(), this.getHeight(), null);
     }
     
     public Tile getTile() {
@@ -37,7 +39,7 @@ public class TileSlotPanel extends JPanel {
 
     public void setTile(Tile tile) {
         this.tile = tile;
-        this.validate();
+        redraw();
         this.repaint();
     }
 }

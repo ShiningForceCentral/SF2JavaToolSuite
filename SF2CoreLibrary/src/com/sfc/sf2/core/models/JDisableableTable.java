@@ -37,12 +37,14 @@ public class JDisableableTable extends JTable {
         boolean inFocus = this.hasFocus();
         if (isRowSelected(row)) {
             if (inFocus) {
-                comp.setForeground(editable ? selectionForeground : SELECTED_DISABLED_COLOR);
+                comp.setForeground(editable ? getSelectionForeground() : SELECTED_DISABLED_COLOR);
             } else {
                 comp.setForeground(editable ? getForeground() : UNFOCUSED_DISABLED_COLOR);
             }
+            comp.setBackground(getSelectionBackground());
         } else {
             comp.setForeground(editable ? getForeground() : DISABLED_COLOR);
+            comp.setBackground(getBackground());
         }
         return comp;
     }

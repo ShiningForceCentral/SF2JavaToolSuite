@@ -7,7 +7,7 @@ package com.sfc.sf2.battlesprite.io;
 
 import com.sfc.sf2.battlesprite.BattleSprite;
 import com.sfc.sf2.core.io.AbstractMetadataProcessor;
-import com.sfc.sf2.core.io.DisassemblyException;
+import com.sfc.sf2.core.io.MetadataException;
 import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -19,7 +19,7 @@ import java.io.IOException;
 public class BattleSpriteMetadataProcessor extends AbstractMetadataProcessor<BattleSprite> {
 
     @Override
-    protected void parseMetaData(BufferedReader reader, BattleSprite item) throws IOException, DisassemblyException {
+    protected void parseMetaData(BufferedReader reader, BattleSprite item) throws MetadataException, IOException {
         String data = reader.readLine();
         data = data.substring(data.indexOf(":")+1).trim();
         item.setAnimSpeed(Short.parseShort(data));
@@ -31,7 +31,7 @@ public class BattleSpriteMetadataProcessor extends AbstractMetadataProcessor<Bat
     }
 
     @Override
-    protected void packageMetaData(FileWriter writer, BattleSprite item) throws IOException, DisassemblyException {
+    protected void packageMetaData(FileWriter writer, BattleSprite item) throws MetadataException, IOException {
         writer.append(String.format("Anim Speed: %d\n", item.getAnimSpeed()));
         writer.append(String.format("Status Offset: %d, %d\n", item.getStatusOffsetX(), item.getStatusOffsetY()));
     }

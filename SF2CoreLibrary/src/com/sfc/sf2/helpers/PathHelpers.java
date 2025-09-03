@@ -40,7 +40,7 @@ public class PathHelpers {
         if (dotIndex == -1) {
             return name;
         } else {
-            return name.substring(0, dotIndex+1);
+            return name.substring(0, dotIndex);
         }
     }
     
