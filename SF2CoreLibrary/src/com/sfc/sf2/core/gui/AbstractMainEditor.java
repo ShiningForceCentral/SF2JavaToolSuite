@@ -8,12 +8,14 @@ package com.sfc.sf2.core.gui;
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.sfc.sf2.core.Manifest;
+import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.core.settings.CoreSettings;
 import com.sfc.sf2.core.settings.GlobalSettings;
 import com.sfc.sf2.core.settings.SettingsManager;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.helpers.PathHelpers;
 import javax.swing.UIManager;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -120,6 +122,14 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         buttonGroupTheme = new javax.swing.ButtonGroup();
+        jFrameActionHistory = new javax.swing.JFrame();
+        jPanelActions = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jButtonUndo = new javax.swing.JButton();
+        jButtonRedo = new javax.swing.JButton();
+        jButtonClear = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTableHistory = new javax.swing.JTable();
         jPanel13 = new javax.swing.JPanel();
         jSplitPane1 = new javax.swing.JSplitPane();
         jPanel15 = new javax.swing.JPanel();
@@ -127,6 +137,10 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuFile = new javax.swing.JMenu();
         jMenuItemExit = new javax.swing.JMenuItem();
+        jMenuEdit = new javax.swing.JMenu();
+        jMenuItemUndo = new javax.swing.JMenuItem();
+        jMenuItemRedo = new javax.swing.JMenuItem();
+        jMenuItemActionHistory = new javax.swing.JMenuItem();
         jMenuSettings = new javax.swing.JMenu();
         jMenuItemSettings = new javax.swing.JMenuItem();
 
@@ -176,7 +190,6 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
         infoButton2.setText("");
 
         buttonGroupTheme.add(jRadioThemeLight);
-        jRadioThemeLight.setSelected(true);
         jRadioThemeLight.setText("Light");
 
         buttonGroupTheme.add(jRadioThemeDark);
@@ -255,6 +268,108 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
                 .addComponent(jPanelSettings, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE))
         );
 
+        jFrameActionHistory.setTitle("Settings");
+        jFrameActionHistory.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jFrameActionHistory.setLocationByPlatform(true);
+        jFrameActionHistory.setMinimumSize(new java.awt.Dimension(500, 200));
+        jFrameActionHistory.setName("Frame Settings"); // NOI18N
+        jFrameActionHistory.setResizable(false);
+        jFrameActionHistory.setSize(new java.awt.Dimension(500, 250));
+        jFrameActionHistory.setType(java.awt.Window.Type.POPUP);
+        jFrameActionHistory.addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                jFrameActionHistoryWindowClosing(evt);
+            }
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                jFrameActionHistoryWindowOpened(evt);
+            }
+        });
+
+        jPanelActions.setMinimumSize(new java.awt.Dimension(400, 200));
+
+        jLabel1.setText("<html>A debugging window to see the action history (the undo/redo history).</html>");
+        jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+
+        jButtonUndo.setText("Undo");
+        jButtonUndo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonUndoActionPerformed(evt);
+            }
+        });
+
+        jButtonRedo.setText("Redo");
+        jButtonRedo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRedoActionPerformed(evt);
+            }
+        });
+
+        jButtonClear.setText("Clear");
+        jButtonClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonClearActionPerformed(evt);
+            }
+        });
+
+        jTableHistory.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Command", "New Data", "Old Data", "Extra 1"
+            }
+        ));
+        jScrollPane1.setViewportView(jTableHistory);
+
+        javax.swing.GroupLayout jPanelActionsLayout = new javax.swing.GroupLayout(jPanelActions);
+        jPanelActions.setLayout(jPanelActionsLayout);
+        jPanelActionsLayout.setHorizontalGroup(
+            jPanelActionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addGroup(jPanelActionsLayout.createSequentialGroup()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(515, Short.MAX_VALUE))
+            .addGroup(jPanelActionsLayout.createSequentialGroup()
+                .addComponent(jButtonUndo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButtonRedo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonClear))
+        );
+        jPanelActionsLayout.setVerticalGroup(
+            jPanelActionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelActionsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelActionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonUndo)
+                    .addComponent(jButtonRedo)
+                    .addComponent(jButtonClear))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 327, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jFrameActionHistoryLayout = new javax.swing.GroupLayout(jFrameActionHistory.getContentPane());
+        jFrameActionHistory.getContentPane().setLayout(jFrameActionHistoryLayout);
+        jFrameActionHistoryLayout.setHorizontalGroup(
+            jFrameActionHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jFrameActionHistoryLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanelActions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jFrameActionHistoryLayout.setVerticalGroup(
+            jFrameActionHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jFrameActionHistoryLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanelActions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SF2 App");
 
@@ -311,6 +426,41 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenuFile);
 
+        jMenuEdit.setText("Edit");
+        jMenuEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonUndoActionPerformed(evt);
+            }
+        });
+
+        jMenuItemUndo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jMenuItemUndo.setText("Undo");
+        jMenuItemUndo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonUndoActionPerformed(evt);
+            }
+        });
+        jMenuEdit.add(jMenuItemUndo);
+
+        jMenuItemRedo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jMenuItemRedo.setText("Redo");
+        jMenuItemRedo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRedoActionPerformed(evt);
+            }
+        });
+        jMenuEdit.add(jMenuItemRedo);
+
+        jMenuItemActionHistory.setText("Action History");
+        jMenuItemActionHistory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemActionHistoryActionPerformed(evt);
+            }
+        });
+        jMenuEdit.add(jMenuItemActionHistory);
+
+        jMenuBar1.add(jMenuEdit);
+
         jMenuSettings.setText("Settings");
 
         jMenuItemSettings.setText("Settings");
@@ -362,6 +512,7 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
     private void jFrameSettingsWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_jFrameSettingsWindowOpened
         jFrameSettings.setLocationRelativeTo(this);
         jFrameSettings.setSize(jFrameSettings.getPreferredSize());
+        
         GlobalSettings global = SettingsManager.getGlobalSettings();
         CoreSettings core = SettingsManager.getSettingsStore("core");
         jCheckBoxPrioritise.setSelected(core.isPrioritiseLocalPath());
@@ -382,6 +533,35 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
         directoryButtonBasePath.setEnabled(!(jCheckBoxPrioritise.isSelected() && core.areLocalPathsValid()));
         directoryButtonIncbinPath.setEnabled(!(jCheckBoxPrioritise.isSelected() && core.areLocalPathsValid()));
     }//GEN-LAST:event_jCheckBoxPrioritiseActionPerformed
+
+    private void jFrameActionHistoryWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_jFrameActionHistoryWindowClosing
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jFrameActionHistoryWindowClosing
+
+    static String[] HISTORY_COLUMN_NAMES = new String[] { "Action", "New Data", "Previous Data", "Extra 1", "Extra 2" };
+    private void jFrameActionHistoryWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_jFrameActionHistoryWindowOpened
+        jFrameActionHistory.setLocationRelativeTo(this);
+        jFrameActionHistory.setSize(jFrameActionHistory.getPreferredSize());
+        
+        Object[][] tableData = ActionManager.getHistoryTableData();
+        jTableHistory.setModel(new DefaultTableModel(tableData, HISTORY_COLUMN_NAMES));
+    }//GEN-LAST:event_jFrameActionHistoryWindowOpened
+
+    private void jButtonUndoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUndoActionPerformed
+        ActionManager.undo();
+    }//GEN-LAST:event_jButtonUndoActionPerformed
+
+    private void jButtonRedoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRedoActionPerformed
+        ActionManager.redo();
+    }//GEN-LAST:event_jButtonRedoActionPerformed
+
+    private void jButtonClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonClearActionPerformed
+        ActionManager.clearActionhistory();
+    }//GEN-LAST:event_jButtonClearActionPerformed
+
+    private void jMenuItemActionHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemActionHistoryActionPerformed
+        jFrameActionHistory.setVisible(true);
+    }//GEN-LAST:event_jMenuItemActionHistoryActionPerformed
      
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroupTheme;
@@ -390,21 +570,33 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton1;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton2;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton3;
+    private javax.swing.JButton jButtonClear;
+    private javax.swing.JButton jButtonRedo;
+    private javax.swing.JButton jButtonUndo;
     private javax.swing.JCheckBox jCheckBoxPrioritise;
+    private javax.swing.JFrame jFrameActionHistory;
     private javax.swing.JFrame jFrameSettings;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenu jMenuEdit;
     private javax.swing.JMenu jMenuFile;
+    private javax.swing.JMenuItem jMenuItemActionHistory;
     private javax.swing.JMenuItem jMenuItemExit;
+    private javax.swing.JMenuItem jMenuItemRedo;
     private javax.swing.JMenuItem jMenuItemSettings;
+    private javax.swing.JMenuItem jMenuItemUndo;
     private javax.swing.JMenu jMenuSettings;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel15;
+    private javax.swing.JPanel jPanelActions;
     private javax.swing.JPanel jPanelSettings;
     private javax.swing.JRadioButton jRadioThemeDark;
     private javax.swing.JRadioButton jRadioThemeLight;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSplitPane jSplitPane1;
+    private javax.swing.JTable jTableHistory;
     // End of variables declaration//GEN-END:variables
 }
