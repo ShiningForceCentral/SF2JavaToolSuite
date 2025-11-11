@@ -129,27 +129,41 @@ public class SpellAnimationMainEditor extends AbstractMainEditor {
 
         jLabel22.setText("Spells :");
 
+        fileButton1.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
         fileButton1.setFilePath("..\\..\\..\\..\\code\\gameflow\\battle\\battlescenes\\animation\\bolt.asm");
+        fileButton1.setInfoMessage("");
         fileButton1.setLabelText("Spell anim :");
 
+        fileButton2.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
         fileButton2.setFilePath(".\\spellgraphics04.bin");
+        fileButton2.setInfoMessage("");
         fileButton2.setLabelText("Spell graphic :");
 
+        fileButton3.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
         fileButton3.setFilePath("..\\battlescenebasepalette.bin");
+        fileButton3.setInfoMessage("");
         fileButton3.setLabelText("Spell base palette :");
 
         accordionPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Scene"));
 
+        fileButton5.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
         fileButton5.setFilePath("..\\backgrounds\\background09.bin");
+        fileButton5.setInfoMessage("");
         fileButton5.setLabelText("Background :");
 
+        fileButton6.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
         fileButton6.setFilePath("..\\grounds\\groundtiles09.bin");
+        fileButton6.setInfoMessage("");
         fileButton6.setLabelText("Ground :");
 
+        fileButton7.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
         fileButton7.setFilePath("..\\battlescenebasepalette.bin");
+        fileButton7.setInfoMessage("");
         fileButton7.setLabelText("Ground base palette :");
 
+        fileButton8.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
         fileButton8.setFilePath("..\\grounds\\groundpalette09.bin");
+        fileButton8.setInfoMessage("");
         fileButton8.setLabelText("Ground palette :");
 
         javax.swing.GroupLayout accordionPanel1Layout = new javax.swing.GroupLayout(accordionPanel1);
@@ -213,6 +227,8 @@ public class SpellAnimationMainEditor extends AbstractMainEditor {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(accordionPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel22)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(fileButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -221,12 +237,10 @@ public class SpellAnimationMainEditor extends AbstractMainEditor {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(fileButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(accordionPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton18)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Export :"));
@@ -242,7 +256,9 @@ public class SpellAnimationMainEditor extends AbstractMainEditor {
             }
         });
 
+        fileButton4.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
         fileButton4.setFilePath(".\\animations\\boltanimdata.asm");
+        fileButton4.setInfoMessage("");
         fileButton4.setLabelText("Spell Anim :");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -280,8 +296,8 @@ public class SpellAnimationMainEditor extends AbstractMainEditor {
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 

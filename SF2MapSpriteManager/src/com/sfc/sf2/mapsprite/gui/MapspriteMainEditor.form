@@ -2,8 +2,6 @@
 
 <Form version="1.8" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
-    <Component class="javax.swing.ButtonGroup" name="buttonGroupImport">
-    </Component>
     <Component class="javax.swing.ButtonGroup" name="buttonGroupExport">
     </Component>
     <Component class="javax.swing.ButtonGroup" name="buttonGroupOptimise">
@@ -17,7 +15,7 @@
     <Property name="focusable" type="boolean" value="false"/>
   </Properties>
   <SyntheticProperties>
-    <SyntheticProperty name="formSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,3,90,0,0,4,42"/>
+    <SyntheticProperty name="formSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,3,90,0,0,4,56"/>
     <SyntheticProperty name="formSizePolicy" type="int" value="0"/>
     <SyntheticProperty name="generateSize" type="boolean" value="true"/>
     <SyntheticProperty name="generateCenter" type="boolean" value="true"/>
@@ -129,8 +127,8 @@
                                   <Component id="jPanel3" min="-2" pref="235" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jPanel6" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="48" max="32767" attributes="0"/>
-                                  <Component id="jPanel5" min="-2" pref="186" max="-2" attributes="0"/>
+                                  <EmptySpace pref="69" max="32767" attributes="0"/>
+                                  <Component id="jPanel5" min="-2" pref="174" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -155,8 +153,9 @@
                                   <Group type="102" attributes="0">
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jTabbedPane1" alignment="1" max="32767" attributes="0"/>
+                                          <Component id="jTabbedPane1" alignment="1" pref="0" max="32767" attributes="0"/>
                                           <Component id="fileButton2" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="fileButton5" alignment="0" max="32767" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
                                   </Group>
@@ -168,6 +167,8 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="fileButton2" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="fileButton5" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
                                       <Component id="jTabbedPane1" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                   </Group>
@@ -175,10 +176,92 @@
                             </DimensionLayout>
                           </Layout>
                           <SubComponents>
+                            <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton2">
+                              <Properties>
+                                <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                  <Value id="ASM"/>
+                                </Property>
+                                <Property name="filePath" type="java.lang.String" value=".\u005centries.asm" containsInvalidXMLChars="true"/>
+                                <Property name="infoMessage" type="java.lang.String" value="Entries file for mapsprites. Loaded mapsprites will be compared to the entries file to determine which sprites are unique, which are referenced by multiple entries, and which are not referenced at all."/>
+                                <Property name="labelText" type="java.lang.String" value="Mapsprite entries :"/>
+                              </Properties>
+                            </Component>
+                            <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton5">
+                              <Properties>
+                                <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                  <Value id="BIN"/>
+                                </Property>
+                                <Property name="filePath" type="java.lang.String" value="..\u005ctech\u005cbasepalette.bin" containsInvalidXMLChars="true"/>
+                                <Property name="infoMessage" type="java.lang.String" value="The default palette file for mapsprites. Imported mapsprites will be previewed in these colors."/>
+                                <Property name="labelText" type="java.lang.String" value="Palette file :"/>
+                              </Properties>
+                            </Component>
                             <Container class="javax.swing.JTabbedPane" name="jTabbedPane1">
 
                               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
                               <SubComponents>
+                                <Container class="javax.swing.JPanel" name="jPanel19">
+                                  <Constraints>
+                                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+                                      <JTabbedPaneConstraints tabName="Entries">
+                                        <Property name="tabTitle" type="java.lang.String" value="Entries"/>
+                                      </JTabbedPaneConstraints>
+                                    </Constraint>
+                                  </Constraints>
+
+                                  <Layout>
+                                    <DimensionLayout dim="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <EmptySpace pref="496" max="32767" attributes="0"/>
+                                              <Component id="jButton21" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="infoButton8" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                    </DimensionLayout>
+                                    <DimensionLayout dim="1">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="jLabel11" min="-2" pref="26" max="-2" attributes="0"/>
+                                                  <Component id="infoButton8" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="jButton21" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                    </DimensionLayout>
+                                  </Layout>
+                                  <SubComponents>
+                                    <Component class="javax.swing.JLabel" name="jLabel11">
+                                      <Properties>
+                                        <Property name="text" type="java.lang.String" value="&lt;html&gt;Load all mapsprite disassemblies from the entries file (field above).&lt;/html&gt;"/>
+                                      </Properties>
+                                    </Component>
+                                    <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton8">
+                                      <Properties>
+                                        <Property name="messageText" type="java.lang.String" value="&lt;html&gt;Uses the entries inside the mapsprites entries.asm file to load the mapsprites.&lt;/html&gt;"/>
+                                        <Property name="text" type="java.lang.String" value=""/>
+                                      </Properties>
+                                    </Component>
+                                    <Component class="javax.swing.JButton" name="jButton21">
+                                      <Properties>
+                                        <Property name="text" type="java.lang.String" value="Import"/>
+                                      </Properties>
+                                      <Events>
+                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton21ActionPerformed"/>
+                                      </Events>
+                                    </Component>
+                                  </SubComponents>
+                                </Container>
                                 <Container class="javax.swing.JPanel" name="jPanel12">
                                   <Constraints>
                                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
@@ -194,13 +277,17 @@
                                           <Group type="102" attributes="0">
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="fileButton5" alignment="0" max="32767" attributes="0"/>
                                                   <Group type="102" alignment="0" attributes="0">
-                                                      <Component id="jLabel10" pref="484" max="32767" attributes="0"/>
-                                                      <EmptySpace max="-2" attributes="0"/>
+                                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                                       <Component id="jButton20" min="-2" max="-2" attributes="0"/>
                                                   </Group>
-                                                  <Component id="directoryButton4" alignment="0" max="32767" attributes="0"/>
+                                                  <Component id="directoryButton4" alignment="0" pref="566" max="32767" attributes="0"/>
+                                                  <Group type="102" alignment="0" attributes="0">
+                                                      <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace max="-2" attributes="0"/>
+                                                      <Component id="infoButton9" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                                  </Group>
                                               </Group>
                                               <EmptySpace max="-2" attributes="0"/>
                                           </Group>
@@ -210,20 +297,32 @@
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" alignment="0" attributes="0">
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="fileButton5" min="-2" max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="1" attributes="0">
+                                                  <Component id="jLabel10" min="-2" pref="26" max="-2" attributes="0"/>
+                                                  <Component id="infoButton9" min="-2" max="-2" attributes="0"/>
+                                              </Group>
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="directoryButton4" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="3" attributes="0">
-                                                  <Component id="jLabel10" alignment="3" max="-2" attributes="0"/>
-                                                  <Component id="jButton20" alignment="3" min="-2" max="-2" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                                              <Component id="jButton20" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
                                     </DimensionLayout>
                                   </Layout>
                                   <SubComponents>
+                                    <Component class="javax.swing.JLabel" name="jLabel10">
+                                      <Properties>
+                                        <Property name="text" type="java.lang.String" value="&lt;html&gt;Select the directory with the Mapsprite disassemblies.&lt;/html&gt;"/>
+                                      </Properties>
+                                    </Component>
+                                    <Component class="com.sfc.sf2.core.gui.controls.DirectoryButton" name="directoryButton4">
+                                      <Properties>
+                                        <Property name="directoryPath" type="java.lang.String" value=".\u005c" containsInvalidXMLChars="true"/>
+                                        <Property name="infoMessage" type="java.lang.String" value=""/>
+                                        <Property name="labelText" type="java.lang.String" value="Mapsprites directory :"/>
+                                      </Properties>
+                                    </Component>
                                     <Component class="javax.swing.JButton" name="jButton20">
                                       <Properties>
                                         <Property name="text" type="java.lang.String" value="Import"/>
@@ -232,22 +331,10 @@
                                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton20ActionPerformed"/>
                                       </Events>
                                     </Component>
-                                    <Component class="javax.swing.JLabel" name="jLabel10">
+                                    <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton9">
                                       <Properties>
-                                        <Property name="text" type="java.lang.String" value="&lt;html&gt;Select the directory with the mapsprite disassemblies.&#xa;&lt;br&gt;Typical disassembly path : &quot;data/graphics/mapsprites/&quot;&lt;/html&gt;"/>
-                                        <Property name="verticalAlignment" type="int" value="1"/>
-                                      </Properties>
-                                    </Component>
-                                    <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton5">
-                                      <Properties>
-                                        <Property name="filePath" type="java.lang.String" value="..\u005ctech\u005cbasepalette.bin" containsInvalidXMLChars="true"/>
-                                        <Property name="labelText" type="java.lang.String" value="Palette file :"/>
-                                      </Properties>
-                                    </Component>
-                                    <Component class="com.sfc.sf2.core.gui.controls.DirectoryButton" name="directoryButton4">
-                                      <Properties>
-                                        <Property name="directoryPath" type="java.lang.String" value=".\u005c" containsInvalidXMLChars="true"/>
-                                        <Property name="labelText" type="java.lang.String" value="Mapsprites directory :"/>
+                                        <Property name="messageText" type="java.lang.String" value="&lt;html&gt;Loads all dissasembly (.bin) files inside a directory. Files are expected to be in the format &quot;mapspriteXXX-Y.bin&quot;&lt;br&gt;Loaded files will be compared against the mapsprite entries. Any files that are not referenced in entries will appear in the &quot;Unreferened&quot; tab.&lt;/html&gt;"/>
+                                        <Property name="text" type="java.lang.String" value=""/>
                                       </Properties>
                                     </Component>
                                   </SubComponents>
@@ -267,15 +354,17 @@
                                           <Group type="102" attributes="0">
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="directoryButton1" pref="566" max="32767" attributes="0"/>
+                                                  <Group type="102" attributes="0">
+                                                      <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace max="-2" attributes="0"/>
+                                                      <Component id="infoButton10" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace min="0" pref="307" max="32767" attributes="0"/>
+                                                  </Group>
+                                                  <Component id="directoryButton1" alignment="0" pref="566" max="32767" attributes="0"/>
                                                   <Group type="102" alignment="1" attributes="0">
-                                                      <Component id="jLabel3" pref="405" max="32767" attributes="0"/>
-                                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                                      <Component id="jPanel7" min="-2" max="-2" attributes="0"/>
-                                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                                       <Component id="jButton12" min="-2" max="-2" attributes="0"/>
                                                   </Group>
-                                                  <Component id="fileButton3" alignment="0" max="32767" attributes="0"/>
                                               </Group>
                                               <EmptySpace max="-2" attributes="0"/>
                                           </Group>
@@ -285,21 +374,32 @@
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" alignment="1" attributes="0">
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="fileButton3" min="-2" max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="3" attributes="0">
+                                                  <Component id="jLabel3" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
+                                                  <Component id="infoButton10" alignment="3" min="-2" max="-2" attributes="0"/>
+                                              </Group>
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="directoryButton1" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="jButton12" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jPanel7" min="-2" max="-2" attributes="0"/>
-                                              </Group>
+                                              <Component id="jButton12" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                     </DimensionLayout>
                                   </Layout>
                                   <SubComponents>
+                                    <Component class="javax.swing.JLabel" name="jLabel3">
+                                      <Properties>
+                                        <Property name="text" type="java.lang.String" value="&lt;html&gt;Select the directory with Mapsprite images.&lt;/html&gt;"/>
+                                      </Properties>
+                                    </Component>
+                                    <Component class="com.sfc.sf2.core.gui.controls.DirectoryButton" name="directoryButton1">
+                                      <Properties>
+                                        <Property name="directoryPath" type="java.lang.String" value=".\u005cexport\u005c" containsInvalidXMLChars="true"/>
+                                        <Property name="infoMessage" type="java.lang.String" value=""/>
+                                        <Property name="labelText" type="java.lang.String" value="Image directory :"/>
+                                      </Properties>
+                                    </Component>
                                     <Component class="javax.swing.JButton" name="jButton12">
                                       <Properties>
                                         <Property name="text" type="java.lang.String" value="Import"/>
@@ -308,378 +408,12 @@
                                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton12ActionPerformed"/>
                                       </Events>
                                     </Component>
-                                    <Component class="javax.swing.JLabel" name="jLabel3">
+                                    <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton10">
                                       <Properties>
-                                        <Property name="text" type="java.lang.String" value="&lt;html&gt;&#xa;Select a directory with &quot;mapspriteXXX-Y-Z.png&quot; files. (e.g.&quot;.png&quot; or &quot;.gif&quot;).&lt;br&gt;&#xa;Color format should be 4BPP / 16 indexed colors.&lt;br&gt;&#xa;(Images of 8BPP / 256 indexed colors will be converted to 4 BPP / 16).&#xa;&lt;/html&gt;"/>
-                                        <Property name="verticalAlignment" type="int" value="1"/>
+                                        <Property name="messageText" type="java.lang.String" value="&lt;html&gt;Loads all image files inside a directory. Files are expected to be in the format &quot;mapspriteXXX-Y.png&quot;&lt;br&gt;Loaded files will be compared against the mapsprite entries. Any files that are not referenced in entries will appear in the &quot;Unreferened&quot; tab.&lt;br&gt;&lt;br&gt;&lt;html&gt;Supported image formats: PNG or GIF.&lt;br&gt;&lt;br&gt;Color format should be 4BPP / 16 indexed colors. Images of 8BPP / 256 indexed colors will be converted to 4 BPP / 16 (some colors may be lost).&lt;br&gt;Colors will be convered to CRAM format (the color format used by the SEGA Genesis).&lt;br&gt;Color index 0 is treated as transparent.&lt;/html&gt;"/>
+                                        <Property name="text" type="java.lang.String" value=""/>
                                       </Properties>
                                     </Component>
-                                    <Component class="com.sfc.sf2.core.gui.controls.DirectoryButton" name="directoryButton1">
-                                      <Properties>
-                                        <Property name="directoryPath" type="java.lang.String" value=".\u005cexport\u005c" containsInvalidXMLChars="true"/>
-                                        <Property name="labelText" type="java.lang.String" value="Image directory :"/>
-                                      </Properties>
-                                    </Component>
-                                    <Container class="javax.swing.JPanel" name="jPanel7">
-
-                                      <Layout>
-                                        <DimensionLayout dim="0">
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Component id="jRadioButton3" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="jRadioButton4" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  </Group>
-                                                  <EmptySpace max="32767" attributes="0"/>
-                                              </Group>
-                                          </Group>
-                                        </DimensionLayout>
-                                        <DimensionLayout dim="1">
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="jRadioButton3" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="jRadioButton4" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace max="32767" attributes="0"/>
-                                              </Group>
-                                          </Group>
-                                        </DimensionLayout>
-                                      </Layout>
-                                      <SubComponents>
-                                        <Component class="javax.swing.JRadioButton" name="jRadioButton3">
-                                          <Properties>
-                                            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                                              <ComponentRef name="buttonGroupImport"/>
-                                            </Property>
-                                            <Property name="selected" type="boolean" value="true"/>
-                                            <Property name="text" type="java.lang.String" value="PNG"/>
-                                          </Properties>
-                                          <Events>
-                                            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jRadioStateChanged_Png"/>
-                                          </Events>
-                                        </Component>
-                                        <Component class="javax.swing.JRadioButton" name="jRadioButton4">
-                                          <Properties>
-                                            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                                              <ComponentRef name="buttonGroupImport"/>
-                                            </Property>
-                                            <Property name="text" type="java.lang.String" value="GIF"/>
-                                          </Properties>
-                                          <Events>
-                                            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jRadioStateChanged_Gif"/>
-                                          </Events>
-                                        </Component>
-                                      </SubComponents>
-                                    </Container>
-                                    <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton3">
-                                      <Properties>
-                                        <Property name="filePath" type="java.lang.String" value="..\u005ctech\u005cbasepalette.bin" containsInvalidXMLChars="true"/>
-                                        <Property name="labelText" type="java.lang.String" value="Palette file :"/>
-                                      </Properties>
-                                    </Component>
-                                  </SubComponents>
-                                </Container>
-                              </SubComponents>
-                            </Container>
-                            <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton2">
-                              <Properties>
-                                <Property name="filePath" type="java.lang.String" value=".\u005centries.asm" containsInvalidXMLChars="true"/>
-                                <Property name="labelText" type="java.lang.String" value="Mapsprite entries :"/>
-                              </Properties>
-                            </Component>
-                          </SubComponents>
-                        </Container>
-                        <Container class="javax.swing.JPanel" name="jPanel5">
-                          <Properties>
-                            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                              <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                                <TitledBorder title="Export to :"/>
-                              </Border>
-                            </Property>
-                            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="[32, 135]"/>
-                            </Property>
-                          </Properties>
-
-                          <Layout>
-                            <DimensionLayout dim="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jTabbedPane2" max="32767" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                            </DimensionLayout>
-                            <DimensionLayout dim="1">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jTabbedPane2" alignment="0" pref="163" max="32767" attributes="0"/>
-                              </Group>
-                            </DimensionLayout>
-                          </Layout>
-                          <SubComponents>
-                            <Container class="javax.swing.JTabbedPane" name="jTabbedPane2">
-
-                              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
-                              <SubComponents>
-                                <Container class="javax.swing.JPanel" name="jPanel11">
-                                  <Constraints>
-                                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                                      <JTabbedPaneConstraints tabName="Disassembly">
-                                        <Property name="tabTitle" type="java.lang.String" value="Disassembly"/>
-                                      </JTabbedPaneConstraints>
-                                    </Constraint>
-                                  </Constraints>
-
-                                  <Layout>
-                                    <DimensionLayout dim="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="directoryButton2" pref="566" max="32767" attributes="0"/>
-                                                  <Group type="102" alignment="1" attributes="0">
-                                                      <Component id="jLabel1" pref="484" max="32767" attributes="0"/>
-                                                      <EmptySpace max="-2" attributes="0"/>
-                                                      <Component id="jButton2" min="-2" max="-2" attributes="0"/>
-                                                  </Group>
-                                              </Group>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                    </DimensionLayout>
-                                    <DimensionLayout dim="1">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="1" attributes="0">
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="directoryButton2" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="3" attributes="0">
-                                                  <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                    </DimensionLayout>
-                                  </Layout>
-                                  <SubComponents>
-                                    <Component class="javax.swing.JButton" name="jButton2">
-                                      <Properties>
-                                        <Property name="text" type="java.lang.String" value="Export"/>
-                                      </Properties>
-                                      <Events>
-                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
-                                      </Events>
-                                    </Component>
-                                    <Component class="javax.swing.JLabel" name="jLabel1">
-                                      <Properties>
-                                        <Property name="text" type="java.lang.String" value="&lt;html&gt;Select a directory to create new &quot;mapspriteXXX-Y.bin&quot; files.&lt;/html&gt;"/>
-                                        <Property name="toolTipText" type="java.lang.String" value=""/>
-                                        <Property name="verticalAlignment" type="int" value="1"/>
-                                      </Properties>
-                                    </Component>
-                                    <Component class="com.sfc.sf2.core.gui.controls.DirectoryButton" name="directoryButton2">
-                                      <Properties>
-                                        <Property name="directoryPath" type="java.lang.String" value=".\u005c" containsInvalidXMLChars="true"/>
-                                        <Property name="labelText" type="java.lang.String" value="Directory :"/>
-                                      </Properties>
-                                    </Component>
-                                  </SubComponents>
-                                </Container>
-                                <Container class="javax.swing.JPanel" name="jPanel14">
-                                  <Constraints>
-                                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                                      <JTabbedPaneConstraints tabName="Image">
-                                        <Property name="tabTitle" type="java.lang.String" value="Image"/>
-                                      </JTabbedPaneConstraints>
-                                    </Constraint>
-                                  </Constraints>
-
-                                  <Layout>
-                                    <DimensionLayout dim="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" attributes="0">
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="directoryButton3" pref="566" max="32767" attributes="0"/>
-                                                  <Group type="102" attributes="0">
-                                                      <Component id="jLabel9" pref="254" max="32767" attributes="0"/>
-                                                      <EmptySpace max="-2" attributes="0"/>
-                                                      <Component id="jPanel2" max="-2" attributes="0"/>
-                                                      <EmptySpace max="-2" attributes="0"/>
-                                                      <Component id="jButton13" min="-2" max="-2" attributes="0"/>
-                                                  </Group>
-                                              </Group>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                    </DimensionLayout>
-                                    <DimensionLayout dim="1">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="directoryButton3" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="1" attributes="0">
-                                                  <Group type="103" groupAlignment="3" attributes="0">
-                                                      <Component id="jButton13" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                  </Group>
-                                                  <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                    </DimensionLayout>
-                                  </Layout>
-                                  <SubComponents>
-                                    <Component class="javax.swing.JButton" name="jButton13">
-                                      <Properties>
-                                        <Property name="text" type="java.lang.String" value="Export"/>
-                                      </Properties>
-                                      <Events>
-                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton13ActionPerformed"/>
-                                      </Events>
-                                    </Component>
-                                    <Component class="javax.swing.JLabel" name="jLabel9">
-                                      <Properties>
-                                        <Property name="text" type="java.lang.String" value="&lt;html&gt;&#xa;Select a directory to create new mapsprite images.&lt;br&gt;&#xa;Exported color format : 4BPP / 16 indexed colors.&lt;br&gt;&#xa;Transparent color at index 0.&#xa;&lt;/html&gt;"/>
-                                        <Property name="verticalAlignment" type="int" value="1"/>
-                                        <Property name="verticalTextPosition" type="int" value="1"/>
-                                      </Properties>
-                                    </Component>
-                                    <Component class="com.sfc.sf2.core.gui.controls.DirectoryButton" name="directoryButton3">
-                                      <Properties>
-                                        <Property name="directoryPath" type="java.lang.String" value=".\u005cexport\u005c" containsInvalidXMLChars="true"/>
-                                        <Property name="labelText" type="java.lang.String" value="Image directory :"/>
-                                      </Properties>
-                                    </Component>
-                                    <Container class="javax.swing.JPanel" name="jPanel2">
-                                      <Properties>
-                                        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                                          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                                            <TitledBorder/>
-                                          </Border>
-                                        </Property>
-                                      </Properties>
-
-                                      <Layout>
-                                        <DimensionLayout dim="0">
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Group type="102" alignment="1" attributes="0">
-                                                          <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                                                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                                                          <Component id="jRadioButton1" min="-2" max="-2" attributes="0"/>
-                                                          <EmptySpace max="-2" attributes="0"/>
-                                                          <Component id="jRadioButton2" min="-2" max="-2" attributes="0"/>
-                                                      </Group>
-                                                      <Group type="102" alignment="1" attributes="0">
-                                                          <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                                                          <EmptySpace max="-2" attributes="0"/>
-                                                          <Component id="jComboBox2" min="-2" pref="132" max="-2" attributes="0"/>
-                                                      </Group>
-                                                  </Group>
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Component id="infoButton1" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="infoButton2" min="-2" max="-2" attributes="0"/>
-                                                  </Group>
-                                                  <EmptySpace max="32767" attributes="0"/>
-                                              </Group>
-                                          </Group>
-                                        </DimensionLayout>
-                                        <DimensionLayout dim="1">
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Group type="102" alignment="1" attributes="0">
-                                                  <EmptySpace max="32767" attributes="0"/>
-                                                  <Group type="103" groupAlignment="3" attributes="0">
-                                                      <Component id="jComboBox2" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="infoButton1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                  </Group>
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="2" attributes="0">
-                                                      <Component id="infoButton2" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="jRadioButton2" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="jRadioButton1" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="jLabel4" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                  </Group>
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                              </Group>
-                                          </Group>
-                                        </DimensionLayout>
-                                      </Layout>
-                                      <SubComponents>
-                                        <Component class="javax.swing.JRadioButton" name="jRadioButton2">
-                                          <Properties>
-                                            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                                              <ComponentRef name="buttonGroupExport"/>
-                                            </Property>
-                                            <Property name="text" type="java.lang.String" value="GIF"/>
-                                          </Properties>
-                                          <Events>
-                                            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jRadioStateChanged_Gif"/>
-                                          </Events>
-                                        </Component>
-                                        <Component class="javax.swing.JRadioButton" name="jRadioButton1">
-                                          <Properties>
-                                            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                                              <ComponentRef name="buttonGroupExport"/>
-                                            </Property>
-                                            <Property name="selected" type="boolean" value="true"/>
-                                            <Property name="text" type="java.lang.String" value="PNG"/>
-                                          </Properties>
-                                          <Events>
-                                            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jRadioStateChanged_Png"/>
-                                          </Events>
-                                        </Component>
-                                        <Component class="javax.swing.JLabel" name="jLabel4">
-                                          <Properties>
-                                            <Property name="text" type="java.lang.String" value="File format :"/>
-                                          </Properties>
-                                        </Component>
-                                        <Component class="javax.swing.JComboBox" name="jComboBox2">
-                                          <Properties>
-                                            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                                              <StringArray count="3">
-                                                <StringItem index="0" value="Item 1"/>
-                                                <StringItem index="1" value="Item 2"/>
-                                                <StringItem index="2" value="Item 3"/>
-                                              </StringArray>
-                                            </Property>
-                                          </Properties>
-                                          <Events>
-                                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBox2ActionPerformed"/>
-                                          </Events>
-                                          <AuxValues>
-                                            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-                                          </AuxValues>
-                                        </Component>
-                                        <Component class="javax.swing.JLabel" name="jLabel6">
-                                          <Properties>
-                                            <Property name="text" type="java.lang.String" value="Export :"/>
-                                          </Properties>
-                                        </Component>
-                                        <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton1">
-                                          <Properties>
-                                            <Property name="messageText" type="java.lang.String" value="&lt;html&gt;The number of sprites-per-image:&lt;br&gt;&lt;b&gt;INDIVIDUAL_FILES:&lt;/b&gt; i.e. all 6 frames (2x up, 2x left, 2x, right) of mapspriteXXX will be exported as individual files. This results in 6x images for each row, with the filename &quot;mapspriteXXX-Y-Z&quot;.&lt;br&gt;&lt;b&gt;FILE_PER_DIRECTION:&lt;/b&gt; i.e. the 3 facing directions (up, left, right) of mapspriteXXX will be exported as separate images. This results in 3 images for each row, with the filename &quot;mapsprite-XXX-Y&quot;.&lt;br&gt;&lt;b&gt;FILE_PER_CHARACTER:&lt;/b&gt; All 6 frames of mapspriteXXX will be exported as a single file. This results in1x image per row with the filename &quot;mapsprite-XXX&quot;.&lt;/html&gt;"/>
-                                            <Property name="text" type="java.lang.String" value=""/>
-                                          </Properties>
-                                        </Component>
-                                        <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton2">
-                                          <Properties>
-                                            <Property name="messageText" type="java.lang.String" value="Export the images as .PNG or .GIF format."/>
-                                            <Property name="text" type="java.lang.String" value=""/>
-                                          </Properties>
-                                        </Component>
-                                      </SubComponents>
-                                    </Container>
                                   </SubComponents>
                                 </Container>
                               </SubComponents>
@@ -725,7 +459,7 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="2" attributes="0">
                                           <Component id="infoButton4" alignment="2" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jLabel7" alignment="2" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jLabel7" alignment="2" min="-2" pref="26" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="jPanel18" min="-2" max="-2" attributes="0"/>
@@ -736,7 +470,7 @@
                                           <Component id="jLabel8" alignment="3" max="-2" attributes="0"/>
                                           <Component id="jButton19" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace pref="16" max="32767" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
@@ -744,7 +478,7 @@
                           <SubComponents>
                             <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton4">
                               <Properties>
-                                <Property name="messageText" type="java.lang.String" value="&lt;html&gt;Will search the mapsprites and replace any pixel-perfect duplicates with a reference.&lt;br&gt;&lt;br&gt;&lt;i&gt;Images with all pixels set to color will be treated as &quot;empty&quot;.&lt;/i&gt;&lt;/html&gt;"/>
+                                <Property name="messageText" type="java.lang.String" value="&lt;html&gt;Will search the mapsprites and replace any pixel-perfect duplicates with a reference.&lt;br&gt;&lt;br&gt;&lt;i&gt;Images with all pixels set to color 0 will be treated as &quot;empty&quot;.&lt;/i&gt;&lt;/html&gt;"/>
                                 <Property name="text" type="java.lang.String" value=""/>
                               </Properties>
                             </Component>
@@ -755,7 +489,11 @@
                             </Component>
                             <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton4">
                               <Properties>
+                                <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                  <Value id="ASM"/>
+                                </Property>
                                 <Property name="filePath" type="java.lang.String" value=".\u005centries.asm" containsInvalidXMLChars="true"/>
+                                <Property name="infoMessage" type="java.lang.String" value=""/>
                                 <Property name="labelText" type="java.lang.String" value="Mapsprite entries :"/>
                               </Properties>
                             </Component>
@@ -863,10 +601,322 @@
                                 </Component>
                                 <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton7">
                                   <Properties>
-                                    <Property name="messageText" type="java.lang.String" value="&lt;html&gt;Optimises only if an entire row pixel-perfect matches another row.&lt;br&gt;&lt;i&gt;e.g. if mapSprite001 matches mapSprite002.&lt;/i&gt;&lt;/html&gt;"/>
+                                    <Property name="messageText" type="java.lang.String" value="&lt;html&gt;Optimises only if an entire row pixel-perfect matches another row.&lt;br&gt;&lt;i&gt;e.g. if mapSprite001(-0, -1, &amp; -2) matches mapSprite002(-0, -1, &amp; -2).&lt;/i&gt;&lt;/html&gt;"/>
                                     <Property name="text" type="java.lang.String" value=""/>
                                   </Properties>
                                 </Component>
+                              </SubComponents>
+                            </Container>
+                          </SubComponents>
+                        </Container>
+                        <Container class="javax.swing.JPanel" name="jPanel5">
+                          <Properties>
+                            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                              <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                                <TitledBorder title="Export to :"/>
+                              </Border>
+                            </Property>
+                            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[32, 135]"/>
+                            </Property>
+                          </Properties>
+
+                          <Layout>
+                            <DimensionLayout dim="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jTabbedPane2" max="32767" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                            </DimensionLayout>
+                            <DimensionLayout dim="1">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jTabbedPane2" alignment="0" max="32767" attributes="0"/>
+                              </Group>
+                            </DimensionLayout>
+                          </Layout>
+                          <SubComponents>
+                            <Container class="javax.swing.JTabbedPane" name="jTabbedPane2">
+
+                              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
+                              <SubComponents>
+                                <Container class="javax.swing.JPanel" name="jPanel11">
+                                  <Constraints>
+                                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+                                      <JTabbedPaneConstraints tabName="Disassembly">
+                                        <Property name="tabTitle" type="java.lang.String" value="Disassembly"/>
+                                      </JTabbedPaneConstraints>
+                                    </Constraint>
+                                  </Constraints>
+
+                                  <Layout>
+                                    <DimensionLayout dim="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" attributes="0">
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="directoryButton2" pref="566" max="32767" attributes="0"/>
+                                                  <Group type="102" alignment="1" attributes="0">
+                                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                                      <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                                                  </Group>
+                                                  <Group type="102" alignment="0" attributes="0">
+                                                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace max="-2" attributes="0"/>
+                                                      <Component id="infoButton11" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                                  </Group>
+                                              </Group>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                    </DimensionLayout>
+                                    <DimensionLayout dim="1">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="3" attributes="0">
+                                                  <Component id="jLabel1" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
+                                                  <Component id="infoButton11" alignment="3" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="directoryButton2" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                    </DimensionLayout>
+                                  </Layout>
+                                  <SubComponents>
+                                    <Component class="javax.swing.JLabel" name="jLabel1">
+                                      <Properties>
+                                        <Property name="text" type="java.lang.String" value="Select a directory to export mapsprite disassembly files to."/>
+                                        <Property name="toolTipText" type="java.lang.String" value=""/>
+                                      </Properties>
+                                    </Component>
+                                    <Component class="com.sfc.sf2.core.gui.controls.DirectoryButton" name="directoryButton2">
+                                      <Properties>
+                                        <Property name="directoryPath" type="java.lang.String" value=".\u005c" containsInvalidXMLChars="true"/>
+                                        <Property name="infoMessage" type="java.lang.String" value=""/>
+                                        <Property name="labelText" type="java.lang.String" value="Directory :"/>
+                                      </Properties>
+                                    </Component>
+                                    <Component class="javax.swing.JButton" name="jButton2">
+                                      <Properties>
+                                        <Property name="text" type="java.lang.String" value="Export"/>
+                                      </Properties>
+                                      <Events>
+                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+                                      </Events>
+                                    </Component>
+                                    <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton11">
+                                      <Properties>
+                                        <Property name="messageText" type="java.lang.String" value="&lt;html&gt;Disassembly files will be exported in the format &quot;mapspriteXXX-Y.bin&quot;.&lt;br&gt;Unreferenced files will not be exported.&lt;/html&gt;"/>
+                                        <Property name="text" type="java.lang.String" value=""/>
+                                      </Properties>
+                                    </Component>
+                                  </SubComponents>
+                                </Container>
+                                <Container class="javax.swing.JPanel" name="jPanel14">
+                                  <Constraints>
+                                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+                                      <JTabbedPaneConstraints tabName="Image">
+                                        <Property name="tabTitle" type="java.lang.String" value="Image"/>
+                                      </JTabbedPaneConstraints>
+                                    </Constraint>
+                                  </Constraints>
+
+                                  <Layout>
+                                    <DimensionLayout dim="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" attributes="0">
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="directoryButton3" pref="566" max="32767" attributes="0"/>
+                                                  <Group type="102" alignment="0" attributes="0">
+                                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                                      <Component id="jPanel2" max="-2" attributes="0"/>
+                                                      <EmptySpace max="-2" attributes="0"/>
+                                                      <Component id="jButton13" min="-2" max="-2" attributes="0"/>
+                                                  </Group>
+                                                  <Group type="102" alignment="0" attributes="0">
+                                                      <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace max="-2" attributes="0"/>
+                                                      <Component id="infoButton12" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                                  </Group>
+                                              </Group>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                    </DimensionLayout>
+                                    <DimensionLayout dim="1">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="jLabel9" min="-2" pref="26" max="-2" attributes="0"/>
+                                                  <Component id="infoButton12" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="directoryButton3" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="jButton13" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                    </DimensionLayout>
+                                  </Layout>
+                                  <SubComponents>
+                                    <Component class="javax.swing.JButton" name="jButton13">
+                                      <Properties>
+                                        <Property name="text" type="java.lang.String" value="Export"/>
+                                      </Properties>
+                                      <Events>
+                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton13ActionPerformed"/>
+                                      </Events>
+                                    </Component>
+                                    <Component class="javax.swing.JLabel" name="jLabel9">
+                                      <Properties>
+                                        <Property name="text" type="java.lang.String" value="&lt;html&gt;Select a directory to create new Mapsprite images.&lt;/html&gt;"/>
+                                        <Property name="verticalTextPosition" type="int" value="1"/>
+                                      </Properties>
+                                    </Component>
+                                    <Component class="com.sfc.sf2.core.gui.controls.DirectoryButton" name="directoryButton3">
+                                      <Properties>
+                                        <Property name="directoryPath" type="java.lang.String" value=".\u005cexport\u005c" containsInvalidXMLChars="true"/>
+                                        <Property name="infoMessage" type="java.lang.String" value=""/>
+                                        <Property name="labelText" type="java.lang.String" value="Image directory :"/>
+                                      </Properties>
+                                    </Component>
+                                    <Container class="javax.swing.JPanel" name="jPanel2">
+                                      <Properties>
+                                        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                                          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                                            <TitledBorder/>
+                                          </Border>
+                                        </Property>
+                                      </Properties>
+
+                                      <Layout>
+                                        <DimensionLayout dim="0">
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="jComboBox2" min="-2" pref="132" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="infoButton1" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                                  <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="jRadioButton1" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="jRadioButton2" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="infoButton2" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace max="32767" attributes="0"/>
+                                              </Group>
+                                          </Group>
+                                        </DimensionLayout>
+                                        <DimensionLayout dim="1">
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Group type="102" alignment="1" attributes="0">
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Group type="103" groupAlignment="2" attributes="0">
+                                                      <Component id="jLabel6" alignment="2" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="infoButton1" alignment="2" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="infoButton2" alignment="2" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="jRadioButton2" alignment="2" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="jRadioButton1" alignment="2" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="jLabel4" alignment="2" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="jComboBox2" alignment="2" min="-2" max="-2" attributes="0"/>
+                                                  </Group>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                              </Group>
+                                          </Group>
+                                        </DimensionLayout>
+                                      </Layout>
+                                      <SubComponents>
+                                        <Component class="javax.swing.JRadioButton" name="jRadioButton2">
+                                          <Properties>
+                                            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                                              <ComponentRef name="buttonGroupExport"/>
+                                            </Property>
+                                            <Property name="text" type="java.lang.String" value="GIF"/>
+                                          </Properties>
+                                          <Events>
+                                            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jRadioStateChanged_Gif"/>
+                                          </Events>
+                                        </Component>
+                                        <Component class="javax.swing.JRadioButton" name="jRadioButton1">
+                                          <Properties>
+                                            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                                              <ComponentRef name="buttonGroupExport"/>
+                                            </Property>
+                                            <Property name="selected" type="boolean" value="true"/>
+                                            <Property name="text" type="java.lang.String" value="PNG"/>
+                                          </Properties>
+                                          <Events>
+                                            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jRadioStateChanged_Png"/>
+                                          </Events>
+                                        </Component>
+                                        <Component class="javax.swing.JLabel" name="jLabel4">
+                                          <Properties>
+                                            <Property name="text" type="java.lang.String" value="File format :"/>
+                                          </Properties>
+                                        </Component>
+                                        <Component class="javax.swing.JComboBox" name="jComboBox2">
+                                          <Properties>
+                                            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                                              <StringArray count="3">
+                                                <StringItem index="0" value="Item 1"/>
+                                                <StringItem index="1" value="Item 2"/>
+                                                <StringItem index="2" value="Item 3"/>
+                                              </StringArray>
+                                            </Property>
+                                          </Properties>
+                                          <Events>
+                                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBox2ActionPerformed"/>
+                                          </Events>
+                                          <AuxValues>
+                                            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                                          </AuxValues>
+                                        </Component>
+                                        <Component class="javax.swing.JLabel" name="jLabel6">
+                                          <Properties>
+                                            <Property name="text" type="java.lang.String" value="Export :"/>
+                                          </Properties>
+                                        </Component>
+                                        <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton1">
+                                          <Properties>
+                                            <Property name="messageText" type="java.lang.String" value="&lt;html&gt;The number of sprites-per-image:&lt;br&gt;&lt;b&gt;- INDIVIDUAL_FILES:&lt;/b&gt; i.e. all 6 frames (2x up, 2x left, 2x, right) of mapspriteXXX will be exported as individual files. This results in 6x images for each row, with the filename &quot;mapspriteXXX-Y-Z&quot;.&lt;br&gt;&lt;b&gt;- FILE_PER_DIRECTION:&lt;/b&gt; i.e. the 3 facing directions (up, left, right) of mapspriteXXX will be exported as separate images. This results in 3 images for each row, with the filename &quot;mapsprite-XXX-Y&quot;.&lt;br&gt;&lt;b&gt;- FILE_PER_CHARACTER:&lt;/b&gt; All 6 frames of mapspriteXXX will be exported as a single file. This results in 1x image per row with the filename &quot;mapsprite-XXX&quot;.&lt;/html&gt;"/>
+                                            <Property name="text" type="java.lang.String" value=""/>
+                                          </Properties>
+                                        </Component>
+                                        <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton2">
+                                          <Properties>
+                                            <Property name="messageText" type="java.lang.String" value="Export the images as .PNG or .GIF format."/>
+                                            <Property name="text" type="java.lang.String" value=""/>
+                                          </Properties>
+                                        </Component>
+                                      </SubComponents>
+                                    </Container>
+                                    <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton12">
+                                      <Properties>
+                                        <Property name="messageText" type="java.lang.String" value="&lt;html&gt;Files will be exported in the format &quot;mapspriteXXX-Y.png&quot;.&lt;br&gt;Unreferenced files will not be exported.&lt;br&gt;&lt;br&gt;Supported image formats: PNG or GIF.&lt;br&gt;&lt;br&gt;Exported color format will be 4BPP / 16 indexed colors.&lt;br&gt;Color index 0 is treated as transparent.&lt;/html&gt;"/>
+                                        <Property name="text" type="java.lang.String" value=""/>
+                                      </Properties>
+                                    </Component>
+                                  </SubComponents>
+                                </Container>
                               </SubComponents>
                             </Container>
                           </SubComponents>
@@ -885,7 +935,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jTabbedPane3" max="32767" attributes="0"/>
+                                  <Component id="jTabbedPaneSprites" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -893,22 +943,22 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jTabbedPane3" max="32767" attributes="0"/>
+                                  <Component id="jTabbedPaneSprites" max="32767" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
                       </Layout>
                       <SubComponents>
-                        <Container class="javax.swing.JTabbedPane" name="jTabbedPane3">
+                        <Container class="javax.swing.JTabbedPane" name="jTabbedPaneSprites">
 
                           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
                           <SubComponents>
-                            <Container class="javax.swing.JPanel" name="jPanel4">
+                            <Container class="javax.swing.JPanel" name="jPanelMapSprites">
                               <Constraints>
                                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                                  <JTabbedPaneConstraints tabName="Map Sprites">
-                                    <Property name="tabTitle" type="java.lang.String" value="Map Sprites"/>
+                                  <JTabbedPaneConstraints tabName="Map Sprites (0)">
+                                    <Property name="tabTitle" type="java.lang.String" value="Map Sprites (0)"/>
                                   </JTabbedPaneConstraints>
                                 </Constraint>
                               </Constraints>
@@ -916,40 +966,17 @@
                               <Layout>
                                 <DimensionLayout dim="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <EmptySpace min="0" pref="439" max="32767" attributes="0"/>
-                                      <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                                          <Group type="102" attributes="0">
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
-                                                  <Group type="102" alignment="0" attributes="0">
-                                                      <Component id="jPanel16" max="32767" attributes="0"/>
-                                                      <EmptySpace max="-2" attributes="0"/>
-                                                      <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                                                      <EmptySpace max="-2" attributes="0"/>
-                                                      <Component id="jComboBox1" min="-2" max="-2" attributes="0"/>
-                                                  </Group>
-                                              </Group>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
+                                      <Component id="jPanel16" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
                                   </Group>
                                 </DimensionLayout>
                                 <DimensionLayout dim="1">
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <EmptySpace min="0" pref="653" max="32767" attributes="0"/>
-                                      <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                                          <Group type="102" attributes="0">
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jPanel1" max="32767" attributes="0"/>
-                                              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="2" attributes="0">
-                                                  <Component id="jPanel16" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jComboBox1" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jLabel5" alignment="2" min="-2" max="-2" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                          </Group>
+                                      <Group type="102" alignment="1" attributes="0">
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="jPanel1" max="32767" attributes="0"/>
+                                          <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                                          <Component id="jPanel16" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                 </DimensionLayout>
@@ -972,7 +999,7 @@
                                     </DimensionLayout>
                                     <DimensionLayout dim="1">
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jScrollPane2" alignment="0" pref="590" max="32767" attributes="0"/>
+                                          <Component id="jScrollPane2" alignment="0" pref="568" max="32767" attributes="0"/>
                                       </Group>
                                     </DimensionLayout>
                                   </Layout>
@@ -986,7 +1013,7 @@
                                           <Layout>
                                             <DimensionLayout dim="0">
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <EmptySpace min="0" pref="499" max="32767" attributes="0"/>
+                                                  <EmptySpace min="0" pref="897" max="32767" attributes="0"/>
                                               </Group>
                                             </DimensionLayout>
                                             <DimensionLayout dim="1">
@@ -1001,37 +1028,50 @@
                                   </SubComponents>
                                 </Container>
                                 <Container class="javax.swing.JPanel" name="jPanel16">
+                                  <Properties>
+                                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                                      <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                                        <TitledBorder title="View"/>
+                                      </Border>
+                                    </Property>
+                                  </Properties>
 
                                   <Layout>
                                     <DimensionLayout dim="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="1" attributes="0">
+                                          <Group type="102" alignment="0" attributes="0">
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jLabel55" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="colorPicker1" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              <Component id="jCheckBox1" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                               <Component id="jCheckBox2" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                                               <Component id="infoButton3" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="32767" attributes="0"/>
+                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                              <Component id="jLabel55" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="colorPicker1" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace pref="26" max="32767" attributes="0"/>
+                                              <Component id="jCheckBox1" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                              <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="jComboBox1" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                     </DimensionLayout>
                                     <DimensionLayout dim="1">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" alignment="0" attributes="0">
-                                              <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
+                                              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="2" attributes="0">
-                                                  <Component id="jCheckBox1" alignment="2" min="-2" max="-2" attributes="0"/>
                                                   <Component id="colorPicker1" alignment="2" min="-2" max="-2" attributes="0"/>
                                                   <Component id="jLabel55" alignment="2" min="-2" max="-2" attributes="0"/>
                                                   <Component id="jCheckBox2" alignment="2" min="-2" max="-2" attributes="0"/>
                                                   <Component id="infoButton3" alignment="2" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="jComboBox1" alignment="2" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="jLabel5" alignment="2" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="jCheckBox1" alignment="2" min="-2" max="-2" attributes="0"/>
                                               </Group>
-                                              <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
+                                              <EmptySpace max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
                                     </DimensionLayout>
@@ -1079,43 +1119,43 @@
                                     </Component>
                                     <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton3">
                                       <Properties>
-                                        <Property name="messageText" type="java.lang.String" value="&lt;html&gt;Some entries are just pointing to other sprites.&lt;br&gt;This will show a yellow label on a row that indicates which sprite that row is reference to.&lt;/html&gt;"/>
+                                        <Property name="messageText" type="java.lang.String" value="&lt;html&gt;Some entries do not have their own graphics, but instead point to other mapsprite graphics.&lt;br&gt;This will show a yellow box on a &quot;reference&quot; mapsprite as well as a label that indicates the graphical mapsprite that this uses.&lt;/html&gt;"/>
                                         <Property name="text" type="java.lang.String" value=""/>
+                                      </Properties>
+                                    </Component>
+                                    <Component class="javax.swing.JComboBox" name="jComboBox1">
+                                      <Properties>
+                                        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                                          <StringArray count="4">
+                                            <StringItem index="0" value="x1"/>
+                                            <StringItem index="1" value="x2"/>
+                                            <StringItem index="2" value="x3"/>
+                                            <StringItem index="3" value="x4"/>
+                                          </StringArray>
+                                        </Property>
+                                        <Property name="selectedIndex" type="int" value="1"/>
+                                      </Properties>
+                                      <Events>
+                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBox1ActionPerformed"/>
+                                      </Events>
+                                      <AuxValues>
+                                        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                                      </AuxValues>
+                                    </Component>
+                                    <Component class="javax.swing.JLabel" name="jLabel5">
+                                      <Properties>
+                                        <Property name="text" type="java.lang.String" value="Scale :"/>
                                       </Properties>
                                     </Component>
                                   </SubComponents>
                                 </Container>
-                                <Component class="javax.swing.JComboBox" name="jComboBox1">
-                                  <Properties>
-                                    <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                                      <StringArray count="4">
-                                        <StringItem index="0" value="x1"/>
-                                        <StringItem index="1" value="x2"/>
-                                        <StringItem index="2" value="x3"/>
-                                        <StringItem index="3" value="x4"/>
-                                      </StringArray>
-                                    </Property>
-                                    <Property name="selectedIndex" type="int" value="1"/>
-                                  </Properties>
-                                  <Events>
-                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBox1ActionPerformed"/>
-                                  </Events>
-                                  <AuxValues>
-                                    <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-                                  </AuxValues>
-                                </Component>
-                                <Component class="javax.swing.JLabel" name="jLabel5">
-                                  <Properties>
-                                    <Property name="text" type="java.lang.String" value="Scale :"/>
-                                  </Properties>
-                                </Component>
                               </SubComponents>
                             </Container>
-                            <Container class="javax.swing.JPanel" name="jPanel17">
+                            <Container class="javax.swing.JPanel" name="jPanelUnreferenced">
                               <Constraints>
                                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                                  <JTabbedPaneConstraints tabName="Unreferenced">
-                                    <Property name="tabTitle" type="java.lang.String" value="Unreferenced"/>
+                                  <JTabbedPaneConstraints tabName="Unreferenced (0)">
+                                    <Property name="tabTitle" type="java.lang.String" value="Unreferenced (0)"/>
                                   </JTabbedPaneConstraints>
                                 </Constraint>
                               </Constraints>
@@ -1124,17 +1164,12 @@
                                 <DimensionLayout dim="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" attributes="0">
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="tableUnreferenced" pref="433" max="32767" attributes="0"/>
-                                              <Group type="102" attributes="0">
-                                                  <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="infoButton5" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                              </Group>
-                                          </Group>
+                                          <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="infoButton5" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace pref="108" max="32767" attributes="0"/>
                                       </Group>
+                                      <Component id="tableUnreferenced" alignment="0" max="32767" attributes="0"/>
                                   </Group>
                                 </DimensionLayout>
                                 <DimensionLayout dim="1">
@@ -1143,7 +1178,7 @@
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="2" attributes="0">
                                               <Component id="infoButton5" alignment="2" min="-2" max="-2" attributes="0"/>
-                                              <Component id="jLabel2" alignment="2" max="-2" attributes="0"/>
+                                              <Component id="jLabel2" alignment="2" min="-2" pref="26" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="tableUnreferenced" min="-2" pref="615" max="-2" attributes="0"/>
@@ -1152,6 +1187,17 @@
                                 </DimensionLayout>
                               </Layout>
                               <SubComponents>
+                                <Component class="javax.swing.JLabel" name="jLabel2">
+                                  <Properties>
+                                    <Property name="text" type="java.lang.String" value="&lt;html&gt;Shows the mapSprites that are not referenced in the entries.&lt;/html&gt;"/>
+                                  </Properties>
+                                </Component>
+                                <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton5">
+                                  <Properties>
+                                    <Property name="messageText" type="java.lang.String" value="&lt;html&gt;Indicates mapsprites that will not be loaded into the game.&lt;br&gt;&lt;br&gt;Mapsprites can appear here if they were removed through the &apos;optimise&apos; button.&lt;br&gt;If using &quot;FILE_PER_CHARACTER&quot; export mode for images (i.e. 6 sprites per image) then empty sprites may appear as unreferenced (i.e. with mapsprite151.png).&lt;/html&gt;"/>
+                                    <Property name="text" type="java.lang.String" value=""/>
+                                  </Properties>
+                                </Component>
                                 <Component class="com.sfc.sf2.core.gui.controls.Table" name="tableUnreferenced">
                                   <Properties>
                                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -1161,17 +1207,6 @@
                                     <Property name="model" type="com.sfc.sf2.core.models.AbstractTableModel" editor="org.netbeans.modules.form.ComponentChooserEditor">
                                       <ComponentRef name="mapSpriteTableModel"/>
                                     </Property>
-                                  </Properties>
-                                </Component>
-                                <Component class="javax.swing.JLabel" name="jLabel2">
-                                  <Properties>
-                                    <Property name="text" type="java.lang.String" value="&lt;html&gt;Shows the mapSprites that are not referenced in the entries.&lt;/html&gt;"/>
-                                  </Properties>
-                                </Component>
-                                <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton5">
-                                  <Properties>
-                                    <Property name="messageText" type="java.lang.String" value="&lt;html&gt;Indicates mapSprites that will not be loaded into the game.&lt;br&gt;&lt;br&gt;MapSprites can appear here if they were removed through the &apos;optimise&apos; button.&lt;br&gt;If using &quot;FILE_PER_CHARACTER&quot; export mode for images (i.e. 6 sprites per image) then empty sprites may appear as unreferenced (i.e. with mapsprite151.png).&lt;/html&gt;"/>
-                                    <Property name="text" type="java.lang.String" value=""/>
                                   </Properties>
                                 </Component>
                               </SubComponents>

@@ -156,19 +156,27 @@ public class BattleMapTerrainMainEditor extends AbstractMainEditor {
 
         accordionPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Entries data"));
 
+        fileButton2.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
         fileButton2.setFilePath(".\\terrainentries.asm");
+        fileButton2.setInfoMessage("");
         fileButton2.setLabelText("Terrain entries :");
 
         directoryButton1.setDirectoryPath("..\\graphics\\maps\\mappalettes\\entries.asm");
+        directoryButton1.setInfoMessage("");
         directoryButton1.setLabelText("Map palette entries :");
 
         directoryButton2.setDirectoryPath("..\\graphics\\maps\\maptilesets\\entries.asm");
+        directoryButton2.setInfoMessage("");
         directoryButton2.setLabelText("Map tileset entries :");
 
+        fileButton1.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
         fileButton1.setFilePath("..\\maps\\entries.asm");
+        fileButton1.setInfoMessage("");
         fileButton1.setLabelText("Map entries :");
 
+        fileButton5.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
         fileButton5.setFilePath("..\\..\\sf2enums.asm");
+        fileButton5.setInfoMessage("");
         fileButton5.setLabelText("Land effect enums :");
 
         javax.swing.GroupLayout accordionPanel1Layout = new javax.swing.GroupLayout(accordionPanel1);
@@ -201,10 +209,14 @@ public class BattleMapTerrainMainEditor extends AbstractMainEditor {
                 .addContainerGap())
         );
 
+        fileButton3.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ANY_ASSEMBLY);
         fileButton3.setFilePath(".\\global\\battlemapcoords.asm");
+        fileButton3.setInfoMessage("");
         fileButton3.setLabelText("Battlemap coords :");
 
+        fileButton6.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ANY_ASSEMBLY);
         fileButton6.setFilePath(".\\global\\landeffectsettingsandmovecosts.asm");
+        fileButton6.setInfoMessage("");
         fileButton6.setLabelText("Land effects :");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -257,7 +269,9 @@ public class BattleMapTerrainMainEditor extends AbstractMainEditor {
             }
         });
 
+        fileButton4.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
         fileButton4.setFilePath(".\\entries\\battle01\\terrain.bin");
+        fileButton4.setInfoMessage("");
         fileButton4.setLabelText("Battlemap terrain :");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
@@ -297,7 +311,9 @@ public class BattleMapTerrainMainEditor extends AbstractMainEditor {
             }
         });
 
+        fileButton7.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
         fileButton7.setFilePath(".\\global\\landeffectsettingsandmovecosts.asm");
+        fileButton7.setInfoMessage("");
         fileButton7.setLabelText("Land effects :");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
@@ -361,10 +377,10 @@ public class BattleMapTerrainMainEditor extends AbstractMainEditor {
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(11, 11, 11)
                 .addComponent(terrainKeyPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, Short.MAX_VALUE)
+                .addGap(18, 36, Short.MAX_VALUE)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );

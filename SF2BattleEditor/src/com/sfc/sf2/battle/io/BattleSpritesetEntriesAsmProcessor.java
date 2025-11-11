@@ -39,7 +39,7 @@ public class BattleSpritesetEntriesAsmProcessor extends AbstractAsmProcessor<Ent
     }
 
     @Override
-    protected String getHeaderName(EntriesAsmData item) {
+    protected String getHeaderName(EntriesAsmData item, EmptyPackage pckg) {
         return "Battle Spritesets";
     }
 

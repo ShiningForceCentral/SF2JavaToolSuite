@@ -6,7 +6,7 @@
 
 package com.sfc.sf2.icon.settings;
 
-import com.sfc.sf2.core.io.AbstractRawImageProcessor.FileFormat;
+import com.sfc.sf2.core.io.FileFormat;
 import com.sfc.sf2.core.settings.AbstractSettings;
 import com.sfc.sf2.icon.IconManager.IconExportMode;
 import java.util.HashMap;
@@ -19,7 +19,6 @@ public class IconSettings implements AbstractSettings {
 
     private IconExportMode exportMode;
     private FileFormat exportFileFormat;
-    
     private int itemsPerRow;
     
     public IconExportMode getExportMode() {

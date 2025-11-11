@@ -127,8 +127,8 @@
                         <DimensionLayout dim="1">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
-                                  <Component id="jPanel3" min="-2" pref="336" max="-2" attributes="0"/>
-                                  <EmptySpace pref="55" max="32767" attributes="0"/>
+                                  <Component id="jPanel3" min="-2" pref="343" max="-2" attributes="0"/>
+                                  <EmptySpace pref="48" max="32767" attributes="0"/>
                                   <Component id="jPanel5" min="-2" pref="103" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -157,7 +157,7 @@
                                           <Component id="fileButton3" alignment="0" pref="0" max="32767" attributes="0"/>
                                           <Component id="fileButton2" alignment="0" pref="0" max="32767" attributes="0"/>
                                           <Component id="fileButton1" alignment="1" pref="0" max="32767" attributes="0"/>
-                                          <Group type="102" attributes="0">
+                                          <Group type="102" alignment="0" attributes="0">
                                               <Component id="jLabel22" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                           </Group>
@@ -175,6 +175,8 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="1" attributes="0">
                                       <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="accordionPanel1" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
                                       <Component id="jLabel22" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="fileButton1" min="-2" max="-2" attributes="0"/>
@@ -183,13 +185,11 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="fileButton3" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="accordionPanel1" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="jButton18" min="-2" max="-2" attributes="0"/>
                                           <Component id="jLabel2" min="-2" pref="27" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
@@ -202,19 +202,31 @@
                             </Component>
                             <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton1">
                               <Properties>
+                                <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                  <Value id="ASM"/>
+                                </Property>
                                 <Property name="filePath" type="java.lang.String" value="..\u005c..\u005c..\u005c..\u005ccode\u005cgameflow\u005cbattle\u005cbattlescenes\u005canimation\u005cbolt.asm" containsInvalidXMLChars="true"/>
+                                <Property name="infoMessage" type="java.lang.String" value=""/>
                                 <Property name="labelText" type="java.lang.String" value="Spell anim :"/>
                               </Properties>
                             </Component>
                             <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton2">
                               <Properties>
+                                <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                  <Value id="BIN"/>
+                                </Property>
                                 <Property name="filePath" type="java.lang.String" value=".\u005cspellgraphics04.bin" containsInvalidXMLChars="true"/>
+                                <Property name="infoMessage" type="java.lang.String" value=""/>
                                 <Property name="labelText" type="java.lang.String" value="Spell graphic :"/>
                               </Properties>
                             </Component>
                             <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton3">
                               <Properties>
+                                <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                  <Value id="BIN"/>
+                                </Property>
                                 <Property name="filePath" type="java.lang.String" value="..\u005cbattlescenebasepalette.bin" containsInvalidXMLChars="true"/>
+                                <Property name="infoMessage" type="java.lang.String" value=""/>
                                 <Property name="labelText" type="java.lang.String" value="Spell base palette :"/>
                               </Properties>
                             </Component>
@@ -261,25 +273,41 @@
                               <SubComponents>
                                 <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton5">
                                   <Properties>
+                                    <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                      <Value id="BIN"/>
+                                    </Property>
                                     <Property name="filePath" type="java.lang.String" value="..\u005cbackgrounds\u005cbackground09.bin" containsInvalidXMLChars="true"/>
+                                    <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="Background :"/>
                                   </Properties>
                                 </Component>
                                 <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton6">
                                   <Properties>
+                                    <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                      <Value id="BIN"/>
+                                    </Property>
                                     <Property name="filePath" type="java.lang.String" value="..\u005cgrounds\u005cgroundtiles09.bin" containsInvalidXMLChars="true"/>
+                                    <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="Ground :"/>
                                   </Properties>
                                 </Component>
                                 <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton7">
                                   <Properties>
+                                    <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                      <Value id="BIN"/>
+                                    </Property>
                                     <Property name="filePath" type="java.lang.String" value="..\u005cbattlescenebasepalette.bin" containsInvalidXMLChars="true"/>
+                                    <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="Ground base palette :"/>
                                   </Properties>
                                 </Component>
                                 <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton8">
                                   <Properties>
+                                    <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                      <Value id="BIN"/>
+                                    </Property>
                                     <Property name="filePath" type="java.lang.String" value="..\u005cgrounds\u005cgroundpalette09.bin" containsInvalidXMLChars="true"/>
+                                    <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="Ground palette :"/>
                                   </Properties>
                                 </Component>
@@ -361,7 +389,11 @@
                             </Component>
                             <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton4">
                               <Properties>
+                                <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                  <Value id="ASM"/>
+                                </Property>
                                 <Property name="filePath" type="java.lang.String" value=".\u005canimations\u005cboltanimdata.asm" containsInvalidXMLChars="true"/>
+                                <Property name="infoMessage" type="java.lang.String" value=""/>
                                 <Property name="labelText" type="java.lang.String" value="Spell Anim :"/>
                               </Properties>
                             </Component>

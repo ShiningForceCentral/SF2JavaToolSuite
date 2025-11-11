@@ -104,24 +104,24 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
         jSplitPane2 = new javax.swing.JSplitPane();
         jPanel8 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jButton18 = new javax.swing.JButton();
         accordionPanelEnvironment = new com.sfc.sf2.core.gui.controls.AccordionPanel();
         fileButton1 = new com.sfc.sf2.core.gui.controls.FileButton();
+        jLabel23 = new javax.swing.JLabel();
         fileButton2 = new com.sfc.sf2.core.gui.controls.FileButton();
         fileButton3 = new com.sfc.sf2.core.gui.controls.FileButton();
-        jLabel23 = new javax.swing.JLabel();
         fileButton4 = new com.sfc.sf2.core.gui.controls.FileButton();
         accordionPanelWeapon = new com.sfc.sf2.core.gui.controls.AccordionPanel();
         fileButton5 = new com.sfc.sf2.core.gui.controls.FileButton();
         fileButton6 = new com.sfc.sf2.core.gui.controls.FileButton();
+        jLabel2 = new javax.swing.JLabel();
         fileButton7 = new com.sfc.sf2.core.gui.controls.FileButton();
         fileButton8 = new com.sfc.sf2.core.gui.controls.FileButton();
-        infoButton5 = new com.sfc.sf2.core.gui.controls.InfoButton();
+        jButton18 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        infoButton4 = new com.sfc.sf2.core.gui.controls.InfoButton();
         fileButton9 = new com.sfc.sf2.core.gui.controls.FileButton();
+        jButton2 = new javax.swing.JButton();
         jPanel10 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -136,11 +136,13 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
         jLabel6 = new javax.swing.JLabel();
         jComboBox2 = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
+        infoButton5 = new com.sfc.sf2.core.gui.controls.InfoButton();
         jPanel14 = new javax.swing.JPanel();
         jButton3 = new javax.swing.JButton();
         jCheckBox2 = new javax.swing.JCheckBox();
         jSpinner1 = new javax.swing.JSpinner();
         jLabel8 = new javax.swing.JLabel();
+        infoButton6 = new com.sfc.sf2.core.gui.controls.InfoButton();
         jPanel6 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jSpinner2 = new javax.swing.JSpinner();
@@ -166,30 +168,28 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Import from :"));
         jPanel3.setPreferredSize(new java.awt.Dimension(590, 135));
 
-        jLabel2.setText("<html>Select disassembly files</html>");
-        jLabel2.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-
-        jButton18.setText("Import");
-        jButton18.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton18ActionPerformed(evt);
-            }
-        });
-
         accordionPanelEnvironment.setBorder(javax.swing.BorderFactory.createTitledBorder("Environment"));
 
+        fileButton1.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
         fileButton1.setFilePath("..\\backgrounds\\background09.bin");
+        fileButton1.setInfoMessage("Loads a Background, for the animation preview.");
         fileButton1.setLabelText("Background :");
-
-        fileButton2.setFilePath("..\\battlescenebasepalette.bin");
-        fileButton2.setLabelText("Ground base palette :");
-
-        fileButton3.setFilePath("..\\grounds\\groundpalette09.bin");
-        fileButton3.setLabelText("Gound palette :");
 
         jLabel23.setText("Ground :");
 
+        fileButton2.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
+        fileButton2.setFilePath("..\\battlescenebasepalette.bin");
+        fileButton2.setInfoMessage("The battle base palette to use for the Ground platform preview.");
+        fileButton2.setLabelText("Ground base palette :");
+
+        fileButton3.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
+        fileButton3.setFilePath("..\\grounds\\groundpalette09.bin");
+        fileButton3.setInfoMessage("The palette to use for the Ground platform preview.");
+        fileButton3.setLabelText("Gound palette :");
+
+        fileButton4.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
         fileButton4.setFilePath("..\\grounds\\groundtiles09.bin");
+        fileButton4.setInfoMessage("Loads a Ground platform, for the animation preview.");
         fileButton4.setLabelText("Ground :");
 
         javax.swing.GroupLayout accordionPanelEnvironmentLayout = new javax.swing.GroupLayout(accordionPanelEnvironment);
@@ -199,7 +199,7 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
             .addGroup(accordionPanelEnvironmentLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(accordionPanelEnvironmentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fileButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(fileButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
                     .addComponent(fileButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(fileButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(accordionPanelEnvironmentLayout.createSequentialGroup()
@@ -226,10 +226,14 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
 
         accordionPanelWeapon.setBorder(javax.swing.BorderFactory.createTitledBorder("Weapon"));
 
+        fileButton5.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
         fileButton5.setFilePath("..\\weapons\\palettes\\entries.asm");
+        fileButton5.setInfoMessage("The entries file for weapon palettes.");
         fileButton5.setLabelText("Weapon palettes :");
 
+        fileButton6.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
         fileButton6.setFilePath("..\\weapons\\weaponsprite04.bin");
+        fileButton6.setInfoMessage("<html>Loads a placeholder weapon for the animation preview.<br>The weapon can be hidden with the checbox on the right of the animation window.</html>");
         fileButton6.setLabelText("Weapon :");
 
         javax.swing.GroupLayout accordionPanelWeaponLayout = new javax.swing.GroupLayout(accordionPanelWeapon);
@@ -239,7 +243,7 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
             .addGroup(accordionPanelWeaponLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(accordionPanelWeaponLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fileButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(fileButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
                     .addComponent(fileButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -253,14 +257,23 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jLabel2.setText("Import animation disassembly.");
+
         fileButton7.setFilePath(".\\allies\\allybattlesprite00.bin");
+        fileButton7.setInfoMessage("<html>Loads a battlesprite to animate. In general, each battesprite is matched to specific animation files (see the info button for \"Battle Sprite Animation\").</html>");
         fileButton7.setLabelText("Battle sprite :");
 
+        fileButton8.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
         fileButton8.setFilePath(".\\allies\\animations\\allyanimation000.bin");
+        fileButton8.setInfoMessage("<html>Loads the animation data. By default, ally animations 0-39 are <i>attack</> animations, 40-79 are <i>dodge</> animations, 80+ for <i>special</> animations.<br>See <b>SF2Enums</b> \"; enum AllyBattleAnimations\".<br><br>By default, enemy animations 0-59 are <i>attack</> animations, 60-117 are <i>dodge</> animations, 118+ for <i>special</> animations.<br>See <b>SF2Enums</b> \"; enum EnemyBattleAnimations\".</html>");
         fileButton8.setLabelText("Battle sprite animation :");
 
-        infoButton5.setMessageText("<html>By default, ally animations 0-39 are <i>attack</> animations, 40-79 are <i>dodge</> animations, 80+ for <i>special</> animations.<br>See <b>SF2Enums</b> \"; enum AllyBattleAnimations\".<br><br>By default, enemy animations 0-59 are <i>attack</> animations, 60-117 are <i>dodge</> animations, 118+ for <i>special</> animations.<br>See <b>SF2Enums</b> \"; enum EnemyBattleAnimations\".</html>");
-        infoButton5.setText("");
+        jButton18.setText("Import");
+        jButton18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton18ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -270,16 +283,15 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton18))
                     .addComponent(fileButton7, javax.swing.GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE)
                     .addComponent(accordionPanelWeapon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(accordionPanelEnvironment, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(fileButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(fileButton8, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(infoButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel2)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -289,24 +301,29 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
                 .addComponent(accordionPanelEnvironment, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(accordionPanelWeapon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(fileButton7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(fileButton8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(infoButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(fileButton8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton18)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jButton18)
+                .addContainerGap())
         );
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Export to :"));
         jPanel5.setPreferredSize(new java.awt.Dimension(32, 135));
 
-        jLabel1.setText("<html>Creates a new file, or overwrites existing file.<br/>(MAKE BACKUPS !)</html>");
-        jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jLabel1.setText("Export animation disassembly.");
+
+        infoButton4.setMessageText("<html>Exports the animation in format \"allyanimationXXX.bin\" or \"enemyanimationXXX.bin.<br>By default, ally animations 0-39 are <i>attack</> animations, 40-79 are <i>dodge</> animations, 80+ for <i>special</> animations.<br>See <b>SF2Enums</b> \"; enum AllyBattleAnimations\".<br><br>By default, enemy animations 0-59 are <i>attack</> animations, 60-117 are <i>dodge</> animations, 118+ for <i>special</> animations.<br>See <b>SF2Enums</b> \"; enum EnemyBattleAnimations\".</html>");
+        infoButton4.setText("");
+
+        fileButton9.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
+        fileButton9.setFilePath(".\\allies\\animations\\newallyanimation000.bin");
+        fileButton9.setInfoMessage("");
+        fileButton9.setLabelText("Animation :");
 
         jButton2.setText("Export");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -315,9 +332,6 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
             }
         });
 
-        fileButton9.setFilePath(".\\allies\\animations\\newallyanimation000.bin");
-        fileButton9.setLabelText("Animation :");
-
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -325,23 +339,29 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fileButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(fileButton9, javax.swing.GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton2))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)))
+                        .addComponent(infoButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(infoButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(fileButton9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jButton2)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
@@ -357,9 +377,9 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 186, Short.MAX_VALUE)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 126, Short.MAX_VALUE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -390,11 +410,11 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 569, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE)
         );
 
         jPanel12.setBorder(javax.swing.BorderFactory.createTitledBorder("Display"));
@@ -456,6 +476,9 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
 
         jLabel5.setText("<html>Battle Sprite<br>Palette : </html>");
 
+        infoButton5.setMessageText("Whether or not to show a weapon in the animation preview.");
+        infoButton5.setText("");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -473,7 +496,9 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
                         .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jCheckBox1)))
+                        .addComponent(jCheckBox1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(infoButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -488,7 +513,9 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox1)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jCheckBox1)
+                    .addComponent(infoButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -517,6 +544,9 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
 
         jLabel8.setText("Anim frame :");
 
+        infoButton6.setMessageText("<html>Alternates between animation frames 0 & 1.<br>NOTE: Some characters do not have an idle animation.<br>NOTE: Idle animation speed is defined by the battlesprite (edit in BattleSpriteManager).</html>");
+        infoButton6.setText("");
+
         javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
         jPanel14.setLayout(jPanel14Layout);
         jPanel14Layout.setHorizontalGroup(
@@ -526,6 +556,8 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
                         .addComponent(jCheckBox2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(infoButton6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton3))
                     .addGroup(jPanel14Layout.createSequentialGroup()
@@ -544,6 +576,7 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jButton3)
+                    .addComponent(infoButton6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jCheckBox2))
                 .addContainerGap())
         );
@@ -629,7 +662,7 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
                 .addComponent(jCheckBox3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(infoButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -644,7 +677,7 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
                     .addComponent(jSpinner3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jCheckBox3)
                     .addComponent(infoButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, 0))
         );
 
         tableFrames.setBorder(javax.swing.BorderFactory.createTitledBorder("Animation frames"));
@@ -664,7 +697,7 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
                 .addContainerGap()
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 579, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(tableFrames, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -678,11 +711,11 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(tableFrames, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
+                .addComponent(tableFrames, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -899,7 +932,9 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton1;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton2;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton3;
+    private com.sfc.sf2.core.gui.controls.InfoButton infoButton4;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton5;
+    private com.sfc.sf2.core.gui.controls.InfoButton infoButton6;
     private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;

@@ -9,6 +9,8 @@ import com.sfc.sf2.map.block.MapBlock;
 import com.sfc.sf2.map.layout.MapLayout;
 import com.sfc.sf2.map.animation.MapAnimation;
 import com.sfc.sf2.map.block.MapBlockset;
+import static com.sfc.sf2.map.layout.MapLayout.BLOCK_WIDTH;
+import com.sfc.sf2.map.layout.MapLayoutBlock;
 
 /**
  *
@@ -120,13 +122,13 @@ public class Map {
     }
 
     public void setActionFlag(int x, int y, int value) {
-        MapBlock block = this.layout.getBlockset().getBlocks()[y*64+x];
+        MapLayoutBlock block = this.layout.getBlocks()[y*BLOCK_WIDTH+x];
         int origFlags = block.getFlags();
         int newValue = value;
-        if ((origFlags & MapBlock.MAP_FLAG_STEP) != 0 && newValue == MapBlock.MAP_FLAG_SHOW) {
-            newValue = MapBlock.MAP_FLAG_STEP;
+        if ((origFlags & MapLayoutBlock.MAP_FLAG_STEP) != 0 && newValue == MapLayoutBlock.MAP_FLAG_SHOW) {
+            newValue = MapLayoutBlock.MAP_FLAG_STEP;
         }
-        int newFlags = (origFlags & MapBlock.MAP_FLAG_HIDE)+(newValue & 0x3FFF);
+        int newFlags = (origFlags & MapLayoutBlock.MAP_FLAG_HIDE)+(newValue & 0x3FFF);
         block.setFlags(newFlags);
     }
 }

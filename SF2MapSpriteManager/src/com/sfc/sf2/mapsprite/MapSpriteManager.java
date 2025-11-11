@@ -7,9 +7,8 @@ package com.sfc.sf2.mapsprite;
 
 import com.sfc.sf2.core.AbstractManager;
 import com.sfc.sf2.core.gui.controls.Console;
-import com.sfc.sf2.core.io.AbstractRawImageProcessor;
-import com.sfc.sf2.core.io.AbstractRawImageProcessor.FileFormat;
 import com.sfc.sf2.core.io.DisassemblyException;
+import com.sfc.sf2.core.io.FileFormat;
 import com.sfc.sf2.core.io.asm.AsmException;
 import com.sfc.sf2.core.io.asm.EntriesAsmData;
 import com.sfc.sf2.core.io.asm.EntriesAsmProcessor;
@@ -93,6 +92,7 @@ public class MapSpriteManager extends AbstractManager {
         if (entriesMax < entriesData.entriesCount()/3) {
             entriesMax = entriesData.entriesCount()/3;
         }
+        unreferencedMapsprites = null;
         mapSprites = new MapSpriteEntries(entriesMax*3);
         int frameCount = 0;
         int failedToLoad = 0;
@@ -142,21 +142,21 @@ public class MapSpriteManager extends AbstractManager {
     }
 
     public MapSpriteEntries importAllDisassemblies(Path mapspritesPath, Path entriesPath, Path paletteFilePath) throws IOException, AsmException, DisassemblyException {
-        HashMap<Integer, MapSprite> loadedSprites = importSprites(mapspritesPath, paletteFilePath, true, FileFormat.UNKNOWN);
+        HashMap<Integer, MapSprite> loadedSprites = importSprites(mapspritesPath, paletteFilePath, FileFormat.BIN);
         parseEntries(entriesPath, loadedSprites);
         return mapSprites; 
     }
     
     public MapSpriteEntries importAllImages(Path paletteFilePath, Path imagesPath, Path entriesPath, FileFormat format) throws IOException, AsmException, DisassemblyException {
-        HashMap<Integer, MapSprite> loadedSprites = importSprites(imagesPath, paletteFilePath, false, format);
+        HashMap<Integer, MapSprite> loadedSprites = importSprites(imagesPath, paletteFilePath, format);
         parseEntries(entriesPath, loadedSprites);
         return mapSprites;
     }
     
-    public HashMap<Integer, MapSprite> importSprites(Path itemsPath, Path paletteFilePath, boolean binFiles, FileFormat format) throws IOException, AsmException, DisassemblyException {
+    public HashMap<Integer, MapSprite> importSprites(Path itemsPath, Path paletteFilePath, FileFormat format) throws IOException, AsmException, DisassemblyException {
         Console.logger().finest("ENTERING importSprites");
         Palette palette = paletteManager.importDisassembly(paletteFilePath, true);
-        File[] files = FileHelpers.findAllFilesInDirectory(itemsPath, "mapsprite", binFiles ? ".bin" : AbstractRawImageProcessor.GetFileExtensionString(format));
+        File[] files = FileHelpers.findAllFilesInDirectory(itemsPath, "mapsprite", format);
         Console.logger().finest(files.length + " files found.");
         HashMap<Integer, MapSprite> mapSprites = new HashMap<>();
         int frameCount = 0;
@@ -167,7 +167,7 @@ public class MapSpriteManager extends AbstractManager {
                 int[] indices = getIndicesFromFilename(tilesetPath.getFileName());
                 Block[] frames = null;
                 MapSpritePackage pckg = new MapSpritePackage(tilesetPath.getFileName().toString(), indices, palette, null);
-                if (binFiles) {
+                if (format == FileFormat.BIN) {
                     frames = mapSpriteDisassemblyProcessor.importDisassembly(tilesetPath, pckg);
                 } else {
                     frames = mapSpriteRawImageProcessor.importRawImage(tilesetPath, pckg);
@@ -327,7 +327,7 @@ public class MapSpriteManager extends AbstractManager {
                             if (frames[0] != null) {
                                 files++;
                                 int[] indices = new int[] { mapSprite.getIndex(), mapSprite.getFacingIndex(), i%2 };
-                                filePath = basePath.resolve(String.format("mapsprite%03d-%d-%d%s", indices[0], indices[1], indices[2], AbstractRawImageProcessor.GetFileExtensionString(format)));
+                                filePath = basePath.resolve(String.format("mapsprite%03d-%d-%d%s", indices[0], indices[1], indices[2], format.getExt()));
                                 MapSpritePackage pckg = new MapSpritePackage(null, indices, palette, exportMode);
                                 mapSpriteRawImageProcessor.exportRawImage(filePath, frames, pckg);
                             }
@@ -343,7 +343,7 @@ public class MapSpriteManager extends AbstractManager {
                         if (frames[0] != null && frames[1] != null) {
                             files++;
                             int[] indices = new int[] { mapSprite.getIndex(), mapSprite.getFacingIndex(), -1 };
-                            filePath = basePath.resolve(String.format("mapsprite%03d-%d%s", indices[0], indices[1], AbstractRawImageProcessor.GetFileExtensionString(format)));
+                            filePath = basePath.resolve(String.format("mapsprite%03d-%d%s", indices[0], indices[1], format.getExt()));
                             MapSpritePackage pckg = new MapSpritePackage(null, indices, palette, exportMode);
                             mapSpriteRawImageProcessor.exportRawImage(filePath, frames, pckg);
                         }
@@ -378,7 +378,7 @@ public class MapSpriteManager extends AbstractManager {
                         }
                         if (allEmpty) continue;
                         int[] indices = new int[] { index, -1, -1 };
-                        filePath = basePath.resolve(String.format("mapsprite%03d%s", indices[0], AbstractRawImageProcessor.GetFileExtensionString(format)));
+                        filePath = basePath.resolve(String.format("mapsprite%03d%s", indices[0], format.getExt()));
                         MapSpritePackage pckg = new MapSpritePackage(null, indices, palette, exportMode);
                         mapSpriteRawImageProcessor.exportRawImage(filePath, frames, pckg);
                         break;

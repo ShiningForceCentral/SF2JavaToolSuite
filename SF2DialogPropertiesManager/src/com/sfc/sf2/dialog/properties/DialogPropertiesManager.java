@@ -8,6 +8,7 @@ package com.sfc.sf2.dialog.properties;
 import com.sfc.sf2.core.AbstractManager;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.core.io.DisassemblyException;
+import com.sfc.sf2.core.io.FileFormat;
 import com.sfc.sf2.core.io.asm.AsmException;
 import com.sfc.sf2.dialog.properties.io.AllyDialogPropertiesAsmProcessor;
 import com.sfc.sf2.dialog.properties.io.DialogPropertiesAsmProcessor;
@@ -68,7 +69,7 @@ public class DialogPropertiesManager extends AbstractManager {
        
     public DialogProperty[] importDisassembly(Path filePath) throws IOException, AsmException, DisassemblyException {
         Console.logger().finest("ENTERING importDisassembly");
-        if (PathHelpers.extensionFromPath(filePath).equals("bin")) {
+        if (FileFormat.getFormat(filePath) == FileFormat.BIN) {
             dialogProperties = dialogDisassemblyProcessor.importDisassembly(filePath, dialogEnums);
         } else {
             dialogProperties = dialogAsmProcessor.importAsmData(filePath, dialogEnums);
@@ -117,7 +118,7 @@ public class DialogPropertiesManager extends AbstractManager {
     public void exportDisassembly(Path filePath, DialogProperty[] dialogProperties) throws IOException, AsmException, DisassemblyException {
         Console.logger().finest("ENTERING exportDisassembly");
         this.dialogProperties = dialogProperties;
-        if (PathHelpers.extensionFromPath(filePath).equals("bin")) {
+        if (FileFormat.getFormat(filePath) == FileFormat.BIN) {
             dialogDisassemblyProcessor.exportDisassembly(filePath, dialogProperties, dialogEnums);
         } else {
             dialogAsmProcessor.exportAsmData(filePath, dialogProperties, dialogEnums);

@@ -115,8 +115,6 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
         infoButton3 = new com.sfc.sf2.core.gui.controls.InfoButton();
         directoryButtonBasePath = new com.sfc.sf2.core.gui.controls.DirectoryButton();
         directoryButtonIncbinPath = new com.sfc.sf2.core.gui.controls.DirectoryButton();
-        infoButton1 = new com.sfc.sf2.core.gui.controls.InfoButton();
-        infoButton2 = new com.sfc.sf2.core.gui.controls.InfoButton();
         jRadioThemeLight = new javax.swing.JRadioButton();
         jRadioThemeDark = new javax.swing.JRadioButton();
         jLabel6 = new javax.swing.JLabel();
@@ -175,19 +173,15 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
         infoButton3.setMessageText("<html>If the .jar file detects that it is inside SF2DISASM then it will assume that the user wants to load data from this SF2DISASM directory.<br>Toggle this off and use the 'base folder' and 'incbin folder' to point to a custom directory.<br><b>Most users do not need to edit this.</b></html>");
         infoButton3.setText("");
 
+        directoryButtonBasePath.setInfoMessage("<html>Base folder is where the .jar file is expected to be run from.<br><b>Most users do not need to edit this path.</b></html>");
         directoryButtonBasePath.setLabelText("Base folder :");
         directoryButtonBasePath.setMinimumSize(new java.awt.Dimension(150, 25));
         directoryButtonBasePath.setPreferredSize(new java.awt.Dimension(200, 25));
 
+        directoryButtonIncbinPath.setInfoMessage("<html>Incbin is the root folder for the disassemby (usually SF2DISASM\\disasm\\)<br><b>Most users do not need to edit this path.</b></html>");
         directoryButtonIncbinPath.setLabelText("incbin folder :");
         directoryButtonIncbinPath.setMinimumSize(new java.awt.Dimension(150, 25));
         directoryButtonIncbinPath.setPreferredSize(new java.awt.Dimension(200, 25));
-
-        infoButton1.setMessageText("<html>Base folder is where the .jar file is expected to be run from.<br><b>Most users do not need to edit this path.</b></html>");
-        infoButton1.setText("");
-
-        infoButton2.setMessageText("<html>Incbin is the root folder for the disassemby (usually SF2DISASM\\disasm\\)<br><b>Most users do not need to edit this path.</b></html>");
-        infoButton2.setText("");
 
         buttonGroupTheme.add(jRadioThemeLight);
         jRadioThemeLight.setText("Light");
@@ -215,17 +209,13 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
                                 .addComponent(jRadioThemeLight)
                                 .addGap(18, 18, 18)
                                 .addComponent(jRadioThemeDark)
-                                .addGap(0, 125, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanelSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(infoButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(infoButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 157, Short.MAX_VALUE)))
+                        .addContainerGap())
                     .addGroup(jPanelSettingsLayout.createSequentialGroup()
                         .addComponent(jCheckBoxPrioritise)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(infoButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanelSettingsLayout.setVerticalGroup(
             jPanelSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -235,13 +225,9 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
                     .addComponent(infoButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jCheckBoxPrioritise))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(infoButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(directoryButtonBasePath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(directoryButtonBasePath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(infoButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(directoryButtonIncbinPath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(directoryButtonIncbinPath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -249,7 +235,7 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
                     .addComponent(jRadioThemeDark)
                     .addComponent(jRadioThemeLight)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jFrameSettingsLayout = new javax.swing.GroupLayout(jFrameSettings.getContentPane());
@@ -567,8 +553,6 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroupTheme;
     private com.sfc.sf2.core.gui.controls.DirectoryButton directoryButtonBasePath;
     private com.sfc.sf2.core.gui.controls.DirectoryButton directoryButtonIncbinPath;
-    private com.sfc.sf2.core.gui.controls.InfoButton infoButton1;
-    private com.sfc.sf2.core.gui.controls.InfoButton infoButton2;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton3;
     private javax.swing.JButton jButtonClear;
     private javax.swing.JButton jButtonRedo;

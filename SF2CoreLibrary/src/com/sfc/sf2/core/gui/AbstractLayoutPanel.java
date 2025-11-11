@@ -132,7 +132,7 @@ public abstract class AbstractLayoutPanel extends JPanel implements AnimationLis
     public void setItemsPerRow(int itemsPerRow) {
         if (this.itemsPerRow != itemsPerRow) {
             this.itemsPerRow = itemsPerRow;
-            if (BaseLayoutComponent.IsEnabled(coordsHeader)) { coordsHeader.setItemsPerRow(itemsPerRow); }
+            if (coordsHeader != null) { coordsHeader.setItemsPerRow(itemsPerRow); }
             redraw();
         }
     }

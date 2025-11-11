@@ -232,16 +232,23 @@ public class MapAnimationMainEditor extends AbstractMainEditor {
 
         accordionPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Palette, tilesets, & map data"));
 
+        fileButton1.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
         fileButton1.setFilePath("..\\graphics\\maps\\mappalettes\\entries.asm");
+        fileButton1.setInfoMessage("");
         fileButton1.setLabelText("Palette entries :");
 
+        fileButton2.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
         fileButton2.setFilePath("..\\graphics\\maps\\maptilesets\\entries.asm");
+        fileButton2.setInfoMessage("");
         fileButton2.setLabelText("Tilesets entries :");
 
+        fileButton3.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
         fileButton3.setFilePath(".\\entries.asm");
+        fileButton3.setInfoMessage("");
         fileButton3.setLabelText("Map entries :");
 
         directoryButton1.setDirectoryPath(".\\entries\\");
+            directoryButton1.setInfoMessage("");
             directoryButton1.setLabelText("Maps dir :");
 
             javax.swing.GroupLayout accordionPanel2Layout = new javax.swing.GroupLayout(accordionPanel2);
@@ -422,24 +429,36 @@ public class MapAnimationMainEditor extends AbstractMainEditor {
 
             accordionPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Palette, tilesets, & map data"));
 
+            fileButton13.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
             fileButton13.setFilePath("..\\graphics\\maps\\mappalettes\\entries.asm");
+            fileButton13.setInfoMessage("");
             fileButton13.setLabelText("Palette entries :");
 
+            fileButton14.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
             fileButton14.setFilePath("..\\graphics\\maps\\maptilesets\\entries.asm");
+            fileButton14.setInfoMessage("");
             fileButton14.setLabelText("Tilesets entries :");
 
+            fileButton19.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
             fileButton19.setFilePath("00-tilesets.asm");
+            fileButton19.setInfoMessage("");
             fileButton19.setLabelText("Map tilesets :");
 
+            fileButton20.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
             fileButton20.setFilePath("0-blocks.bin");
+            fileButton20.setInfoMessage("");
             fileButton20.setLabelText("Map blockset :");
             fileButton20.setToolTipText("");
 
+            fileButton21.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
             fileButton21.setFilePath("1-layout.bin");
+            fileButton21.setInfoMessage("");
             fileButton21.setLabelText("Map layout :");
             fileButton21.setToolTipText("");
 
+            fileButton22.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
             fileButton22.setFilePath("9-animations.asm");
+            fileButton22.setInfoMessage("");
             fileButton22.setLabelText("Map anim :");
             fileButton22.setToolTipText("");
 
@@ -592,28 +611,44 @@ public class MapAnimationMainEditor extends AbstractMainEditor {
 
                     jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Import :"));
 
+                    fileButton8.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
                     fileButton8.setFilePath("..\\graphics\\maps\\mappalettes\\mappalette00.bin");
+                    fileButton8.setInfoMessage("");
                     fileButton8.setLabelText("Palette :");
 
+                    fileButton9.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
                     fileButton9.setFilePath("..\\graphics\\maps\\maptilesets\\maptileset000.bin");
+                    fileButton9.setInfoMessage("");
                     fileButton9.setLabelText("Tileset 1 :");
 
+                    fileButton10.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
                     fileButton10.setFilePath("..\\graphics\\maps\\maptilesets\\maptileset037.bin");
+                    fileButton10.setInfoMessage("");
                     fileButton10.setLabelText("Tileset 2 :");
 
+                    fileButton11.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
                     fileButton11.setFilePath("..\\graphics\\maps\\maptilesets\\maptileset043.bin");
+                    fileButton11.setInfoMessage("");
                     fileButton11.setLabelText("Tileset 3 :");
 
+                    fileButton12.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
                     fileButton12.setFilePath("..\\graphics\\maps\\maptilesets\\maptileset053.bin");
+                    fileButton12.setInfoMessage("");
                     fileButton12.setLabelText("Tileset 4 :");
 
+                    fileButton15.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
                     fileButton15.setFilePath("..\\graphics\\maps\\maptilesets\\maptileset066.bin");
+                    fileButton15.setInfoMessage("");
                     fileButton15.setLabelText("Tileset 5 :");
 
+                    fileButton16.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
                     fileButton16.setFilePath(".\\entries\\map03\\0-blocks.bin");
+                    fileButton16.setInfoMessage("");
                     fileButton16.setLabelText("Blocks file :");
 
+                    fileButton17.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
                     fileButton17.setFilePath(".\\entries\\map03\\1-layout.bin");
+                    fileButton17.setInfoMessage("");
                     fileButton17.setLabelText("Layout file :");
                     fileButton17.setToolTipText("");
 
@@ -627,11 +662,15 @@ public class MapAnimationMainEditor extends AbstractMainEditor {
                         }
                     });
 
+                    fileButton18.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
                     fileButton18.setFilePath(".\\entries\\map03\\9-animations.asm");
+                    fileButton18.setInfoMessage("");
                     fileButton18.setLabelText("Animation file :");
                     fileButton18.setToolTipText("");
 
+                    fileButton23.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
                     fileButton23.setFilePath("..\\graphics\\maps\\maptilesets\\entries.asm");
+                    fileButton23.setInfoMessage("");
                     fileButton23.setLabelText("Tilesets entries :");
 
                     javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -701,7 +740,7 @@ public class MapAnimationMainEditor extends AbstractMainEditor {
                         .addGroup(jPanel19Layout.createSequentialGroup()
                             .addContainerGap()
                             .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addContainerGap(320, Short.MAX_VALUE))
+                            .addContainerGap(257, Short.MAX_VALUE))
                     );
 
                     jTabbedPane1.addTab("Raw files", jPanel19);
@@ -1405,7 +1444,7 @@ public class MapAnimationMainEditor extends AbstractMainEditor {
     }
     
     private void onAnimationUpdated(LayoutAnimator.AnimationListener.AnimationFrameEvent e) {
-        mapAnimationLayoutPanel.getMapLayout().getBlockset().clearIndexedColorImage(true);
+        mapAnimationLayoutPanel.getMapLayout().clearIndexedColorImage(true);
         mapAnimationLayoutPanel.redraw();
         tableAnimFrames.jTable.setRowSelectionInterval(e.getCurrentFrame(), e.getCurrentFrame());
     }

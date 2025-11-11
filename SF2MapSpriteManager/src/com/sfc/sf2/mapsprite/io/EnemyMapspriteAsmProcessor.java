@@ -5,6 +5,7 @@
  */
 package com.sfc.sf2.mapsprite.io;
 
+import com.sfc.sf2.core.io.EmptyPackage;
 import com.sfc.sf2.core.io.asm.ListAsmProcessor;
 
 /**
@@ -28,7 +29,7 @@ public class EnemyMapspriteAsmProcessor extends ListAsmProcessor<String> {
     }
 
     @Override
-    protected String getHeaderName(String[] item) {
+    protected String getHeaderName(String[] item, EmptyPackage pckg) {
         return "Enemy map sprite indexes table";
     }
 }

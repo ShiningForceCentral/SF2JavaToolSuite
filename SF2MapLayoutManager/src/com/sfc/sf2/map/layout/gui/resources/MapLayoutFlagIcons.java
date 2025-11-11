@@ -5,10 +5,10 @@
  */
 package com.sfc.sf2.map.layout.gui.resources;
 
-import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.core.settings.CoreSettings;
 import com.sfc.sf2.core.settings.SettingsManager;
 import com.sfc.sf2.map.block.MapBlock;
+import com.sfc.sf2.map.layout.MapLayoutBlock;
 import javax.swing.ImageIcon;
 
 /**
@@ -63,20 +63,20 @@ public class MapLayoutFlagIcons {
     }
     
     public static ImageIcon getFlagIcon(int mapFlag) {
-        if ((mapFlag & MapBlock.MAP_FLAG_MASK_EXPLORE) != 0) {
-            return getBlockExplorationFlagIcon(mapFlag & MapBlock.MAP_FLAG_MASK_EXPLORE);
+        if ((mapFlag & MapLayoutBlock.MAP_FLAG_MASK_EXPLORE) != 0) {
+            return getBlockExplorationFlagIcon(mapFlag & MapLayoutBlock.MAP_FLAG_MASK_EXPLORE);
         } else {
-            return getBlockInteractionFlagIcon(mapFlag & MapBlock.MAP_FLAG_MASK_EVENTS);
+            return getBlockInteractionFlagIcon(mapFlag & MapLayoutBlock.MAP_FLAG_MASK_EVENTS);
         }
     }
     
     public static ImageIcon getBlockExplorationFlagIcon(int explorationFlags) {
         switch (explorationFlags) {
-            case MapBlock.MAP_FLAG_OBSTRUCTED:
+            case MapLayoutBlock.MAP_FLAG_OBSTRUCTED:
                 return getObstructedIcon();
-            case MapBlock.MAP_FLAG_STAIRS_RIGHT:
+            case MapLayoutBlock.MAP_FLAG_STAIRS_RIGHT:
                 return getStairsRightIcon();
-            case MapBlock.MAP_FLAG_STAIRS_LEFT:
+            case MapLayoutBlock.MAP_FLAG_STAIRS_LEFT:
                 return getStairsLeftIcon();
             default:
                 return null;
@@ -85,21 +85,21 @@ public class MapLayoutFlagIcons {
     
     public static ImageIcon getBlockInteractionFlagIcon(int interactionFlags) {
         switch (interactionFlags) {
-            case MapBlock.MAP_FLAG_STEP:
+            case MapLayoutBlock.MAP_FLAG_STEP:
                 return getStepIcon();
-            case MapBlock.MAP_FLAG_HIDE:
+            case MapLayoutBlock.MAP_FLAG_HIDE:
                 return getHideIcon();
-            case MapBlock.MAP_FLAG_SHOW:
+            case MapLayoutBlock.MAP_FLAG_SHOW:
                 return getShowIcon();
-            case MapBlock.MAP_FLAG_WARP:
+            case MapLayoutBlock.MAP_FLAG_WARP:
                 return getWarpIcon();
-            case MapBlock.MAP_FLAG_CARAVAN:
+            case MapLayoutBlock.MAP_FLAG_CARAVAN:
                 return getCaravanIcon();
-            case MapBlock.MAP_FLAG_RAFT:
+            case MapLayoutBlock.MAP_FLAG_RAFT:
                 return getRaftIcon();
-            case MapBlock.MAP_FLAG_TRIGGER:
-            case MapBlock.MAP_FLAG_LAYER_UP:
-            case MapBlock.MAP_FLAG_LAYER_DOWN:
+            case MapLayoutBlock.MAP_FLAG_TRIGGER:
+            case MapLayoutBlock.MAP_FLAG_LAYER_UP:
+            case MapLayoutBlock.MAP_FLAG_LAYER_DOWN:
                 return getBlockTriggersFlagIcon(interactionFlags);
             default:
                 return getBlockItemFlagIcon(interactionFlags);
@@ -108,11 +108,11 @@ public class MapLayoutFlagIcons {
     
     public static ImageIcon getBlockTriggersFlagIcon(int interactionFlags) {
         switch (interactionFlags) {
-            case MapBlock.MAP_FLAG_TRIGGER:
+            case MapLayoutBlock.MAP_FLAG_TRIGGER:
                 return getTriggerIcon();
-            case MapBlock.MAP_FLAG_LAYER_UP:
+            case MapLayoutBlock.MAP_FLAG_LAYER_UP:
                 return getLayerUpIcon();
-            case MapBlock.MAP_FLAG_LAYER_DOWN:
+            case MapLayoutBlock.MAP_FLAG_LAYER_DOWN:
                 return getLayerDownIcon();
             default:
                 return null;
@@ -121,17 +121,17 @@ public class MapLayoutFlagIcons {
     
     public static ImageIcon getBlockItemFlagIcon(int interactionFlags) {
         switch (interactionFlags) {
-            case MapBlock.MAP_FLAG_CHEST:
+            case MapLayoutBlock.MAP_FLAG_CHEST:
                 return getChestIcon();
-            case MapBlock.MAP_FLAG_SEARCH:
+            case MapLayoutBlock.MAP_FLAG_SEARCH:
                 return getSearchIcon();
-            case MapBlock.MAP_FLAG_TABLE:
+            case MapLayoutBlock.MAP_FLAG_TABLE:
                 return getTableIcon();
-            case MapBlock.MAP_FLAG_VASE:
+            case MapLayoutBlock.MAP_FLAG_VASE:
                 return getVaseIcon();
-            case MapBlock.MAP_FLAG_BARREL:
+            case MapLayoutBlock.MAP_FLAG_BARREL:
                 return getBarrelIcon();
-            case MapBlock.MAP_FLAG_SHELF:
+            case MapLayoutBlock.MAP_FLAG_SHELF:
                 return getShelfIcon();
             default:
                 return null;

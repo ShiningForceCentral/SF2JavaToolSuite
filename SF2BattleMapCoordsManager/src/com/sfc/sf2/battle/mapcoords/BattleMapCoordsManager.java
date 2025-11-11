@@ -53,17 +53,10 @@ public class BattleMapCoordsManager extends AbstractManager {
         Console.logger().finest("EXITING exportDisassembly");
     }
     
-    public void ImportMapEntries(Path mapEntriesPath) throws IOException, AsmException {
+    public MapLayout importMapFromEntries(Path paletteEntriesPath, Path tilesetsEntriesPath, Path mapEntriesPath, int mapId) throws IOException, AsmException, DisassemblyException {
         mapLayoutManager.ImportMapEntries(mapEntriesPath);
-    }
-    
-    public MapLayout importMap(Path paletteEntriesPath, Path tilesetsEntriesPath, int mapId) throws IOException, AsmException, DisassemblyException {
-        battleMapLayout = mapLayoutManager.importMap(paletteEntriesPath, tilesetsEntriesPath, mapId);
+        battleMapLayout = mapLayoutManager.importDisassemblyFromMapEntries(paletteEntriesPath, tilesetsEntriesPath, mapEntriesPath, mapId);
         return battleMapLayout;
-    }
-    
-    public boolean doesMapDataExist(int mapID) {
-        return mapLayoutManager.doesMapDataExist(mapID);
     }
 
     public BattleMapCoords[] getCoords() {

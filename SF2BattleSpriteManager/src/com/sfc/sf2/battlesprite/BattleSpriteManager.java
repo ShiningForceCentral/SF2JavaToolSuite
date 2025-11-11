@@ -10,9 +10,8 @@ import com.sfc.sf2.battlesprite.io.BattleSpriteDisassemblyProcessor;
 import com.sfc.sf2.battlesprite.io.BattleSpriteMetadataProcessor;
 import com.sfc.sf2.core.AbstractManager;
 import com.sfc.sf2.core.gui.controls.Console;
-import com.sfc.sf2.core.io.AbstractRawImageProcessor;
-import com.sfc.sf2.core.io.AbstractRawImageProcessor.FileFormat;
 import com.sfc.sf2.core.io.DisassemblyException;
+import com.sfc.sf2.core.io.FileFormat;
 import com.sfc.sf2.core.io.MetadataException;
 import com.sfc.sf2.core.io.RawImageException;
 import com.sfc.sf2.graphics.Tileset;
@@ -66,29 +65,29 @@ public class BattleSpriteManager extends AbstractManager {
     
     public BattleSprite importImage(Path filePath, boolean useImagePalette) throws IOException, RawImageException, DisassemblyException, FileNotFoundException, MetadataException {
         Console.logger().finest("ENTERING importImage");
-        FileFormat format = AbstractRawImageProcessor.fileExtensionToFormat(filePath);
-        if (format == FileFormat.UNKNOWN) {
-            format = FileFormat.PNG;
+        FileFormat format = FileFormat.getFormat(filePath);
+        if (format != FileFormat.PNG || format != FileFormat.GIF) {
+            format = FileFormat.ANY_IMAGE;
         }
         String filename = getImageName(filePath.getFileName().toString());
         filePath = filePath.getParent();
-        File[] files = FileHelpers.findAllFilesInDirectory(filePath, filename + "-palette-", ".bin");
-        Palette[] palettes = new Palette[useImagePalette || files.length == 0 ? files.length+1 : files.length];
+        File[] files = FileHelpers.findAllFilesInDirectory(filePath, filename+"-palette-", FileFormat.BIN);
+        Palette[] palettes = new Palette[files.length == 0 ? files.length+1 : files.length];
         for (int f=0; f < files.length; f++) {
             Palette palette = paletteManager.importDisassembly(files[f].toPath(), true);
             palettes[f] = palette;
             palette.setName(Integer.toString(f));
         }
         Palette defaultPalette = useImagePalette || palettes.length == 0 || palettes[0] == null ? null : palettes[0];
-        files = FileHelpers.findAllFilesInDirectory(filePath, filename + "-frame-", AbstractRawImageProcessor.GetFileExtensionString(format));
+        files = FileHelpers.findAllFilesInDirectory(filePath, filename+"-frame-", format);
         Tileset[] frames = new Tileset[files.length];
         for (int f=0; f < files.length; f++) {
             Tileset frame = tilesetManager.importImage(files[f].toPath(), true);
             if (defaultPalette == null) {
                 defaultPalette = frame.getPalette();
                 if (useImagePalette) {
-                    palettes[palettes.length-1] = defaultPalette;
-                    defaultPalette.setName("From Image");
+                    palettes[0] = defaultPalette;
+                    defaultPalette.setName("0 (From Image)");
                 } else if (palettes[0] == null) {
                     palettes[palettes.length-1] = defaultPalette;
                     defaultPalette.setName("0");
@@ -101,30 +100,34 @@ public class BattleSpriteManager extends AbstractManager {
         battlesprite = new BattleSprite(type, frames, palettes);
         
         Path metaPath = filePath.resolve(filename + ".meta");
-        battleSpriteMetadataProcessor.importMetadata(metaPath, battlesprite);
+        if (metaPath.toFile().exists()) {
+            battleSpriteMetadataProcessor.importMetadata(metaPath, battlesprite);
+        } else {
+            Console.logger().warning("WARNING Metadata file could not be found so Battle sprite will load without meta data. Path : " + filePath);
+        }
         Console.logger().info("Battle Sprite successfully imported from : " + filePath);
         Console.logger().finest("EXITING importImage");
         return battlesprite;
     }
     
-    public void exportImage(Path filePath, BattleSprite battlesprite, int selectedPalette) throws IOException, DisassemblyException, RawImageException, MetadataException {
+    public void exportImage(Path filePath, BattleSprite battlesprite, int selectedPalette, FileFormat fileFormat) throws IOException, DisassemblyException, RawImageException, MetadataException {
         Console.logger().finest("ENTERING exportImage");
         this.battlesprite = battlesprite;
-        FileFormat format = AbstractRawImageProcessor.fileExtensionToFormat(filePath);
+        FileFormat format = FileFormat.getFormat(filePath);
         if (format == FileFormat.UNKNOWN) {
-            format = FileFormat.PNG;
+            format = fileFormat;
         }
         Tileset[] frames = battlesprite.getFrames();
         String filename = getImageName(filePath.getFileName().toString());
         filePath = filePath.getParent();
         for (int i=0; i < frames.length; i++) {
-            Path framePath = filePath.resolve(filename + "-frame-" + String.valueOf(i) + AbstractRawImageProcessor.GetFileExtensionString(format));
+            Path framePath = filePath.resolve(filename+"-frame-"+String.valueOf(i)+format.getExt());
             tilesetManager.exportImage(framePath, frames[i]);
         }
         Palette[] palettes = battlesprite.getPalettes();
         if (palettes.length > 0) {
             for (int i=0; i < palettes.length; i++) {
-                Path palettePath = filePath.resolve(filename + "-palette-" + String.valueOf(i) + ".bin");
+                Path palettePath = filePath.resolve(filename + "-palette-" + String.valueOf(i) + FileFormat.BIN.getExt());
                 paletteManager.exportDisassembly(palettePath, palettes[i]);
             }
             Console.logger().info(palettes.length + " Battle Sprite palettes successfully exported");
@@ -140,12 +143,17 @@ public class BattleSpriteManager extends AbstractManager {
         int dotIndex = filename.indexOf('.');
         int frameIndex = filename.indexOf("-frame");
         int paletteIndex = filename.indexOf("-palette");
+        int dashIndex = filename.indexOf("-");
         if (frameIndex >= 0) {
             return filename.substring(0, frameIndex);
         } else if (paletteIndex >= 0) {
             return filename.substring(0, paletteIndex);
+        } else if (dashIndex >= 0) {
+            return filename.substring(0, dashIndex);
         } else if (dotIndex >= 0) {
-            return filename.substring(0, dotIndex);
+            if (dotIndex > filename.lastIndexOf("\\")) {
+                return filename.substring(0, dotIndex);
+            }
         }
         return filename;
     }

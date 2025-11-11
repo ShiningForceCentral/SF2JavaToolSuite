@@ -133,10 +133,10 @@
                             <DimensionLayout dim="1">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jPanel3" min="-2" pref="314" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="jPanel3" min="-2" pref="321" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
                                       <Component id="terrainKeyPanel1" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="32767" attributes="0"/>
+                                      <EmptySpace type="separate" pref="36" max="32767" attributes="0"/>
                                       <Component id="jPanel5" min="-2" pref="133" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                   </Group>
@@ -266,31 +266,45 @@
                                   <SubComponents>
                                     <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton2">
                                       <Properties>
+                                        <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                          <Value id="ASM"/>
+                                        </Property>
                                         <Property name="filePath" type="java.lang.String" value=".\u005cterrainentries.asm" containsInvalidXMLChars="true"/>
+                                        <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Terrain entries :"/>
                                       </Properties>
                                     </Component>
                                     <Component class="com.sfc.sf2.core.gui.controls.DirectoryButton" name="directoryButton1">
                                       <Properties>
                                         <Property name="directoryPath" type="java.lang.String" value="..\u005cgraphics\u005cmaps\u005cmappalettes\u005centries.asm" containsInvalidXMLChars="true"/>
+                                        <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Map palette entries :"/>
                                       </Properties>
                                     </Component>
                                     <Component class="com.sfc.sf2.core.gui.controls.DirectoryButton" name="directoryButton2">
                                       <Properties>
                                         <Property name="directoryPath" type="java.lang.String" value="..\u005cgraphics\u005cmaps\u005cmaptilesets\u005centries.asm" containsInvalidXMLChars="true"/>
+                                        <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Map tileset entries :"/>
                                       </Properties>
                                     </Component>
                                     <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton1">
                                       <Properties>
+                                        <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                          <Value id="ASM"/>
+                                        </Property>
                                         <Property name="filePath" type="java.lang.String" value="..\u005cmaps\u005centries.asm" containsInvalidXMLChars="true"/>
+                                        <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Map entries :"/>
                                       </Properties>
                                     </Component>
                                     <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton5">
                                       <Properties>
+                                        <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                          <Value id="ASM"/>
+                                        </Property>
                                         <Property name="filePath" type="java.lang.String" value="..\u005c..\u005csf2enums.asm" containsInvalidXMLChars="true"/>
+                                        <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Land effect enums :"/>
                                       </Properties>
                                     </Component>
@@ -298,13 +312,21 @@
                                 </Container>
                                 <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton3">
                                   <Properties>
+                                    <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                      <Value id="ANY_ASSEMBLY"/>
+                                    </Property>
                                     <Property name="filePath" type="java.lang.String" value=".\u005cglobal\u005cbattlemapcoords.asm" containsInvalidXMLChars="true"/>
+                                    <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="Battlemap coords :"/>
                                   </Properties>
                                 </Component>
                                 <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton6">
                                   <Properties>
+                                    <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                      <Value id="ANY_ASSEMBLY"/>
+                                    </Property>
                                     <Property name="filePath" type="java.lang.String" value=".\u005cglobal\u005clandeffectsettingsandmovecosts.asm" containsInvalidXMLChars="true"/>
+                                    <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="Land effects :"/>
                                   </Properties>
                                 </Component>
@@ -406,7 +428,11 @@
                                         </Component>
                                         <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton4">
                                           <Properties>
+                                            <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                              <Value id="BIN"/>
+                                            </Property>
                                             <Property name="filePath" type="java.lang.String" value=".\u005centries\u005cbattle01\u005cterrain.bin" containsInvalidXMLChars="true"/>
+                                            <Property name="infoMessage" type="java.lang.String" value=""/>
                                             <Property name="labelText" type="java.lang.String" value="Battlemap terrain :"/>
                                           </Properties>
                                         </Component>
@@ -469,7 +495,11 @@
                                         </Component>
                                         <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton7">
                                           <Properties>
+                                            <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                              <Value id="ASM"/>
+                                            </Property>
                                             <Property name="filePath" type="java.lang.String" value=".\u005cglobal\u005clandeffectsettingsandmovecosts.asm" containsInvalidXMLChars="true"/>
+                                            <Property name="infoMessage" type="java.lang.String" value=""/>
                                             <Property name="labelText" type="java.lang.String" value="Land effects :"/>
                                           </Properties>
                                         </Component>

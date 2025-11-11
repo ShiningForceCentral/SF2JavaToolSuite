@@ -156,8 +156,6 @@ public class MapBlockMainEditor extends AbstractMainEditor {
         jButton5 = new javax.swing.JButton();
         fileButton13 = new com.sfc.sf2.core.gui.controls.FileButton();
         fileButton14 = new com.sfc.sf2.core.gui.controls.FileButton();
-        infoButton1 = new com.sfc.sf2.core.gui.controls.InfoButton();
-        infoButton2 = new com.sfc.sf2.core.gui.controls.InfoButton();
         directoryButton2 = new com.sfc.sf2.core.gui.controls.DirectoryButton();
         jPanel10 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
@@ -243,6 +241,7 @@ public class MapBlockMainEditor extends AbstractMainEditor {
         });
 
         directoryButton1.setDirectoryPath(".\\entries\\map03\\");
+            directoryButton1.setInfoMessage("");
             directoryButton1.setLabelText("Map dir :");
 
             javax.swing.GroupLayout jPanel21Layout = new javax.swing.GroupLayout(jPanel21);
@@ -273,16 +272,24 @@ public class MapBlockMainEditor extends AbstractMainEditor {
 
             accordionPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Palette, tilesets, & map data"));
 
+            fileButton1.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
             fileButton1.setFilePath("..\\graphics\\maps\\mappalettes\\entries.asm");
+            fileButton1.setInfoMessage("");
             fileButton1.setLabelText("Palette entries :");
 
+            fileButton2.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
             fileButton2.setFilePath("..\\graphics\\maps\\maptilesets\\entries.asm");
+            fileButton2.setInfoMessage("");
             fileButton2.setLabelText("Tilesets entries :");
 
+            fileButton3.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
             fileButton3.setFilePath("00-tilesets.asm");
+            fileButton3.setInfoMessage("");
             fileButton3.setLabelText("Map tilesets :");
 
+            fileButton4.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
             fileButton4.setFilePath("0-blocks.bin");
+            fileButton4.setInfoMessage("");
             fileButton4.setLabelText("Map blockset :");
             fileButton4.setToolTipText("");
 
@@ -349,25 +356,39 @@ public class MapBlockMainEditor extends AbstractMainEditor {
                 }
             });
 
+            fileButton5.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
             fileButton5.setFilePath("..\\graphics\\maps\\mappalettes\\mappalette00.bin");
+            fileButton5.setInfoMessage("");
             fileButton5.setLabelText("Palette :");
 
+            fileButton6.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
             fileButton6.setFilePath("..\\graphics\\maps\\maptilesets\\maptileset000.bin");
+            fileButton6.setInfoMessage("");
             fileButton6.setLabelText("Tileset 1 :");
 
+            fileButton7.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
             fileButton7.setFilePath("..\\graphics\\maps\\maptilesets\\maptileset037.bin");
+            fileButton7.setInfoMessage("");
             fileButton7.setLabelText("Tileset 2 :");
 
+            fileButton8.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
             fileButton8.setFilePath("..\\graphics\\maps\\maptilesets\\maptileset043.bin");
+            fileButton8.setInfoMessage("");
             fileButton8.setLabelText("Tileset 3 :");
 
+            fileButton9.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
             fileButton9.setFilePath("..\\graphics\\maps\\maptilesets\\maptileset053.bin");
+            fileButton9.setInfoMessage("");
             fileButton9.setLabelText("Tileset 4 :");
 
+            fileButton10.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
             fileButton10.setFilePath("..\\graphics\\maps\\maptilesets\\maptileset066.bin");
+            fileButton10.setInfoMessage("");
             fileButton10.setLabelText("Tileset 5 :");
 
+            fileButton11.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
             fileButton11.setFilePath(".\\entries\\map03\\0-blocks.bin");
+            fileButton11.setInfoMessage("");
             fileButton11.setLabelText("Blocks file :");
 
             javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -457,10 +478,14 @@ public class MapBlockMainEditor extends AbstractMainEditor {
                 }
             });
 
+            fileButton12.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
             fileButton12.setFilePath("00-tilesets.asm");
+            fileButton12.setInfoMessage("");
             fileButton12.setLabelText("Map tilesets :");
 
+            fileButton15.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
             fileButton15.setFilePath("0-blocks.bin");
+            fileButton15.setInfoMessage("");
             fileButton15.setLabelText("Map blockset :");
             fileButton15.setToolTipText("");
 
@@ -506,17 +531,15 @@ public class MapBlockMainEditor extends AbstractMainEditor {
                 }
             });
 
+            fileButton13.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ANY_IMAGE);
             fileButton13.setFilePath(".\\blockset.png");
+            fileButton13.setInfoMessage("<html>Exports an image of all of the blocks in the blockset (just like the 'blockset panel'.<br>Can be used with the Sf2MapCreator.</html>");
             fileButton13.setLabelText("Image file :");
 
+            fileButton14.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.TXT);
             fileButton14.setFilePath(".\\blocksethptiles.txt");
+            fileButton14.setInfoMessage("<html>Exports a file containing the priority flags for the blockset.</html>");
             fileButton14.setLabelText("Block HP tiles :");
-
-            infoButton1.setMessageText("<html>Exports an image of all of the blocks in the blockset (just like the 'blockset panel'.<br>Can be used with the Sf2MapCreator.</html>");
-            infoButton1.setText("");
-
-            infoButton2.setMessageText("<html>Exports a file containing the priority flags for the blockset.</html>");
-            infoButton2.setText("");
 
             javax.swing.GroupLayout jPanel28Layout = new javax.swing.GroupLayout(jPanel28);
             jPanel28.setLayout(jPanel28Layout);
@@ -526,30 +549,20 @@ public class MapBlockMainEditor extends AbstractMainEditor {
                     .addContainerGap()
                     .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel28Layout.createSequentialGroup()
-                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jButton5))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel28Layout.createSequentialGroup()
-                            .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(fileButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                .addComponent(fileButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(infoButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(infoButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(fileButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(fileButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                     .addContainerGap())
             );
             jPanel28Layout.setVerticalGroup(
                 jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel28Layout.createSequentialGroup()
                     .addContainerGap()
-                    .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(fileButton13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(infoButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(fileButton13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(fileButton14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(infoButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(fileButton14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jButton5)
@@ -560,6 +573,7 @@ public class MapBlockMainEditor extends AbstractMainEditor {
             jTabbedPane2.addTab("Image", jPanel28);
 
             directoryButton2.setDirectoryPath(".\\entries\\map03\\");
+                directoryButton2.setInfoMessage("");
                 directoryButton2.setLabelText("Map dir :");
 
                 javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
@@ -578,7 +592,7 @@ public class MapBlockMainEditor extends AbstractMainEditor {
                         .addContainerGap()
                         .addComponent(directoryButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTabbedPane2))
+                        .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 );
 
                 jTabbedPane2.getAccessibleContext().setAccessibleName("tab");
@@ -595,7 +609,7 @@ public class MapBlockMainEditor extends AbstractMainEditor {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel31Layout.createSequentialGroup()
                         .addComponent(jPanel32, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, Short.MAX_VALUE)
-                        .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, 227, Short.MAX_VALUE))
+                        .addComponent(jPanel17, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE))
                 );
 
                 jSplitPane3.setLeftComponent(jPanel31);
@@ -626,7 +640,7 @@ public class MapBlockMainEditor extends AbstractMainEditor {
                 );
                 jPanel1Layout.setVerticalGroup(
                     jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE)
                 );
 
                 jPanel12.setBorder(javax.swing.BorderFactory.createTitledBorder("Blocks display"));
@@ -690,39 +704,39 @@ public class MapBlockMainEditor extends AbstractMainEditor {
                     .addGroup(jPanel12Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel12Layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jCheckBox1))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel9)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(colorPickerBlockset, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jCheckBox4)))
+                                .addComponent(jCheckBox1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
+                                .addComponent(jCheckBox4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap())
                 );
                 jPanel12Layout.setVerticalGroup(
                     jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel12Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(jLabel5)
-                            .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jCheckBox1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
+                        .addGap(0, 0, 0)
                         .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                             .addComponent(jLabel4)
                             .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jCheckBox4)
+                            .addComponent(jCheckBox1)
                             .addComponent(jLabel9)
                             .addComponent(colorPickerBlockset, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(jLabel5)
+                            .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jCheckBox4))
                         .addContainerGap())
                 );
 
@@ -789,7 +803,7 @@ public class MapBlockMainEditor extends AbstractMainEditor {
                 jPanel10Layout.setVerticalGroup(
                     jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 462, Short.MAX_VALUE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 468, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -836,8 +850,7 @@ public class MapBlockMainEditor extends AbstractMainEditor {
                 jScrollPane4.setViewportView(tilesetsLayoutPanel);
 
                 jPanel20.setBorder(javax.swing.BorderFactory.createTitledBorder("Tileset display"));
-                jPanel20.setMinimumSize(new java.awt.Dimension(340, 100));
-                jPanel20.setPreferredSize(new java.awt.Dimension(340, 100));
+                jPanel20.setMinimumSize(null);
 
                 jLabel15.setText("Scale :");
 
@@ -902,42 +915,43 @@ public class MapBlockMainEditor extends AbstractMainEditor {
                         .addContainerGap()
                         .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel20Layout.createSequentialGroup()
+                                .addComponent(jLabel21)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jSpinner4, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel10)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(colorPickerTileset, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jCheckBox2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jCheckBox2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel15)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel20Layout.createSequentialGroup()
                                 .addComponent(jLabel29)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel21)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jSpinner4, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap())
                 );
                 jPanel20Layout.setVerticalGroup(
                     jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel20Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel20Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(jLabel21)
-                            .addComponent(jLabel29)
-                            .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jSpinner4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(jCheckBox2)
+                            .addComponent(jSpinner4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel15)
                             .addComponent(jLabel10)
                             .addComponent(colorPickerTileset, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel15)
-                            .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap())
+                            .addComponent(jCheckBox2)
+                            .addComponent(jLabel21))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(jLabel29)
+                            .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 );
 
                 javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
@@ -947,13 +961,13 @@ public class MapBlockMainEditor extends AbstractMainEditor {
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addContainerGap())
-                    .addComponent(jPanel20, javax.swing.GroupLayout.DEFAULT_SIZE, 442, Short.MAX_VALUE)
+                    .addComponent(jPanel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 );
                 jPanel9Layout.setVerticalGroup(
                     jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                         .addComponent(jPanel20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 );
 
@@ -1560,8 +1574,6 @@ public class MapBlockMainEditor extends AbstractMainEditor {
     private com.sfc.sf2.core.gui.controls.FileButton fileButton7;
     private com.sfc.sf2.core.gui.controls.FileButton fileButton8;
     private com.sfc.sf2.core.gui.controls.FileButton fileButton9;
-    private com.sfc.sf2.core.gui.controls.InfoButton infoButton1;
-    private com.sfc.sf2.core.gui.controls.InfoButton infoButton2;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton3;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton4;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton5;

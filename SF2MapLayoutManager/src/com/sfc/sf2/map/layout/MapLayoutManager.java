@@ -15,6 +15,7 @@ import com.sfc.sf2.helpers.FileHelpers;
 import com.sfc.sf2.helpers.PathHelpers;
 import com.sfc.sf2.map.block.MapBlockset;
 import com.sfc.sf2.map.block.MapBlocksetManager;
+import com.sfc.sf2.map.layout.compression.MapLayoutDecoder;
 import com.sfc.sf2.map.layout.io.MapEntriesAsmProcessor;
 import com.sfc.sf2.map.layout.io.MapEntryData;
 import com.sfc.sf2.map.layout.io.MapLayoutDisassemblyProcessor;
@@ -46,7 +47,7 @@ public class MapLayoutManager extends AbstractManager {
             blockset = null;
         }
         if (layout != null) {
-            layout.getBlockset().clearIndexedColorImage(true);
+            layout.clearIndexedColorImage(true);
             layout = null;
         }
         mapEntries = null;
@@ -106,8 +107,9 @@ public class MapLayoutManager extends AbstractManager {
     
     public void exportDisassembly(Path tilesetsPath, Path blocksetPath, Path layoutPath, MapBlockset mapBlockset, MapLayout mapLayout) throws IOException, DisassemblyException, AsmException {
         Console.logger().finest("ENTERING exportDisassembly");
-        blockset = mapBlockset;
         layout = mapLayout;
+        blockset = mapBlockset;
+        new MapLayoutDecoder().optimiseBlockset(blockset, mapLayout); //Blockset must be optimised before saving either blockset or layout
         mapBlocksetManager.exportDisassembly(tilesetsPath, blocksetPath, blockset, mapBlocksetManager.getTilesets());
         MapLayoutPackage pckg = new MapLayoutPackage(layout.getIndex(), blockset, mapLayout.getTilesets());
         layoutDisassemblyProcessor.exportDisassembly(layoutPath, layout, pckg);
@@ -118,16 +120,17 @@ public class MapLayoutManager extends AbstractManager {
     public void exportDisassemblyFromMapEntries(Path mapEntriesPath, int mapId, MapBlockset mapBlockset, MapLayout mapLayout) throws IOException, DisassemblyException, AsmException {
         Console.logger().finest("ENTERING exportDisassembly");
         ImportMapEntries(mapEntriesPath);
-        blockset = mapBlockset;
-        layout = mapLayout;
         if (mapId < 0 || mapId >= mapEntries.length || mapEntries[mapId] == null) {
             throw new DisassemblyException("Cannot export map " + mapId + ". Map entry was not found or map entries are corrupted.");
         }
+        layout = mapLayout;
+        blockset = mapBlockset;
+        new MapLayoutDecoder().optimiseBlockset(blockset, mapLayout); //Blockset must be optimised before saving either blockset or layout
         MapEntryData mapEntry = mapEntries[mapId];
         Path layoutPath = mapEntry.getLayoutPath() == null ? null : PathHelpers.getIncbinPath().resolve(mapEntry.getLayoutPath());
         Path blocksetPath = mapEntry.getBlocksPath() == null ? null : PathHelpers.getIncbinPath().resolve(mapEntry.getBlocksPath());
         Path tilesetsPath = mapEntry.getTilesetsPath() == null ? null : PathHelpers.getIncbinPath().resolve(mapEntry.getTilesetsPath());
-        mapBlocksetManager.exportDisassembly(tilesetsPath, blocksetPath, mapBlockset, mapLayout.getTilesets());
+        mapBlocksetManager.exportDisassembly(tilesetsPath, blocksetPath, blockset, mapLayout.getTilesets());
         MapLayoutPackage pckg = new MapLayoutPackage(layout.getIndex(), blockset, mapLayout.getTilesets());
         layoutDisassemblyProcessor.exportDisassembly(layoutPath, layout, pckg);
         Console.logger().info("Map layout successfully exported from entries to : " + layoutPath);
@@ -136,8 +139,8 @@ public class MapLayoutManager extends AbstractManager {
     
     public void exportImage(Path filepath, Path flagsPath, Path hpFilePath, MapLayout layout) throws IOException, RawImageException, MetadataException {
         Console.logger().finest("ENTERING exportImage");
-        mapBlocksetManager.exportImage(filepath, hpFilePath, MapLayout.BLOCK_WIDTH, layout.getBlockset(), layout.getTilesets());
-        mapLayoutMetaProcessor.exportMetadata(flagsPath, layout.getBlockset());
+        mapBlocksetManager.exportImage(filepath, hpFilePath, MapLayout.BLOCK_WIDTH, layout.layoutToBlockset(), layout.getTilesets());
+        mapLayoutMetaProcessor.exportMetadata(flagsPath, layout);
         Console.logger().info("Map layout successfully exported to image : " + filepath + ", flags : " + flagsPath + ", and hpTiles : " + hpFilePath);
         Console.logger().finest("EXITING exportImage");
     }

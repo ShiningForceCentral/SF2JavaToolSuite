@@ -194,7 +194,7 @@ public class BattleSpritesetAsmProcessor extends AbstractAsmProcessor<BattleSpri
     }
 
     @Override
-    protected String getHeaderName(BattleSpriteset item) {
+    protected String getHeaderName(BattleSpriteset item, BattleSpritesetPackage pckg) {
         return String.format("Battle Spritesets %02d", item.getIndex());
     }
 

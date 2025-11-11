@@ -155,7 +155,7 @@ public class MapBlockset {
     }
     
     public static MapBlockset EmptyMapBlockset(int blocksPerRow) {
-        MapBlock emptyBlock = MapBlock.EmptyMapBlock(-1, 0);
+        MapBlock emptyBlock = MapBlock.EmptyMapBlock(-1);
         MapBlock[] blocks = new MapBlock[128];
         for(int i=0; i < blocks.length; i++) {
             blocks[i] = emptyBlock;

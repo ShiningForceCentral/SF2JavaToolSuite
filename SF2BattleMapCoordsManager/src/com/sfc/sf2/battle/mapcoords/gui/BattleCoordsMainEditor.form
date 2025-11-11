@@ -259,19 +259,31 @@
                                   <SubComponents>
                                     <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton1">
                                       <Properties>
+                                        <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                          <Value id="ASM"/>
+                                        </Property>
                                         <Property name="filePath" type="java.lang.String" value="..\u005cgraphics\u005cmaps\u005cmappalettes\u005centries.asm" containsInvalidXMLChars="true"/>
+                                        <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Palette entries :"/>
                                       </Properties>
                                     </Component>
                                     <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton2">
                                       <Properties>
+                                        <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                          <Value id="ASM"/>
+                                        </Property>
                                         <Property name="filePath" type="java.lang.String" value="..\u005cgraphics\u005cmaps\u005cmaptilesets\u005centries.asm" containsInvalidXMLChars="true"/>
+                                        <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Tilesets entries :"/>
                                       </Properties>
                                     </Component>
                                     <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton3">
                                       <Properties>
+                                        <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                          <Value id="ASM"/>
+                                        </Property>
                                         <Property name="filePath" type="java.lang.String" value="..\u005cmaps\u005centries.asm" containsInvalidXMLChars="true"/>
+                                        <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Map entries :"/>
                                       </Properties>
                                     </Component>
@@ -340,7 +352,11 @@
                                 </Component>
                                 <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton5">
                                   <Properties>
+                                    <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                      <Value id="ASM"/>
+                                    </Property>
                                     <Property name="filePath" type="java.lang.String" value=".\u005cglobal\u005cbattlemapcoords.asm" containsInvalidXMLChars="true"/>
+                                    <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="Battle map coords :"/>
                                   </Properties>
                                 </Component>
@@ -393,8 +409,8 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jPanel1" pref="633" max="32767" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jPanel1" pref="639" max="32767" attributes="0"/>
+                                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                                   <Component id="jPanel25" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -421,7 +437,7 @@
                             </DimensionLayout>
                             <DimensionLayout dim="1">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jScrollPane2" alignment="0" pref="632" max="32767" attributes="0"/>
+                                  <Component id="jScrollPane2" alignment="0" pref="616" max="32767" attributes="0"/>
                               </Group>
                             </DimensionLayout>
                           </Layout>
@@ -469,11 +485,11 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="jCheckBox1" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace pref="264" max="32767" attributes="0"/>
-                                      <Component id="jCheckBox2" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Component id="jLabel59" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="colorPicker1" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="jCheckBox2" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>

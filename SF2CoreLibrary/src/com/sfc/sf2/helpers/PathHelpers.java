@@ -34,6 +34,13 @@ public class PathHelpers {
         return Path.of(coreSettings.getActiveIncbinPath());
     }
     
+    public static Path makeAbsolute(Path path) {
+        if (!path.isAbsolute()) {
+            path = getBasePath().resolve(path);
+        }
+        return path;
+    }
+    
     public static String filenameFromPath(Path path) {
         String name = path.getFileName().toString();
         int dotIndex = name.lastIndexOf('.');
@@ -55,9 +62,7 @@ public class PathHelpers {
     }
     
     public static File getNearestValidParent(Path path) {
-        if (!path.isAbsolute()) {
-            path = getBasePath().resolve(path);
-        }
+        path = makeAbsolute(path);
         return getNearestValidParent(path.toFile());
     }
     

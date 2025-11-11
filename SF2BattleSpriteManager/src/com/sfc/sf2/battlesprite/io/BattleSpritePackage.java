@@ -5,7 +5,7 @@
  */
 package com.sfc.sf2.battlesprite.io;
 
-import com.sfc.sf2.core.io.AbstractRawImageProcessor.FileFormat;
+import com.sfc.sf2.core.io.FileFormat;
 
 /**
  *

@@ -181,8 +181,8 @@ public class BattleManager extends AbstractManager {
         return enemyData;
     }
     
-    public MapLayout loadNewMap(Path paletteEntriesPath, Path tilesetEntriesPath, int mapIndex) throws IOException, AsmException, DisassemblyException {
-        return mapTerrainManager.importMap(paletteEntriesPath, tilesetEntriesPath, mapIndex);
+    public MapLayout loadNewMap(Path paletteEntriesPath, Path tilesetEntriesPath, Path mapEntriesPath, int mapIndex) throws IOException, AsmException, DisassemblyException {
+        return mapTerrainManager.importMap(paletteEntriesPath, tilesetEntriesPath, mapEntriesPath, mapIndex);
     }
 
     public Battle getBattle() {

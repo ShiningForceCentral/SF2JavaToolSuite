@@ -142,13 +142,19 @@ public class BattleCoordsMainEditor extends AbstractMainEditor {
 
         accordionPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Entries"));
 
+        fileButton1.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
         fileButton1.setFilePath("..\\graphics\\maps\\mappalettes\\entries.asm");
+        fileButton1.setInfoMessage("");
         fileButton1.setLabelText("Palette entries :");
 
+        fileButton2.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
         fileButton2.setFilePath("..\\graphics\\maps\\maptilesets\\entries.asm");
+        fileButton2.setInfoMessage("");
         fileButton2.setLabelText("Tilesets entries :");
 
+        fileButton3.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
         fileButton3.setFilePath("..\\maps\\entries.asm");
+        fileButton3.setInfoMessage("");
         fileButton3.setLabelText("Map entries :");
 
         javax.swing.GroupLayout accordionPanel1Layout = new javax.swing.GroupLayout(accordionPanel1);
@@ -217,7 +223,9 @@ public class BattleCoordsMainEditor extends AbstractMainEditor {
             }
         });
 
+        fileButton5.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
         fileButton5.setFilePath(".\\global\\battlemapcoords.asm");
+        fileButton5.setInfoMessage("");
         fileButton5.setLabelText("Battle map coords :");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -316,7 +324,7 @@ public class BattleCoordsMainEditor extends AbstractMainEditor {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 632, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 616, Short.MAX_VALUE)
         );
 
         jPanel25.setBorder(javax.swing.BorderFactory.createTitledBorder("Map view"));
@@ -371,11 +379,11 @@ public class BattleCoordsMainEditor extends AbstractMainEditor {
                 .addContainerGap()
                 .addComponent(jCheckBox1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 264, Short.MAX_VALUE)
-                .addComponent(jCheckBox2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel59)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(colorPicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jCheckBox2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -410,8 +418,8 @@ public class BattleCoordsMainEditor extends AbstractMainEditor {
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 633, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 639, Short.MAX_VALUE)
+                .addGap(0, 0, 0)
                 .addComponent(jPanel25, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -472,7 +480,6 @@ public class BattleCoordsMainEditor extends AbstractMainEditor {
         Path mapEntriesPath = PathHelpers.getBasePath().resolve(fileButton3.getFilePath());
         Path battleCoordsPath = PathHelpers.getBasePath().resolve(fileButton4.getFilePath());
         try {
-            battlemapcoordsManager.ImportMapEntries(mapEntriesPath);
             coords = battlemapcoordsManager.importDisassembly(battleCoordsPath);
             selectedCoords = 0;
             loadMap(0);
@@ -504,17 +511,13 @@ public class BattleCoordsMainEditor extends AbstractMainEditor {
     
     private void loadMap(int index) {
         if (index < 0 || index >= coords.length) return;
+        Path mapEntriesPath = PathHelpers.getBasePath().resolve(fileButton3.getFilePath());
         Path paletteEntriesPath = PathHelpers.getBasePath().resolve(fileButton1.getFilePath());
         Path tilesetEntriesPath = PathHelpers.getBasePath().resolve(fileButton2.getFilePath());
         int mapId = -1;
         try {
             mapId = coords[index].getMap();
-            if (battlemapcoordsManager.doesMapDataExist(mapId)) {
-                battlemapcoordsManager.importMap(paletteEntriesPath, tilesetEntriesPath, mapId);
-            } else {
-                battlemapcoordsManager.setMapLayout(null);
-                Console.logger().warning(String.format("Battle map was not found for map%02d", mapId));
-            }
+            battlemapcoordsManager.importMapFromEntries(paletteEntriesPath, tilesetEntriesPath, mapEntriesPath, mapId);
         } catch (Exception ex) {
             battlemapcoordsManager.setMapLayout(null);
             Console.logger().log(Level.SEVERE, null, ex);

@@ -255,7 +255,7 @@ public class MapBlocksetDecoder {
         }
         MapBlock[] blocks = new MapBlock[outputTiles.length/TILES_COUNT];
         for (int i=0; i < blocks.length; i++) {
-            MapBlock block = new MapBlock(i, 0, Arrays.copyOfRange(outputTiles,i*TILES_COUNT, i*TILES_COUNT+TILES_COUNT));
+            MapBlock block = new MapBlock(i, Arrays.copyOfRange(outputTiles,i*TILES_COUNT, i*TILES_COUNT+TILES_COUNT));
             blocks[i] = block;
         }
         return blocks;

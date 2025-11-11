@@ -17,7 +17,7 @@
     </Property>
   </Properties>
   <SyntheticProperties>
-    <SyntheticProperty name="formSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,3,40,0,0,3,-8"/>
+    <SyntheticProperty name="formSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,3,40,0,0,4,22"/>
     <SyntheticProperty name="formSizePolicy" type="int" value="0"/>
     <SyntheticProperty name="generateSize" type="boolean" value="true"/>
     <SyntheticProperty name="generateCenter" type="boolean" value="true"/>
@@ -52,7 +52,7 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="jSplitPane1" alignment="1" max="32767" attributes="0"/>
+              <Component id="jSplitPane1" alignment="1" pref="1030" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -140,7 +140,7 @@
                           <Layout>
                             <DimensionLayout dim="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jTabbedPane1" alignment="1" pref="540" max="32767" attributes="0"/>
+                                  <Component id="jTabbedPane1" alignment="1" pref="0" max="32767" attributes="0"/>
                               </Group>
                             </DimensionLayout>
                             <DimensionLayout dim="1">
@@ -169,21 +169,19 @@
                                           <Group type="102" attributes="0">
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="fileButton1" max="32767" attributes="0"/>
-                                                  <Group type="102" alignment="1" attributes="0">
-                                                      <Component id="jLabel2" pref="146" max="32767" attributes="0"/>
-                                                      <EmptySpace max="-2" attributes="0"/>
-                                                      <Component id="jLabel31" min="-2" max="-2" attributes="0"/>
-                                                      <EmptySpace max="-2" attributes="0"/>
-                                                      <Component id="jComboBox1" min="-2" max="-2" attributes="0"/>
-                                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                                      <Component id="jLabel29" min="-2" max="-2" attributes="0"/>
-                                                      <EmptySpace max="-2" attributes="0"/>
-                                                      <Component id="jSpinner1" min="-2" pref="61" max="-2" attributes="0"/>
+                                                  <Component id="fileButton1" pref="528" max="32767" attributes="0"/>
+                                                  <Component id="fileButton2" alignment="0" pref="0" max="32767" attributes="0"/>
+                                                  <Group type="102" alignment="0" attributes="0">
+                                                      <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
                                                       <EmptySpace max="-2" attributes="0"/>
                                                       <Component id="jButton18" min="-2" max="-2" attributes="0"/>
                                                   </Group>
-                                                  <Component id="fileButton2" alignment="0" max="32767" attributes="0"/>
+                                                  <Group type="102" alignment="0" attributes="0">
+                                                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace max="-2" attributes="0"/>
+                                                      <Component id="infoButton4" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                                  </Group>
                                               </Group>
                                               <EmptySpace max="-2" attributes="0"/>
                                           </Group>
@@ -193,19 +191,20 @@
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" alignment="1" attributes="0">
                                               <EmptySpace max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="2" attributes="0">
+                                                  <Component id="infoButton4" alignment="2" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="jLabel2" alignment="2" min="-2" pref="26" max="-2" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace max="-2" attributes="0"/>
                                               <Component id="fileButton1" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="fileButton2" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="3" attributes="0">
-                                                  <Component id="jButton18" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jComboBox1" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
-                                                  <Component id="jLabel31" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jLabel29" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jSpinner1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="jButton18" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
                                               </Group>
-                                              <EmptySpace max="32767" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                     </DimensionLayout>
@@ -219,58 +218,133 @@
                                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton18ActionPerformed"/>
                                       </Events>
                                     </Component>
-                                    <Component class="javax.swing.JLabel" name="jLabel2">
-                                      <Properties>
-                                        <Property name="text" type="java.lang.String" value="&lt;html&gt;Select disassembly files."/>
-                                      </Properties>
-                                    </Component>
-                                    <Component class="javax.swing.JLabel" name="jLabel29">
-                                      <Properties>
-                                        <Property name="text" type="java.lang.String" value="Tile width :"/>
-                                      </Properties>
-                                    </Component>
-                                    <Component class="javax.swing.JComboBox" name="jComboBox1">
-                                      <Properties>
-                                        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                                          <StringArray count="3">
-                                            <StringItem index="0" value="None"/>
-                                            <StringItem index="1" value="Basic"/>
-                                            <StringItem index="2" value="Stack"/>
-                                          </StringArray>
-                                        </Property>
-                                        <Property name="selectedIndex" type="int" value="2"/>
-                                      </Properties>
-                                      <Events>
-                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBox1ActionPerformed"/>
-                                      </Events>
-                                      <AuxValues>
-                                        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-                                      </AuxValues>
-                                    </Component>
-                                    <Component class="javax.swing.JLabel" name="jLabel31">
-                                      <Properties>
-                                        <Property name="text" type="java.lang.String" value="Compression :"/>
-                                      </Properties>
-                                    </Component>
-                                    <Component class="javax.swing.JSpinner" name="jSpinner1">
-                                      <Properties>
-                                        <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-                                          <SpinnerModel initial="16" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
-                                        </Property>
-                                      </Properties>
-                                    </Component>
                                     <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton1">
                                       <Properties>
+                                        <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                          <Value id="BIN"/>
+                                        </Property>
                                         <Property name="filePath" type="java.lang.String" value=".\u005ctech\u005csegalogopalette.bin" containsInvalidXMLChars="true"/>
+                                        <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Palette file :"/>
                                       </Properties>
                                     </Component>
                                     <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton2">
                                       <Properties>
+                                        <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                          <Value id="BIN"/>
+                                        </Property>
                                         <Property name="filePath" type="java.lang.String" value=".\u005ctech\u005csegalogotiles.bin" containsInvalidXMLChars="true"/>
+                                        <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Graphics file :"/>
                                       </Properties>
                                     </Component>
+                                    <Component class="javax.swing.JLabel" name="jLabel2">
+                                      <Properties>
+                                        <Property name="text" type="java.lang.String" value="&lt;html&gt;Import a graphics disassembly file.&lt;/html&gt;"/>
+                                      </Properties>
+                                    </Component>
+                                    <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton4">
+                                      <Properties>
+                                        <Property name="messageText" type="java.lang.String" value="&lt;html&gt;&gt;Graphics use 16 indexed colors (colors determined by the palette).&lt;br&gt;Graphics files may be compressed (see &quot;Compression&quot; below).&lt;/html&gt;"/>
+                                        <Property name="text" type="java.lang.String" value=""/>
+                                      </Properties>
+                                    </Component>
+                                    <Container class="javax.swing.JPanel" name="jPanel2">
+                                      <Properties>
+                                        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                                          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                                            <TitledBorder/>
+                                          </Border>
+                                        </Property>
+                                      </Properties>
+
+                                      <Layout>
+                                        <DimensionLayout dim="0">
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="jLabel31" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="jComboBox1" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="infoButton2" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                                  <Component id="jLabel29" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="jSpinner1" min="-2" pref="61" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="infoButton1" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace max="32767" attributes="0"/>
+                                              </Group>
+                                          </Group>
+                                        </DimensionLayout>
+                                        <DimensionLayout dim="1">
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Group type="103" groupAlignment="2" attributes="0">
+                                                      <Component id="jLabel29" alignment="2" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="jComboBox1" alignment="2" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="jLabel31" alignment="2" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="jSpinner1" alignment="2" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="infoButton1" alignment="2" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="infoButton2" alignment="2" min="-2" max="-2" attributes="0"/>
+                                                  </Group>
+                                                  <EmptySpace max="32767" attributes="0"/>
+                                              </Group>
+                                          </Group>
+                                        </DimensionLayout>
+                                      </Layout>
+                                      <SubComponents>
+                                        <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton1">
+                                          <Properties>
+                                            <Property name="messageText" type="java.lang.String" value="&lt;html&gt;How many tiles wide the image is. Can be adjusted after the image is loaded. &lt;/html&gt;"/>
+                                            <Property name="text" type="java.lang.String" value=""/>
+                                          </Properties>
+                                        </Component>
+                                        <Component class="javax.swing.JSpinner" name="jSpinner1">
+                                          <Properties>
+                                            <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+                                              <SpinnerModel initial="16" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
+                                            </Property>
+                                          </Properties>
+                                        </Component>
+                                        <Component class="javax.swing.JLabel" name="jLabel29">
+                                          <Properties>
+                                            <Property name="text" type="java.lang.String" value="Tile width :"/>
+                                          </Properties>
+                                        </Component>
+                                        <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton2">
+                                          <Properties>
+                                            <Property name="messageText" type="java.lang.String" value="&lt;html&gt;The compression used for the graphic.&lt;br&gt;&lt;b&gt;- None:&lt;/b&gt; Uncompressed graphics. Usually for small images (e.g. icons).&lt;br&gt;&lt;b&gt;- Basic:&lt;/b&gt; Simple compression. Used in map sprites and tilesets.&lt;br&gt;&lt;b&gt;- Stack:&lt;/b&gt; Complex compression. Used for all larger images (e.g. portraits, spell/invocations, and all battle graphics).&lt;/html&gt;"/>
+                                            <Property name="text" type="java.lang.String" value=""/>
+                                          </Properties>
+                                        </Component>
+                                        <Component class="javax.swing.JComboBox" name="jComboBox1">
+                                          <Properties>
+                                            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                                              <StringArray count="3">
+                                                <StringItem index="0" value="None"/>
+                                                <StringItem index="1" value="Basic"/>
+                                                <StringItem index="2" value="Stack"/>
+                                              </StringArray>
+                                            </Property>
+                                            <Property name="selectedIndex" type="int" value="2"/>
+                                          </Properties>
+                                          <Events>
+                                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBox1ActionPerformed"/>
+                                          </Events>
+                                          <AuxValues>
+                                            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                                          </AuxValues>
+                                        </Component>
+                                        <Component class="javax.swing.JLabel" name="jLabel31">
+                                          <Properties>
+                                            <Property name="text" type="java.lang.String" value="Compression :"/>
+                                          </Properties>
+                                        </Component>
+                                      </SubComponents>
+                                    </Container>
                                   </SubComponents>
                                 </Container>
                                 <Container class="javax.swing.JPanel" name="jPanel9">
@@ -285,15 +359,20 @@
                                   <Layout>
                                     <DimensionLayout dim="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
+                                          <Group type="102" attributes="0">
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="fileButton3" max="32767" attributes="0"/>
                                                   <Group type="102" alignment="0" attributes="0">
-                                                      <Component id="jLabel3" pref="446" max="32767" attributes="0"/>
-                                                      <EmptySpace max="-2" attributes="0"/>
+                                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                                       <Component id="jButton12" min="-2" max="-2" attributes="0"/>
                                                   </Group>
+                                                  <Group type="102" attributes="0">
+                                                      <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace max="-2" attributes="0"/>
+                                                      <Component id="infoButton5" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                                  </Group>
+                                                  <Component id="fileButton3" pref="528" max="32767" attributes="0"/>
                                               </Group>
                                               <EmptySpace max="-2" attributes="0"/>
                                           </Group>
@@ -301,17 +380,16 @@
                                     </DimensionLayout>
                                     <DimensionLayout dim="1">
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
+                                          <Group type="102" attributes="0">
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="2" attributes="0">
+                                                  <Component id="infoButton5" alignment="2" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="jLabel3" alignment="2" min="-2" pref="26" max="-2" attributes="0"/>
+                                              </Group>
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="fileButton3" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Group type="102" attributes="0">
-                                                      <Component id="jButton12" min="-2" max="-2" attributes="0"/>
-                                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                                  </Group>
-                                                  <Component id="jLabel3" pref="259" max="32767" attributes="0"/>
-                                              </Group>
+                                              <Component id="jButton12" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
@@ -328,14 +406,23 @@
                                     </Component>
                                     <Component class="javax.swing.JLabel" name="jLabel3">
                                       <Properties>
-                                        <Property name="text" type="java.lang.String" value="&lt;html&gt;&#xa;Select an image File (e.g. PNG or GIF).&lt;br&gt;&#xa;Color format should be 4BPP / 16 indexed colors.&lt;br&gt;&#xa;(Images of 8BPP / 256 indexed colors will be converted to 4 BPP / 16).&#xa;&lt;/html&gt;"/>
-                                        <Property name="verticalAlignment" type="int" value="1"/>
+                                        <Property name="text" type="java.lang.String" value="&lt;html&gt;Import an image file.&lt;/html&gt;"/>
                                       </Properties>
                                     </Component>
                                     <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton3">
                                       <Properties>
+                                        <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                          <Value id="ANY_IMAGE"/>
+                                        </Property>
                                         <Property name="filePath" type="java.lang.String" value=".\u005cexport\u005csegalogotiles.png" containsInvalidXMLChars="true"/>
+                                        <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Image File :"/>
+                                      </Properties>
+                                    </Component>
+                                    <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton5">
+                                      <Properties>
+                                        <Property name="messageText" type="java.lang.String" value="&lt;html&gt;Supported image formats: PNG or GIF.&lt;br&gt;&lt;br&gt;Color format should be 4BPP / 16 indexed colors. Images of 8BPP / 256 indexed colors will be converted to 4 BPP / 16 (some colors may be lost).&lt;br&gt;Colors will be convered to CRAM format (the color format used by the SEGA Genesis).&lt;br&gt;Color index 0 is treated as transparent.&lt;/html&gt;"/>
+                                        <Property name="text" type="java.lang.String" value=""/>
                                       </Properties>
                                     </Component>
                                   </SubComponents>
@@ -417,7 +504,7 @@
                                                       </Group>
                                                   </Group>
                                                   <Group type="102" alignment="1" attributes="0">
-                                                      <EmptySpace min="0" pref="207" max="32767" attributes="0"/>
+                                                      <EmptySpace min="0" pref="167" max="32767" attributes="0"/>
                                                       <Component id="jLabel37" min="-2" max="-2" attributes="0"/>
                                                       <EmptySpace max="-2" attributes="0"/>
                                                       <Component id="jComboBox5" min="-2" max="-2" attributes="0"/>
@@ -841,7 +928,7 @@
                             </DimensionLayout>
                             <DimensionLayout dim="1">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jTabbedPane2" alignment="0" pref="172" max="32767" attributes="0"/>
+                                  <Component id="jTabbedPane2" alignment="0" max="32767" attributes="0"/>
                               </Group>
                             </DimensionLayout>
                           </Layout>
@@ -862,18 +949,19 @@
                                   <Layout>
                                     <DimensionLayout dim="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
+                                          <Group type="102" attributes="0">
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="fileButton4" max="32767" attributes="0"/>
-                                                  <Group type="102" alignment="1" attributes="0">
-                                                      <Component id="jLabel1" pref="276" max="32767" attributes="0"/>
-                                                      <EmptySpace max="-2" attributes="0"/>
-                                                      <Component id="jLabel34" min="-2" max="-2" attributes="0"/>
-                                                      <EmptySpace max="-2" attributes="0"/>
-                                                      <Component id="jComboBox4" min="-2" max="-2" attributes="0"/>
+                                                  <Group type="102" alignment="0" attributes="0">
+                                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                                      <Component id="jPanel6" min="-2" max="-2" attributes="0"/>
                                                       <EmptySpace max="-2" attributes="0"/>
                                                       <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                                                  </Group>
+                                                  <Component id="fileButton4" alignment="1" pref="522" max="32767" attributes="0"/>
+                                                  <Group type="102" alignment="0" attributes="0">
+                                                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                                   </Group>
                                               </Group>
                                               <EmptySpace max="-2" attributes="0"/>
@@ -882,22 +970,15 @@
                                     </DimensionLayout>
                                     <DimensionLayout dim="1">
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
+                                          <Group type="102" attributes="0">
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="jLabel1" min="-2" pref="26" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="fileButton4" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Group type="102" alignment="0" attributes="0">
-                                                      <Group type="103" groupAlignment="3" attributes="0">
-                                                          <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                          <Component id="jComboBox4" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                          <Component id="jLabel34" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                      </Group>
-                                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                                  </Group>
-                                                  <Group type="102" alignment="0" attributes="0">
-                                                      <EmptySpace min="5" pref="5" max="-2" attributes="0"/>
-                                                      <Component id="jLabel1" pref="94" max="32767" attributes="0"/>
-                                                  </Group>
+                                                  <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="jPanel6" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                               <EmptySpace max="-2" attributes="0"/>
                                           </Group>
@@ -915,36 +996,85 @@
                                     </Component>
                                     <Component class="javax.swing.JLabel" name="jLabel1">
                                       <Properties>
-                                        <Property name="text" type="java.lang.String" value="&lt;html&gt;Select new target files. This export will create new files.&lt;/html&gt;"/>
-                                        <Property name="verticalAlignment" type="int" value="1"/>
+                                        <Property name="text" type="java.lang.String" value="&lt;html&gt;Export the graphic to a new or existing file.&lt;/html&gt;"/>
                                       </Properties>
-                                    </Component>
-                                    <Component class="javax.swing.JLabel" name="jLabel34">
-                                      <Properties>
-                                        <Property name="text" type="java.lang.String" value="Compression :"/>
-                                      </Properties>
-                                    </Component>
-                                    <Component class="javax.swing.JComboBox" name="jComboBox4">
-                                      <Properties>
-                                        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                                          <StringArray count="3">
-                                            <StringItem index="0" value="None"/>
-                                            <StringItem index="1" value="Basic"/>
-                                            <StringItem index="2" value="Stack"/>
-                                          </StringArray>
-                                        </Property>
-                                        <Property name="selectedIndex" type="int" value="2"/>
-                                      </Properties>
-                                      <AuxValues>
-                                        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-                                      </AuxValues>
                                     </Component>
                                     <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton4">
                                       <Properties>
+                                        <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                          <Value id="BIN"/>
+                                        </Property>
                                         <Property name="filePath" type="java.lang.String" value=".\u005ctech\u005cnewsegalogo.bin" containsInvalidXMLChars="true"/>
+                                        <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Graphics file :"/>
                                       </Properties>
                                     </Component>
+                                    <Container class="javax.swing.JPanel" name="jPanel6">
+                                      <Properties>
+                                        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                                          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                                            <TitledBorder/>
+                                          </Border>
+                                        </Property>
+                                      </Properties>
+
+                                      <Layout>
+                                        <DimensionLayout dim="0">
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="jLabel34" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="jComboBox4" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="infoButton3" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace max="32767" attributes="0"/>
+                                              </Group>
+                                          </Group>
+                                        </DimensionLayout>
+                                        <DimensionLayout dim="1">
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Group type="103" groupAlignment="2" attributes="0">
+                                                      <Component id="jLabel34" alignment="2" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="jComboBox4" alignment="2" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="infoButton3" alignment="2" min="-2" max="-2" attributes="0"/>
+                                                  </Group>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                              </Group>
+                                          </Group>
+                                        </DimensionLayout>
+                                      </Layout>
+                                      <SubComponents>
+                                        <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton3">
+                                          <Properties>
+                                            <Property name="messageText" type="java.lang.String" value="&lt;html&gt;The compression used for the graphic.&lt;br&gt;&lt;b&gt;- None:&lt;/b&gt; Uncompressed graphics. Usually for small images (e.g. icons).&lt;br&gt;&lt;b&gt;- Basic:&lt;/b&gt; Simple compression. Used in map sprites and tilesets.&lt;br&gt;&lt;b&gt;- Stack:&lt;/b&gt; Complex compression. Used for all larger images (e.g. portraits, spell/invocations, and all battle graphics).&lt;/html&gt;"/>
+                                            <Property name="text" type="java.lang.String" value=""/>
+                                          </Properties>
+                                        </Component>
+                                        <Component class="javax.swing.JComboBox" name="jComboBox4">
+                                          <Properties>
+                                            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                                              <StringArray count="3">
+                                                <StringItem index="0" value="None"/>
+                                                <StringItem index="1" value="Basic"/>
+                                                <StringItem index="2" value="Stack"/>
+                                              </StringArray>
+                                            </Property>
+                                            <Property name="selectedIndex" type="int" value="2"/>
+                                          </Properties>
+                                          <AuxValues>
+                                            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                                          </AuxValues>
+                                        </Component>
+                                        <Component class="javax.swing.JLabel" name="jLabel34">
+                                          <Properties>
+                                            <Property name="text" type="java.lang.String" value="Compression :"/>
+                                          </Properties>
+                                        </Component>
+                                      </SubComponents>
+                                    </Container>
                                   </SubComponents>
                                 </Container>
                                 <Container class="javax.swing.JPanel" name="jPanel14">
@@ -959,15 +1089,19 @@
                                   <Layout>
                                     <DimensionLayout dim="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
+                                          <Group type="102" attributes="0">
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="fileButton5" pref="522" max="32767" attributes="0"/>
                                                   <Group type="102" alignment="1" attributes="0">
-                                                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                                                      <Component id="jLabel9" max="32767" attributes="0"/>
-                                                      <EmptySpace max="-2" attributes="0"/>
+                                                      <EmptySpace min="0" pref="446" max="32767" attributes="0"/>
                                                       <Component id="jButton13" min="-2" max="-2" attributes="0"/>
+                                                  </Group>
+                                                  <Component id="fileButton5" pref="522" max="32767" attributes="0"/>
+                                                  <Group type="102" attributes="0">
+                                                      <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace max="-2" attributes="0"/>
+                                                      <Component id="infoButton6" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                                   </Group>
                                               </Group>
                                               <EmptySpace max="-2" attributes="0"/>
@@ -976,14 +1110,16 @@
                                     </DimensionLayout>
                                     <DimensionLayout dim="1">
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="1" attributes="0">
+                                          <Group type="102" attributes="0">
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="2" attributes="0">
+                                                  <Component id="infoButton6" alignment="2" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="jLabel9" alignment="2" min="-2" pref="26" max="-2" attributes="0"/>
+                                              </Group>
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="fileButton5" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="jButton13" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jLabel9" max="32767" attributes="0"/>
-                                              </Group>
+                                              <Component id="jButton13" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
@@ -1000,14 +1136,23 @@
                                     </Component>
                                     <Component class="javax.swing.JLabel" name="jLabel9">
                                       <Properties>
-                                        <Property name="text" type="java.lang.String" value="&lt;html&gt;Export data to a new image file. &lt;br&gt;&#xa;Recommended to save as PNG or GIF.&lt;br&gt;&#xa;Exported color format : 4BPP / 16 indexed colors.&lt;br&gt;Transparent color at index 0.&lt;/html&gt;"/>
-                                        <Property name="verticalAlignment" type="int" value="1"/>
+                                        <Property name="text" type="java.lang.String" value="&lt;html&gt;Export the graphic as image.&lt;/html&gt;"/>
                                       </Properties>
                                     </Component>
                                     <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton5">
                                       <Properties>
+                                        <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                          <Value id="ANY_IMAGE"/>
+                                        </Property>
                                         <Property name="filePath" type="java.lang.String" value=".\u005cexport\u005csegalogotiles.png" containsInvalidXMLChars="true"/>
+                                        <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Image file :"/>
+                                      </Properties>
+                                    </Component>
+                                    <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton6">
+                                      <Properties>
+                                        <Property name="messageText" type="java.lang.String" value="&lt;html&gt;Supported image formats: PNG or GIF.&lt;br&gt;&lt;br&gt;Color format should be 4BPP / 16 indexed colors. Images of 8BPP / 256 indexed colors will be converted to 4 BPP / 16 (some colors may be lost).&lt;br&gt;Colors will be convered to CRAM format (the color format used by the SEGA Genesis).&lt;br&gt;Color index 0 is treated as transparent.&lt;/html&gt;"/>
+                                        <Property name="text" type="java.lang.String" value=""/>
                                       </Properties>
                                     </Component>
                                   </SubComponents>
@@ -1031,11 +1176,11 @@
                                                       <Component id="jLabel50" min="-2" max="-2" attributes="0"/>
                                                       <EmptySpace max="-2" attributes="0"/>
                                                       <Component id="jComboBox6" min="-2" max="-2" attributes="0"/>
-                                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                                       <Component id="jLabel49" min="-2" max="-2" attributes="0"/>
                                                       <EmptySpace max="-2" attributes="0"/>
                                                       <Component id="jTextField42" min="-2" max="-2" attributes="0"/>
-                                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                                       <Component id="jLabel53" min="-2" max="-2" attributes="0"/>
                                                       <EmptySpace max="-2" attributes="0"/>
                                                       <Component id="jComboBox8" min="-2" max="-2" attributes="0"/>
@@ -1071,6 +1216,7 @@
                                     <DimensionLayout dim="1">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" alignment="0" attributes="0">
+                                              <EmptySpace max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="3" attributes="0">
                                                   <Component id="jTextField44" alignment="3" min="-2" max="-2" attributes="0"/>
                                                   <Component id="jLabel52" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -1266,7 +1412,7 @@
                           <Layout>
                             <DimensionLayout dim="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jScrollPane2" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jScrollPane2" alignment="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                             </DimensionLayout>
                             <DimensionLayout dim="1">
@@ -1285,7 +1431,7 @@
                                   <Layout>
                                     <DimensionLayout dim="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <EmptySpace min="0" pref="431" max="32767" attributes="0"/>
+                                          <EmptySpace min="0" pref="534" max="32767" attributes="0"/>
                                       </Group>
                                     </DimensionLayout>
                                     <DimensionLayout dim="1">

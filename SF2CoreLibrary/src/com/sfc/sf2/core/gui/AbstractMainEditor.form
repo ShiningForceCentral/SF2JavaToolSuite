@@ -73,23 +73,18 @@
                                       <Component id="jRadioThemeLight" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Component id="jRadioThemeDark" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="0" pref="125" max="32767" attributes="0"/>
+                                      <EmptySpace min="0" pref="157" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="infoButton1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="infoButton2" min="-2" max="-2" attributes="0"/>
-                              </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jCheckBoxPrioritise" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="infoButton3" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -102,15 +97,9 @@
                           <Component id="jCheckBoxPrioritise" alignment="2" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="2" attributes="0">
-                          <Component id="infoButton1" alignment="2" min="-2" max="-2" attributes="0"/>
-                          <Component id="directoryButtonBasePath" alignment="2" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="directoryButtonBasePath" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="2" attributes="0">
-                          <Component id="infoButton2" alignment="2" min="-2" max="-2" attributes="0"/>
-                          <Component id="directoryButtonIncbinPath" alignment="2" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="directoryButtonIncbinPath" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -119,7 +108,7 @@
                           <Component id="jRadioThemeLight" alignment="2" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel6" alignment="2" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="45" max="32767" attributes="0"/>
+                      <EmptySpace pref="47" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -142,6 +131,7 @@
             </Component>
             <Component class="com.sfc.sf2.core.gui.controls.DirectoryButton" name="directoryButtonBasePath">
               <Properties>
+                <Property name="infoMessage" type="java.lang.String" value="&lt;html&gt;Base folder is where the .jar file is expected to be run from.&lt;br&gt;&lt;b&gt;Most users do not need to edit this path.&lt;/b&gt;&lt;/html&gt;"/>
                 <Property name="labelText" type="java.lang.String" value="Base folder :"/>
                 <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[150, 25]"/>
@@ -153,6 +143,7 @@
             </Component>
             <Component class="com.sfc.sf2.core.gui.controls.DirectoryButton" name="directoryButtonIncbinPath">
               <Properties>
+                <Property name="infoMessage" type="java.lang.String" value="&lt;html&gt;Incbin is the root folder for the disassemby (usually SF2DISASM\u005cdisasm\u005c)&lt;br&gt;&lt;b&gt;Most users do not need to edit this path.&lt;/b&gt;&lt;/html&gt;" containsInvalidXMLChars="true"/>
                 <Property name="labelText" type="java.lang.String" value="incbin folder :"/>
                 <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[150, 25]"/>
@@ -160,18 +151,6 @@
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[200, 25]"/>
                 </Property>
-              </Properties>
-            </Component>
-            <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton1">
-              <Properties>
-                <Property name="messageText" type="java.lang.String" value="&lt;html&gt;Base folder is where the .jar file is expected to be run from.&lt;br&gt;&lt;b&gt;Most users do not need to edit this path.&lt;/b&gt;&lt;/html&gt;"/>
-                <Property name="text" type="java.lang.String" value=""/>
-              </Properties>
-            </Component>
-            <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton2">
-              <Properties>
-                <Property name="messageText" type="java.lang.String" value="&lt;html&gt;Incbin is the root folder for the disassemby (usually SF2DISASM\u005cdisasm\u005c)&lt;br&gt;&lt;b&gt;Most users do not need to edit this path.&lt;/b&gt;&lt;/html&gt;" containsInvalidXMLChars="true"/>
-                <Property name="text" type="java.lang.String" value=""/>
               </Properties>
             </Component>
             <Component class="javax.swing.JRadioButton" name="jRadioThemeLight">

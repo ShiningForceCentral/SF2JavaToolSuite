@@ -490,25 +490,38 @@
                                               <SubComponents>
                                                 <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton1">
                                                   <Properties>
+                                                    <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                                      <Value id="ASM"/>
+                                                    </Property>
                                                     <Property name="filePath" type="java.lang.String" value="..\u005cgraphics\u005cmaps\u005cmappalettes\u005centries.asm" containsInvalidXMLChars="true"/>
+                                                    <Property name="infoMessage" type="java.lang.String" value=""/>
                                                     <Property name="labelText" type="java.lang.String" value="Palette entries :"/>
                                                   </Properties>
                                                 </Component>
                                                 <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton2">
                                                   <Properties>
+                                                    <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                                      <Value id="ASM"/>
+                                                    </Property>
                                                     <Property name="filePath" type="java.lang.String" value="..\u005cgraphics\u005cmaps\u005cmaptilesets\u005centries.asm" containsInvalidXMLChars="true"/>
+                                                    <Property name="infoMessage" type="java.lang.String" value=""/>
                                                     <Property name="labelText" type="java.lang.String" value="Tilesets entries :"/>
                                                   </Properties>
                                                 </Component>
                                                 <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton3">
                                                   <Properties>
+                                                    <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                                      <Value id="ASM"/>
+                                                    </Property>
                                                     <Property name="filePath" type="java.lang.String" value=".\u005centries.asm" containsInvalidXMLChars="true"/>
+                                                    <Property name="infoMessage" type="java.lang.String" value=""/>
                                                     <Property name="labelText" type="java.lang.String" value="Map entries :"/>
                                                   </Properties>
                                                 </Component>
                                                 <Component class="com.sfc.sf2.core.gui.controls.DirectoryButton" name="directoryButton3">
                                                   <Properties>
                                                     <Property name="directoryPath" type="java.lang.String" value=".\u005centries\u005c" containsInvalidXMLChars="true"/>
+                                                    <Property name="infoMessage" type="java.lang.String" value=""/>
                                                     <Property name="labelText" type="java.lang.String" value="Maps dir :"/>
                                                   </Properties>
                                                 </Component>
@@ -795,32 +808,52 @@
                                               <SubComponents>
                                                 <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton13">
                                                   <Properties>
+                                                    <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                                      <Value id="ASM"/>
+                                                    </Property>
                                                     <Property name="filePath" type="java.lang.String" value="..\u005cgraphics\u005cmaps\u005cmappalettes\u005centries.asm" containsInvalidXMLChars="true"/>
+                                                    <Property name="infoMessage" type="java.lang.String" value=""/>
                                                     <Property name="labelText" type="java.lang.String" value="Palette entries :"/>
                                                   </Properties>
                                                 </Component>
                                                 <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton14">
                                                   <Properties>
+                                                    <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                                      <Value id="ASM"/>
+                                                    </Property>
                                                     <Property name="filePath" type="java.lang.String" value="..\u005cgraphics\u005cmaps\u005cmaptilesets\u005centries.asm" containsInvalidXMLChars="true"/>
+                                                    <Property name="infoMessage" type="java.lang.String" value=""/>
                                                     <Property name="labelText" type="java.lang.String" value="Tilesets entries :"/>
                                                   </Properties>
                                                 </Component>
                                                 <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton19">
                                                   <Properties>
+                                                    <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                                      <Value id="ASM"/>
+                                                    </Property>
                                                     <Property name="filePath" type="java.lang.String" value="00-tilesets.asm"/>
+                                                    <Property name="infoMessage" type="java.lang.String" value=""/>
                                                     <Property name="labelText" type="java.lang.String" value="Map tilesets :"/>
                                                   </Properties>
                                                 </Component>
                                                 <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton20">
                                                   <Properties>
+                                                    <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                                      <Value id="BIN"/>
+                                                    </Property>
                                                     <Property name="filePath" type="java.lang.String" value="0-blocks.bin"/>
+                                                    <Property name="infoMessage" type="java.lang.String" value=""/>
                                                     <Property name="labelText" type="java.lang.String" value="Map blockset :"/>
                                                     <Property name="toolTipText" type="java.lang.String" value=""/>
                                                   </Properties>
                                                 </Component>
                                                 <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton21">
                                                   <Properties>
+                                                    <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                                      <Value id="BIN"/>
+                                                    </Property>
                                                     <Property name="filePath" type="java.lang.String" value="1-layout.bin"/>
+                                                    <Property name="infoMessage" type="java.lang.String" value=""/>
                                                     <Property name="labelText" type="java.lang.String" value="Map layout :"/>
                                                     <Property name="toolTipText" type="java.lang.String" value=""/>
                                                   </Properties>
@@ -875,6 +908,7 @@
                                                 <Component class="com.sfc.sf2.core.gui.controls.DirectoryButton" name="directoryButton1">
                                                   <Properties>
                                                     <Property name="directoryPath" type="java.lang.String" value=".\u005centries\u005cmap03\u005c" containsInvalidXMLChars="true"/>
+                                                    <Property name="infoMessage" type="java.lang.String" value=""/>
                                                     <Property name="labelText" type="java.lang.String" value="Map dir :"/>
                                                   </Properties>
                                                 </Component>
@@ -1064,49 +1098,81 @@
                                               <SubComponents>
                                                 <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton5">
                                                   <Properties>
+                                                    <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                                      <Value id="BIN"/>
+                                                    </Property>
                                                     <Property name="filePath" type="java.lang.String" value="..\u005cgraphics\u005cmaps\u005cmappalettes\u005cmappalette00.bin" containsInvalidXMLChars="true"/>
+                                                    <Property name="infoMessage" type="java.lang.String" value=""/>
                                                     <Property name="labelText" type="java.lang.String" value="Palette :"/>
                                                   </Properties>
                                                 </Component>
                                                 <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton6">
                                                   <Properties>
+                                                    <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                                      <Value id="BIN"/>
+                                                    </Property>
                                                     <Property name="filePath" type="java.lang.String" value="..\u005cgraphics\u005cmaps\u005cmaptilesets\u005cmaptileset000.bin" containsInvalidXMLChars="true"/>
+                                                    <Property name="infoMessage" type="java.lang.String" value=""/>
                                                     <Property name="labelText" type="java.lang.String" value="Tileset 1 :"/>
                                                   </Properties>
                                                 </Component>
                                                 <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton7">
                                                   <Properties>
+                                                    <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                                      <Value id="BIN"/>
+                                                    </Property>
                                                     <Property name="filePath" type="java.lang.String" value="..\u005cgraphics\u005cmaps\u005cmaptilesets\u005cmaptileset037.bin" containsInvalidXMLChars="true"/>
+                                                    <Property name="infoMessage" type="java.lang.String" value=""/>
                                                     <Property name="labelText" type="java.lang.String" value="Tileset 2 :"/>
                                                   </Properties>
                                                 </Component>
                                                 <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton8">
                                                   <Properties>
+                                                    <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                                      <Value id="BIN"/>
+                                                    </Property>
                                                     <Property name="filePath" type="java.lang.String" value="..\u005cgraphics\u005cmaps\u005cmaptilesets\u005cmaptileset043.bin" containsInvalidXMLChars="true"/>
+                                                    <Property name="infoMessage" type="java.lang.String" value=""/>
                                                     <Property name="labelText" type="java.lang.String" value="Tileset 3 :"/>
                                                   </Properties>
                                                 </Component>
                                                 <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton9">
                                                   <Properties>
+                                                    <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                                      <Value id="BIN"/>
+                                                    </Property>
                                                     <Property name="filePath" type="java.lang.String" value="..\u005cgraphics\u005cmaps\u005cmaptilesets\u005cmaptileset053.bin" containsInvalidXMLChars="true"/>
+                                                    <Property name="infoMessage" type="java.lang.String" value=""/>
                                                     <Property name="labelText" type="java.lang.String" value="Tileset 4 :"/>
                                                   </Properties>
                                                 </Component>
                                                 <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton10">
                                                   <Properties>
+                                                    <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                                      <Value id="BIN"/>
+                                                    </Property>
                                                     <Property name="filePath" type="java.lang.String" value="..\u005cgraphics\u005cmaps\u005cmaptilesets\u005cmaptileset066.bin" containsInvalidXMLChars="true"/>
+                                                    <Property name="infoMessage" type="java.lang.String" value=""/>
                                                     <Property name="labelText" type="java.lang.String" value="Tileset 5 :"/>
                                                   </Properties>
                                                 </Component>
                                                 <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton11">
                                                   <Properties>
+                                                    <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                                      <Value id="BIN"/>
+                                                    </Property>
                                                     <Property name="filePath" type="java.lang.String" value=".\u005centries\u005cmap03\u005c0-blocks.bin" containsInvalidXMLChars="true"/>
+                                                    <Property name="infoMessage" type="java.lang.String" value=""/>
                                                     <Property name="labelText" type="java.lang.String" value="Blocks file :"/>
                                                   </Properties>
                                                 </Component>
                                                 <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton17">
                                                   <Properties>
+                                                    <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                                      <Value id="BIN"/>
+                                                    </Property>
                                                     <Property name="filePath" type="java.lang.String" value=".\u005centries\u005cmap03\u005c1-layout.bin" containsInvalidXMLChars="true"/>
+                                                    <Property name="infoMessage" type="java.lang.String" value=""/>
                                                     <Property name="labelText" type="java.lang.String" value="Layout file :"/>
                                                     <Property name="toolTipText" type="java.lang.String" value=""/>
                                                   </Properties>
@@ -1269,12 +1335,12 @@
                                                           <Component id="jCheckBox6" min="-2" max="-2" attributes="0"/>
                                                       </Group>
                                                       <Group type="102" alignment="0" attributes="0">
-                                                          <Component id="jCheckBox3" min="-2" max="-2" attributes="0"/>
-                                                          <EmptySpace max="32767" attributes="0"/>
                                                           <Component id="jLabel55" min="-2" max="-2" attributes="0"/>
                                                           <EmptySpace max="-2" attributes="0"/>
                                                           <Component id="colorPicker1" min="-2" max="-2" attributes="0"/>
-                                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                                          <EmptySpace type="unrelated" max="32767" attributes="0"/>
+                                                          <Component id="jCheckBox3" min="-2" max="-2" attributes="0"/>
+                                                          <EmptySpace type="unrelated" max="32767" attributes="0"/>
                                                           <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                                                           <EmptySpace max="-2" attributes="0"/>
                                                           <Component id="jComboBox7" min="-2" max="-2" attributes="0"/>
@@ -1289,7 +1355,7 @@
                                               <Group type="102" alignment="0" attributes="0">
                                                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                                                   <Group type="103" groupAlignment="2" attributes="0">
-                                                      <Component id="jCheckBox6" alignment="2" max="32767" attributes="0"/>
+                                                      <Component id="jCheckBox6" alignment="2" min="-2" max="-2" attributes="0"/>
                                                       <Component id="jSpinner2" alignment="2" min="-2" max="-2" attributes="0"/>
                                                       <Component id="jLabel54" alignment="2" min="-2" max="-2" attributes="0"/>
                                                       <Component id="infoButtonSharedBlocks" alignment="2" min="-2" max="-2" attributes="0"/>
@@ -1299,8 +1365,10 @@
                                                       <Component id="jCheckBox3" alignment="2" min="-2" max="-2" attributes="0"/>
                                                       <Component id="jComboBox7" alignment="2" min="-2" max="-2" attributes="0"/>
                                                       <Component id="jLabel7" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="colorPicker1" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="jLabel55" alignment="2" min="-2" max="-2" attributes="0"/>
+                                                      <Group type="103" alignment="2" groupAlignment="2" attributes="0">
+                                                          <Component id="colorPicker1" alignment="2" min="-2" max="-2" attributes="0"/>
+                                                          <Component id="jLabel55" alignment="2" min="-2" max="-2" attributes="0"/>
+                                                      </Group>
                                                   </Group>
                                                   <EmptySpace max="-2" attributes="0"/>
                                               </Group>

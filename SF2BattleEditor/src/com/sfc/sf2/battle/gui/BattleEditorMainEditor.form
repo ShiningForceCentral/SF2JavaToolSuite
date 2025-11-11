@@ -105,7 +105,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jPanel9" pref="738" max="32767" attributes="0"/>
+                              <Component id="jPanel9" pref="819" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -122,11 +122,11 @@
                       <Layout>
                         <DimensionLayout dim="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
+                              <Group type="102" alignment="1" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jPanel3" pref="332" max="32767" attributes="0"/>
-                                      <Component id="jPanel5" alignment="0" pref="332" max="32767" attributes="0"/>
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Component id="jPanel3" alignment="0" pref="332" max="32767" attributes="0"/>
+                                      <Component id="jPanel5" alignment="1" pref="332" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
@@ -136,9 +136,9 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jPanel3" pref="605" max="32767" attributes="0"/>
+                                  <Component id="jPanel3" pref="606" max="32767" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="jPanel5" min="-2" pref="165" max="-2" attributes="0"/>
+                                  <Component id="jPanel5" min="-2" pref="195" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -175,12 +175,12 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="1" attributes="0">
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="accordionPanel1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="accordionPanel1" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="accordionPanel2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="jPanel16" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
@@ -201,8 +201,8 @@
                                       <Group type="102" attributes="0">
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="fileButton1" pref="250" max="32767" attributes="0"/>
-                                              <Component id="fileButton2" pref="250" max="32767" attributes="0"/>
+                                              <Component id="fileButton1" pref="288" max="32767" attributes="0"/>
+                                              <Component id="fileButton2" pref="0" max="32767" attributes="0"/>
                                               <Component id="fileButton3" alignment="0" pref="0" max="32767" attributes="0"/>
                                               <Component id="fileButton4" alignment="0" pref="0" max="32767" attributes="0"/>
                                               <Component id="fileButton5" alignment="0" pref="0" max="32767" attributes="0"/>
@@ -238,43 +238,71 @@
                               <SubComponents>
                                 <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton1">
                                   <Properties>
+                                    <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                      <Value id="ASM"/>
+                                    </Property>
                                     <Property name="filePath" type="java.lang.String" value="..\u005cgraphics\u005cmaps\u005cmappalettes\u005centries.asm" containsInvalidXMLChars="true"/>
+                                    <Property name="infoMessage" type="java.lang.String" value="Entries file for map palettes."/>
                                     <Property name="labelText" type="java.lang.String" value="Palette entries :"/>
                                   </Properties>
                                 </Component>
                                 <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton2">
                                   <Properties>
+                                    <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                      <Value id="ASM"/>
+                                    </Property>
                                     <Property name="filePath" type="java.lang.String" value="..\u005cgraphics\u005cmaps\u005cmaptilesets\u005centries.asm" containsInvalidXMLChars="true"/>
+                                    <Property name="infoMessage" type="java.lang.String" value="Entries file for map tilesets."/>
                                     <Property name="labelText" type="java.lang.String" value="Tileset entries :"/>
                                   </Properties>
                                 </Component>
                                 <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton3">
                                   <Properties>
+                                    <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                      <Value id="ASM"/>
+                                    </Property>
                                     <Property name="filePath" type="java.lang.String" value="..\u005cmaps\u005centries.asm" containsInvalidXMLChars="true"/>
+                                    <Property name="infoMessage" type="java.lang.String" value="&lt;html&gt;Map entries file. Lists all maps defined to be used in the game.&lt;br&gt;If a map is not loading then it might not have been added to the entries.&lt;/html&gt;"/>
                                     <Property name="labelText" type="java.lang.String" value="Map entries :"/>
                                   </Properties>
                                 </Component>
                                 <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton4">
                                   <Properties>
+                                    <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                      <Value id="ASM"/>
+                                    </Property>
                                     <Property name="filePath" type="java.lang.String" value=".\u005cterrainentries.asm" containsInvalidXMLChars="true"/>
+                                    <Property name="infoMessage" type="java.lang.String" value="Entries for battle terrain data."/>
                                     <Property name="labelText" type="java.lang.String" value="Terrain entries :"/>
                                   </Properties>
                                 </Component>
                                 <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton5">
                                   <Properties>
+                                    <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                      <Value id="ASM"/>
+                                    </Property>
                                     <Property name="filePath" type="java.lang.String" value=".\u005cglobal\u005cbattlemapcoords.asm" containsInvalidXMLChars="true"/>
+                                    <Property name="infoMessage" type="java.lang.String" value="Assembly file that defines the map and boundries for all battles."/>
                                     <Property name="labelText" type="java.lang.String" value="Battle map coords :"/>
                                   </Properties>
                                 </Component>
                                 <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton9">
                                   <Properties>
+                                    <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                      <Value id="ASM"/>
+                                    </Property>
                                     <Property name="filePath" type="java.lang.String" value=".\u005cspritesets\u005centries.asm" containsInvalidXMLChars="true"/>
+                                    <Property name="infoMessage" type="java.lang.String" value="&lt;html&gt;The entries file for battle data.&lt;br&gt;Battle &quot;Spritesets&quot; include ally positions, enemy info, AI Regions, and AI points.&lt;/html&gt;"/>
                                     <Property name="labelText" type="java.lang.String" value="Spriteset entries :"/>
                                   </Properties>
                                 </Component>
                                 <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton16">
                                   <Properties>
+                                    <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                      <Value id="ASM"/>
+                                    </Property>
                                     <Property name="filePath" type="java.lang.String" value=".\u005cglobal\u005clandeffectsettingsandmovecosts.asm" containsInvalidXMLChars="true"/>
+                                    <Property name="infoMessage" type="java.lang.String" value="Assembly file that defines the land effects (block move cost and defense bonus) for each battle."/>
                                     <Property name="labelText" type="java.lang.String" value="Land effects :"/>
                                   </Properties>
                                 </Component>
@@ -284,7 +312,7 @@
                               <Properties>
                                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                                   <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                                    <TitledBorder title="Battle sprites :"/>
+                                    <TitledBorder title="Map sprites :"/>
                                   </Border>
                                 </Property>
                               </Properties>
@@ -319,7 +347,7 @@
                                           <Component id="fileButton14" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="fileButton15" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
                                           <Component id="fileButton8" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="32767" attributes="0"/>
                                       </Group>
@@ -329,37 +357,61 @@
                               <SubComponents>
                                 <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton6">
                                   <Properties>
+                                    <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                      <Value id="BIN"/>
+                                    </Property>
                                     <Property name="filePath" type="java.lang.String" value="..\u005cgraphics\u005ctech\u005cbasepalette.bin" containsInvalidXMLChars="true"/>
+                                    <Property name="infoMessage" type="java.lang.String" value="The base palette to use for map sprites."/>
                                     <Property name="labelText" type="java.lang.String" value="Base palette :"/>
                                   </Properties>
                                 </Component>
                                 <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton7">
                                   <Properties>
+                                    <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                      <Value id="ASM"/>
+                                    </Property>
                                     <Property name="filePath" type="java.lang.String" value="..\u005cgraphics\u005cmapsprites\u005centries.asm" containsInvalidXMLChars="true"/>
+                                    <Property name="infoMessage" type="java.lang.String" value="The entries file for map sprites."/>
                                     <Property name="labelText" type="java.lang.String" value="Mapsprite entries :"/>
                                   </Properties>
                                 </Component>
                                 <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton8">
                                   <Properties>
+                                    <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                      <Value id="ASM"/>
+                                    </Property>
                                     <Property name="filePath" type="java.lang.String" value="..\u005c..\u005csf2enums.asm" containsInvalidXMLChars="true"/>
+                                    <Property name="infoMessage" type="java.lang.String" value="Loads data from SF2Enums (such as enemy and item names)."/>
                                     <Property name="labelText" type="java.lang.String" value="Battle enums :"/>
                                   </Properties>
                                 </Component>
                                 <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton13">
                                   <Properties>
+                                    <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                      <Value id="ASM"/>
+                                    </Property>
                                     <Property name="filePath" type="java.lang.String" value="..\u005cstats\u005cenemies\u005cenemymapsprites.asm" containsInvalidXMLChars="true"/>
+                                    <Property name="infoMessage" type="java.lang.String" value="The file that determine which Mapsprite is used by which defined enemy."/>
                                     <Property name="labelText" type="java.lang.String" value="Enemy mapsprites :"/>
                                   </Properties>
                                 </Component>
                                 <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton14">
                                   <Properties>
+                                    <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                      <Value id="ASM"/>
+                                    </Property>
                                     <Property name="filePath" type="java.lang.String" value="..\u005cgraphics\u005cspecialsprites\u005centries.asm" containsInvalidXMLChars="true"/>
-                                    <Property name="labelText" type="java.lang.String" value="Special sprites entries :"/>
+                                    <Property name="infoMessage" type="java.lang.String" value="&lt;html&gt;Defines the special sprites (larger sprites). Certain enemies (e.g. bosses) use special sprites.&lt;/html&gt;"/>
+                                    <Property name="labelText" type="java.lang.String" value="Special Sprites entries :"/>
                                   </Properties>
                                 </Component>
                                 <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton15">
                                   <Properties>
+                                    <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                      <Value id="ASM"/>
+                                    </Property>
                                     <Property name="filePath" type="java.lang.String" value="..\u005cgraphics\u005cspecialsprites\u005cpointers.asm" containsInvalidXMLChars="true"/>
+                                    <Property name="infoMessage" type="java.lang.String" value="Pointers file used to load Special Sprites."/>
                                     <Property name="labelText" type="java.lang.String" value="Special sprites pointers :"/>
                                   </Properties>
                                 </Component>
@@ -380,15 +432,20 @@
                                       <Group type="102" attributes="0">
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Group type="102" alignment="0" attributes="0">
+                                              <Group type="102" alignment="1" attributes="0">
                                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                                   <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
                                                   <Component id="jSpinner4" min="-2" pref="50" max="-2" attributes="0"/>
-                                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
                                                   <Component id="jButton18" min="-2" max="-2" attributes="0"/>
                                               </Group>
-                                              <Component id="jLabel2" max="32767" attributes="0"/>
+                                              <Group type="102" alignment="1" attributes="0">
+                                                  <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="infoButton7" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                              </Group>
                                           </Group>
                                           <EmptySpace max="-2" attributes="0"/>
                                       </Group>
@@ -396,7 +453,12 @@
                                 </DimensionLayout>
                                 <DimensionLayout dim="1">
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" alignment="1" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="3" attributes="0">
+                                              <Component id="jLabel2" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
+                                              <Component id="infoButton7" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          </Group>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Component id="jButton18" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -406,23 +468,26 @@
                                               </Group>
                                           </Group>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                 </DimensionLayout>
                               </Layout>
                               <SubComponents>
-                                <Component class="javax.swing.JSpinner" name="jSpinner4">
+                                <Component class="javax.swing.JLabel" name="jLabel2">
                                   <Properties>
-                                    <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-                                      <SpinnerModel initial="1" maximum="255" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
-                                    </Property>
+                                    <Property name="text" type="java.lang.String" value="&lt;html&gt;Load battle from index.&lt;/html&gt;"/>
                                   </Properties>
                                 </Component>
                                 <Component class="javax.swing.JLabel" name="jLabel10">
                                   <Properties>
                                     <Property name="text" type="java.lang.String" value="Battle index :"/>
+                                  </Properties>
+                                </Component>
+                                <Component class="javax.swing.JSpinner" name="jSpinner4">
+                                  <Properties>
+                                    <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+                                      <SpinnerModel initial="1" maximum="255" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
+                                    </Property>
                                   </Properties>
                                 </Component>
                                 <Component class="javax.swing.JButton" name="jButton18">
@@ -433,10 +498,9 @@
                                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton18ActionPerformed"/>
                                   </Events>
                                 </Component>
-                                <Component class="javax.swing.JLabel" name="jLabel2">
+                                <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton7">
                                   <Properties>
-                                    <Property name="text" type="java.lang.String" value="&lt;html&gt;Select disassembly files and battle index.&lt;/html&gt;"/>
-                                    <Property name="verticalAlignment" type="int" value="1"/>
+                                    <Property name="text" type="java.lang.String" value=""/>
                                   </Properties>
                                 </Component>
                               </SubComponents>
@@ -458,7 +522,7 @@
                           <Layout>
                             <DimensionLayout dim="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jTabbedPane4" alignment="1" pref="284" max="32767" attributes="0"/>
+                                  <Component id="jTabbedPane4" alignment="1" pref="322" max="32767" attributes="0"/>
                               </Group>
                             </DimensionLayout>
                             <DimensionLayout dim="1">
@@ -466,6 +530,7 @@
                                   <Group type="102" alignment="1" attributes="0">
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="jTabbedPane4" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
@@ -475,70 +540,6 @@
 
                               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
                               <SubComponents>
-                                <Container class="javax.swing.JPanel" name="jPanel18">
-                                  <Constraints>
-                                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                                      <JTabbedPaneConstraints tabName="Map Coords">
-                                        <Property name="tabTitle" type="java.lang.String" value="Map Coords"/>
-                                      </JTabbedPaneConstraints>
-                                    </Constraint>
-                                  </Constraints>
-
-                                  <Layout>
-                                    <DimensionLayout dim="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="1" attributes="0">
-                                                  <Component id="fileButton10" alignment="0" pref="272" max="32767" attributes="0"/>
-                                                  <Group type="102" alignment="1" attributes="0">
-                                                      <Component id="jLabel21" max="32767" attributes="0"/>
-                                                      <EmptySpace max="-2" attributes="0"/>
-                                                      <Component id="jButton3" min="-2" max="-2" attributes="0"/>
-                                                  </Group>
-                                              </Group>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                    </DimensionLayout>
-                                    <DimensionLayout dim="1">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="fileButton10" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="2" attributes="0">
-                                                  <Component id="jButton3" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jLabel21" alignment="2" min="-2" max="-2" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                    </DimensionLayout>
-                                  </Layout>
-                                  <SubComponents>
-                                    <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton10">
-                                      <Properties>
-                                        <Property name="filePath" type="java.lang.String" value=".\u005cglobal\u005cbattlemapcoords.asm" containsInvalidXMLChars="true"/>
-                                        <Property name="labelText" type="java.lang.String" value="Battle map coords :"/>
-                                      </Properties>
-                                    </Component>
-                                    <Component class="javax.swing.JButton" name="jButton3">
-                                      <Properties>
-                                        <Property name="text" type="java.lang.String" value="Export"/>
-                                      </Properties>
-                                      <Events>
-                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
-                                      </Events>
-                                    </Component>
-                                    <Component class="javax.swing.JLabel" name="jLabel21">
-                                      <Properties>
-                                        <Property name="text" type="java.lang.String" value="&lt;html&gt;Select new target files.&lt;/html&gt;"/>
-                                        <Property name="verticalAlignment" type="int" value="1"/>
-                                      </Properties>
-                                    </Component>
-                                  </SubComponents>
-                                </Container>
                                 <Container class="javax.swing.JPanel" name="jPanel13">
                                   <Constraints>
                                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
@@ -551,16 +552,21 @@
                                   <Layout>
                                     <DimensionLayout dim="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
+                                          <Group type="102" attributes="0">
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="1" attributes="0">
+                                              <Group type="103" groupAlignment="0" attributes="0">
                                                   <Group type="102" alignment="0" attributes="0">
-                                                      <Component id="jLabel1" max="32767" attributes="0"/>
-                                                      <EmptySpace max="-2" attributes="0"/>
+                                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                                       <Component id="jButton2" min="-2" max="-2" attributes="0"/>
                                                   </Group>
-                                                  <Component id="fileButton11" alignment="0" pref="0" max="32767" attributes="0"/>
+                                                  <Component id="fileButton11" alignment="0" pref="266" max="32767" attributes="0"/>
                                                   <Component id="fileButton12" alignment="0" pref="0" max="32767" attributes="0"/>
+                                                  <Group type="102" alignment="0" attributes="0">
+                                                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace max="-2" attributes="0"/>
+                                                      <Component id="infoButton9" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                                  </Group>
                                               </Group>
                                               <EmptySpace max="-2" attributes="0"/>
                                           </Group>
@@ -568,16 +574,18 @@
                                     </DimensionLayout>
                                     <DimensionLayout dim="1">
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="3" attributes="0">
+                                                  <Component id="jLabel1" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
+                                                  <Component id="infoButton9" alignment="3" min="-2" max="-2" attributes="0"/>
+                                              </Group>
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="fileButton11" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="fileButton12" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="2" attributes="0">
-                                                  <Component id="jButton2" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jLabel1" alignment="2" min="-2" max="-2" attributes="0"/>
-                                              </Group>
+                                              <Component id="jButton2" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
@@ -586,8 +594,27 @@
                                   <SubComponents>
                                     <Component class="javax.swing.JLabel" name="jLabel1">
                                       <Properties>
-                                        <Property name="text" type="java.lang.String" value="&lt;html&gt;Select new target files.&lt;/html&gt;"/>
-                                        <Property name="verticalAlignment" type="int" value="1"/>
+                                        <Property name="text" type="java.lang.String" value="Export the battle terrain and spritesets."/>
+                                      </Properties>
+                                    </Component>
+                                    <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton9">
+                                      <Properties>
+                                        <Property name="messageText" type="java.lang.String" value="Exports the battle terrain data and spriteset data (ally, enemy, AI region &amp; AI point)."/>
+                                        <Property name="text" type="java.lang.String" value=""/>
+                                      </Properties>
+                                    </Component>
+                                    <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton11">
+                                      <Properties>
+                                        <Property name="filePath" type="java.lang.String" value=".\u005centries\u005cbattle01\u005cterrain.bin" containsInvalidXMLChars="true"/>
+                                        <Property name="infoMessage" type="java.lang.String" value=""/>
+                                        <Property name="labelText" type="java.lang.String" value="Battle terrain :"/>
+                                      </Properties>
+                                    </Component>
+                                    <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton12">
+                                      <Properties>
+                                        <Property name="filePath" type="java.lang.String" value=".\u005cspritesets\u005cspriteset01.asm" containsInvalidXMLChars="true"/>
+                                        <Property name="infoMessage" type="java.lang.String" value=""/>
+                                        <Property name="labelText" type="java.lang.String" value="Battle spriteset :"/>
                                       </Properties>
                                     </Component>
                                     <Component class="javax.swing.JButton" name="jButton2">
@@ -598,17 +625,85 @@
                                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
                                       </Events>
                                     </Component>
-                                    <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton11">
+                                  </SubComponents>
+                                </Container>
+                                <Container class="javax.swing.JPanel" name="jPanel18">
+                                  <Constraints>
+                                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+                                      <JTabbedPaneConstraints tabName="Map Coords">
+                                        <Property name="tabTitle" type="java.lang.String" value="Map Coords"/>
+                                      </JTabbedPaneConstraints>
+                                    </Constraint>
+                                  </Constraints>
+
+                                  <Layout>
+                                    <DimensionLayout dim="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" attributes="0">
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="fileButton10" alignment="0" pref="266" max="32767" attributes="0"/>
+                                                  <Group type="102" alignment="1" attributes="0">
+                                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                                      <Component id="jButton3" min="-2" max="-2" attributes="0"/>
+                                                  </Group>
+                                                  <Group type="102" alignment="0" attributes="0">
+                                                      <Component id="jLabel21" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace max="-2" attributes="0"/>
+                                                      <Component id="infoButton8" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                                  </Group>
+                                              </Group>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                    </DimensionLayout>
+                                    <DimensionLayout dim="1">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="3" attributes="0">
+                                                  <Component id="jLabel21" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
+                                                  <Component id="infoButton8" alignment="3" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="fileButton10" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="jButton3" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                    </DimensionLayout>
+                                  </Layout>
+                                  <SubComponents>
+                                    <Component class="javax.swing.JLabel" name="jLabel21">
                                       <Properties>
-                                        <Property name="filePath" type="java.lang.String" value=".\u005centries\u005cbattle01\u005cterrain.bin" containsInvalidXMLChars="true"/>
-                                        <Property name="labelText" type="java.lang.String" value="Battle terrain :"/>
+                                        <Property name="text" type="java.lang.String" value="Export battle map coordinates."/>
                                       </Properties>
                                     </Component>
-                                    <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton12">
+                                    <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton8">
                                       <Properties>
-                                        <Property name="filePath" type="java.lang.String" value=".\u005cspritesets\u005cspriteset01.asm" containsInvalidXMLChars="true"/>
-                                        <Property name="labelText" type="java.lang.String" value="Battle spriteset :"/>
+                                        <Property name="messageText" type="java.lang.String" value="Exports the battle coordinates (map &amp; area of the battle)."/>
+                                        <Property name="text" type="java.lang.String" value=""/>
                                       </Properties>
+                                    </Component>
+                                    <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton10">
+                                      <Properties>
+                                        <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                          <Value id="ANY_ASSEMBLY"/>
+                                        </Property>
+                                        <Property name="filePath" type="java.lang.String" value=".\u005cglobal\u005cbattlemapcoords.asm" containsInvalidXMLChars="true"/>
+                                        <Property name="infoMessage" type="java.lang.String" value=""/>
+                                        <Property name="labelText" type="java.lang.String" value="Battle map coords :"/>
+                                      </Properties>
+                                    </Component>
+                                    <Component class="javax.swing.JButton" name="jButton3">
+                                      <Properties>
+                                        <Property name="text" type="java.lang.String" value="Export"/>
+                                      </Properties>
+                                      <Events>
+                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
+                                      </Events>
                                     </Component>
                                   </SubComponents>
                                 </Container>
@@ -624,14 +719,19 @@
                                   <Layout>
                                     <DimensionLayout dim="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
+                                          <Group type="102" attributes="0">
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="1" attributes="0">
-                                                  <Component id="fileButton17" alignment="0" pref="272" max="32767" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="fileButton17" alignment="0" pref="266" max="32767" attributes="0"/>
                                                   <Group type="102" alignment="1" attributes="0">
-                                                      <Component id="jLabel23" max="32767" attributes="0"/>
-                                                      <EmptySpace max="-2" attributes="0"/>
+                                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                                       <Component id="jButton4" min="-2" max="-2" attributes="0"/>
+                                                  </Group>
+                                                  <Group type="102" alignment="0" attributes="0">
+                                                      <Component id="jLabel23" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace max="-2" attributes="0"/>
+                                                      <Component id="infoButton10" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                                   </Group>
                                               </Group>
                                               <EmptySpace max="-2" attributes="0"/>
@@ -640,14 +740,16 @@
                                     </DimensionLayout>
                                     <DimensionLayout dim="1">
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="3" attributes="0">
+                                                  <Component id="jLabel23" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
+                                                  <Component id="infoButton10" alignment="3" min="-2" max="-2" attributes="0"/>
+                                              </Group>
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="fileButton17" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="2" attributes="0">
-                                                  <Component id="jButton4" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jLabel23" alignment="2" min="-2" max="-2" attributes="0"/>
-                                              </Group>
+                                              <Component id="jButton4" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
@@ -656,13 +758,22 @@
                                   <SubComponents>
                                     <Component class="javax.swing.JLabel" name="jLabel23">
                                       <Properties>
-                                        <Property name="text" type="java.lang.String" value="&lt;html&gt;Select new target files.&lt;/html&gt;"/>
-                                        <Property name="verticalAlignment" type="int" value="1"/>
+                                        <Property name="text" type="java.lang.String" value="Export the land effect data."/>
+                                      </Properties>
+                                    </Component>
+                                    <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton10">
+                                      <Properties>
+                                        <Property name="messageText" type="java.lang.String" value="Exports the land effect data (how each block affects movement and defense bonus)."/>
+                                        <Property name="text" type="java.lang.String" value=""/>
                                       </Properties>
                                     </Component>
                                     <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton17">
                                       <Properties>
+                                        <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                          <Value id="ASM"/>
+                                        </Property>
                                         <Property name="filePath" type="java.lang.String" value=".\u005cglobal\u005clandeffectsettingsandmovecosts.asm" containsInvalidXMLChars="true"/>
+                                        <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Land effect :"/>
                                       </Properties>
                                     </Component>
@@ -751,7 +862,7 @@
                                 <DimensionLayout dim="1">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
-                                          <Component id="jTabbedPane2" pref="709" max="32767" attributes="0"/>
+                                          <Component id="jTabbedPane2" max="32767" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
@@ -815,7 +926,7 @@
                                                   <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                                   <Component id="terrainKeyPanel1" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace pref="198" max="32767" attributes="0"/>
+                                                  <EmptySpace pref="227" max="32767" attributes="0"/>
                                               </Group>
                                           </Group>
                                         </DimensionLayout>
@@ -1040,7 +1151,7 @@
                                             </Component>
                                             <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton1">
                                               <Properties>
-                                                <Property name="messageText" type="java.lang.String" value="&lt;html&gt;Changing the Start X and Start Y will move the allies, enemies, AI regions, and AI points. Toggling this on will fix those elements to the map while moving the battle boundaries.&lt;br&gt;&lt;br&gt;&lt;b&gt;WARNING&lt;/b&gt; Points outside of the battle area will not be saved properly. A red alert will show any points outside of the battle area.&lt;/html&gt;"/>
+                                                <Property name="messageText" type="java.lang.String" value="&lt;html&gt;Changing the Start X and Start Y will move the allies, enemies, AI regions, and AI points. Toggling this on will fix those elements to the map while moving the battle boundaries.&lt;br&gt;&lt;br&gt;&lt;b&gt;WARNING&lt;/b&gt; Points outside of the battle area will not be saved properly. A red alert icon will show any points outside of the battle area.&lt;/html&gt;"/>
                                                 <Property name="text" type="java.lang.String" value=""/>
                                               </Properties>
                                             </Component>
@@ -1115,7 +1226,7 @@
                                                               <Component id="jLabel12" alignment="2" min="-2" max="-2" attributes="0"/>
                                                           </Group>
                                                           <EmptySpace max="-2" attributes="0"/>
-                                                          <Component id="tableAllies" pref="593" max="32767" attributes="0"/>
+                                                          <Component id="tableAllies" pref="622" max="32767" attributes="0"/>
                                                           <EmptySpace max="-2" attributes="0"/>
                                                       </Group>
                                                   </Group>
@@ -1185,7 +1296,7 @@
                                                               <Component id="jLabel13" alignment="2" min="-2" max="-2" attributes="0"/>
                                                           </Group>
                                                           <EmptySpace max="-2" attributes="0"/>
-                                                          <Component id="tableEnemies" pref="318" max="32767" attributes="0"/>
+                                                          <Component id="tableEnemies" pref="347" max="32767" attributes="0"/>
                                                           <EmptySpace max="-2" attributes="0"/>
                                                           <Component id="jPanel17" max="-2" attributes="0"/>
                                                       </Group>
@@ -1747,7 +1858,7 @@
                                                               <Component id="jLabel20" alignment="2" min="-2" max="-2" attributes="0"/>
                                                           </Group>
                                                           <EmptySpace max="-2" attributes="0"/>
-                                                          <Component id="tableAIRegions" pref="593" max="32767" attributes="0"/>
+                                                          <Component id="tableAIRegions" pref="622" max="32767" attributes="0"/>
                                                           <EmptySpace max="-2" attributes="0"/>
                                                       </Group>
                                                   </Group>
@@ -1817,7 +1928,7 @@
                                                               <Component id="jLabel15" alignment="2" min="-2" max="-2" attributes="0"/>
                                                           </Group>
                                                           <EmptySpace max="-2" attributes="0"/>
-                                                          <Component id="tableAIPoints" pref="593" max="32767" attributes="0"/>
+                                                          <Component id="tableAIPoints" pref="622" max="32767" attributes="0"/>
                                                           <EmptySpace max="-2" attributes="0"/>
                                                       </Group>
                                                   </Group>
@@ -1885,7 +1996,7 @@
                                 <DimensionLayout dim="1">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
-                                          <Component id="jScrollPane2" pref="637" max="32767" attributes="0"/>
+                                          <Component id="jScrollPane2" pref="718" max="32767" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="jPanel12" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
@@ -1948,11 +2059,11 @@
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="jCheckBox7" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="32767" attributes="0"/>
-                                              <Component id="jCheckBox2" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                               <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="colorPicker1" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                              <Component id="jCheckBox2" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                               <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
@@ -2101,13 +2212,13 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="landEffectTable" pref="1133" max="32767" attributes="0"/>
                                           <Group type="102" attributes="0">
-                                              <EmptySpace pref="1018" max="32767" attributes="0"/>
                                               <Component id="jLabel22" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="infoButton11" max="-2" attributes="0"/>
+                                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                           </Group>
-                                          <Component id="landEffectTable" alignment="0" max="32767" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
                                   </Group>
@@ -2142,6 +2253,7 @@
                             <Component class="com.sfc.sf2.battle.mapterrain.gui.LandEffectTable" name="landEffectTable">
                               <Properties>
                                 <Property name="horizontalScrolling" type="boolean" value="true"/>
+                                <Property name="infoMessage" type="java.lang.String" value=""/>
                                 <Property name="model" type="com.sfc.sf2.core.models.AbstractTableModel" editor="org.netbeans.modules.form.ComponentChooserEditor">
                                   <ComponentRef name="landEffectTableModel"/>
                                 </Property>

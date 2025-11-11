@@ -76,23 +76,23 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
         jPanel1 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jButton18 = new javax.swing.JButton();
-        fileButton6 = new com.sfc.sf2.core.gui.controls.FileButton();
         infoButton2 = new com.sfc.sf2.core.gui.controls.InfoButton();
+        fileButton6 = new com.sfc.sf2.core.gui.controls.FileButton();
+        jButton18 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
         fileButton7 = new com.sfc.sf2.core.gui.controls.FileButton();
+        jButton2 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jButton19 = new javax.swing.JButton();
         fileButton4 = new com.sfc.sf2.core.gui.controls.FileButton();
         infoButton1 = new com.sfc.sf2.core.gui.controls.InfoButton();
+        jButton19 = new javax.swing.JButton();
         jPanel9 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
         fileButton5 = new com.sfc.sf2.core.gui.controls.FileButton();
+        jButton3 = new javax.swing.JButton();
         accordionPanel1 = new com.sfc.sf2.core.gui.controls.AccordionPanel();
         fileButton1 = new com.sfc.sf2.core.gui.controls.FileButton();
         fileButton2 = new com.sfc.sf2.core.gui.controls.FileButton();
@@ -105,7 +105,7 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SF2DialogPropertiesManager");
 
-        jSplitPane1.setDividerLocation(700);
+        jSplitPane1.setDividerLocation(650);
         jSplitPane1.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
         jSplitPane1.setResizeWeight(0.85);
         jSplitPane1.setOneTouchExpandable(true);
@@ -116,6 +116,7 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder("Properties"));
 
         dialogPropertiesTable.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        dialogPropertiesTable.setInfoMessage("<html>- Sprite: The mapsprite used when this character is added to a map. For ally dialog properties, the sprite cannot be changed in this system.<br>- Portrait: The portrait used when talking to this character (or as the character portrait for ally characters).<br>- SFX: The sound to play when this character talks.</html>");
         dialogPropertiesTable.setModel(dialogPropertiesTableModel);
         dialogPropertiesTable.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
@@ -132,7 +133,7 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(dialogPropertiesTable, javax.swing.GroupLayout.DEFAULT_SIZE, 665, Short.MAX_VALUE)
+                .addComponent(dialogPropertiesTable, javax.swing.GroupLayout.DEFAULT_SIZE, 615, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -151,8 +152,15 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Import :"));
 
-        jLabel2.setText("<html>Select disassembly file</html>");
-        jLabel2.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jLabel2.setText("Import dialog properties disassembly.");
+
+        infoButton2.setMessageText("<html>Used for:<br>- spritedialogproperties.asm<br>- spritedialogproperties.bin<br>- spritedialogproperties-standard.asm</html>");
+        infoButton2.setText("");
+
+        fileButton6.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
+        fileButton6.setFilePath(".\\spritedialogproperties-standard.asm");
+        fileButton6.setInfoMessage("");
+        fileButton6.setLabelText("Dialog properties :");
 
         jButton18.setText("Import");
         jButton18.addActionListener(new java.awt.event.ActionListener() {
@@ -161,12 +169,6 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
             }
         });
 
-        fileButton6.setFilePath(".\\spritedialogproperties-standard.asm");
-        fileButton6.setLabelText("Dialog properties :");
-
-        infoButton2.setMessageText("<html>Used for:<br>- spritedialogproperties.asm<br>- spritedialogproperties.bin<br>- spritedialogproperties-standard.asm</html>");
-        infoButton2.setText("");
-
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -174,33 +176,39 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(fileButton6, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(infoButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
-                        .addComponent(jButton18))
-                    .addComponent(fileButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addComponent(infoButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton18)))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(infoButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(fileButton6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jButton18)
-                    .addComponent(infoButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jButton18)
                 .addContainerGap())
         );
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Export :"));
         jPanel5.setPreferredSize(new java.awt.Dimension(32, 135));
 
-        jLabel1.setText("<html>Creates a new file, or overwrites existing file. (MAKE BACKUPS !)</html>");
-        jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jLabel1.setText("Export dialog properties disassembly.");
+
+        fileButton7.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
+        fileButton7.setFilePath(".\\spritedialogproperties-standard.asm");
+        fileButton7.setInfoMessage("");
+        fileButton7.setLabelText("Dialog properties :");
 
         jButton2.setText("Export");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -209,9 +217,6 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
             }
         });
 
-        fileButton7.setFilePath(".\\spritedialogproperties-standard.asm");
-        fileButton7.setLabelText("Dialog properties :");
-
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -219,23 +224,27 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fileButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)))
+                        .addComponent(fileButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton2)
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(fileButton7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jButton2)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -254,8 +263,8 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 217, Short.MAX_VALUE)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 112, Short.MAX_VALUE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -263,7 +272,15 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
 
         jPanel11.setBorder(javax.swing.BorderFactory.createTitledBorder("Import :"));
 
-        jLabel4.setText("<html>Select disassembly file</html>");
+        jLabel4.setText("Import ally dialog properties disassembly.");
+
+        fileButton4.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
+        fileButton4.setFilePath(".\\stats\\allies\\allydialogproperties-standard.asm");
+        fileButton4.setInfoMessage("");
+        fileButton4.setLabelText("Dialog properties :");
+
+        infoButton1.setMessageText("<html>Used for:<br>- allydialogproperties-standard.asm</html>");
+        infoButton1.setText("");
 
         jButton19.setText("Import");
         jButton19.addActionListener(new java.awt.event.ActionListener() {
@@ -272,12 +289,6 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
             }
         });
 
-        fileButton4.setFilePath(".\\stats\\allies\\allydialogproperties-standard.asm");
-        fileButton4.setLabelText("Dialog properties :");
-
-        infoButton1.setMessageText("<html>Used for:<br>- allydialogproperties-standard.asm</html>");
-        infoButton1.setText("");
-
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
         jPanel11Layout.setHorizontalGroup(
@@ -285,33 +296,39 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(fileButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
                     .addGroup(jPanel11Layout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(infoButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton19))
-                    .addComponent(fileButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addComponent(infoButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton19)))
                 .addContainerGap())
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel11Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(infoButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(fileButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jButton19)
-                    .addComponent(infoButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jButton19)
                 .addContainerGap())
         );
 
         jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder("Export :"));
         jPanel9.setPreferredSize(new java.awt.Dimension(32, 135));
 
-        jLabel3.setText("<html>Creates a new file, or overwrites existing file. (MAKE BACKUPS !)</html>");
-        jLabel3.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jLabel3.setText("Export allies dialog properties disassembly.");
+
+        fileButton5.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
+        fileButton5.setFilePath(".\\stats\\allies\\allydialogproperties-standard.asm");
+        fileButton5.setInfoMessage("");
+        fileButton5.setLabelText("Dialog properties :");
 
         jButton3.setText("Export");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -320,9 +337,6 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
             }
         });
 
-        fileButton5.setFilePath(".\\stats\\allies\\allydialogproperties-standard.asm");
-        fileButton5.setLabelText("Dialog properties :");
-
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
@@ -330,10 +344,12 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fileButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(fileButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
                     .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton3)))
                 .addContainerGap())
         );
@@ -341,12 +357,12 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(fileButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(6, 6, 6)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addComponent(jButton3)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -365,7 +381,7 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 217, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 128, Short.MAX_VALUE)
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -374,23 +390,35 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
 
         accordionPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Import data :"));
 
+        fileButton1.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
         fileButton1.setFilePath(".\\graphics\\tech\\basepalette.bin");
+        fileButton1.setInfoMessage("The game's base palette. Used to show the mapsprites.");
         fileButton1.setLabelText("Base palette :");
 
+        fileButton2.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
         fileButton2.setFilePath(".\\graphics\\mapsprites\\entries.asm");
+        fileButton2.setInfoMessage("The entries file to load mapsprite previews.");
         fileButton2.setLabelText("Mapsprite entries :");
 
+        fileButton3.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
         fileButton3.setFilePath(".\\graphics\\portraits\\entries.asm");
+        fileButton3.setInfoMessage("The entries file to show preview of portraits.");
         fileButton3.setLabelText("Portrait entries :");
 
+        fileButton8.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
         fileButton8.setFilePath("..\\sf2enums.asm");
+        fileButton8.setInfoMessage("Loads data from SF2Enums, including: SFX file names.");
         fileButton8.setLabelText("SF2Enums :");
 
-        fileButton9.setFilePath(".\\graphics\\portraits\\entries.asm");
+        fileButton9.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
+        fileButton9.setFilePath(".\\graphics\\specialsprites\\entries.asm");
+        fileButton9.setInfoMessage("The special sprites entries to show preview of special sprites (ie. boss sprites).");
         fileButton9.setLabelText("Special sprite entries :");
 
-        fileButton10.setFilePath(".\\graphics\\portraits\\entries.asm");
-        fileButton10.setLabelText("Special sprite entries :");
+        fileButton10.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
+        fileButton10.setFilePath(".\\graphics\\specialsprites\\pointers.asm");
+        fileButton10.setInfoMessage("Also required to load special sprites.");
+        fileButton10.setLabelText("Special sprite pointers :");
 
         javax.swing.GroupLayout accordionPanel1Layout = new javax.swing.GroupLayout(accordionPanel1);
         accordionPanel1.setLayout(accordionPanel1Layout);

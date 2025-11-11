@@ -89,7 +89,7 @@ public class DialogPropertiesAsmProcessor extends AbstractAsmProcessor<DialogPro
     }
 
     @Override
-    protected String getHeaderName(DialogProperty[] item) {
+    protected String getHeaderName(DialogProperty[] item, DialogPropertiesEnums pckg) {
         return "Sprite dialog properties";
     }
 

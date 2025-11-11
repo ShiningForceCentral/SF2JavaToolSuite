@@ -7,9 +7,8 @@ package com.sfc.sf2.icon;
 
 import com.sfc.sf2.core.AbstractManager;
 import com.sfc.sf2.core.gui.controls.Console;
-import com.sfc.sf2.core.io.AbstractRawImageProcessor;
-import com.sfc.sf2.core.io.AbstractRawImageProcessor.FileFormat;
 import com.sfc.sf2.core.io.DisassemblyException;
+import com.sfc.sf2.core.io.FileFormat;
 import com.sfc.sf2.core.io.RawImageException;
 import com.sfc.sf2.graphics.Tileset;
 import com.sfc.sf2.graphics.TilesetManager;
@@ -55,7 +54,7 @@ public class IconManager extends AbstractManager {
     public void importAllDisassemblies(Path paletteFilePath, Path basePath) throws IOException, DisassemblyException {
         Console.logger().finest("ENTERING importAllDisassemblies");
         Palette palette = paletteManager.importDisassembly(paletteFilePath, true);
-        File[] files = FileHelpers.findAllFilesInDirectory(basePath, "icon", ".bin");
+        File[] files = FileHelpers.findAllFilesInDirectory(basePath, "icon", FileFormat.BIN);
         Console.logger().info(files.length + " icon disasms found.");
         ArrayList<Icon> iconsList = new ArrayList<>();
         int failedToLoad = 0;
@@ -87,7 +86,7 @@ public class IconManager extends AbstractManager {
             try {
                 if (icon != null && icon.getTileset() != null) {
                     int index = icon.getIndex();
-                    filePath = basePath.resolve(String.format("icon%03d.bin", index));
+                    filePath = basePath.resolve(String.format("icon%03d%s", index, FileFormat.BIN.getExt()));
                     tilesetManager.exportDisassembly(filePath, icon.getTileset(), TilesetCompression.NONE);
                 }
             } catch (Exception e) {
@@ -105,13 +104,13 @@ public class IconManager extends AbstractManager {
     public void importAllImages(Path paletteFilePath, Path basePath, FileFormat format) throws IOException, DisassemblyException, RawImageException {
         Console.logger().finest("ENTERING importAllImages");
         Palette palette = paletteManager.importDisassembly(paletteFilePath, true);
-        File singleFile = basePath.resolve("allIcons" + AbstractRawImageProcessor.GetFileExtensionString(format)).toFile();
+        File singleFile = basePath.resolve("allIcons" + format.getExt()).toFile();
         if (singleFile.exists()) {
             IconPackage pckg = new IconPackage(-1, palette, 10);
             icons = iconRawImageProcessor.importRawImage(singleFile.toPath(), pckg);
             Console.logger().info(icons.length + " Icons with successfully imported from image : " + singleFile);
         } else {
-            File[] files = FileHelpers.findAllFilesInDirectory(basePath, "icon", AbstractRawImageProcessor.GetFileExtensionString(format));
+            File[] files = FileHelpers.findAllFilesInDirectory(basePath, "icon", format);
             Console.logger().info(files.length + " icon images found.");
             ArrayList<Icon> iconsList = new ArrayList<>();
             int failedToLoad = 0;
@@ -148,14 +147,14 @@ public class IconManager extends AbstractManager {
                 case INDIVIDUAL_FILES:
                 for (Icon icon : icons) {
                     if (icon != null && icon.getTileset() != null) {
-                        iconPath = basePath.resolve(String.format("icon%03d%s", icon.getIndex(), AbstractRawImageProcessor.GetFileExtensionString(format)));
+                        iconPath = basePath.resolve(String.format("icon%03d%s", icon.getIndex(), format.getExt()));
                         IconPackage pckg = new IconPackage(icon.getIndex(), icon.getPalette(), 1);
                         iconRawImageProcessor.exportRawImage(iconPath, new Icon[] { icon }, pckg);
                     }
                 }
                 break;
             case SINGLE_FILE:
-                iconPath = basePath.resolve(String.format("allIcons%s", AbstractRawImageProcessor.GetFileExtensionString(format)));
+                iconPath = basePath.resolve(String.format("allIcons%s", format.getExt()));
                 IconPackage pckg = new IconPackage(-1, icons[0].getPalette(), iconsPerRow);
                 iconRawImageProcessor.exportRawImage(iconPath, icons, pckg);
                 break;

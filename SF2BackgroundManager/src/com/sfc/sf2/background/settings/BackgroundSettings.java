@@ -5,7 +5,7 @@
  */
 package com.sfc.sf2.background.settings;
 
-import com.sfc.sf2.core.io.AbstractRawImageProcessor.FileFormat;
+import com.sfc.sf2.core.io.FileFormat;
 import com.sfc.sf2.core.settings.AbstractSettings;
 import java.util.HashMap;
 

@@ -7,11 +7,12 @@ package com.sfc.sf2.spellGraphic;
 
 import com.sfc.sf2.core.AbstractManager;
 import com.sfc.sf2.core.gui.controls.Console;
-import com.sfc.sf2.core.io.AbstractRawImageProcessor;
 import com.sfc.sf2.core.io.DisassemblyException;
+import com.sfc.sf2.core.io.FileFormat;
 import com.sfc.sf2.core.io.RawImageException;
 import com.sfc.sf2.graphics.Tileset;
 import com.sfc.sf2.graphics.TilesetManager;
+import com.sfc.sf2.helpers.FileHelpers;
 import com.sfc.sf2.helpers.PathHelpers;
 import com.sfc.sf2.spellGraphic.io.InvocationDisassemblyProcessor;
 import com.sfc.sf2.spellGraphic.io.InvocationMetadataProcessor;
@@ -59,39 +60,23 @@ public class InvocationGraphicManager extends AbstractManager {
     public InvocationGraphic importImage(Path filePath) throws RawImageException, IOException, DisassemblyException {
         Console.logger().finest("ENTERING importImage");
         Path dir = filePath.getParent();
-        String name = filePath.getFileName().toString();
-        String extension = null;
-        String meta = null;
-        String pattern = null;
-        int dotIndex = name.lastIndexOf('.');
-        if (dotIndex > 0 && name.length()-dotIndex < 5) {
-            extension = name.substring(dotIndex);
-        } else {
-            extension = AbstractRawImageProcessor.GetFileExtensionString(AbstractRawImageProcessor.FileFormat.PNG);
+        String name = getImageName(filePath.getFileName().toString());
+        FileFormat format = FileFormat.getFormat(filePath);
+        if (format != FileFormat.PNG || format != FileFormat.GIF) {
+            format = FileFormat.ANY_IMAGE;
         }
-        int suffixIndex = name.indexOf("-frame-");
-        if (suffixIndex > 0) {
-            meta = name.substring(0, suffixIndex) + ".meta";
-            pattern = name.substring(0, suffixIndex+7);
-        } else {
-            meta = name + ".meta";
-            pattern = name + "-frame-";
-        }
-        
         List<Tileset> frames = new ArrayList<>();
-        File[] files = dir.toFile().listFiles();
+        File[] files = FileHelpers.findAllFilesInDirectory(dir, name+"-frame-", format);
         for (File f : files) { 
-            if (f.getName().startsWith(pattern) && f.getName().endsWith(extension)) {
-                Tileset frame = tilesetManager.importImage(f.toPath(), true);
-                frames.add(frame);
-            }
+            Tileset frame = tilesetManager.importImage(f.toPath(), true);
+            frames.add(frame);
         }
         if (frames.isEmpty()) {
-            throw new DisassemblyException("ERROR : No frames found for pattern : " + dir.resolve(pattern + "XX" + extension));
+            throw new DisassemblyException("ERROR : No frames found for pattern : " + dir.resolve(name+"-frame-"+"XX"+format.getExt()));
         }
         invocationGraphic = new InvocationGraphic(frames.toArray(new Tileset[frames.size()]));
         Console.logger().info("Invocation with " + invocationGraphic.getFrames().length + " frames successfully imported from : " + filePath);
-        Path metaPath = dir.resolve(meta);
+        Path metaPath = dir.resolve(name+FileFormat.META.getExt());
         try {
             invocationMetadataProcessor.importMetadata(metaPath, invocationGraphic);
             Console.logger().info("Invocation meta successfully imported from : " + metaPath);
@@ -105,31 +90,43 @@ public class InvocationGraphicManager extends AbstractManager {
     public void exportImage(Path filePath, InvocationGraphic invocationGraphic) throws RawImageException, IOException, DisassemblyException {
         Console.logger().finest("ENTERING exportImage");
         Path dir = filePath.getParent();
-        String name = filePath.getFileName().toString();
-        String extension = null;
-        int dotIndex = name.indexOf('.');
-        if (dotIndex >= 0) {
-            extension = name.substring(dotIndex);
-        } else {
-            extension = AbstractRawImageProcessor.GetFileExtensionString(AbstractRawImageProcessor.FileFormat.PNG);
+        String name = getImageName(filePath.getFileName().toString());
+        FileFormat format = FileFormat.getFormat(filePath);
+        if (format == FileFormat.UNKNOWN) {
+            format = FileFormat.ANY_IMAGE;
         }
-        name = name.replaceAll("\\d+\\.[^\\.]+$", "");
         
         this.invocationGraphic = invocationGraphic;
         Tileset[] frames = this.invocationGraphic.getFrames();
         for (int i = 0; i < frames.length; i++) {
-            Path framePath = dir.resolve(name + "-frame-" + String.format("%02d", i) + extension);
+            Path framePath = dir.resolve(name + "-frame-" + String.format("%02d", i) + format.getExt());
             tilesetManager.exportImage(framePath, frames[i]);
         }
-        Console.logger().info("Invocation successfully exported to : " + dir.resolve(name));
-        Path metaPath = dir.resolve(name + ".meta");
+        Console.logger().info("Invocation successfully exported to : " + filePath.resolve(name));
+        Path metaPath = dir.resolve(name + FileFormat.META.getExt());
         try {
             invocationMetadataProcessor.exportMetadata(metaPath, invocationGraphic);
-            Console.logger().info("Invocation meta successfully exported to : " + metaPath);
         } catch (Exception e) {
             Console.logger().log(Level.SEVERE, "Invocation metadata could not be loaded from : " + metaPath);
         }
+        Console.logger().info("Invocation meta successfully exported to : " + metaPath);
         Console.logger().finest("EXITING exportImage");
+    }
+    
+    private String getImageName(String filename) {
+        int dotIndex = filename.indexOf('.');
+        int frameIndex = filename.indexOf("-frame");
+        int dashIndex = filename.indexOf("-");
+        if (frameIndex >= 0) {
+            return filename.substring(0, frameIndex);
+        } else if (dashIndex >= 0) {
+            return filename.substring(0, dashIndex);
+        } else if (dotIndex >= 0) {
+            if (dotIndex > filename.lastIndexOf("\\")) {
+                return filename.substring(0, dotIndex);
+            }
+        }
+        return filename;
     }
 
     public InvocationGraphic getInvocationGraphic() {

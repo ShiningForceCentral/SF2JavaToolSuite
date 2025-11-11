@@ -5,7 +5,6 @@
  */
 package com.sfc.sf2.graphics.io;
 
-import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.core.io.AbstractDisassemblyProcessor;
 import com.sfc.sf2.core.io.DisassemblyException;
 import com.sfc.sf2.graphics.Tile;
@@ -13,14 +12,6 @@ import com.sfc.sf2.graphics.Tileset;
 import com.sfc.sf2.graphics.compression.BasicGraphicsDecoder;
 import com.sfc.sf2.graphics.compression.StackGraphicsDecoder;
 import com.sfc.sf2.graphics.compression.UncompressedGraphicsDecoder;
-import com.sfc.sf2.helpers.BinaryHelpers;
-import com.sfc.sf2.helpers.PathHelpers;
-import com.sfc.sf2.palette.Palette;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *

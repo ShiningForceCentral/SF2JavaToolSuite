@@ -55,8 +55,7 @@ public class BattleMapTerrainManager extends AbstractManager {
         this.coords = allCoords[battleIndex];
         EntriesAsmData terrainEntries = entriesAsmProcessor.importAsmData(terrainEntriesPath, null);
         int mapId = coords.getMap();
-        mapCoordsManager.ImportMapEntries(mapEntriesPath);
-        mapCoordsManager.importMap(paletteEntriesPath, tilesetEntriesPath, mapId);
+        mapCoordsManager.importMapFromEntries(paletteEntriesPath, tilesetEntriesPath, mapEntriesPath, mapId);
         if (battleIndex < terrainEntries.entriesCount()) {
             Path path = PathHelpers.getIncbinPath().resolve(terrainEntries.getPathForEntry(battleIndex));
             terrain = terrainDisassemblyProcessor.importDisassembly(path, null);
@@ -92,8 +91,8 @@ public class BattleMapTerrainManager extends AbstractManager {
         Console.logger().finest("EXITING exportLandEffects");
     }
     
-    public MapLayout importMap(Path paletteEntriesPath, Path tilesetsEntriesPath, int mapId) throws IOException, AsmException, DisassemblyException {
-        return mapCoordsManager.importMap(paletteEntriesPath, tilesetsEntriesPath, mapId);
+    public MapLayout importMap(Path paletteEntriesPath, Path tilesetsEntriesPath, Path mapEntriesPath, int mapId) throws IOException, AsmException, DisassemblyException {
+        return mapCoordsManager.importMapFromEntries(paletteEntriesPath, tilesetsEntriesPath, mapEntriesPath, mapId);
     }
     
     private void checkForSharedTerrain(EntriesAsmData terrainEntries, int index) {

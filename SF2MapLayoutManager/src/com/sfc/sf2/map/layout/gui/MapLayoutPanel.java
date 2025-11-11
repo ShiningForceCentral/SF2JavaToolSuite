@@ -10,10 +10,10 @@ import com.sfc.sf2.core.gui.layout.*;
 import static com.sfc.sf2.graphics.Block.PIXEL_HEIGHT;
 import static com.sfc.sf2.graphics.Block.PIXEL_WIDTH;
 import com.sfc.sf2.helpers.MapBlockHelpers;
-import com.sfc.sf2.map.block.MapBlock;
 import com.sfc.sf2.map.layout.MapLayout;
 import static com.sfc.sf2.map.layout.MapLayout.BLOCK_HEIGHT;
 import static com.sfc.sf2.map.layout.MapLayout.BLOCK_WIDTH;
+import com.sfc.sf2.map.layout.MapLayoutBlock;
 import com.sfc.sf2.map.layout.gui.resources.MapLayoutFlagIcons;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -65,7 +65,7 @@ public class MapLayoutPanel extends AbstractLayoutPanel {
 
     @Override
     protected boolean hasData() {
-        return layout != null && layout.getBlockset() != null;
+        return layout != null && layout.getBlocks() != null;
     }
 
     @Override
@@ -75,21 +75,25 @@ public class MapLayoutPanel extends AbstractLayoutPanel {
 
     @Override
     protected void drawImage(Graphics graphics) {
-        MapBlock[] blocks = layout.getBlockset().getBlocks();
+        MapLayoutBlock[] blocks = layout.getBlocks();
         for (int y=0; y < BLOCK_HEIGHT; y++) {
             for (int x=0; x < BLOCK_WIDTH; x++) {
-                graphics.drawImage(blocks[x+y*BLOCK_WIDTH].getIndexedColorImage(layout.getTilesets()), x*PIXEL_WIDTH, y*PIXEL_HEIGHT, null);
+                graphics.drawImage(blocks[x+y*BLOCK_WIDTH].getMapBlock().getIndexedColorImage(layout.getTilesets()), x*PIXEL_WIDTH, y*PIXEL_HEIGHT, null);
             }
         }
         if (getShowExplorationFlags() || getShowInteractionFlags()) {
             drawFlags(blocks, graphics);
         }
         if (showPriority) {
-            MapBlockHelpers.drawTilePriorities(graphics, blocks, layout.getTilesets(), BLOCK_WIDTH);
+            for (int y=0; y < BLOCK_HEIGHT; y++) {
+                for (int x=0; x < BLOCK_WIDTH; x++) {
+                    MapBlockHelpers.drawTilePriorities(graphics, blocks[x+y*BLOCK_WIDTH].getMapBlock(), layout.getTilesets(), x*PIXEL_WIDTH, y*PIXEL_HEIGHT);
+                }
+            }
         }
     }
     
-    protected void drawFlags(MapBlock[] blocks, Graphics graphics) {
+    protected void drawFlags(MapLayoutBlock[] blocks, Graphics graphics) {
         boolean showExplorationFlags = getShowExplorationFlags();
         boolean showInteractionFlags = getShowInteractionFlags();
         for (int y=0; y < BLOCK_HEIGHT; y++) {

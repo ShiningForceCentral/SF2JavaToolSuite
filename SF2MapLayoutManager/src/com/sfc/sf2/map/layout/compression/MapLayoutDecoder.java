@@ -5,12 +5,12 @@
  */
 package com.sfc.sf2.map.layout.compression;
 
-import com.sfc.sf2.core.gui.controls.Console;
-import com.sfc.sf2.graphics.Tileset;
 import com.sfc.sf2.helpers.BinaryHelpers;
 import com.sfc.sf2.map.block.MapBlock;
 import com.sfc.sf2.map.block.MapBlockset;
 import com.sfc.sf2.map.layout.MapLayout;
+import static com.sfc.sf2.map.layout.MapLayout.BLOCK_COUNT;
+import com.sfc.sf2.map.layout.MapLayoutBlock;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,37 +32,38 @@ public class MapLayoutDecoder {
     private int blocksetCursor;
     private int blockCursor;
 
-    MapBlock[][] leftHistoryMap = null;
-    MapBlock[][] upperHistoryMap = null;
+    MapLayoutBlock[][] leftHistoryMap = null;
+    MapLayoutBlock[][] upperHistoryMap = null;
     
     //private StringBuilder debugSb = null;
 
-    public MapBlockset decode(byte[] layoutData, MapBlock[] blockset) {
+    public MapLayoutBlock[] decode(byte[] layoutData, MapBlockset blockset) {
         inputData = layoutData;
-        MapBlock[] blocks = new MapBlock[64 * 64];
-        leftHistoryMap = new MapBlock[blockset.length][4];
-        upperHistoryMap = new MapBlock[blockset.length][4];
+        MapLayoutBlock[] layoutBlocks = new MapLayoutBlock[BLOCK_COUNT];
+        MapBlock[] blocks = blockset.getBlocks();
+        leftHistoryMap = new MapLayoutBlock[blocks.length][4];
+        upperHistoryMap = new MapLayoutBlock[blocks.length][4];
         blocksetCursor = 2;
         blockCursor = 0;
         //debugSb = new StringBuilder();
-        while (blockCursor < 64 * 64) {
+        while (blockCursor < BLOCK_COUNT) {
             //debugSb.append(" ");
-            MapBlock block = null;
+            MapLayoutBlock block = null;
             if (getNextBit() == 0) {
                 if (getNextBit() == 0) {
                     /* 00 */
                     //Console.logger().finest("Block=$" + Integer.toHexString(blockCursor)+" - 00 : Output next block from block set.");
                     blocksetCursor++;
-                    block = blockset[blocksetCursor].clone();
+                    block = new MapLayoutBlock(blocks[blocksetCursor], 0);
                     applyFlags(block);
-                    blocks[blockCursor] = block;
+                    layoutBlocks[blockCursor] = block;
                     if (blockCursor > 0) {
-                        saveBlockToLeftStackMap(blocks[blockCursor-1].getIndex(), block);
+                        saveBlockToLeftStackMap(layoutBlocks[blockCursor-1].getMapBlock().getIndex(), block);
                     } else {
                         saveBlockToLeftStackMap(0, block);
                     }
                     if (blockCursor >= MapLayout.BLOCK_WIDTH) {
-                        saveBlockToUpperStackMap(blocks[blockCursor-MapLayout.BLOCK_WIDTH].getIndex(), block);
+                        saveBlockToUpperStackMap(layoutBlocks[blockCursor-MapLayout.BLOCK_WIDTH].getMapBlock().getIndex(), block);
                     } else {
                         saveBlockToUpperStackMap(0, block);
                     }
@@ -85,21 +86,18 @@ public class MapLayoutDecoder {
                     int offset = (getNextBit() == 1) ? 1 : MapLayout.BLOCK_WIDTH;
                     for (int i = 0; i < result; i++) {
                         if (blockCursor < MapLayout.BLOCK_COUNT) {
-                            MapBlock source = blocks[blockCursor-offset];
-                            MapBlock copy = source.clone();
-                            blocks[blockCursor] = copy;
-                            //Console.logger().finest(" Copy of block=$" + Integer.toHexString(blocks[blockCursor].getIndex())+" / "+blocks[blockCursor].getIndex());
+                                layoutBlocks[blockCursor] = layoutBlocks[blockCursor-offset].clone();
+                            //Console.logger().finest(" Copy of block=$" + Integer.toHexString(blocks[blockCursor].getMapBlock().getIndex())+" / "+blocks[blockCursor].getMapBlock().getIndex());
                             blockCursor++;
                         }
                     }
                     //Console.logger().finest(debugSb.substring(debugSb.length()-1-2));
-                    //Console.logger().finest("outputData="+outputData);
                 }
             } else {
                 /* 1... check if left block history stack available */
                 int commandType;
-                int leftBlockCursor = (blockCursor > 0) ? blocks[blockCursor-1].getIndex() : 0;
-                int upperBlockCursor = (blockCursor >= MapLayout.BLOCK_WIDTH) ? blocks[blockCursor-MapLayout.BLOCK_WIDTH].getIndex() : 0;
+                int leftBlockCursor = (blockCursor > 0) ? layoutBlocks[blockCursor-1].getMapBlock().getIndex() : 0;
+                int upperBlockCursor = (blockCursor >= MapLayout.BLOCK_WIDTH) ? layoutBlocks[blockCursor-MapLayout.BLOCK_WIDTH].getMapBlock().getIndex() : 0;
                 if (leftHistoryMap[leftBlockCursor][0] != null) {
                     /* 1... left block stack available, check next bit */
                     if (getNextBit() == 0) {
@@ -146,7 +144,7 @@ public class MapLayoutDecoder {
                 }
                 int stackSize = 0;
                 int stackTarget = 0;
-                MapBlock targetBlock = null;
+                MapLayoutBlock targetBlock = null;
                 switch (commandType) {
 
                     case COMMAND_LEFTMAP:
@@ -205,24 +203,24 @@ public class MapLayoutDecoder {
                             length--;
                         }
                         //Console.logger().finest(" blocksetCursor=="+blocksetCursor+" / "+Integer.toString(blocksetCursor,2)+", length="+Integer.toString(blocksetCursor,2).length()+", Value="+value);
-                        targetBlock = blockset[value];
-                        block = targetBlock.clone();
+                        targetBlock = new MapLayoutBlock(blocks[value], 0);
+                        block = targetBlock;
                         applyFlags(block);
                         break;
                 }
 
                 if (block == null) {
-                    //block = MapBlock.EmptyMapBlock(-1, 0, palette);
+                    block = new MapLayoutBlock(blocks[0], 0);
                 }
-                blocks[blockCursor] = block;
+                layoutBlocks[blockCursor] = block;
 
                 if (blockCursor > 0) {
-                    saveBlockToLeftStackMap(blocks[blockCursor-1].getIndex(), block);
+                    saveBlockToLeftStackMap(layoutBlocks[blockCursor-1].getMapBlock().getIndex(), block);
                 } else {
                     saveBlockToLeftStackMap(0, block);
                 }
                 if (blockCursor >= MapLayout.BLOCK_WIDTH) {
-                    saveBlockToUpperStackMap(blocks[blockCursor-MapLayout.BLOCK_WIDTH].getIndex(), block);
+                    saveBlockToUpperStackMap(layoutBlocks[blockCursor-MapLayout.BLOCK_WIDTH].getMapBlock().getIndex(), block);
                 } else {
                     saveBlockToUpperStackMap(0, block);
                 }
@@ -230,34 +228,37 @@ public class MapLayoutDecoder {
                 blockCursor++;
             }
 
-            //Console.logger().finest(" Output block = $" + Integer.toHexString(block.getIndex())+" / "+block.getIndex());
-            //Console.logger().finest(debugSb.substring(debugSb.lastIndexOf(" ")));  
+            if (block != null) {
+                //Console.logger().finest(" Output block = $" + Integer.toHexString(block.getMapBlock().getIndex())+" / "+block.getMapBlock().getIndex());
+            }
+            //Console.logger().finest(debugSb.substring(debugSb.lastIndexOf(" ")));
         }
-        for (int i = 0; i < blocks.length; i++) {
-            if (blocks[i] == null) {
-                blocks[i] = blockset[0];
+        MapLayoutBlock emptyBlock = new MapLayoutBlock(blocks[0], 0);
+        for (int i = 0; i < layoutBlocks.length; i++) {
+            if (layoutBlocks[i] == null) {
+                layoutBlocks[i] = emptyBlock;
             }
         }
-        return new MapBlockset(blocks, MapLayout.BLOCK_WIDTH);
+        return layoutBlocks;
     }
 
-    private void applyFlags(MapBlock block) {
+    private void applyFlags(MapLayoutBlock block) {
         short flags = 0;
         if (getNextBit() == 0) {
             if (getNextBit() == 0) {
                 /* 00 : no flag set */
             } else {
                 /* 01 : $C000*/
-                flags = (short)MapBlock.MAP_FLAG_OBSTRUCTED;
+                flags = (short)MapLayoutBlock.MAP_FLAG_OBSTRUCTED;
             }
         } else {
             if (getNextBit() == 0) {
                 if (getNextBit() == 0) {
                     /* 100 : $4000 */
-                    flags = (short)MapBlock.MAP_FLAG_STAIRS_RIGHT;
+                    flags = (short)MapLayoutBlock.MAP_FLAG_STAIRS_RIGHT;
                 } else {
                     /* 101 : $8000 */
-                    flags = (short)MapBlock.MAP_FLAG_STAIRS_LEFT;
+                    flags = (short)MapLayoutBlock.MAP_FLAG_STAIRS_LEFT;
                 }
             } else {
                 /* 11 : next 6 bits = flag mask XXXX XX00 0000 0000 */
@@ -272,11 +273,11 @@ public class MapLayoutDecoder {
         block.setFlags(flags & 0xFFFF);
     }
 
-    private void saveBlockToLeftStackMap(int leftBlockIndex, MapBlock block) {
-        MapBlock[] currentStack = leftHistoryMap[leftBlockIndex];
+    private void saveBlockToLeftStackMap(int leftBlockIndex, MapLayoutBlock block) {
+        MapLayoutBlock[] currentStack = leftHistoryMap[leftBlockIndex];
 
         if (!block.equalsIgnoreTiles(currentStack[0])) {
-            MapBlock[] newStack = new MapBlock[4];
+            MapLayoutBlock[] newStack = new MapLayoutBlock[4];
             leftHistoryMap[leftBlockIndex] = newStack;
             newStack[0] = block;
             int currentStackCursor = 0;
@@ -297,11 +298,11 @@ public class MapLayoutDecoder {
         }
     }
 
-    private void saveBlockToUpperStackMap(int upperBlockIndex, MapBlock block) {
-        MapBlock[] currentStack = upperHistoryMap[upperBlockIndex];
+    private void saveBlockToUpperStackMap(int upperBlockIndex, MapLayoutBlock block) {
+        MapLayoutBlock[] currentStack = upperHistoryMap[upperBlockIndex];
 
         if (!block.equalsIgnoreTiles(currentStack[0])) {
-            MapBlock[] newStack = new MapBlock[4];
+            MapLayoutBlock[] newStack = new MapLayoutBlock[4];
             upperHistoryMap[upperBlockIndex] = newStack;
             newStack[0] = block;
             int currentStackCursor = 0;
@@ -335,48 +336,41 @@ public class MapLayoutDecoder {
         return bit;
     }
 
-    public MapBlock[] encodeNewBlockset(MapBlock[] blockSet, MapBlockset layoutBlockset) {
-        List<Integer> newBlocksetValues = new ArrayList<>();
-        MapBlock[] newBlockset;
-        MapBlock[] blocks = layoutBlockset.getBlocks();
+    public void optimiseBlockset(MapBlockset blockset, MapLayout layout) {
+        MapBlock[] oldBlocks = blockset.getBlocks();
+        MapLayoutBlock[] layoutBlocks = layout.getBlocks();
+        List<Integer> newBlockValues = new ArrayList<>();
+        MapBlock[] newBlocks;
         /* Add base blocks : empty, closed chest and open chest */
-        newBlocksetValues.add(blockSet[0].getIndex());
-        newBlocksetValues.add(blockSet[1].getIndex());
-        newBlocksetValues.add(blockSet[2].getIndex());
+        newBlockValues.add(0);
+        newBlockValues.add(1);
+        newBlockValues.add(2);
         /* Add blocks in layout's appearing order */
-        for (int i = 0; i < blocks.length; i++) {
-            if (!newBlocksetValues.contains(blocks[i].getIndex())) {
-                newBlocksetValues.add(blocks[i].getIndex());
+        for (int i = 0; i < layoutBlocks.length; i++) {
+            if (!newBlockValues.contains(layoutBlocks[i].getMapBlock().getIndex())) {
+                newBlockValues.add(layoutBlocks[i].getMapBlock().getIndex());
             }
         }
         /* Add remaining unused blocks */
-        for (int i = 0; i < blockSet.length; i++) {
-            if (!newBlocksetValues.contains(blockSet[i].getIndex())) {
-                newBlocksetValues.add(blockSet[i].getIndex());
+        for (int i = 0; i < oldBlocks.length; i++) {
+            if (!newBlockValues.contains(oldBlocks[i].getIndex())) {
+                newBlockValues.add(oldBlocks[i].getIndex());
             }
         }
-        newBlockset = new MapBlock[newBlocksetValues.size()];
-        for (int i = 0; i < newBlockset.length; i++) {
-            newBlockset[i] = blockSet[newBlocksetValues.get(i)];
+        newBlocks = new MapBlock[newBlockValues.size()];
+        for (int i = 0; i < newBlocks.length; i++) {
+            newBlocks[i] = oldBlocks[newBlockValues.get(i)];
         }
-        for (int i = 0; i < blocks.length; i++) {
-            MapBlock block = blocks[i];
-            for (int j = 0; j < newBlockset.length; j++) {
-                if (block.getIndex() == newBlockset[j].getIndex()) {
-                    block.setIndex(j);
-                    break;
-                }
-            }
+        for (int i = 0; i < newBlocks.length; i++) {
+            newBlocks[i].setIndex(i);
         }
-        for (int i = 0; i < newBlockset.length; i++) {
-            newBlockset[i].setIndex(i);
-        }
-        return newBlockset;
+        blockset.setBlocks(newBlocks);
     }
 
-    public byte[] encode(MapLayout layout, MapBlock[] blockset) {
-        leftHistoryMap = new MapBlock[blockset.length][4];
-        upperHistoryMap = new MapBlock[blockset.length][4];
+    public byte[] encode(MapLayout layout, MapBlockset blockset) {
+        MapBlock[] blocks = blockset.getBlocks();
+        leftHistoryMap = new MapLayoutBlock[blocks.length][4];
+        upperHistoryMap = new MapLayoutBlock[blocks.length][4];
 
         StringBuilder outputSb = new StringBuilder();
         outputSb.append(" ");
@@ -393,7 +387,7 @@ public class MapLayoutDecoder {
         String nextBlockCandidate;
         String customBlockCandidate;
 
-        MapBlock[] blocks = layout.getBlockset().getBlocks();
+        MapLayoutBlock[] layoutBlocks = layout.getBlocks();
 
         while (blockCursor < 64 * 64) {
 
@@ -406,26 +400,26 @@ public class MapLayoutDecoder {
             nextBlockCandidate = null;
             customBlockCandidate = null;
 
-            MapBlock block = blocks[blockCursor];
-            //Console.logger().finest("Block $"+Integer.toString(block.getIndex(),16)+" / $"+Integer.toString(block.getFlags(),16));
-            MapBlock leftBlock = null;
+            MapLayoutBlock block = layoutBlocks[blockCursor];
+            //Console.logger().finest("Block $"+Integer.toString(block.getMapBlock().getIndex(),16)+" / $"+Integer.toString(block.getFlags(),16));
+            MapLayoutBlock leftBlock = null;
             int leftHistoryCursor = 0;
             if (blockCursor > 0) {
-                leftBlock = blocks[blockCursor - 1];
-                leftHistoryCursor = leftBlock.getIndex();
+                leftBlock = layoutBlocks[blockCursor - 1];
+                leftHistoryCursor = leftBlock.getMapBlock().getIndex();
             }
-            MapBlock upperBlock = null;
+            MapLayoutBlock upperBlock = null;
             int upperHistoryCursor = 0;
             if (blockCursor > 63) {
-                upperBlock = blocks[blockCursor - 64];
-                upperHistoryCursor = upperBlock.getIndex();
+                upperBlock = layoutBlocks[blockCursor - 64];
+                upperHistoryCursor = upperBlock.getMapBlock().getIndex();
             }
 
             /* Produce candidate commands */
             if (block.equalsIgnoreTiles(leftBlock)) {
                 /* Produce leftCopyCandidate with length */
                 leftCopyLength = 1;
-                while (blockCursor + leftCopyLength < blocks.length && blocks[blockCursor + leftCopyLength].equalsIgnoreTiles(blocks[blockCursor - 1 + leftCopyLength])) {
+                while (blockCursor + leftCopyLength < layoutBlocks.length && layoutBlocks[blockCursor + leftCopyLength].equalsIgnoreTiles(layoutBlocks[blockCursor - 1 + leftCopyLength])) {
                     leftCopyLength++;
                 }
                 int powerOfTwo = 0;
@@ -458,7 +452,7 @@ public class MapLayoutDecoder {
             if (block.equalsIgnoreTiles(upperBlock)) {
                 /* Produce upperCopyCandidate with length */
                 upperCopyLength = 1;
-                while (blockCursor + upperCopyLength < blocks.length && blocks[blockCursor + upperCopyLength].equalsIgnoreTiles(blocks[blockCursor - 64 + upperCopyLength])) {
+                while (blockCursor + upperCopyLength < layoutBlocks.length && layoutBlocks[blockCursor + upperCopyLength].equalsIgnoreTiles(layoutBlocks[blockCursor - 64 + upperCopyLength])) {
                     upperCopyLength++;
                 }
                 int powerOfTwo = 0;
@@ -492,7 +486,7 @@ public class MapLayoutDecoder {
                 /* Produce leftHistoryCandidate*/
                 StringBuilder commandSb = new StringBuilder();
                 commandSb.append("10");
-                MapBlock[] stack = leftHistoryMap[leftHistoryCursor];
+                MapLayoutBlock[] stack = leftHistoryMap[leftHistoryCursor];
                 if (stack[1] == null) {
                     /* No index to add */
                 } else {
@@ -522,7 +516,7 @@ public class MapLayoutDecoder {
                 /* Produce upperHistoryCandidate*/
                 StringBuilder commandSb = new StringBuilder();
                 commandSb.append("10");
-                MapBlock[] stack = upperHistoryMap[upperHistoryCursor];
+                MapLayoutBlock[] stack = upperHistoryMap[upperHistoryCursor];
                 if (stack[1] == null) {
                     /* No index to add */
                 } else {
@@ -551,7 +545,7 @@ public class MapLayoutDecoder {
             }
 
             if (leftCopyCandidate == null && upperCopyCandidate == null && leftHistoryCandidate == null && upperHistoryCandidate == null) {
-                if (blocksetCursor < blockset.length && block.getIndex() == blockset[blocksetCursor].getIndex()) {
+                if (blocksetCursor < blocks.length && block.getMapBlock().getIndex() == blocks[blocksetCursor].getIndex()) {
                     /* Produce nextBlockCandidate */
                     nextBlockCandidate = "00" + produceFlagBits(block.getFlags());
                     //Console.logger().finest(" nextBlockCandidate="+nextBlockCandidate);
@@ -563,7 +557,7 @@ public class MapLayoutDecoder {
                     commandSb.append("1");
                     int length = Integer.toString(blocksetCursor - 1, 2).length();
                     //Console.logger().finest(" blocksetCursor="+(blocksetCursor-1)+" / "+Integer.toString(blocksetCursor-1,2)+", length="+length);
-                    String value = Integer.toString(block.getIndex(), 2);
+                    String value = Integer.toString(block.getMapBlock().getIndex(), 2);
                     while (value.length() < length) {
                         value = "0" + value;
                     }
@@ -614,7 +608,7 @@ public class MapLayoutDecoder {
                     saveHistoryMaps(leftBlock, upperBlock, blockCursor, block);
                     blockCursor++;
                 } else {
-                    Console.logger().finest("ERROR : NO CANDIDATE COMMAND FOUND FOR BLOCK.");
+                    //Console.logger().finest("ERROR : NO CANDIDATE COMMAND FOUND FOR BLOCK.");
                 }
 
             }
@@ -636,27 +630,27 @@ public class MapLayoutDecoder {
             Byte b = (byte) (Integer.valueOf(outputSb.substring(i * 8, i * 8 + 8), 2) & 0xFF);
             output[i] = b;
         }
-        Console.logger().finest("output bytes length = " + output.length);
-        //Console.logger().finest("output = " + bytesToHex(output));
+        //Console.logger().finest("output bytes length = " + output.length);
+        //Console.logger().finest("output = " + BinaryHelpers.bytesToHex(output));
         return output;
     }
 
-    private void saveHistoryMaps(MapBlock leftBlock, MapBlock upperBlock, int blockCursor, MapBlock block) {
+    private void saveHistoryMaps(MapLayoutBlock leftBlock, MapLayoutBlock upperBlock, int blockCursor, MapLayoutBlock block) {
         if (blockCursor > 0) {
-            saveBlockToLeftStackMap(leftBlock.getIndex(), block);
+            saveBlockToLeftStackMap(leftBlock.getMapBlock().getIndex(), block);
         } else {
             saveBlockToLeftStackMap(0, block);
         }
         if (blockCursor >= MapLayout.BLOCK_WIDTH) {
-            saveBlockToUpperStackMap(upperBlock.getIndex(), block);
+            saveBlockToUpperStackMap(upperBlock.getMapBlock().getIndex(), block);
         } else {
             saveBlockToUpperStackMap(0, block);
         }
     }
 
-    private int getLeftHistoryIndex(int leftHistoryCursor, MapBlock block) {
+    private int getLeftHistoryIndex(int leftHistoryCursor, MapLayoutBlock block) {
         int index = -1;
-        MapBlock[] stack = leftHistoryMap[leftHistoryCursor];
+        MapLayoutBlock[] stack = leftHistoryMap[leftHistoryCursor];
         if (stack[0] == null) {
             return index;
         } else {
@@ -670,9 +664,9 @@ public class MapLayoutDecoder {
         return index;
     }
 
-    private int getUpperHistoryIndex(int upperHistoryCursor, MapBlock block) {
+    private int getUpperHistoryIndex(int upperHistoryCursor, MapLayoutBlock block) {
         int index = -1;
-        MapBlock[] stack = upperHistoryMap[upperHistoryCursor];
+        MapLayoutBlock[] stack = upperHistoryMap[upperHistoryCursor];
         if (stack[0] == null) {
             return index;
         } else {
