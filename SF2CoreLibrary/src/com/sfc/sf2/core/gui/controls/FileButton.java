@@ -5,6 +5,8 @@
  */
 package com.sfc.sf2.core.gui.controls;
 
+import com.sfc.sf2.core.actions.Action;
+import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.core.io.FileFormat;
 import com.sfc.sf2.helpers.PathHelpers;
 import java.beans.BeanProperty;
@@ -12,7 +14,6 @@ import java.io.File;
 import java.nio.file.Path;
 import javax.swing.Icon;
 import javax.swing.JFileChooser;
-import javax.swing.JTextField;
 
 /**
  *
@@ -29,8 +30,8 @@ public class FileButton extends javax.swing.JPanel {
 
     @Override
     public void setEnabled(boolean enabled) {
-        jTextFieldFile.setEnabled(enabled);
-        jButtonFile.setEnabled(enabled);
+        jTextFieldPath.setEnabled(enabled);
+        jButtonPath.setEnabled(enabled);
     }
     
     public String getLabelText() {
@@ -43,21 +44,21 @@ public class FileButton extends javax.swing.JPanel {
     }
     
     public String getFilePath() {
-        return jTextFieldFile.getText();
+        return jTextFieldPath.getText();
     }
     
     @BeanProperty(preferred = true, visualUpdate = true, description = "The default text that will appear in the text field.")
     public void setFilePath(String path) {
-        jTextFieldFile.setText(path);
+        jTextFieldPath.setText(path);
     }
     
     public Icon getButtonIcon() {
-        return jButtonFile.getIcon();
+        return jButtonPath.getIcon();
     }
     
     @BeanProperty(preferred = true, visualUpdate = true, description = "The icon on the file selector button.")
     public void setButtonIcon(Icon icon) {
-        jButtonFile.setIcon(icon);
+        jButtonPath.setIcon(icon);
     }
     
     @BeanProperty(preferred = true, visualUpdate = true, description = "Info button.")
@@ -81,8 +82,8 @@ public class FileButton extends javax.swing.JPanel {
         flatFileViewFileIcon = new com.formdev.flatlaf.icons.FlatFileViewFileIcon();
         jFileChooserFiles = new javax.swing.JFileChooser();
         jLabelFile = new javax.swing.JLabel();
-        jTextFieldFile = new javax.swing.JTextField();
-        jButtonFile = new javax.swing.JButton();
+        jTextFieldPath = new javax.swing.JTextField();
+        jButtonPath = new javax.swing.JButton();
         infoButton = new com.sfc.sf2.core.gui.controls.InfoButton();
 
         setMinimumSize(new java.awt.Dimension(250, 26));
@@ -90,22 +91,22 @@ public class FileButton extends javax.swing.JPanel {
 
         jLabelFile.setText("Filename :");
 
-        jTextFieldFile.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        jTextFieldFile.setText("jTextField1");
-        jTextFieldFile.setMinimumSize(new java.awt.Dimension(50, 26));
-        jTextFieldFile.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldPath.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        jTextFieldPath.setText("jTextField1");
+        jTextFieldPath.setMinimumSize(new java.awt.Dimension(50, 26));
+        jTextFieldPath.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldFileActionPerformed(evt);
+                jTextFieldPathActionPerformed(evt);
             }
         });
 
-        jButtonFile.setIcon(flatFileViewFileIcon);
-        jButtonFile.setMaximumSize(new java.awt.Dimension(26, 26));
-        jButtonFile.setMinimumSize(new java.awt.Dimension(26, 26));
-        jButtonFile.setPreferredSize(new java.awt.Dimension(26, 26));
-        jButtonFile.addActionListener(new java.awt.event.ActionListener() {
+        jButtonPath.setIcon(flatFileViewFileIcon);
+        jButtonPath.setMaximumSize(new java.awt.Dimension(26, 26));
+        jButtonPath.setMinimumSize(new java.awt.Dimension(26, 26));
+        jButtonPath.setPreferredSize(new java.awt.Dimension(26, 26));
+        jButtonPath.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonFileActionPerformed(evt);
+                jButtonPathActionPerformed(evt);
             }
         });
 
@@ -118,9 +119,9 @@ public class FileButton extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabelFile)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextFieldFile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jTextFieldPath, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(3, 3, 3)
-                .addComponent(jButtonFile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonPath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(infoButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -130,23 +131,23 @@ public class FileButton extends javax.swing.JPanel {
                 .addGap(0, 0, 0)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabelFile)
-                    .addComponent(jTextFieldFile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonFile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldPath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonPath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(infoButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFileActionPerformed
-        openFileChooser(jTextFieldFile);
-    }//GEN-LAST:event_jButtonFileActionPerformed
+    private void jButtonPathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPathActionPerformed
+        openFileChooser();
+    }//GEN-LAST:event_jButtonPathActionPerformed
 
-    private void jTextFieldFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldFileActionPerformed
+    private void jTextFieldPathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPathActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldFileActionPerformed
+    }//GEN-LAST:event_jTextFieldPathActionPerformed
 
-    protected void openFileChooser(JTextField textField) {
-        Path filePath = PathHelpers.makeAbsolute(Path.of(textField.getText()));
+    private void openFileChooser() {
+        Path filePath = PathHelpers.makeAbsolute(Path.of(jTextFieldPath.getText()));
         File directory = PathHelpers.getNearestValidParent(filePath);
         File file = filePath.toFile();
         jFileChooserFiles.setCurrentDirectory(directory);
@@ -154,16 +155,20 @@ public class FileButton extends javax.swing.JPanel {
         int returnVal = jFileChooserFiles.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File newFile = jFileChooserFiles.getSelectedFile();
-            textField.setText(newFile.getAbsolutePath());
+            ActionManager.setAndExecuteAction(new Action<String>(this::setPath, newFile.getAbsolutePath(), jTextFieldPath.getText()));
         }
+    }
+
+    private void setPath(String data) {
+        jTextFieldPath.setText(data);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.formdev.flatlaf.icons.FlatFileViewFileIcon flatFileViewFileIcon;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton;
-    private javax.swing.JButton jButtonFile;
+    private javax.swing.JButton jButtonPath;
     private javax.swing.JFileChooser jFileChooserFiles;
     private javax.swing.JLabel jLabelFile;
-    private javax.swing.JTextField jTextFieldFile;
+    private javax.swing.JTextField jTextFieldPath;
     // End of variables declaration//GEN-END:variables
 }

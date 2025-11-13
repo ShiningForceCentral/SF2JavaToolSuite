@@ -38,6 +38,6 @@ public class SpinnerAction implements IAction {
 
     @Override
     public Object[] toTableData() {
-        return new Object[] { this.getClass().toString(), newValue, previousValue };
+        return new Object[] { spinner.getClass().toString(), newValue, previousValue };
     }
 }

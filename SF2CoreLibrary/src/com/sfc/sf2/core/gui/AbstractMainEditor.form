@@ -202,6 +202,7 @@
         </Property>
       </Properties>
       <Events>
+        <EventHandler event="windowGainedFocus" listener="java.awt.event.WindowFocusListener" parameters="java.awt.event.WindowEvent" handler="jFrameActionHistoryWindowGainedFocus"/>
         <EventHandler event="windowClosing" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="jFrameActionHistoryWindowClosing"/>
         <EventHandler event="windowOpened" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="jFrameActionHistoryWindowOpened"/>
       </Events>
@@ -309,13 +310,16 @@
                 <Component class="javax.swing.JTable" name="jTableHistory">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="4" rowCount="4">
-                        <Column editable="true" title="Command" type="java.lang.Object"/>
-                        <Column editable="true" title="New Data" type="java.lang.Object"/>
-                        <Column editable="true" title="Old Data" type="java.lang.Object"/>
-                        <Column editable="true" title="Extra 1" type="java.lang.Object"/>
+                      <Table columnCount="5" rowCount="4">
+                        <Column editable="false" title="Index" type="java.lang.Integer"/>
+                        <Column editable="false" title="Command" type="java.lang.Object"/>
+                        <Column editable="false" title="New Data" type="java.lang.Object"/>
+                        <Column editable="false" title="Old Data" type="java.lang.Object"/>
+                        <Column editable="false" title="Extra 1" type="java.lang.Object"/>
                       </Table>
                     </Property>
+                    <Property name="enabled" type="boolean" value="false"/>
+                    <Property name="selectionMode" type="int" value="0"/>
                   </Properties>
                 </Component>
               </SubComponents>

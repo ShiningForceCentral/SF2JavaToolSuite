@@ -19,7 +19,6 @@ public class ToggleAction implements IAction {
     public ToggleAction(JToggleButton toggle, boolean on) {
         this.toggle = toggle;
         this.on = on;
-        
     }
     
     @Override
@@ -37,6 +36,6 @@ public class ToggleAction implements IAction {
 
     @Override
     public Object[] toTableData() {
-        return new Object[] { this.getClass().toString(), on, !on };
+        return new Object[] { toggle.getClass().toString(), on, !on };
     }
 }

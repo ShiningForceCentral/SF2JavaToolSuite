@@ -38,6 +38,6 @@ public class ComboAction implements IAction {
 
     @Override
     public Object[] toTableData() {
-        return new Object[] { this, selectedIndex, previousIndex };
+        return new Object[] { comboBox.getClass().toString(), selectedIndex, previousIndex };
     }
 }

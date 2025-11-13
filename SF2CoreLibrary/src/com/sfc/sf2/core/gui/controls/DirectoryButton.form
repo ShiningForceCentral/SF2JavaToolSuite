@@ -36,9 +36,9 @@
           <Group type="102" alignment="0" attributes="0">
               <Component id="jLabelFile" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jTextFieldFile" max="32767" attributes="0"/>
+              <Component id="jTextFieldPath" max="32767" attributes="0"/>
               <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
-              <Component id="jButtonFile" max="-2" attributes="0"/>
+              <Component id="jButtonPath" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="infoButton" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
@@ -51,8 +51,8 @@
               <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="2" attributes="0">
                   <Component id="jLabelFile" alignment="2" min="-2" max="-2" attributes="0"/>
-                  <Component id="jTextFieldFile" alignment="2" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButtonFile" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Component id="jTextFieldPath" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButtonPath" alignment="2" min="-2" max="-2" attributes="0"/>
                   <Component id="infoButton" alignment="2" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -66,7 +66,7 @@
         <Property name="text" type="java.lang.String" value="Path name :"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextFieldFile">
+    <Component class="javax.swing.JTextField" name="jTextFieldPath">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="11"/>
         <Property name="text" type="java.lang.String" value="jTextField1"/>
@@ -75,7 +75,7 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="jButtonFile">
+    <Component class="javax.swing.JButton" name="jButtonPath">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection component="flatFileViewDirectoryIcon" type="bean"/>
@@ -91,7 +91,7 @@
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonFileActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonPathActionPerformed"/>
       </Events>
     </Component>
     <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton">

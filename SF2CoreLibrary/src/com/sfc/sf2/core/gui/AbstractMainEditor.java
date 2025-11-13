@@ -262,6 +262,13 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
         jFrameActionHistory.setResizable(false);
         jFrameActionHistory.setSize(new java.awt.Dimension(500, 250));
         jFrameActionHistory.setType(java.awt.Window.Type.POPUP);
+        jFrameActionHistory.addWindowFocusListener(new java.awt.event.WindowFocusListener() {
+            public void windowGainedFocus(java.awt.event.WindowEvent evt) {
+                jFrameActionHistoryWindowGainedFocus(evt);
+            }
+            public void windowLostFocus(java.awt.event.WindowEvent evt) {
+            }
+        });
         jFrameActionHistory.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 jFrameActionHistoryWindowClosing(evt);
@@ -299,15 +306,32 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
 
         jTableHistory.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Command", "New Data", "Old Data", "Extra 1"
+                "Index", "Command", "New Data", "Old Data", "Extra 1"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTableHistory.setEnabled(false);
+        jTableHistory.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(jTableHistory);
 
         javax.swing.GroupLayout jPanelActionsLayout = new javax.swing.GroupLayout(jPanelActions);
@@ -528,27 +552,46 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
     private void jFrameActionHistoryWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_jFrameActionHistoryWindowOpened
         jFrameActionHistory.setLocationRelativeTo(this);
         jFrameActionHistory.setSize(jFrameActionHistory.getPreferredSize());
-        
-        Object[][] tableData = ActionManager.getHistoryTableData();
-        jTableHistory.setModel(new DefaultTableModel(tableData, HISTORY_COLUMN_NAMES));
+        //Data set on jFrameActionHistoryWindowGainedFocus
     }//GEN-LAST:event_jFrameActionHistoryWindowOpened
 
     private void jButtonUndoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUndoActionPerformed
         ActionManager.undo();
+        updateActionHistorySelection();
     }//GEN-LAST:event_jButtonUndoActionPerformed
 
     private void jButtonRedoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRedoActionPerformed
         ActionManager.redo();
+        updateActionHistorySelection();
     }//GEN-LAST:event_jButtonRedoActionPerformed
 
     private void jButtonClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonClearActionPerformed
         ActionManager.clearActionhistory();
+        jTableHistory.clearSelection();
+        Object[][] tableData = ActionManager.getHistoryTableData();
+        jTableHistory.setModel(new DefaultTableModel(tableData, HISTORY_COLUMN_NAMES));
     }//GEN-LAST:event_jButtonClearActionPerformed
 
     private void jMenuItemActionHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemActionHistoryActionPerformed
         jFrameActionHistory.setVisible(true);
     }//GEN-LAST:event_jMenuItemActionHistoryActionPerformed
+
+    private void jFrameActionHistoryWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_jFrameActionHistoryWindowGainedFocus
+        Object[][] tableData = ActionManager.getHistoryTableData();
+        jTableHistory.setModel(new DefaultTableModel(tableData, HISTORY_COLUMN_NAMES));
+        updateActionHistorySelection();
+    }//GEN-LAST:event_jFrameActionHistoryWindowGainedFocus
      
+    private void updateActionHistorySelection() {
+        if (!jFrameActionHistory.isActive()) return;
+        int index = ActionManager.getCurrentHistoryIndex()-1;
+        if (index == -1 || index >= jTableHistory.getRowCount()) {
+            jTableHistory.clearSelection();
+        } else {
+            jTableHistory.setRowSelectionInterval(index, index);
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroupTheme;
     private com.sfc.sf2.core.gui.controls.DirectoryButton directoryButtonBasePath;

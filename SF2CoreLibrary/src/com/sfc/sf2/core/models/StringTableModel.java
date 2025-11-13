@@ -12,7 +12,7 @@ package com.sfc.sf2.core.models;
 public class StringTableModel extends AbstractTableModel<String> {
 
     public StringTableModel() {
-        super(new String[] { "Index", "String", "Length" }, -1);
+        super(new String[] { "Index", "String", "Length" }, 10);
     }
     
     @Override
