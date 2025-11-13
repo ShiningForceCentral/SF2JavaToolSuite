@@ -346,10 +346,7 @@
                                                   <Group type="102" alignment="0" attributes="0">
                                                       <EmptySpace max="-2" attributes="0"/>
                                                       <Group type="103" groupAlignment="0" attributes="0">
-                                                          <Group type="102" alignment="0" attributes="0">
-                                                              <EmptySpace max="-2" attributes="0"/>
-                                                              <Component id="jLabel3" min="-2" pref="26" max="-2" attributes="0"/>
-                                                          </Group>
+                                                          <Component id="jLabel3" alignment="0" min="-2" pref="26" max="-2" attributes="0"/>
                                                           <Component id="infoButton5" alignment="0" min="-2" max="-2" attributes="0"/>
                                                       </Group>
                                                       <EmptySpace max="-2" attributes="0"/>
@@ -640,9 +637,6 @@
                                         <TitledBorder title="Import from :"/>
                                       </Border>
                                     </Property>
-                                    <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                                      <Dimension value="null"/>
-                                    </Property>
                                   </Properties>
 
                                   <Layout>
@@ -663,9 +657,6 @@
                                   <SubComponents>
                                     <Container class="javax.swing.JTabbedPane" name="jTabbedPane4">
                                       <Properties>
-                                        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                                          <Dimension value="null"/>
-                                        </Property>
                                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                                           <Dimension value="[0, 0]"/>
                                         </Property>
@@ -692,17 +683,14 @@
                                                               <Component id="jLabel18" min="-2" max="-2" attributes="0"/>
                                                               <EmptySpace max="-2" attributes="0"/>
                                                               <Component id="infoButton4" min="-2" max="-2" attributes="0"/>
-                                                              <EmptySpace max="32767" attributes="0"/>
+                                                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                                           </Group>
-                                                          <Group type="102" attributes="0">
-                                                              <Component id="fileButton4" pref="328" max="32767" attributes="0"/>
-                                                              <EmptySpace max="-2" attributes="0"/>
+                                                          <Component id="fileButton4" pref="328" max="32767" attributes="0"/>
+                                                          <Group type="102" alignment="1" attributes="0">
+                                                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                                              <Component id="jButton21" min="-2" max="-2" attributes="0"/>
                                                           </Group>
                                                       </Group>
-                                                  </Group>
-                                                  <Group type="102" alignment="1" attributes="0">
-                                                      <EmptySpace max="32767" attributes="0"/>
-                                                      <Component id="jButton21" min="-2" max="-2" attributes="0"/>
                                                       <EmptySpace max="-2" attributes="0"/>
                                                   </Group>
                                               </Group>
@@ -1625,18 +1613,22 @@
                                                   <Group type="102" alignment="0" attributes="0">
                                                       <Component id="jLabel25" min="-2" max="-2" attributes="0"/>
                                                       <EmptySpace max="-2" attributes="0"/>
+                                                      <Component id="jLabel34" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace max="-2" attributes="0"/>
                                                       <Component id="jSpinner2" min="-2" max="-2" attributes="0"/>
-                                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                                      <EmptySpace max="-2" attributes="0"/>
                                                       <Component id="jLabel32" min="-2" max="-2" attributes="0"/>
                                                       <EmptySpace max="-2" attributes="0"/>
                                                       <Component id="jSpinner3" min="-2" max="-2" attributes="0"/>
-                                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                                      <EmptySpace max="-2" attributes="0"/>
                                                       <Component id="infoButton2" min="-2" max="-2" attributes="0"/>
                                                   </Group>
                                                   <Group type="102" alignment="0" attributes="0">
                                                       <Component id="jLabel33" min="-2" max="-2" attributes="0"/>
                                                       <EmptySpace max="-2" attributes="0"/>
                                                       <Component id="jSpinner4" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace max="-2" attributes="0"/>
+                                                      <Component id="infoButton7" min="-2" max="-2" attributes="0"/>
                                                   </Group>
                                               </Group>
                                               <EmptySpace max="32767" attributes="0"/>
@@ -1647,19 +1639,21 @@
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" alignment="0" attributes="0">
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="1" attributes="0">
-                                                  <Group type="103" groupAlignment="3" attributes="0">
-                                                      <Component id="jLabel25" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="jLabel32" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="jSpinner2" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="jSpinner3" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                  </Group>
-                                                  <Component id="infoButton2" min="-2" max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="2" attributes="0">
+                                                  <Component id="infoButton2" alignment="2" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="jLabel25" alignment="2" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="jLabel32" alignment="2" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="jSpinner2" alignment="2" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="jLabel34" alignment="2" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="jSpinner3" alignment="2" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="3" attributes="0">
-                                                  <Component id="jLabel33" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jSpinner4" alignment="3" min="-2" max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="1" attributes="0">
+                                                  <Group type="103" groupAlignment="3" attributes="0">
+                                                      <Component id="jLabel33" alignment="3" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="jSpinner4" alignment="3" min="-2" max="-2" attributes="0"/>
+                                                  </Group>
+                                                  <Component id="infoButton7" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                               <EmptySpace max="-2" attributes="0"/>
                                           </Group>
@@ -1669,17 +1663,17 @@
                                   <SubComponents>
                                     <Component class="javax.swing.JLabel" name="jLabel25">
                                       <Properties>
-                                        <Property name="text" type="java.lang.String" value="Unknown 1 :"/>
+                                        <Property name="text" type="java.lang.String" value="Position offset :"/>
                                       </Properties>
                                     </Component>
                                     <Component class="javax.swing.JLabel" name="jLabel32">
                                       <Properties>
-                                        <Property name="text" type="java.lang.String" value="Unknown 2 :"/>
+                                        <Property name="text" type="java.lang.String" value="Y: "/>
                                       </Properties>
                                     </Component>
                                     <Component class="javax.swing.JLabel" name="jLabel33">
                                       <Properties>
-                                        <Property name="text" type="java.lang.String" value="Unknown 3 :"/>
+                                        <Property name="text" type="java.lang.String" value="Load Mode (Not implemeneted) :"/>
                                       </Properties>
                                     </Component>
                                     <Component class="javax.swing.JSpinner" name="jSpinner2">
@@ -1705,7 +1699,7 @@
                                     <Component class="javax.swing.JSpinner" name="jSpinner4">
                                       <Properties>
                                         <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-                                          <SpinnerModel initial="0" numberType="java.lang.Short" stepSize="1" type="number"/>
+                                          <SpinnerModel initial="1" maximum="1" minimum="0" numberType="java.lang.Short" stepSize="1" type="number"/>
                                         </Property>
                                       </Properties>
                                       <Events>
@@ -1714,12 +1708,20 @@
                                     </Component>
                                     <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton2">
                                       <Properties>
-                                        <Property name="messageText" type="java.lang.String" value="&lt;html&gt;These values are stored in the invocation .bin file.&lt;br&gt;It is currently unknown what these values do.&lt;/html&gt;"/>
+                                        <Property name="messageText" type="java.lang.String" value="&lt;html&gt;Offset&apos;s the position of the invocation sprite when drawn to the battle scene.&lt;/html&gt;"/>
                                         <Property name="text" type="java.lang.String" value=""/>
                                       </Properties>
-                                      <Events>
-                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="infoButton2ActionPerformed"/>
-                                      </Events>
+                                    </Component>
+                                    <Component class="javax.swing.JLabel" name="jLabel34">
+                                      <Properties>
+                                        <Property name="text" type="java.lang.String" value="X :"/>
+                                      </Properties>
+                                    </Component>
+                                    <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton7">
+                                      <Properties>
+                                        <Property name="messageText" type="java.lang.String" value="&lt;html&gt;Determines how the  invocation is loaded.&lt;br&gt;- 0 = &quot;As battle sprite&quot;. Loads the invocation in the same way that battlesprites are loaded.&lt;b&gt; Not implemented&lt;/b&gt;&lt;br&gt;- 1 = &quot;As invocation&quot;. Loads invocations as 2 sprites per-frame (top half and bottom half).&lt;/html&gt;"/>
+                                        <Property name="text" type="java.lang.String" value=""/>
+                                      </Properties>
                                     </Component>
                                   </SubComponents>
                                 </Container>

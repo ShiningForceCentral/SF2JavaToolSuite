@@ -31,9 +31,9 @@ public class InvocationDisassemblyProcessor extends AbstractDisassemblyProcessor
         //First 6 bytes = ??? (or 3 words)
         //4th word = paletteOffset
         //Next bytes until paletteOffset = offsets for each frame (each frame 128 x 64)(makes half of full sprite)
-        short unknown1 = BinaryHelpers.getWord(data, 0);
-        short unknown2 = BinaryHelpers.getWord(data, 2);
-        short unknown3 = BinaryHelpers.getWord(data, 4);
+        short posX = BinaryHelpers.getWord(data, 0);
+        short posY = BinaryHelpers.getWord(data, 2);
+        short loadMode = BinaryHelpers.getWord(data, 4);
 
         int palettesOffset = BinaryHelpers.getWord(data, 6) + 6;
         byte[] paletteData = new byte[32];
@@ -55,14 +55,14 @@ public class InvocationDisassemblyProcessor extends AbstractDisassemblyProcessor
             frameList[i] = new Tileset(Integer.toString(i), frame, InvocationGraphic.INVOCATION_TILE_WIDTH);
             Console.logger().finest("Frame "+i+" length="+dataLength+", offset="+frameOffset+", tiles="+frameList[i].getTiles().length);
         }
-        return new InvocationGraphic(frameList, unknown1, unknown2, unknown3);
+        return new InvocationGraphic(frameList, posX, posY, loadMode);
     }
     
     @Override
     protected byte[] packageDisassemblyData(InvocationGraphic item, InvocationPackage pckg) throws DisassemblyException {
-        short unknown1 = item.getUnknown1();
-        short unknown2 = item.getUnknown2();
-        short unknown3 = item.getUnknown3();
+        short posX = item.getPosX();
+        short posY = item.getPosY();
+        short loadMode = item.getLoadMode();
 
         Palette palette = item.getPalette();
         byte[] paletteBytes;
@@ -89,9 +89,9 @@ public class InvocationDisassemblyProcessor extends AbstractDisassemblyProcessor
 
         int totalSize = 8 + frames.length * 2 + palette.getColors().length * 32 + totalFramesSize;
         byte[] newInvocationBytes = new byte[totalSize];
-        BinaryHelpers.setWord(newInvocationBytes, 0, unknown1);
-        BinaryHelpers.setWord(newInvocationBytes, 2, unknown2);
-        BinaryHelpers.setWord(newInvocationBytes, 4, unknown3);
+        BinaryHelpers.setWord(newInvocationBytes, 0, posX);
+        BinaryHelpers.setWord(newInvocationBytes, 2, posY);
+        BinaryHelpers.setWord(newInvocationBytes, 4, loadMode);
         BinaryHelpers.setWord(newInvocationBytes, 6, paletteOffset);
         for(int i=0;i<frameOffsets.length;i++){
             BinaryHelpers.setWord(newInvocationBytes, 8 + i*2, frameOffsets[i]);

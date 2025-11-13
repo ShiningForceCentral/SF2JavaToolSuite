@@ -38,13 +38,13 @@ public class InvocationLayoutPanel extends AbstractLayoutPanel {
 
     @Override
     protected boolean hasData() {
-        return invocationGraphic != null && invocationGraphic.getFrames().length > 0;
+        return invocationGraphic != null && invocationGraphic.getFrames() != null && invocationGraphic.getFrames().length > 0;
     }
 
     @Override
     protected Dimension getImageDimensions() {
-        int width = invocationGraphic.getFrameWidth()*PIXEL_WIDTH;
-        int height = invocationGraphic.getTotalHeight()*PIXEL_HEIGHT;
+        int width = INVOCATION_TILE_WIDTH*PIXEL_WIDTH;
+        int height = invocationGraphic.getFrames().length*INVOCATION_TILE_HEIGHT*PIXEL_HEIGHT;
         return new Dimension(width, height);
     }
 
