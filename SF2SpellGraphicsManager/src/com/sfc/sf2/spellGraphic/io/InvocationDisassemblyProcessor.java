@@ -22,7 +22,7 @@ import com.sfc.sf2.spellGraphic.InvocationGraphic;
  * @author TiMMy
  */
 public class InvocationDisassemblyProcessor extends AbstractDisassemblyProcessor<InvocationGraphic, InvocationPackage> {
-        
+    
     @Override
     protected InvocationGraphic parseDisassemblyData(byte[] data, InvocationPackage pckg) throws DisassemblyException {
         if(data.length < 42) {

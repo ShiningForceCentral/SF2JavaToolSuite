@@ -26,6 +26,15 @@ public class LayoutBackground extends BaseLayoutComponent {
         checkerPatternGridSize = -1;
     }
 
+    /**
+     * Creates a background with a checker pattern. Scaled with image scale
+     * @param checkerPatternGridSize The size, in pixels to render the checkers (recommended to set as half of your grid units).<br>Set to 0 to have a flat background
+     */
+    public LayoutBackground(Color bgColor, int checkerPatternGridSize) {
+        this.bgColor = bgColor;
+        this.checkerPatternGridSize = checkerPatternGridSize;
+    }
+
     public Color getBgColor() {
         return bgColor;
     }
@@ -34,12 +43,7 @@ public class LayoutBackground extends BaseLayoutComponent {
         this.bgColor = bgColor;
     }
 
-    /**
-     * Creates a background with a checker pattern. Scaled with image scale
-     * @param checkerPatternGridSize The size, in pixels to render the checkers (recommended to set as half of your grid units).<br>Set to 0 to have a flat background
-     */
-    public LayoutBackground(Color bgColor, int checkerPatternGridSize) {
-        this.bgColor = bgColor;
+    public void setCheckerPattern(int checkerPatternGridSize) {
         this.checkerPatternGridSize = checkerPatternGridSize;
     }
     

@@ -33,13 +33,13 @@ public class BattleSceneLayoutPanel extends AbstractLayoutPanel {
     protected static final int BATTLESPRITE_ALLY_BASE_Y = 64;
     protected static final int BATTLESPRITE_ENEMY_BASE_X = 0;
     protected static final int BATTLESPRITE_ENEMY_BASE_Y = 56;
-    protected static final int BATTLESPRITE_INVOCATION_BASE_X = 120;
-    protected static final int BATTLESPRITE_INVOCATION_BASE_Y = 40;
+    protected static final int BATTLESPRITE_INVOCATION_BASE_X = -128;
+    protected static final int BATTLESPRITE_INVOCATION_BASE_Y = -128;
     protected static final int WEAPONSPRITE_BASE_X = 136;
     protected static final int WEAPONSPRITE_BASE_Y = 64;
     
-    private Background bg;
-    private Ground ground;
+    protected Background bg;
+    protected Ground ground;
     
     private boolean showPositions = false;
     
