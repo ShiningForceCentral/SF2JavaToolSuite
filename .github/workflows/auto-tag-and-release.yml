@@ -258,7 +258,7 @@ jobs:
         if: steps.detect_changes.outputs.should_run == 'true'
         run: |
           echo "Cloning destination repo..."
-          git clone --depth=1 --branch feature/tools_updates https://x-access-token:${{ secrets.SF2DISASM_PUSH_TOKEN }}@github.com/TiMMyyMMiT/SF2DISASM.git target-repo
+          git clone --depth=1 --branch feature/tools_updates https://x-access-token:${{ secrets.SF2DISASM_PUSH_TOKEN }}@github.com/ShiningForceCentral/SF2DISASM.git target-repo
     
           root_release_file="release.properties"
           if [ ! -f "$root_release_file" ]; then
