@@ -31,7 +31,7 @@ public class BattleMapCoordsManager extends AbstractManager {
     public void clearData() {
         mapLayoutManager.clearData();
         if (battleMapLayout != null) {
-            battleMapLayout.getBlockset().clearIndexedColorImage(true);
+            battleMapLayout.clearIndexedColorImage(true);
             battleMapLayout = null;
         }
         coords = null;
