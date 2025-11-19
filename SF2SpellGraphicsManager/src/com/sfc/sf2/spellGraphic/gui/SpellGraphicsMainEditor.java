@@ -216,7 +216,7 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
         console1 = new com.sfc.sf2.core.gui.controls.Console();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("SF2SpellGraphicManager");
+        setTitle("SF2SpellGraphicsManager");
 
         jSplitPane1.setDividerLocation(500);
         jSplitPane1.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);

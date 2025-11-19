@@ -893,7 +893,7 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
             battleSpriteAnimationLayoutPanel.redraw();
         }
         BattleSpriteAnimation animation = battleSpriteAnimationLayoutPanel.getAnimation();
-        if (battleSpriteAnimationFramesModel.getRowCount() != animation.getFrameCount()) {
+        if (evt.getType() == TableModelEvent.INSERT || evt.getType() == TableModelEvent.DELETE) {
             animation.setFrames(battleSpriteAnimationFramesModel.getTableData(BattleSpriteAnimationFrame[].class));
         }
     }
