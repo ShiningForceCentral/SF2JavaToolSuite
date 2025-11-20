@@ -7,6 +7,7 @@ package com.sfc.sf2.core.gui.controls;
 
 import com.sfc.sf2.core.actions.Action;
 import com.sfc.sf2.core.actions.ActionManager;
+import com.sfc.sf2.core.actions.ActionTableData;
 import com.sfc.sf2.core.models.AbstractTableModel;
 import com.sfc.sf2.core.models.SelectionInterval;
 import com.sfc.sf2.core.models.spinner.SpinnerTableEditor;
@@ -25,7 +26,7 @@ import javax.swing.table.TableColumnModel;
  * @author TiMMy
  */
 public class Table extends javax.swing.JPanel {
-    
+
     private AbstractTableModel tableModel;
     
     /**
@@ -295,24 +296,8 @@ public class Table extends javax.swing.JPanel {
         int start = 0;
         for (int i = 0; i < selection.length; i++) {
             if (i == selection.length-1 || selection[i]+1 != selection[i+1]) {
-                selections.add(new SelectionInterval(selection[start], selection[i], 0));
+                selections.add(new SelectionInterval(selection[start], selection[i]));
                 start = i+1;
-            }
-        }
-        SelectionInterval[] sel = new SelectionInterval[selections.size()];
-        return selections.toArray(sel);
-    }
-    
-    private SelectionInterval[] splitIntoIntervalsWithData(int[] selection) {
-        ArrayList<SelectionInterval> selections = new ArrayList<>();
-        ArrayList<Object> data = new ArrayList<>();
-        int start = 0;
-        for (int i = 0; i < selection.length; i++) {
-            data.add(tableModel.getRow(selection[i]));
-            if (i == selection.length-1 || selection[i]+1 != selection[i+1]) {
-                selections.add(new SelectionInterval(selection[start], data.toArray()));
-                start = i+1;
-                data.clear();
             }
         }
         SelectionInterval[] sel = new SelectionInterval[selections.size()];
@@ -323,81 +308,105 @@ public class Table extends javax.swing.JPanel {
         if (tableModel == null) return;
         SelectionInterval[] selection = splitIntoIntervals(jTable.getSelectedRows());
         if (selection == null || selection.length == 0) {
-            int index = tableModel.getRowCount();
-            selection = new SelectionInterval[] { new SelectionInterval(index, index, 0) };
-        } else {
-            tableModel.validateAddRows(selection);
+            selection = new SelectionInterval[] { new SelectionInterval(tableModel.getRowCount()-1, tableModel.getRowCount()-1) };
         }
-        actionTableAdd(selection);
-        SelectionInterval[] newSelection = splitIntoIntervals(jTable.getSelectedRows());
-        ActionManager.setActionWithoutExecute(new Action<SelectionInterval[]>(this::actionTableAdd, selection, this::actionTableRemove, newSelection));
+        ActionTableData oldData = new ActionTableData(tableModel.getTableData(), selection);
+        jTable.clearSelection();
+        for (int i = selection.length-1; i >= 0; i--) {
+            SelectionInterval interval = tableModel.addRows(selection[i].start(), selection[i].end());
+            jTable.addRowSelectionInterval(interval.start(), interval.end());
+        }
+        if (oldData.tableData().length != tableModel.getRowCount()) {
+            //If a row was added
+            ActionTableData newData = new ActionTableData(tableModel.getTableData(), splitIntoIntervals(jTable.getSelectedRows()));
+            ActionManager.setActionWithoutExecute(new Action<ActionTableData>(this::actionSetTableData, newData, this::actionSetTableData, oldData));
+        }
     }//GEN-LAST:event_jButtonAddActionPerformed
 
     private void jButtonRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoveActionPerformed
         if (tableModel == null) return;
         SelectionInterval[] selection = splitIntoIntervals(jTable.getSelectedRows());
-        if (selection == null || selection.length == 0) return;
-        tableModel.validateRemoveRows(selection);
-        SelectionInterval[] newSelection = splitIntoIntervalsWithData(jTable.getSelectedRows());
-        actionTableRemove(selection);
-        ActionManager.setActionWithoutExecute(new Action<SelectionInterval[]>(this::actionTableRemove, selection, this::actionTableAdd, newSelection));
+        ActionTableData oldData = new ActionTableData(tableModel.getTableData(), selection);
+        jTable.clearSelection();
+        int totalShift = 0;
+        for (int i = 0; i < selection.length; i++) {
+            SelectionInterval interval = tableModel.removeRows(selection[i].start()-totalShift, selection[i].end()-totalShift);
+            if (interval.start() != -1) {
+                totalShift += selection[i].end()-selection[i].start()+1;
+                jTable.addRowSelectionInterval(interval.start(), interval.end());
+            }
+        }
+        if (oldData.tableData().length != tableModel.getRowCount()) {
+            //If a row was removed
+            ActionTableData newData = new ActionTableData(tableModel.getTableData(), splitIntoIntervals(jTable.getSelectedRows()));
+            ActionManager.setActionWithoutExecute(new Action<ActionTableData>(this::actionSetTableData, newData, this::actionSetTableData, oldData));
+        }
     }//GEN-LAST:event_jButtonRemoveActionPerformed
 
     private void jButtonCloneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCloneActionPerformed
         if (tableModel == null) return;
-        SelectionInterval[] selection = splitIntoIntervalsWithData(jTable.getSelectedRows());
-        if (selection == null || selection.length == 0) return;
-        tableModel.validateAddRows(selection);
-        actionTableAdd(selection);
-        SelectionInterval[] newSelection = splitIntoIntervals(jTable.getSelectedRows());
-        ActionManager.setActionWithoutExecute(new Action<SelectionInterval[]>(this::actionTableAdd, selection, this::actionTableRemove, newSelection));
+        SelectionInterval[] selection = splitIntoIntervals(jTable.getSelectedRows());
+        ActionTableData oldData = new ActionTableData(tableModel.getTableData(), selection);
+        jTable.clearSelection();
+        for (int i = selection.length-1; i >= 0; i--) {
+            SelectionInterval interval = tableModel.cloneRows(selection[i].start(), selection[i].end());
+            jTable.addRowSelectionInterval(interval.start(), interval.end());
+        }
+        if (oldData.tableData().length != tableModel.getRowCount()) {
+            //If a row was added
+            ActionTableData newData = new ActionTableData(tableModel.getTableData(), splitIntoIntervals(jTable.getSelectedRows()));
+            ActionManager.setActionWithoutExecute(new Action<ActionTableData>(this::actionSetTableData, newData, this::actionSetTableData, oldData));
+        }
     }//GEN-LAST:event_jButtonCloneActionPerformed
 
     private void jButtonUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUpActionPerformed
         if (tableModel == null) return;
         SelectionInterval[] selection = splitIntoIntervals(jTable.getSelectedRows());
+        ActionTableData oldData = new ActionTableData(tableModel.getTableData(), selection);
+        jTable.clearSelection();
+        boolean selectionChanged = false;
+        for (int i = 0; i < selection.length; i++) {
+            SelectionInterval interval = tableModel.shiftUp(selection[i].start(), selection[i].end());
+            if (interval.start() != selection[i].start() || interval.end() != selection[i].end()) {
+                selectionChanged = true;
+            }
+            jTable.addRowSelectionInterval(interval.start(), interval.end());
+        }
+        if (selectionChanged) {
+            //If a row was shifted
+            ActionTableData newData = new ActionTableData(tableModel.getTableData(), splitIntoIntervals(jTable.getSelectedRows()));
+            ActionManager.setActionWithoutExecute(new Action<ActionTableData>(this::actionSetTableData, newData, this::actionSetTableData, oldData));
+        }
     }//GEN-LAST:event_jButtonUpActionPerformed
 
     private void jButtonDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDownActionPerformed
         if (tableModel == null) return;
         SelectionInterval[] selection = splitIntoIntervals(jTable.getSelectedRows());
-    }//GEN-LAST:event_jButtonDownActionPerformed
-    
-    private void actionTableAdd(SelectionInterval[] selection) {
+        ActionTableData oldData = new ActionTableData(tableModel.getTableData(), selection);
         jTable.clearSelection();
-        for (int i = selection.length-1; i >= 0; i--) {
-            if (selection[i].start() == -1 || selection[i].end() == -1) continue;
-            SelectionInterval interval = tableModel.addRows(selection[i]);
-            jTable.addRowSelectionInterval(interval.start(), interval.end());
-        }
-    }
-    
-    private void actionTableRemove(SelectionInterval[] selection) {
-        jTable.clearSelection();
-        for (int i = selection.length-1; i >= 0; i--) {
-            if (selection[i].start() == -1 || selection[i].end() == -1) continue;
-            SelectionInterval interval = tableModel.removeRows(selection[i]);
-            if (interval.start() != -1) {
-                jTable.addRowSelectionInterval(interval.start(), interval.end());
-            }
-        }
-    }
-    
-    private void actionTableShiftUp(SelectionInterval[] selection) {
-        jTable.clearSelection();
+        boolean selectionChanged = false;
         for (int i = 0; i < selection.length; i++) {
-            if (selection[i].start() == -1 || selection[i].end() == -1) continue;
-            SelectionInterval interval = tableModel.shiftUp(selection[i].start(), selection[i].end());
-            jTable.addRowSelectionInterval(interval.start(), interval.end());
-        }
-    }
-    
-    private void actionTableShiftDown(SelectionInterval[] selection) {
-        jTable.clearSelection();
-        for (int i = 0; i < selection.length; i++) {
-            if (selection[i].start() == -1 || selection[i].end() == -1) continue;
             SelectionInterval interval = tableModel.shiftDown(selection[i].start(), selection[i].end());
+            if (interval.start() != selection[i].start() || interval.end() != selection[i].end()) {
+                selectionChanged = true;
+            }
             jTable.addRowSelectionInterval(interval.start(), interval.end());
+        }
+        if (selectionChanged) {
+            //If a row was shifted
+            ActionTableData newData = new ActionTableData(tableModel.getTableData(), splitIntoIntervals(jTable.getSelectedRows()));
+            ActionManager.setActionWithoutExecute(new Action<ActionTableData>(this::actionSetTableData, newData, this::actionSetTableData, oldData));
+        }
+    }//GEN-LAST:event_jButtonDownActionPerformed
+        
+    private void actionSetTableData(ActionTableData data) {
+        tableModel.setTableData(data.tableData());
+        jTable.clearSelection();
+        SelectionInterval[] selection = data.selection();
+        for (int i = 0; i < selection.length; i++) {
+            if (selection[i].start() != -1 && selection[i].end() != -1) {
+                jTable.addRowSelectionInterval(selection[i].start(), selection[i].end());
+            }
         }
     }
     

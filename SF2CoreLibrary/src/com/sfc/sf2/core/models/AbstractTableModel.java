@@ -32,6 +32,10 @@ public abstract class AbstractTableModel<T> extends javax.swing.table.AbstractTa
         this.rowLimit = rowLimit;
     }
 
+    public Object[] getTableData() {
+        return tableItems.toArray();
+    }
+
     public T[] getTableData(Class<T[]> type) {
         T[] data = type.cast(Array.newInstance(type.getComponentType(), tableItems.size()));
         for (int i = 0; i < data.length; i++) {
@@ -108,104 +112,64 @@ public abstract class AbstractTableModel<T> extends javax.swing.table.AbstractTa
         return rowLimit == -1 || tableItems.size() < rowLimit;
     }
     
-    public void validateAddRows(SelectionInterval[] selection) {
-        int totalToAdd = 0;
-        for (int i = 0; i < selection.length; i++) {
-            int start = selection[i].start(), end = selection[i].end(), count = selection[i].count();
-            if (start < 0) {
-                start = 0;
-            }
-            int offset = (tableItems.size()+totalToAdd+count)-rowLimit;
-            if (offset > 0) {
-                end -= offset;
-                count = end-start+1;
-                Console.logger().warning("WARNING Table limit reached, can only add " + (end-start+1) + " items");
-                if (end < start) {
-                    start = end = -1;   //Cannot add any
-                    count = 0;
-                }
-            } else {
-                offset = 0;
-            }
-            if (start >= 0 && end >= 0) {
-                totalToAdd += end-start+1;
-            }
-            if (end != selection[i].end()) {
-                if (count > 0 && selection[i].data() != null) {
-                    Object[] data = new Object[count];
-                    System.arraycopy(selection[i].data(), 0, data, 0, count);
-                    selection[i] = new SelectionInterval(start, data, offset);
-                } else {
-                    selection[i] = new SelectionInterval(start, end, offset);
-                }
-            }
-        }
-    }
-    
-    public SelectionInterval addRows(SelectionInterval selection) {
-        int start = selection.start(), end = selection.end(), offset = selection.offset(), count = selection.count();
-        Object[] data = selection.data();
+    public SelectionInterval addRows(int start, int end) {
+        int count = end-start+1;
         for (int i = 0; i < count; i++) {
-            addRow(end+offset+i+1, (data == null || data[i] == null) ? null : (T)data[i]);
+            addRow(end+1);
         }
-        fireTableRowsInserted(start, end);
-        
+        fireTableRowsInserted(start, end);        
         int dif = end-start;
-        start = end+1+offset;
+        start = end+1;
         end = start+dif;
         if (start >= tableItems.size())
             start = tableItems.size()-1;
         if (end >= tableItems.size())
             end = tableItems.size()-1;
-        return new SelectionInterval(start, end, 0);
+        return new SelectionInterval(start, end);
     }
     
-    private void addRow(int row, T item) {
+    private void addRow(int row) {
         if (rowLimit > -1 && tableItems.size() >= rowLimit) {
             Console.logger().warning("WARNING Cannot create new row because already at limit");
             return;
         }
-        if (item == null) {
-            item = createBlankItem(tableItems.size());
-        }
         if (tableItems.isEmpty() || row < 0 || row >= tableItems.size()) {
-            tableItems.add(item);
+            tableItems.add(createBlankItem(tableItems.size()));
         } else {
-            tableItems.add(row, item);
+            tableItems.add(row+1, createBlankItem(row+1));
         }
     }
     
-    public void validateRemoveRows(SelectionInterval[] selection) {
-        int totalToRemove = 0;
-        for (int i = 0; i < selection.length; i++) {
-            int start = selection[i].start(), end = selection[i].end();
-            if (end < start) {
-                int temp = start;
-                start = end;
-                end = temp;
-            }
-            if (start < 0) {
-                start = 0;
-            }
-            int offset = (tableItems.size()-totalToRemove-(end-start+1));
-            if (offset < 0) {
-                end -= offset;
-                Console.logger().warning("WARNING Table limit reached, can only remove " + (end-start+1) + " items");
-                if (end < start) {
-                    start = end = -1;   //Cannot add any
-                }
-            } else {
-                offset = 0;
-            }
-            if (start >= 0 && end >= 0) {
-                totalToRemove += end-start+1;
-            }
-            selection[i] = new SelectionInterval(start, end, offset);
+    public SelectionInterval cloneRows(int start, int end) {
+        for (int i = end; i >= start; i--) {
+            cloneRow(i, end+1);
         }
+        fireTableRowsInserted(start, end);
+        int dif = end - start;
+        start = end+1;
+        end = start+dif;
+        if (start >= tableItems.size())
+            start = tableItems.size()-1;
+        if (end >= tableItems.size())
+            end = tableItems.size()-1;
+        return new SelectionInterval(start, end);
     }
     
-    public SelectionInterval removeRows(SelectionInterval selection) {
-        int start = selection.start(), end = selection.end();
+    private void cloneRow(int row, int addOffset) {
+        if (rowLimit > -1 && tableItems.size() >= rowLimit) {
+            Console.logger().warning("WARNING Cannot clone item because already at limit");
+            return;
+        }
+        T item;
+        if (tableItems.isEmpty() || row < 0 || row >= tableItems.size()) {
+            item = createBlankItem(row);
+        } else {
+            item = cloneItem(tableItems.get(row));
+        }
+        tableItems.add(addOffset, item);
+    }
+    
+    public SelectionInterval removeRows(int start, int end) {
         for (int i = end; i >= start; i--) {
             if (isRowLocked(i)) {
                 Console.logger().warning("WARNING Cannot delete item because row " + i + " is locked");
@@ -215,12 +179,12 @@ public abstract class AbstractTableModel<T> extends javax.swing.table.AbstractTa
         }
         fireTableRowsDeleted(start, end);
         if (tableItems.isEmpty()) {
-            return new SelectionInterval(-1, -1, 0);
+            return new SelectionInterval(-1, -1);
         } else {
-            int selected = start;
-            if (selected >= tableItems.size())
-                selected = tableItems.size()-1;
-            return new SelectionInterval(selected, selected, 0);
+            int selection = start;
+            if (selection >= tableItems.size())
+                selection = tableItems.size()-1;
+            return new SelectionInterval(selection, selection);
         }
     }
     
@@ -238,20 +202,20 @@ public abstract class AbstractTableModel<T> extends javax.swing.table.AbstractTa
     public SelectionInterval shiftUp(int start, int end) {
         if (start <= 0) {
             Console.logger().warning("WARNING Cannot shift up because selection is already at the top");
-            return new SelectionInterval(start, end, 0);
+            return new SelectionInterval(start, end);
         } else if (isRowLocked(start-1)) {
             Console.logger().warning("WARNING Cannot shift items up row " + (start-1) + " is locked");
-            return new SelectionInterval(start, end, 0);
+            return new SelectionInterval(start, end);
         }
         for (int i = start; i <= end; i++) {
             if (isRowLocked(i)) {
                 Console.logger().warning("WARNING Cannot shift items up because row " + i + " is locked");
-                return new SelectionInterval(start, end, 0);
+                return new SelectionInterval(start, end);
             }
         }
         shiftItemsUp(start, end);
         fireTableRowsDeleted(start, end);
-        return new SelectionInterval(start-1, end-1, 0);
+        return new SelectionInterval(start-1, end-1);
     }
     
     private void shiftItemsUp(int start, int end) {
@@ -262,20 +226,20 @@ public abstract class AbstractTableModel<T> extends javax.swing.table.AbstractTa
     public SelectionInterval shiftDown(int start, int end) {
         if (end >= tableItems.size()-1) {
             Console.logger().warning("WARNING Cannot shift down because selection is already at the bottom");
-            return new SelectionInterval(start, end, 0);
+            return new SelectionInterval(start, end);
         } else if (isRowLocked(end+1)) {
             Console.logger().warning("WARNING Cannot shift items up row " + (end+1) + " is locked");
-            return new SelectionInterval(start, end, 0);
+            return new SelectionInterval(start, end);
         }
         for (int i = start; i <= end; i++) {
             if (isRowLocked(i)) {
                 Console.logger().warning("WARNING Cannot shift items up because row " + i + " is locked");
-                return new SelectionInterval(start, end, 0);
+                return new SelectionInterval(start, end);
             }
         }
         shiftItemsDown(start, end);
         fireTableRowsDeleted(start, end);
-        return new SelectionInterval(start+1, end+1, 0);
+        return new SelectionInterval(start+1, end+1);
     }
     
     private void shiftItemsDown(int start, int end) {
