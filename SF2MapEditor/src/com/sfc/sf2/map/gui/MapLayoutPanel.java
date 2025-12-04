@@ -19,7 +19,6 @@ import com.sfc.sf2.map.MapFlagCopyEvent;
 import com.sfc.sf2.map.MapItem;
 import com.sfc.sf2.map.MapWarpEvent;
 import com.sfc.sf2.map.block.MapBlock;
-import com.sfc.sf2.map.block.MapTile;
 import com.sfc.sf2.map.block.gui.BlockSlotPanel;
 import com.sfc.sf2.map.block.gui.MapBlocksetLayoutPanel;
 import com.sfc.sf2.map.layout.MapLayout;
@@ -159,6 +158,7 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
             }
         }
         if (shouldDraw(DRAW_MODE_STEP_COPIES)) {
+            drawMapStepCopies(g2);
             for (int i = 0; i < map.getStepCopies().length; i++) {
                 if (showStepCopyResult) {
                     drawStepCopyResult(g2, map.getStepCopies()[i]);
@@ -562,6 +562,20 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
         g2.copyArea(stepCopy.getSourceStartX()*PIXEL_WIDTH, stepCopy.getSourceStartY()*PIXEL_HEIGHT, stepCopy.getWidth()*PIXEL_WIDTH, stepCopy.getHeight()*PIXEL_HEIGHT, dx, dy);
     }
     
+    private void drawMapStepCopies(Graphics2D g2) {
+        MapLayoutBlock[] blocks = layout.getBlocks();
+        g2.setColor(new Color(800080));
+        g2.setStroke(new BasicStroke(1));
+        for (int y=0; y < BLOCK_HEIGHT; y++) {
+            for (int x=0; x < BLOCK_WIDTH; x++) {
+                int itemFlag = blocks[x+y*BLOCK_WIDTH].getEventFlags();
+                if (itemFlag == MapLayoutBlock.MAP_FLAG_STEP) {
+                    g2.drawImage(MapLayoutFlagIcons.getStepIcon().getImage(), x*PIXEL_WIDTH, y*PIXEL_HEIGHT, null);
+                }
+            }
+        }
+    }
+    
     private void drawMapRoofCopies(Graphics2D g2) {
         MapLayoutBlock[] blocks = layout.getBlocks();
         g2.setColor(Color.BLUE);
@@ -924,6 +938,8 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
             case MapLayoutBlock.MAP_FLAG_HIDE:
             case MapLayoutBlock.MAP_FLAG_SHOW:
                 return (DRAW_MODE_ROOF_COPIES & drawFlag) != 0;
+            case MapLayoutBlock.MAP_FLAG_STEP:
+                return (DRAW_MODE_STEP_COPIES & drawFlag) != 0;
             case MapLayoutBlock.MAP_FLAG_CARAVAN:
             case MapLayoutBlock.MAP_FLAG_RAFT:
                 return (DRAW_MODE_VEHICLES & drawFlag) != 0;
