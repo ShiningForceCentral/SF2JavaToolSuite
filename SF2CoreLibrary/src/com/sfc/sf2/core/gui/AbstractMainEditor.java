@@ -312,7 +312,7 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Index", "Command", "New Data", "Old Data", "Extra 1"
+                "Index", "Owner", "Command", "New Data", "Old Data"
             }
         ) {
             Class[] types = new Class [] {
@@ -548,7 +548,7 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jFrameActionHistoryWindowClosing
 
-    static String[] HISTORY_COLUMN_NAMES = new String[] { "Action", "New Data", "Previous Data", "Extra 1", "Extra 2" };
+    static String[] HISTORY_COLUMN_NAMES = new String[] { "Owner", "Action", "New Data", "Previous Data" };
     private void jFrameActionHistoryWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_jFrameActionHistoryWindowOpened
         jFrameActionHistory.setLocationRelativeTo(this);
         jFrameActionHistory.setSize(jFrameActionHistory.getPreferredSize());

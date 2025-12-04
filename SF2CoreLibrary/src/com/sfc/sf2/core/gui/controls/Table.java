@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableColumnModel;
@@ -319,7 +320,7 @@ public class Table extends javax.swing.JPanel {
         if (oldData.tableData().length != tableModel.getRowCount()) {
             //If a row was added
             ActionTableData newData = new ActionTableData(tableModel.getTableData(), splitIntoIntervals(jTable.getSelectedRows()));
-            ActionManager.setActionWithoutExecute(new Action<ActionTableData>(this::actionSetTableData, newData, this::actionSetTableData, oldData));
+            ActionManager.setActionWithoutExecute(new Action<ActionTableData>(this, "Add Rows", this::actionSetTableData, newData, this::actionSetTableData, oldData));
         }
     }//GEN-LAST:event_jButtonAddActionPerformed
 
@@ -339,7 +340,7 @@ public class Table extends javax.swing.JPanel {
         if (oldData.tableData().length != tableModel.getRowCount()) {
             //If a row was removed
             ActionTableData newData = new ActionTableData(tableModel.getTableData(), splitIntoIntervals(jTable.getSelectedRows()));
-            ActionManager.setActionWithoutExecute(new Action<ActionTableData>(this::actionSetTableData, newData, this::actionSetTableData, oldData));
+            ActionManager.setActionWithoutExecute(new Action<ActionTableData>(this, "Delete Rows", this::actionSetTableData, newData, this::actionSetTableData, oldData));
         }
     }//GEN-LAST:event_jButtonRemoveActionPerformed
 
@@ -355,7 +356,7 @@ public class Table extends javax.swing.JPanel {
         if (oldData.tableData().length != tableModel.getRowCount()) {
             //If a row was added
             ActionTableData newData = new ActionTableData(tableModel.getTableData(), splitIntoIntervals(jTable.getSelectedRows()));
-            ActionManager.setActionWithoutExecute(new Action<ActionTableData>(this::actionSetTableData, newData, this::actionSetTableData, oldData));
+            ActionManager.setActionWithoutExecute(new Action<ActionTableData>(this, "Clone Rows", this::actionSetTableData, newData, this::actionSetTableData, oldData));
         }
     }//GEN-LAST:event_jButtonCloneActionPerformed
 
@@ -375,7 +376,7 @@ public class Table extends javax.swing.JPanel {
         if (selectionChanged) {
             //If a row was shifted
             ActionTableData newData = new ActionTableData(tableModel.getTableData(), splitIntoIntervals(jTable.getSelectedRows()));
-            ActionManager.setActionWithoutExecute(new Action<ActionTableData>(this::actionSetTableData, newData, this::actionSetTableData, oldData));
+            ActionManager.setActionWithoutExecute(new Action<ActionTableData>(this, "Shift Rows Up", this::actionSetTableData, newData, this::actionSetTableData, oldData));
         }
     }//GEN-LAST:event_jButtonUpActionPerformed
 
@@ -395,7 +396,7 @@ public class Table extends javax.swing.JPanel {
         if (selectionChanged) {
             //If a row was shifted
             ActionTableData newData = new ActionTableData(tableModel.getTableData(), splitIntoIntervals(jTable.getSelectedRows()));
-            ActionManager.setActionWithoutExecute(new Action<ActionTableData>(this::actionSetTableData, newData, this::actionSetTableData, oldData));
+            ActionManager.setActionWithoutExecute(new Action<ActionTableData>(this, "Shhift Rows Down", this::actionSetTableData, newData, this::actionSetTableData, oldData));
         }
     }//GEN-LAST:event_jButtonDownActionPerformed
         
@@ -424,6 +425,18 @@ public class Table extends javax.swing.JPanel {
 
     public synchronized void removeListSelectionListenerModelListener(ListSelectionListener l) {
         jTable.getSelectionModel().removeListSelectionListener(l);
+    }
+
+    @Override
+    public String toString() {
+        String name = getName();
+        if (name == null) {
+            TitledBorder border = (TitledBorder)getBorder();
+            if (border != null) {
+                return border.getTitle();
+            }
+        }
+        return tableModel.getClass().toString();
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

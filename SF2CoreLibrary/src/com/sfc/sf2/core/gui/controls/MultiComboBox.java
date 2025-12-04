@@ -3,9 +3,9 @@
 * To change this template file, choose Tools | Templates
 * and open the template in the editor.
  */
-package com.sfc.sf2.core.gui;
+package com.sfc.sf2.core.gui.controls;
 
-import com.sfc.sf2.core.gui.MultiComboBox.CheckItem;
+import com.sfc.sf2.core.gui.controls.MultiComboBox.CheckItem;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -62,7 +62,7 @@ public class MultiComboBox extends JComboBox<CheckItem> {
                 list.add(model.getElementAt(i).item);
             }
         }
-        Object[] selected = new Object[model.getSize()];
+        Object[] selected = new Object[list.size()];
         selected = list.toArray(selected);
         return selected;
     }
@@ -95,6 +95,14 @@ public class MultiComboBox extends JComboBox<CheckItem> {
                 model.setSelectedItem(model.getElementAt(i));
                 return;
             }
+        }
+    }
+    
+    public void setSelected(Object[] items) {
+        ComboBoxModel<CheckItem> model = getModel();
+        clearSelection();
+        for (int i = 0; i < items.length; i++) {
+            model.setSelectedItem(items[i]);
         }
     }
 

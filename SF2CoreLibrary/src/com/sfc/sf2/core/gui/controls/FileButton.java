@@ -155,7 +155,7 @@ public class FileButton extends javax.swing.JPanel {
         int returnVal = jFileChooserFiles.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File newFile = jFileChooserFiles.getSelectedFile();
-            ActionManager.setAndExecuteAction(new Action<String>(this::setPath, newFile.getAbsolutePath(), jTextFieldPath.getText()));
+            ActionManager.setAndExecuteAction(new Action<String>(this, "File Change", this::setPath, newFile.getAbsolutePath(), jTextFieldPath.getText()));
         }
     }
 

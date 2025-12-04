@@ -11,37 +11,62 @@ package com.sfc.sf2.core.actions;
  */
 public class Action<T extends Object> implements IAction {
 
-    protected final IActionable<T> action;
-    protected final IActionable<T> undoAction;
-    protected final T newValue;
-    protected final T oldValue;
+    private Object owner;
+    private String operation;
     
-    public Action(IActionable<T> action, T newValue, T oldValue) {
-        this(action, newValue, null, oldValue);
+    private final IActionable<T> action;
+    private final IActionable<T> undoAction;
+    protected T newValue;
+    protected T oldValue;
+    
+    public Action(Object owner, String operation, IActionable<T> action, T newValue, T oldValue) {
+        this(owner, operation, action, newValue, null, oldValue);
     }
     
-    public Action(IActionable<T> redoAction, T redoValue, IActionable<T> undoAction, T undoValue) {
+    public Action(Object owner, String operation, IActionable<T> redoAction, T redoValue, IActionable<T> undoAction, T undoValue) {
         this.action = redoAction;
         this.undoAction = undoAction;
         this.newValue = redoValue;
         this.oldValue = undoValue;
+        this.owner = owner;
+        this.operation = operation;
     }
     
     public void execute() {
-        action.setActionData(newValue);
+        if (action != null) {
+            action.setActionData(newValue);
+        }
     }
     
     public void undo() {
         if (undoAction != null) {
             undoAction.setActionData(oldValue);
-        } else {
+        } else if (action != null) {
             action.setActionData(oldValue);
         }
+    }
+
+    @Override
+    public boolean canBeCombined(IAction action) {
+        if (this.getClass() != action.getClass()) return false;
+        Action<T> other = (Action<T>)action;
+        if (this.owner != other.owner) return false;
+        return this.action == other.action && this.undoAction == other.undoAction;
+    }
+
+    @Override
+    public void combine(IAction action) {
+        this.newValue = ((Action<T>)action).newValue;
+    }
+
+    @Override
+    public boolean isInvalidated() {
+        return newValue.equals(oldValue);
     }
     
     public void dispose() { }
     
     public Object[] toTableData() {
-        return new Object[] { action.getClass().toString(), newValue.toString(), oldValue.toString(), undoAction.getClass().toString() };
+        return new Object[] { owner.getClass().toString(), operation, newValue.toString(), oldValue.toString() };
     }
 }

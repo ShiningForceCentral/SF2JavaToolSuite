@@ -18,54 +18,100 @@ public class ActionManager {
     private static final Action[] history = new Action[ACTION_HISTORY_LIMIT];
     private static int stackStart = 0;
     private static int stackPointer = 0;
-        
+    
+    private static boolean actionTriggering = false;
+    private static long lastActionTime = 0;
+
+    public static boolean isActionTriggering() {
+        return actionTriggering;
+    }
+    
     public static void setAndExecuteAction(Action action) {
         if (action == null) return;
+        actionTriggering = true;
         setActionWithoutExecute(action);
         action.execute();
+        actionTriggering = false;
     }
         
     public static void setActionWithoutExecute(Action action) {
         if (action == null) return;
-        history[stackPointer] = action;
-        stackPointer++;
-        if (stackPointer >= ACTION_HISTORY_LIMIT) {
-            stackPointer -= ACTION_HISTORY_LIMIT;
-        }
-        if (stackPointer == stackStart) {
-            stackStart++;
-            if (stackStart >= ACTION_HISTORY_LIMIT) {
-                stackStart -= ACTION_HISTORY_LIMIT;
+        long time = System.currentTimeMillis();
+        if (time - lastActionTime < 20000) {
+            //Check if action can be combined
+            if (getCurrentHistoryIndex() > 0) {
+                int pointer = stackPointer-1;
+                if (pointer < 0) {
+                    pointer += ACTION_HISTORY_LIMIT;
+                }
+                if (history[pointer].canBeCombined(action)) {
+                    //Actions can be combined so combine but don't adjust the action stack
+                    history[pointer].combine(action);
+                    if (history[pointer].isInvalidated()) {
+                        history[pointer] = null;
+                        shiftPointerBack();
+                    }
+                    lastActionTime = time;
+                    actionTriggering = false;
+                    return;
+                }
             }
         }
+        lastActionTime = time;
+        history[stackPointer] = action;
+        shiftPointerForward(true);
     }
     
     public static void undo() {
+        actionTriggering = true;
+        lastActionTime = 0;
         if (stackPointer == stackStart) {
             Console.logger().finest("No more actions to undo.");
             return;
         }
+        shiftPointerBack();
+        history[stackPointer].undo();
+        Console.logger().finest(String.format("Undo (%d/%d) performed on : %s", getCurrentHistoryIndex(), ACTION_HISTORY_LIMIT, actionToString(history[stackPointer])));
+        actionTriggering = false;
+    }
+    
+    public static void redo() {
+        actionTriggering = true;
+        if (history[stackPointer] == null || stackPointer == stackStart-1 || (stackPointer == ACTION_HISTORY_LIMIT-1 && stackStart == 0)) {
+            Console.logger().finest("No more actions to redo.");
+            return;
+        }
+        int pointer = stackPointer;
+        shiftPointerForward(false);
+        history[pointer].execute();
+        Console.logger().finest(String.format("Redo (%d/%d) performed on : %s", getCurrentHistoryIndex(), ACTION_HISTORY_LIMIT, actionToString(history[pointer])));
+        actionTriggering = false;
+    }
+    
+    private static void shiftPointerBack() {
+        if (stackPointer == stackStart) return;
         stackPointer--;
         if (stackPointer < 0) {
             stackPointer += ACTION_HISTORY_LIMIT;
         }
-        history[stackPointer].undo();
-        Console.logger().finest(String.format("Undo (%d/%d) performed on : %s", getCurrentHistoryIndex(), ACTION_HISTORY_LIMIT, actionToString(history[stackPointer])));
-        
     }
     
-    public static void redo() {
-        int pointer = stackPointer;
-        if (history[pointer] == null || stackPointer == stackStart-1 || (stackPointer == ACTION_HISTORY_LIMIT-1 && stackStart == 0)) {
-            Console.logger().finest("No more actions to redo.");
-            return;
+    private static void shiftPointerForward(boolean pushStart) {
+        int pointer = stackPointer+1;
+        if (pointer >= ACTION_HISTORY_LIMIT) {
+            pointer -= ACTION_HISTORY_LIMIT;
         }
-        stackPointer++;
-        if (stackPointer >= ACTION_HISTORY_LIMIT) {
-            stackPointer -= ACTION_HISTORY_LIMIT;
+        if (pointer == stackStart) {
+            if (pushStart) {
+                stackStart++;
+                if (stackStart >= ACTION_HISTORY_LIMIT) {
+                    stackStart -= ACTION_HISTORY_LIMIT;
+                }
+            } else {
+                return; //Don't adjust stack pointer
+            }
         }
-        history[pointer].execute();
-        Console.logger().finest(String.format("Redo (%d/%d) performed on : %s", getCurrentHistoryIndex(), ACTION_HISTORY_LIMIT, actionToString(history[pointer])));
+        stackPointer = pointer;
     }
     
     public static void clearActionhistory() {
@@ -124,6 +170,6 @@ public class ActionManager {
      */
     private static String actionToString(Action action) {
         Object[] data = formatTableData(action.toTableData());
-        return String.format("%s, New Data = %s, Old Data = %s", data[0], data[1], data[2]);
+        return String.format("%s (%s): New Data = %s, Old Data = %s", data[0], data[1], data[2], data[3]);
     }
 }

@@ -11,31 +11,29 @@ import javax.swing.JToggleButton;
  *
  * @author TiMMy
  */
-public class ToggleAction implements IAction {
+public class ToggleAction extends Action<Boolean> {
 
     private JToggleButton toggle;
-    private boolean on;
     
-    public ToggleAction(JToggleButton toggle, boolean on) {
+    public ToggleAction(JToggleButton toggle, boolean newValue, IActionable<Boolean> action) {
+        super(toggle, "Toggle Value", action, newValue, !newValue);
         this.toggle = toggle;
-        this.on = on;
     }
     
     @Override
     public void execute() {
-        toggle.setSelected(on);
+        toggle.setSelected(newValue);
+        super.execute();
     }
 
     @Override
     public void undo() {
-        toggle.setSelected(!on);
+        toggle.setSelected(oldValue);
+        super.undo();
     }
 
     @Override
-    public void dispose() { }
-
-    @Override
-    public Object[] toTableData() {
-        return new Object[] { toggle.getClass().toString(), on, !on };
+    public boolean isInvalidated() {
+        return newValue.equals(oldValue);
     }
 }

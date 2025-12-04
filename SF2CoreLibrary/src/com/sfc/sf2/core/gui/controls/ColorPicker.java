@@ -7,7 +7,6 @@ package com.sfc.sf2.core.gui.controls;
 
 import com.sfc.sf2.core.actions.Action;
 import com.sfc.sf2.core.actions.ActionManager;
-import com.sfc.sf2.core.actions.IActionable;
 import com.sfc.sf2.helpers.GraphicsHelpers;
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -93,7 +92,7 @@ public class ColorPicker extends javax.swing.JPanel {
         Color returnCol = jColorChooser.showDialog(this, colorDialogTitle, this.getBackground());
         if (returnCol != null) {
             Color oldColor = this.getColor();
-            ActionManager.setAndExecuteAction(new Action<Color>(this::setColorUpdated, returnCol, oldColor));
+            ActionManager.setAndExecuteAction(new Action<Color>(this, "Change Color", this::setColorUpdated, returnCol, oldColor));
         }
     }//GEN-LAST:event_formMouseClicked
     

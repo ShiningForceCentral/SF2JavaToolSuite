@@ -11,16 +11,13 @@ import javax.swing.JSpinner;
  *
  * @author TiMMy
  */
-public class SpinnerAction implements IAction {
+public class SpinnerAction extends Action<Integer> {
 
     private JSpinner spinner;
-    private int newValue;
-    private int previousValue;
     
-    public SpinnerAction(JSpinner spinner, int newValue, int previousValue) {
+    public SpinnerAction(JSpinner spinner, int newValue, int oldValue) {
+        super(spinner, "Spinner Value", null, newValue, oldValue);
         this.spinner = spinner;
-        this.newValue = newValue;
-        this.previousValue = previousValue;
     }
     
     @Override
@@ -30,14 +27,6 @@ public class SpinnerAction implements IAction {
 
     @Override
     public void undo() {
-        spinner.setValue(previousValue);
-    }
-
-    @Override
-    public void dispose() { }
-
-    @Override
-    public Object[] toTableData() {
-        return new Object[] { spinner.getClass().toString(), newValue, previousValue };
+        spinner.setValue(oldValue);
     }
 }

@@ -11,33 +11,22 @@ import javax.swing.JComboBox;
  *
  * @author TiMMy
  */
-public class ComboAction implements IAction {
+public class ComboAction extends Action<Integer> {
 
     private JComboBox comboBox;
-    private int selectedIndex;
-    private int previousIndex;
     
-    public ComboAction(JComboBox comboBox, int selectedIndex, int previousIndex) {
+    public ComboAction(JComboBox comboBox, int newIndex, int oldIndex) {
+        super(comboBox, "Combo Value", null, newIndex, oldIndex);
         this.comboBox = comboBox;
-        this.selectedIndex = selectedIndex;
-        this.previousIndex = previousIndex;
     }
     
     @Override
     public void execute() {
-        comboBox.setSelectedIndex(selectedIndex);
+        comboBox.setSelectedIndex(newValue);
     }
 
     @Override
     public void undo() {
-        comboBox.setSelectedIndex(previousIndex);
-    }
-
-    @Override
-    public void dispose() { }
-
-    @Override
-    public Object[] toTableData() {
-        return new Object[] { comboBox.getClass().toString(), selectedIndex, previousIndex };
+        comboBox.setSelectedIndex(oldValue);
     }
 }
