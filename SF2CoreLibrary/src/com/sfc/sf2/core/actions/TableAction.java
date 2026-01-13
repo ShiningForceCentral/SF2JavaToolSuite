@@ -6,7 +6,6 @@
 package com.sfc.sf2.core.actions;
 
 import com.sfc.sf2.core.models.SelectionInterval;
-import javax.swing.JComponent;
 
 /**
  *
@@ -14,11 +13,11 @@ import javax.swing.JComponent;
  */
 public class TableAction extends Action<ActionTableData> {
     
-    public TableAction(JComponent owner, String operation, IActionable<ActionTableData> action, ActionTableData newValue, ActionTableData oldValue) {
+    public TableAction(Object owner, String operation, IActionable<ActionTableData> action, ActionTableData newValue, ActionTableData oldValue) {
         super(owner, operation, action, newValue, oldValue);
     }
 
-    public TableAction(JComponent owner, String operation, IActionable<ActionTableData> redoAction, ActionTableData redoValue, IActionable<ActionTableData> undoAction, ActionTableData undoValue) {
+    public TableAction(Object owner, String operation, IActionable<ActionTableData> redoAction, ActionTableData redoValue, IActionable<ActionTableData> undoAction, ActionTableData undoValue) {
         super(owner, operation, redoAction, redoValue, undoAction, undoValue);
     }
 
@@ -91,5 +90,10 @@ public class TableAction extends Action<ActionTableData> {
             if (!newValue.tableData()[i].equals(oldValue.tableData()[i])) return false;
         }
         return true;
+    }
+
+    @Override
+    protected String dataToString(ActionTableData data) {  
+        return String.format("Rows: %d", data.tableData().length);
     }
 }

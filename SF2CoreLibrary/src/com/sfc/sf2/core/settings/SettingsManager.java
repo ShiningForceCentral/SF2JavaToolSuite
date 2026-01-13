@@ -29,7 +29,7 @@ public class SettingsManager {
     private static Path globalSettingsPath = null;
     
     private static boolean isRunningInEditor = true;
-    private static boolean preventSaving = true;
+    private static boolean allowSaving = false;
 
     static {
         globalSettings = new GlobalSettings();
@@ -46,11 +46,11 @@ public class SettingsManager {
     }
     
     public static void setSavingAllowed(boolean allowed) {
-        preventSaving = !allowed;
+        allowSaving = allowed;
     }
     
     public static boolean isSavingAllowed() {
-        return preventSaving;
+        return allowSaving;
     }
     
     private static Path getGlobalSettingsFilePath() {
@@ -192,7 +192,7 @@ public class SettingsManager {
     }
     
     public static void saveGlobalSettingsFile() {
-        if (preventSaving) return;
+        if (!allowSaving) return;
         Console.logger().finest("ENTERING saveGlobalSettingsFile");
         try {
             StringBuilder sb = new StringBuilder();
@@ -207,7 +207,7 @@ public class SettingsManager {
     }
     
     public static void saveSettingsFile() {
-        if (preventSaving) return;
+        if (!allowSaving) return;
         Console.logger().finest("ENTERING saveSettingsFile");
         try {
             StringBuilder sb = new StringBuilder();

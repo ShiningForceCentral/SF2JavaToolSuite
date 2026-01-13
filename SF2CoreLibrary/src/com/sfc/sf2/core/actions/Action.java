@@ -13,7 +13,7 @@ import javax.swing.JComponent;
  */
 public class Action<T extends Object> implements IAction {
 
-    private JComponent owner;
+    private Object owner;
     protected String operation;
     
     private final IActionable<T> action;
@@ -21,11 +21,11 @@ public class Action<T extends Object> implements IAction {
     protected T newValue;
     protected T oldValue;
     
-    public Action(JComponent owner, String operation, IActionable<T> action, T newValue, T oldValue) {
+    public Action(Object owner, String operation, IActionable<T> action, T newValue, T oldValue) {
         this(owner, operation, action, newValue, null, oldValue);
     }
     
-    public Action(JComponent owner, String operation, IActionable<T> redoAction, T redoValue, IActionable<T> undoAction, T undoValue) {
+    public Action(Object owner, String operation, IActionable<T> redoAction, T redoValue, IActionable<T> undoAction, T undoValue) {
         this.action = redoAction;
         this.undoAction = undoAction;
         this.newValue = redoValue;
@@ -72,9 +72,15 @@ public class Action<T extends Object> implements IAction {
     public void dispose() { }
     
     public Object[] toTableData() {
-        String name = owner.getName();
-        if (name == null || name.isEmpty()) {
-            name = owner.getClass().toString();
+        String name = null;
+        if (owner != null) {
+            if (owner instanceof JComponent) {
+                JComponent component = (JComponent)owner;
+                name = component.getName();
+            }
+            if (name == null || name.isEmpty()) {
+                name = owner.getClass().toString();
+            }
         }
         return new Object[] { name, operation, dataToString(newValue), dataToString(oldValue) };
     }

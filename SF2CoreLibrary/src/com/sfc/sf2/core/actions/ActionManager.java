@@ -29,8 +29,8 @@ public class ActionManager {
     
     public static void setAndExecuteAction(Action action) {
         if (action == null) return;
-        actionTriggering = true;
         setActionWithoutExecute(action);
+        actionTriggering = true;
         action.execute();
         actionTriggering = false;
     }
@@ -53,7 +53,6 @@ public class ActionManager {
                         shiftPointerBack();
                     }
                     lastActionTime = time;
-                    actionTriggering = false;
                     return;
                 }
             }
@@ -64,26 +63,26 @@ public class ActionManager {
     }
     
     public static void undo() {
-        actionTriggering = true;
         lastActionTime = 0;
         if (stackPointer == stackStart) {
             Console.logger().finest("No more actions to undo.");
             return;
         }
         shiftPointerBack();
+        actionTriggering = true;
         history[stackPointer].undo();
         Console.logger().finest(String.format("Undo (%d/%d) performed on : %s", getCurrentHistoryIndex(), ACTION_HISTORY_LIMIT, actionToString(history[stackPointer])));
         actionTriggering = false;
     }
     
     public static void redo() {
-        actionTriggering = true;
         if (history[stackPointer] == null || stackPointer == stackStart-1 || (stackPointer == ACTION_HISTORY_LIMIT-1 && stackStart == 0)) {
             Console.logger().finest("No more actions to redo.");
             return;
         }
         int pointer = stackPointer;
         shiftPointerForward(false);
+        actionTriggering = true;
         history[pointer].execute();
         Console.logger().finest(String.format("Redo (%d/%d) performed on : %s", getCurrentHistoryIndex(), ACTION_HISTORY_LIMIT, actionToString(history[pointer])));
         actionTriggering = false;
@@ -124,6 +123,7 @@ public class ActionManager {
             }
             history[i] = null;
         }
+        actionTriggering = false;
     }
     
     /**
@@ -157,7 +157,7 @@ public class ActionManager {
      * Organise an action into a table-friendly format
      */
     private static Object[] formatTableData(Object[] data) {
-        for (int i = 0; i < data.length; i++) {
+        for (int i = 0; i < 1; i++) {
             int dotIndex = data[i].toString().lastIndexOf('.');
             if (dotIndex != -1) {
                 data[i] = data[i].toString().substring(dotIndex+1);

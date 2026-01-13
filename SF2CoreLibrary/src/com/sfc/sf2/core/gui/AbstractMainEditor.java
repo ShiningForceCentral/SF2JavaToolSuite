@@ -254,7 +254,7 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
                 .addComponent(jPanelSettings, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE))
         );
 
-        jFrameActionHistory.setTitle("Settings");
+        jFrameActionHistory.setTitle("Action History");
         jFrameActionHistory.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jFrameActionHistory.setLocationByPlatform(true);
         jFrameActionHistory.setMinimumSize(new java.awt.Dimension(500, 200));

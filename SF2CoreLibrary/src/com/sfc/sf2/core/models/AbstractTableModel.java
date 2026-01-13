@@ -5,6 +5,10 @@
  */
 package com.sfc.sf2.core.models;
 
+import com.sfc.sf2.core.actions.Action;
+import com.sfc.sf2.core.actions.ActionManager;
+import com.sfc.sf2.core.actions.ActionTableCellData;
+import com.sfc.sf2.core.actions.TableCellAction;
 import com.sfc.sf2.core.gui.controls.Console;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -17,8 +21,7 @@ import javax.swing.ComboBoxModel;
  */
 public abstract class AbstractTableModel<T> extends javax.swing.table.AbstractTableModel {
 
-    private String[] columns;
-    
+    private String[] columns;    
     private List<T> tableItems = new ArrayList();
     private int rowLimit;
     
@@ -45,6 +48,19 @@ public abstract class AbstractTableModel<T> extends javax.swing.table.AbstractTa
     }
 
     public void setTableData(T[] tableData) {
+        if (ActionManager.isActionTriggering()) {
+            actionSetTableData(tableData);
+        } else {
+            ActionManager.setAndExecuteAction(new Action(this, "Table Data Added", this::actionSetTableData, tableData, getTableData()));
+        }
+    }
+    
+    private void actionSetTableData(Object data) {
+        T[] tableData = (T[])data;
+        actionSetTableData(tableData);
+    }
+    
+    private void actionSetTableData(T[] tableData) {
         this.tableItems.clear();
         if (tableData != null) {
             for (int i = 0; i < tableData.length; i++) {
@@ -104,6 +120,18 @@ public abstract class AbstractTableModel<T> extends javax.swing.table.AbstractTa
         if (row < 0 || row >= tableItems.size() || col < 0 || col >= columns.length) {
             return;
         }
+        if (ActionManager.isActionTriggering()) {
+            actionSetValueAt(row, col, value);
+        } else {
+            ActionManager.setAndExecuteAction(new TableCellAction(this, this::actionSetValueAt, new ActionTableCellData(row, col, value), new ActionTableCellData(row, col, getValueAt(row, col))));
+        }
+    }
+    
+    private void actionSetValueAt(ActionTableCellData data) {
+        actionSetValueAt(data.row(), data.column(), data.data());
+    }
+    
+    private void actionSetValueAt(int row, int col, Object value) {
         tableItems.set(row, setValue(tableItems.get(row), row, col, value));
         fireTableCellUpdated(row, col);
     }
