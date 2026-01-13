@@ -15,8 +15,8 @@ public class ToggleAction extends Action<Boolean> {
 
     private JToggleButton toggle;
     
-    public ToggleAction(JToggleButton toggle, boolean newValue, IActionable<Boolean> action) {
-        super(toggle, "Toggle Value", action, newValue, !newValue);
+    public ToggleAction(JToggleButton toggle, boolean newValue) {
+        super(toggle, "Toggle Value", null, newValue, !newValue);
         this.toggle = toggle;
     }
     

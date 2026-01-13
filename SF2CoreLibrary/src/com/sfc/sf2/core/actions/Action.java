@@ -5,25 +5,27 @@
  */
 package com.sfc.sf2.core.actions;
 
+import javax.swing.JComponent;
+
 /**
  *
  * @author TiMMy
  */
 public class Action<T extends Object> implements IAction {
 
-    private Object owner;
-    private String operation;
+    private JComponent owner;
+    protected String operation;
     
     private final IActionable<T> action;
     private final IActionable<T> undoAction;
     protected T newValue;
     protected T oldValue;
     
-    public Action(Object owner, String operation, IActionable<T> action, T newValue, T oldValue) {
+    public Action(JComponent owner, String operation, IActionable<T> action, T newValue, T oldValue) {
         this(owner, operation, action, newValue, null, oldValue);
     }
     
-    public Action(Object owner, String operation, IActionable<T> redoAction, T redoValue, IActionable<T> undoAction, T undoValue) {
+    public Action(JComponent owner, String operation, IActionable<T> redoAction, T redoValue, IActionable<T> undoAction, T undoValue) {
         this.action = redoAction;
         this.undoAction = undoAction;
         this.newValue = redoValue;
@@ -50,8 +52,11 @@ public class Action<T extends Object> implements IAction {
     public boolean canBeCombined(IAction action) {
         if (this.getClass() != action.getClass()) return false;
         Action<T> other = (Action<T>)action;
-        if (this.owner != other.owner) return false;
-        return this.action == other.action && this.undoAction == other.undoAction;
+        if (!this.owner.equals(other.owner)) return false;
+        if (!this.operation.equals(other.operation)) return false;
+        if (this.action == null || other.action == null) return this.action == other.action;
+        if (this.undoAction == null || other.undoAction == null) return this.undoAction == other.undoAction;
+        return this.action.getClass() == other.action.getClass() && this.undoAction.getClass() == other.undoAction.getClass();
     }
 
     @Override
@@ -67,6 +72,14 @@ public class Action<T extends Object> implements IAction {
     public void dispose() { }
     
     public Object[] toTableData() {
-        return new Object[] { owner.getClass().toString(), operation, newValue.toString(), oldValue.toString() };
+        String name = owner.getName();
+        if (name == null || name.isEmpty()) {
+            name = owner.getClass().toString();
+        }
+        return new Object[] { name, operation, dataToString(newValue), dataToString(oldValue) };
+    }
+    
+    protected String dataToString(T data) {
+        return data.toString();
     }
 }

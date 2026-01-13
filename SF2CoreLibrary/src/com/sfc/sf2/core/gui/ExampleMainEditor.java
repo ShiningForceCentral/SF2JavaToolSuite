@@ -40,10 +40,12 @@ public final class ExampleMainEditor extends AbstractMainEditor {
         columns.getColumn(2).setMaxWidth(50);
         
         DefaultComboBoxModel model = new DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" });
+        comboTableModel.setComboModel(model);
         jTable2.setDefaultEditor(String.class, new ComboBoxTableEditor(model));
         jTable2.setDefaultRenderer(String.class, new ComboBoxTableRenderer());
         table2.jTable.setDefaultEditor(String.class, new ComboBoxTableEditor(model));
         table2.jTable.setDefaultRenderer(String.class, new ComboBoxTableRenderer());
+        multiComboBox1.setSelected(3, true);
     }
     
     @Override
@@ -63,6 +65,7 @@ public final class ExampleMainEditor extends AbstractMainEditor {
     private void initComponents() {
 
         stringTableModel = new com.sfc.sf2.core.models.StringTableModel();
+        comboTableModel = new com.sfc.sf2.core.models.combobox.ComboTableModel();
         jPanel13 = new javax.swing.JPanel();
         jSplitPane1 = new javax.swing.JSplitPane();
         jPanel15 = new javax.swing.JPanel();
@@ -180,6 +183,7 @@ public final class ExampleMainEditor extends AbstractMainEditor {
         );
 
         jSpinner4.setUI(new com.sfc.sf2.core.models.spinner.LeftRightSpinnerUI());
+        jSpinner4.setName("Action test spinner"); // NOI18N
         jSpinner4.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 jSpinnerTestStateChanged(evt);
@@ -187,6 +191,7 @@ public final class ExampleMainEditor extends AbstractMainEditor {
         });
 
         multiComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "fwefwrg ", "rgththsr", "ghjkyjjrtn", "5tehgxdh", "ws" }));
+        multiComboBox1.setName("Action test multicombo"); // NOI18N
         multiComboBox1.setPreferredSize(new java.awt.Dimension(76, 26));
         multiComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -195,6 +200,7 @@ public final class ExampleMainEditor extends AbstractMainEditor {
         });
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setName("Action test combo"); // NOI18N
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -202,6 +208,7 @@ public final class ExampleMainEditor extends AbstractMainEditor {
         });
 
         jCheckBox1.setText("Toggle");
+        jCheckBox1.setName("Action test toggle"); // NOI18N
         jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBox1ActionPerformed(evt);
@@ -320,6 +327,7 @@ public final class ExampleMainEditor extends AbstractMainEditor {
                 return types [columnIndex];
             }
         });
+        jTable1.setName("String jTable"); // NOI18N
         jScrollPane1.setViewportView(jTable1);
 
         table1.setBorder(javax.swing.BorderFactory.createTitledBorder("String table test"));
@@ -327,6 +335,7 @@ public final class ExampleMainEditor extends AbstractMainEditor {
         table1.setModel(stringTableModel);
         table1.setSingleClickText(true);
         table1.setSpinnerNumberEditor(false);
+        table1.setName("String table test"); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -404,13 +413,16 @@ public final class ExampleMainEditor extends AbstractMainEditor {
                 return types [columnIndex];
             }
         });
+        jTable2.setName("combo jTable"); // NOI18N
         jScrollPane3.setViewportView(jTable2);
 
         table2.setBorder(javax.swing.BorderFactory.createTitledBorder("ComboBox table test"));
         table2.setInfoMessage("");
+        table2.setModel(comboTableModel);
         table2.setRowBorders(false);
         table2.setSingleClickText(false);
         table2.setSpinnerNumberEditor(false);
+        table2.setName("Combo table test"); // NOI18N
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -513,9 +525,10 @@ public final class ExampleMainEditor extends AbstractMainEditor {
     }//GEN-LAST:event_colorPicker1ColorChanged
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
-        ActionManager.setAndExecuteAction(new ToggleAction(jCheckBox1, jCheckBox1.isSelected(), (data) -> {
-            jLabel6.setText(data.toString());
-        }));
+        if (!ActionManager.isActionTriggering()) {
+            ActionManager.setAndExecuteAction(new ToggleAction(jCheckBox1, jCheckBox1.isSelected()));
+        }
+        jLabel6.setText(Boolean.toString(jCheckBox1.isSelected()));
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     private void jSpinnerTestStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinnerTestStateChanged
@@ -536,8 +549,8 @@ public final class ExampleMainEditor extends AbstractMainEditor {
 
     private void multiComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_multiComboBox1ActionPerformed
         if (!ActionManager.isActionTriggering()) {
-            String[] oldValue = jLabel3.getText().split("|");
-            ActionManager.setAndExecuteAction(new MultiComboAction(multiComboBox1, multiComboBox1.getSelectedObjects(), oldValue, null));
+            String[] oldValue = jLabel3.getText().split(", ");
+            ActionManager.setAndExecuteAction(new MultiComboAction(multiComboBox1, multiComboBox1.getObjectsString().split(", "), oldValue));
         }
         jLabel3.setText(multiComboBox1.getObjectsString());
     }//GEN-LAST:event_multiComboBox1ActionPerformed
@@ -563,6 +576,7 @@ public final class ExampleMainEditor extends AbstractMainEditor {
     private com.sfc.sf2.core.gui.controls.AccordionPanel accordionPanel2;
     private com.sfc.sf2.core.gui.controls.AccordionPanel accordionPanel3;
     private com.sfc.sf2.core.gui.controls.ColorPicker colorPicker1;
+    private com.sfc.sf2.core.models.combobox.ComboTableModel comboTableModel;
     private com.sfc.sf2.core.gui.controls.Console console1;
     private com.sfc.sf2.core.gui.controls.FileButton fileButton1;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton1;

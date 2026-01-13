@@ -49,6 +49,10 @@ public class SettingsManager {
         preventSaving = !allowed;
     }
     
+    public static boolean isSavingAllowed() {
+        return preventSaving;
+    }
+    
     private static Path getGlobalSettingsFilePath() {
         if (globalSettingsPath == null) {
             globalSettingsPath = Path.of(System.getenv("APPDATA")).resolve("SF2").resolve("global.settings");

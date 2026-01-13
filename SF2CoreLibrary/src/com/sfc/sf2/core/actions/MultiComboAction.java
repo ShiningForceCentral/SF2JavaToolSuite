@@ -11,12 +11,12 @@ import com.sfc.sf2.core.gui.controls.MultiComboBox;
  *
  * @author TiMMy
  */
-public class MultiComboAction extends Action<Object[]> {
+public class MultiComboAction extends Action<String[]> {
 
     private MultiComboBox comboBox;
     
-    public MultiComboAction(MultiComboBox comboBox, Object[] newIndex, Object[] oldIndex, IActionable<Object[]> action) {
-        super(comboBox, "MultiCombo Value", action, newIndex, oldIndex);
+    public MultiComboAction(MultiComboBox comboBox, String[] newIndex, String[] oldIndex) {
+        super(comboBox, "MultiCombo Value", null, newIndex, oldIndex);
         this.comboBox = comboBox;
     }
     
@@ -30,5 +30,17 @@ public class MultiComboAction extends Action<Object[]> {
     public void undo() {
         comboBox.setSelected(oldValue);
         super.undo();
+    }
+
+    @Override
+    protected String dataToString(String[] data) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < data.length; i++) {
+            sb.append(data[i]);
+            if (i < data.length-1) {
+                sb.append(", ");
+            }
+        }
+        return sb.toString();
     }
 }

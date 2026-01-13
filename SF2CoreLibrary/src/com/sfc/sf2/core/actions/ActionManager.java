@@ -6,6 +6,7 @@
 package com.sfc.sf2.core.actions;
 
 import com.sfc.sf2.core.gui.controls.Console;
+import com.sfc.sf2.core.settings.SettingsManager;
 import java.util.Stack;
 
 /**
@@ -23,7 +24,7 @@ public class ActionManager {
     private static long lastActionTime = 0;
 
     public static boolean isActionTriggering() {
-        return actionTriggering;
+        return actionTriggering || !SettingsManager.isSavingAllowed();
     }
     
     public static void setAndExecuteAction(Action action) {

@@ -6,7 +6,6 @@
 package com.sfc.sf2.core.models.spinner;
 
 import com.formdev.flatlaf.ui.FlatArrowButton;
-import com.formdev.flatlaf.ui.FlatRoundBorder;
 import com.formdev.flatlaf.ui.FlatSpinnerUI;
 import java.awt.BorderLayout;
 import java.awt.Component;

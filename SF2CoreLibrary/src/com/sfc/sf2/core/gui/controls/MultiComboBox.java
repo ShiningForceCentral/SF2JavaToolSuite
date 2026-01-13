@@ -98,6 +98,21 @@ public class MultiComboBox extends JComboBox<CheckItem> {
         }
     }
     
+    public void setSelected(String[] items) {
+        ComboBoxModel<CheckItem> model = getModel();
+        clearSelection();
+        for (int i = 0; i < items.length; i++) {
+            for (int e = 0; e < model.getSize(); e++) {
+                CheckItem element = model.getElementAt(e);
+                if (items[i].equals(element.toString())) {
+                    element.setSelected(true);
+                    model.setSelectedItem(element);
+                    break;
+                }
+            }
+        }
+    }
+    
     public void setSelected(Object[] items) {
         ComboBoxModel<CheckItem> model = getModel();
         clearSelection();
@@ -145,13 +160,6 @@ public class MultiComboBox extends JComboBox<CheckItem> {
         if (isPopupVisible() && index >= 0) {
             CheckItem item = (CheckItem)getItemAt(index);
             item.setSelected(!item.isSelected());
-            // item.selected ^= true;
-            // ComboBoxModel m = getModel();
-            // if (m instanceof MultiComboBoxModel) {
-            //   ((MultiComboBoxModel) m).fireContentsChanged(index);
-            // }
-            // removeItemAt(index);
-            // insertItemAt(item, index);
             setSelectedIndex(-1);
             setSelectedItem(item);
         }
@@ -198,7 +206,7 @@ public class MultiComboBox extends JComboBox<CheckItem> {
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < model.getSize(); i++) {
                 if (model.getElementAt(i).isSelected()) {
-                    if (sb.length() > 0) sb.append("|");
+                    if (sb.length() > 0) sb.append(", ");
                     sb.append(model.getElementAt(i).toString());
                 }
             }
