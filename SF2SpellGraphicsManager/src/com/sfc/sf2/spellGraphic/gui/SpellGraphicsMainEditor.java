@@ -41,7 +41,10 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
     protected void initEditor() {
         super.initEditor();
         
+        accordionPanelEnvironment.setExpanded(false);
+        
         colorPicker1.setColor(SettingsManager.getGlobalSettings().getTransparentBGColor());
+        jCheckBox2.setSelected(invocationLayoutPanel.isBattlePreviewMode());
         
         spellLayoutPanel.setDisplayScale(jComboBox1.getSelectedIndex()+1);
         spellLayoutPanel.setShowGrid(jCheckBox1.isSelected());
@@ -75,10 +78,12 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
         } else {
             InvocationGraphic invocationGraphic = invocationGraphicManager.getInvocationGraphic();
             invocationLayoutPanel.setInvocationGraphic(invocationGraphic);
+            invocationLayoutPanel.setBackground(invocationGraphicManager.getBackground());
+            invocationLayoutPanel.setGround(invocationGraphicManager.getGround());
             if (invocationGraphic != null) {
-                jSpinner2.setValue(invocationGraphic.getUnknown1());
-                jSpinner3.setValue(invocationGraphic.getUnknown2());
-                jSpinner4.setValue(invocationGraphic.getUnknown3());
+                jSpinner2.setValue(invocationGraphic.getPosX());
+                jSpinner3.setValue(invocationGraphic.getPosY());
+                jSpinner4.setValue(invocationGraphic.getLoadMode());
             }
             spellLayoutPanel.setVisible(false);
             invocationLayoutPanel.setVisible(true);
@@ -151,6 +156,12 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
         infoButton8 = new com.sfc.sf2.core.gui.controls.InfoButton();
         fileButton9 = new com.sfc.sf2.core.gui.controls.FileButton();
         jButton33 = new javax.swing.JButton();
+        accordionPanelEnvironment = new com.sfc.sf2.core.gui.controls.AccordionPanel();
+        fileButton10 = new com.sfc.sf2.core.gui.controls.FileButton();
+        jLabel23 = new javax.swing.JLabel();
+        fileButton11 = new com.sfc.sf2.core.gui.controls.FileButton();
+        fileButton12 = new com.sfc.sf2.core.gui.controls.FileButton();
+        fileButton13 = new com.sfc.sf2.core.gui.controls.FileButton();
         jPanel10 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -193,6 +204,9 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
         jSpinner3 = new javax.swing.JSpinner();
         jSpinner4 = new javax.swing.JSpinner();
         infoButton2 = new com.sfc.sf2.core.gui.controls.InfoButton();
+        jLabel34 = new javax.swing.JLabel();
+        infoButton7 = new com.sfc.sf2.core.gui.controls.InfoButton();
+        jCheckBox2 = new javax.swing.JCheckBox();
         jPanel12 = new javax.swing.JPanel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
@@ -202,7 +216,7 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
         console1 = new com.sfc.sf2.core.gui.controls.Console();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("SF2SpellGraphicManager");
+        setTitle("SF2SpellGraphicsManager");
 
         jSplitPane1.setDividerLocation(500);
         jSplitPane1.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
@@ -331,9 +345,7 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(infoButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(fileButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -354,8 +366,7 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
         );
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Export to :"));
@@ -468,9 +479,7 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addComponent(jTabbedPane2)
-                .addContainerGap())
+            .addComponent(jTabbedPane2)
         );
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
@@ -486,8 +495,8 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
                 .addComponent(jPanel28, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -497,9 +506,7 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
         jPanel18.setPreferredSize(new java.awt.Dimension(350, 400));
 
         jPanel19.setBorder(javax.swing.BorderFactory.createTitledBorder("Import from :"));
-        jPanel19.setMinimumSize(null);
 
-        jTabbedPane4.setMinimumSize(null);
         jTabbedPane4.setPreferredSize(new java.awt.Dimension(0, 0));
 
         jLabel18.setText("Import incovation disassembly.");
@@ -531,13 +538,11 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
                         .addComponent(jLabel18)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(infoButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel20Layout.createSequentialGroup()
-                        .addComponent(fileButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
-                        .addContainerGap())))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel20Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton21)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(fileButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel20Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton21)))
                 .addContainerGap())
         );
         jPanel20Layout.setVerticalGroup(
@@ -733,20 +738,79 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
             .addComponent(jTabbedPane5)
         );
 
+        accordionPanelEnvironment.setBorder(javax.swing.BorderFactory.createTitledBorder("Battle scene"));
+
+        fileButton10.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
+        fileButton10.setFilePath("..\\backgrounds\\background09.bin");
+        fileButton10.setInfoMessage("Loads a Background, for the animation preview.");
+        fileButton10.setLabelText("Background :");
+
+        jLabel23.setText("Ground :");
+
+        fileButton11.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
+        fileButton11.setFilePath("..\\battlescenebasepalette.bin");
+        fileButton11.setInfoMessage("The battle base palette to use for the Ground platform preview.");
+        fileButton11.setLabelText("Ground base palette :");
+
+        fileButton12.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
+        fileButton12.setFilePath("..\\grounds\\groundpalette09.bin");
+        fileButton12.setInfoMessage("The palette to use for the Ground platform preview.");
+        fileButton12.setLabelText("Gound palette :");
+
+        fileButton13.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
+        fileButton13.setFilePath("..\\grounds\\groundtiles09.bin");
+        fileButton13.setInfoMessage("Loads a Ground platform, for the animation preview.");
+        fileButton13.setLabelText("Ground :");
+
+        javax.swing.GroupLayout accordionPanelEnvironmentLayout = new javax.swing.GroupLayout(accordionPanelEnvironment);
+        accordionPanelEnvironment.setLayout(accordionPanelEnvironmentLayout);
+        accordionPanelEnvironmentLayout.setHorizontalGroup(
+            accordionPanelEnvironmentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(accordionPanelEnvironmentLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(accordionPanelEnvironmentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(fileButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(fileButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(fileButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(accordionPanelEnvironmentLayout.createSequentialGroup()
+                        .addComponent(jLabel23)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(fileButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        accordionPanelEnvironmentLayout.setVerticalGroup(
+            accordionPanelEnvironmentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(accordionPanelEnvironmentLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(fileButton10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel23)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(fileButton11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(fileButton12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(fileButton13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout jPanel18Layout = new javax.swing.GroupLayout(jPanel18);
         jPanel18.setLayout(jPanel18Layout);
         jPanel18Layout.setHorizontalGroup(
             jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel23, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
-            .addComponent(jPanel19, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(accordionPanelEnvironment, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel18Layout.setVerticalGroup(
             jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel18Layout.createSequentialGroup()
-                .addContainerGap()
+                .addComponent(accordionPanelEnvironment, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 131, Short.MAX_VALUE)
-                .addComponent(jPanel23, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addComponent(jPanel23, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jTabbedPane3.addTab("Invocations", null, jPanel18, "");
@@ -1071,38 +1135,45 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
         jPanelInvocationData.setBorder(javax.swing.BorderFactory.createTitledBorder("Invocation :"));
         jPanelInvocationData.setPreferredSize(new java.awt.Dimension(385, 85));
 
-        jLabel25.setText("Unknown 1 :");
+        jLabel25.setText("Initial pos :");
 
-        jLabel32.setText("Unknown 2 :");
+        jLabel32.setText("Y: ");
 
-        jLabel33.setText("Unknown 3 :");
+        jLabel33.setText("Load mode (Not implemeneted) :");
 
-        jSpinner2.setModel(new javax.swing.SpinnerNumberModel((short)0, null, null, (short)1));
+        jSpinner2.setModel(new javax.swing.SpinnerNumberModel(Short.valueOf((short)0), Short.valueOf((short)-500), Short.valueOf((short)500), Short.valueOf((short)1)));
         jSpinner2.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 jSpinner2StateChanged(evt);
             }
         });
 
-        jSpinner3.setModel(new javax.swing.SpinnerNumberModel((short)0, null, null, (short)1));
+        jSpinner3.setModel(new javax.swing.SpinnerNumberModel(Short.valueOf((short)0), Short.valueOf((short)-500), Short.valueOf((short)500), Short.valueOf((short)1)));
         jSpinner3.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 jSpinner3StateChanged(evt);
             }
         });
 
-        jSpinner4.setModel(new javax.swing.SpinnerNumberModel((short)0, null, null, (short)1));
+        jSpinner4.setModel(new javax.swing.SpinnerNumberModel(Short.valueOf((short)1), Short.valueOf((short)0), Short.valueOf((short)1), Short.valueOf((short)1)));
         jSpinner4.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 jSpinner4StateChanged(evt);
             }
         });
 
-        infoButton2.setMessageText("<html>These values are stored in the invocation .bin file.<br>It is currently unknown what these values do.</html>");
+        infoButton2.setMessageText("<html>Sets the initial position of the invocation sprite when drawn to the battle scene.<br><br><b>NOTE:</b> By default, all invocations except Dao are set with initial position off of the game screen. The invocation animation then controls moving the sprite into the screen space.</html>");
         infoButton2.setText("");
-        infoButton2.addActionListener(new java.awt.event.ActionListener() {
+
+        jLabel34.setText("X :");
+
+        infoButton7.setMessageText("<html>Determines how the  invocation is loaded.<br>- 0 = \"As battle sprite\". Loads the invocation in the same way that battlesprites are loaded.<b> Not implemented</b><br>- 1 = \"As invocation\". Loads invocations as 2 sprites per-frame (top half and bottom half).</html>");
+        infoButton7.setText("");
+
+        jCheckBox2.setText("Preview battle scene");
+        jCheckBox2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                infoButton2ActionPerformed(evt);
+                jCheckBox2ActionPerformed(evt);
             }
         });
 
@@ -1116,34 +1187,46 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
                     .addGroup(jPanelInvocationDataLayout.createSequentialGroup()
                         .addComponent(jLabel25)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel34)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel32)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSpinner3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(infoButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(infoButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanelInvocationDataLayout.createSequentialGroup()
                         .addComponent(jLabel33)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSpinner4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jSpinner4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(infoButton7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jCheckBox2)))
+                .addContainerGap())
         );
         jPanelInvocationDataLayout.setVerticalGroup(
             jPanelInvocationDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelInvocationDataLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelInvocationDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanelInvocationDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel25)
-                        .addComponent(jLabel32)
-                        .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jSpinner3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(infoButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelInvocationDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel33)
-                    .addComponent(jSpinner4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jCheckBox2)
+                    .addGroup(jPanelInvocationDataLayout.createSequentialGroup()
+                        .addGroup(jPanelInvocationDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(infoButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel25)
+                            .addComponent(jLabel32)
+                            .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel34)
+                            .addComponent(jSpinner3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanelInvocationDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanelInvocationDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel33)
+                                .addComponent(jSpinner4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(infoButton7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
 
@@ -1364,10 +1447,14 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     private void jButton21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton21ActionPerformed
+        Path bgPath = PathHelpers.getBasePath().resolve(fileButton10.getFilePath());
+        Path groundBasePalettePath = PathHelpers.getBasePath().resolve(fileButton11.getFilePath());
+        Path groundPalettePath = PathHelpers.getBasePath().resolve(fileButton12.getFilePath());
+        Path groundPath = PathHelpers.getBasePath().resolve(fileButton13.getFilePath());
         Path invocationPath = PathHelpers.getBasePath().resolve(fileButton4.getFilePath());
         try {
             spellGraphicManager.clearData();
-            invocationGraphicManager.importDisassembly(invocationPath);
+            invocationGraphicManager.importDisassembly(invocationPath, bgPath, groundBasePalettePath, groundPalettePath, groundPath);
         } catch (Exception ex) {
             invocationGraphicManager.clearData();
             Console.logger().log(Level.SEVERE, null, ex);
@@ -1377,10 +1464,14 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
     }//GEN-LAST:event_jButton21ActionPerformed
 
     private void jButton24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton24ActionPerformed
+        Path bgPath = PathHelpers.getBasePath().resolve(fileButton10.getFilePath());
+        Path groundBasePalettePath = PathHelpers.getBasePath().resolve(fileButton11.getFilePath());
+        Path groundPalettePath = PathHelpers.getBasePath().resolve(fileButton12.getFilePath());
+        Path groundPath = PathHelpers.getBasePath().resolve(fileButton13.getFilePath());
         Path invocationPath = PathHelpers.getBasePath().resolve(fileButton5.getFilePath());
         try {
             spellGraphicManager.clearData();
-            invocationGraphicManager.importImage(invocationPath);
+            invocationGraphicManager.importImage(invocationPath, bgPath, groundBasePalettePath, groundPalettePath, groundPath);
         } catch (Exception ex) {
             invocationGraphicManager.clearData();
             Console.logger().log(Level.SEVERE, null, ex);
@@ -1441,20 +1532,28 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
 
     private void jSpinner2StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner2StateChanged
         InvocationGraphic invocationGraphic = invocationLayoutPanel.getInvocationGraphic();
-        if (invocationGraphic != null)
-            invocationGraphic.setUnknown1((short)jSpinner2.getValue());
+        if (invocationGraphic != null) {
+            invocationGraphic.setPosX((short)jSpinner2.getValue());
+            if (invocationLayoutPanel.isBattlePreviewMode()) {
+                invocationLayoutPanel.redraw();
+            }
+        }
     }//GEN-LAST:event_jSpinner2StateChanged
 
     private void jSpinner3StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner3StateChanged
         InvocationGraphic invocationGraphic = invocationLayoutPanel.getInvocationGraphic();
-        if (invocationGraphic != null)
-            invocationGraphic.setUnknown2((short)jSpinner3.getValue());
+        if (invocationGraphic != null) {
+            invocationGraphic.setPosY((short)jSpinner3.getValue());
+            if (invocationLayoutPanel.isBattlePreviewMode()) {
+                invocationLayoutPanel.redraw();
+            }
+        }
     }//GEN-LAST:event_jSpinner3StateChanged
 
     private void jSpinner4StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner4StateChanged
         InvocationGraphic invocationGraphic = invocationLayoutPanel.getInvocationGraphic();
         if (invocationGraphic != null)
-            invocationGraphic.setUnknown3((short)jSpinner4.getValue());
+            invocationGraphic.setLoadMode((short)jSpinner4.getValue());
     }//GEN-LAST:event_jSpinner4StateChanged
 
     private void colorPicker1ColorChanged(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorPicker1ColorChanged
@@ -1464,9 +1563,10 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
         SettingsManager.saveGlobalSettingsFile();
     }//GEN-LAST:event_colorPicker1ColorChanged
 
-    private void infoButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_infoButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_infoButton2ActionPerformed
+    private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox2ActionPerformed
+        invocationLayoutPanel.setBattlePreviewMode(jCheckBox2.isSelected());
+        jComboBox1.setEnabled(!jCheckBox2.isSelected());
+    }//GEN-LAST:event_jCheckBox2ActionPerformed
     
     private void updateSpellPaletteColor(int index, CRAMColor newColor) {
         Tileset spellTileset = spellLayoutPanel.getTileset();
@@ -1501,9 +1601,14 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.sfc.sf2.core.gui.controls.AccordionPanel accordionPanelEnvironment;
     private com.sfc.sf2.core.gui.controls.ColorPicker colorPicker1;
     private com.sfc.sf2.core.gui.controls.Console console1;
     private com.sfc.sf2.core.gui.controls.FileButton fileButton1;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButton10;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButton11;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButton12;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButton13;
     private com.sfc.sf2.core.gui.controls.FileButton fileButton2;
     private com.sfc.sf2.core.gui.controls.FileButton fileButton3;
     private com.sfc.sf2.core.gui.controls.FileButton fileButton4;
@@ -1518,6 +1623,7 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton4;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton5;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton6;
+    private com.sfc.sf2.core.gui.controls.InfoButton infoButton7;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton8;
     private com.sfc.sf2.spellGraphic.gui.InvocationLayoutPanel invocationLayoutPanel;
     private javax.swing.JButton jButton12;
@@ -1529,6 +1635,7 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton33;
     private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -1541,12 +1648,14 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel55;

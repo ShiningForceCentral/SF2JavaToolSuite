@@ -18,23 +18,21 @@ public class InvocationGraphic {
     public static int INVOCATION_TILE_HEIGHT = 8;
     
     private Tileset[] frames;
-    private int frameWidth;
-    private int frameHeight;
-    private short unknown1;
-    private short unknown2;
-    private short unknown3;
+    private short posX;
+    private short posY;
+    private short loadMode;
     
     public InvocationGraphic(Tileset[] frames) {
         this.frames = frames;
-        recalcFrameDimensions();
+        posX = posY = 0;
+        loadMode = 1;
     }
-    
-    public InvocationGraphic(Tileset[] frames, short unknown1, short unknown2, short unknown3) {
+
+    public InvocationGraphic(Tileset[] frames, short posX, short posY, short loadMode) {
         this.frames = frames;
-        recalcFrameDimensions();
-        this.unknown1 = unknown1;
-        this.unknown2 = unknown2;
-        this.unknown3 = unknown3;
+        this.posX = posX;
+        this.posY = posY;
+        this.loadMode = loadMode;
     }
 
     public Tileset[] getFrames() {
@@ -43,16 +41,6 @@ public class InvocationGraphic {
 
     public void setFrames(Tileset[] frames) {
         this.frames = frames;
-        recalcFrameDimensions();
-    }
-    
-    private void recalcFrameDimensions() {
-        if (frames == null) {
-            frameWidth = frameHeight = 0;
-        } else {
-            frameWidth = INVOCATION_TILE_WIDTH;
-            frameHeight = INVOCATION_TILE_HEIGHT;
-        }
     }
 
     public Palette getPalette() {
@@ -62,39 +50,31 @@ public class InvocationGraphic {
         return frames[0].getPalette();
     }
 
-    public int getFrameWidth() {
-        return frameWidth;
-    }
-
-    public int getFrameHeight() {
-        return frameHeight;
-    }
-
     public int getTotalHeight() {
-        return frames == null ? 0 : frameHeight*frames.length;
+        return frames == null ? 0 : INVOCATION_TILE_HEIGHT*frames.length;
     }
 
-    public short getUnknown1() {
-        return unknown1;
+    public short getPosX() {
+        return posX;
     }
 
-    public void setUnknown1(short unknown1) {
-        this.unknown1 = unknown1;
+    public void setPosX(short posX) {
+        this.posX = posX;
     }
 
-    public short getUnknown2() {
-        return unknown2;
+    public short getPosY() {
+        return posY;
     }
 
-    public void setUnknown2(short unknown2) {
-        this.unknown2 = unknown2;
+    public void setPosY(short posY) {
+        this.posY = posY;
     }
 
-    public short getUnknown3() {
-        return unknown3;
+    public short getLoadMode() {
+        return loadMode;
     }
 
-    public void setUnknown3(short unknown3) {
-        this.unknown3 = unknown3;
+    public void setLoadMode(short loadMode) {
+        this.loadMode = loadMode;
     }
 }

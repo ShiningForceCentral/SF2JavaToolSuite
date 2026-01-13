@@ -6,7 +6,6 @@
 package com.sfc.sf2.spellGraphic.io;
 
 import com.sfc.sf2.core.io.AbstractMetadataProcessor;
-import com.sfc.sf2.core.io.DisassemblyException;
 import com.sfc.sf2.core.io.MetadataException;
 import com.sfc.sf2.spellGraphic.InvocationGraphic;
 import java.io.BufferedReader;
@@ -23,19 +22,19 @@ public class InvocationMetadataProcessor extends AbstractMetadataProcessor<Invoc
     protected void parseMetaData(BufferedReader reader, InvocationGraphic item) throws IOException, MetadataException {
         String data = reader.readLine();
         data = data.substring(data.indexOf(":")+1).trim();
-        item.setUnknown1(Short.parseShort(data));
+        item.setPosX(Short.parseShort(data));
         data = reader.readLine();
         data = data.substring(data.indexOf(":")+1).trim();
-        item.setUnknown2(Short.parseShort(data));
+        item.setPosY(Short.parseShort(data));
         data = reader.readLine();
         data = data.substring(data.indexOf(":")+1).trim();
-        item.setUnknown3(Short.parseShort(data));
+        item.setLoadMode(Short.parseShort(data));
     }
 
     @Override
     protected void packageMetaData(FileWriter writer, InvocationGraphic item) throws IOException, MetadataException {
-        writer.append("Unknown 1: " + item.getUnknown1() + "\n");
-        writer.append("Unknown 2: " + item.getUnknown2() + "\n");
-        writer.append("Unknown 3: " + item.getUnknown3() + "\n");
+        writer.append("Pos X: " + item.getPosX()+ "\n");
+        writer.append("Pos Y: " + item.getPosY()+ "\n");
+        writer.append("Load Mode: " + item.getLoadMode()+ "\n");
     }
 }

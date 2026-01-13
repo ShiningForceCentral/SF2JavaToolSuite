@@ -5,13 +5,17 @@
  */
 package com.sfc.sf2.spellGraphic;
 
+import com.sfc.sf2.background.Background;
+import com.sfc.sf2.battlescene.BattleSceneManager;
 import com.sfc.sf2.core.AbstractManager;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.core.io.DisassemblyException;
 import com.sfc.sf2.core.io.FileFormat;
 import com.sfc.sf2.core.io.RawImageException;
+import com.sfc.sf2.core.io.asm.AsmException;
 import com.sfc.sf2.graphics.Tileset;
 import com.sfc.sf2.graphics.TilesetManager;
+import com.sfc.sf2.ground.Ground;
 import com.sfc.sf2.helpers.FileHelpers;
 import com.sfc.sf2.helpers.PathHelpers;
 import com.sfc.sf2.spellGraphic.io.InvocationDisassemblyProcessor;
@@ -30,6 +34,7 @@ import java.util.logging.Level;
  */
 public class InvocationGraphicManager extends AbstractManager {
     private final TilesetManager tilesetManager = new TilesetManager();
+    private final BattleSceneManager battleSceneManager = new BattleSceneManager();
     private final InvocationDisassemblyProcessor invocationDisassemblyProcessor = new InvocationDisassemblyProcessor();
     private final InvocationMetadataProcessor invocationMetadataProcessor = new InvocationMetadataProcessor();
     
@@ -37,11 +42,14 @@ public class InvocationGraphicManager extends AbstractManager {
 
     @Override
     public void clearData() {
+        tilesetManager.clearData();
+        battleSceneManager.clearData();
         invocationGraphic = null;
     }
        
-    public InvocationGraphic importDisassembly(Path filePath) throws IOException, DisassemblyException {
+    public InvocationGraphic importDisassembly(Path filePath, Path backgroundPath, Path groundBasePalettePath, Path groundPalettePath, Path groundPath) throws IOException, DisassemblyException, AsmException {
         Console.logger().finest("ENTERING importDisassembly");
+        battleSceneManager.importDisassembly(backgroundPath, groundBasePalettePath, groundPalettePath, groundPath);
         InvocationPackage pckg = new InvocationPackage(PathHelpers.filenameFromPath(filePath));
         invocationGraphic = invocationDisassemblyProcessor.importDisassembly(filePath, pckg);
         Console.logger().info("Invocation with " + invocationGraphic.getFrames().length + " frames successfully imported from : " + filePath);
@@ -57,8 +65,9 @@ public class InvocationGraphicManager extends AbstractManager {
         Console.logger().finest("EXITING exportDisassembly");
     }
     
-    public InvocationGraphic importImage(Path filePath) throws RawImageException, IOException, DisassemblyException {
+    public InvocationGraphic importImage(Path filePath, Path backgroundPath, Path groundBasePalettePath, Path groundPalettePath, Path groundPath) throws RawImageException, IOException, DisassemblyException, AsmException {
         Console.logger().finest("ENTERING importImage");
+        battleSceneManager.importDisassembly(backgroundPath, groundBasePalettePath, groundPalettePath, groundPath);
         Path dir = filePath.getParent();
         String name = getImageName(filePath.getFileName().toString());
         FileFormat format = FileFormat.getFormat(filePath);
@@ -135,5 +144,13 @@ public class InvocationGraphicManager extends AbstractManager {
 
     public void setInvocationGraphic(InvocationGraphic invocationGraphic) {
         this.invocationGraphic = invocationGraphic;
+    }
+
+    public Background getBackground() {
+        return battleSceneManager.getBackground();
+    }
+
+    public Ground getGround() {
+        return battleSceneManager.getGround();
     }
 }

@@ -7,7 +7,6 @@ package com.sfc.sf2.map.layout.gui.resources;
 
 import com.sfc.sf2.core.settings.CoreSettings;
 import com.sfc.sf2.core.settings.SettingsManager;
-import com.sfc.sf2.map.block.MapBlock;
 import com.sfc.sf2.map.layout.MapLayoutBlock;
 import javax.swing.ImageIcon;
 
@@ -41,7 +40,7 @@ public class MapLayoutFlagIcons {
         if (!((CoreSettings)SettingsManager.getSettingsStore("core")).arePathsValid()) return;
         if (obstructedIcon == null) {
             ClassLoader loader = MapLayoutFlagIcons.class.getClassLoader();
-            stepIcon = new ImageIcon(loader.getResource("map/flags/icons/Copy.png"));
+            stepIcon = new ImageIcon(loader.getResource("map/flags/icons/Step.png"));
             hideIcon = new ImageIcon(loader.getResource("map/flags/icons/Hide.png"));
             showIcon = new ImageIcon(loader.getResource("map/flags/icons/Show.png"));
             warpIcon = new ImageIcon(loader.getResource("map/flags/icons/Warp.png"));

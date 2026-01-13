@@ -224,9 +224,9 @@ jobs:
                   git tag "$tag_name"
                   git push origin "$tag_name"
                 fi
-                
-                # Extract release notes
-                release_notes=$(grep '^release-notes:' "$file_path" | cut -d':' -f2- | xargs)
+
+                # Extract release notes (first non-empty line after release-notes:)
+                release_notes=$(awk '$1 == "release-notes:" {found=1; next} found && NF {print; exit}' "$file_path" | xargs)
                 # Append to release list with release notes
                 echo "$tag_name|${jar_file}|${release_notes}" >> release_list.txt
               else
@@ -243,7 +243,8 @@ jobs:
           if [ -f release_list.txt ]; then
             while IFS='|' read -r tag jar_path release_notes; do
               echo "Creating release for $tag with artifact $jar_path"
-              full_notes="$(printf "%s\n\n_Automated release for %s_" "$release_notes" "$tag")"
+              processed_notes="$(printf "%b" "$release_notes")"
+              full_notes="$(printf "_Automated release for %s_\n\n%s" "$tag" "$processed_notes")"
               gh release create "$tag" "$jar_path" --title "$tag" --notes "$full_notes"
             done < release_list.txt
           else
@@ -289,9 +290,13 @@ jobs:
             for changed_file in $CHANGED_FILES; do
               changed_project=$(basename "$(dirname "$changed_file")")
               if [ "$changed_project" == "$project_name" ]; then
-                note=$(grep '^release-notes:' "$changed_file" | cut -d':' -f2- | xargs)
-                if [ -n "$note" ]; then
-                  release_notes_list+=("- $project_name: $note")
+                start_line=$(grep -n '^release-notes:' "$changed_file" | cut -d: -f1)
+                if [ -n "$start_line" ]; then
+                  note=$(sed -n "$((start_line+1)),$((start_line+2))p" "$changed_file" | sed '/^\s*$/d' | head -n 1 | sed 's/^[ \t]*//')
+                  if [ -n "$note" ]; then
+                    formatted_note=$(printf "%s" "$note" | sed ':a;N;$!ba;s/\n/ | /g')
+                    release_notes_list+=("- $project_name: $formatted_note")
+                  fi
                 fi
                 break
               fi
@@ -317,6 +322,7 @@ jobs:
               } > commit_msg.txt
               git commit -F commit_msg.txt
             else
+              echo "No changelog to append to commit"
               git commit -m "Update tools: auto-built JARs [${{ github.sha }}]"
             fi
       
