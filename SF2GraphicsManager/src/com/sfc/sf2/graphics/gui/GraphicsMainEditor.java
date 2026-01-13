@@ -5,6 +5,10 @@
  */
 package com.sfc.sf2.graphics.gui;
 
+import com.sfc.sf2.core.actions.ActionManager;
+import com.sfc.sf2.core.actions.ComboAction;
+import com.sfc.sf2.core.actions.SpinnerAction;
+import com.sfc.sf2.core.actions.ToggleAction;
 import com.sfc.sf2.core.settings.SettingsManager;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
@@ -229,11 +233,6 @@ public class GraphicsMainEditor extends AbstractMainEditor {
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "None", "Basic", "Stack" }));
         jComboBox1.setSelectedIndex(2);
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
-            }
-        });
 
         jLabel31.setText("Compression :");
 
@@ -1024,9 +1023,9 @@ public class GraphicsMainEditor extends AbstractMainEditor {
         jLabel7.setText("Scale :");
 
         jCheckBox1.setText("Show grid");
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
+        jCheckBox1.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jCheckBox1StateChanged(evt);
             }
         });
 
@@ -1252,16 +1251,11 @@ public class GraphicsMainEditor extends AbstractMainEditor {
     }//GEN-LAST:event_jButton40ActionPerformed
 
     private void jComboBox7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox7ActionPerformed
+        if (!ActionManager.isActionTriggering()) {
+            ActionManager.setActionWithoutExecute(new ComboAction(jComboBox7, (int)jComboBox7.getSelectedIndex(), tilesetLayoutPanel.getDisplayScale()-1));
+        }
         tilesetLayoutPanel.setDisplayScale(jComboBox7.getSelectedIndex()+1);
     }//GEN-LAST:event_jComboBox7ActionPerformed
-
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
-        tilesetLayoutPanel.setShowGrid(jCheckBox1.isSelected());
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
-
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jButton30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton30ActionPerformed
         int returnVal = jFileChooser1.showOpenDialog(this);
@@ -1365,6 +1359,9 @@ public class GraphicsMainEditor extends AbstractMainEditor {
     }//GEN-LAST:event_jButton24ActionPerformed
 
     private void jSpinner2StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner2StateChanged
+        if (!ActionManager.isActionTriggering()) {
+            ActionManager.setActionWithoutExecute(new SpinnerAction(jSpinner2, (int)jSpinner2.getValue(), tilesetLayoutPanel.getItemsPerRow()));
+        }
         tilesetLayoutPanel.setItemsPerRow((int)jSpinner2.getValue());
     }//GEN-LAST:event_jSpinner2StateChanged
 
@@ -1373,6 +1370,13 @@ public class GraphicsMainEditor extends AbstractMainEditor {
         SettingsManager.getGlobalSettings().setTransparentBGColor(colorPicker1.getColor());
         SettingsManager.saveGlobalSettingsFile();
     }//GEN-LAST:event_colorPicker1ColorChanged
+
+    private void jCheckBox1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jCheckBox1StateChanged
+        if (!ActionManager.isActionTriggering()) {
+            ActionManager.setActionWithoutExecute(new ToggleAction(jCheckBox1, jCheckBox1.isSelected()));
+        }
+        tilesetLayoutPanel.setShowGrid(jCheckBox1.isSelected());
+    }//GEN-LAST:event_jCheckBox1StateChanged
 
     /**
      * To create a new Main Editor, copy the below code

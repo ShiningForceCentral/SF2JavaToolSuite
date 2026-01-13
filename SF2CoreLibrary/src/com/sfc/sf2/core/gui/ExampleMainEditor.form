@@ -389,7 +389,7 @@
                                 <Property name="name" type="java.lang.String" value="Action test toggle" noResource="true"/>
                               </Properties>
                               <Events>
-                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBox1ActionPerformed"/>
+                                <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jCheckBox1StateChanged"/>
                               </Events>
                             </Component>
                             <Component class="javax.swing.JLabel" name="jLabel2">
@@ -526,10 +526,12 @@
                                 <TitledBorder title="String table test"/>
                               </Border>
                             </Property>
+                            <Property name="horizontalScrolling" type="boolean" value="false"/>
                             <Property name="infoMessage" type="java.lang.String" value="&lt;html&gt;This also has a help button.&lt;/html&gt;"/>
                             <Property name="model" type="com.sfc.sf2.core.models.AbstractTableModel" editor="org.netbeans.modules.form.ComponentChooserEditor">
                               <ComponentRef name="stringTableModel"/>
                             </Property>
+                            <Property name="rowBorders" type="boolean" value="false"/>
                             <Property name="singleClickText" type="boolean" value="true"/>
                             <Property name="spinnerNumberEditor" type="boolean" value="false"/>
                             <Property name="name" type="java.lang.String" value="String table test" noResource="true"/>

@@ -335,9 +335,6 @@
                                             </Property>
                                             <Property name="selectedIndex" type="int" value="2"/>
                                           </Properties>
-                                          <Events>
-                                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBox1ActionPerformed"/>
-                                          </Events>
                                           <AuxValues>
                                             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                                           </AuxValues>
@@ -1527,7 +1524,7 @@
                                 <Property name="text" type="java.lang.String" value="Show grid"/>
                               </Properties>
                               <Events>
-                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBox1ActionPerformed"/>
+                                <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jCheckBox1StateChanged"/>
                               </Events>
                             </Component>
                             <Component class="javax.swing.JSpinner" name="jSpinner2">

@@ -209,9 +209,9 @@ public final class ExampleMainEditor extends AbstractMainEditor {
 
         jCheckBox1.setText("Toggle");
         jCheckBox1.setName("Action test toggle"); // NOI18N
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
+        jCheckBox1.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jCheckBox1StateChanged(evt);
             }
         });
 
@@ -331,8 +331,10 @@ public final class ExampleMainEditor extends AbstractMainEditor {
         jScrollPane1.setViewportView(jTable1);
 
         table1.setBorder(javax.swing.BorderFactory.createTitledBorder("String table test"));
+        table1.setHorizontalScrolling(false);
         table1.setInfoMessage("<html>This also has a help button.</html>");
         table1.setModel(stringTableModel);
+        table1.setRowBorders(false);
         table1.setSingleClickText(true);
         table1.setSpinnerNumberEditor(false);
         table1.setName("String table test"); // NOI18N
@@ -524,17 +526,10 @@ public final class ExampleMainEditor extends AbstractMainEditor {
         SettingsManager.saveGlobalSettingsFile();
     }//GEN-LAST:event_colorPicker1ColorChanged
 
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
-        if (!ActionManager.isActionTriggering()) {
-            ActionManager.setAndExecuteAction(new ToggleAction(jCheckBox1, jCheckBox1.isSelected()));
-        }
-        jLabel6.setText(Boolean.toString(jCheckBox1.isSelected()));
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
-
     private void jSpinnerTestStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinnerTestStateChanged
         if (!ActionManager.isActionTriggering()) {
             int oldValue = Integer.parseInt(jLabel5.getText());
-            ActionManager.setAndExecuteAction(new SpinnerAction(jSpinner4, (int)jSpinner4.getValue(), oldValue));
+            ActionManager.setActionWithoutExecute(new SpinnerAction(jSpinner4, (int)jSpinner4.getValue(), oldValue));
         }
         jLabel5.setText(jSpinner4.getValue().toString());
     }//GEN-LAST:event_jSpinnerTestStateChanged
@@ -542,7 +537,7 @@ public final class ExampleMainEditor extends AbstractMainEditor {
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         if (!ActionManager.isActionTriggering()) {
             int oldValue = Integer.parseInt(jLabel4.getText());
-            ActionManager.setAndExecuteAction(new ComboAction(jComboBox1, jComboBox1.getSelectedIndex(), oldValue));
+            ActionManager.setActionWithoutExecute(new ComboAction(jComboBox1, jComboBox1.getSelectedIndex(), oldValue));
         }
         jLabel4.setText(Integer.toString(jComboBox1.getSelectedIndex()));
     }//GEN-LAST:event_jComboBox1ActionPerformed
@@ -550,10 +545,17 @@ public final class ExampleMainEditor extends AbstractMainEditor {
     private void multiComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_multiComboBox1ActionPerformed
         if (!ActionManager.isActionTriggering()) {
             String[] oldValue = jLabel3.getText().split(", ");
-            ActionManager.setAndExecuteAction(new MultiComboAction(multiComboBox1, multiComboBox1.getObjectsString().split(", "), oldValue));
+            ActionManager.setActionWithoutExecute(new MultiComboAction(multiComboBox1, multiComboBox1.getObjectsString().split(", "), oldValue));
         }
         jLabel3.setText(multiComboBox1.getObjectsString());
     }//GEN-LAST:event_multiComboBox1ActionPerformed
+
+    private void jCheckBox1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jCheckBox1StateChanged
+        if (!ActionManager.isActionTriggering()) {
+            ActionManager.setActionWithoutExecute(new ToggleAction(jCheckBox1, jCheckBox1.isSelected()));
+        }
+        jLabel6.setText(Boolean.toString(jCheckBox1.isSelected()));
+    }//GEN-LAST:event_jCheckBox1StateChanged
     
     /**
      * To create a new Main Editor, copy the below code
