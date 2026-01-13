@@ -49,7 +49,7 @@ public class MapAnimationMainEditor extends AbstractMainEditor {
         jComboBox4.setSelectedIndex(mapLayoutSettings.getTilesetScale()-1);
         
         mapAnimationLayoutPanel.setShowGrid(jCheckBox5.isSelected());
-        mapAnimationLayoutPanel.setDisplayScale(jComboBox9.getSelectedIndex()+1);
+        mapAnimationLayoutPanel.setRenderScaleIndex(jComboBox9.getSelectedIndex());
         mapAnimationLayoutPanel.setBGColor(colorPicker1.getColor());
         mapAnimationLayoutPanel.setShowPriority(jCheckBox6.isSelected());
         mapAnimationLayoutPanel.setShowExplorationFlags(jCheckBox3.isSelected());
@@ -57,12 +57,12 @@ public class MapAnimationMainEditor extends AbstractMainEditor {
         
         tilesetLayoutPanelAnim.setBGColor(colorPickerTileset.getColor());
         tilesetLayoutPanelAnim.setShowGrid(jCheckBox2.isSelected());
-        tilesetLayoutPanelAnim.setDisplayScale(jComboBox4.getSelectedIndex()+1);
+        tilesetLayoutPanelAnim.setRenderScaleIndex(jComboBox4.getSelectedIndex());
         tilesetLayoutPanelAnim.setItemsPerRow((int)jSpinner6.getValue());
         tilesetLayoutPanelAnim.setShowAnimationFrames(jCheckBox7.isSelected());
         tilesetLayoutPanelModified.setBGColor(colorPickerTileset.getColor());
         tilesetLayoutPanelModified.setShowGrid(jCheckBox2.isSelected());
-        tilesetLayoutPanelModified.setDisplayScale(jComboBox4.getSelectedIndex()+1);
+        tilesetLayoutPanelModified.setRenderScaleIndex(jComboBox4.getSelectedIndex());
         tilesetLayoutPanelModified.setItemsPerRow((int)jSpinner6.getValue());
         tilesetLayoutPanelModified.setShowAnimationFrames(jCheckBox7.isSelected());
         
@@ -1240,7 +1240,7 @@ public class MapAnimationMainEditor extends AbstractMainEditor {
     }//GEN-LAST:event_jSpinner2StateChanged
 
     private void jComboBox9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox9ActionPerformed
-        mapAnimationLayoutPanel.setDisplayScale(jComboBox9.getSelectedIndex()+1);
+        mapAnimationLayoutPanel.setRenderScaleIndex(jComboBox9.getSelectedIndex());
         mapLayoutSettings.setTilesetScale(jComboBox9.getSelectedIndex()+1);
         SettingsManager.saveSettingsFile();
     }//GEN-LAST:event_jComboBox9ActionPerformed
@@ -1269,10 +1269,10 @@ public class MapAnimationMainEditor extends AbstractMainEditor {
 
     private void jComboBox4ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox4ItemStateChanged
         if (jComboBox4.getSelectedIndex() >= 0 && tilesetLayoutPanelModified != null) {
-            int scale = (int)jComboBox4.getSelectedIndex()+1;
+            int scale = (int)jComboBox4.getSelectedIndex();
             if (scale != mapLayoutSettings.getTilesetScale()) {
-                tilesetLayoutPanelAnim.setDisplayScale(scale);
-                tilesetLayoutPanelModified.setDisplayScale(scale);
+                tilesetLayoutPanelAnim.setRenderScaleIndex(scale);
+                tilesetLayoutPanelModified.setRenderScaleIndex(scale);
                 mapLayoutSettings.setTilesetScale(scale);
                 SettingsManager.saveSettingsFile();
             }

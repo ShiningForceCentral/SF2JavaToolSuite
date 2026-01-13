@@ -13,6 +13,7 @@ import com.sfc.sf2.core.models.combobox.ComboBoxTableRenderer;
 import com.sfc.sf2.core.settings.SettingsManager;
 import com.sfc.sf2.graphics.Tileset;
 import com.sfc.sf2.helpers.PathHelpers;
+import com.sfc.sf2.helpers.RenderScaleHelpers;
 import com.sfc.sf2.map.Map;
 import com.sfc.sf2.map.MapArea;
 import com.sfc.sf2.map.MapCopyEvent;
@@ -32,6 +33,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.nio.file.Path;
 import java.util.logging.Level;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JCheckBox;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -64,6 +66,11 @@ public class MapEditorMainEditor extends AbstractMainEditor {
     protected void initEditor() {
         super.initEditor();
         
+        jComboBox3.setModel(new DefaultComboBoxModel<>(RenderScaleHelpers.RENDER_SCALE_STRINGS));
+        jComboBox3.setSelectedIndex(RenderScaleHelpers.DEFAULT_RENDER_SCALE);
+        jComboBox9.setModel(new DefaultComboBoxModel<>(RenderScaleHelpers.RENDER_SCALE_STRINGS));
+        jComboBox9.setSelectedIndex(RenderScaleHelpers.DEFAULT_RENDER_SCALE);
+        
         accordionPanel1.setExpanded(false);
         accordionPanel2.setExpanded(false);
         
@@ -77,7 +84,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
         
         //Map editing
         mapLayoutPanel.setShowGrid(jCheckBox10.isSelected());
-        mapLayoutPanel.setDisplayScale(jComboBox9.getSelectedIndex()+1);
+        mapLayoutPanel.setRenderScaleIndex(jComboBox9.getSelectedIndex());
         mapLayoutPanel.setBGColor(colorPicker1.getColor());
         mapLayoutPanel.setShowPriority(jCheckBox13.isSelected());
         mapLayoutPanel.setShowExplorationFlags(jCheckBox11.isSelected());
@@ -94,7 +101,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
         
         //Blockset panel
         mapBlocksetLayoutPanel.setShowGrid(jCheckBox3.isSelected());
-        mapBlocksetLayoutPanel.setDisplayScale(jComboBox3.getSelectedIndex()+1);
+        mapBlocksetLayoutPanel.setRenderScaleIndex(jComboBox3.getSelectedIndex());
         mapBlocksetLayoutPanel.setBGColor(colorPickerBlockset.getColor());
         mapBlocksetLayoutPanel.setShowPriority(jCheckBox5.isSelected());
         mapBlocksetLayoutPanel.setItemsPerRow((int)jSpinner7.getValue());
@@ -112,7 +119,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
         //Tilesets editing
         tilesetsLayoutPanel.setBGColor(colorPickerTilesetAnim.getColor());
         tilesetsLayoutPanel.setShowGrid(jCheckBox23.isSelected());
-        tilesetsLayoutPanel.setDisplayScale(jComboBox5.getSelectedIndex()+1);
+        tilesetsLayoutPanel.setRenderScaleIndex(jComboBox5.getSelectedIndex());
         
         editableBlockSlotPanel.setShowGrid(jCheckBox24.isSelected());
         editableBlockSlotPanel.setBGColor(colorPickerBlocks.getColor());
@@ -129,12 +136,12 @@ public class MapEditorMainEditor extends AbstractMainEditor {
         //Animation
         tilesetLayoutPanelAnim.setBGColor(colorPickerTilesetAnim.getColor());
         tilesetLayoutPanelAnim.setShowGrid(jCheckBox2.isSelected());
-        tilesetLayoutPanelAnim.setDisplayScale(jComboBox4.getSelectedIndex()+1);
+        tilesetLayoutPanelAnim.setRenderScaleIndex(jComboBox4.getSelectedIndex());
         tilesetLayoutPanelAnim.setItemsPerRow((int)jSpinner6.getValue());
         tilesetLayoutPanelAnim.setShowAnimationFrames(jCheckBox7.isSelected());
         tilesetLayoutPanelModified.setBGColor(colorPickerTilesetAnim.getColor());
         tilesetLayoutPanelModified.setShowGrid(jCheckBox2.isSelected());
-        tilesetLayoutPanelModified.setDisplayScale(jComboBox4.getSelectedIndex()+1);
+        tilesetLayoutPanelModified.setRenderScaleIndex(jComboBox4.getSelectedIndex());
         tilesetLayoutPanelModified.setItemsPerRow((int)jSpinner6.getValue());
         tilesetLayoutPanelModified.setShowAnimationFrames(jCheckBox7.isSelected());
         
@@ -3437,8 +3444,8 @@ public class MapEditorMainEditor extends AbstractMainEditor {
     }//GEN-LAST:event_jButton5ActionPerformed
 	
     private void jComboBox9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox9ActionPerformed
-        mapLayoutPanel.setDisplayScale(jComboBox9.getSelectedIndex()+1);
-        mapLayoutSettings.setTilesetScale(jComboBox9.getSelectedIndex()+1);
+        mapLayoutPanel.setRenderScaleIndex(jComboBox9.getSelectedIndex());
+        mapLayoutSettings.setTilesetScale(jComboBox9.getSelectedIndex());
         SettingsManager.saveSettingsFile();
     }//GEN-LAST:event_jComboBox9ActionPerformed
 
@@ -3597,7 +3604,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
         if (jComboBox5.getSelectedIndex() < 0) return;
         int scale = (int)jComboBox5.getSelectedIndex()+1;
         if (scale != mapLayoutSettings.getTilesetScale()) {
-            tilesetsLayoutPanel.setDisplayScale(scale);
+            tilesetsLayoutPanel.setRenderScaleIndex(scale);
             mapLayoutSettings.setTilesetScale(scale);
             SettingsManager.saveSettingsFile();
         }
@@ -3759,8 +3766,8 @@ public class MapEditorMainEditor extends AbstractMainEditor {
         if (jComboBox4.getSelectedIndex() >= 0 && tilesetLayoutPanelModified != null) {
             int scale = (int)jComboBox4.getSelectedIndex()+1;
             if (scale != mapLayoutSettings.getTilesetScale()) {
-                tilesetLayoutPanelAnim.setDisplayScale(scale);
-                tilesetLayoutPanelModified.setDisplayScale(scale);
+                tilesetLayoutPanelAnim.setRenderScaleIndex(scale);
+                tilesetLayoutPanelModified.setRenderScaleIndex(scale);
                 mapLayoutSettings.setTilesetScale(scale);
                 SettingsManager.saveSettingsFile();
             }
@@ -3864,7 +3871,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
         if (jComboBox3.getSelectedIndex() >= 0 && mapBlocksetLayoutPanel != null) {
             int scale = (int)jComboBox3.getSelectedIndex()+1;
             if (scale != mapLayoutSettings.getBlocksetScale()) {
-                mapBlocksetLayoutPanel.setDisplayScale(scale);
+                mapBlocksetLayoutPanel.setRenderScaleIndex(scale);
                 mapLayoutSettings.setBlocksetScale(scale);
                 SettingsManager.saveSettingsFile();
             }

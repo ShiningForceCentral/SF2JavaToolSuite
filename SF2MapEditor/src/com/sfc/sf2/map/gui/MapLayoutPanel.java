@@ -119,7 +119,7 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
         drawHandleNode(g);
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
         Dimension offset = getImageOffset();
-        g2.drawImage(previewImage, offset.width+(copiedBlocksDrawX*PIXEL_WIDTH)*getDisplayScale(), offset.height+(copiedBlocksDrawY*PIXEL_HEIGHT)*getDisplayScale(), null);
+        g2.drawImage(previewImage, (int)(offset.width+(copiedBlocksDrawX*PIXEL_WIDTH)*getRenderScale()), (int)(offset.height+(copiedBlocksDrawY*PIXEL_HEIGHT)*getRenderScale()), null);
     }
 
     @Override
@@ -310,7 +310,7 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
                 return;
         }
         Dimension imageOffset = getImageOffset();
-        int scale = getDisplayScale();
+        float scale = getRenderScale();
         x = x*PIXEL_WIDTH+offsetX;
         y = y*PIXEL_HEIGHT+offsetY;
         if (atEdge) {
@@ -321,11 +321,11 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
             y += 6;
         }
         graphics.setColor(Color.CYAN);
-        graphics.fillArc(x*scale + imageOffset.width, y*scale + imageOffset.height, 12*scale, 12*scale, 0, 360);
+        graphics.fillArc((int)(x*scale + imageOffset.width), (int)(y*scale + imageOffset.height), (int)(12*scale), (int)(12*scale), 0, 360);
         x += 2;
         y += 2;
         graphics.setColor(Color.BLUE);
-        graphics.fillArc(x*scale + imageOffset.width, y*scale + imageOffset.height, 8*scale, 8*scale, 0, 360);
+        graphics.fillArc((int)(x*scale + imageOffset.width), (int)(y*scale + imageOffset.height), (int)(8*scale), (int)(8*scale), 0, 360);
     }
     
     private void buildPreviewImage() {
@@ -779,8 +779,8 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
         switch (selectedTabsDrawMode) {
             case DRAW_MODE_AREAS:
                 MapArea area = map.getAreas()[selectedItemIndex];
-                x = area.getLayer1StartX()+10/getDisplayScale();
-                y = area.getLayer1StartY()+10/getDisplayScale();
+                x = (int)(area.getLayer1StartX()+10/getRenderScale());
+                y = (int)(area.getLayer1StartY()+10/getRenderScale());
                 break;
             case DRAW_MODE_FLAG_COPIES:
                 MapCopyEvent flagCopy = map.getFlagCopies()[selectedItemIndex];

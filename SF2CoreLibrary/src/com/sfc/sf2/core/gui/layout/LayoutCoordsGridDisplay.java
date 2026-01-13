@@ -59,24 +59,24 @@ public class LayoutCoordsGridDisplay extends BaseLayoutComponent {
         this.fontIncrease = fontIncrease;
     }
     
-    public Dimension getOffset(int displayScale) {
-        int h = topSize <= 0 ? 0 : topPadding+PADDING_TOP+displayScale*PADDING_SCALE;
-        int w = leftSize <= 0 ? 0 : leftPadding+PADDING_LEFT+displayScale*PADDING_SCALE;
+    public Dimension getOffset(float displayScale) {
+        int h = topSize <= 0 ? 0 : (int)(topPadding+PADDING_TOP+displayScale*PADDING_SCALE);
+        int w = leftSize <= 0 ? 0 : (int)(leftPadding+PADDING_LEFT+displayScale*PADDING_SCALE);
         return new Dimension(w, h);
     }
     
-    public void paintCoordsImage(Graphics graphics, int displayScale) {
+    public void paintCoordsImage(Graphics graphics, float displayScale) {
         if (topSize > 0) {
-            int padding = leftSize <= 0 ? 0 : leftPadding+PADDING_LEFT+PADDING_SCALE*displayScale;
+            int padding = (int)(leftSize <= 0 ? 0 : leftPadding+PADDING_LEFT+PADDING_SCALE*displayScale);
             graphics.drawImage(coordsImageTop, padding, 0, null);
         }
         if (leftSize > 0) {
-            int padding = topSize <= 0 ? 0 : topPadding+PADDING_LEFT+PADDING_SCALE*displayScale;
+            int padding = (int)(topSize <= 0 ? 0 : topPadding+PADDING_LEFT+PADDING_SCALE*displayScale);
             graphics.drawImage(coordsImageLeft, 0, padding, null);
         }
     }
     
-    public void buildCoordsImage(Dimension displayArea, int displayScale) {
+    public void buildCoordsImage(Dimension displayArea, float displayScale) {
         if (topSize > 0) {
             coordsImageTop = paintCoordsAxis(true, displayArea.width, topSize, displayScale, fontIncrease, 1);
         }
@@ -86,13 +86,13 @@ public class LayoutCoordsGridDisplay extends BaseLayoutComponent {
         }
     }
     
-    private BufferedImage paintCoordsAxis(boolean topCoords, int imageSize, int coordsSize, int displayScale, int fontIncrease, int numberScale) {
+    private BufferedImage paintCoordsAxis(boolean topCoords, int imageSize, int coordsSize, float displayScale, int fontIncrease, int numberScale) {
         imageSize *= displayScale;
         coordsSize *= displayScale;
-        int padding = (topCoords ? PADDING_TOP+topPadding : PADDING_LEFT+leftPadding) + PADDING_SCALE*displayScale;
+        int padding = (int)((topCoords ? PADDING_TOP+topPadding : PADDING_LEFT+leftPadding) + PADDING_SCALE*displayScale);
         BufferedImage image = new BufferedImage(topCoords ? imageSize : padding, topCoords ? padding : imageSize, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = (Graphics2D)image.getGraphics();
-        int fontSize = 4+2*displayScale+2*fontIncrease;
+        int fontSize = (int)(4+2*displayScale+2*fontIncrease);
         g2.setFont(new Font(Font.DIALOG, Font.BOLD, fontSize));
         FontMetrics fontMetrics = g2.getFontMetrics();
         g2.setColor(SettingsManager.getGlobalSettings().getIsDarkTheme() ? Color.WHITE : Color.BLACK);

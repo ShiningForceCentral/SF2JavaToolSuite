@@ -9,6 +9,7 @@ import com.sfc.sf2.core.settings.SettingsManager;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.helpers.PathHelpers;
+import com.sfc.sf2.helpers.RenderScaleHelpers;
 import com.sfc.sf2.palette.Palette;
 import com.sfc.sf2.portrait.Portrait;
 import com.sfc.sf2.portrait.PortraitManager;
@@ -17,6 +18,7 @@ import com.sfc.sf2.portrait.settings.PortraitSettings;
 import java.awt.event.ActionEvent;
 import java.util.logging.Level;
 import java.nio.file.Path;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.TableColumnModel;
@@ -46,8 +48,11 @@ public class PortraitMainEditor extends AbstractMainEditor {
     protected void initEditor() {
         super.initEditor();
         
+        jComboBox1.setModel(new DefaultComboBoxModel<>(RenderScaleHelpers.RENDER_SCALE_STRINGS));
+        jComboBox1.setSelectedIndex(RenderScaleHelpers.DEFAULT_RENDER_SCALE);
+        
         portraitLayoutPanel.setShowGrid(jCheckBox3.isSelected());                                           
-        portraitLayoutPanel.setDisplayScale(jComboBox1.getSelectedIndex()+1);
+        portraitLayoutPanel.setRenderScaleIndex(jComboBox1.getSelectedIndex());
         colorPicker1.setColor(SettingsManager.getGlobalSettings().getTransparentBGColor());
         portraitLayoutPanel.setBGColor(colorPicker1.getBackground());
         
@@ -64,7 +69,7 @@ public class PortraitMainEditor extends AbstractMainEditor {
         columns = tableMouth.jTable.getColumnModel();
         columns.getColumn(0).setMaxWidth(40);
         
-        jComboBox1.setSelectedIndex(portraitSettings.getZoom()-1);
+        jComboBox1.setSelectedIndex(portraitSettings.getZoom());
         
         paletteButton1.setupPaletteButton(() -> {
             Portrait portrait = portraitLayoutPanel.getPortrait();
@@ -83,7 +88,7 @@ public class PortraitMainEditor extends AbstractMainEditor {
         portraitLayoutPanel.setEyeAnimTable(eyeTable);
         portraitLayoutPanel.setMouthAnimTable(mouthTable);
         portraitLayoutPanel.setShowGrid(jCheckBox3.isSelected());
-        portraitLayoutPanel.setDisplayScale(jComboBox1.getSelectedIndex()+1);
+        portraitLayoutPanel.setRenderScaleIndex(jComboBox1.getSelectedIndex());
         
         Portrait portrait = portraitManager.getPortrait();
         if (portrait != null) {
@@ -708,9 +713,9 @@ public class PortraitMainEditor extends AbstractMainEditor {
     }//GEN-LAST:event_jButton18ActionPerformed
     
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        if (portraitLayoutPanel != null && portraitSettings.getZoom() != jComboBox1.getSelectedIndex()+1) {
-            portraitLayoutPanel.setDisplayScale(jComboBox1.getSelectedIndex()+1);
-            portraitSettings.setZoom(jComboBox1.getSelectedIndex()+1);
+        if (portraitLayoutPanel != null && portraitSettings.getZoom() != jComboBox1.getSelectedIndex()) {
+            portraitLayoutPanel.setRenderScaleIndex(jComboBox1.getSelectedIndex());
+            portraitSettings.setZoom(jComboBox1.getSelectedIndex());
             SettingsManager.saveSettingsFile();
         }
     }//GEN-LAST:event_jComboBox1ActionPerformed
