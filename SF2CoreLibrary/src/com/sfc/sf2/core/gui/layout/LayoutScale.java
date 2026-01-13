@@ -5,6 +5,7 @@
  */
 package com.sfc.sf2.core.gui.layout;
 
+import com.sfc.sf2.helpers.RenderScaleHelpers;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -15,27 +16,47 @@ import java.awt.image.BufferedImage;
  */
 public class LayoutScale extends BaseLayoutComponent {
     
-    private int displayScale = 1;
+    private int renderScaleIndex = RenderScaleHelpers.DEFAULT_RENDER_SCALE;
+    private float renderScale = 1f;
     
-    public LayoutScale(int displayScale) {
-        this.displayScale = displayScale;
+    public LayoutScale(int renderScale) {
+        this.renderScaleIndex = renderScale;
     }
 
-    public int getScale() {
-        return displayScale;
+    public float getScale() {
+        return renderScale;
     }
 
-    public void setScale(int scale) {
-        this.displayScale = scale;
+    public int getScaleIndex() {
+        return renderScaleIndex;
+    }
+
+    public void setScale(int renderScaleIndex) {
+        this.renderScaleIndex = renderScaleIndex;
+        this.renderScale = RenderScaleHelpers.indexToRenderScale(renderScaleIndex);;
     }
     
     public BufferedImage resizeImage(BufferedImage image) {
-        if (displayScale <= 1) return image;
-        BufferedImage newImage = new BufferedImage(image.getWidth(null)*displayScale, image.getHeight(null)*displayScale, BufferedImage.TYPE_INT_ARGB);
-        Graphics g = newImage.getGraphics();
-        g.drawImage(image, 0, 0, image.getWidth(null)*displayScale, image.getHeight(null)*displayScale, null);
-        g.dispose();
-        image.flush();
-        return newImage;
+        if (renderScaleIndex == RenderScaleHelpers.DEFAULT_RENDER_SCALE) {
+            //Scale = 1 so do nothing
+            return image;
+        } else if (renderScaleIndex < RenderScaleHelpers.DEFAULT_RENDER_SCALE) {
+            //Scale is a fraction
+            int scaleX = (int)(image.getWidth()*renderScale);
+            int scaleY = (int)(image.getHeight()*renderScale);
+            Image temp = image.getScaledInstance(scaleX, scaleY, Image.SCALE_SMOOTH);
+            image = new BufferedImage(scaleX, scaleY, BufferedImage.TYPE_INT_ARGB);
+            image.getGraphics().drawImage(temp, 0, 0 , null);
+            return image;
+        } else {
+            int scale = (int)renderScale;
+            //Scale is integer multiple
+            BufferedImage newImage = new BufferedImage(image.getWidth(null)*scale, image.getHeight(null)*scale, BufferedImage.TYPE_INT_ARGB);
+            Graphics g = newImage.getGraphics();
+            g.drawImage(image, 0, 0, image.getWidth(null)*scale, image.getHeight(null)*scale, null);
+            g.dispose();
+            image.flush();
+            return newImage;
+        }
     }
 }

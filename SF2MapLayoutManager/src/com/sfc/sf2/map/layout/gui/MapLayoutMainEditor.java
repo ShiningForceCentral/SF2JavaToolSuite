@@ -39,14 +39,14 @@ public class MapLayoutMainEditor extends AbstractMainEditor {
         jComboBox7.setSelectedIndex(mapLayoutSettings.getBlocksetScale()-1);
         
         mapLayoutPanel.setShowGrid(jCheckBox5.isSelected());
-        mapLayoutPanel.setDisplayScale(jComboBox9.getSelectedIndex()+1);
+        mapLayoutPanel.setRenderScaleIndex(jComboBox9.getSelectedIndex()+1);
         mapLayoutPanel.setBGColor(colorPicker2.getColor());
         mapLayoutPanel.setShowPriority(jCheckBox4.isSelected());
         mapLayoutPanel.setShowExplorationFlags(jCheckBox1.isSelected());
         mapLayoutPanel.setShowInteractionFlags(jCheckBox2.isSelected());
         
         mapBlocksetPanel.setShowGrid(jCheckBox3.isSelected());
-        mapBlocksetPanel.setDisplayScale(jComboBox7.getSelectedIndex()+1);
+        mapBlocksetPanel.setRenderScaleIndex(jComboBox7.getSelectedIndex()+1);
         mapBlocksetPanel.setBGColor(colorPicker1.getColor());
         mapBlocksetPanel.setItemsPerRow(((int)jSpinner2.getModel().getValue()));
         mapBlocksetPanel.setShowPriority(jCheckBox6.isSelected());
@@ -1123,7 +1123,7 @@ public class MapLayoutMainEditor extends AbstractMainEditor {
     }//GEN-LAST:event_jButton18ActionPerformed
 
     private void jComboBox7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox7ActionPerformed
-        mapBlocksetPanel.setDisplayScale(jComboBox7.getSelectedIndex()+1);
+        mapBlocksetPanel.setRenderScaleIndex(jComboBox7.getSelectedIndex()+1);
         mapLayoutSettings.setBlocksetScale(jComboBox7.getSelectedIndex()+1);
         SettingsManager.saveSettingsFile();
     }//GEN-LAST:event_jComboBox7ActionPerformed
@@ -1143,7 +1143,7 @@ public class MapLayoutMainEditor extends AbstractMainEditor {
     }//GEN-LAST:event_colorPicker1ColorChanged
 
     private void jComboBox9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox9ActionPerformed
-        mapLayoutPanel.setDisplayScale(jComboBox9.getSelectedIndex()+1);
+        mapLayoutPanel.setRenderScaleIndex(jComboBox9.getSelectedIndex()+1);
         mapLayoutSettings.setTilesetScale(jComboBox9.getSelectedIndex()+1);
         SettingsManager.saveSettingsFile();
     }//GEN-LAST:event_jComboBox9ActionPerformed

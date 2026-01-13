@@ -49,7 +49,7 @@ public class EditableBlockSlotPanel extends BlockSlotPanel {
         super();
         grid = new LayoutGrid(PIXEL_WIDTH, PIXEL_HEIGHT);
         mouseInput = new LayoutMouseInput(this, this::onMouseButtonInput, PIXEL_WIDTH, PIXEL_HEIGHT);
-        setDisplayScale(4);
+        setRenderScaleIndex(4);
     }
     
     @Override

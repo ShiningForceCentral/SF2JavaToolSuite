@@ -16,9 +16,11 @@ import com.sfc.sf2.graphics.TilesetManager;
 import com.sfc.sf2.graphics.Tileset;
 import com.sfc.sf2.graphics.io.TilesetDisassemblyProcessor.TilesetCompression;
 import com.sfc.sf2.helpers.PathHelpers;
+import com.sfc.sf2.helpers.RenderScaleHelpers;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.logging.Level;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
 import jdk.jshell.spi.ExecutionControl;
 
@@ -40,8 +42,11 @@ public class GraphicsMainEditor extends AbstractMainEditor {
     protected void initEditor() {
         super.initEditor();
         
+        jComboBox7.setModel(new DefaultComboBoxModel<>(RenderScaleHelpers.RENDER_SCALE_STRINGS));
+        jComboBox7.setSelectedIndex(RenderScaleHelpers.DEFAULT_RENDER_SCALE);
+        
+        tilesetLayoutPanel.setRenderScaleIndex(jComboBox7.getSelectedIndex());
         tilesetLayoutPanel.setShowGrid(jCheckBox1.isSelected());
-        tilesetLayoutPanel.setDisplayScale(jComboBox7.getSelectedIndex()+1);
         colorPicker1.setColor(SettingsManager.getGlobalSettings().getTransparentBGColor());
         tilesetLayoutPanel.setBGColor(colorPicker1.getBackground());
     }
@@ -1013,7 +1018,7 @@ public class GraphicsMainEditor extends AbstractMainEditor {
 
         jPanel20.setBorder(javax.swing.BorderFactory.createTitledBorder("View"));
 
-        jComboBox7.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "x1", "x2", "x3", "x4" }));
+        jComboBox7.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "10x" }));
         jComboBox7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox7ActionPerformed(evt);
@@ -1070,13 +1075,13 @@ public class GraphicsMainEditor extends AbstractMainEditor {
                 .addComponent(jLabel55)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(colorPicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
                 .addComponent(jCheckBox1)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jComboBox7, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel20Layout.setVerticalGroup(
             jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1129,7 +1134,7 @@ public class GraphicsMainEditor extends AbstractMainEditor {
         jPanel13.setLayout(jPanel13Layout);
         jPanel13Layout.setHorizontalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1030, Short.MAX_VALUE)
+            .addComponent(jSplitPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         jPanel13Layout.setVerticalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1252,9 +1257,9 @@ public class GraphicsMainEditor extends AbstractMainEditor {
 
     private void jComboBox7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox7ActionPerformed
         if (!ActionManager.isActionTriggering()) {
-            ActionManager.setActionWithoutExecute(new ComboAction(jComboBox7, (int)jComboBox7.getSelectedIndex(), tilesetLayoutPanel.getDisplayScale()-1));
+            ActionManager.setActionWithoutExecute(new ComboAction(jComboBox7, (int)jComboBox7.getSelectedIndex(), tilesetLayoutPanel.getRenderScaleIndex()));
         }
-        tilesetLayoutPanel.setDisplayScale(jComboBox7.getSelectedIndex()+1);
+        tilesetLayoutPanel.setRenderScaleIndex(jComboBox7.getSelectedIndex());
     }//GEN-LAST:event_jComboBox7ActionPerformed
 
     private void jButton30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton30ActionPerformed

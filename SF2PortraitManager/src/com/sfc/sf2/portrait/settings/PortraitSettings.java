@@ -6,6 +6,7 @@
 package com.sfc.sf2.portrait.settings;
 
 import com.sfc.sf2.core.settings.AbstractSettings;
+import com.sfc.sf2.helpers.RenderScaleHelpers;
 import java.util.HashMap;
 
 /**
@@ -26,19 +27,19 @@ public class PortraitSettings implements AbstractSettings {
     
     @Override
     public void initialiseNewUser() {
-        zoom = 2;
+        zoom = RenderScaleHelpers.DEFAULT_RENDER_SCALE;
     }
 
     @Override
     public void decodeSettings(HashMap<String, String> data) {
         if (data.containsKey("zoom")) {
-            zoom = Integer.parseInt(data.get("zoom"));
+            zoom = RenderScaleHelpers.stringToIndex(data.get("zoom"));
         }
     }
 
     @Override
     public void encodeSettings(HashMap<String, String> data) {
-        data.put("zoom", Integer.toString(zoom));
+        data.put("zoom", RenderScaleHelpers.indexToRenderScale(zoom));
     }
     
 }

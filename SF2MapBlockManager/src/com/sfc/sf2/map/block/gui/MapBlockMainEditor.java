@@ -49,14 +49,14 @@ public class MapBlockMainEditor extends AbstractMainEditor {
         colorPickerBlocks.setColor(mapBlockSettings.getBlockBGColor());
         
         mapBlocksetLayoutPanel.setShowGrid(jCheckBox1.isSelected());
-        mapBlocksetLayoutPanel.setDisplayScale(jComboBox1.getSelectedIndex()+1);
+        mapBlocksetLayoutPanel.setRenderScaleIndex(jComboBox1.getSelectedIndex()+1);
         mapBlocksetLayoutPanel.setBGColor(colorPickerBlockset.getColor());
         mapBlocksetLayoutPanel.setItemsPerRow((int)jSpinner1.getValue());
         mapBlocksetLayoutPanel.setShowPriority(jCheckBox4.isSelected());
         
         tilesetsLayoutPanel.setBGColor(colorPickerTileset.getColor());
         tilesetsLayoutPanel.setShowGrid(jCheckBox2.isSelected());
-        tilesetsLayoutPanel.setDisplayScale(jComboBox4.getSelectedIndex()+1);
+        tilesetsLayoutPanel.setRenderScaleIndex(jComboBox4.getSelectedIndex()+1);
         
         editableBlockSlotPanel.setShowGrid(jCheckBox5.isSelected());
         editableBlockSlotPanel.setBGColor(colorPickerBlocks.getColor());
@@ -1392,7 +1392,7 @@ public class MapBlockMainEditor extends AbstractMainEditor {
         if (jComboBox4.getSelectedIndex() >= 0 && tilesetsLayoutPanel != null) {
             int scale = (int)jComboBox4.getSelectedIndex()+1;
             if (scale != mapBlockSettings.getTilesetScale()) {
-                tilesetsLayoutPanel.setDisplayScale(scale);
+                tilesetsLayoutPanel.setRenderScaleIndex(scale);
                 mapBlockSettings.setTilesetScale(scale);
                 SettingsManager.saveSettingsFile();
             }
@@ -1403,7 +1403,7 @@ public class MapBlockMainEditor extends AbstractMainEditor {
         if (jComboBox1.getSelectedIndex() >= 0 && mapBlocksetLayoutPanel != null) {
             int scale = (int)jComboBox1.getSelectedIndex()+1;
             if (scale != mapBlockSettings.getBlocksetScale()) {
-                mapBlocksetLayoutPanel.setDisplayScale(scale);
+                mapBlocksetLayoutPanel.setRenderScaleIndex(scale);
                 mapBlockSettings.setBlocksetScale(scale);
                 SettingsManager.saveSettingsFile();
             }

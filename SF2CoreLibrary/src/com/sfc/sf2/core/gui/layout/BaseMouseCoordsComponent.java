@@ -29,7 +29,7 @@ public abstract class BaseMouseCoordsComponent extends BaseLayoutComponent imple
     
     private Dimension bounds = NO_OFFSET;
     private Dimension coordsOffset = NO_OFFSET;
-    private int displayScale = 1;
+    private float displayScale = 1;
     
     private int lastX = -1;
     private int lastY = -1;
@@ -64,7 +64,7 @@ public abstract class BaseMouseCoordsComponent extends BaseLayoutComponent imple
         this.motionListener = motionListener;
     }
     
-    public void updateDisplayParameters(int displayScale, Dimension bounds, Dimension coordsOffset) {
+    public void updateDisplayParameters(float displayScale, Dimension bounds, Dimension coordsOffset) {
         this.bounds = bounds;
         this.displayScale = displayScale;
         this.coordsOffset = coordsOffset;

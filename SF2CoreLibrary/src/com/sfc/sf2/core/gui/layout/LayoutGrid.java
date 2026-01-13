@@ -38,12 +38,12 @@ public class LayoutGrid extends BaseLayoutComponent {
         this.thickGridHeight = thickGridHeight;
     }
     
-    public void paintGrid(BufferedImage image, int displayScale) {
+    public void paintGrid(BufferedImage image, float displayScale) {
         if (gridWidth >= 0 || gridHeight >= 0) {
-            GraphicsHelpers.drawGrid(image, gridWidth*displayScale, gridHeight*displayScale, 1);
+            GraphicsHelpers.drawGrid(image, (int)(gridWidth*displayScale), (int)(gridHeight*displayScale), 1);
         }
         if (thickGridWidth >= 0 || thickGridHeight >= 0) {
-            GraphicsHelpers.drawGrid(image, thickGridWidth*displayScale, thickGridHeight*displayScale, 3);
+            GraphicsHelpers.drawGrid(image, (int)(thickGridWidth*displayScale), (int)(thickGridHeight*displayScale), 3);
         }
     }
 }
