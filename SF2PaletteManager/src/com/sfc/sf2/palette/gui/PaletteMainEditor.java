@@ -39,16 +39,11 @@ public class PaletteMainEditor extends AbstractMainEditor {
     @Override
     protected void onDataLoaded() {
         super.onDataLoaded();
-        if (!ActionManager.isActionTriggering()) {
-            ActionManager.setActionWithoutExecute(new Action<Palette>(this, "Palette Loaded", this::actionPaletteLoaded, paletteManager.getPalette(), palettePane1.getPalette()));
-        }
-        
-        palettePane1.setPalette(paletteManager.getPalette());
+        ActionManager.setAndExecuteAction(new Action<Palette>(this, "Palette Loaded", this::actionPaletteLoaded, paletteManager.getPalette(), palettePane1.getPalette()));
     }
     
     private void actionPaletteLoaded(Palette palette) {
-        paletteManager.setPalette(palette);
-        onDataLoaded();
+        palettePane1.setPalette(paletteManager.getPalette());
     }
 
     /**

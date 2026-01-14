@@ -29,4 +29,14 @@ public class ComboAction extends Action<Integer> {
     public void undo() {
         comboBox.setSelectedIndex(oldValue);
     }
+
+    @Override
+    protected String dataToString(Integer data) {
+        Object dataObj = comboBox.getModel().getElementAt(data);
+        if (dataObj == null) {
+            return super.dataToString(data);
+        } else {
+            return dataObj.toString();
+        }
+    }
 }

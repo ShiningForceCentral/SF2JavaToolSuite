@@ -92,6 +92,10 @@ public class Action<T extends Object> implements IAction {
                INameable nameable = (INameable)data;
                return nameable.getName();
         }
-        return data.toString();
+        String s = data.toString();
+        if (s.charAt(0) == '[') {
+            s = s.substring(s.lastIndexOf('.')+1);
+        }
+        return s;
     }
 }

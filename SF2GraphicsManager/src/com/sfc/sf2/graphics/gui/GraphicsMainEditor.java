@@ -43,20 +43,14 @@ public class GraphicsMainEditor extends AbstractMainEditor {
     @Override
     protected void onDataLoaded() {
         super.onDataLoaded();
-        if (!ActionManager.isActionTriggering()) {
-            ActionManager.setActionWithoutExecute(new Action<Tileset>(this, "Graphic Loaded", this::actionTilesetLoaded, tilesetManager.getTileset(), tilesetLayoutPanel.getTileset()));
-        }
-        
-        Tileset tileset = tilesetManager.getTileset();
+        ActionManager.setAndExecuteAction(new Action<Tileset>(this, "Graphic Loaded", this::actionTilesetLoaded, tilesetManager.getTileset(), tilesetLayoutPanel.getTileset()));
+    }
+    
+    private void actionTilesetLoaded(Tileset tileset) {
         tilesetLayoutPanel.setTileset(tileset);
         if (tileset != null) {
             tilesetLayoutPanel.setItemsPerRow((int)viewPanel1.getItemsPerRowSpinner().getValue());
         }
-    }
-    
-    private void actionTilesetLoaded(Tileset tileset) {
-        tilesetManager.setTileset(tileset);
-        onDataLoaded();
     }
     
     /**

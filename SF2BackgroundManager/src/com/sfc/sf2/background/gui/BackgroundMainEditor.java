@@ -5,12 +5,16 @@
  */
 package com.sfc.sf2.background.gui;
 
+import com.sfc.sf2.background.Background;
 import com.sfc.sf2.background.BackgroundManager;
 import com.sfc.sf2.background.settings.BackgroundSettings;
+import com.sfc.sf2.core.actions.Action;
+import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.core.io.FileFormat;
 import com.sfc.sf2.core.settings.SettingsManager;
+import com.sfc.sf2.graphics.Tileset;
 import com.sfc.sf2.helpers.PathHelpers;
 import java.nio.file.Path;
 import java.util.logging.Level;
@@ -37,8 +41,7 @@ public class BackgroundMainEditor extends AbstractMainEditor {
     protected void initEditor() {
         super.initEditor();
         
-        backgroundLayoutPanel.setShowGrid(jCheckBox6.isSelected());
-        backgroundLayoutPanel.setDisplayScale(jComboBox6.getSelectedIndex()+1);
+        backgroundsViewPanel1.setLayoutPanel(backgroundLayoutPanel);
         
         jRadioButton1.setSelected(backgroundSettings.getExportFileFormat() == FileFormat.PNG);
         jRadioButton2.setSelected(backgroundSettings.getExportFileFormat() != FileFormat.PNG);
@@ -47,8 +50,11 @@ public class BackgroundMainEditor extends AbstractMainEditor {
     @Override
     protected void onDataLoaded() {
         super.onDataLoaded();
-        
-        backgroundLayoutPanel.setBackgrounds(backgroundManager.getBackgrounds());
+        ActionManager.setAndExecuteAction(new Action<Background[]>(this, "Backgrounds Loaded", this::actionBackgroundLoaded, backgroundManager.getBackgrounds(), backgroundLayoutPanel.getBackgrounds()));
+    }
+    
+    private void actionBackgroundLoaded(Background[] backgrounds) {
+        backgroundLayoutPanel.setBackgrounds(backgrounds);
     }
     
     /**
@@ -98,10 +104,7 @@ public class BackgroundMainEditor extends AbstractMainEditor {
         jPanel10 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         backgroundLayoutPanel = new com.sfc.sf2.background.gui.BackgroundLayoutPanel();
-        jPanel22 = new javax.swing.JPanel();
-        jComboBox6 = new javax.swing.JComboBox<>();
-        jLabel18 = new javax.swing.JLabel();
-        jCheckBox6 = new javax.swing.JCheckBox();
+        backgroundsViewPanel1 = new com.sfc.sf2.background.gui.BackgroundsViewPanel();
         console1 = new com.sfc.sf2.core.gui.controls.Console();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -414,9 +417,9 @@ public class BackgroundMainEditor extends AbstractMainEditor {
                             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
                                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
                                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap())
+                                .addGap(0, 0, 0))
                         );
 
                         jSplitPane2.setLeftComponent(jPanel8);
@@ -436,48 +439,6 @@ public class BackgroundMainEditor extends AbstractMainEditor {
 
                         jScrollPane2.setViewportView(backgroundLayoutPanel);
 
-                        jPanel22.setBorder(javax.swing.BorderFactory.createTitledBorder("View"));
-
-                        jComboBox6.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "x1", "x2", "x3", "x4" }));
-                        jComboBox6.addActionListener(new java.awt.event.ActionListener() {
-                            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                jComboBox6ActionPerformed(evt);
-                            }
-                        });
-
-                        jLabel18.setText("Scale :");
-
-                        jCheckBox6.setText("Show grid");
-                        jCheckBox6.addActionListener(new java.awt.event.ActionListener() {
-                            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                jCheckBox6ActionPerformed(evt);
-                            }
-                        });
-
-                        javax.swing.GroupLayout jPanel22Layout = new javax.swing.GroupLayout(jPanel22);
-                        jPanel22.setLayout(jPanel22Layout);
-                        jPanel22Layout.setHorizontalGroup(
-                            jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel22Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jCheckBox6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel18)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap())
-                        );
-                        jPanel22Layout.setVerticalGroup(
-                            jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel22Layout.createSequentialGroup()
-                                .addGap(0, 0, 0)
-                                .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                                    .addComponent(jLabel18)
-                                    .addComponent(jCheckBox6)
-                                    .addComponent(jComboBox6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap())
-                        );
-
                         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
                         jPanel10.setLayout(jPanel10Layout);
                         jPanel10Layout.setHorizontalGroup(
@@ -485,17 +446,18 @@ public class BackgroundMainEditor extends AbstractMainEditor {
                             .addGroup(jPanel10Layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jPanel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE))
-                                .addGap(0, 0, 0))
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
+                                    .addGroup(jPanel10Layout.createSequentialGroup()
+                                        .addComponent(backgroundsViewPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                        .addContainerGap())))
                         );
                         jPanel10Layout.setVerticalGroup(
                             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel10Layout.createSequentialGroup()
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)
-                                .addGap(0, 0, 0)
-                                .addComponent(jPanel22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0))
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(backgroundsViewPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())
                         );
 
                         jSplitPane2.setRightComponent(jPanel10);
@@ -522,7 +484,7 @@ public class BackgroundMainEditor extends AbstractMainEditor {
                         );
                         jPanel13Layout.setVerticalGroup(
                             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jSplitPane1)
+                            .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 565, Short.MAX_VALUE)
                         );
 
                         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -588,14 +550,6 @@ public class BackgroundMainEditor extends AbstractMainEditor {
         onDataLoaded(); 
     }//GEN-LAST:event_jButton18ActionPerformed
 
-    private void jComboBox6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox6ActionPerformed
-        backgroundLayoutPanel.setDisplayScale(jComboBox6.getSelectedIndex()+1);
-    }//GEN-LAST:event_jComboBox6ActionPerformed
-
-    private void jCheckBox6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox6ActionPerformed
-        backgroundLayoutPanel.setShowGrid(jCheckBox6.isSelected());
-    }//GEN-LAST:event_jCheckBox6ActionPerformed
-
     private void RadioStateChanged_Png(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_RadioStateChanged_Png
         if (settingFileFormat) return;
         settingFileFormat = true;
@@ -640,6 +594,7 @@ public class BackgroundMainEditor extends AbstractMainEditor {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.sfc.sf2.background.gui.BackgroundLayoutPanel backgroundLayoutPanel;
+    private com.sfc.sf2.background.gui.BackgroundsViewPanel backgroundsViewPanel1;
     private javax.swing.ButtonGroup buttonGroupExport;
     private com.sfc.sf2.core.gui.controls.Console console1;
     private com.sfc.sf2.core.gui.controls.DirectoryButton directoryButton1;
@@ -655,10 +610,7 @@ public class BackgroundMainEditor extends AbstractMainEditor {
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton2;
-    private javax.swing.JCheckBox jCheckBox6;
-    private javax.swing.JComboBox<String> jComboBox6;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -669,7 +621,6 @@ public class BackgroundMainEditor extends AbstractMainEditor {
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
-    private javax.swing.JPanel jPanel22;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
