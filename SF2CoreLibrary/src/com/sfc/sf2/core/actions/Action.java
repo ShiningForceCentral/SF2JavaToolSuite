@@ -5,6 +5,7 @@
  */
 package com.sfc.sf2.core.actions;
 
+import com.sfc.sf2.core.INameable;
 import javax.swing.JComponent;
 
 /**
@@ -86,6 +87,11 @@ public class Action<T extends Object> implements IAction {
     }
     
     protected String dataToString(T data) {
+        if (data == null) return "NULL";
+        if (data instanceof INameable) {
+               INameable nameable = (INameable)data;
+               return nameable.getName();
+        }
         return data.toString();
     }
 }

@@ -172,19 +172,15 @@
                                                   <Component id="fileButton1" pref="528" max="32767" attributes="0"/>
                                                   <Component id="fileButton2" alignment="0" pref="0" max="32767" attributes="0"/>
                                                   <Group type="102" attributes="0">
-                                                      <Group type="103" groupAlignment="0" attributes="0">
-                                                          <Group type="102" alignment="0" attributes="0">
-                                                              <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-                                                              <EmptySpace max="-2" attributes="0"/>
-                                                              <Component id="jButton18" min="-2" max="-2" attributes="0"/>
-                                                          </Group>
-                                                          <Group type="102" alignment="0" attributes="0">
-                                                              <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                                                              <EmptySpace max="-2" attributes="0"/>
-                                                              <Component id="infoButton4" min="-2" max="-2" attributes="0"/>
-                                                          </Group>
-                                                      </Group>
-                                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace max="-2" attributes="0"/>
+                                                      <Component id="infoButton4" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace min="0" pref="314" max="32767" attributes="0"/>
+                                                  </Group>
+                                                  <Group type="102" alignment="0" attributes="0">
+                                                      <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace max="32767" attributes="0"/>
+                                                      <Component id="jButton18" min="-2" max="-2" attributes="0"/>
                                                   </Group>
                                               </Group>
                                               <EmptySpace max="-2" attributes="0"/>
@@ -269,13 +265,13 @@
                                                   <EmptySpace max="-2" attributes="0"/>
                                                   <Component id="jLabel31" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="jComboBox1" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="jComboBoxCompressionImport" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
                                                   <Component id="infoButton2" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                                   <Component id="jLabel29" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="jSpinner1" min="-2" pref="61" max="-2" attributes="0"/>
+                                                  <Component id="jSpinnerTileWidthImport" min="-2" pref="61" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
                                                   <Component id="infoButton1" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace max="32767" attributes="0"/>
@@ -288,9 +284,9 @@
                                                   <EmptySpace max="-2" attributes="0"/>
                                                   <Group type="103" groupAlignment="2" attributes="0">
                                                       <Component id="jLabel29" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="jComboBox1" alignment="2" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="jComboBoxCompressionImport" alignment="2" min="-2" max="-2" attributes="0"/>
                                                       <Component id="jLabel31" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="jSpinner1" alignment="2" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="jSpinnerTileWidthImport" alignment="2" min="-2" max="-2" attributes="0"/>
                                                       <Component id="infoButton1" alignment="2" min="-2" max="-2" attributes="0"/>
                                                       <Component id="infoButton2" alignment="2" min="-2" max="-2" attributes="0"/>
                                                   </Group>
@@ -306,7 +302,7 @@
                                             <Property name="text" type="java.lang.String" value=""/>
                                           </Properties>
                                         </Component>
-                                        <Component class="javax.swing.JSpinner" name="jSpinner1">
+                                        <Component class="javax.swing.JSpinner" name="jSpinnerTileWidthImport">
                                           <Properties>
                                             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
                                               <SpinnerModel initial="16" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
@@ -324,7 +320,7 @@
                                             <Property name="text" type="java.lang.String" value=""/>
                                           </Properties>
                                         </Component>
-                                        <Component class="javax.swing.JComboBox" name="jComboBox1">
+                                        <Component class="javax.swing.JComboBox" name="jComboBoxCompressionImport">
                                           <Properties>
                                             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                                               <StringArray count="3">

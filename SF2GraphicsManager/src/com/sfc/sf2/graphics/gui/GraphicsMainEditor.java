@@ -5,6 +5,7 @@
  */
 package com.sfc.sf2.graphics.gui;
 
+import com.sfc.sf2.core.actions.Action;
 import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.core.actions.ComboAction;
 import com.sfc.sf2.core.actions.SpinnerAction;
@@ -54,13 +55,20 @@ public class GraphicsMainEditor extends AbstractMainEditor {
     @Override
     protected void onDataLoaded() {
         super.onDataLoaded();
+        if (!ActionManager.isActionTriggering()) {
+            ActionManager.setActionWithoutExecute(new Action<Tileset>(this, "Graphic Loaded", this::actionTilesetLoaded, tilesetManager.getTileset(), tilesetLayoutPanel.getTileset()));
+        }
         
         Tileset tileset = tilesetManager.getTileset();
+        tilesetLayoutPanel.setTileset(tileset);
         if (tileset != null) {
-            int tileWidth = (int)jSpinner2.getValue();
-            tilesetLayoutPanel.setItemsPerRow(tileWidth);
-            tilesetLayoutPanel.setTileset(tileset);
+            tilesetLayoutPanel.setItemsPerRow((int)jSpinner2.getValue());
         }
+    }
+    
+    private void actionTilesetLoaded(Tileset tileset) {
+        tilesetManager.setTileset(tileset);
+        onDataLoaded();
     }
     
     /**
@@ -89,10 +97,10 @@ public class GraphicsMainEditor extends AbstractMainEditor {
         infoButton4 = new com.sfc.sf2.core.gui.controls.InfoButton();
         jPanel2 = new javax.swing.JPanel();
         infoButton1 = new com.sfc.sf2.core.gui.controls.InfoButton();
-        jSpinner1 = new javax.swing.JSpinner();
+        jSpinnerTileWidthImport = new javax.swing.JSpinner();
         jLabel29 = new javax.swing.JLabel();
         infoButton2 = new com.sfc.sf2.core.gui.controls.InfoButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jComboBoxCompressionImport = new javax.swing.JComboBox<>();
         jLabel31 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         jButton12 = new javax.swing.JButton();
@@ -229,15 +237,15 @@ public class GraphicsMainEditor extends AbstractMainEditor {
         infoButton1.setMessageText("<html>How many tiles wide the image is. Can be adjusted after the image is loaded. </html>");
         infoButton1.setText("");
 
-        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(16, 1, null, 1));
+        jSpinnerTileWidthImport.setModel(new javax.swing.SpinnerNumberModel(16, 1, null, 1));
 
         jLabel29.setText("Tile width :");
 
         infoButton2.setMessageText("<html>The compression used for the graphic.<br><b>- None:</b> Uncompressed graphics. Usually for small images (e.g. icons).<br><b>- Basic:</b> Simple compression. Used in map sprites and tilesets.<br><b>- Stack:</b> Complex compression. Used for all larger images (e.g. portraits, spell/invocations, and all battle graphics).</html>");
         infoButton2.setText("");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "None", "Basic", "Stack" }));
-        jComboBox1.setSelectedIndex(2);
+        jComboBoxCompressionImport.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "None", "Basic", "Stack" }));
+        jComboBoxCompressionImport.setSelectedIndex(2);
 
         jLabel31.setText("Compression :");
 
@@ -249,13 +257,13 @@ public class GraphicsMainEditor extends AbstractMainEditor {
                 .addContainerGap()
                 .addComponent(jLabel31)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jComboBoxCompressionImport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(infoButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel29)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jSpinnerTileWidthImport, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(infoButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -266,9 +274,9 @@ public class GraphicsMainEditor extends AbstractMainEditor {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel29)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxCompressionImport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel31)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSpinnerTileWidthImport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(infoButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(infoButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -284,16 +292,14 @@ public class GraphicsMainEditor extends AbstractMainEditor {
                     .addComponent(fileButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE)
                     .addComponent(fileButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton18))
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(infoButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(infoButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 314, Short.MAX_VALUE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton18)))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -1197,9 +1203,9 @@ public class GraphicsMainEditor extends AbstractMainEditor {
         Path palettePath = PathHelpers.getBasePath().resolve(fileButton1.getFilePath());
         Path graphicPath = PathHelpers.getBasePath().resolve(fileButton2.getFilePath());
         try {
-            TilesetCompression compression = TilesetCompression.values()[jComboBox1.getSelectedIndex()];
-            tilesetManager.importDisassembly(palettePath, graphicPath, compression, (int)jSpinner1.getValue());
-            jSpinner2.setValue(jSpinner1.getValue());
+            TilesetCompression compression = TilesetCompression.values()[jComboBoxCompressionImport.getSelectedIndex()];
+            tilesetManager.importDisassembly(palettePath, graphicPath, compression, (int)jSpinnerTileWidthImport.getValue());
+            jSpinner2.setValue(jSpinnerTileWidthImport.getValue());
         } catch (Exception ex) {
             tilesetManager.clearData();
             Console.logger().log(Level.SEVERE, null, ex);
@@ -1431,12 +1437,12 @@ public class GraphicsMainEditor extends AbstractMainEditor {
     private javax.swing.JButton jButton39;
     private javax.swing.JButton jButton40;
     private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JComboBox<String> jComboBox5;
     private javax.swing.JComboBox<String> jComboBox6;
     private javax.swing.JComboBox<String> jComboBox7;
     private javax.swing.JComboBox<String> jComboBox8;
+    private javax.swing.JComboBox<String> jComboBoxCompressionImport;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JFileChooser jFileChooser2;
     private javax.swing.JLabel jLabel1;
@@ -1488,8 +1494,8 @@ public class GraphicsMainEditor extends AbstractMainEditor {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JSpinner jSpinner1;
     private javax.swing.JSpinner jSpinner2;
+    private javax.swing.JSpinner jSpinnerTileWidthImport;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JSplitPane jSplitPane2;
     private javax.swing.JTabbedPane jTabbedPane1;

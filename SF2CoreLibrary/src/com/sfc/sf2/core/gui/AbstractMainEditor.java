@@ -69,7 +69,7 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
     }
     
     protected void onDataLoaded() {
-        ActionManager.clearActionhistory();
+        
     }
     
     public static void programSetup() {

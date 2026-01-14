@@ -5,6 +5,7 @@
  */
 package com.sfc.sf2.graphics;
 
+import com.sfc.sf2.core.INameable;
 import static com.sfc.sf2.graphics.Tile.PIXEL_HEIGHT;
 import static com.sfc.sf2.graphics.Tile.PIXEL_WIDTH;
 import com.sfc.sf2.palette.Palette;
@@ -16,7 +17,7 @@ import java.awt.image.BufferedImage;
  *
  * @author TiMMy
  */
-public class Tileset {
+public class Tileset implements INameable {
     
     private String name;
     protected Tile[] tiles;
