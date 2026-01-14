@@ -40,18 +40,21 @@ public class AbstractViewPanel<T extends AbstractLayoutPanel> extends javax.swin
         this.jSpinnerItemsPerRow = jSpinnerItemsPerRow;
         this.colorPickerBG = colorPickerBG;
         
-        colorPickerBG.setColor(SettingsManager.getGlobalSettings().getTransparentBGColor());
-        
-        jComboBoxScale.setModel(new DefaultComboBoxModel<>(RenderScaleHelpers.RENDER_SCALE_STRINGS));
-        jComboBoxScale.setSelectedIndex(RenderScaleHelpers.DEFAULT_RENDER_SCALE);
+        if (colorPickerBG != null) {
+            colorPickerBG.setColor(SettingsManager.getGlobalSettings().getTransparentBGColor());
+        }
+        if (jComboBoxScale != null) {
+            jComboBoxScale.setModel(new DefaultComboBoxModel<>(RenderScaleHelpers.RENDER_SCALE_STRINGS));
+            jComboBoxScale.setSelectedIndex(RenderScaleHelpers.DEFAULT_RENDER_SCALE);
+        }
     }
     
     public void setLayoutPanel(T layoutPanel) {
         this.layoutPanel = layoutPanel;
-        layoutPanel.setRenderScaleIndex(jComboBoxScale.getSelectedIndex());
-        layoutPanel.setShowGrid(jCheckBoxGrid.isSelected());
-        layoutPanel.setItemsPerRow((int)jSpinnerItemsPerRow.getValue());
-        layoutPanel.setBackground(colorPickerBG.getColor());
+        if (jComboBoxScale != null) layoutPanel.setRenderScaleIndex(jComboBoxScale.getSelectedIndex());
+        if (jCheckBoxGrid != null) layoutPanel.setShowGrid(jCheckBoxGrid.isSelected());
+        if (jSpinnerItemsPerRow != null) layoutPanel.setItemsPerRow((int)jSpinnerItemsPerRow.getValue());
+        if (colorPickerBG != null) layoutPanel.setBackground(colorPickerBG.getColor());
     }
 
     protected void onItemsPerRowChanged(javax.swing.event.ChangeEvent evt) {

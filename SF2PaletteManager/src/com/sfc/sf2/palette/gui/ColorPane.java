@@ -5,7 +5,6 @@
  */
 package com.sfc.sf2.palette.gui;
 
-import com.sfc.sf2.core.settings.SettingsManager;
 import com.sfc.sf2.palette.CRAMColor;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -51,6 +50,10 @@ public class ColorPane extends JPanel implements MouseListener, MouseMotionListe
 
     public CRAMColor getCurrentColor() {
         return currentColor;
+    }
+    
+    public void setSelected() {
+        setBorder(true, false);
     }
     
     public static void clearSelection() {

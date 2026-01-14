@@ -5,10 +5,12 @@
  */
 package com.sfc.sf2.palette.gui;
 
+import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.palette.gui.controls.CRAMColorEditor;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.palette.CRAMColor;
 import com.sfc.sf2.palette.Palette;
+import com.sfc.sf2.palette.actions.PaletteAction;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -62,13 +64,22 @@ public class PalettePane extends JPanel {
     }
   
     public void updateColor(int index, CRAMColor color) {
-        if (palette == null) return;
-        if (palette != null && index >= 0) {
-            colorPanes[index].updateColor(color);
-            palette.getColors()[index] = color;
-            if (colorChangeListener != null) {
-                colorChangeListener.actionPerformed(new ActionEvent(palette, index, "ColorChange"));
-            }
+        if (palette == null || index < 0) return;
+        if (ActionManager.isActionTriggering()) {
+            actionUpdateColor(index, color);
+        } else {
+            ActionManager.setAndExecuteAction(new PaletteAction(this, index, color, colorPanes[index].getCurrentColor()));
+        }
+    }
+    
+    private void actionUpdateColor(int index, CRAMColor color) {
+        palette.getColors()[index] = color;
+        colorEditor.setColor(color, index);
+        colorPanes[index].updateColor(color);
+        colorPanes[index].setSelected();
+        refreshColorPanes();
+        if (colorChangeListener != null) {
+            colorChangeListener.actionPerformed(new ActionEvent(palette, index, "ColorChange"));
         }
     }
     

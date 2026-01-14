@@ -34,12 +34,12 @@ public class TestLayoutPanel extends AbstractLayoutPanel {
 
     @Override
     protected Dimension getImageDimensions() {
-        return getSize();
+        return new Dimension(500, 900);
     }
 
     @Override
     protected void drawImage(Graphics graphics) {
-        Dimension d = getSize();
+        Dimension d = getImageDimensions();
         float w = d.width;
         float h = d.height;
         Color c = null;

@@ -15,31 +15,30 @@ import java.util.HashMap;
  */
 public class PortraitSettings implements AbstractSettings {
 
-    private int zoom;
+    private int renderScaleIndex;
     
-    public int getZoom() {
-        return zoom;
+    public int getRenderScaleIndex() {
+        return renderScaleIndex;
     }
     
-    public void setZoom(int zoom) {
-        this.zoom = zoom;
+    public void setRenderScaleInex(int zoom) {
+        this.renderScaleIndex = zoom;
     }
     
     @Override
     public void initialiseNewUser() {
-        zoom = RenderScaleHelpers.DEFAULT_RENDER_SCALE;
+        renderScaleIndex = RenderScaleHelpers.DEFAULT_RENDER_SCALE;
     }
 
     @Override
     public void decodeSettings(HashMap<String, String> data) {
-        if (data.containsKey("zoom")) {
-            zoom = RenderScaleHelpers.stringToIndex(data.get("zoom"));
+        if (data.containsKey("renderScale")) {
+            renderScaleIndex = RenderScaleHelpers.stringToIndex(data.get("renderScale"));
         }
     }
 
     @Override
     public void encodeSettings(HashMap<String, String> data) {
-        data.put("zoom", RenderScaleHelpers.indexToRenderScale(zoom));
-    }
-    
+        data.put("renderScale", RenderScaleHelpers.indexToString(renderScaleIndex));
+    }    
 }
