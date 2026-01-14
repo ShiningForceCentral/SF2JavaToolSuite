@@ -54,7 +54,7 @@ public class AbstractViewPanel<T extends AbstractLayoutPanel> extends javax.swin
         if (jComboBoxScale != null) layoutPanel.setRenderScaleIndex(jComboBoxScale.getSelectedIndex());
         if (jCheckBoxGrid != null) layoutPanel.setShowGrid(jCheckBoxGrid.isSelected());
         if (jSpinnerItemsPerRow != null) layoutPanel.setItemsPerRow((int)jSpinnerItemsPerRow.getValue());
-        if (colorPickerBG != null) layoutPanel.setBackground(colorPickerBG.getColor());
+        if (colorPickerBG != null) layoutPanel.setBGColor(colorPickerBG.getColor());
     }
 
     protected void onItemsPerRowChanged(javax.swing.event.ChangeEvent evt) {
