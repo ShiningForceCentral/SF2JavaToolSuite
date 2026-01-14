@@ -28,7 +28,7 @@ public class BattleSpriteLayoutPanel extends AbstractLayoutPanel implements Anim
     public BattleSpriteLayoutPanel() {
         super();
         background = new LayoutBackground(Color.LIGHT_GRAY, PIXEL_WIDTH/2);
-        scale = new LayoutScale(1);
+        scale = new LayoutScale();
         grid = new LayoutGrid(PIXEL_WIDTH, PIXEL_WIDTH, -1, BATTLE_SPRITE_TILE_HEIGHT*PIXEL_HEIGHT);
         coordsGrid = new LayoutCoordsGridDisplay(0, BATTLE_SPRITE_TILE_HEIGHT*PIXEL_HEIGHT, false, 0, 0, 2);
         coordsHeader = null;

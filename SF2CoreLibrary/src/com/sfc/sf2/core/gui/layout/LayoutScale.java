@@ -19,8 +19,8 @@ public class LayoutScale extends BaseLayoutComponent {
     private int renderScaleIndex = RenderScaleHelpers.DEFAULT_RENDER_SCALE;
     private float renderScale = 1f;
     
-    public LayoutScale(int renderScale) {
-        this.renderScaleIndex = renderScale;
+    public LayoutScale() {
+        this.renderScaleIndex = RenderScaleHelpers.DEFAULT_RENDER_SCALE;
     }
 
     public float getScale() {

@@ -31,7 +31,7 @@ public class MapSpriteLayoutPanel extends AbstractLayoutPanel {
     public MapSpriteLayoutPanel() {
         super();
         background = new LayoutBackground(Color.LIGHT_GRAY, Tile.PIXEL_WIDTH);
-        scale = new LayoutScale(1);
+        scale = new LayoutScale();
         grid = new LayoutGrid(Tile.PIXEL_WIDTH, Tile.PIXEL_HEIGHT, PIXEL_WIDTH*2, PIXEL_HEIGHT);
         coordsGrid = new LayoutCoordsGridDisplay(PIXEL_WIDTH*2, PIXEL_HEIGHT, false, 0, Tile.PIXEL_WIDTH, 1);
         coordsHeader = new LayoutCoordsHeader(this, PIXEL_WIDTH*2, PIXEL_HEIGHT, false);

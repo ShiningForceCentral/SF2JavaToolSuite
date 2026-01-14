@@ -47,7 +47,7 @@ public class SpellAnimationLayoutPanel extends AbstractLayoutPanel implements An
     public SpellAnimationLayoutPanel() {
         super();
         background = new LayoutBackground(Color.BLACK);
-        scale = new LayoutScale(1);
+        scale = new LayoutScale();
         grid = null;
         coordsGrid = null;
         coordsHeader = null;

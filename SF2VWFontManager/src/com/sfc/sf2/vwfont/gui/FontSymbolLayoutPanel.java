@@ -27,7 +27,7 @@ public class FontSymbolLayoutPanel extends AbstractLayoutPanel {
     public FontSymbolLayoutPanel() {
         super();
         background = new LayoutBackground(Color.LIGHT_GRAY);
-        scale = new LayoutScale(1);
+        scale = new LayoutScale();
         grid = new LayoutGrid(PIXEL_WIDTH, PIXEL_HEIGHT);
         coordsGrid = new LayoutCoordsGridDisplay(PIXEL_WIDTH, PIXEL_HEIGHT, true);
         coordsHeader = new LayoutCoordsHeader(this, PIXEL_WIDTH, PIXEL_HEIGHT, true);

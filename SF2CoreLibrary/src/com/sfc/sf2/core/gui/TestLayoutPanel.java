@@ -19,7 +19,7 @@ public class TestLayoutPanel extends AbstractLayoutPanel {
     public TestLayoutPanel() {
         super();
         background = new LayoutBackground(Color.LIGHT_GRAY, 8);
-        scale = new LayoutScale(1);
+        scale = new LayoutScale();
         grid = new LayoutGrid(8, 8, 24, 24);
         coordsGrid = new LayoutCoordsGridDisplay(24, 24, true, 4, 10, 2);
         coordsHeader = new LayoutCoordsHeader(this, 24, 24);
@@ -40,19 +40,15 @@ public class TestLayoutPanel extends AbstractLayoutPanel {
     @Override
     protected void drawImage(Graphics graphics) {
         Dimension d = getSize();
-        int halfHeight = d.height/2;
+        float w = d.width;
+        float h = d.height;
         Color c = null;
         for (int j = 0; j < d.height; j++) {
             for (int i = 0; i < d.width; i++) {
-                if (j <= halfHeight) {
-                    c = Color.getHSBColor(i*0.01f, 1f, (halfHeight-j)*2*0.01f);
-                } else {
-                    c = Color.getHSBColor(i*0.01f, (j-halfHeight)*2*0.01f, 1f);
-                }
+                c = Color.getHSBColor(i/w, 1f-(j/h), 1f-(j/h));
                 graphics.setColor(c);
                 graphics.fillRect(i, j, 1, 1);
             }
         }
     }
-    
 }

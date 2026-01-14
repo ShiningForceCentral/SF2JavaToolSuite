@@ -37,7 +37,7 @@ public class BattleSpriteAnimationLayoutPanel extends BattleSceneLayoutPanel imp
     public BattleSpriteAnimationLayoutPanel() {
         super();
         background = new LayoutBackground(Color.BLACK);
-        scale = new LayoutScale(1);
+        scale = new LayoutScale();
         grid = null;
         coordsGrid = null;
         coordsHeader = null;
