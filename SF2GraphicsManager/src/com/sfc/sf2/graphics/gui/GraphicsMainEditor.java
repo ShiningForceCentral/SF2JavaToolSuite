@@ -7,21 +7,15 @@ package com.sfc.sf2.graphics.gui;
 
 import com.sfc.sf2.core.actions.Action;
 import com.sfc.sf2.core.actions.ActionManager;
-import com.sfc.sf2.core.actions.ComboAction;
-import com.sfc.sf2.core.actions.SpinnerAction;
-import com.sfc.sf2.core.actions.ToggleAction;
-import com.sfc.sf2.core.settings.SettingsManager;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.graphics.TilesetManager;
 import com.sfc.sf2.graphics.Tileset;
 import com.sfc.sf2.graphics.io.TilesetDisassemblyProcessor.TilesetCompression;
 import com.sfc.sf2.helpers.PathHelpers;
-import com.sfc.sf2.helpers.RenderScaleHelpers;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.logging.Level;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
 import jdk.jshell.spi.ExecutionControl;
 
@@ -43,13 +37,7 @@ public class GraphicsMainEditor extends AbstractMainEditor {
     protected void initEditor() {
         super.initEditor();
         
-        jComboBox7.setModel(new DefaultComboBoxModel<>(RenderScaleHelpers.RENDER_SCALE_STRINGS));
-        jComboBox7.setSelectedIndex(RenderScaleHelpers.DEFAULT_RENDER_SCALE);
-        
-        tilesetLayoutPanel.setRenderScaleIndex(jComboBox7.getSelectedIndex());
-        tilesetLayoutPanel.setShowGrid(jCheckBox1.isSelected());
-        colorPicker1.setColor(SettingsManager.getGlobalSettings().getTransparentBGColor());
-        tilesetLayoutPanel.setBGColor(colorPicker1.getBackground());
+        viewPanel1.setLayoutPanel(tilesetLayoutPanel);
     }
     
     @Override
@@ -62,7 +50,7 @@ public class GraphicsMainEditor extends AbstractMainEditor {
         Tileset tileset = tilesetManager.getTileset();
         tilesetLayoutPanel.setTileset(tileset);
         if (tileset != null) {
-            tilesetLayoutPanel.setItemsPerRow((int)jSpinner2.getValue());
+            tilesetLayoutPanel.setItemsPerRow((int)viewPanel1.getItemsPerRowSpinner().getValue());
         }
     }
     
@@ -185,14 +173,7 @@ public class GraphicsMainEditor extends AbstractMainEditor {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tilesetLayoutPanel = new com.sfc.sf2.graphics.gui.TilesetLayoutPanel();
-        jPanel20 = new javax.swing.JPanel();
-        jComboBox7 = new javax.swing.JComboBox<>();
-        jLabel7 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jSpinner2 = new javax.swing.JSpinner();
-        jLabel54 = new javax.swing.JLabel();
-        colorPicker1 = new com.sfc.sf2.core.gui.controls.ColorPicker();
-        jLabel55 = new javax.swing.JLabel();
+        viewPanel1 = new com.sfc.sf2.core.gui.controls.ViewPanel();
         console1 = new com.sfc.sf2.core.gui.controls.Console();
 
         jFileChooser2.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
@@ -1002,11 +983,11 @@ public class GraphicsMainEditor extends AbstractMainEditor {
         tilesetLayoutPanel.setLayout(tilesetLayoutPanelLayout);
         tilesetLayoutPanelLayout.setHorizontalGroup(
             tilesetLayoutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 534, Short.MAX_VALUE)
+            .addGap(0, 635, Short.MAX_VALUE)
         );
         tilesetLayoutPanelLayout.setVerticalGroup(
             tilesetLayoutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 504, Short.MAX_VALUE)
+            .addGap(0, 518, Short.MAX_VALUE)
         );
 
         jScrollPane2.setViewportView(tilesetLayoutPanel);
@@ -1015,93 +996,11 @@ public class GraphicsMainEditor extends AbstractMainEditor {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane2)
-        );
-
-        jPanel20.setBorder(javax.swing.BorderFactory.createTitledBorder("View"));
-
-        jComboBox7.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "10x" }));
-        jComboBox7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox7ActionPerformed(evt);
-            }
-        });
-
-        jLabel7.setText("Scale :");
-
-        jCheckBox1.setText("Show grid");
-        jCheckBox1.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jCheckBox1StateChanged(evt);
-            }
-        });
-
-        jSpinner2.setModel(new javax.swing.SpinnerNumberModel(16, 1, null, 1));
-        jSpinner2.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jSpinner2StateChanged(evt);
-            }
-        });
-
-        jLabel54.setText("Tiles per row :");
-
-        colorPicker1.addColorChangedListener(new com.sfc.sf2.core.gui.controls.ColorPicker.ColorChangedListener() {
-            public void colorChanged(java.awt.event.ActionEvent evt) {
-                colorPicker1ColorChanged(evt);
-            }
-        });
-
-        javax.swing.GroupLayout colorPicker1Layout = new javax.swing.GroupLayout(colorPicker1);
-        colorPicker1.setLayout(colorPicker1Layout);
-        colorPicker1Layout.setHorizontalGroup(
-            colorPicker1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 22, Short.MAX_VALUE)
-        );
-        colorPicker1Layout.setVerticalGroup(
-            colorPicker1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 22, Short.MAX_VALUE)
-        );
-
-        jLabel55.setText("BG :");
-
-        javax.swing.GroupLayout jPanel20Layout = new javax.swing.GroupLayout(jPanel20);
-        jPanel20.setLayout(jPanel20Layout);
-        jPanel20Layout.setHorizontalGroup(
-            jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel20Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel54)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel55)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(colorPicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
-                .addComponent(jCheckBox1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox7, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        jPanel20Layout.setVerticalGroup(
-            jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel20Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel54)
-                    .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel55)
-                    .addComponent(colorPicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jCheckBox1)
-                    .addComponent(jComboBox7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
-                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
@@ -1109,14 +1008,17 @@ public class GraphicsMainEditor extends AbstractMainEditor {
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(viewPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(viewPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -1178,7 +1080,7 @@ public class GraphicsMainEditor extends AbstractMainEditor {
         Path graphicPath = PathHelpers.getBasePath().resolve(fileButton5.getFilePath());
         if (!PathHelpers.createPathIfRequred(graphicPath)) return;
         try {
-            tilesetManager.getTileset().setTilesPerRow((int)jSpinner2.getValue());
+            tilesetManager.getTileset().setTilesPerRow((int)viewPanel1.getItemsPerRowSpinner().getValue());
             tilesetManager.exportImage(graphicPath, tilesetLayoutPanel.getTileset());
         } catch (Exception ex) {
             Console.logger().log(Level.SEVERE, null, ex);
@@ -1190,7 +1092,7 @@ public class GraphicsMainEditor extends AbstractMainEditor {
         Path graphicPath = PathHelpers.getBasePath().resolve(fileButton3.getFilePath());
         try {
             tilesetManager.importImage(graphicPath, true);
-            jSpinner2.setValue(tilesetManager.getTileset().getTilesPerRow());
+            viewPanel1.getItemsPerRowSpinner().setValue(tilesetManager.getTileset().getTilesPerRow());
         } catch (Exception ex) {
             tilesetManager.clearData();
             Console.logger().log(Level.SEVERE, null, ex);
@@ -1205,7 +1107,7 @@ public class GraphicsMainEditor extends AbstractMainEditor {
         try {
             TilesetCompression compression = TilesetCompression.values()[jComboBoxCompressionImport.getSelectedIndex()];
             tilesetManager.importDisassembly(palettePath, graphicPath, compression, (int)jSpinnerTileWidthImport.getValue());
-            jSpinner2.setValue(jSpinnerTileWidthImport.getValue());
+            viewPanel1.getItemsPerRowSpinner().setValue(jSpinnerTileWidthImport.getValue());
         } catch (Exception ex) {
             tilesetManager.clearData();
             Console.logger().log(Level.SEVERE, null, ex);
@@ -1260,13 +1162,6 @@ public class GraphicsMainEditor extends AbstractMainEditor {
             jTextField44.setText(file.getAbsolutePath());
         }
     }//GEN-LAST:event_jButton40ActionPerformed
-
-    private void jComboBox7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox7ActionPerformed
-        if (!ActionManager.isActionTriggering()) {
-            ActionManager.setActionWithoutExecute(new ComboAction(jComboBox7, (int)jComboBox7.getSelectedIndex(), tilesetLayoutPanel.getRenderScaleIndex()));
-        }
-        tilesetLayoutPanel.setRenderScaleIndex(jComboBox7.getSelectedIndex());
-    }//GEN-LAST:event_jComboBox7ActionPerformed
 
     private void jButton30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton30ActionPerformed
         int returnVal = jFileChooser1.showOpenDialog(this);
@@ -1369,26 +1264,6 @@ public class GraphicsMainEditor extends AbstractMainEditor {
         }
     }//GEN-LAST:event_jButton24ActionPerformed
 
-    private void jSpinner2StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner2StateChanged
-        if (!ActionManager.isActionTriggering()) {
-            ActionManager.setActionWithoutExecute(new SpinnerAction(jSpinner2, (int)jSpinner2.getValue(), tilesetLayoutPanel.getItemsPerRow()));
-        }
-        tilesetLayoutPanel.setItemsPerRow((int)jSpinner2.getValue());
-    }//GEN-LAST:event_jSpinner2StateChanged
-
-    private void colorPicker1ColorChanged(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorPicker1ColorChanged
-        tilesetLayoutPanel.setBGColor(colorPicker1.getColor());
-        SettingsManager.getGlobalSettings().setTransparentBGColor(colorPicker1.getColor());
-        SettingsManager.saveGlobalSettingsFile();
-    }//GEN-LAST:event_colorPicker1ColorChanged
-
-    private void jCheckBox1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jCheckBox1StateChanged
-        if (!ActionManager.isActionTriggering()) {
-            ActionManager.setActionWithoutExecute(new ToggleAction(jCheckBox1, jCheckBox1.isSelected()));
-        }
-        tilesetLayoutPanel.setShowGrid(jCheckBox1.isSelected());
-    }//GEN-LAST:event_jCheckBox1StateChanged
-
     /**
      * To create a new Main Editor, copy the below code
      * Don't forget to change the new main class (below)
@@ -1406,7 +1281,6 @@ public class GraphicsMainEditor extends AbstractMainEditor {
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.sfc.sf2.core.gui.controls.ColorPicker colorPicker1;
     private com.sfc.sf2.core.gui.controls.Console console1;
     private com.sfc.sf2.core.gui.controls.FileButton fileButton1;
     private com.sfc.sf2.core.gui.controls.FileButton fileButton2;
@@ -1436,11 +1310,9 @@ public class GraphicsMainEditor extends AbstractMainEditor {
     private javax.swing.JButton jButton38;
     private javax.swing.JButton jButton39;
     private javax.swing.JButton jButton40;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JComboBox<String> jComboBox5;
     private javax.swing.JComboBox<String> jComboBox6;
-    private javax.swing.JComboBox<String> jComboBox7;
     private javax.swing.JComboBox<String> jComboBox8;
     private javax.swing.JComboBox<String> jComboBoxCompressionImport;
     private javax.swing.JFileChooser jFileChooser1;
@@ -1473,9 +1345,6 @@ public class GraphicsMainEditor extends AbstractMainEditor {
     private javax.swing.JLabel jLabel51;
     private javax.swing.JLabel jLabel52;
     private javax.swing.JLabel jLabel53;
-    private javax.swing.JLabel jLabel54;
-    private javax.swing.JLabel jLabel55;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
@@ -1486,7 +1355,6 @@ public class GraphicsMainEditor extends AbstractMainEditor {
     private javax.swing.JPanel jPanel18;
     private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel20;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -1494,7 +1362,6 @@ public class GraphicsMainEditor extends AbstractMainEditor {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JSpinner jSpinner2;
     private javax.swing.JSpinner jSpinnerTileWidthImport;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JSplitPane jSplitPane2;
@@ -1520,6 +1387,7 @@ public class GraphicsMainEditor extends AbstractMainEditor {
     private javax.swing.JTextField jTextField43;
     private javax.swing.JTextField jTextField44;
     private com.sfc.sf2.graphics.gui.TilesetLayoutPanel tilesetLayoutPanel;
+    private com.sfc.sf2.core.gui.controls.ViewPanel viewPanel1;
     // End of variables declaration//GEN-END:variables
 
 }
