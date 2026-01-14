@@ -50,14 +50,14 @@ public class GraphicsHelpers {
         graphics.setStroke(new BasicStroke(gridThickness));
         int x = 0;
         int y = 0;
-        if (gridW >= 0) {
+        if (gridW > 0) {
             while (x < image.getWidth()) {
                 graphics.drawLine(x, 0, x, image.getHeight());
                 x += gridW;
             }
             graphics.drawLine(x-1, 0, x-1, image.getHeight());
         }
-        if (gridH >= 0) {
+        if (gridH > 0) {
             while (y < image.getHeight()) {
                 graphics.drawLine(0, y, image.getWidth(), y);
                 y += gridH;
