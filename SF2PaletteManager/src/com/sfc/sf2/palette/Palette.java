@@ -5,6 +5,7 @@
  */
 package com.sfc.sf2.palette;
 
+import com.sfc.sf2.core.INameable;
 import java.awt.Color;
 import java.awt.image.IndexColorModel;
 
@@ -12,7 +13,7 @@ import java.awt.image.IndexColorModel;
  *
  * @author TiMMy
  */
-public class Palette {
+public class Palette implements INameable {
     
     private String name;
     private CRAMColor[] colors;

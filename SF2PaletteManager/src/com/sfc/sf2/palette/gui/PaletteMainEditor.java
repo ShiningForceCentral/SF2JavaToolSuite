@@ -5,9 +5,12 @@
  */
 package com.sfc.sf2.palette.gui;
 
+import com.sfc.sf2.core.actions.Action;
+import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.helpers.PathHelpers;
+import com.sfc.sf2.palette.Palette;
 import com.sfc.sf2.palette.PaletteManager;
 import java.nio.file.Path;
 import java.util.logging.Level;
@@ -36,8 +39,16 @@ public class PaletteMainEditor extends AbstractMainEditor {
     @Override
     protected void onDataLoaded() {
         super.onDataLoaded();
+        if (!ActionManager.isActionTriggering()) {
+            ActionManager.setActionWithoutExecute(new Action<Palette>(this, "Palette Loaded", this::actionPaletteLoaded, paletteManager.getPalette(), palettePane1.getPalette()));
+        }
         
         palettePane1.setPalette(paletteManager.getPalette());
+    }
+    
+    private void actionPaletteLoaded(Palette palette) {
+        paletteManager.setPalette(palette);
+        onDataLoaded();
     }
 
     /**
