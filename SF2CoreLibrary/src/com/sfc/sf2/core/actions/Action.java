@@ -78,6 +78,9 @@ public class Action<T extends Object> implements IAction {
             if (owner instanceof JComponent) {
                 JComponent component = (JComponent)owner;
                 name = component.getName();
+            } else  if (owner instanceof INameable) {
+                INameable nameable = (INameable)owner;
+                name = nameable.getName();
             }
             if (name == null || name.isEmpty()) {
                 name = owner.getClass().toString();
@@ -89,8 +92,8 @@ public class Action<T extends Object> implements IAction {
     protected String dataToString(T data) {
         if (data == null) return "NULL";
         if (data instanceof INameable) {
-               INameable nameable = (INameable)data;
-               return nameable.getName();
+            INameable nameable = (INameable)data;
+            return nameable.getName();
         }
         String s = data.toString();
         if (s.charAt(0) == '[') {

@@ -8,8 +8,10 @@ package com.sfc.sf2.portrait.gui;
 import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.core.actions.ToggleAction;
 import com.sfc.sf2.core.gui.controls.AbstractViewPanel;
+import com.sfc.sf2.core.settings.SettingsManager;
 import com.sfc.sf2.palette.Palette;
 import com.sfc.sf2.portrait.Portrait;
+import com.sfc.sf2.portrait.settings.PortraitSettings;
 import java.awt.event.ActionEvent;
 
 /**
@@ -30,6 +32,14 @@ public class PortraitViewPanel extends AbstractViewPanel<PortraitLayoutPanel> {
             Portrait portrait = layoutPanel.getPortrait();
             return portrait == null ? null : portrait.getPalette();
         }, this::onPaletteColorChange);
+    }
+
+    @Override
+    public void setLayoutPanel(PortraitLayoutPanel layoutPanel) {
+        PortraitSettings portraitSettings = SettingsManager.getSettingsStore("portrait");
+        jComboBoxScale.setSelectedIndex(portraitSettings.getRenderScaleIndex());
+        
+        super.setLayoutPanel(layoutPanel);
     }
 
     /**
@@ -54,6 +64,7 @@ public class PortraitViewPanel extends AbstractViewPanel<PortraitLayoutPanel> {
 
         jLabelBG.setText("BG :");
 
+        colorPickerBG.setName("BG Color Picker"); // NOI18N
         colorPickerBG.addColorChangedListener(new com.sfc.sf2.core.gui.controls.ColorPicker.ColorChangedListener() {
             public void colorChanged(java.awt.event.ActionEvent evt) {
                 colorPickerBGColorChanged(evt);
@@ -72,15 +83,17 @@ public class PortraitViewPanel extends AbstractViewPanel<PortraitLayoutPanel> {
         );
 
         jCheckBoxGrid.setText("Show grid");
-        jCheckBoxGrid.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jCheckBoxGridStateChanged(evt);
+        jCheckBoxGrid.setName("Grid Toggle"); // NOI18N
+        jCheckBoxGrid.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCheckBoxGridItemStateChanged(evt);
             }
         });
 
         jLabelScale.setText("Scale :");
 
         jComboBoxScale.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1/8x" }));
+        jComboBoxScale.setName("Scale Combo"); // NOI18N
         jComboBoxScale.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxScaleActionPerformed(evt);
@@ -88,21 +101,25 @@ public class PortraitViewPanel extends AbstractViewPanel<PortraitLayoutPanel> {
         });
 
         jCheckBoxBlink.setText("Blink frame");
-        jCheckBoxBlink.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBoxBlinkActionPerformed(evt);
+        jCheckBoxBlink.setName("Blink Toggle"); // NOI18N
+        jCheckBoxBlink.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCheckBoxBlinkItemStateChanged(evt);
             }
         });
 
         jCheckBoxTalk.setText("Talk frame");
-        jCheckBoxTalk.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBoxTalkActionPerformed(evt);
+        jCheckBoxTalk.setName("Talk Toggle"); // NOI18N
+        jCheckBoxTalk.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCheckBoxTalkItemStateChanged(evt);
             }
         });
 
         infoButton1.setMessageText("Toggle the talk/blink frame to show what the character willl look like when playing their blink and talk 'animation'.");
         infoButton1.setText("");
+
+        paletteButtonRecolor.setName(""); // NOI18N
 
         jLabelRecolor.setText("Recolor :");
 
@@ -130,9 +147,9 @@ public class PortraitViewPanel extends AbstractViewPanel<PortraitLayoutPanel> {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 31, Short.MAX_VALUE)
                         .addComponent(infoButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCheckBoxTalk)
+                        .addComponent(jCheckBoxBlink)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCheckBoxBlink)))
+                        .addComponent(jCheckBoxTalk)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -149,9 +166,9 @@ public class PortraitViewPanel extends AbstractViewPanel<PortraitLayoutPanel> {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(paletteButtonRecolor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelRecolor)
-                    .addComponent(jCheckBoxTalk)
+                    .addComponent(infoButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jCheckBoxBlink)
-                    .addComponent(infoButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jCheckBoxTalk))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -160,27 +177,32 @@ public class PortraitViewPanel extends AbstractViewPanel<PortraitLayoutPanel> {
         super.onBGColorChanged(evt);
     }//GEN-LAST:event_colorPickerBGColorChanged
 
-    private void jCheckBoxGridStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jCheckBoxGridStateChanged
-        super.onGridChanged(evt);
-    }//GEN-LAST:event_jCheckBoxGridStateChanged
-
     private void jComboBoxScaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxScaleActionPerformed
         super.onScaleChanged(evt);
+        if (SettingsManager.isSavingAllowed()) {
+            PortraitSettings portraitSettings = SettingsManager.getSettingsStore("portrait");
+            portraitSettings.setRenderScaleIndex((int)jComboBoxScale.getSelectedIndex());
+            SettingsManager.saveSettingsFile();
+        }
     }//GEN-LAST:event_jComboBoxScaleActionPerformed
 
-    private void jCheckBoxBlinkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxBlinkActionPerformed
+    private void jCheckBoxBlinkItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBoxBlinkItemStateChanged
         if (!ActionManager.isActionTriggering()) {
             ActionManager.setActionWithoutExecute(new ToggleAction(jCheckBoxBlink, jCheckBoxBlink.isSelected()));
         }
         layoutPanel.setBlinking(jCheckBoxBlink.isSelected());
-    }//GEN-LAST:event_jCheckBoxBlinkActionPerformed
+    }//GEN-LAST:event_jCheckBoxBlinkItemStateChanged
 
-    private void jCheckBoxTalkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxTalkActionPerformed
+    private void jCheckBoxTalkItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBoxTalkItemStateChanged
         if (!ActionManager.isActionTriggering()) {
             ActionManager.setActionWithoutExecute(new ToggleAction(jCheckBoxTalk, jCheckBoxTalk.isSelected()));
         }
         layoutPanel.setSpeaking(jCheckBoxTalk.isSelected());
-    }//GEN-LAST:event_jCheckBoxTalkActionPerformed
+    }//GEN-LAST:event_jCheckBoxTalkItemStateChanged
+
+    private void jCheckBoxGridItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBoxGridItemStateChanged
+        super.onGridChanged(evt);
+    }//GEN-LAST:event_jCheckBoxGridItemStateChanged
     
     private void onPaletteColorChange(ActionEvent e) {
         Palette palette = (Palette)e.getSource();

@@ -10,10 +10,12 @@ import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.core.actions.ActionTableCellData;
 import com.sfc.sf2.core.actions.TableCellAction;
 import com.sfc.sf2.core.gui.controls.Console;
+import com.sfc.sf2.core.gui.controls.Table;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ComboBoxModel;
+import javax.swing.JTable;
 
 /**
  *
@@ -21,9 +23,14 @@ import javax.swing.ComboBoxModel;
  */
 public abstract class AbstractTableModel<T> extends javax.swing.table.AbstractTableModel {
 
+    private Table linkedTable;    
     private String[] columns;    
     private List<T> tableItems = new ArrayList();
     private int rowLimit;
+    
+    public void setLinkedTable(Table linkedTable) {
+        this.linkedTable = linkedTable;
+    }
     
     /**
      *
@@ -107,6 +114,14 @@ public abstract class AbstractTableModel<T> extends javax.swing.table.AbstractTa
         return tableItems.get(row);
     }
     
+    public void SetRow(int row, T data) {
+        if (row < 0 || row >= tableItems.size()) {
+            return;
+        }
+        tableItems.set(row, data);
+        fireTableRowsUpdated(row, row);
+    }
+    
     @Override
     public Object getValueAt(int row, int col) {
         if (row < 0 || row >= tableItems.size() || col < 0 || col >= columns.length) {
@@ -123,12 +138,14 @@ public abstract class AbstractTableModel<T> extends javax.swing.table.AbstractTa
         if (ActionManager.isActionTriggering()) {
             actionSetValueAt(row, col, value);
         } else {
-            ActionManager.setAndExecuteAction(new TableCellAction(this, this::actionSetValueAt, new ActionTableCellData(row, col, value), new ActionTableCellData(row, col, getValueAt(row, col))));
+            ActionManager.setAndExecuteAction(new TableCellAction(this, linkedTable, this::actionSetValueAt, new ActionTableCellData(row, col, value), new ActionTableCellData(row, col, getValueAt(row, col))));
         }
     }
     
     private void actionSetValueAt(ActionTableCellData data) {
         actionSetValueAt(data.row(), data.column(), data.data());
+        linkedTable.jTable.clearSelection();
+        linkedTable.jTable.setRowSelectionInterval(data.row(), data.row());
     }
     
     private void actionSetValueAt(int row, int col, Object value) {
@@ -164,7 +181,7 @@ public abstract class AbstractTableModel<T> extends javax.swing.table.AbstractTa
         if (tableItems.isEmpty() || row < 0 || row >= tableItems.size()) {
             tableItems.add(createBlankItem(tableItems.size()));
         } else {
-            tableItems.add(row+1, createBlankItem(row+1));
+            tableItems.add(row, createBlankItem(row));
         }
     }
     

@@ -213,9 +213,9 @@ public final class ExampleMainEditor extends AbstractMainEditor {
 
         jCheckBox1.setText("Toggle");
         jCheckBox1.setName("Action test toggle"); // NOI18N
-        jCheckBox1.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jCheckBox1StateChanged(evt);
+        jCheckBox1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCheckBox1ItemStateChanged(evt);
             }
         });
 
@@ -317,10 +317,7 @@ public final class ExampleMainEditor extends AbstractMainEditor {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(viewPanelStacked1, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+            .addComponent(viewPanelStacked1, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -360,7 +357,7 @@ public final class ExampleMainEditor extends AbstractMainEditor {
         table1.setRowBorders(false);
         table1.setSingleClickText(true);
         table1.setSpinnerNumberEditor(false);
-        table1.setName("String table test"); // NOI18N
+        table1.setName("String Test Table"); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -447,7 +444,7 @@ public final class ExampleMainEditor extends AbstractMainEditor {
         table2.setRowBorders(false);
         table2.setSingleClickText(false);
         table2.setSpinnerNumberEditor(false);
-        table2.setName("Combo table test"); // NOI18N
+        table2.setName("Combo Test Table"); // NOI18N
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -573,12 +570,12 @@ public final class ExampleMainEditor extends AbstractMainEditor {
         jLabel3.setText(multiComboBox1.getObjectsString());
     }//GEN-LAST:event_multiComboBox1ActionPerformed
 
-    private void jCheckBox1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jCheckBox1StateChanged
+    private void jCheckBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox1ItemStateChanged
         if (!ActionManager.isActionTriggering()) {
             ActionManager.setActionWithoutExecute(new ToggleAction(jCheckBox1, jCheckBox1.isSelected()));
         }
         jLabel6.setText(Boolean.toString(jCheckBox1.isSelected()));
-    }//GEN-LAST:event_jCheckBox1StateChanged
+    }//GEN-LAST:event_jCheckBox1ItemStateChanged
     
     /**
      * To create a new Main Editor, copy the below code

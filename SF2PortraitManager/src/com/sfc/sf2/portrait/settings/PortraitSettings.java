@@ -21,8 +21,8 @@ public class PortraitSettings implements AbstractSettings {
         return renderScaleIndex;
     }
     
-    public void setRenderScaleInex(int zoom) {
-        this.renderScaleIndex = zoom;
+    public void setRenderScaleIndex(int renderScaleIndex) {
+        this.renderScaleIndex = renderScaleIndex;
     }
     
     @Override

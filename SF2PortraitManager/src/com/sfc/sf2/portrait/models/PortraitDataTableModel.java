@@ -11,7 +11,7 @@ import com.sfc.sf2.core.models.AbstractTableModel;
  *
  * @author TiMMy
  */
-public class PortraitDataTableModel extends AbstractTableModel<int[]>  {
+public class PortraitDataTableModel extends AbstractTableModel<int[]> {
 
     public PortraitDataTableModel() {
         super(new String[] { "Row", "X", "Y", "X'", "Y'" }, 12);

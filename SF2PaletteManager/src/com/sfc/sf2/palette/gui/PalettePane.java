@@ -27,6 +27,8 @@ public class PalettePane extends JPanel {
     private Palette palette;
     private ColorPane[] colorPanes;
     
+    private boolean recordActions = true;
+    
     private ActionListener colorChangeListener;
     
     public PalettePane() {
@@ -48,6 +50,10 @@ public class PalettePane extends JPanel {
         this.colorChangeListener = colorChangeListener;
     }
     
+    public void setRecordActions(boolean recordActions) {
+        this.recordActions = recordActions;
+    }
+    
     public void setColorEditor(CRAMColorEditor colorEditor) {
         this.colorEditor = colorEditor;
         colorEditor.setColorPane(this);
@@ -65,7 +71,7 @@ public class PalettePane extends JPanel {
   
     public void updateColor(int index, CRAMColor color) {
         if (palette == null || index < 0) return;
-        if (ActionManager.isActionTriggering()) {
+        if (!recordActions || ActionManager.isActionTriggering()) {
             actionUpdateColor(index, color);
         } else {
             ActionManager.setAndExecuteAction(new PaletteAction(this, index, color, colorPanes[index].getCurrentColor()));

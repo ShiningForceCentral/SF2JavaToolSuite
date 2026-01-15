@@ -5,6 +5,7 @@
  */
 package com.sfc.sf2.portrait;
 
+import com.sfc.sf2.core.INameable;
 import com.sfc.sf2.graphics.Tile;
 import static com.sfc.sf2.graphics.Tile.PIXEL_HEIGHT;
 import static com.sfc.sf2.graphics.Tile.PIXEL_WIDTH;
@@ -17,7 +18,7 @@ import java.awt.image.BufferedImage;
  *
  * @author wiz
  */
-public class Portrait {
+public class Portrait implements INameable {
     
     public static final int PORTRAIT_TILES_FULL_WIDTH = 8;
     public static final int PORTRAIT_TILES_WIDTH = 6;

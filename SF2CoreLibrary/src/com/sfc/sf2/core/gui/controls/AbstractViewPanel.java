@@ -74,7 +74,7 @@ public class AbstractViewPanel<T extends AbstractLayoutPanel> extends javax.swin
         SettingsManager.saveGlobalSettingsFile();
     }
 
-    protected void onGridChanged(javax.swing.event.ChangeEvent evt) {
+    protected void onGridChanged(java.awt.event.ItemEvent evt) {
         if (!ActionManager.isActionTriggering()) {
             ActionManager.setActionWithoutExecute(new ToggleAction(jCheckBoxGrid, jCheckBoxGrid.isSelected()));
         }

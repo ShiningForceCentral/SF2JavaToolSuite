@@ -44,9 +44,9 @@
                       <EmptySpace type="unrelated" pref="31" max="32767" attributes="0"/>
                       <Component id="infoButton1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jCheckBoxTalk" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="jCheckBoxBlink" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jCheckBoxTalk" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -68,9 +68,9 @@
               <Group type="103" groupAlignment="2" attributes="0">
                   <Component id="paletteButtonRecolor" alignment="2" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabelRecolor" alignment="2" min="-2" max="-2" attributes="0"/>
-                  <Component id="jCheckBoxTalk" alignment="2" min="-2" max="-2" attributes="0"/>
-                  <Component id="jCheckBoxBlink" alignment="2" min="-2" max="-2" attributes="0"/>
                   <Component id="infoButton1" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Component id="jCheckBoxBlink" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Component id="jCheckBoxTalk" alignment="2" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -84,6 +84,9 @@
       </Properties>
     </Component>
     <Container class="com.sfc.sf2.core.gui.controls.ColorPicker" name="colorPickerBG">
+      <Properties>
+        <Property name="name" type="java.lang.String" value="BG Color Picker" noResource="true"/>
+      </Properties>
       <Events>
         <EventHandler event="colorChanged" listener="com.sfc.sf2.core.gui.controls.ColorPicker$ColorChangedListener" parameters="java.awt.event.ActionEvent" handler="colorPickerBGColorChanged"/>
       </Events>
@@ -104,9 +107,10 @@
     <Component class="javax.swing.JCheckBox" name="jCheckBoxGrid">
       <Properties>
         <Property name="text" type="java.lang.String" value="Show grid"/>
+        <Property name="name" type="java.lang.String" value="Grid Toggle" noResource="true"/>
       </Properties>
       <Events>
-        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jCheckBoxGridStateChanged"/>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jCheckBoxGridItemStateChanged"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelScale">
@@ -121,6 +125,7 @@
             <StringItem index="0" value="1/8x"/>
           </StringArray>
         </Property>
+        <Property name="name" type="java.lang.String" value="Scale Combo" noResource="true"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBoxScaleActionPerformed"/>
@@ -132,17 +137,19 @@
     <Component class="javax.swing.JCheckBox" name="jCheckBoxBlink">
       <Properties>
         <Property name="text" type="java.lang.String" value="Blink frame"/>
+        <Property name="name" type="java.lang.String" value="Blink Toggle" noResource="true"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBoxBlinkActionPerformed"/>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jCheckBoxBlinkItemStateChanged"/>
       </Events>
     </Component>
     <Component class="javax.swing.JCheckBox" name="jCheckBoxTalk">
       <Properties>
         <Property name="text" type="java.lang.String" value="Talk frame"/>
+        <Property name="name" type="java.lang.String" value="Talk Toggle" noResource="true"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBoxTalkActionPerformed"/>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jCheckBoxTalkItemStateChanged"/>
       </Events>
     </Component>
     <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton1">
@@ -152,6 +159,9 @@
       </Properties>
     </Component>
     <Component class="com.sfc.sf2.palette.gui.controls.PaletteButton" name="paletteButtonRecolor">
+      <Properties>
+        <Property name="name" type="java.lang.String" value="" noResource="true"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelRecolor">
       <Properties>

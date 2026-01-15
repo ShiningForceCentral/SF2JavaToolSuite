@@ -28,10 +28,6 @@ import java.nio.file.Path;
  * @author wiz
  */
 public class PortraitManager extends AbstractManager {
-    private final TilesetManager tilesetManager = new TilesetManager();
-    private final PortraitDisassemblyProcessor portraitDisassemblyProcessor = new PortraitDisassemblyProcessor();
-    private final PortraitMetadataProcessor portraitMetadataProcessor = new PortraitMetadataProcessor();
-    private final EntriesAsmProcessor entriesAsmProcessor = new EntriesAsmProcessor();
     
     private Portrait portrait;
 
@@ -46,7 +42,7 @@ public class PortraitManager extends AbstractManager {
     public void importDisassembly(Path filePath) throws IOException, DisassemblyException {
         Console.logger().finest("ENTERING importDisassembly");
         PortraitPackage pckg = new PortraitPackage(FileHelpers.getNumberFromFileName(filePath.toFile()), PathHelpers.filenameFromPath(filePath));
-        portrait = portraitDisassemblyProcessor.importDisassembly(filePath, pckg);
+        portrait = new PortraitDisassemblyProcessor().importDisassembly(filePath, pckg);
         Console.logger().info("Portrait successfully imported from : " + filePath);
         Console.logger().finest("EXITING importDisassembly");
     }
@@ -55,19 +51,19 @@ public class PortraitManager extends AbstractManager {
         Console.logger().finest("ENTERING exportDisassembly");
         this.portrait = portrait;
         PortraitPackage pckg = new PortraitPackage(portrait.getIndex(), PathHelpers.filenameFromPath(filePath));
-        portraitDisassemblyProcessor.exportDisassembly(filePath, portrait, pckg);
+        new PortraitDisassemblyProcessor().exportDisassembly(filePath, portrait, pckg);
         Console.logger().info("Portrait successfully exported to : " + filePath);
         Console.logger().finest("EXITING exportDisassembly");
     }
     
     public void importImage(Path portraitPath, Path metadataPath) throws IOException, MetadataException, RawImageException {
         Console.logger().finest("ENTERING importImage");
-        Tileset tileset = tilesetManager.importImage(portraitPath, true);
+        Tileset tileset = new TilesetManager().importImage(portraitPath, true);
         int index = FileHelpers.getNumberFromFileName(portraitPath.toFile());
         portrait = new Portrait(index, tileset.getName(), tileset);
         Console.logger().info("Portrait successfully imported from : " + portraitPath);
         try {
-            portraitMetadataProcessor.importMetadata(metadataPath, portrait);
+            new PortraitMetadataProcessor().importMetadata(metadataPath, portrait);
             Console.logger().info("Portrait metadata successfully imported from : " + metadataPath);
         } catch (Exception e) {
             Console.logger().info("ERROR Portrait metadata could not be imported : " + metadataPath + "\nImage still loaded.");
@@ -78,9 +74,9 @@ public class PortraitManager extends AbstractManager {
     public void exportImage(Path portraitPath, Path metadataPath, Portrait portrait) throws IOException, MetadataException, RawImageException {
         Console.logger().finest("ENTERING exportImage");
         this.portrait = portrait;
-        tilesetManager.exportImage(portraitPath, portrait.getTileset());
+        new TilesetManager().exportImage(portraitPath, portrait.getTileset());
         Console.logger().info("Portrait successfully exported to : " + portraitPath);
-        portraitMetadataProcessor.exportMetadata(metadataPath, portrait);
+        new PortraitMetadataProcessor().exportMetadata(metadataPath, portrait);
         Console.logger().info("Portrait metadata successfully exported to : " + metadataPath);
         Console.logger().finest("EXITING exportImage");  
     }
@@ -88,7 +84,7 @@ public class PortraitManager extends AbstractManager {
     //TODO update to new format
     public Portrait[] importDisassemblyFromEntryFile(Path entriesPath) throws IOException, AsmException {
         Console.logger().finest("ENTERING importDisassemblyFromEntryFile");
-        EntriesAsmData entriesData = entriesAsmProcessor.importAsmData(entriesPath, null);
+        EntriesAsmData entriesData = new EntriesAsmProcessor().importAsmData(entriesPath, null);
         Portrait[] portraits = new Portrait[entriesData.entriesCount()];
         Path portraitPath = null;
         int failedToLoad = 0;
@@ -97,7 +93,7 @@ public class PortraitManager extends AbstractManager {
                 portraitPath = PathHelpers.getIncbinPath().resolve(entriesData.getPathForUnique(i));
                 int index = FileHelpers.getNumberFromFileName(portraitPath.toFile());
                 PortraitPackage pckg = new PortraitPackage(index, PathHelpers.filenameFromPath(portraitPath));
-                portraits[i] = portraitDisassemblyProcessor.importDisassembly(portraitPath, pckg);
+                portraits[i] = new PortraitDisassemblyProcessor().importDisassembly(portraitPath, pckg);
             } catch (Exception e) {
                 failedToLoad++;
                 Console.logger().warning("Portrait could not be imported : " + portraitPath + " : " + e);

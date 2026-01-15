@@ -5,6 +5,7 @@
  */
 package com.sfc.sf2.core.actions;
 
+import com.sfc.sf2.core.gui.controls.Table;
 import com.sfc.sf2.core.models.AbstractTableModel;
 
 /**
@@ -13,17 +14,25 @@ import com.sfc.sf2.core.models.AbstractTableModel;
  */
 public class TableCellAction extends Action<ActionTableCellData> {
     
-    AbstractTableModel tableModel;
+    private AbstractTableModel tableModel;
     
-    public TableCellAction(AbstractTableModel tableModel, IActionable<ActionTableCellData> action, ActionTableCellData newValue, ActionTableCellData oldValue) {
-        super(tableModel, "Table Cell Value", action, newValue, oldValue);
+    public TableCellAction(AbstractTableModel tableModel, Table table, IActionable<ActionTableCellData> action, ActionTableCellData newValue, ActionTableCellData oldValue) {
+        super(table, "Table Cell Value", action, newValue, oldValue);
         
         this.tableModel = tableModel;
     }
 
     @Override
     public boolean isInvalidated() {
-        return newValue.data().equals(oldValue.data());
+        return newValue.row() == oldValue.row() && newValue.column() == oldValue.column() && newValue.data().equals(oldValue.data());
+    }
+
+    @Override
+    public boolean canBeCombined(IAction action) {
+        if (!super.canBeCombined(action)) return false;
+        TableCellAction other = (TableCellAction)action;
+        if (newValue.row() != other.newValue.row() || newValue.column() != other.newValue.column()) return false;
+        return true;
     }
 
     @Override

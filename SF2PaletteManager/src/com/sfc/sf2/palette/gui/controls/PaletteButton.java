@@ -5,6 +5,8 @@
  */
 package com.sfc.sf2.palette.gui.controls;
 
+import com.sfc.sf2.core.actions.Action;
+import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.palette.CRAMColor;
 import com.sfc.sf2.palette.Palette;
 import java.awt.event.ActionEvent;
@@ -30,6 +32,7 @@ public class PaletteButton extends javax.swing.JButton {
         initComponents();
         
         palettePane.setColorEditor(cRAMColorEditor);
+        palettePane.setRecordActions(false);
         palettePane.setColorChangeListener(this::onColorChanged);
         paletteEditor.setLocationRelativeTo(this);
     }
@@ -140,10 +143,19 @@ public class PaletteButton extends javax.swing.JButton {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfirmActionPerformed
+        ActionManager.setActionWithoutExecute(new Action<CRAMColor[]>(palette, "Palette Change", this::actionPaletteChanged, palette.getColors(), originalColors));
         palette = null;
         paletteEditor.dispose();
     }//GEN-LAST:event_jButtonConfirmActionPerformed
 
+    private void actionPaletteChanged(CRAMColor[] colors) {
+        Palette palette = paletteListener.getPalette();
+        palette.setColors(colors, palette.isFirstColorTransparent());
+        if (colorChangeListener != null) {
+            colorChangeListener.actionPerformed(new ActionEvent(palette, -1, "Reset"));
+        }
+    }
+    
     private void jButtonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelActionPerformed
         jButtonResetActionPerformed(evt);
         palette = null;

@@ -37,6 +37,9 @@ public class Table extends javax.swing.JPanel {
         super();
         initComponents();
         tableModel = getModel();
+        if (tableModel != null) {
+            tableModel.setLinkedTable(this);
+        }
         jPanelInfo.setVisible(infoButton.getMessageText() != null && infoButton.getMessageText().length() > 0);
     }
     
@@ -79,6 +82,9 @@ public class Table extends javax.swing.JPanel {
     public void setModel(AbstractTableModel model) {
         tableModel = model;
         jTable.setModel(model);
+        if (tableModel != null) {
+            tableModel.setLinkedTable(this);
+        }
     }
     
     @BeanProperty(enumerationValues = {
