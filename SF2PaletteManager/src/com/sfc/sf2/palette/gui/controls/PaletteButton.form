@@ -42,7 +42,7 @@
                               </Group>
                               <Group type="103" alignment="1" groupAlignment="0" attributes="0">
                                   <Component id="cRAMColorEditor" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="palettePane" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="palettePane" alignment="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
@@ -105,8 +105,6 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="com.formdev.flatlaf.icons.FlatRadioButtonIcon" name="flatRadioButtonIcon1">
-    </Component>
   </NonVisualComponents>
   <Properties>
     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">

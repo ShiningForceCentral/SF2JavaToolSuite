@@ -22,6 +22,8 @@ public class PaletteButton extends javax.swing.JButton {
     private Palette palette;
     private CRAMColor[] originalColors;
     
+    private int[] limitColorIndices;
+    
     private PaletteListener paletteListener;
     private ActionListener colorChangeListener;
     
@@ -38,6 +40,11 @@ public class PaletteButton extends javax.swing.JButton {
     }
     
     public void setupPaletteButton(PaletteListener paletteListener, ActionListener colorChangeListener) {
+        setupPaletteButton(paletteListener, colorChangeListener, null);
+    }
+    
+    public void setupPaletteButton(PaletteListener paletteListener, ActionListener colorChangeListener, int[] limitColorIndices) {
+        this.limitColorIndices = limitColorIndices;
         this.paletteListener = paletteListener;
         this.colorChangeListener = colorChangeListener;
     }
@@ -56,7 +63,6 @@ public class PaletteButton extends javax.swing.JButton {
         jButtonConfirm = new javax.swing.JButton();
         jButtonReset = new javax.swing.JButton();
         jButtonCancel = new javax.swing.JButton();
-        flatRadioButtonIcon1 = new com.formdev.flatlaf.icons.FlatRadioButtonIcon();
 
         paletteEditor.setTitle("Palette Editor");
         paletteEditor.setBounds(new java.awt.Rectangle(0, 0, 532, 320));
@@ -110,7 +116,7 @@ public class PaletteButton extends javax.swing.JButton {
                                 .addComponent(jButtonConfirm))
                             .addGroup(paletteEditorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(cRAMColorEditor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(palettePane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(palettePane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGap(20, 20, 20)))
                 .addContainerGap())
         );
@@ -164,7 +170,7 @@ public class PaletteButton extends javax.swing.JButton {
 
     private void showPaletteEditor(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showPaletteEditor
         palette = paletteListener.getPalette();
-        palettePane.setPalette(palette);
+        palettePane.setPalette(palette, limitColorIndices);
         if (palette == null) {
             originalColors = null;
             paletteEditor.setTitle("Palette Editor");
@@ -195,7 +201,6 @@ public class PaletteButton extends javax.swing.JButton {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.sfc.sf2.palette.gui.controls.CRAMColorEditor cRAMColorEditor;
-    private com.formdev.flatlaf.icons.FlatRadioButtonIcon flatRadioButtonIcon1;
     private javax.swing.JButton jButtonCancel;
     private javax.swing.JButton jButtonConfirm;
     private javax.swing.JButton jButtonReset;

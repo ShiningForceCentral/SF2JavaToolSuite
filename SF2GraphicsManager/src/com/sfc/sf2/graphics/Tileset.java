@@ -31,6 +31,7 @@ public class Tileset implements INameable {
         this.tilesPerRow = tilesPerRow;
     }
     
+    @Override
     public String getName() {
         return name;
     }

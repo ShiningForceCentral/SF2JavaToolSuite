@@ -37,11 +37,11 @@ public class PaletteHelpers {
      * @param extractIndices The indices to extract colors from the palette
      * @return A new palette of same length as extractIndices
      */
-    public static Palette extractColors(Palette palette, int[] extractIndices) {
+    public static Palette extractColors(Palette palette, int[] extractIndices, boolean firstColorTransparent) {
         CRAMColor[] newPalette = new CRAMColor[extractIndices.length];
         for (int i = 0; i < extractIndices.length; i++) {
             newPalette[i] = palette.getColors()[extractIndices[i]];
         }
-        return new Palette(newPalette, true);
+        return new Palette(newPalette, firstColorTransparent);
     }
 }

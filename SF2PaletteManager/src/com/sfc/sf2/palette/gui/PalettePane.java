@@ -102,7 +102,7 @@ public class PalettePane extends JPanel {
         return palette;
     }
     
-   public void setPalette(Palette palette) {
+    public void setPalette(Palette palette) {
         this.palette = palette;
         if (palette == null) {
             for (int i = 0; i < colorPanes.length; i++) {
@@ -121,7 +121,26 @@ public class PalettePane extends JPanel {
             }
         }
         setColorPaneSelected(-1);
-   }
+    }
+    
+    public void setPalette(Palette palette, int[] limitColorIndices) {
+        if (limitColorIndices == null) {
+            setPalette(palette);
+            return;
+        }
+        this.palette = palette;
+        CRAMColor[] colors = palette.getColors();
+        for (int i = 0; i < colorPanes.length; i++) {
+            if (i < colors.length) {
+                colorPanes[i].updateColor(colors[i]);
+            }
+            colorPanes[i].setVisible(false);
+        }
+        for (int i = 0; i < limitColorIndices.length; i++) {
+            colorPanes[limitColorIndices[i]].setVisible(true);
+        }
+        setColorPaneSelected(-1);
+    }
    
    public Palette getUpdatedPalette() {
        if (palette == null) {
