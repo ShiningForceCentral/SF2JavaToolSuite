@@ -13,7 +13,7 @@ public class RenderScaleHelpers {
     
     public static final String[] RENDER_SCALE_STRINGS = new String[] { "1/8x", "1/4x", "1/2x", "1x", "2x", "3x", "4x", "6x" };
     public static final float[] RENDER_SCALE = new float[] { 1/8f, 1/4f, 1/2f, 1f, 2f, 3f, 4f, 6f };
-    public static final int DEFAULT_RENDER_SCALE = 3;   //"1"
+    public static final int DEFAULT_RENDER_SCALE_INDEX = 3;   //"1x"
     
     public static int stringToIndex(String scale) {
         if (!scale.endsWith("x")) {
@@ -24,7 +24,7 @@ public class RenderScaleHelpers {
                 return i;
             }
         }
-        return DEFAULT_RENDER_SCALE;
+        return DEFAULT_RENDER_SCALE_INDEX;
     }
     
     public static float stringToRenderScale(String scale) {

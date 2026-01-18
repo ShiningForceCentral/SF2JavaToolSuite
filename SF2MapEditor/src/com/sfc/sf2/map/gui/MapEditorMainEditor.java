@@ -67,9 +67,9 @@ public class MapEditorMainEditor extends AbstractMainEditor {
         super.initEditor();
         
         jComboBox3.setModel(new DefaultComboBoxModel<>(RenderScaleHelpers.RENDER_SCALE_STRINGS));
-        jComboBox3.setSelectedIndex(RenderScaleHelpers.DEFAULT_RENDER_SCALE);
+        jComboBox3.setSelectedIndex(RenderScaleHelpers.DEFAULT_RENDER_SCALE_INDEX);
         jComboBox9.setModel(new DefaultComboBoxModel<>(RenderScaleHelpers.RENDER_SCALE_STRINGS));
-        jComboBox9.setSelectedIndex(RenderScaleHelpers.DEFAULT_RENDER_SCALE);
+        jComboBox9.setSelectedIndex(RenderScaleHelpers.DEFAULT_RENDER_SCALE_INDEX);
         
         accordionPanel1.setExpanded(false);
         accordionPanel2.setExpanded(false);

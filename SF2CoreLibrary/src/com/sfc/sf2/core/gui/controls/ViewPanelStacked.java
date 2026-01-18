@@ -42,6 +42,7 @@ public class ViewPanelStacked extends AbstractViewPanel<AbstractLayoutPanel> {
         jLabelItemsPerRow.setText("Tiles per row :");
 
         jSpinnerItemsPerRow.setModel(new javax.swing.SpinnerNumberModel(16, 1, null, 1));
+        jSpinnerItemsPerRow.setName("Tiles Per Row Spinner"); // NOI18N
         jSpinnerItemsPerRow.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 jSpinnerItemsPerRowStateChanged(evt);
@@ -50,6 +51,7 @@ public class ViewPanelStacked extends AbstractViewPanel<AbstractLayoutPanel> {
 
         jLabelBG.setText("BG :");
 
+        colorPickerBG.setName("BG Color Picker"); // NOI18N
         colorPickerBG.addColorChangedListener(new com.sfc.sf2.core.gui.controls.ColorPicker.ColorChangedListener() {
             public void colorChanged(java.awt.event.ActionEvent evt) {
                 colorPickerBGColorChanged(evt);
@@ -67,7 +69,7 @@ public class ViewPanelStacked extends AbstractViewPanel<AbstractLayoutPanel> {
             .addGap(0, 22, Short.MAX_VALUE)
         );
 
-        jCheckBoxGrid.setText("Show grid");
+        jCheckBoxGrid.setLabel("Grid Toggle");
         jCheckBoxGrid.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jCheckBoxGridItemStateChanged(evt);
@@ -77,6 +79,7 @@ public class ViewPanelStacked extends AbstractViewPanel<AbstractLayoutPanel> {
         jLabelScale.setText("Scale :");
 
         jComboBoxScale.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1/8x" }));
+        jComboBoxScale.setName("View Scale Combo"); // NOI18N
         jComboBoxScale.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxScaleActionPerformed(evt);

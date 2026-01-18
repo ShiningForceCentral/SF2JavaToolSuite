@@ -27,7 +27,7 @@ public class PortraitSettings implements AbstractSettings {
     
     @Override
     public void initialiseNewUser() {
-        renderScaleIndex = RenderScaleHelpers.DEFAULT_RENDER_SCALE;
+        renderScaleIndex = RenderScaleHelpers.DEFAULT_RENDER_SCALE_INDEX;
     }
 
     @Override

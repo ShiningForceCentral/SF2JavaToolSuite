@@ -8,6 +8,7 @@ package com.sfc.sf2.icon.settings;
 
 import com.sfc.sf2.core.io.FileFormat;
 import com.sfc.sf2.core.settings.AbstractSettings;
+import com.sfc.sf2.helpers.RenderScaleHelpers;
 import com.sfc.sf2.icon.IconManager.IconExportMode;
 import java.util.HashMap;
 
@@ -20,6 +21,7 @@ public class IconSettings implements AbstractSettings {
     private IconExportMode exportMode;
     private FileFormat exportFileFormat;
     private int itemsPerRow;
+    private int renderScaleIndex;
     
     public IconExportMode getExportMode() {
         return exportMode;
@@ -44,12 +46,21 @@ public class IconSettings implements AbstractSettings {
     public void setItemsPerRow(int itemsPerRow) {
         this.itemsPerRow = itemsPerRow;
     }
+
+    public int getRenderScaleIndex() {
+        return renderScaleIndex;
+    }
+
+    public void setRenderScaleIndex(int renderScaleIndex) {
+        this.renderScaleIndex = renderScaleIndex;
+    }
     
     @Override
     public void initialiseNewUser() {
         exportMode = IconExportMode.INDIVIDUAL_FILES;
         exportFileFormat = exportFileFormat.PNG;
         itemsPerRow = 10;
+        renderScaleIndex = RenderScaleHelpers.DEFAULT_RENDER_SCALE_INDEX;
     }
 
     @Override
@@ -67,6 +78,9 @@ public class IconSettings implements AbstractSettings {
         if (data.containsKey("itemsPerRow")) {
             itemsPerRow = Integer.parseInt(data.get("itemsPerRow"));
         }
+        if (data.containsKey("renderScale")) {
+            renderScaleIndex = RenderScaleHelpers.stringToIndex(data.get("renderScale"));
+        }
     }
 
     @Override
@@ -74,5 +88,6 @@ public class IconSettings implements AbstractSettings {
         data.put("exportMode", exportMode.toString());
         data.put("exportFileFormat", exportFileFormat.toString());
         data.put("itemsPerRow", Integer.toString(itemsPerRow));
+        data.put("renderScale", RenderScaleHelpers.indexToString(renderScaleIndex));
     }
 }

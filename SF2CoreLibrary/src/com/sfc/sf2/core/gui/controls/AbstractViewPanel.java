@@ -45,7 +45,7 @@ public class AbstractViewPanel<T extends AbstractLayoutPanel> extends javax.swin
         }
         if (jComboBoxScale != null) {
             jComboBoxScale.setModel(new DefaultComboBoxModel<>(RenderScaleHelpers.RENDER_SCALE_STRINGS));
-            jComboBoxScale.setSelectedIndex(RenderScaleHelpers.DEFAULT_RENDER_SCALE);
+            jComboBoxScale.setSelectedIndex(RenderScaleHelpers.DEFAULT_RENDER_SCALE_INDEX);
         }
     }
     

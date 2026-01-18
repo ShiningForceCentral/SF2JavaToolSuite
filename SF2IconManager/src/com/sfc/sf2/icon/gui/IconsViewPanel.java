@@ -3,23 +3,33 @@
 * To change this template file, choose Tools | Templates
 * and open the template in the editor.
  */
-package com.sfc.sf2.core.gui.controls;
+package com.sfc.sf2.icon.gui;
 
-import com.sfc.sf2.core.gui.AbstractLayoutPanel;
+import com.sfc.sf2.core.gui.controls.AbstractViewPanel;
+import com.sfc.sf2.core.settings.SettingsManager;
+import com.sfc.sf2.icon.settings.IconSettings;
 
 /**
  *
  * @author TiMMy
  */
-public class ViewPanel extends AbstractViewPanel<AbstractLayoutPanel> {
+public class IconsViewPanel extends AbstractViewPanel<IconsLayoutPanel> {
 
     /**
      * Creates new form ViewPanel
      */
-    public ViewPanel() {
+    public IconsViewPanel() {
         super();
         initComponents();
         init(jComboBoxScale, jCheckBoxGrid, jSpinnerItemsPerRow, colorPickerBG);
+    }
+
+    @Override
+    public void setLayoutPanel(IconsLayoutPanel layoutPanel) {
+        super.setLayoutPanel(layoutPanel);
+        IconSettings iconSettings = SettingsManager.getSettingsStore("icons");
+        jSpinnerItemsPerRow.setValue(iconSettings.getItemsPerRow());
+        jComboBoxScale.setSelectedIndex(iconSettings.getRenderScaleIndex());
     }
 
     /**
@@ -69,7 +79,7 @@ public class ViewPanel extends AbstractViewPanel<AbstractLayoutPanel> {
             .addGap(0, 22, Short.MAX_VALUE)
         );
 
-        jCheckBoxGrid.setLabel("Show Grid");
+        jCheckBoxGrid.setText("Show grid");
         jCheckBoxGrid.setName("Grid Toggle"); // NOI18N
         jCheckBoxGrid.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -126,6 +136,9 @@ public class ViewPanel extends AbstractViewPanel<AbstractLayoutPanel> {
 
     private void jSpinnerItemsPerRowStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinnerItemsPerRowStateChanged
         super.onItemsPerRowChanged(evt);
+        IconSettings iconSettings = SettingsManager.getSettingsStore("icons");
+        iconSettings.setItemsPerRow((int)jSpinnerItemsPerRow.getValue());
+        SettingsManager.saveSettingsFile();
     }//GEN-LAST:event_jSpinnerItemsPerRowStateChanged
 
     private void colorPickerBGColorChanged(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorPickerBGColorChanged
@@ -134,6 +147,9 @@ public class ViewPanel extends AbstractViewPanel<AbstractLayoutPanel> {
 
     private void jComboBoxScaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxScaleActionPerformed
         super.onScaleChanged(evt);
+        IconSettings iconSettings = SettingsManager.getSettingsStore("icons");
+        iconSettings.setRenderScaleIndex(jComboBoxScale.getSelectedIndex());
+        SettingsManager.saveSettingsFile();
     }//GEN-LAST:event_jComboBoxScaleActionPerformed
 
     private void jCheckBoxGridItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBoxGridItemStateChanged

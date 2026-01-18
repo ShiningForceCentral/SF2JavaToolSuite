@@ -5,6 +5,7 @@
  */
 package com.sfc.sf2.icon;
 
+import com.sfc.sf2.core.INameable;
 import com.sfc.sf2.graphics.Tileset;
 import com.sfc.sf2.palette.Palette;
 
@@ -12,7 +13,7 @@ import com.sfc.sf2.palette.Palette;
  *
  * @author TiMMy
  */
-public class Icon {
+public class Icon implements INameable {
     public static final int ICON_TILE_WIDTH = 2;
     public static final int ICON_TILE_HEIGHT = 3;
     
@@ -22,6 +23,10 @@ public class Icon {
     public Icon(int index, Tileset tileset) {
         this.index = index;
         this.tileset = tileset;
+    }
+
+    public String getName() {
+        return String.format("Icon%03d", index);
     }
     
     public int getIndex() {
