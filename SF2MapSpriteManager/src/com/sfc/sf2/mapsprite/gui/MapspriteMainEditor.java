@@ -42,7 +42,7 @@ public class MapspriteMainEditor extends AbstractMainEditor {
     protected void initEditor() {
         super.initEditor();
         
-        mapSpriteLayoutPanel.setDisplayScale(jComboBox1.getSelectedIndex()+1);
+        mapSpriteLayoutPanel.setRenderScaleIndex(jComboBox1.getSelectedIndex());
         mapSpriteLayoutPanel.setShowGrid(jCheckBox1.isSelected());
         colorPicker1.setColor(SettingsManager.getGlobalSettings().getTransparentBGColor());
         mapSpriteLayoutPanel.setBGColor(colorPicker1.getColor());
@@ -952,7 +952,7 @@ public class MapspriteMainEditor extends AbstractMainEditor {
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        mapSpriteLayoutPanel.setDisplayScale(jComboBox1.getSelectedIndex()+1);
+        mapSpriteLayoutPanel.setRenderScaleIndex(jComboBox1.getSelectedIndex());
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
