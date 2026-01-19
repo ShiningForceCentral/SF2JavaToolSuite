@@ -5,13 +5,19 @@
  */
 package com.sfc.sf2.specialSprites.gui;
 
+import com.sfc.sf2.core.actions.Action;
+import com.sfc.sf2.core.actions.ActionManager;
+import com.sfc.sf2.core.actions.RadioButtonAction;
+import com.sfc.sf2.core.actions.ToggleAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
-import com.sfc.sf2.core.settings.SettingsManager;
+import com.sfc.sf2.graphics.Tileset;
 import com.sfc.sf2.helpers.PathHelpers;
+import com.sfc.sf2.helpers.RenderScaleHelpers;
 import com.sfc.sf2.specialSprites.SpecialSpriteManager;
 import java.nio.file.Path;
 import java.util.logging.Level;
+import javax.swing.JRadioButton;
 
 /**
  *
@@ -19,7 +25,9 @@ import java.util.logging.Level;
  */
 public class SpecialSpriteMainEditor extends AbstractMainEditor {
     
-    SpecialSpriteManager specialSpriteManager = new SpecialSpriteManager();
+    private SpecialSpriteManager specialSpriteManager = new SpecialSpriteManager();
+    
+    private JRadioButton actionPreviousPreset;
     
     public SpecialSpriteMainEditor() {
         super();
@@ -31,18 +39,20 @@ public class SpecialSpriteMainEditor extends AbstractMainEditor {
     protected void initEditor() {
         super.initEditor();
         
-        specialSpriteLayoutPanel.setShowGrid(jCheckBox1.isSelected());                                           
-        specialSpriteLayoutPanel.setDisplayScale(jComboBox7.getSelectedIndex()+1);
-        colorPicker1.setColor(SettingsManager.getGlobalSettings().getTransparentBGColor());
-        specialSpriteLayoutPanel.setBGColor(colorPicker1.getBackground());
-        specialSpriteLayoutPanel.setItemsPerRow((int)jSpinner1.getValue());
+        viewPanel1.setLayoutPanel(specialSpriteLayoutPanel);
+        viewPanel1.getScaleComboBox().setSelectedIndex(RenderScaleHelpers.stringToIndex("4x"));
+        actionPreviousPreset = jRadio4x2Palette;
     }
     
     @Override
     protected void onDataLoaded() {
         super.onDataLoaded();
         
-        specialSpriteLayoutPanel.setTileset(specialSpriteManager.getTileset());
+        ActionManager.setAndExecuteAction(new Action<Tileset>(this, "Special Sprite Imported", this::actionTilesetLoaded, specialSpriteManager.getTileset(), specialSpriteLayoutPanel.getTileset()));
+    }
+    
+    private void actionTilesetLoaded(Tileset tileset) {
+        specialSpriteLayoutPanel.setTileset(tileset);
     } 
 
     /**
@@ -56,7 +66,7 @@ public class SpecialSpriteMainEditor extends AbstractMainEditor {
 
         jFileChooser1 = new javax.swing.JFileChooser();
         jFileChooser2 = new javax.swing.JFileChooser();
-        buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroupPresets = new javax.swing.ButtonGroup();
         jPanel13 = new javax.swing.JPanel();
         jSplitPane1 = new javax.swing.JSplitPane();
         jPanel15 = new javax.swing.JPanel();
@@ -65,52 +75,45 @@ public class SpecialSpriteMainEditor extends AbstractMainEditor {
         jPanel3 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel4 = new javax.swing.JPanel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        jRadio4x2Palette = new javax.swing.JRadioButton();
+        jRadio4x2NoPalette = new javax.swing.JRadioButton();
         jPanel6 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jSpinner2 = new javax.swing.JSpinner();
-        jSpinner3 = new javax.swing.JSpinner();
+        jSpinnerBlockW = new javax.swing.JSpinner();
+        jSpinnerBlockH = new javax.swing.JSpinner();
         jLabel4 = new javax.swing.JLabel();
-        jSpinner5 = new javax.swing.JSpinner();
-        jRadioButton4 = new javax.swing.JRadioButton();
-        fileButton2 = new com.sfc.sf2.core.gui.controls.FileButton();
+        jSpinnerTilesBlock = new javax.swing.JSpinner();
+        jRadioCustom = new javax.swing.JRadioButton();
+        fileButtonImportPalette = new com.sfc.sf2.core.gui.controls.FileButton();
         infoButton3 = new com.sfc.sf2.core.gui.controls.InfoButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
+        jRadio6x3 = new javax.swing.JRadioButton();
         jLabel10 = new javax.swing.JLabel();
-        jButton18 = new javax.swing.JButton();
-        fileButton1 = new com.sfc.sf2.core.gui.controls.FileButton();
+        jButtonImportSpecialSprite = new javax.swing.JButton();
+        fileButtonImportSpecialSprite = new com.sfc.sf2.core.gui.controls.FileButton();
         infoButton1 = new com.sfc.sf2.core.gui.controls.InfoButton();
         jPanel9 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        fileButton3 = new com.sfc.sf2.core.gui.controls.FileButton();
-        jButton12 = new javax.swing.JButton();
+        fileButtonImportImage = new com.sfc.sf2.core.gui.controls.FileButton();
+        jButtonImportImage = new javax.swing.JButton();
         infoButton5 = new com.sfc.sf2.core.gui.controls.InfoButton();
         jPanel5 = new javax.swing.JPanel();
         jTabbedPane2 = new javax.swing.JTabbedPane();
         jPanel11 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
+        jButtonExportSpecialSprite = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jCheckBox2 = new javax.swing.JCheckBox();
-        fileButton4 = new com.sfc.sf2.core.gui.controls.FileButton();
+        jCheckBoxSavePalette = new javax.swing.JCheckBox();
+        fileButtonExpotSpecialSprite = new com.sfc.sf2.core.gui.controls.FileButton();
         infoButton2 = new com.sfc.sf2.core.gui.controls.InfoButton();
         jPanel14 = new javax.swing.JPanel();
-        jButton13 = new javax.swing.JButton();
+        jButtonExportImage = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
-        fileButton5 = new com.sfc.sf2.core.gui.controls.FileButton();
+        fileButtonExportImage = new com.sfc.sf2.core.gui.controls.FileButton();
         infoButton6 = new com.sfc.sf2.core.gui.controls.InfoButton();
         jPanel10 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         specialSpriteLayoutPanel = new com.sfc.sf2.specialSprites.gui.SpecialSpriteLayoutPanel();
-        jPanel20 = new javax.swing.JPanel();
-        jComboBox7 = new javax.swing.JComboBox<>();
-        jLabel7 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jLabel28 = new javax.swing.JLabel();
-        jSpinner1 = new javax.swing.JSpinner();
-        colorPicker1 = new com.sfc.sf2.core.gui.controls.ColorPicker();
-        jLabel55 = new javax.swing.JLabel();
+        viewPanel1 = new com.sfc.sf2.core.gui.controls.ViewPanel();
         console1 = new com.sfc.sf2.core.gui.controls.Console();
 
         jFileChooser2.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
@@ -128,20 +131,24 @@ public class SpecialSpriteMainEditor extends AbstractMainEditor {
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Import from :"));
         jPanel3.setPreferredSize(new java.awt.Dimension(590, 135));
 
-        buttonGroup1.add(jRadioButton1);
-        jRadioButton1.setSelected(true);
-        jRadioButton1.setText("4x2 (x3) - (zeon, taros, kraken, evilspirit)");
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton1ActionPerformed(evt);
+        buttonGroupPresets.add(jRadio4x2Palette);
+        jRadio4x2Palette.setSelected(true);
+        jRadio4x2Palette.setText("4x2 (x3) - (zeon, taros, kraken, evilspirit)");
+        jRadio4x2Palette.setActionCommand("4x2p");
+        jRadio4x2Palette.setName("Preset Radio 4x2"); // NOI18N
+        jRadio4x2Palette.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jRadioButtonItemStateChanged(evt);
             }
         });
 
-        buttonGroup1.add(jRadioButton2);
-        jRadioButton2.setText("4x2 (x3) - wo/ palette - (evilspiritalt)");
-        jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton2ActionPerformed(evt);
+        buttonGroupPresets.add(jRadio4x2NoPalette);
+        jRadio4x2NoPalette.setText("4x2 (x3) - wo/ palette - (evilspiritalt)");
+        jRadio4x2NoPalette.setActionCommand("4x2np");
+        jRadio4x2NoPalette.setName("Preset Radio 4x2 wo/palette"); // NOI18N
+        jRadio4x2NoPalette.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jRadioButtonItemStateChanged(evt);
             }
         });
 
@@ -149,21 +156,28 @@ public class SpecialSpriteMainEditor extends AbstractMainEditor {
 
         jLabel2.setText("Blocks :");
 
-        jSpinner2.setModel(new javax.swing.SpinnerNumberModel(4, 1, null, 1));
+        jSpinnerBlockW.setModel(new javax.swing.SpinnerNumberModel(4, 1, null, 1));
 
-        jSpinner3.setModel(new javax.swing.SpinnerNumberModel(2, 1, null, 1));
+        jSpinnerBlockH.setModel(new javax.swing.SpinnerNumberModel(2, 1, null, 1));
 
         jLabel4.setText("tiles :");
 
-        jSpinner5.setModel(new javax.swing.SpinnerNumberModel(3, 1, null, 1));
+        jSpinnerTilesBlock.setModel(new javax.swing.SpinnerNumberModel(3, 1, null, 1));
 
-        buttonGroup1.add(jRadioButton4);
-        jRadioButton4.setText("Custom");
+        buttonGroupPresets.add(jRadioCustom);
+        jRadioCustom.setText("Custom");
+        jRadioCustom.setName("Preset Radio Custom"); // NOI18N
+        jRadioCustom.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jRadioButtonItemStateChanged(evt);
+            }
+        });
 
-        fileButton2.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButton2.setFilePath("");
-        fileButton2.setInfoMessage("<html>Option to load palette from a separate file.<br>E.g. The palette for evilspiritalt.bin is stored in evilspirit.bin.</html>");
-        fileButton2.setLabelText("Load palette from :");
+        fileButtonImportPalette.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
+        fileButtonImportPalette.setFilePath("");
+        fileButtonImportPalette.setInfoMessage("<html>Option to load palette from a separate file.<br>E.g. The palette for evilspiritalt.bin is stored in evilspirit.bin.</html>");
+        fileButtonImportPalette.setLabelText("Import palette from :");
+        fileButtonImportPalette.setName("Import Palette"); // NOI18N
 
         infoButton3.setMessageText("<html>The 'custom' option allows precise control over the parameters that define how a special sprite loads.</html>");
         infoButton3.setText("");
@@ -175,23 +189,23 @@ public class SpecialSpriteMainEditor extends AbstractMainEditor {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fileButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(fileButtonImportPalette, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addComponent(jRadioButton4)
+                                .addComponent(jRadioCustom)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(infoButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel6Layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jSpinnerBlockW, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jSpinner3, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jSpinnerBlockH, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jSpinner5, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jSpinnerTilesBlock, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 93, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -201,40 +215,43 @@ public class SpecialSpriteMainEditor extends AbstractMainEditor {
                 .addGap(2, 2, 2)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(infoButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jRadioButton4))
+                    .addComponent(jRadioCustom))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSpinner3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSpinnerBlockW, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSpinnerBlockH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel4)
-                    .addComponent(jSpinner5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jSpinnerTilesBlock, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fileButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fileButtonImportPalette, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
-        buttonGroup1.add(jRadioButton3);
-        jRadioButton3.setText("6x3 (x3) - (nazcaship)");
-        jRadioButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton3ActionPerformed(evt);
+        buttonGroupPresets.add(jRadio6x3);
+        jRadio6x3.setText("6x3 (x3) - (nazcaship)");
+        jRadio6x3.setActionCommand("6x3");
+        jRadio6x3.setName("Preset Radio 6x3"); // NOI18N
+        jRadio6x3.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jRadioButtonItemStateChanged(evt);
             }
         });
 
         jLabel10.setText("Presets :");
 
-        jButton18.setText("Import");
-        jButton18.addActionListener(new java.awt.event.ActionListener() {
+        jButtonImportSpecialSprite.setText("Import");
+        jButtonImportSpecialSprite.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton18ActionPerformed(evt);
+                jButtonImportSpecialSpriteActionPerformed(evt);
             }
         });
 
-        fileButton1.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButton1.setFilePath(".\\zeon.bin");
-        fileButton1.setInfoMessage("");
-        fileButton1.setLabelText("Special sprite :");
+        fileButtonImportSpecialSprite.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
+        fileButtonImportSpecialSprite.setFilePath(".\\zeon.bin");
+        fileButtonImportSpecialSprite.setInfoMessage("");
+        fileButtonImportSpecialSprite.setLabelText("Special sprite :");
+        fileButtonImportSpecialSprite.setName("Import Special Sprite"); // NOI18N
 
         infoButton1.setMessageText("<html>Special sprites have several properties that define how they are loaded. Therefore some presets have been setup to simplify loading the pre-existing special sprites.</html>");
         infoButton1.setText("");
@@ -248,19 +265,19 @@ public class SpecialSpriteMainEditor extends AbstractMainEditor {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(fileButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addComponent(fileButtonImportSpecialSprite, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(jRadioButton1)
+                                .addComponent(jRadio4x2Palette)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jRadioButton2)
-                                    .addComponent(jRadioButton3))
+                                    .addComponent(jRadio4x2NoPalette)
+                                    .addComponent(jRadio6x3))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
-                                .addComponent(jButton18))))
+                                .addComponent(jButtonImportSpecialSprite))))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel10)
@@ -273,20 +290,20 @@ public class SpecialSpriteMainEditor extends AbstractMainEditor {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(fileButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fileButtonImportSpecialSprite, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(infoButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton1)
+                .addComponent(jRadio4x2Palette)
                 .addGap(0, 0, 0)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jRadioButton2)
+                        .addComponent(jRadio4x2NoPalette)
                         .addGap(0, 0, 0)
-                        .addComponent(jRadioButton3))
-                    .addComponent(jButton18))
+                        .addComponent(jRadio6x3))
+                    .addComponent(jButtonImportSpecialSprite))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -296,15 +313,16 @@ public class SpecialSpriteMainEditor extends AbstractMainEditor {
 
         jLabel3.setText("Import special sprite from image.");
 
-        fileButton3.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ANY_IMAGE);
-        fileButton3.setFilePath(".\\export\\newSpecialSprite.png");
-        fileButton3.setInfoMessage("");
-        fileButton3.setLabelText("Image file :");
+        fileButtonImportImage.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ANY_IMAGE);
+        fileButtonImportImage.setFilePath(".\\export\\newSpecialSprite.png");
+        fileButtonImportImage.setInfoMessage("");
+        fileButtonImportImage.setLabelText("Image file :");
+        fileButtonImportImage.setName("Import Image"); // NOI18N
 
-        jButton12.setText("Import");
-        jButton12.addActionListener(new java.awt.event.ActionListener() {
+        jButtonImportImage.setText("Import");
+        jButtonImportImage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton12ActionPerformed(evt);
+                jButtonImportImageActionPerformed(evt);
             }
         });
 
@@ -318,10 +336,10 @@ public class SpecialSpriteMainEditor extends AbstractMainEditor {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fileButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(fileButtonImportImage, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
                         .addGap(6, 377, Short.MAX_VALUE)
-                        .addComponent(jButton12))
+                        .addComponent(jButtonImportImage))
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -337,9 +355,9 @@ public class SpecialSpriteMainEditor extends AbstractMainEditor {
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(infoButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fileButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fileButtonImportImage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton12)
+                .addComponent(jButtonImportImage)
                 .addContainerGap())
         );
 
@@ -363,22 +381,29 @@ public class SpecialSpriteMainEditor extends AbstractMainEditor {
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Export to :"));
         jPanel5.setPreferredSize(new java.awt.Dimension(32, 135));
 
-        jButton2.setText("Export");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButtonExportSpecialSprite.setText("Export");
+        jButtonExportSpecialSprite.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButtonExportSpecialSpriteActionPerformed(evt);
             }
         });
 
         jLabel1.setText("Export special sprite disasssembly.");
 
-        jCheckBox2.setSelected(true);
-        jCheckBox2.setText("Save palette in file");
+        jCheckBoxSavePalette.setSelected(true);
+        jCheckBoxSavePalette.setText("Save palette in file");
+        jCheckBoxSavePalette.setName("Toggle Palette In File"); // NOI18N
+        jCheckBoxSavePalette.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCheckBoxSavePaletteItemStateChanged(evt);
+            }
+        });
 
-        fileButton4.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButton4.setFilePath(".\\newSpecialSprite.bin");
-        fileButton4.setInfoMessage("");
-        fileButton4.setLabelText("Special sprite :");
+        fileButtonExpotSpecialSprite.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
+        fileButtonExpotSpecialSprite.setFilePath(".\\newSpecialSprite.bin");
+        fileButtonExpotSpecialSprite.setInfoMessage("");
+        fileButtonExpotSpecialSprite.setLabelText("Special sprite :");
+        fileButtonExpotSpecialSprite.setName("Export Special Sprite"); // NOI18N
 
         infoButton2.setMessageText("<html>The special sprite evilspiritalt.bin uses the palette from evilspirit.bin and, thus, does not store the palette inside <i>evilspiritalt.bin</i>.</html>");
         infoButton2.setText("");
@@ -390,13 +415,13 @@ public class SpecialSpriteMainEditor extends AbstractMainEditor {
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fileButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(fileButtonExpotSpecialSprite, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(jPanel11Layout.createSequentialGroup()
-                        .addComponent(jCheckBox2)
+                        .addComponent(jCheckBoxSavePalette)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(infoButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
-                        .addComponent(jButton2))
+                        .addComponent(jButtonExportSpecialSprite))
                     .addGroup(jPanel11Layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -408,28 +433,29 @@ public class SpecialSpriteMainEditor extends AbstractMainEditor {
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fileButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fileButtonExpotSpecialSprite, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jButton2)
+                    .addComponent(jButtonExportSpecialSprite)
                     .addComponent(infoButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jCheckBox2))
+                    .addComponent(jCheckBoxSavePalette))
                 .addContainerGap())
         );
 
         jTabbedPane2.addTab("Disassembly", jPanel11);
 
-        jButton13.setText("Export");
-        jButton13.addActionListener(new java.awt.event.ActionListener() {
+        jButtonExportImage.setText("Export");
+        jButtonExportImage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton13ActionPerformed(evt);
+                jButtonExportImageActionPerformed(evt);
             }
         });
 
         jLabel9.setText("Export special sprite as image.");
 
-        fileButton5.setFilePath(".\\export\\newSpecialSprite.png");
-        fileButton5.setLabelText("Image file :");
+        fileButtonExportImage.setFilePath(".\\export\\newSpecialSprite.png");
+        fileButtonExportImage.setLabelText("Image file :");
+        fileButtonExportImage.setName("Export Image"); // NOI18N
 
         infoButton6.setMessageText("<html>Supported image formats: PNG or GIF.<br><br>Exported color format will be 4BPP / 16 indexed colors.<br>Color index 0 is treated as transparent.</html>");
         infoButton6.setText("");
@@ -441,10 +467,10 @@ public class SpecialSpriteMainEditor extends AbstractMainEditor {
             .addGroup(jPanel14Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fileButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(fileButtonExportImage, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
                         .addGap(6, 270, Short.MAX_VALUE)
-                        .addComponent(jButton13))
+                        .addComponent(jButtonExportImage))
                     .addGroup(jPanel14Layout.createSequentialGroup()
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -460,9 +486,9 @@ public class SpecialSpriteMainEditor extends AbstractMainEditor {
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(infoButton6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fileButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fileButtonExportImage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton13)
+                .addComponent(jButtonExportImage)
                 .addContainerGap())
         );
 
@@ -478,7 +504,7 @@ public class SpecialSpriteMainEditor extends AbstractMainEditor {
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane2)
+            .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
@@ -491,8 +517,8 @@ public class SpecialSpriteMainEditor extends AbstractMainEditor {
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -509,7 +535,7 @@ public class SpecialSpriteMainEditor extends AbstractMainEditor {
         );
         specialSpriteLayoutPanelLayout.setVerticalGroup(
             specialSpriteLayoutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 404, Short.MAX_VALUE)
+            .addGap(0, 416, Short.MAX_VALUE)
         );
 
         jScrollPane2.setViewportView(specialSpriteLayoutPanel);
@@ -522,106 +548,22 @@ public class SpecialSpriteMainEditor extends AbstractMainEditor {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2)
-        );
-
-        jPanel20.setBorder(javax.swing.BorderFactory.createTitledBorder("View"));
-
-        jComboBox7.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "x1", "x2", "x3", "x4" }));
-        jComboBox7.setSelectedIndex(1);
-        jComboBox7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox7ActionPerformed(evt);
-            }
-        });
-
-        jLabel7.setText("Scale :");
-
-        jCheckBox1.setText("Show grid");
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
-            }
-        });
-
-        jLabel28.setText("Tiles per row : ");
-
-        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(6, 1, null, 1));
-        jSpinner1.setToolTipText("");
-        jSpinner1.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jSpinner1StateChanged(evt);
-            }
-        });
-
-        colorPicker1.addColorChangedListener(new com.sfc.sf2.core.gui.controls.ColorPicker.ColorChangedListener() {
-            public void colorChanged(java.awt.event.ActionEvent evt) {
-                colorPicker1ColorChanged(evt);
-            }
-        });
-
-        javax.swing.GroupLayout colorPicker1Layout = new javax.swing.GroupLayout(colorPicker1);
-        colorPicker1.setLayout(colorPicker1Layout);
-        colorPicker1Layout.setHorizontalGroup(
-            colorPicker1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 22, Short.MAX_VALUE)
-        );
-        colorPicker1Layout.setVerticalGroup(
-            colorPicker1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 22, Short.MAX_VALUE)
-        );
-
-        jLabel55.setText("BG :");
-
-        javax.swing.GroupLayout jPanel20Layout = new javax.swing.GroupLayout(jPanel20);
-        jPanel20.setLayout(jPanel20Layout);
-        jPanel20Layout.setHorizontalGroup(
-            jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel20Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel28)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel55)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(colorPicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jCheckBox1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox7, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        jPanel20Layout.setVerticalGroup(
-            jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel20Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel28)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel55)
-                    .addComponent(colorPicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jCheckBox1)
-                    .addComponent(jComboBox7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
-                .addContainerGap())
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(viewPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(viewPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -667,103 +609,100 @@ public class SpecialSpriteMainEditor extends AbstractMainEditor {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Path graphicPath = PathHelpers.getBasePath().resolve(fileButton4.getFilePath());
+    private void jButtonExportSpecialSpriteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExportSpecialSpriteActionPerformed
+        Path graphicPath = PathHelpers.getBasePath().resolve(fileButtonExpotSpecialSprite.getFilePath());
         if (!PathHelpers.createPathIfRequred(graphicPath)) return;
         try {
-            int blockRows = (int)jSpinner3.getValue();
-            int blockColumns = (int)jSpinner2.getValue();
-            int tilesPerBlock = (int)jSpinner5.getValue();
-            specialSpriteManager.exportDisassembly(graphicPath, specialSpriteLayoutPanel.getTileset(), blockRows, blockColumns, tilesPerBlock, jCheckBox2.isSelected());
+            int blockRows = (int)jSpinnerBlockH.getValue();
+            int blockColumns = (int)jSpinnerBlockW.getValue();
+            int tilesPerBlock = (int)jSpinnerTilesBlock.getValue();
+            specialSpriteManager.exportDisassembly(graphicPath, specialSpriteLayoutPanel.getTileset(), blockRows, blockColumns, tilesPerBlock, jCheckBoxSavePalette.isSelected());
         } catch (Exception ex) {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Special sprite disasm could not be exported to : " + graphicPath);
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jButtonExportSpecialSpriteActionPerformed
 
-    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
-        Path graphicPath = PathHelpers.getBasePath().resolve(fileButton5.getFilePath());
+    private void jButtonExportImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExportImageActionPerformed
+        Path graphicPath = PathHelpers.getBasePath().resolve(fileButtonExportImage.getFilePath());
         if (!PathHelpers.createPathIfRequred(graphicPath)) return;
         try {
-            specialSpriteManager.exportImage(graphicPath, specialSpriteLayoutPanel.getTileset(), (int)jSpinner1.getValue());
+            specialSpriteManager.exportImage(graphicPath, specialSpriteLayoutPanel.getTileset(), (int)viewPanel1.getItemsPerRowSpinner().getValue());
         } catch (Exception ex) {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Special sprite image could not be exported to : " + graphicPath);
         }
-    }//GEN-LAST:event_jButton13ActionPerformed
+    }//GEN-LAST:event_jButtonExportImageActionPerformed
 
-    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-        Path graphicPath = PathHelpers.getBasePath().resolve(fileButton3.getFilePath());
+    private void jButtonImportImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportImageActionPerformed
+        Path graphicPath = PathHelpers.getBasePath().resolve(fileButtonImportImage.getFilePath());
         try {
             specialSpriteManager.importImage(graphicPath);
-            jSpinner1.setValue(specialSpriteManager.getTileset().getTilesPerRow());
+            viewPanel1.getItemsPerRowSpinner().setValue(specialSpriteManager.getTileset().getTilesPerRow());
         } catch (Exception ex) {
             specialSpriteManager.clearData();
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Special sprite image could not be imported from : " + graphicPath);
         }
         onDataLoaded();
-    }//GEN-LAST:event_jButton12ActionPerformed
+    }//GEN-LAST:event_jButtonImportImageActionPerformed
 
-    private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
+    private void jButtonImportSpecialSpriteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportSpecialSpriteActionPerformed
         Path optionalPalettePath = null;
-        if (fileButton2.getFilePath().length() > 0) {
-            optionalPalettePath = PathHelpers.getBasePath().resolve(fileButton2.getFilePath());
+        if (fileButtonImportPalette.getFilePath().length() > 0) {
+            optionalPalettePath = PathHelpers.getBasePath().resolve(fileButtonImportPalette.getFilePath());
         }
-        Path graphicPath = PathHelpers.getBasePath().resolve(fileButton1.getFilePath());
+        Path graphicPath = PathHelpers.getBasePath().resolve(fileButtonImportSpecialSprite.getFilePath());
         try {
-            int blockRows = (int)jSpinner3.getValue();
-            int blockColumns = (int)jSpinner2.getValue();
-            int tilesPerRow = blockColumns * (int)jSpinner5.getValue();
-            specialSpriteManager.importDisassembly(graphicPath, blockRows, blockColumns, (int)jSpinner5.getValue(), optionalPalettePath);
-            jSpinner1.setValue(specialSpriteManager.getTileset().getTilesPerRow());
+            int blockRows = (int)jSpinnerBlockH.getValue();
+            int blockColumns = (int)jSpinnerBlockW.getValue();
+            int tilesPerRow = blockColumns * (int)jSpinnerTilesBlock.getValue();
+            specialSpriteManager.importDisassembly(graphicPath, blockRows, blockColumns, (int)jSpinnerTilesBlock.getValue(), optionalPalettePath);
+            viewPanel1.getItemsPerRowSpinner().setValue(specialSpriteManager.getTileset().getTilesPerRow());
         } catch (Exception ex) {
             specialSpriteManager.clearData();
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Special sprite disasm could not be imported from : " + graphicPath);
         }
         onDataLoaded();
-    }//GEN-LAST:event_jButton18ActionPerformed
+    }//GEN-LAST:event_jButtonImportSpecialSpriteActionPerformed
 
-    private void jComboBox7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox7ActionPerformed
-        specialSpriteLayoutPanel.setDisplayScale(jComboBox7.getSelectedIndex()+1);
-    }//GEN-LAST:event_jComboBox7ActionPerformed
+    private void jRadioButtonItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jRadioButtonItemStateChanged
+        if (!ActionManager.isActionTriggering()) {
+            ActionManager.setActionWithoutExecute(new RadioButtonAction(buttonGroupPresets, (JRadioButton)evt.getSource(), actionPreviousPreset));
+        }
+        actionPreviousPreset = (JRadioButton)evt.getSource();
+        switch (actionPreviousPreset.getActionCommand()) {
+            case "4x2p":
+                jSpinnerBlockW.setValue(4);
+                jSpinnerBlockH.setValue(2);
+                jSpinnerTilesBlock.setValue(3);
+                fileButtonImportPalette.setFilePath(null);
+                break;
+            case "4x2np":
+                jSpinnerBlockW.setValue(4);
+                jSpinnerBlockH.setValue(2);
+                jSpinnerTilesBlock.setValue(3);
+                fileButtonImportPalette.setFilePath(".\\evilspirit.bin");
+                break;
+            case "6x3":
+                jSpinnerBlockW.setValue(6);
+                jSpinnerBlockH.setValue(3);
+                jSpinnerTilesBlock.setValue(3);
+                fileButtonImportPalette.setFilePath(null);
+                break;
+            case "Custom":
+                //Do nothing
+                break;
+        }
+    }//GEN-LAST:event_jRadioButtonItemStateChanged
 
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
-        specialSpriteLayoutPanel.setShowGrid(jCheckBox1.isSelected());
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
-
-    private void jSpinner1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner1StateChanged
-        specialSpriteLayoutPanel.setItemsPerRow((int)jSpinner1.getValue());
-    }//GEN-LAST:event_jSpinner1StateChanged
-
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
-        jSpinner2.setValue(4);
-        jSpinner3.setValue(2);
-        jSpinner5.setValue(3);
-        fileButton2.setFilePath(null);
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
-
-    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
-        jSpinner2.setValue(4);
-        jSpinner3.setValue(2);
-        jSpinner5.setValue(3);
-        fileButton2.setFilePath(".\\evilspirit.bin");
-    }//GEN-LAST:event_jRadioButton2ActionPerformed
-
-    private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
-        jSpinner2.setValue(6);
-        jSpinner3.setValue(3);
-        jSpinner5.setValue(3);
-        fileButton2.setFilePath(null);
-    }//GEN-LAST:event_jRadioButton3ActionPerformed
-
-    private void colorPicker1ColorChanged(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorPicker1ColorChanged
-        specialSpriteLayoutPanel.setBGColor(colorPicker1.getColor());
-        SettingsManager.getGlobalSettings().setTransparentBGColor(colorPicker1.getColor());
-        SettingsManager.saveGlobalSettingsFile();
-    }//GEN-LAST:event_colorPicker1ColorChanged
-
+    private void jCheckBoxSavePaletteItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBoxSavePaletteItemStateChanged
+        if (!ActionManager.isActionTriggering()) {
+            ActionManager.setActionWithoutExecute(new ToggleAction(jCheckBoxSavePalette, jCheckBoxSavePalette.isSelected()));
+        }
+    }//GEN-LAST:event_jCheckBoxSavePaletteItemStateChanged
+    
     /**
      * To create a new Main Editor, copy the below code
      * Don't forget to change the new main class (below)
@@ -781,36 +720,30 @@ public class SpecialSpriteMainEditor extends AbstractMainEditor {
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.ButtonGroup buttonGroup1;
-    private com.sfc.sf2.core.gui.controls.ColorPicker colorPicker1;
+    private javax.swing.ButtonGroup buttonGroupPresets;
     private com.sfc.sf2.core.gui.controls.Console console1;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton1;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton2;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton3;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton4;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton5;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonExportImage;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonExpotSpecialSprite;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonImportImage;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonImportPalette;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonImportSpecialSprite;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton1;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton2;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton3;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton5;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton6;
-    private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton13;
-    private javax.swing.JButton jButton18;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JComboBox<String> jComboBox7;
+    private javax.swing.JButton jButtonExportImage;
+    private javax.swing.JButton jButtonExportSpecialSprite;
+    private javax.swing.JButton jButtonImportImage;
+    private javax.swing.JButton jButtonImportSpecialSprite;
+    private javax.swing.JCheckBox jCheckBoxSavePalette;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JFileChooser jFileChooser2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel55;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
@@ -818,27 +751,26 @@ public class SpecialSpriteMainEditor extends AbstractMainEditor {
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
-    private javax.swing.JPanel jPanel20;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
+    private javax.swing.JRadioButton jRadio4x2NoPalette;
+    private javax.swing.JRadioButton jRadio4x2Palette;
+    private javax.swing.JRadioButton jRadio6x3;
+    private javax.swing.JRadioButton jRadioCustom;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JSpinner jSpinner2;
-    private javax.swing.JSpinner jSpinner3;
-    private javax.swing.JSpinner jSpinner5;
+    private javax.swing.JSpinner jSpinnerBlockH;
+    private javax.swing.JSpinner jSpinnerBlockW;
+    private javax.swing.JSpinner jSpinnerTilesBlock;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JSplitPane jSplitPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private com.sfc.sf2.specialSprites.gui.SpecialSpriteLayoutPanel specialSpriteLayoutPanel;
+    private com.sfc.sf2.core.gui.controls.ViewPanel viewPanel1;
     // End of variables declaration//GEN-END:variables
 
 }
