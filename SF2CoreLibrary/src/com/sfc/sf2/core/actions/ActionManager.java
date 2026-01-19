@@ -14,7 +14,7 @@ import java.util.Stack;
  * @author TiMMy
  */
 public class ActionManager {
-    private static final int ACTION_HISTORY_LIMIT = 10;//100;
+    private static final int ACTION_HISTORY_LIMIT = 100;
     
     private static final Action[] history = new Action[ACTION_HISTORY_LIMIT];
     private static int stackStart = 0;
