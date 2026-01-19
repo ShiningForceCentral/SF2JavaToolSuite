@@ -7,6 +7,8 @@ package com.sfc.sf2.graphics.gui;
 
 import com.sfc.sf2.core.actions.Action;
 import com.sfc.sf2.core.actions.ActionManager;
+import com.sfc.sf2.core.actions.ComboAction;
+import com.sfc.sf2.core.actions.SpinnerAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.graphics.TilesetManager;
@@ -27,6 +29,10 @@ public class GraphicsMainEditor extends AbstractMainEditor {
     
     TilesetManager tilesetManager = new TilesetManager();
     
+    private int actionImportCompression;
+    private int actionExportCompression;
+    private int actionImportTileWidth;
+    
     public GraphicsMainEditor() {
         super();
         initComponents();
@@ -38,18 +44,22 @@ public class GraphicsMainEditor extends AbstractMainEditor {
         super.initEditor();
         
         viewPanel1.setLayoutPanel(tilesetLayoutPanel);
+        actionImportCompression = jComboBoxCompressionImport.getSelectedIndex();
+        actionExportCompression = jComboBoxCompressionExport.getSelectedIndex();
+        actionImportTileWidth = (int)jSpinnerTileWidthImport.getValue();
     }
     
     @Override
     protected void onDataLoaded() {
         super.onDataLoaded();
-        ActionManager.setAndExecuteAction(new Action<Tileset>(this, "Graphic Loaded", this::actionTilesetLoaded, tilesetManager.getTileset(), tilesetLayoutPanel.getTileset()));
+        ActionManager.setAndExecuteAction(new Action<Tileset>(this, "Graphic Imported", this::actionTilesetLoaded, tilesetManager.getTileset(), tilesetLayoutPanel.getTileset()));
     }
     
     private void actionTilesetLoaded(Tileset tileset) {
         tilesetLayoutPanel.setTileset(tileset);
         if (tileset != null) {
-            tilesetLayoutPanel.setItemsPerRow((int)viewPanel1.getItemsPerRowSpinner().getValue());
+            viewPanel1.getItemsPerRowSpinner().setValue(tileset.getTilesPerRow());
+            tilesetLayoutPanel.setItemsPerRow(tileset.getTilesPerRow());
         }
     }
     
@@ -72,9 +82,9 @@ public class GraphicsMainEditor extends AbstractMainEditor {
         jPanel3 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel4 = new javax.swing.JPanel();
-        jButton18 = new javax.swing.JButton();
-        fileButton1 = new com.sfc.sf2.core.gui.controls.FileButton();
-        fileButton2 = new com.sfc.sf2.core.gui.controls.FileButton();
+        jButtonImportDisassembly = new javax.swing.JButton();
+        fileButtonImportPalette = new com.sfc.sf2.core.gui.controls.FileButton();
+        fileButtonImportGraphics = new com.sfc.sf2.core.gui.controls.FileButton();
         jLabel2 = new javax.swing.JLabel();
         infoButton4 = new com.sfc.sf2.core.gui.controls.InfoButton();
         jPanel2 = new javax.swing.JPanel();
@@ -85,9 +95,9 @@ public class GraphicsMainEditor extends AbstractMainEditor {
         jComboBoxCompressionImport = new javax.swing.JComboBox<>();
         jLabel31 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
-        jButton12 = new javax.swing.JButton();
+        jButtonImportImage = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        fileButton3 = new com.sfc.sf2.core.gui.controls.FileButton();
+        fileButtonImportImage = new com.sfc.sf2.core.gui.controls.FileButton();
         infoButton5 = new com.sfc.sf2.core.gui.controls.InfoButton();
         jPanel18 = new javax.swing.JPanel();
         jButton24 = new javax.swing.JButton();
@@ -134,17 +144,17 @@ public class GraphicsMainEditor extends AbstractMainEditor {
         jPanel5 = new javax.swing.JPanel();
         jTabbedPane2 = new javax.swing.JTabbedPane();
         jPanel11 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
+        jButtonExportDisassembly = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        fileButton4 = new com.sfc.sf2.core.gui.controls.FileButton();
+        fileButtonExportGraphics = new com.sfc.sf2.core.gui.controls.FileButton();
         jPanel6 = new javax.swing.JPanel();
         infoButton3 = new com.sfc.sf2.core.gui.controls.InfoButton();
-        jComboBox4 = new javax.swing.JComboBox<>();
+        jComboBoxCompressionExport = new javax.swing.JComboBox<>();
         jLabel34 = new javax.swing.JLabel();
         jPanel14 = new javax.swing.JPanel();
-        jButton13 = new javax.swing.JButton();
+        jButtonExportImage = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
-        fileButton5 = new com.sfc.sf2.core.gui.controls.FileButton();
+        fileButtonExportImage = new com.sfc.sf2.core.gui.controls.FileButton();
         infoButton6 = new com.sfc.sf2.core.gui.controls.InfoButton();
         jPanel19 = new javax.swing.JPanel();
         jLabel19 = new javax.swing.JLabel();
@@ -185,22 +195,24 @@ public class GraphicsMainEditor extends AbstractMainEditor {
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Import from :"));
         jPanel3.setPreferredSize(new java.awt.Dimension(590, 135));
 
-        jButton18.setText("Import");
-        jButton18.addActionListener(new java.awt.event.ActionListener() {
+        jButtonImportDisassembly.setText("Import");
+        jButtonImportDisassembly.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton18ActionPerformed(evt);
+                jButtonImportDisassemblyActionPerformed(evt);
             }
         });
 
-        fileButton1.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButton1.setFilePath(".\\tech\\segalogopalette.bin");
-        fileButton1.setInfoMessage("");
-        fileButton1.setLabelText("Palette file :");
+        fileButtonImportPalette.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
+        fileButtonImportPalette.setFilePath(".\\tech\\segalogopalette.bin");
+        fileButtonImportPalette.setInfoMessage("");
+        fileButtonImportPalette.setLabelText("Palette file :");
+        fileButtonImportPalette.setName("Import Palette"); // NOI18N
 
-        fileButton2.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButton2.setFilePath(".\\tech\\segalogotiles.bin");
-        fileButton2.setInfoMessage("");
-        fileButton2.setLabelText("Graphics file :");
+        fileButtonImportGraphics.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
+        fileButtonImportGraphics.setFilePath(".\\tech\\segalogotiles.bin");
+        fileButtonImportGraphics.setInfoMessage("");
+        fileButtonImportGraphics.setLabelText("Graphics file :");
+        fileButtonImportGraphics.setName("Import Graphics"); // NOI18N
 
         jLabel2.setText("<html>Import a graphics disassembly file.</html>");
 
@@ -213,6 +225,12 @@ public class GraphicsMainEditor extends AbstractMainEditor {
         infoButton1.setText("");
 
         jSpinnerTileWidthImport.setModel(new javax.swing.SpinnerNumberModel(16, 1, null, 1));
+        jSpinnerTileWidthImport.setName("Import Tile Width"); // NOI18N
+        jSpinnerTileWidthImport.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jSpinnerTileWidthImportStateChanged(evt);
+            }
+        });
 
         jLabel29.setText("Tile width :");
 
@@ -221,6 +239,12 @@ public class GraphicsMainEditor extends AbstractMainEditor {
 
         jComboBoxCompressionImport.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "None", "Basic", "Stack" }));
         jComboBoxCompressionImport.setSelectedIndex(2);
+        jComboBoxCompressionImport.setName("Import Compression"); // NOI18N
+        jComboBoxCompressionImport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxCompressionImportActionPerformed(evt);
+            }
+        });
 
         jLabel31.setText("Compression :");
 
@@ -264,8 +288,8 @@ public class GraphicsMainEditor extends AbstractMainEditor {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fileButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE)
-                    .addComponent(fileButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(fileButtonImportPalette, javax.swing.GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE)
+                    .addComponent(fileButtonImportGraphics, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -274,7 +298,7 @@ public class GraphicsMainEditor extends AbstractMainEditor {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton18)))
+                        .addComponent(jButtonImportDisassembly)))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -285,31 +309,32 @@ public class GraphicsMainEditor extends AbstractMainEditor {
                     .addComponent(infoButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fileButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fileButtonImportPalette, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fileButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fileButtonImportGraphics, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton18)
+                    .addComponent(jButtonImportDisassembly)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
         jTabbedPane1.addTab("Disassembly", jPanel4);
 
-        jButton12.setText("Import");
-        jButton12.addActionListener(new java.awt.event.ActionListener() {
+        jButtonImportImage.setText("Import");
+        jButtonImportImage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton12ActionPerformed(evt);
+                jButtonImportImageActionPerformed(evt);
             }
         });
 
         jLabel3.setText("<html>Import an image file.</html>");
 
-        fileButton3.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ANY_IMAGE);
-        fileButton3.setFilePath(".\\export\\segalogotiles.png");
-        fileButton3.setInfoMessage("");
-        fileButton3.setLabelText("Image File :");
+        fileButtonImportImage.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ANY_IMAGE);
+        fileButtonImportImage.setFilePath(".\\export\\segalogotiles.png");
+        fileButtonImportImage.setInfoMessage("");
+        fileButtonImportImage.setLabelText("Image File :");
+        fileButtonImportImage.setName("Import Image"); // NOI18N
 
         infoButton5.setMessageText("<html>Supported image formats: PNG or GIF.<br><br>Color format should be 4BPP / 16 indexed colors. Images of 8BPP / 256 indexed colors will be converted to 4 BPP / 16 (some colors may be lost).<br>Colors will be convered to CRAM format (the color format used by the SEGA Genesis).<br>Color index 0 is treated as transparent.</html>");
         infoButton5.setText("");
@@ -323,13 +348,13 @@ public class GraphicsMainEditor extends AbstractMainEditor {
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton12))
+                        .addComponent(jButtonImportImage))
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(infoButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(fileButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE))
+                    .addComponent(fileButtonImportImage, javax.swing.GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel9Layout.setVerticalGroup(
@@ -340,9 +365,9 @@ public class GraphicsMainEditor extends AbstractMainEditor {
                     .addComponent(infoButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fileButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fileButtonImportImage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton12)
+                .addComponent(jButtonImportImage)
                 .addContainerGap())
         );
 
@@ -677,27 +702,34 @@ public class GraphicsMainEditor extends AbstractMainEditor {
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Export to :"));
         jPanel5.setPreferredSize(new java.awt.Dimension(32, 135));
 
-        jButton2.setText("Export");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButtonExportDisassembly.setText("Export");
+        jButtonExportDisassembly.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButtonExportDisassemblyActionPerformed(evt);
             }
         });
 
         jLabel1.setText("<html>Export the graphic to a new or existing file.</html>");
 
-        fileButton4.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButton4.setFilePath(".\\tech\\newsegalogo.bin");
-        fileButton4.setInfoMessage("");
-        fileButton4.setLabelText("Graphics file :");
+        fileButtonExportGraphics.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
+        fileButtonExportGraphics.setFilePath(".\\tech\\newsegalogo.bin");
+        fileButtonExportGraphics.setInfoMessage("");
+        fileButtonExportGraphics.setLabelText("Graphics file :");
+        fileButtonExportGraphics.setName("Export Graphic"); // NOI18N
 
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         infoButton3.setMessageText("<html>The compression used for the graphic.<br><b>- None:</b> Uncompressed graphics. Usually for small images (e.g. icons).<br><b>- Basic:</b> Simple compression. Used in map sprites and tilesets.<br><b>- Stack:</b> Complex compression. Used for all larger images (e.g. portraits, spell/invocations, and all battle graphics).</html>");
         infoButton3.setText("");
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "None", "Basic", "Stack" }));
-        jComboBox4.setSelectedIndex(2);
+        jComboBoxCompressionExport.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "None", "Basic", "Stack" }));
+        jComboBoxCompressionExport.setSelectedIndex(2);
+        jComboBoxCompressionExport.setName("Export Compression"); // NOI18N
+        jComboBoxCompressionExport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxCompressionExportActionPerformed(evt);
+            }
+        });
 
         jLabel34.setText("Compression :");
 
@@ -709,7 +741,7 @@ public class GraphicsMainEditor extends AbstractMainEditor {
                 .addContainerGap()
                 .addComponent(jLabel34)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jComboBoxCompressionExport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(infoButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -720,7 +752,7 @@ public class GraphicsMainEditor extends AbstractMainEditor {
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel34)
-                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxCompressionExport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(infoButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -736,8 +768,8 @@ public class GraphicsMainEditor extends AbstractMainEditor {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2))
-                    .addComponent(fileButton4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 522, Short.MAX_VALUE)
+                        .addComponent(jButtonExportDisassembly))
+                    .addComponent(fileButtonExportGraphics, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 522, Short.MAX_VALUE)
                     .addGroup(jPanel11Layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -749,29 +781,30 @@ public class GraphicsMainEditor extends AbstractMainEditor {
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fileButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fileButtonExportGraphics, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2)
+                    .addComponent(jButtonExportDisassembly)
                     .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
         jTabbedPane2.addTab("Disassembly", jPanel11);
 
-        jButton13.setText("Export");
-        jButton13.addActionListener(new java.awt.event.ActionListener() {
+        jButtonExportImage.setText("Export");
+        jButtonExportImage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton13ActionPerformed(evt);
+                jButtonExportImageActionPerformed(evt);
             }
         });
 
         jLabel9.setText("<html>Export the graphic as image.</html>");
 
-        fileButton5.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ANY_IMAGE);
-        fileButton5.setFilePath(".\\export\\segalogotiles.png");
-        fileButton5.setInfoMessage("");
-        fileButton5.setLabelText("Image file :");
+        fileButtonExportImage.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ANY_IMAGE);
+        fileButtonExportImage.setFilePath(".\\export\\segalogotiles.png");
+        fileButtonExportImage.setInfoMessage("");
+        fileButtonExportImage.setLabelText("Image file :");
+        fileButtonExportImage.setName("Export Image"); // NOI18N
 
         infoButton6.setMessageText("<html>Supported image formats: PNG or GIF.<br><br>Color format should be 4BPP / 16 indexed colors. Images of 8BPP / 256 indexed colors will be converted to 4 BPP / 16 (some colors may be lost).<br>Colors will be convered to CRAM format (the color format used by the SEGA Genesis).<br>Color index 0 is treated as transparent.</html>");
         infoButton6.setText("");
@@ -785,8 +818,8 @@ public class GraphicsMainEditor extends AbstractMainEditor {
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
                         .addGap(0, 446, Short.MAX_VALUE)
-                        .addComponent(jButton13))
-                    .addComponent(fileButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 522, Short.MAX_VALUE)
+                        .addComponent(jButtonExportImage))
+                    .addComponent(fileButtonExportImage, javax.swing.GroupLayout.DEFAULT_SIZE, 522, Short.MAX_VALUE)
                     .addGroup(jPanel14Layout.createSequentialGroup()
                         .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -802,9 +835,9 @@ public class GraphicsMainEditor extends AbstractMainEditor {
                     .addComponent(infoButton6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fileButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fileButtonExportImage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton13)
+                .addComponent(jButtonExportImage)
                 .addContainerGap())
         );
 
@@ -990,11 +1023,11 @@ public class GraphicsMainEditor extends AbstractMainEditor {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 465, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 510, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
@@ -1058,20 +1091,20 @@ public class GraphicsMainEditor extends AbstractMainEditor {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Path graphicPath = PathHelpers.getBasePath().resolve(fileButton4.getFilePath());
+    private void jButtonExportDisassemblyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExportDisassemblyActionPerformed
+        Path graphicPath = PathHelpers.getBasePath().resolve(fileButtonExportGraphics.getFilePath());
         if (!PathHelpers.createPathIfRequred(graphicPath)) return;
         try {
-            TilesetCompression compression = TilesetCompression.values()[jComboBox4.getSelectedIndex()];
+            TilesetCompression compression = TilesetCompression.values()[jComboBoxCompressionExport.getSelectedIndex()];
             tilesetManager.exportDisassembly(graphicPath, tilesetLayoutPanel.getTileset(), compression);
         } catch (Exception ex) {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Graphic disasm could not be exported to : " + graphicPath);
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jButtonExportDisassemblyActionPerformed
 
-    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
-        Path graphicPath = PathHelpers.getBasePath().resolve(fileButton5.getFilePath());
+    private void jButtonExportImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExportImageActionPerformed
+        Path graphicPath = PathHelpers.getBasePath().resolve(fileButtonExportImage.getFilePath());
         if (!PathHelpers.createPathIfRequred(graphicPath)) return;
         try {
             tilesetManager.getTileset().setTilesPerRow((int)viewPanel1.getItemsPerRowSpinner().getValue());
@@ -1080,35 +1113,33 @@ public class GraphicsMainEditor extends AbstractMainEditor {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Graphic image could not be exported to : " + graphicPath);
         }
-    }//GEN-LAST:event_jButton13ActionPerformed
+    }//GEN-LAST:event_jButtonExportImageActionPerformed
 
-    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-        Path graphicPath = PathHelpers.getBasePath().resolve(fileButton3.getFilePath());
+    private void jButtonImportImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportImageActionPerformed
+        Path graphicPath = PathHelpers.getBasePath().resolve(fileButtonImportImage.getFilePath());
         try {
             tilesetManager.importImage(graphicPath, true);
-            viewPanel1.getItemsPerRowSpinner().setValue(tilesetManager.getTileset().getTilesPerRow());
         } catch (Exception ex) {
             tilesetManager.clearData();
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Graphic image could not be imported from : " + graphicPath);
         }
         onDataLoaded();
-    }//GEN-LAST:event_jButton12ActionPerformed
+    }//GEN-LAST:event_jButtonImportImageActionPerformed
 
-    private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
-        Path palettePath = PathHelpers.getBasePath().resolve(fileButton1.getFilePath());
-        Path graphicPath = PathHelpers.getBasePath().resolve(fileButton2.getFilePath());
+    private void jButtonImportDisassemblyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportDisassemblyActionPerformed
+        Path palettePath = PathHelpers.getBasePath().resolve(fileButtonImportPalette.getFilePath());
+        Path graphicPath = PathHelpers.getBasePath().resolve(fileButtonImportGraphics.getFilePath());
         try {
             TilesetCompression compression = TilesetCompression.values()[jComboBoxCompressionImport.getSelectedIndex()];
             tilesetManager.importDisassembly(palettePath, graphicPath, compression, (int)jSpinnerTileWidthImport.getValue());
-            viewPanel1.getItemsPerRowSpinner().setValue(jSpinnerTileWidthImport.getValue());
         } catch (Exception ex) {
             tilesetManager.clearData();
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Graphic disasm could not be imported from : " + graphicPath);
         }
         onDataLoaded();
-    }//GEN-LAST:event_jButton18ActionPerformed
+    }//GEN-LAST:event_jButtonImportDisassemblyActionPerformed
 
     private void jButton37ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton37ActionPerformed
         int returnVal = jFileChooser1.showOpenDialog(this);
@@ -1258,6 +1289,27 @@ public class GraphicsMainEditor extends AbstractMainEditor {
         }
     }//GEN-LAST:event_jButton24ActionPerformed
 
+    private void jComboBoxCompressionImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxCompressionImportActionPerformed
+        if (!ActionManager.isActionTriggering()) {
+            ActionManager.setActionWithoutExecute(new ComboAction(jComboBoxCompressionImport, jComboBoxCompressionImport.getSelectedIndex(), actionImportCompression));
+        }
+        actionImportCompression = jComboBoxCompressionImport.getSelectedIndex();
+    }//GEN-LAST:event_jComboBoxCompressionImportActionPerformed
+
+    private void jComboBoxCompressionExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxCompressionExportActionPerformed
+        if (!ActionManager.isActionTriggering()) {
+            ActionManager.setActionWithoutExecute(new ComboAction(jComboBoxCompressionExport, jComboBoxCompressionExport.getSelectedIndex(), actionExportCompression));
+        }
+        actionExportCompression = jComboBoxCompressionExport.getSelectedIndex();
+    }//GEN-LAST:event_jComboBoxCompressionExportActionPerformed
+
+    private void jSpinnerTileWidthImportStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinnerTileWidthImportStateChanged
+        if (!ActionManager.isActionTriggering()) {
+            ActionManager.setActionWithoutExecute(new SpinnerAction(jSpinnerTileWidthImport, (int)jSpinnerTileWidthImport.getValue(), actionImportTileWidth));
+        }
+        actionImportTileWidth = (int)jSpinnerTileWidthImport.getValue();
+    }//GEN-LAST:event_jSpinnerTileWidthImportStateChanged
+
     /**
      * To create a new Main Editor, copy the below code
      * Don't forget to change the new main class (below)
@@ -1276,21 +1328,17 @@ public class GraphicsMainEditor extends AbstractMainEditor {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.sfc.sf2.core.gui.controls.Console console1;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton1;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton2;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton3;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton4;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton5;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonExportGraphics;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonExportImage;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonImportGraphics;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonImportImage;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonImportPalette;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton1;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton2;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton3;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton4;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton5;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton6;
-    private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton13;
-    private javax.swing.JButton jButton18;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton24;
     private javax.swing.JButton jButton25;
     private javax.swing.JButton jButton30;
@@ -1304,10 +1352,14 @@ public class GraphicsMainEditor extends AbstractMainEditor {
     private javax.swing.JButton jButton38;
     private javax.swing.JButton jButton39;
     private javax.swing.JButton jButton40;
-    private javax.swing.JComboBox<String> jComboBox4;
+    private javax.swing.JButton jButtonExportDisassembly;
+    private javax.swing.JButton jButtonExportImage;
+    private javax.swing.JButton jButtonImportDisassembly;
+    private javax.swing.JButton jButtonImportImage;
     private javax.swing.JComboBox<String> jComboBox5;
     private javax.swing.JComboBox<String> jComboBox6;
     private javax.swing.JComboBox<String> jComboBox8;
+    private javax.swing.JComboBox<String> jComboBoxCompressionExport;
     private javax.swing.JComboBox<String> jComboBoxCompressionImport;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JFileChooser jFileChooser2;

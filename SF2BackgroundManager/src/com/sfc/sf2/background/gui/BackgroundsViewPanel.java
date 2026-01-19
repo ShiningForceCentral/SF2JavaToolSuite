@@ -36,9 +36,9 @@ public class BackgroundsViewPanel extends AbstractViewPanel<BackgroundLayoutPane
         setBorder(javax.swing.BorderFactory.createTitledBorder("View"));
 
         jCheckBoxGrid.setText("Show grid");
-        jCheckBoxGrid.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jCheckBoxGridStateChanged(evt);
+        jCheckBoxGrid.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCheckBoxGridItemStateChanged(evt);
             }
         });
 
@@ -76,13 +76,13 @@ public class BackgroundsViewPanel extends AbstractViewPanel<BackgroundLayoutPane
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jCheckBoxGridStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jCheckBoxGridStateChanged
-        super.onGridChanged(evt);
-    }//GEN-LAST:event_jCheckBoxGridStateChanged
-
     private void jComboBoxScaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxScaleActionPerformed
         super.onScaleChanged(evt);
     }//GEN-LAST:event_jComboBoxScaleActionPerformed
+
+    private void jCheckBoxGridItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBoxGridItemStateChanged
+        super.onGridChanged(evt);
+    }//GEN-LAST:event_jCheckBoxGridItemStateChanged
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox jCheckBoxGrid;

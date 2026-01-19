@@ -28,6 +28,10 @@ public class DialogPropertiesTableModel extends AbstractTableModel<DialogPropert
     public DialogPropertiesTableModel() {
         super(new String[] { "Id", "Sprite", "Sprite", "Portrait", "Portrait", "SFX" }, 255);
     }
+
+    public DialogPropertiesEnums getEnums() {
+        return enums;
+    }
  
     public void setEnums(DialogPropertiesEnums enums) {
         this.enums = enums;

@@ -57,7 +57,7 @@ public class IconsMainEditor extends AbstractMainEditor {
     @Override
     protected void onDataLoaded() {
         super.onDataLoaded();
-        ActionManager.setAndExecuteAction(new Action<Icon[]>(this, "Icons Loaded", this::actionIconsLoaded, iconManager.getIcons(), iconsLayoutPanel.getIcons()));
+        ActionManager.setAndExecuteAction(new Action<Icon[]>(this, "Icons Imported", this::actionIconsLoaded, iconManager.getIcons(), iconsLayoutPanel.getIcons()));
     }
     
     private void actionIconsLoaded(Icon[] icons) {

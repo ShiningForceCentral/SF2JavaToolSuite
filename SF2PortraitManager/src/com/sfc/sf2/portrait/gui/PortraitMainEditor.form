@@ -355,10 +355,10 @@
                                                   </Group>
                                                   <Group type="102" attributes="0">
                                                       <Group type="103" groupAlignment="0" attributes="0">
-                                                          <Component id="fileButton1" alignment="0" pref="340" max="32767" attributes="0"/>
+                                                          <Component id="fileButtonImportPortrait" alignment="0" pref="340" max="32767" attributes="0"/>
                                                           <Group type="102" alignment="1" attributes="0">
                                                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                                              <Component id="jButton18" min="-2" max="-2" attributes="0"/>
+                                                              <Component id="jButtonImportPortrait" min="-2" max="-2" attributes="0"/>
                                                           </Group>
                                                       </Group>
                                                       <EmptySpace max="-2" attributes="0"/>
@@ -373,9 +373,9 @@
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="jLabel2" min="-2" pref="26" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="fileButton1" min="-2" max="-2" attributes="0"/>
+                                              <Component id="fileButtonImportPortrait" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jButton18" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jButtonImportPortrait" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
@@ -387,7 +387,7 @@
                                         <Property name="text" type="java.lang.String" value="Import portrait disassembly."/>
                                       </Properties>
                                     </Component>
-                                    <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton1">
+                                    <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButtonImportPortrait">
                                       <Properties>
                                         <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                           <Value id="BIN"/>
@@ -395,14 +395,15 @@
                                         <Property name="filePath" type="java.lang.String" value=".\u005cportrait00.bin" containsInvalidXMLChars="true"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Portrait file :"/>
+                                        <Property name="name" type="java.lang.String" value="Import Portrait" noResource="true"/>
                                       </Properties>
                                     </Component>
-                                    <Component class="javax.swing.JButton" name="jButton18">
+                                    <Component class="javax.swing.JButton" name="jButtonImportPortrait">
                                       <Properties>
                                         <Property name="text" type="java.lang.String" value="Import"/>
                                       </Properties>
                                       <Events>
-                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton18ActionPerformed"/>
+                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonImportPortraitActionPerformed"/>
                                       </Events>
                                     </Component>
                                   </SubComponents>
@@ -422,12 +423,12 @@
                                           <Group type="102" attributes="0">
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="fileButton2" pref="340" max="32767" attributes="0"/>
-                                                  <Component id="fileButton3" alignment="1" pref="340" max="32767" attributes="0"/>
+                                                  <Component id="fileButtonImportImage" pref="340" max="32767" attributes="0"/>
+                                                  <Component id="fileButtonImportMeta" alignment="1" pref="340" max="32767" attributes="0"/>
                                                   <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
                                                   <Group type="102" alignment="1" attributes="0">
                                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                                      <Component id="jButton12" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="jButtonImportImage" min="-2" max="-2" attributes="0"/>
                                                   </Group>
                                               </Group>
                                               <EmptySpace max="-2" attributes="0"/>
@@ -440,11 +441,11 @@
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="jLabel3" min="-2" pref="26" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="fileButton2" min="-2" max="-2" attributes="0"/>
+                                              <Component id="fileButtonImportImage" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="fileButton3" min="-2" max="-2" attributes="0"/>
+                                              <Component id="fileButtonImportMeta" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jButton12" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jButtonImportImage" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
@@ -456,7 +457,7 @@
                                         <Property name="text" type="java.lang.String" value="Import portrait from image and meta."/>
                                       </Properties>
                                     </Component>
-                                    <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton2">
+                                    <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButtonImportImage">
                                       <Properties>
                                         <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                           <Value id="ANY_IMAGE"/>
@@ -464,9 +465,10 @@
                                         <Property name="filePath" type="java.lang.String" value=".\u005cexport\u005cportrait00.png" containsInvalidXMLChars="true"/>
                                         <Property name="infoMessage" type="java.lang.String" value="&lt;html&gt;Supported image formats: PNG or GIF.&lt;br&gt;&lt;br&gt;Color format should be 4BPP / 16 indexed colors. Images of 8BPP / 256 indexed colors will be converted to 4 BPP / 16 (some colors may be lost).&lt;br&gt;When imported, icons will use the base palette colors.&lt;br&gt;Color index 0 is treated as transparent.&lt;/html&gt;"/>
                                         <Property name="labelText" type="java.lang.String" value="Image file :"/>
+                                        <Property name="name" type="java.lang.String" value="Import Image" noResource="true"/>
                                       </Properties>
                                     </Component>
-                                    <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton3">
+                                    <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButtonImportMeta">
                                       <Properties>
                                         <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                           <Value id="META"/>
@@ -474,14 +476,15 @@
                                         <Property name="filePath" type="java.lang.String" value=".meta"/>
                                         <Property name="infoMessage" type="java.lang.String" value="&lt;html&gt;Meta file stores the eye and mouth &apos;animation&apos; data for the portrait.&lt;/html&gt;"/>
                                         <Property name="labelText" type="java.lang.String" value="Meta file :"/>
+                                        <Property name="name" type="java.lang.String" value="Import Meta" noResource="true"/>
                                       </Properties>
                                     </Component>
-                                    <Component class="javax.swing.JButton" name="jButton12">
+                                    <Component class="javax.swing.JButton" name="jButtonImportImage">
                                       <Properties>
                                         <Property name="text" type="java.lang.String" value="Import"/>
                                       </Properties>
                                       <Events>
-                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton12ActionPerformed"/>
+                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonImportImageActionPerformed"/>
                                       </Events>
                                     </Component>
                                   </SubComponents>
@@ -538,10 +541,10 @@
                                           <Group type="102" attributes="0">
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="fileButton4" pref="340" max="32767" attributes="0"/>
+                                                  <Component id="fileButtonExportPortrait" pref="340" max="32767" attributes="0"/>
                                                   <Group type="102" alignment="1" attributes="0">
                                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                                      <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="jButtonExportportrait" min="-2" max="-2" attributes="0"/>
                                                   </Group>
                                                   <Group type="102" alignment="0" attributes="0">
                                                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
@@ -558,9 +561,9 @@
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="jLabel1" min="-2" pref="26" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="fileButton4" min="-2" max="-2" attributes="0"/>
+                                              <Component id="fileButtonExportPortrait" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jButtonExportportrait" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
@@ -572,7 +575,7 @@
                                         <Property name="text" type="java.lang.String" value="Export portrait disassembly."/>
                                       </Properties>
                                     </Component>
-                                    <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton4">
+                                    <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButtonExportPortrait">
                                       <Properties>
                                         <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                           <Value id="BIN"/>
@@ -580,14 +583,15 @@
                                         <Property name="filePath" type="java.lang.String" value=".\u005cportrait00.bin" containsInvalidXMLChars="true"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Portrait file :"/>
+                                        <Property name="name" type="java.lang.String" value="Export Portrait" noResource="true"/>
                                       </Properties>
                                     </Component>
-                                    <Component class="javax.swing.JButton" name="jButton2">
+                                    <Component class="javax.swing.JButton" name="jButtonExportportrait">
                                       <Properties>
                                         <Property name="text" type="java.lang.String" value="Export"/>
                                       </Properties>
                                       <Events>
-                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonExportportraitActionPerformed"/>
                                       </Events>
                                     </Component>
                                   </SubComponents>
@@ -607,12 +611,12 @@
                                           <Group type="102" attributes="0">
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="fileButton5" pref="340" max="32767" attributes="0"/>
+                                                  <Component id="fileButtonExportImage" pref="340" max="32767" attributes="0"/>
                                                   <Group type="102" alignment="1" attributes="0">
                                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                                      <Component id="jButton13" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="jButtonExportImage" min="-2" max="-2" attributes="0"/>
                                                   </Group>
-                                                  <Component id="fileButton6" alignment="0" pref="0" max="32767" attributes="0"/>
+                                                  <Component id="fileButtonExportMeta" alignment="0" pref="0" max="32767" attributes="0"/>
                                                   <Group type="102" alignment="0" attributes="0">
                                                       <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -628,11 +632,11 @@
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="jLabel9" min="-2" pref="26" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="fileButton5" min="-2" max="-2" attributes="0"/>
+                                              <Component id="fileButtonExportImage" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="fileButton6" min="-2" max="-2" attributes="0"/>
+                                              <Component id="fileButtonExportMeta" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jButton13" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jButtonExportImage" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
@@ -644,7 +648,7 @@
                                         <Property name="text" type="java.lang.String" value="Export portrait as image."/>
                                       </Properties>
                                     </Component>
-                                    <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton5">
+                                    <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButtonExportImage">
                                       <Properties>
                                         <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                           <Value id="ANY_IMAGE"/>
@@ -652,9 +656,10 @@
                                         <Property name="filePath" type="java.lang.String" value=".\u005cexport\u005cportrait00.png" containsInvalidXMLChars="true"/>
                                         <Property name="infoMessage" type="java.lang.String" value="&lt;html&gt;Supported image formats: PNG or GIF.&lt;br&gt;&lt;br&gt;Exported color format will be 4BPP / 16 indexed colors.&lt;br&gt;Color index 0 is treated as transparent.&lt;/html&gt;"/>
                                         <Property name="labelText" type="java.lang.String" value="Image file :"/>
+                                        <Property name="name" type="java.lang.String" value="Export Image" noResource="true"/>
                                       </Properties>
                                     </Component>
-                                    <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton6">
+                                    <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButtonExportMeta">
                                       <Properties>
                                         <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                           <Value id="META"/>
@@ -662,14 +667,15 @@
                                         <Property name="filePath" type="java.lang.String" value=".meta"/>
                                         <Property name="infoMessage" type="java.lang.String" value="&lt;html&gt;Meta file stores the eye and mouth &apos;animation&apos; data for the portrait.&lt;/html&gt;"/>
                                         <Property name="labelText" type="java.lang.String" value="Meta file :"/>
+                                        <Property name="name" type="java.lang.String" value="Export Meta" noResource="true"/>
                                       </Properties>
                                     </Component>
-                                    <Component class="javax.swing.JButton" name="jButton13">
+                                    <Component class="javax.swing.JButton" name="jButtonExportImage">
                                       <Properties>
                                         <Property name="text" type="java.lang.String" value="Export"/>
                                       </Properties>
                                       <Events>
-                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton13ActionPerformed"/>
+                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonExportImageActionPerformed"/>
                                       </Events>
                                     </Component>
                                   </SubComponents>

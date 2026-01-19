@@ -259,7 +259,7 @@
                                           <Group type="102" attributes="0">
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="fileButton6" pref="266" max="32767" attributes="0"/>
+                                                  <Component id="fileButtonImportDialog" pref="266" max="32767" attributes="0"/>
                                                   <Group type="102" alignment="0" attributes="0">
                                                       <Component id="jLabel2" max="-2" attributes="0"/>
                                                       <EmptySpace max="-2" attributes="0"/>
@@ -267,7 +267,7 @@
                                                   </Group>
                                                   <Group type="102" alignment="1" attributes="0">
                                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                                      <Component id="jButton18" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="jButtonImportDialog" min="-2" max="-2" attributes="0"/>
                                                   </Group>
                                               </Group>
                                               <EmptySpace max="-2" attributes="0"/>
@@ -283,9 +283,9 @@
                                                   <Component id="jLabel2" alignment="2" min="-2" pref="26" max="-2" attributes="0"/>
                                               </Group>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="fileButton6" min="-2" max="-2" attributes="0"/>
+                                              <Component id="fileButtonImportDialog" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jButton18" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jButtonImportDialog" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
@@ -303,7 +303,7 @@
                                         <Property name="text" type="java.lang.String" value=""/>
                                       </Properties>
                                     </Component>
-                                    <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton6">
+                                    <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButtonImportDialog">
                                       <Properties>
                                         <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                           <Value id="ASM"/>
@@ -311,14 +311,16 @@
                                         <Property name="filePath" type="java.lang.String" value=".\u005cspritedialogproperties-standard.asm" containsInvalidXMLChars="true"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Dialog properties :"/>
+                                        <Property name="name" type="java.lang.String" value="Import General Dialog" noResource="true"/>
                                       </Properties>
                                     </Component>
-                                    <Component class="javax.swing.JButton" name="jButton18">
+                                    <Component class="javax.swing.JButton" name="jButtonImportDialog">
                                       <Properties>
                                         <Property name="text" type="java.lang.String" value="Import"/>
+                                        <Property name="name" type="java.lang.String" value="" noResource="true"/>
                                       </Properties>
                                       <Events>
-                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton18ActionPerformed"/>
+                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonImportDialogActionPerformed"/>
                                       </Events>
                                     </Component>
                                   </SubComponents>
@@ -342,7 +344,7 @@
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
                                                   <Group type="102" attributes="0">
-                                                      <Component id="fileButton7" pref="0" max="32767" attributes="0"/>
+                                                      <Component id="fileButtonExportDialog" pref="0" max="32767" attributes="0"/>
                                                       <EmptySpace max="-2" attributes="0"/>
                                                   </Group>
                                                   <Group type="102" attributes="0">
@@ -353,7 +355,7 @@
                                           </Group>
                                           <Group type="102" alignment="1" attributes="0">
                                               <EmptySpace max="32767" attributes="0"/>
-                                              <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jButtonExportDialog" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
@@ -364,9 +366,9 @@
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="jLabel1" min="-2" pref="26" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="fileButton7" min="-2" max="-2" attributes="0"/>
+                                              <Component id="fileButtonExportDialog" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jButtonExportDialog" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
@@ -378,7 +380,7 @@
                                         <Property name="text" type="java.lang.String" value="Export dialog properties disassembly."/>
                                       </Properties>
                                     </Component>
-                                    <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton7">
+                                    <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButtonExportDialog">
                                       <Properties>
                                         <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                           <Value id="ASM"/>
@@ -386,14 +388,16 @@
                                         <Property name="filePath" type="java.lang.String" value=".\u005cspritedialogproperties-standard.asm" containsInvalidXMLChars="true"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Dialog properties :"/>
+                                        <Property name="name" type="java.lang.String" value="Export General Dialog" noResource="true"/>
                                       </Properties>
                                     </Component>
-                                    <Component class="javax.swing.JButton" name="jButton2">
+                                    <Component class="javax.swing.JButton" name="jButtonExportDialog">
                                       <Properties>
                                         <Property name="text" type="java.lang.String" value="Export"/>
+                                        <Property name="name" type="java.lang.String" value="" noResource="true"/>
                                       </Properties>
                                       <Events>
-                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonExportDialogActionPerformed"/>
                                       </Events>
                                     </Component>
                                   </SubComponents>
@@ -450,7 +454,7 @@
                                           <Group type="102" attributes="0">
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="fileButton4" pref="266" max="32767" attributes="0"/>
+                                                  <Component id="fileButtonImportAllies" pref="266" max="32767" attributes="0"/>
                                                   <Group type="102" alignment="0" attributes="0">
                                                       <Component id="jLabel4" max="-2" attributes="0"/>
                                                       <EmptySpace max="-2" attributes="0"/>
@@ -458,7 +462,7 @@
                                                   </Group>
                                                   <Group type="102" alignment="1" attributes="0">
                                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                                      <Component id="jButton19" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="jButtonImportAllies" min="-2" max="-2" attributes="0"/>
                                                   </Group>
                                               </Group>
                                               <EmptySpace max="-2" attributes="0"/>
@@ -474,9 +478,9 @@
                                                   <Component id="jLabel4" alignment="2" min="-2" pref="26" max="-2" attributes="0"/>
                                               </Group>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="fileButton4" min="-2" max="-2" attributes="0"/>
+                                              <Component id="fileButtonImportAllies" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jButton19" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jButtonImportAllies" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
@@ -488,7 +492,7 @@
                                         <Property name="text" type="java.lang.String" value="Import ally dialog properties disassembly."/>
                                       </Properties>
                                     </Component>
-                                    <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton4">
+                                    <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButtonImportAllies">
                                       <Properties>
                                         <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                           <Value id="ASM"/>
@@ -496,6 +500,7 @@
                                         <Property name="filePath" type="java.lang.String" value=".\u005cstats\u005callies\u005callydialogproperties-standard.asm" containsInvalidXMLChars="true"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Dialog properties :"/>
+                                        <Property name="name" type="java.lang.String" value="Import Allies Dialog" noResource="true"/>
                                       </Properties>
                                     </Component>
                                     <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton1">
@@ -504,12 +509,12 @@
                                         <Property name="text" type="java.lang.String" value=""/>
                                       </Properties>
                                     </Component>
-                                    <Component class="javax.swing.JButton" name="jButton19">
+                                    <Component class="javax.swing.JButton" name="jButtonImportAllies">
                                       <Properties>
                                         <Property name="text" type="java.lang.String" value="Import"/>
                                       </Properties>
                                       <Events>
-                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton19ActionPerformed"/>
+                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonImportAlliesActionPerformed"/>
                                       </Events>
                                     </Component>
                                   </SubComponents>
@@ -532,14 +537,14 @@
                                           <Group type="102" attributes="0">
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="fileButton5" pref="266" max="32767" attributes="0"/>
+                                                  <Component id="fileButtonExportAllies" pref="266" max="32767" attributes="0"/>
                                                   <Group type="102" attributes="0">
                                                       <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                                   </Group>
                                                   <Group type="102" alignment="1" attributes="0">
                                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                                      <Component id="jButton3" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="jButtonExportAllies" min="-2" max="-2" attributes="0"/>
                                                   </Group>
                                               </Group>
                                               <EmptySpace max="-2" attributes="0"/>
@@ -552,9 +557,9 @@
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="jLabel3" min="-2" pref="26" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="fileButton5" min="-2" max="-2" attributes="0"/>
+                                              <Component id="fileButtonExportAllies" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                                              <Component id="jButton3" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jButtonExportAllies" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
@@ -566,7 +571,7 @@
                                         <Property name="text" type="java.lang.String" value="Export allies dialog properties disassembly."/>
                                       </Properties>
                                     </Component>
-                                    <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton5">
+                                    <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButtonExportAllies">
                                       <Properties>
                                         <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                           <Value id="ASM"/>
@@ -574,14 +579,15 @@
                                         <Property name="filePath" type="java.lang.String" value=".\u005cstats\u005callies\u005callydialogproperties-standard.asm" containsInvalidXMLChars="true"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Dialog properties :"/>
+                                        <Property name="name" type="java.lang.String" value="Export Allies Dialog" noResource="true"/>
                                       </Properties>
                                     </Component>
-                                    <Component class="javax.swing.JButton" name="jButton3">
+                                    <Component class="javax.swing.JButton" name="jButtonExportAllies">
                                       <Properties>
                                         <Property name="text" type="java.lang.String" value="Export"/>
                                       </Properties>
                                       <Events>
-                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
+                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonExportAlliesActionPerformed"/>
                                       </Events>
                                     </Component>
                                   </SubComponents>
@@ -605,12 +611,12 @@
                                   <Group type="102" attributes="0">
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="fileButton2" pref="0" max="32767" attributes="0"/>
-                                          <Component id="fileButton1" alignment="0" pref="0" max="32767" attributes="0"/>
-                                          <Component id="fileButton3" alignment="0" pref="0" max="32767" attributes="0"/>
-                                          <Component id="fileButton8" alignment="0" pref="0" max="32767" attributes="0"/>
-                                          <Component id="fileButton9" alignment="0" pref="0" max="32767" attributes="0"/>
-                                          <Component id="fileButton10" alignment="0" pref="0" max="32767" attributes="0"/>
+                                          <Component id="fileButtonImportMapsprites" pref="0" max="32767" attributes="0"/>
+                                          <Component id="fileButtonImportBasePalette" alignment="0" pref="0" max="32767" attributes="0"/>
+                                          <Component id="fileButtonImportPortraits" alignment="0" pref="0" max="32767" attributes="0"/>
+                                          <Component id="fileButtonImportEnums" alignment="0" pref="0" max="32767" attributes="0"/>
+                                          <Component id="fileButtonImportSpecialSprites" alignment="0" pref="0" max="32767" attributes="0"/>
+                                          <Component id="fileButtonImportSpecialSpritePointers" alignment="0" pref="0" max="32767" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
                                   </Group>
@@ -620,24 +626,24 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="fileButton1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="fileButtonImportBasePalette" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="fileButton8" min="-2" max="-2" attributes="0"/>
+                                      <Component id="fileButtonImportEnums" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="fileButton2" min="-2" max="-2" attributes="0"/>
+                                      <Component id="fileButtonImportMapsprites" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="fileButton3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="fileButtonImportPortraits" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="fileButton9" min="-2" max="-2" attributes="0"/>
+                                      <Component id="fileButtonImportSpecialSprites" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="fileButton10" min="-2" max="-2" attributes="0"/>
+                                      <Component id="fileButtonImportSpecialSpritePointers" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
                           </Layout>
                           <SubComponents>
-                            <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton1">
+                            <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButtonImportBasePalette">
                               <Properties>
                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                   <Value id="BIN"/>
@@ -645,9 +651,10 @@
                                 <Property name="filePath" type="java.lang.String" value=".\u005cgraphics\u005ctech\u005cbasepalette.bin" containsInvalidXMLChars="true"/>
                                 <Property name="infoMessage" type="java.lang.String" value="The game&apos;s base palette. Used to show the mapsprites."/>
                                 <Property name="labelText" type="java.lang.String" value="Base palette :"/>
+                                <Property name="name" type="java.lang.String" value="Import Base Palette" noResource="true"/>
                               </Properties>
                             </Component>
-                            <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton2">
+                            <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButtonImportMapsprites">
                               <Properties>
                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                   <Value id="ASM"/>
@@ -655,9 +662,10 @@
                                 <Property name="filePath" type="java.lang.String" value=".\u005cgraphics\u005cmapsprites\u005centries.asm" containsInvalidXMLChars="true"/>
                                 <Property name="infoMessage" type="java.lang.String" value="The entries file to load mapsprite previews."/>
                                 <Property name="labelText" type="java.lang.String" value="Mapsprite entries :"/>
+                                <Property name="name" type="java.lang.String" value="Import Mapsprite Entries" noResource="true"/>
                               </Properties>
                             </Component>
-                            <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton3">
+                            <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButtonImportPortraits">
                               <Properties>
                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                   <Value id="ASM"/>
@@ -665,9 +673,10 @@
                                 <Property name="filePath" type="java.lang.String" value=".\u005cgraphics\u005cportraits\u005centries.asm" containsInvalidXMLChars="true"/>
                                 <Property name="infoMessage" type="java.lang.String" value="The entries file to show preview of portraits."/>
                                 <Property name="labelText" type="java.lang.String" value="Portrait entries :"/>
+                                <Property name="name" type="java.lang.String" value="Import Portrait Entries" noResource="true"/>
                               </Properties>
                             </Component>
-                            <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton8">
+                            <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButtonImportEnums">
                               <Properties>
                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                   <Value id="ASM"/>
@@ -675,9 +684,10 @@
                                 <Property name="filePath" type="java.lang.String" value="..\u005csf2enums.asm" containsInvalidXMLChars="true"/>
                                 <Property name="infoMessage" type="java.lang.String" value="Loads data from SF2Enums, including: SFX file names."/>
                                 <Property name="labelText" type="java.lang.String" value="SF2Enums :"/>
+                                <Property name="name" type="java.lang.String" value="Import Enums" noResource="true"/>
                               </Properties>
                             </Component>
-                            <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton9">
+                            <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButtonImportSpecialSprites">
                               <Properties>
                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                   <Value id="ASM"/>
@@ -685,9 +695,10 @@
                                 <Property name="filePath" type="java.lang.String" value=".\u005cgraphics\u005cspecialsprites\u005centries.asm" containsInvalidXMLChars="true"/>
                                 <Property name="infoMessage" type="java.lang.String" value="The special sprites entries to show preview of special sprites (ie. boss sprites)."/>
                                 <Property name="labelText" type="java.lang.String" value="Special sprite entries :"/>
+                                <Property name="name" type="java.lang.String" value="Import Special Sprite Entries" noResource="true"/>
                               </Properties>
                             </Component>
-                            <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton10">
+                            <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButtonImportSpecialSpritePointers">
                               <Properties>
                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                   <Value id="ASM"/>
@@ -695,6 +706,7 @@
                                 <Property name="filePath" type="java.lang.String" value=".\u005cgraphics\u005cspecialsprites\u005cpointers.asm" containsInvalidXMLChars="true"/>
                                 <Property name="infoMessage" type="java.lang.String" value="Also required to load special sprites."/>
                                 <Property name="labelText" type="java.lang.String" value="Special sprite pointers :"/>
+                                <Property name="name" type="java.lang.String" value="Import Special Sprite Pointers" noResource="true"/>
                               </Properties>
                             </Component>
                           </SubComponents>

@@ -40,7 +40,7 @@ public class GroundMainEditor extends AbstractMainEditor {
     @Override
     protected void onDataLoaded() {
         super.onDataLoaded();
-        ActionManager.setAndExecuteAction(new Action<Ground>(this, "Ground Loaded", this::actionGroundLoaded, groundManager.getGround(), groundLayoutPanel.getGround()));
+        ActionManager.setAndExecuteAction(new Action<Ground>(this, "Ground Imported", this::actionGroundLoaded, groundManager.getGround(), groundLayoutPanel.getGround()));
     }
     
     private void actionGroundLoaded(Ground ground) {
@@ -62,34 +62,34 @@ public class GroundMainEditor extends AbstractMainEditor {
         jSplitPane2 = new javax.swing.JSplitPane();
         jPanel8 = new javax.swing.JPanel();
         jPanel28 = new javax.swing.JPanel();
-        fileButton7 = new com.sfc.sf2.core.gui.controls.FileButton();
+        fileButtonImportBasePalette = new com.sfc.sf2.core.gui.controls.FileButton();
         jPanel3 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel4 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         infoButton1 = new com.sfc.sf2.core.gui.controls.InfoButton();
-        fileButton1 = new com.sfc.sf2.core.gui.controls.FileButton();
-        fileButton2 = new com.sfc.sf2.core.gui.controls.FileButton();
-        jButton18 = new javax.swing.JButton();
+        fileButtonImportPalette = new com.sfc.sf2.core.gui.controls.FileButton();
+        fileButtonImportGround = new com.sfc.sf2.core.gui.controls.FileButton();
+        jButtonImportDisassembly = new javax.swing.JButton();
         jPanel9 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         infoButton2 = new com.sfc.sf2.core.gui.controls.InfoButton();
-        fileButton3 = new com.sfc.sf2.core.gui.controls.FileButton();
-        jButton12 = new javax.swing.JButton();
+        fileButtonImportImage = new com.sfc.sf2.core.gui.controls.FileButton();
+        jButtonImportImage = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jTabbedPane2 = new javax.swing.JTabbedPane();
         jPanel11 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        fileButton4 = new com.sfc.sf2.core.gui.controls.FileButton();
-        jButton2 = new javax.swing.JButton();
+        fileButtonExportGround = new com.sfc.sf2.core.gui.controls.FileButton();
+        jButtonExportGroundDisassembly = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel6 = new javax.swing.JLabel();
-        fileButton5 = new com.sfc.sf2.core.gui.controls.FileButton();
-        jButton3 = new javax.swing.JButton();
+        fileButtonExportPalette = new com.sfc.sf2.core.gui.controls.FileButton();
+        jButtonExportPaletteDisassembly = new javax.swing.JButton();
         jPanel14 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
-        fileButton6 = new com.sfc.sf2.core.gui.controls.FileButton();
-        jButton13 = new javax.swing.JButton();
+        fileButtonExportImage = new com.sfc.sf2.core.gui.controls.FileButton();
+        jButtonExportImage = new javax.swing.JButton();
         infoButton3 = new com.sfc.sf2.core.gui.controls.InfoButton();
         jPanel10 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
@@ -110,10 +110,11 @@ public class GroundMainEditor extends AbstractMainEditor {
 
         jPanel28.setBorder(javax.swing.BorderFactory.createTitledBorder("Base palette :"));
 
-        fileButton7.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButton7.setFilePath("..\\battlescenebasepalette.bin");
-        fileButton7.setInfoMessage("<html>The game's base palette. Ground images use this palette most color channels but then override this with a 'ground palette' that sets the colors at indexes 3, 4, & 8.</html>");
-        fileButton7.setLabelText("Base palette file :");
+        fileButtonImportBasePalette.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
+        fileButtonImportBasePalette.setFilePath("..\\battlescenebasepalette.bin");
+        fileButtonImportBasePalette.setInfoMessage("<html>The game's base palette. Ground images use this palette most color channels but then override this with a 'ground palette' that sets the colors at indexes 3, 4, & 8.</html>");
+        fileButtonImportBasePalette.setLabelText("Base palette file :");
+        fileButtonImportBasePalette.setName("Import Base Palette"); // NOI18N
 
         javax.swing.GroupLayout jPanel28Layout = new javax.swing.GroupLayout(jPanel28);
         jPanel28.setLayout(jPanel28Layout);
@@ -121,14 +122,14 @@ public class GroundMainEditor extends AbstractMainEditor {
             jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel28Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(fileButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(fileButtonImportBasePalette, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel28Layout.setVerticalGroup(
             jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel28Layout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addComponent(fileButton7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fileButtonImportBasePalette, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -140,20 +141,22 @@ public class GroundMainEditor extends AbstractMainEditor {
         infoButton1.setMessageText("<html>Import the ground platform that the battlesprites stand on in a battle scene.<br>The ground platform graphics can be loaded with different palettes to adjust the colors of the graphic.</html>");
         infoButton1.setText("");
 
-        fileButton1.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButton1.setFilePath(".\\groundpalette00.bin");
-        fileButton1.setInfoMessage("<html>Loads the palette to replace colors of the base palette. The 'ground palette' that sets the colors at indexes 3, 4, & 8.</html>");
-        fileButton1.setLabelText("Palette file :");
+        fileButtonImportPalette.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
+        fileButtonImportPalette.setFilePath(".\\groundpalette00.bin");
+        fileButtonImportPalette.setInfoMessage("<html>Loads the palette to replace colors of the base palette. The 'ground palette' that sets the colors at indexes 3, 4, & 8.</html>");
+        fileButtonImportPalette.setLabelText("Palette file :");
+        fileButtonImportPalette.setName("Import Palette"); // NOI18N
 
-        fileButton2.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButton2.setFilePath(".\\groundtiles00.bin");
-        fileButton2.setInfoMessage("The graphic for the ground platform.");
-        fileButton2.setLabelText("Ground file :");
+        fileButtonImportGround.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
+        fileButtonImportGround.setFilePath(".\\groundtiles00.bin");
+        fileButtonImportGround.setInfoMessage("The graphic for the ground platform.");
+        fileButtonImportGround.setLabelText("Ground file :");
+        fileButtonImportGround.setName("Import Ground"); // NOI18N
 
-        jButton18.setText("Import");
-        jButton18.addActionListener(new java.awt.event.ActionListener() {
+        jButtonImportDisassembly.setText("Import");
+        jButtonImportDisassembly.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton18ActionPerformed(evt);
+                jButtonImportDisassemblyActionPerformed(evt);
             }
         });
 
@@ -164,8 +167,8 @@ public class GroundMainEditor extends AbstractMainEditor {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fileButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(fileButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(fileButtonImportPalette, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(fileButtonImportGround, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -173,7 +176,7 @@ public class GroundMainEditor extends AbstractMainEditor {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton18)))
+                        .addComponent(jButtonImportDisassembly)))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -184,11 +187,11 @@ public class GroundMainEditor extends AbstractMainEditor {
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(infoButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fileButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fileButtonImportPalette, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fileButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fileButtonImportGround, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton18)
+                .addComponent(jButtonImportDisassembly)
                 .addContainerGap())
         );
 
@@ -199,15 +202,16 @@ public class GroundMainEditor extends AbstractMainEditor {
         infoButton2.setMessageText("<html>Loads the ground platform from an image. Only takes the colors at index 3, 4, & 8.<br>Supported image formats: PNG or GIF.<br><br>Color format should be 4BPP / 16 indexed colors. Images of 8BPP / 256 indexed colors will be converted to 4 BPP / 16 (some colors may be lost).<br>When imported, icons will use the base palette colors.<br>Color index 0 is treated as transparent.</html>");
         infoButton2.setText("");
 
-        fileButton3.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ANY_IMAGE);
-        fileButton3.setFilePath(".\\export\\groundtiles00.png");
-        fileButton3.setInfoMessage("");
-        fileButton3.setLabelText("Image file :");
+        fileButtonImportImage.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ANY_IMAGE);
+        fileButtonImportImage.setFilePath(".\\export\\groundtiles00.png");
+        fileButtonImportImage.setInfoMessage("");
+        fileButtonImportImage.setLabelText("Image file :");
+        fileButtonImportImage.setName("Import Image"); // NOI18N
 
-        jButton12.setText("Import");
-        jButton12.addActionListener(new java.awt.event.ActionListener() {
+        jButtonImportImage.setText("Import");
+        jButtonImportImage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton12ActionPerformed(evt);
+                jButtonImportImageActionPerformed(evt);
             }
         });
 
@@ -218,8 +222,8 @@ public class GroundMainEditor extends AbstractMainEditor {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fileButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton12, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(fileButtonImportImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonImportImage, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -235,9 +239,9 @@ public class GroundMainEditor extends AbstractMainEditor {
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(infoButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fileButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fileButtonImportImage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton12)
+                .addComponent(jButtonImportImage)
                 .addContainerGap())
         );
 
@@ -262,29 +266,31 @@ public class GroundMainEditor extends AbstractMainEditor {
 
         jLabel1.setText("Export ground disassembly.");
 
-        fileButton4.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButton4.setFilePath(".\\groundtiles00.bin");
-        fileButton4.setInfoMessage("");
-        fileButton4.setLabelText("Ground File :");
+        fileButtonExportGround.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
+        fileButtonExportGround.setFilePath(".\\groundtiles00.bin");
+        fileButtonExportGround.setInfoMessage("");
+        fileButtonExportGround.setLabelText("Ground File :");
+        fileButtonExportGround.setName("Export Ground"); // NOI18N
 
-        jButton2.setText("Export");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButtonExportGroundDisassembly.setText("Export");
+        jButtonExportGroundDisassembly.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButtonExportGroundDisassemblyActionPerformed(evt);
             }
         });
 
         jLabel6.setText("(Optional) Export palette disassembly.");
 
-        fileButton5.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButton5.setFilePath(".\\groundpalette00.bin");
-        fileButton5.setInfoMessage("");
-        fileButton5.setLabelText("Palette file :");
+        fileButtonExportPalette.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
+        fileButtonExportPalette.setFilePath(".\\groundpalette00.bin");
+        fileButtonExportPalette.setInfoMessage("");
+        fileButtonExportPalette.setLabelText("Palette file :");
+        fileButtonExportPalette.setName("Export Palette"); // NOI18N
 
-        jButton3.setText("Export");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jButtonExportPaletteDisassembly.setText("Export");
+        jButtonExportPaletteDisassembly.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jButtonExportPaletteDisassemblyActionPerformed(evt);
             }
         });
 
@@ -296,12 +302,12 @@ public class GroundMainEditor extends AbstractMainEditor {
                 .addContainerGap()
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(fileButton4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(fileButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(fileButtonExportGround, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(fileButtonExportPalette, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel6)
-                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(jButtonExportGroundDisassembly, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButtonExportPaletteDisassembly, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
         jPanel11Layout.setVerticalGroup(
@@ -310,17 +316,17 @@ public class GroundMainEditor extends AbstractMainEditor {
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fileButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fileButtonExportGround, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
+                .addComponent(jButtonExportGroundDisassembly)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fileButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fileButtonExportPalette, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3)
+                .addComponent(jButtonExportPaletteDisassembly)
                 .addContainerGap())
         );
 
@@ -328,15 +334,16 @@ public class GroundMainEditor extends AbstractMainEditor {
 
         jLabel9.setText("Export ground as image.");
 
-        fileButton6.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ANY_IMAGE);
-        fileButton6.setFilePath(".\\export\\groundtiles00.png");
-        fileButton6.setInfoMessage("");
-        fileButton6.setLabelText("Image file :");
+        fileButtonExportImage.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ANY_IMAGE);
+        fileButtonExportImage.setFilePath(".\\export\\groundtiles00.png");
+        fileButtonExportImage.setInfoMessage("");
+        fileButtonExportImage.setLabelText("Image file :");
+        fileButtonExportImage.setName("Export Image"); // NOI18N
 
-        jButton13.setText("Export");
-        jButton13.addActionListener(new java.awt.event.ActionListener() {
+        jButtonExportImage.setText("Export");
+        jButtonExportImage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton13ActionPerformed(evt);
+                jButtonExportImageActionPerformed(evt);
             }
         });
 
@@ -350,10 +357,10 @@ public class GroundMainEditor extends AbstractMainEditor {
             .addGroup(jPanel14Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fileButton6, javax.swing.GroupLayout.DEFAULT_SIZE, 466, Short.MAX_VALUE)
+                    .addComponent(fileButtonExportImage, javax.swing.GroupLayout.DEFAULT_SIZE, 466, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton13))
+                        .addComponent(jButtonExportImage))
                     .addGroup(jPanel14Layout.createSequentialGroup()
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -369,9 +376,9 @@ public class GroundMainEditor extends AbstractMainEditor {
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(infoButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fileButton6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fileButtonExportImage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton13)
+                .addComponent(jButtonExportImage)
                 .addContainerGap())
         );
 
@@ -498,8 +505,8 @@ public class GroundMainEditor extends AbstractMainEditor {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Path graphicPath = PathHelpers.getBasePath().resolve(fileButton4.getFilePath());
+    private void jButtonExportGroundDisassemblyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExportGroundDisassemblyActionPerformed
+        Path graphicPath = PathHelpers.getBasePath().resolve(fileButtonExportGround.getFilePath());
         if (!PathHelpers.createPathIfRequred(graphicPath)) return;
         try {
             groundManager.exportDisassembly(graphicPath, groundLayoutPanel.getGround());
@@ -507,10 +514,10 @@ public class GroundMainEditor extends AbstractMainEditor {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Ground disasm could not be exported to : " + graphicPath);
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jButtonExportGroundDisassemblyActionPerformed
 
-    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
-        Path graphicPath = PathHelpers.getBasePath().resolve(fileButton6.getFilePath());
+    private void jButtonExportImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExportImageActionPerformed
+        Path graphicPath = PathHelpers.getBasePath().resolve(fileButtonExportImage.getFilePath());
         if (!PathHelpers.createPathIfRequred(graphicPath)) return;
         try {
             groundManager.getGround().getTileset().setTilesPerRow(Ground.GROUND_TILES_PER_ROW);
@@ -519,11 +526,11 @@ public class GroundMainEditor extends AbstractMainEditor {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Ground image could not be exported to : " + graphicPath);
         }
-    }//GEN-LAST:event_jButton13ActionPerformed
+    }//GEN-LAST:event_jButtonExportImageActionPerformed
 
-    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-        Path basePalettePath = PathHelpers.getBasePath().resolve(fileButton7.getFilePath());
-        Path graphicPath = PathHelpers.getBasePath().resolve(fileButton3.getFilePath());
+    private void jButtonImportImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportImageActionPerformed
+        Path basePalettePath = PathHelpers.getBasePath().resolve(fileButtonImportBasePalette.getFilePath());
+        Path graphicPath = PathHelpers.getBasePath().resolve(fileButtonImportImage.getFilePath());
         try {
             groundManager.importImage(basePalettePath, graphicPath);
         } catch (Exception ex) {
@@ -532,12 +539,12 @@ public class GroundMainEditor extends AbstractMainEditor {
             Console.logger().severe("ERROR Ground image could not be imported from : " + graphicPath);
         }
         onDataLoaded();
-    }//GEN-LAST:event_jButton12ActionPerformed
+    }//GEN-LAST:event_jButtonImportImageActionPerformed
 
-    private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
-        Path basePalettePath = PathHelpers.getBasePath().resolve(fileButton7.getFilePath());
-        Path palettePath = PathHelpers.getBasePath().resolve(fileButton1.getFilePath());
-        Path graphicPath = PathHelpers.getBasePath().resolve(fileButton2.getFilePath());
+    private void jButtonImportDisassemblyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportDisassemblyActionPerformed
+        Path basePalettePath = PathHelpers.getBasePath().resolve(fileButtonImportBasePalette.getFilePath());
+        Path palettePath = PathHelpers.getBasePath().resolve(fileButtonImportPalette.getFilePath());
+        Path graphicPath = PathHelpers.getBasePath().resolve(fileButtonImportGround.getFilePath());
         try {
             groundManager.importDisassembly(basePalettePath, palettePath, graphicPath);
         } catch (Exception ex) {
@@ -546,10 +553,10 @@ public class GroundMainEditor extends AbstractMainEditor {
             Console.logger().severe("ERROR Ground disasm could not be imported from : " + graphicPath);
         }
         onDataLoaded();
-    }//GEN-LAST:event_jButton18ActionPerformed
+    }//GEN-LAST:event_jButtonImportDisassemblyActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        Path palettePath = PathHelpers.getBasePath().resolve(fileButton5.getFilePath());
+    private void jButtonExportPaletteDisassemblyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExportPaletteDisassemblyActionPerformed
+        Path palettePath = PathHelpers.getBasePath().resolve(fileButtonExportPalette.getFilePath());
         if (!PathHelpers.createPathIfRequred(palettePath)) return;
         try {
             groundManager.exportPalette(palettePath, groundLayoutPanel.getGround());
@@ -557,7 +564,7 @@ public class GroundMainEditor extends AbstractMainEditor {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Ground palette disasm could not be exported to : " + palettePath);
         }
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_jButtonExportPaletteDisassemblyActionPerformed
     
     /**
      * To create a new Main Editor, copy the below code
@@ -577,23 +584,23 @@ public class GroundMainEditor extends AbstractMainEditor {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.sfc.sf2.core.gui.controls.Console console1;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton1;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton2;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton3;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton4;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton5;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton6;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton7;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonExportGround;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonExportImage;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonExportPalette;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonImportBasePalette;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonImportGround;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonImportImage;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonImportPalette;
     private com.sfc.sf2.ground.gui.GroundLayoutPanel groundLayoutPanel;
     private com.sfc.sf2.ground.gui.GroundViewPanel groundViewPanel1;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton1;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton2;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton3;
-    private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton13;
-    private javax.swing.JButton jButton18;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButtonExportGroundDisassembly;
+    private javax.swing.JButton jButtonExportImage;
+    private javax.swing.JButton jButtonExportPaletteDisassembly;
+    private javax.swing.JButton jButtonImportDisassembly;
+    private javax.swing.JButton jButtonImportImage;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

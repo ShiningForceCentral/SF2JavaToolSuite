@@ -5,10 +5,12 @@
  */
 package com.sfc.sf2.dialog.properties.gui;
 
+import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.dialog.properties.DialogPropertiesManager;
 import com.sfc.sf2.dialog.properties.DialogProperty;
+import com.sfc.sf2.dialog.properties.actions.DialogPropertiesAction;
 import com.sfc.sf2.helpers.PathHelpers;
 import java.io.File;
 import java.nio.file.Path;
@@ -28,10 +30,10 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
         initCore(console1);
         
         //Handle if standard dialog properties exists or not
-        File file = PathHelpers.getBasePath().resolve(fileButton6.getFilePath()).toFile();
+        File file = PathHelpers.getBasePath().resolve(fileButtonImportDialog.getFilePath()).toFile();
         if (!file.exists()) {
-            fileButton6.setFilePath(".\\spritedialogproperties.asm");
-            fileButton7.setFilePath(".\\spritedialogproperties.asm");
+            fileButtonImportDialog.setFilePath(".\\spritedialogproperties.asm");
+            fileButtonExportDialog.setFilePath(".\\spritedialogproperties.asm");
         }
     }
     
@@ -50,9 +52,12 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
     @Override
     protected void onDataLoaded() {
         super.onDataLoaded();
-        
         dialogPropertiesTableModel.setEnums(dialogpropertiesManager.getDialogEnums());
-        dialogPropertiesTableModel.setTableData(dialogpropertiesManager.getDialogProperties());
+        ActionManager.setAndExecuteAction(new DialogPropertiesAction(this, "Dialog Properties Imported", this::actionTilesetLoaded, dialogpropertiesManager.getDialogProperties(), dialogPropertiesTableModel.getTableData(DialogProperty[].class)));
+    }
+    
+    private void actionTilesetLoaded(DialogProperty[] dialogProperties) {
+        dialogPropertiesTableModel.setTableData(dialogProperties);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -77,29 +82,29 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
         jPanel4 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         infoButton2 = new com.sfc.sf2.core.gui.controls.InfoButton();
-        fileButton6 = new com.sfc.sf2.core.gui.controls.FileButton();
-        jButton18 = new javax.swing.JButton();
+        fileButtonImportDialog = new com.sfc.sf2.core.gui.controls.FileButton();
+        jButtonImportDialog = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        fileButton7 = new com.sfc.sf2.core.gui.controls.FileButton();
-        jButton2 = new javax.swing.JButton();
+        fileButtonExportDialog = new com.sfc.sf2.core.gui.controls.FileButton();
+        jButtonExportDialog = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        fileButton4 = new com.sfc.sf2.core.gui.controls.FileButton();
+        fileButtonImportAllies = new com.sfc.sf2.core.gui.controls.FileButton();
         infoButton1 = new com.sfc.sf2.core.gui.controls.InfoButton();
-        jButton19 = new javax.swing.JButton();
+        jButtonImportAllies = new javax.swing.JButton();
         jPanel9 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        fileButton5 = new com.sfc.sf2.core.gui.controls.FileButton();
-        jButton3 = new javax.swing.JButton();
+        fileButtonExportAllies = new com.sfc.sf2.core.gui.controls.FileButton();
+        jButtonExportAllies = new javax.swing.JButton();
         accordionPanel1 = new com.sfc.sf2.core.gui.controls.AccordionPanel();
-        fileButton1 = new com.sfc.sf2.core.gui.controls.FileButton();
-        fileButton2 = new com.sfc.sf2.core.gui.controls.FileButton();
-        fileButton3 = new com.sfc.sf2.core.gui.controls.FileButton();
-        fileButton8 = new com.sfc.sf2.core.gui.controls.FileButton();
-        fileButton9 = new com.sfc.sf2.core.gui.controls.FileButton();
-        fileButton10 = new com.sfc.sf2.core.gui.controls.FileButton();
+        fileButtonImportBasePalette = new com.sfc.sf2.core.gui.controls.FileButton();
+        fileButtonImportMapsprites = new com.sfc.sf2.core.gui.controls.FileButton();
+        fileButtonImportPortraits = new com.sfc.sf2.core.gui.controls.FileButton();
+        fileButtonImportEnums = new com.sfc.sf2.core.gui.controls.FileButton();
+        fileButtonImportSpecialSprites = new com.sfc.sf2.core.gui.controls.FileButton();
+        fileButtonImportSpecialSpritePointers = new com.sfc.sf2.core.gui.controls.FileButton();
         console1 = new com.sfc.sf2.core.gui.controls.Console();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -164,15 +169,17 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
         infoButton2.setMessageText("<html>Used for:<br>- spritedialogproperties.asm<br>- spritedialogproperties.bin<br>- spritedialogproperties-standard.asm</html>");
         infoButton2.setText("");
 
-        fileButton6.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButton6.setFilePath(".\\spritedialogproperties-standard.asm");
-        fileButton6.setInfoMessage("");
-        fileButton6.setLabelText("Dialog properties :");
+        fileButtonImportDialog.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
+        fileButtonImportDialog.setFilePath(".\\spritedialogproperties-standard.asm");
+        fileButtonImportDialog.setInfoMessage("");
+        fileButtonImportDialog.setLabelText("Dialog properties :");
+        fileButtonImportDialog.setName("Import General Dialog"); // NOI18N
 
-        jButton18.setText("Import");
-        jButton18.addActionListener(new java.awt.event.ActionListener() {
+        jButtonImportDialog.setText("Import");
+        jButtonImportDialog.setName(""); // NOI18N
+        jButtonImportDialog.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton18ActionPerformed(evt);
+                jButtonImportDialogActionPerformed(evt);
             }
         });
 
@@ -183,14 +190,14 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fileButton6, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
+                    .addComponent(fileButtonImportDialog, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(infoButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton18)))
+                        .addComponent(jButtonImportDialog)))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -201,9 +208,9 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
                     .addComponent(infoButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fileButton6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fileButtonImportDialog, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton18)
+                .addComponent(jButtonImportDialog)
                 .addContainerGap())
         );
 
@@ -212,15 +219,17 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
 
         jLabel1.setText("Export dialog properties disassembly.");
 
-        fileButton7.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButton7.setFilePath(".\\spritedialogproperties-standard.asm");
-        fileButton7.setInfoMessage("");
-        fileButton7.setLabelText("Dialog properties :");
+        fileButtonExportDialog.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
+        fileButtonExportDialog.setFilePath(".\\spritedialogproperties-standard.asm");
+        fileButtonExportDialog.setInfoMessage("");
+        fileButtonExportDialog.setLabelText("Dialog properties :");
+        fileButtonExportDialog.setName("Export General Dialog"); // NOI18N
 
-        jButton2.setText("Export");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButtonExportDialog.setText("Export");
+        jButtonExportDialog.setName(""); // NOI18N
+        jButtonExportDialog.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButtonExportDialogActionPerformed(evt);
             }
         });
 
@@ -232,14 +241,14 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(fileButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(fileButtonExportDialog, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2)
+                .addComponent(jButtonExportDialog)
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -248,9 +257,9 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fileButton7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fileButtonExportDialog, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
+                .addComponent(jButtonExportDialog)
                 .addContainerGap())
         );
 
@@ -281,18 +290,19 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
 
         jLabel4.setText("Import ally dialog properties disassembly.");
 
-        fileButton4.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButton4.setFilePath(".\\stats\\allies\\allydialogproperties-standard.asm");
-        fileButton4.setInfoMessage("");
-        fileButton4.setLabelText("Dialog properties :");
+        fileButtonImportAllies.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
+        fileButtonImportAllies.setFilePath(".\\stats\\allies\\allydialogproperties-standard.asm");
+        fileButtonImportAllies.setInfoMessage("");
+        fileButtonImportAllies.setLabelText("Dialog properties :");
+        fileButtonImportAllies.setName("Import Allies Dialog"); // NOI18N
 
         infoButton1.setMessageText("<html>Used for:<br>- allydialogproperties-standard.asm</html>");
         infoButton1.setText("");
 
-        jButton19.setText("Import");
-        jButton19.addActionListener(new java.awt.event.ActionListener() {
+        jButtonImportAllies.setText("Import");
+        jButtonImportAllies.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton19ActionPerformed(evt);
+                jButtonImportAlliesActionPerformed(evt);
             }
         });
 
@@ -303,14 +313,14 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fileButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
+                    .addComponent(fileButtonImportAllies, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
                     .addGroup(jPanel11Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(infoButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton19)))
+                        .addComponent(jButtonImportAllies)))
                 .addContainerGap())
         );
         jPanel11Layout.setVerticalGroup(
@@ -321,9 +331,9 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
                     .addComponent(infoButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fileButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fileButtonImportAllies, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton19)
+                .addComponent(jButtonImportAllies)
                 .addContainerGap())
         );
 
@@ -332,15 +342,16 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
 
         jLabel3.setText("Export allies dialog properties disassembly.");
 
-        fileButton5.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButton5.setFilePath(".\\stats\\allies\\allydialogproperties-standard.asm");
-        fileButton5.setInfoMessage("");
-        fileButton5.setLabelText("Dialog properties :");
+        fileButtonExportAllies.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
+        fileButtonExportAllies.setFilePath(".\\stats\\allies\\allydialogproperties-standard.asm");
+        fileButtonExportAllies.setInfoMessage("");
+        fileButtonExportAllies.setLabelText("Dialog properties :");
+        fileButtonExportAllies.setName("Export Allies Dialog"); // NOI18N
 
-        jButton3.setText("Export");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jButtonExportAllies.setText("Export");
+        jButtonExportAllies.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jButtonExportAlliesActionPerformed(evt);
             }
         });
 
@@ -351,13 +362,13 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fileButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
+                    .addComponent(fileButtonExportAllies, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton3)))
+                        .addComponent(jButtonExportAllies)))
                 .addContainerGap())
         );
         jPanel9Layout.setVerticalGroup(
@@ -366,9 +377,9 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
                 .addContainerGap()
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fileButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fileButtonExportAllies, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(6, 6, 6)
-                .addComponent(jButton3)
+                .addComponent(jButtonExportAllies)
                 .addContainerGap())
         );
 
@@ -397,35 +408,41 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
 
         accordionPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Import data :"));
 
-        fileButton1.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButton1.setFilePath(".\\graphics\\tech\\basepalette.bin");
-        fileButton1.setInfoMessage("The game's base palette. Used to show the mapsprites.");
-        fileButton1.setLabelText("Base palette :");
+        fileButtonImportBasePalette.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
+        fileButtonImportBasePalette.setFilePath(".\\graphics\\tech\\basepalette.bin");
+        fileButtonImportBasePalette.setInfoMessage("The game's base palette. Used to show the mapsprites.");
+        fileButtonImportBasePalette.setLabelText("Base palette :");
+        fileButtonImportBasePalette.setName("Import Base Palette"); // NOI18N
 
-        fileButton2.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButton2.setFilePath(".\\graphics\\mapsprites\\entries.asm");
-        fileButton2.setInfoMessage("The entries file to load mapsprite previews.");
-        fileButton2.setLabelText("Mapsprite entries :");
+        fileButtonImportMapsprites.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
+        fileButtonImportMapsprites.setFilePath(".\\graphics\\mapsprites\\entries.asm");
+        fileButtonImportMapsprites.setInfoMessage("The entries file to load mapsprite previews.");
+        fileButtonImportMapsprites.setLabelText("Mapsprite entries :");
+        fileButtonImportMapsprites.setName("Import Mapsprite Entries"); // NOI18N
 
-        fileButton3.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButton3.setFilePath(".\\graphics\\portraits\\entries.asm");
-        fileButton3.setInfoMessage("The entries file to show preview of portraits.");
-        fileButton3.setLabelText("Portrait entries :");
+        fileButtonImportPortraits.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
+        fileButtonImportPortraits.setFilePath(".\\graphics\\portraits\\entries.asm");
+        fileButtonImportPortraits.setInfoMessage("The entries file to show preview of portraits.");
+        fileButtonImportPortraits.setLabelText("Portrait entries :");
+        fileButtonImportPortraits.setName("Import Portrait Entries"); // NOI18N
 
-        fileButton8.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButton8.setFilePath("..\\sf2enums.asm");
-        fileButton8.setInfoMessage("Loads data from SF2Enums, including: SFX file names.");
-        fileButton8.setLabelText("SF2Enums :");
+        fileButtonImportEnums.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
+        fileButtonImportEnums.setFilePath("..\\sf2enums.asm");
+        fileButtonImportEnums.setInfoMessage("Loads data from SF2Enums, including: SFX file names.");
+        fileButtonImportEnums.setLabelText("SF2Enums :");
+        fileButtonImportEnums.setName("Import Enums"); // NOI18N
 
-        fileButton9.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButton9.setFilePath(".\\graphics\\specialsprites\\entries.asm");
-        fileButton9.setInfoMessage("The special sprites entries to show preview of special sprites (ie. boss sprites).");
-        fileButton9.setLabelText("Special sprite entries :");
+        fileButtonImportSpecialSprites.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
+        fileButtonImportSpecialSprites.setFilePath(".\\graphics\\specialsprites\\entries.asm");
+        fileButtonImportSpecialSprites.setInfoMessage("The special sprites entries to show preview of special sprites (ie. boss sprites).");
+        fileButtonImportSpecialSprites.setLabelText("Special sprite entries :");
+        fileButtonImportSpecialSprites.setName("Import Special Sprite Entries"); // NOI18N
 
-        fileButton10.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButton10.setFilePath(".\\graphics\\specialsprites\\pointers.asm");
-        fileButton10.setInfoMessage("Also required to load special sprites.");
-        fileButton10.setLabelText("Special sprite pointers :");
+        fileButtonImportSpecialSpritePointers.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
+        fileButtonImportSpecialSpritePointers.setFilePath(".\\graphics\\specialsprites\\pointers.asm");
+        fileButtonImportSpecialSpritePointers.setInfoMessage("Also required to load special sprites.");
+        fileButtonImportSpecialSpritePointers.setLabelText("Special sprite pointers :");
+        fileButtonImportSpecialSpritePointers.setName("Import Special Sprite Pointers"); // NOI18N
 
         javax.swing.GroupLayout accordionPanel1Layout = new javax.swing.GroupLayout(accordionPanel1);
         accordionPanel1.setLayout(accordionPanel1Layout);
@@ -434,29 +451,29 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
             .addGroup(accordionPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(accordionPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fileButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(fileButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(fileButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(fileButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(fileButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(fileButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(fileButtonImportMapsprites, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(fileButtonImportBasePalette, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(fileButtonImportPortraits, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(fileButtonImportEnums, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(fileButtonImportSpecialSprites, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(fileButtonImportSpecialSpritePointers, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
         accordionPanel1Layout.setVerticalGroup(
             accordionPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(accordionPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(fileButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fileButtonImportBasePalette, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fileButton8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fileButtonImportEnums, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fileButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fileButtonImportMapsprites, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fileButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fileButtonImportPortraits, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fileButton9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fileButtonImportSpecialSprites, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fileButton10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fileButtonImportSpecialSpritePointers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -525,8 +542,8 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Path dialogPropertiesPath = PathHelpers.getBasePath().resolve(fileButton7.getFilePath());
+    private void jButtonExportDialogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExportDialogActionPerformed
+        Path dialogPropertiesPath = PathHelpers.getBasePath().resolve(fileButtonExportDialog.getFilePath());
         if (!PathHelpers.createPathIfRequred(dialogPropertiesPath)) return;
         try {
             dialogpropertiesManager.exportDisassembly(dialogPropertiesPath, dialogPropertiesTableModel.getTableData(DialogProperty[].class));
@@ -534,14 +551,14 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Dialog properties disasm could not be exported to : " + dialogPropertiesPath);
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jButtonExportDialogActionPerformed
 
-    private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
-        Path palettePath = PathHelpers.getBasePath().resolve(fileButton1.getFilePath());
-        Path enumsPath = PathHelpers.getBasePath().resolve(fileButton8.getFilePath());
-        Path mapspriteEntriesPath = PathHelpers.getBasePath().resolve(fileButton2.getFilePath());
-        Path portraitEntriesPath = PathHelpers.getBasePath().resolve(fileButton3.getFilePath());
-        Path dialogPropertiesPath = PathHelpers.getBasePath().resolve(fileButton6.getFilePath());
+    private void jButtonImportDialogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportDialogActionPerformed
+        Path palettePath = PathHelpers.getBasePath().resolve(fileButtonImportBasePalette.getFilePath());
+        Path enumsPath = PathHelpers.getBasePath().resolve(fileButtonImportEnums.getFilePath());
+        Path mapspriteEntriesPath = PathHelpers.getBasePath().resolve(fileButtonImportMapsprites.getFilePath());
+        Path portraitEntriesPath = PathHelpers.getBasePath().resolve(fileButtonImportPortraits.getFilePath());
+        Path dialogPropertiesPath = PathHelpers.getBasePath().resolve(fileButtonImportDialog.getFilePath());
         try {
             dialogpropertiesManager.importImagesAndEnums(palettePath, mapspriteEntriesPath, portraitEntriesPath, enumsPath);
             dialogpropertiesManager.importDisassembly(dialogPropertiesPath);
@@ -552,10 +569,10 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
             Console.logger().severe("ERROR Dialog properties could not be imported from : " + dialogPropertiesPath);
         }
         onDataLoaded();
-    }//GEN-LAST:event_jButton18ActionPerformed
+    }//GEN-LAST:event_jButtonImportDialogActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        Path dialogPropertiesPath = PathHelpers.getBasePath().resolve(fileButton5.getFilePath());
+    private void jButtonExportAlliesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExportAlliesActionPerformed
+        Path dialogPropertiesPath = PathHelpers.getBasePath().resolve(fileButtonExportAllies.getFilePath());
         if (!PathHelpers.createPathIfRequred(dialogPropertiesPath)) return;
         try {
             dialogpropertiesManager.exportAlliesDisassembly(dialogPropertiesPath, dialogPropertiesTableModel.getTableData(DialogProperty[].class));
@@ -563,14 +580,14 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Allies dialog properties disasm could not be exported to : " + dialogPropertiesPath);
         }
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_jButtonExportAlliesActionPerformed
 
-    private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
-        Path palettePath = PathHelpers.getBasePath().resolve(fileButton1.getFilePath());
-        Path enumsPath = PathHelpers.getBasePath().resolve(fileButton8.getFilePath());
-        Path mapspriteEntriesPath = PathHelpers.getBasePath().resolve(fileButton2.getFilePath());
-        Path portraitEntriesPath = PathHelpers.getBasePath().resolve(fileButton3.getFilePath());
-        Path dialogPropertiesPath = PathHelpers.getBasePath().resolve(fileButton4.getFilePath());
+    private void jButtonImportAlliesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportAlliesActionPerformed
+        Path palettePath = PathHelpers.getBasePath().resolve(fileButtonImportBasePalette.getFilePath());
+        Path enumsPath = PathHelpers.getBasePath().resolve(fileButtonImportEnums.getFilePath());
+        Path mapspriteEntriesPath = PathHelpers.getBasePath().resolve(fileButtonImportMapsprites.getFilePath());
+        Path portraitEntriesPath = PathHelpers.getBasePath().resolve(fileButtonImportPortraits.getFilePath());
+        Path dialogPropertiesPath = PathHelpers.getBasePath().resolve(fileButtonImportAllies.getFilePath());
         try {
             dialogpropertiesManager.importImagesAndEnums(palettePath, mapspriteEntriesPath, portraitEntriesPath, enumsPath);
             dialogpropertiesManager.importAlliesDisassembly(dialogPropertiesPath);
@@ -581,7 +598,7 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
             Console.logger().severe("ERROR Dialog properties could not be imported from : " + dialogPropertiesPath);
         }
         onDataLoaded();
-    }//GEN-LAST:event_jButton19ActionPerformed
+    }//GEN-LAST:event_jButtonImportAlliesActionPerformed
 
     /**
      * To create a new Main Editor, copy the below code
@@ -604,22 +621,22 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
     private com.sfc.sf2.core.gui.controls.Console console1;
     private com.sfc.sf2.dialog.properties.gui.DialogPropertiesTable dialogPropertiesTable;
     private com.sfc.sf2.dialog.properties.models.DialogPropertiesTableModel dialogPropertiesTableModel;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton1;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton10;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton2;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton3;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton4;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton5;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton6;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton7;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton8;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton9;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonExportAllies;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonExportDialog;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonImportAllies;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonImportBasePalette;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonImportDialog;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonImportEnums;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonImportMapsprites;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonImportPortraits;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonImportSpecialSpritePointers;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonImportSpecialSprites;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton1;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton2;
-    private javax.swing.JButton jButton18;
-    private javax.swing.JButton jButton19;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButtonExportAllies;
+    private javax.swing.JButton jButtonExportDialog;
+    private javax.swing.JButton jButtonImportAllies;
+    private javax.swing.JButton jButtonImportDialog;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

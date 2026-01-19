@@ -98,10 +98,19 @@ public class Action<T extends Object> implements IAction {
             INameable nameable = (INameable)data;
             return nameable.getName();
         }
+        
         String s = data.toString();
         if (s.charAt(0) == '[') {
             s = s.substring(s.lastIndexOf('.')+1);
         }
-        return s;
+        
+        if (data instanceof Object[]) {
+            Object[] array = (Object[])data;
+            if (array.length == 0) return "NULL";
+            s = s.substring(0, s.indexOf(";@"));
+            return String.format("%s array. Size = %d", s, array.length);
+        } else {
+            return s;
+        }
     }
 }
