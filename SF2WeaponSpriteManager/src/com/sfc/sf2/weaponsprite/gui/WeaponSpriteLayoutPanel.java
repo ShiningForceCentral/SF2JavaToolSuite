@@ -25,7 +25,8 @@ import java.awt.Graphics;
 public class WeaponSpriteLayoutPanel extends AbstractLayoutPanel {
     
     private WeaponSprite weaponsprite;
-    private Palette palette;
+    private Palette[] palettes;
+    private int paletteIndex = -1;
     
     public WeaponSpriteLayoutPanel() {
         super();
@@ -41,7 +42,7 @@ public class WeaponSpriteLayoutPanel extends AbstractLayoutPanel {
     
     @Override
     protected boolean hasData() {
-        return weaponsprite != null && palette != null;
+        return weaponsprite != null && paletteIndex != -1;
     }
 
     @Override
@@ -51,11 +52,10 @@ public class WeaponSpriteLayoutPanel extends AbstractLayoutPanel {
 
     @Override
     protected void drawImage(Graphics graphics) {
-        
         int frameHeight = FRAME_TILE_HEIGHT*PIXEL_HEIGHT;
         Tileset[] frames = weaponsprite.getFrames();
         for(int f = 0; f < weaponsprite.getFrames().length; f++) {
-            frames[f].setPalette(palette);
+            frames[f].setPalette(palettes[paletteIndex]);
             graphics.drawImage(frames[f].getIndexedColorImage(), 0, f*frameHeight, null);
         }
     }
@@ -65,16 +65,28 @@ public class WeaponSpriteLayoutPanel extends AbstractLayoutPanel {
     }
 
     public void setWeaponSprite(WeaponSprite weaponsprite) {
+        if (this.weaponsprite == weaponsprite) return;
         this.weaponsprite = weaponsprite;
         redraw();
     }
 
-    public Palette getPalette() {
-        return palette;
+    public Palette[] getPalettes() {
+        return palettes;
     }
 
-    public void setPalette(Palette palette) {
-        this.palette = palette;
+    public void setPalettes(Palette[] palettes) {
+        this.palettes = palettes;
+        paletteIndex = -1;
+        redraw();
+    }
+
+    public int getPaletteIndex() {
+        return paletteIndex;
+    }
+
+    public void setPaletteIndex(int paletteIndex) {
+        if (this.paletteIndex == paletteIndex) return;
+        this.paletteIndex = paletteIndex;
         redraw();
     }
 }

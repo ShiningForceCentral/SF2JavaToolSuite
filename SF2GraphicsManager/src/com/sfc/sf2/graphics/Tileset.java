@@ -86,7 +86,7 @@ public class Tileset implements INameable {
         for (int i = 0; i < tiles.length; i++) {
             tiles[i].setPalette(palette);
         }
-        clearIndexedColorImage(false);
+        clearIndexedColorImage(true);
     }
     
     public BufferedImage getIndexedColorImage() {

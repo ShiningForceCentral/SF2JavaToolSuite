@@ -3,23 +3,30 @@
 * To change this template file, choose Tools | Templates
 * and open the template in the editor.
  */
-package com.sfc.sf2.core.gui.controls;
+package com.sfc.sf2.weaponsprite.gui;
 
-import com.sfc.sf2.core.gui.AbstractLayoutPanel;
+import com.sfc.sf2.core.actions.ActionManager;
+import com.sfc.sf2.core.actions.ComboAction;
+import com.sfc.sf2.core.gui.controls.AbstractViewPanel;
+import javax.swing.JComboBox;
 
 /**
  *
  * @author TiMMy
  */
-public class ViewPanel extends AbstractViewPanel<AbstractLayoutPanel> {
-
+public class WeaponSpriteViewPanel extends AbstractViewPanel<WeaponSpriteLayoutPanel> {
+        
     /**
      * Creates new form ViewPanel
      */
-    public ViewPanel() {
+    public WeaponSpriteViewPanel() {
         super();
         initComponents();
-        init(jComboBoxScale, jCheckBoxGrid, jSpinnerItemsPerRow, colorPickerBG);
+        init(jComboBoxScale, jCheckBoxGrid, null, colorPickerBG);
+    }
+
+    public JComboBox<String> getjComboBoxPalette() {
+        return jComboBoxPalette;
     }
 
     /**
@@ -29,25 +36,15 @@ public class ViewPanel extends AbstractViewPanel<AbstractLayoutPanel> {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabelItemsPerRow = new javax.swing.JLabel();
-        jSpinnerItemsPerRow = new javax.swing.JSpinner();
         jLabelBG = new javax.swing.JLabel();
         colorPickerBG = new com.sfc.sf2.core.gui.controls.ColorPicker();
         jCheckBoxGrid = new javax.swing.JCheckBox();
         jLabelScale = new javax.swing.JLabel();
         jComboBoxScale = new javax.swing.JComboBox<>();
+        jComboBoxPalette = new javax.swing.JComboBox<>();
+        jLabelPalette = new javax.swing.JLabel();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder("View"));
-
-        jLabelItemsPerRow.setText("Tiles per row :");
-
-        jSpinnerItemsPerRow.setModel(new javax.swing.SpinnerNumberModel(16, 1, null, 1));
-        jSpinnerItemsPerRow.setName("Tiles Per Row Spinner"); // NOI18N
-        jSpinnerItemsPerRow.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jSpinnerItemsPerRowStateChanged(evt);
-            }
-        });
 
         jLabelBG.setText("BG :");
 
@@ -87,20 +84,30 @@ public class ViewPanel extends AbstractViewPanel<AbstractLayoutPanel> {
             }
         });
 
+        jComboBoxPalette.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0" }));
+        jComboBoxPalette.setName("Palette Combo"); // NOI18N
+        jComboBoxPalette.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxPaletteActionPerformed(evt);
+            }
+        });
+
+        jLabelPalette.setText("Palette : ");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelItemsPerRow)
+                .addComponent(jLabelPalette)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSpinnerItemsPerRow, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jComboBoxPalette, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabelBG)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(colorPickerBG, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addComponent(jCheckBoxGrid)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabelScale)
@@ -113,20 +120,17 @@ public class ViewPanel extends AbstractViewPanel<AbstractLayoutPanel> {
             .addGroup(layout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabelItemsPerRow)
-                    .addComponent(jSpinnerItemsPerRow, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelBG)
                     .addComponent(colorPickerBG, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jCheckBoxGrid)
                     .addComponent(jComboBoxScale, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelScale))
+                    .addComponent(jLabelScale)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                        .addComponent(jComboBoxPalette, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabelPalette)))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jSpinnerItemsPerRowStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinnerItemsPerRowStateChanged
-        super.onItemsPerRowChanged(evt);
-    }//GEN-LAST:event_jSpinnerItemsPerRowStateChanged
 
     private void colorPickerBGColorChanged(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorPickerBGColorChanged
         super.onBGColorChanged(evt);
@@ -140,13 +144,22 @@ public class ViewPanel extends AbstractViewPanel<AbstractLayoutPanel> {
         super.onGridChanged(evt);
     }//GEN-LAST:event_jCheckBoxGridItemStateChanged
 
+    private void jComboBoxPaletteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxPaletteActionPerformed
+        if (!ActionManager.isActionTriggering()) {
+            ActionManager.setActionWithoutExecute(new ComboAction(jComboBoxPalette, (int)jComboBoxPalette.getSelectedIndex(), layoutPanel.getPaletteIndex()));
+        }
+        if (layoutPanel != null) {
+            layoutPanel.setPaletteIndex(jComboBoxPalette.getSelectedIndex());
+        }
+    }//GEN-LAST:event_jComboBoxPaletteActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.sfc.sf2.core.gui.controls.ColorPicker colorPickerBG;
     private javax.swing.JCheckBox jCheckBoxGrid;
+    private javax.swing.JComboBox<String> jComboBoxPalette;
     private javax.swing.JComboBox<String> jComboBoxScale;
     private javax.swing.JLabel jLabelBG;
-    private javax.swing.JLabel jLabelItemsPerRow;
+    private javax.swing.JLabel jLabelPalette;
     private javax.swing.JLabel jLabelScale;
-    private javax.swing.JSpinner jSpinnerItemsPerRow;
     // End of variables declaration//GEN-END:variables
 }
