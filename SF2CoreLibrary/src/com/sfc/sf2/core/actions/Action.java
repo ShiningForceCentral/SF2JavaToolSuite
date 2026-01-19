@@ -91,7 +91,10 @@ public class Action<T extends Object> implements IAction {
     
     protected String dataToString(T data) {
         if (data == null) return "NULL";
-        if (data instanceof INameable) {
+        if (data instanceof JComponent) {
+            JComponent component = (JComponent)data;
+            return component.getName();
+        } else  if (data instanceof INameable) {
             INameable nameable = (INameable)data;
             return nameable.getName();
         }

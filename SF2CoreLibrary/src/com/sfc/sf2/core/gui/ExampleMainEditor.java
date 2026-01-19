@@ -8,13 +8,18 @@ package com.sfc.sf2.core.gui;
 import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.core.actions.ComboAction;
 import com.sfc.sf2.core.actions.MultiComboAction;
+import com.sfc.sf2.core.actions.RadioButtonAction;
 import com.sfc.sf2.core.actions.SpinnerAction;
 import com.sfc.sf2.core.actions.ToggleAction;
 import com.sfc.sf2.core.settings.SettingsManager;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.core.models.combobox.ComboBoxTableEditor;
 import com.sfc.sf2.core.models.combobox.ComboBoxTableRenderer;
+import com.sfc.sf2.helpers.SwingControlsHelpers;
+import javax.swing.AbstractButton;
+import javax.swing.ButtonModel;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JRadioButton;
 import javax.swing.table.TableColumnModel;
 
 /**
@@ -68,6 +73,7 @@ public final class ExampleMainEditor extends AbstractMainEditor {
 
         stringTableModel = new com.sfc.sf2.core.models.StringTableModel();
         comboTableModel = new com.sfc.sf2.core.models.combobox.ComboTableModel();
+        buttonGroupTest = new javax.swing.ButtonGroup();
         jPanel13 = new javax.swing.JPanel();
         jSplitPane1 = new javax.swing.JSplitPane();
         jPanel15 = new javax.swing.JPanel();
@@ -89,6 +95,11 @@ public final class ExampleMainEditor extends AbstractMainEditor {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        jRadioButton1 = new javax.swing.JRadioButton();
+        jRadioButton2 = new javax.swing.JRadioButton();
+        jRadioButton3 = new javax.swing.JRadioButton();
+        jLabel7 = new javax.swing.JLabel();
+        jRadioButton4 = new javax.swing.JRadioButton();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         testLayoutPanel1 = new com.sfc.sf2.core.gui.TestLayoutPanel();
@@ -187,7 +198,7 @@ public final class ExampleMainEditor extends AbstractMainEditor {
         );
 
         jSpinner4.setUI(new com.sfc.sf2.core.models.spinner.LeftRightSpinnerUI());
-        jSpinner4.setName("Action test spinner"); // NOI18N
+        jSpinner4.setName("Action Test Spinner"); // NOI18N
         jSpinner4.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 jSpinnerTestStateChanged(evt);
@@ -195,7 +206,7 @@ public final class ExampleMainEditor extends AbstractMainEditor {
         });
 
         multiComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "fwefwrg ", "rgththsr", "ghjkyjjrtn", "5tehgxdh", "ws" }));
-        multiComboBox1.setName("Action test multicombo"); // NOI18N
+        multiComboBox1.setName("Action Test Multicombo"); // NOI18N
         multiComboBox1.setPreferredSize(new java.awt.Dimension(76, 26));
         multiComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -204,7 +215,7 @@ public final class ExampleMainEditor extends AbstractMainEditor {
         });
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.setName("Action test combo"); // NOI18N
+        jComboBox1.setName("Action Test Combo"); // NOI18N
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -212,7 +223,7 @@ public final class ExampleMainEditor extends AbstractMainEditor {
         });
 
         jCheckBox1.setText("Toggle");
-        jCheckBox1.setName("Action test toggle"); // NOI18N
+        jCheckBox1.setName("Action Test Toggle"); // NOI18N
         jCheckBox1.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jCheckBox1ItemStateChanged(evt);
@@ -229,25 +240,80 @@ public final class ExampleMainEditor extends AbstractMainEditor {
 
         jLabel6.setText("False");
 
+        buttonGroupTest.add(jRadioButton1);
+        jRadioButton1.setSelected(true);
+        jRadioButton1.setText("jRadioTest1");
+        jRadioButton1.setName("Action Test Radio 1"); // NOI18N
+        jRadioButton1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jRadioTestItemStateChanged(evt);
+            }
+        });
+
+        buttonGroupTest.add(jRadioButton2);
+        jRadioButton2.setText("jRadioTest2");
+        jRadioButton2.setName("Action Test Radio 2"); // NOI18N
+        jRadioButton2.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jRadioTestItemStateChanged(evt);
+            }
+        });
+
+        buttonGroupTest.add(jRadioButton3);
+        jRadioButton3.setText("jRadioTest3");
+        jRadioButton3.setName("Action Test Radio 3"); // NOI18N
+        jRadioButton3.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jRadioTestItemStateChanged(evt);
+            }
+        });
+
+        jLabel7.setText("Action Test Radio 1");
+
+        buttonGroupTest.add(jRadioButton4);
+        jRadioButton4.setText("jRadioTest4");
+        jRadioButton4.setName("Action Test Radio 4"); // NOI18N
+        jRadioButton4.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jRadioTestItemStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout accordionPanel1Layout = new javax.swing.GroupLayout(accordionPanel1);
         accordionPanel1.setLayout(accordionPanel1Layout);
         accordionPanel1Layout.setHorizontalGroup(
             accordionPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(accordionPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(accordionPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel2)
-                    .addComponent(jCheckBox1)
-                    .addComponent(jSpinner4)
-                    .addComponent(jComboBox1, 0, 103, Short.MAX_VALUE)
-                    .addComponent(multiComboBox1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
                 .addGroup(accordionPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(accordionPanel1Layout.createSequentialGroup()
+                        .addGroup(accordionPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel2)
+                            .addComponent(jCheckBox1)
+                            .addComponent(jSpinner4)
+                            .addComponent(jComboBox1, 0, 103, Short.MAX_VALUE)
+                            .addComponent(multiComboBox1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(accordionPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(accordionPanel1Layout.createSequentialGroup()
+                        .addGroup(accordionPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(accordionPanel1Layout.createSequentialGroup()
+                                .addComponent(jRadioButton1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jRadioButton2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE))
+                            .addGroup(accordionPanel1Layout.createSequentialGroup()
+                                .addComponent(jRadioButton3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jRadioButton4)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(6, 6, 6))))
         );
         accordionPanel1Layout.setVerticalGroup(
             accordionPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -270,7 +336,16 @@ public final class ExampleMainEditor extends AbstractMainEditor {
                 .addGroup(accordionPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel3)
                     .addComponent(multiComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(44, 44, 44))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(accordionPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jRadioButton1)
+                    .addComponent(jRadioButton2)
+                    .addComponent(jLabel7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(accordionPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jRadioButton3)
+                    .addComponent(jRadioButton4))
+                .addGap(53, 53, 53))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -576,6 +651,14 @@ public final class ExampleMainEditor extends AbstractMainEditor {
         }
         jLabel6.setText(Boolean.toString(jCheckBox1.isSelected()));
     }//GEN-LAST:event_jCheckBox1ItemStateChanged
+
+    private void jRadioTestItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jRadioTestItemStateChanged
+        if (!ActionManager.isActionTriggering()) {
+            JRadioButton previous = (JRadioButton)SwingControlsHelpers.getButtonByName(buttonGroupTest, jLabel7.getText());
+            ActionManager.setActionWithoutExecute(new RadioButtonAction(buttonGroupTest, (JRadioButton)evt.getSource(), previous));
+        }
+        jLabel7.setText(((JRadioButton)evt.getSource()).getName());
+    }//GEN-LAST:event_jRadioTestItemStateChanged
     
     /**
      * To create a new Main Editor, copy the below code
@@ -597,6 +680,7 @@ public final class ExampleMainEditor extends AbstractMainEditor {
     private com.sfc.sf2.core.gui.controls.AccordionPanel accordionPanel1;
     private com.sfc.sf2.core.gui.controls.AccordionPanel accordionPanel2;
     private com.sfc.sf2.core.gui.controls.AccordionPanel accordionPanel3;
+    private javax.swing.ButtonGroup buttonGroupTest;
     private com.sfc.sf2.core.gui.controls.ColorPicker colorPicker1;
     private com.sfc.sf2.core.models.combobox.ComboTableModel comboTableModel;
     private com.sfc.sf2.core.gui.controls.Console console1;
@@ -610,6 +694,7 @@ public final class ExampleMainEditor extends AbstractMainEditor {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel15;
@@ -617,6 +702,10 @@ public final class ExampleMainEditor extends AbstractMainEditor {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JRadioButton jRadioButton3;
+    private javax.swing.JRadioButton jRadioButton4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;

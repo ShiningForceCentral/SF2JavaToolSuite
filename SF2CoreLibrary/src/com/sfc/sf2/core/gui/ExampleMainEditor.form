@@ -6,6 +6,8 @@
     </Component>
     <Component class="com.sfc.sf2.core.models.combobox.ComboTableModel" name="comboTableModel">
     </Component>
+    <Component class="javax.swing.ButtonGroup" name="buttonGroupTest">
+    </Component>
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
@@ -284,21 +286,43 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jCheckBox1" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jSpinner4" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="jComboBox1" alignment="0" pref="103" max="32767" attributes="0"/>
-                                          <Component id="multiComboBox1" max="32767" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                                  <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="jCheckBox1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="jSpinner4" alignment="0" max="32767" attributes="0"/>
+                                                  <Component id="jComboBox1" alignment="0" pref="103" max="32767" attributes="0"/>
+                                                  <Component id="multiComboBox1" max="32767" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace max="32767" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Group type="102" alignment="0" attributes="0">
+                                                      <Component id="jRadioButton1" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                                      <Component id="jRadioButton2" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                                      <Component id="jLabel7" pref="115" max="32767" attributes="0"/>
+                                                  </Group>
+                                                  <Group type="102" alignment="0" attributes="0">
+                                                      <Component id="jRadioButton3" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                                      <Component id="jRadioButton4" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                                  </Group>
+                                              </Group>
+                                              <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                                          </Group>
                                       </Group>
-                                      <EmptySpace max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
@@ -327,7 +351,18 @@
                                           <Component id="jLabel3" alignment="2" min="-2" max="-2" attributes="0"/>
                                           <Component id="multiComboBox1" alignment="2" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="jRadioButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jRadioButton2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="jRadioButton3" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jRadioButton4" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
@@ -338,7 +373,7 @@
                                 <Property name="UI" type="javax.swing.plaf.SpinnerUI" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                                   <Connection code="new com.sfc.sf2.core.models.spinner.LeftRightSpinnerUI()" type="code"/>
                                 </Property>
-                                <Property name="name" type="java.lang.String" value="Action test spinner" noResource="true"/>
+                                <Property name="name" type="java.lang.String" value="Action Test Spinner" noResource="true"/>
                               </Properties>
                               <Events>
                                 <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jSpinnerTestStateChanged"/>
@@ -355,7 +390,7 @@
                                     <StringItem index="4" value="ws"/>
                                   </StringArray>
                                 </Property>
-                                <Property name="name" type="java.lang.String" value="Action test multicombo" noResource="true"/>
+                                <Property name="name" type="java.lang.String" value="Action Test Multicombo" noResource="true"/>
                                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                                   <Dimension value="[76, 26]"/>
                                 </Property>
@@ -374,7 +409,7 @@
                                     <StringItem index="3" value="Item 4"/>
                                   </StringArray>
                                 </Property>
-                                <Property name="name" type="java.lang.String" value="Action test combo" noResource="true"/>
+                                <Property name="name" type="java.lang.String" value="Action Test Combo" noResource="true"/>
                               </Properties>
                               <Events>
                                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBox1ActionPerformed"/>
@@ -386,7 +421,7 @@
                             <Component class="javax.swing.JCheckBox" name="jCheckBox1">
                               <Properties>
                                 <Property name="text" type="java.lang.String" value="Toggle"/>
-                                <Property name="name" type="java.lang.String" value="Action test toggle" noResource="true"/>
+                                <Property name="name" type="java.lang.String" value="Action Test Toggle" noResource="true"/>
                               </Properties>
                               <Events>
                                 <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jCheckBox1ItemStateChanged"/>
@@ -416,6 +451,60 @@
                               <Properties>
                                 <Property name="text" type="java.lang.String" value="False"/>
                               </Properties>
+                            </Component>
+                            <Component class="javax.swing.JRadioButton" name="jRadioButton1">
+                              <Properties>
+                                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                                  <ComponentRef name="buttonGroupTest"/>
+                                </Property>
+                                <Property name="selected" type="boolean" value="true"/>
+                                <Property name="text" type="java.lang.String" value="jRadioTest1"/>
+                                <Property name="name" type="java.lang.String" value="Action Test Radio 1" noResource="true"/>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jRadioTestItemStateChanged"/>
+                              </Events>
+                            </Component>
+                            <Component class="javax.swing.JRadioButton" name="jRadioButton2">
+                              <Properties>
+                                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                                  <ComponentRef name="buttonGroupTest"/>
+                                </Property>
+                                <Property name="text" type="java.lang.String" value="jRadioTest2"/>
+                                <Property name="name" type="java.lang.String" value="Action Test Radio 2" noResource="true"/>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jRadioTestItemStateChanged"/>
+                              </Events>
+                            </Component>
+                            <Component class="javax.swing.JRadioButton" name="jRadioButton3">
+                              <Properties>
+                                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                                  <ComponentRef name="buttonGroupTest"/>
+                                </Property>
+                                <Property name="text" type="java.lang.String" value="jRadioTest3"/>
+                                <Property name="name" type="java.lang.String" value="Action Test Radio 3" noResource="true"/>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jRadioTestItemStateChanged"/>
+                              </Events>
+                            </Component>
+                            <Component class="javax.swing.JLabel" name="jLabel7">
+                              <Properties>
+                                <Property name="text" type="java.lang.String" value="Action Test Radio 1"/>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JRadioButton" name="jRadioButton4">
+                              <Properties>
+                                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                                  <ComponentRef name="buttonGroupTest"/>
+                                </Property>
+                                <Property name="text" type="java.lang.String" value="jRadioTest4"/>
+                                <Property name="name" type="java.lang.String" value="Action Test Radio 4" noResource="true"/>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jRadioTestItemStateChanged"/>
+                              </Events>
                             </Component>
                           </SubComponents>
                         </Container>
