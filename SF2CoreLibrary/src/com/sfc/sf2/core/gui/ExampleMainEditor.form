@@ -226,8 +226,8 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="fileButton1" alignment="0" min="-2" pref="268" max="-2" attributes="0"/>
-                                          <Group type="102" alignment="0" attributes="0">
+                                          <Component id="fileButton1" pref="0" max="32767" attributes="0"/>
+                                          <Group type="102" attributes="0">
                                               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace pref="194" max="32767" attributes="0"/>
                                               <Component id="infoButton1" min="-2" pref="26" max="-2" attributes="0"/>
@@ -270,6 +270,7 @@
                                 <Property name="filePath" type="java.lang.String" value=".\u005cnewFolder\u005cfile.txt" containsInvalidXMLChars="true"/>
                                 <Property name="infoMessage" type="java.lang.String" value="&lt;html&gt;This also has a help button.&lt;/html&gt;"/>
                                 <Property name="labelText" type="java.lang.String" value="Test file button :"/>
+                                <Property name="name" type="java.lang.String" value="Test File Button" noResource="true"/>
                               </Properties>
                             </Component>
                             <Component class="javax.swing.JLabel" name="jLabel1">
@@ -311,7 +312,7 @@
                                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                                       <Component id="jRadioButton2" min="-2" max="-2" attributes="0"/>
                                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                                      <Component id="jLabel7" pref="115" max="32767" attributes="0"/>
+                                                      <Component id="jLabel7" max="32767" attributes="0"/>
                                                   </Group>
                                                   <Group type="102" alignment="0" attributes="0">
                                                       <Component id="jRadioButton3" min="-2" max="-2" attributes="0"/>

@@ -149,8 +149,9 @@ public class DirectoryButton extends javax.swing.JPanel {
         jFileChooserFiles.setCurrentDirectory(file);
         int returnVal = jFileChooserFiles.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-            File newFile = jFileChooserFiles.getSelectedFile();
-            ActionManager.setAndExecuteAction(new Action<String>(this, "Directory Change", this::setPath, newFile.getAbsolutePath(), jTextFieldPath.getText()));
+            String path = jFileChooserFiles.getSelectedFile().toString();
+            path = path.replace(PathHelpers.getBasePath().toString(), ".");
+            ActionManager.setAndExecuteAction(new Action<String>(this, "Directory Change", this::setPath, path, jTextFieldPath.getText()));
         }
     }
 
