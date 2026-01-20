@@ -11,11 +11,11 @@ import javax.swing.JSpinner;
  *
  * @author TiMMy
  */
-public class SpinnerAction extends Action<Integer> {
+public class SpinnerAction extends Action<Object> {
 
     private JSpinner spinner;
     
-    public SpinnerAction(JSpinner spinner, int newValue, int oldValue) {
+    public SpinnerAction(JSpinner spinner, Object newValue, Object oldValue) {
         super(spinner, "Spinner Value", null, newValue, oldValue);
         this.spinner = spinner;
     }

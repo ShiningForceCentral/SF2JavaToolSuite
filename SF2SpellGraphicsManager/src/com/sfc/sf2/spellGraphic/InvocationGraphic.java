@@ -5,6 +5,7 @@
  */
 package com.sfc.sf2.spellGraphic;
 
+import com.sfc.sf2.core.INameable;
 import com.sfc.sf2.graphics.Tileset;
 import com.sfc.sf2.palette.Palette;
 
@@ -12,27 +13,32 @@ import com.sfc.sf2.palette.Palette;
  *
  * @author TiMMy
  */
-public class InvocationGraphic {
+public class InvocationGraphic implements INameable {
 
     public static int INVOCATION_TILE_WIDTH = 16;
     public static int INVOCATION_TILE_HEIGHT = 8;
     
+    private String name;
     private Tileset[] frames;
     private short posX;
     private short posY;
     private short loadMode;
     
-    public InvocationGraphic(Tileset[] frames) {
-        this.frames = frames;
-        posX = posY = 0;
-        loadMode = 1;
+    public InvocationGraphic(String name, Tileset[] frames) {
+        this(name, frames, (short)0, (short)0, (short)1);
     }
 
-    public InvocationGraphic(Tileset[] frames, short posX, short posY, short loadMode) {
+    public InvocationGraphic(String name, Tileset[] frames, short posX, short posY, short loadMode) {
+        this.name = name;
         this.frames = frames;
         this.posX = posX;
         this.posY = posY;
         this.loadMode = loadMode;
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 
     public Tileset[] getFrames() {
@@ -41,6 +47,15 @@ public class InvocationGraphic {
 
     public void setFrames(Tileset[] frames) {
         this.frames = frames;
+    }
+    
+    public void clearIndexedColorImage() {
+        if (frames == null) return;
+        for (int i = 0; i < frames.length; i++) {
+            if (frames[i] != null) {
+                frames[i].clearIndexedColorImage(true);
+            }
+        }
     }
 
     public Palette getPalette() {

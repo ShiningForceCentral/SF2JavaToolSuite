@@ -55,7 +55,7 @@ public class InvocationDisassemblyProcessor extends AbstractDisassemblyProcessor
             frameList[i] = new Tileset(Integer.toString(i), frame, InvocationGraphic.INVOCATION_TILE_WIDTH);
             Console.logger().finest("Frame "+i+" length="+dataLength+", offset="+frameOffset+", tiles="+frameList[i].getTiles().length);
         }
-        return new InvocationGraphic(frameList, posX, posY, loadMode);
+        return new InvocationGraphic(pckg.name(), frameList, posX, posY, loadMode);
     }
     
     @Override

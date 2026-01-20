@@ -21,29 +21,35 @@ import java.nio.file.Path;
  * @author wiz
  */
 public class BattleSceneManager extends AbstractManager {
-       
-    private final BackgroundManager backgroundManager = new BackgroundManager();
-    private final GroundManager groundManager = new GroundManager();
     
+    private Background background;
+    private Ground ground;
+
     @Override
     public void clearData() {
-        backgroundManager.clearData();
-        groundManager.clearData();
+        if (background != null) {
+            background.getTileset().clearIndexedColorImage(true);
+        }
+        if (ground != null) {
+            ground.getTileset().clearIndexedColorImage(true);
+        }
+        background = null;
+        ground = null;
     }
        
     public void importDisassembly(Path backgroundPath, Path groundBasePalettePath, Path groundPalettePath, Path groundPath) throws IOException, DisassemblyException, AsmException {
         Console.logger().finest("ENTERING importDisassembly");
-        backgroundManager.importDisassembly(backgroundPath);
-        groundManager.importDisassembly(groundBasePalettePath, groundPalettePath, groundPath);
+        background = new BackgroundManager().importDisassembly(backgroundPath);
+        ground = new GroundManager().importDisassembly(groundBasePalettePath, groundPalettePath, groundPath);
         Console.logger().info("Animation successfully imported.");
         Console.logger().finest("EXITING importDisassembly");
     }
 
     public Background getBackground() {
-        return backgroundManager.getBackgrounds()[0];
+        return background;
     }
 
     public Ground getGround() {
-        return groundManager.getGround();
+        return ground;
     }
 }

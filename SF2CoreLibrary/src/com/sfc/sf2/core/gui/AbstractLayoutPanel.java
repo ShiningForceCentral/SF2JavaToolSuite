@@ -156,8 +156,8 @@ public abstract class AbstractLayoutPanel extends JPanel implements AnimationLis
     }
 
     public void setRenderScaleIndex(int renderScaleIndex) {
-        if (scale != null && scale.getScaleIndex()!= renderScaleIndex) {
-            scale.setScale(renderScaleIndex);
+        if (scale != null && scale.getScaleIndex() != renderScaleIndex) {
+            scale.setScaleIndex(renderScaleIndex);
             redraw();
         }
     }

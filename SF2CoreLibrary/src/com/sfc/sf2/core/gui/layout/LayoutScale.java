@@ -31,7 +31,7 @@ public class LayoutScale extends BaseLayoutComponent {
         return renderScaleIndex;
     }
 
-    public void setScale(int renderScaleIndex) {
+    public void setScaleIndex(int renderScaleIndex) {
         this.renderScaleIndex = renderScaleIndex;
         this.renderScale = RenderScaleHelpers.indexToRenderScale(renderScaleIndex);;
     }

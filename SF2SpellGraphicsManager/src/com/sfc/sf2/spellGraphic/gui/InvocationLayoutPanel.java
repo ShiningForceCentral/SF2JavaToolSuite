@@ -11,6 +11,7 @@ import com.sfc.sf2.graphics.Tile;
 import static com.sfc.sf2.graphics.Tile.PIXEL_HEIGHT;
 import static com.sfc.sf2.graphics.Tile.PIXEL_WIDTH;
 import com.sfc.sf2.graphics.Tileset;
+import com.sfc.sf2.helpers.RenderScaleHelpers;
 import com.sfc.sf2.spellGraphic.InvocationGraphic;
 import static com.sfc.sf2.spellGraphic.InvocationGraphic.INVOCATION_TILE_HEIGHT;
 import static com.sfc.sf2.spellGraphic.InvocationGraphic.INVOCATION_TILE_WIDTH;
@@ -23,12 +24,12 @@ import java.awt.Graphics;
  * @author TiMMy
  */
 public class InvocationLayoutPanel extends BattleSceneLayoutPanel {
-    private static int BATTLE_POSITION_OFFSET = 100;
+    private static final int BATTLE_POSITION_OFFSET = 100;
     
     private InvocationGraphic invocationGraphic;
     
     private boolean battlePreviewMode = false;
-    private int previousScale;
+    private int previousScaleIndex = RenderScaleHelpers.DEFAULT_RENDER_SCALE_INDEX;
     
     public InvocationLayoutPanel() {
         super();
@@ -89,15 +90,15 @@ public class InvocationLayoutPanel extends BattleSceneLayoutPanel {
             grid.setGridDimensions(-1, -1);
             grid.setThickGridDimensions(-1, -1);
             coordsGrid.setEnabled(false);
-            previousScale = scale.getScale();
-            scale.setScale(1);
+            previousScaleIndex = scale.getScaleIndex();
+            scale.setScaleIndex(RenderScaleHelpers.DEFAULT_RENDER_SCALE_INDEX);
         } else {
             background.setBgColor(Color.LIGHT_GRAY);
             background.setCheckerPattern(PIXEL_WIDTH);
             grid.setGridDimensions(PIXEL_WIDTH, PIXEL_HEIGHT);
             grid.setThickGridDimensions(-1, INVOCATION_TILE_HEIGHT*PIXEL_HEIGHT);
             coordsGrid.setEnabled(true);
-            scale.setScale(previousScale);
+            scale.setScaleIndex(previousScaleIndex);
         }
         redraw();
     }

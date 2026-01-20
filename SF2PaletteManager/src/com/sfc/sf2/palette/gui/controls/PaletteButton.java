@@ -186,6 +186,7 @@ public class PaletteButton extends javax.swing.JButton {
     }//GEN-LAST:event_paletteEditorWindowClosing
 
     private void jButtonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonResetActionPerformed
+        if (palette == null) return;
         palette.setColors(originalColors, palette.isFirstColorTransparent());
         if (palette != null && colorChangeListener != null) {
             colorChangeListener.actionPerformed(new ActionEvent(palette, -1, "Reset"));

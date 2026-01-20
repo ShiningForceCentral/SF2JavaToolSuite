@@ -33,25 +33,35 @@ import java.util.logging.Level;
  * @author TiMMy
  */
 public class InvocationGraphicManager extends AbstractManager {
-    private final TilesetManager tilesetManager = new TilesetManager();
-    private final BattleSceneManager battleSceneManager = new BattleSceneManager();
-    private final InvocationDisassemblyProcessor invocationDisassemblyProcessor = new InvocationDisassemblyProcessor();
-    private final InvocationMetadataProcessor invocationMetadataProcessor = new InvocationMetadataProcessor();
     
     private InvocationGraphic invocationGraphic;
+    private Background background;
+    private Ground ground;
 
     @Override
     public void clearData() {
-        tilesetManager.clearData();
-        battleSceneManager.clearData();
+        if (invocationGraphic != null) {
+            invocationGraphic.clearIndexedColorImage();
+        }
+        if (background != null) {
+            background.getTileset().clearIndexedColorImage(true);
+        }
+        if (ground != null) {
+            ground.getTileset().clearIndexedColorImage(true);
+        }
         invocationGraphic = null;
+        background = null;
+        ground = null;
     }
        
     public InvocationGraphic importDisassembly(Path filePath, Path backgroundPath, Path groundBasePalettePath, Path groundPalettePath, Path groundPath) throws IOException, DisassemblyException, AsmException {
         Console.logger().finest("ENTERING importDisassembly");
+        BattleSceneManager battleSceneManager = new BattleSceneManager();
         battleSceneManager.importDisassembly(backgroundPath, groundBasePalettePath, groundPalettePath, groundPath);
+        background = battleSceneManager.getBackground();
+        ground = battleSceneManager.getGround();
         InvocationPackage pckg = new InvocationPackage(PathHelpers.filenameFromPath(filePath));
-        invocationGraphic = invocationDisassemblyProcessor.importDisassembly(filePath, pckg);
+        invocationGraphic = new InvocationDisassemblyProcessor().importDisassembly(filePath, pckg);
         Console.logger().info("Invocation with " + invocationGraphic.getFrames().length + " frames successfully imported from : " + filePath);
         Console.logger().finest("EXITING importDisassembly");
         return invocationGraphic;
@@ -60,14 +70,17 @@ public class InvocationGraphicManager extends AbstractManager {
     public void exportDisassembly(Path filePath, InvocationGraphic invocationGraphic) throws IOException, DisassemblyException {
         Console.logger().finest("ENTERING exportDisassembly");
         this.invocationGraphic = invocationGraphic;
-        invocationDisassemblyProcessor.exportDisassembly(filePath, invocationGraphic, null);
+        new InvocationDisassemblyProcessor().exportDisassembly(filePath, invocationGraphic, null);
         Console.logger().info("Invocation successfully exported to : " + filePath);
         Console.logger().finest("EXITING exportDisassembly");
     }
     
     public InvocationGraphic importImage(Path filePath, Path backgroundPath, Path groundBasePalettePath, Path groundPalettePath, Path groundPath) throws RawImageException, IOException, DisassemblyException, AsmException {
         Console.logger().finest("ENTERING importImage");
+        BattleSceneManager battleSceneManager = new BattleSceneManager();
         battleSceneManager.importDisassembly(backgroundPath, groundBasePalettePath, groundPalettePath, groundPath);
+        background = battleSceneManager.getBackground();
+        ground = battleSceneManager.getGround();
         Path dir = filePath.getParent();
         String name = getImageName(filePath.getFileName().toString());
         FileFormat format = FileFormat.getFormat(filePath);
@@ -76,6 +89,7 @@ public class InvocationGraphicManager extends AbstractManager {
         }
         List<Tileset> frames = new ArrayList<>();
         File[] files = FileHelpers.findAllFilesInDirectory(dir, name+"-frame-", format);
+        TilesetManager tilesetManager = new TilesetManager();
         for (File f : files) { 
             Tileset frame = tilesetManager.importImage(f.toPath(), true);
             frames.add(frame);
@@ -83,11 +97,11 @@ public class InvocationGraphicManager extends AbstractManager {
         if (frames.isEmpty()) {
             throw new DisassemblyException("ERROR : No frames found for pattern : " + dir.resolve(name+"-frame-"+"XX"+format.getExt()));
         }
-        invocationGraphic = new InvocationGraphic(frames.toArray(new Tileset[frames.size()]));
+        invocationGraphic = new InvocationGraphic(name, frames.toArray(new Tileset[frames.size()]));
         Console.logger().info("Invocation with " + invocationGraphic.getFrames().length + " frames successfully imported from : " + filePath);
         Path metaPath = dir.resolve(name+FileFormat.META.getExt());
         try {
-            invocationMetadataProcessor.importMetadata(metaPath, invocationGraphic);
+            new InvocationMetadataProcessor().importMetadata(metaPath, invocationGraphic);
             Console.logger().info("Invocation meta successfully imported from : " + metaPath);
         } catch (Exception e) {
             Console.logger().log(Level.SEVERE, "Invocation metadata could not be loaded from : " + metaPath);
@@ -107,6 +121,7 @@ public class InvocationGraphicManager extends AbstractManager {
         
         this.invocationGraphic = invocationGraphic;
         Tileset[] frames = this.invocationGraphic.getFrames();
+        TilesetManager tilesetManager = new TilesetManager();
         for (int i = 0; i < frames.length; i++) {
             Path framePath = dir.resolve(name + "-frame-" + String.format("%02d", i) + format.getExt());
             tilesetManager.exportImage(framePath, frames[i]);
@@ -114,7 +129,7 @@ public class InvocationGraphicManager extends AbstractManager {
         Console.logger().info("Invocation successfully exported to : " + filePath.resolve(name));
         Path metaPath = dir.resolve(name + FileFormat.META.getExt());
         try {
-            invocationMetadataProcessor.exportMetadata(metaPath, invocationGraphic);
+            new InvocationMetadataProcessor().exportMetadata(metaPath, invocationGraphic);
         } catch (Exception e) {
             Console.logger().log(Level.SEVERE, "Invocation metadata could not be loaded from : " + metaPath);
         }
@@ -147,10 +162,10 @@ public class InvocationGraphicManager extends AbstractManager {
     }
 
     public Background getBackground() {
-        return battleSceneManager.getBackground();
+        return background;
     }
 
     public Ground getGround() {
-        return battleSceneManager.getGround();
+        return ground;
     }
 }
