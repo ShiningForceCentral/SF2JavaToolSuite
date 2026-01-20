@@ -59,7 +59,7 @@ public class TextPreviewLayoutPanel extends AbstractLayoutPanel {
     public TextPreviewLayoutPanel() {
         super();
         background = null;
-        scale = new LayoutScale(2);
+        scale = new LayoutScale();
         grid = null;
         coordsGrid = null;
         coordsHeader = null;

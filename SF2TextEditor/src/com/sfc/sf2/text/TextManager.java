@@ -44,15 +44,7 @@ import org.apache.commons.lang3.StringUtils;
 public class TextManager extends AbstractManager {
     private static final String HUFFMANTREEOFFSETS_FILENAME = "huffmantreeoffsets.bin";
     private static final String HUFFMANTREES_FILENAME = "huffmantrees.bin";
-    private static final String TEXTBANK_FILEPREFIX = "textbank";  
-    
-    private final TilesetManager tilesetManager = new TilesetManager();
-    private final VWFontManager fontManager = new VWFontManager();
-    private final BinaryDisassemblyProcessor binaryDisassemblyProcessor = new BinaryDisassemblyProcessor();
-    private final AsciiTableAsmProcessor asciiAsmProcessor = new AsciiTableAsmProcessor();
-    private final AllyNamesAsmProcessor allyNamesAsmProcessor = new AllyNamesAsmProcessor();
-    private final AsciiReplaceProcessor asciiReplaceProcessor = new AsciiReplaceProcessor();
-    private final TextProcessor textProcessor = new TextProcessor();
+    private static final String TEXTBANK_FILEPREFIX = "textbank";
     
     private String[] gamescript;
     private Tileset baseTiles;
@@ -63,9 +55,6 @@ public class TextManager extends AbstractManager {
 
     @Override
     public void clearData() {
-        tilesetManager.clearData();
-        fontManager.clearData();
-        
         gamescript = null;
         if (baseTiles != null) {
             baseTiles.clearIndexedColorImage(true);
@@ -85,6 +74,7 @@ public class TextManager extends AbstractManager {
        
     public String[] importDisassembly(Path basePath) throws IOException, DisassemblyException {
         Console.logger().finest("ENTERING importDisassembly");
+        BinaryDisassemblyProcessor binaryDisassemblyProcessor = new BinaryDisassemblyProcessor();
         //Load huffman trees
         Path offsetsPath = basePath.resolve(HUFFMANTREEOFFSETS_FILENAME);
         Path treesPath = basePath.resolve(HUFFMANTREES_FILENAME);
@@ -122,6 +112,7 @@ public class TextManager extends AbstractManager {
     
     public void exportDisassembly(Path basePath, String[] text) throws IOException, DisassemblyException {
         Console.logger().finest("ENTERING exportDisassembly");
+        BinaryDisassemblyProcessor binaryDisassemblyProcessor = new BinaryDisassemblyProcessor();
         gamescript = text;
         int failedToSave = 0;
         Path bankPath = null;
@@ -156,7 +147,7 @@ public class TextManager extends AbstractManager {
     
     public String[] importTxt(Path filePath) throws IOException, TextFileException {
         Console.logger().finest("ENTERING importTxt");
-        gamescript = textProcessor.importTextData(filePath);
+        gamescript = new TextProcessor().importTextData(filePath);
         asciiReplace(gamescript);
         Console.logger().info(gamescript.length + " lines of text successfully imported from : " + filePath);
         Console.logger().finest("EXITING importTxt");
@@ -166,7 +157,7 @@ public class TextManager extends AbstractManager {
     public void exportTxt(Path filePath, String[] text) throws IOException, TextFileException {
         Console.logger().finest("ENTERING exportTxt");
         gamescript = text;
-        textProcessor.exportTextData(filePath, text);
+        new TextProcessor().exportTextData(filePath, text);
         Console.logger().info(gamescript.length + " lines of text successfully exported to : " + filePath);
         Console.logger().finest("EXITING exportTxt");
     }
@@ -181,21 +172,21 @@ public class TextManager extends AbstractManager {
     
     public Tileset importBaseTiles(Path palettePath, Path tilesetPath) throws IOException, DisassemblyException {
         Console.logger().finest("ENTERING importBaseTiles");
-        baseTiles = tilesetManager.importDisassembly(palettePath, tilesetPath, TilesetDisassemblyProcessor.TilesetCompression.STACK, 16);
+        baseTiles = new TilesetManager().importDisassembly(palettePath, tilesetPath, TilesetDisassemblyProcessor.TilesetCompression.STACK, 16);
         Console.logger().finest("EXITING importBaseTiles");
         return baseTiles;
     }
     
     public FontSymbol[] importVWFonts(Path vwFontPath) throws IOException, DisassemblyException {
         Console.logger().finest("ENTERING importVWFonts");
-        fontSymbols = fontManager.importDisassembly(vwFontPath);
+        fontSymbols = new VWFontManager().importDisassembly(vwFontPath);
         Console.logger().finest("EXITING importVWFonts");
         return fontSymbols;
     }
     
     public int[] importAsciiMap(Path asciiMapPath) throws IOException, FileNotFoundException, AsmException {
         Console.logger().finest("ENTERING importAsciiMap");
-        asciiToSymbolMap = asciiAsmProcessor.importAsmData(asciiMapPath, null);
+        asciiToSymbolMap = new AsciiTableAsmProcessor().importAsmData(asciiMapPath, null);
         Console.logger().finest("EXITING importAsciiMap");
         return asciiToSymbolMap;
     }
@@ -203,14 +194,14 @@ public class TextManager extends AbstractManager {
     public HashMap<Character, Character> importAsciiReplaceMap(Path replacePath) throws IOException, MetadataException {
         Console.logger().finest("ENTERING importAsciiReplaceMap");
         asciiReplaceMap = new HashMap<Character, Character>();
-        asciiReplaceProcessor.importMetadata(replacePath, asciiReplaceMap);
+        new AsciiReplaceProcessor().importMetadata(replacePath, asciiReplaceMap);
         Console.logger().finest("EXITING importAsciiReplaceMap");
         return asciiReplaceMap;
     }
     
     public String[] importAllyNames(Path allyNamesPath) throws IOException, FileNotFoundException, AsmException {
         Console.logger().finest("ENTERING importAllyNames");
-        EntriesAsmData data = allyNamesAsmProcessor.importAsmData(allyNamesPath, null);
+        EntriesAsmData data = new AllyNamesAsmProcessor().importAsmData(allyNamesPath, null);
         allyNames = new String[data.uniqueEntriesCount()];
         for (int i = 0; i < allyNames.length; i++) {
             allyNames[i] = data.getUniqueEntries(i);
