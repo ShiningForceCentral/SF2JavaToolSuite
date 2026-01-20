@@ -170,9 +170,9 @@
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Group type="102" alignment="1" attributes="0">
                                                   <EmptySpace min="0" pref="278" max="32767" attributes="0"/>
-                                                  <Component id="jButton18" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="jButtonImportSymbols" min="-2" max="-2" attributes="0"/>
                                               </Group>
-                                              <Component id="fileButton1" pref="0" max="32767" attributes="0"/>
+                                              <Component id="fileButtonImportSymbols" pref="0" max="32767" attributes="0"/>
                                               <Group type="102" attributes="0">
                                                   <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
@@ -193,9 +193,9 @@
                                               <Component id="infoButton3" alignment="3" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="fileButton1" min="-2" max="-2" attributes="0"/>
+                                          <Component id="fileButtonImportSymbols" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jButton18" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jButtonImportSymbols" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
@@ -213,7 +213,7 @@
                                     <Property name="text" type="java.lang.String" value=""/>
                                   </Properties>
                                 </Component>
-                                <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton1">
+                                <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButtonImportSymbols">
                                   <Properties>
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="BIN"/>
@@ -221,14 +221,15 @@
                                     <Property name="filePath" type="java.lang.String" value=".\u005cvariablewidthfont.bin" containsInvalidXMLChars="true"/>
                                     <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="BIN File :"/>
+                                    <Property name="name" type="java.lang.String" value="Import Font Symbols" noResource="true"/>
                                   </Properties>
                                 </Component>
-                                <Component class="javax.swing.JButton" name="jButton18">
+                                <Component class="javax.swing.JButton" name="jButtonImportSymbols">
                                   <Properties>
                                     <Property name="text" type="java.lang.String" value="Import"/>
                                   </Properties>
                                   <Events>
-                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton18ActionPerformed"/>
+                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonImportSymbolsActionPerformed"/>
                                   </Events>
                                 </Component>
                               </SubComponents>
@@ -250,9 +251,9 @@
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Group type="102" alignment="1" attributes="0">
                                                   <EmptySpace min="0" pref="278" max="32767" attributes="0"/>
-                                                  <Component id="jButton12" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="jButtonImportImages" min="-2" max="-2" attributes="0"/>
                                               </Group>
-                                              <Component id="directoryButton1" pref="0" max="32767" attributes="0"/>
+                                              <Component id="directoryButtonImportImages" pref="0" max="32767" attributes="0"/>
                                               <Group type="102" attributes="0">
                                                   <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
@@ -273,9 +274,9 @@
                                               <Component id="infoButton4" alignment="3" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="directoryButton1" min="-2" max="-2" attributes="0"/>
+                                          <Component id="directoryButtonImportImages" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jButton12" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jButtonImportImages" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
@@ -293,19 +294,20 @@
                                     <Property name="text" type="java.lang.String" value=""/>
                                   </Properties>
                                 </Component>
-                                <Component class="com.sfc.sf2.core.gui.controls.DirectoryButton" name="directoryButton1">
+                                <Component class="com.sfc.sf2.core.gui.controls.DirectoryButton" name="directoryButtonImportImages">
                                   <Properties>
                                     <Property name="directoryPath" type="java.lang.String" value=".\u005cexport\u005c" containsInvalidXMLChars="true"/>
                                     <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="Symbols drectory :"/>
+                                    <Property name="name" type="java.lang.String" value="Import Images" noResource="true"/>
                                   </Properties>
                                 </Component>
-                                <Component class="javax.swing.JButton" name="jButton12">
+                                <Component class="javax.swing.JButton" name="jButtonImportImages">
                                   <Properties>
                                     <Property name="text" type="java.lang.String" value="Import"/>
                                   </Properties>
                                   <Events>
-                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton12ActionPerformed"/>
+                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonImportImagesActionPerformed"/>
                                   </Events>
                                 </Component>
                               </SubComponents>
@@ -362,10 +364,10 @@
                                       <Group type="102" attributes="0">
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="fileButton2" alignment="1" pref="354" max="32767" attributes="0"/>
+                                              <Component id="fileButtonExportSymbols" alignment="1" pref="354" max="32767" attributes="0"/>
                                               <Group type="102" alignment="1" attributes="0">
                                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                                  <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="jButtonExportSymbols" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                               <Group type="102" alignment="0" attributes="0">
                                                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
@@ -387,9 +389,9 @@
                                               <Component id="infoButton5" alignment="3" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="fileButton2" min="-2" max="-2" attributes="0"/>
+                                          <Component id="fileButtonExportSymbols" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jButtonExportSymbols" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
@@ -407,7 +409,7 @@
                                     <Property name="text" type="java.lang.String" value=""/>
                                   </Properties>
                                 </Component>
-                                <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton2">
+                                <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButtonExportSymbols">
                                   <Properties>
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="BIN"/>
@@ -415,14 +417,15 @@
                                     <Property name="filePath" type="java.lang.String" value=".\u005cvariablewidthfont.bin" containsInvalidXMLChars="true"/>
                                     <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="BIN file :"/>
+                                    <Property name="name" type="java.lang.String" value="Export Font Symbols" noResource="true"/>
                                   </Properties>
                                 </Component>
-                                <Component class="javax.swing.JButton" name="jButton2">
+                                <Component class="javax.swing.JButton" name="jButtonExportSymbols">
                                   <Properties>
                                     <Property name="text" type="java.lang.String" value="Export"/>
                                   </Properties>
                                   <Events>
-                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonExportSymbolsActionPerformed"/>
                                   </Events>
                                 </Component>
                               </SubComponents>
@@ -442,12 +445,12 @@
                                       <Group type="102" attributes="0">
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="directoryButton2" alignment="0" pref="354" max="32767" attributes="0"/>
+                                              <Component id="directoryButtonExportImages" alignment="0" pref="354" max="32767" attributes="0"/>
                                               <Group type="102" alignment="1" attributes="0">
                                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                                   <Component id="jPanel6" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="jButton13" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="jButtonExportImages" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                               <Group type="102" alignment="0" attributes="0">
                                                   <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
@@ -469,10 +472,10 @@
                                               <Component id="infoButton6" alignment="3" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="directoryButton2" min="-2" max="-2" attributes="0"/>
+                                          <Component id="directoryButtonExportImages" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="jButton13" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jButtonExportImages" min="-2" max="-2" attributes="0"/>
                                               <Component id="jPanel6" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace max="-2" attributes="0"/>
@@ -492,11 +495,12 @@
                                     <Property name="text" type="java.lang.String" value=""/>
                                   </Properties>
                                 </Component>
-                                <Component class="com.sfc.sf2.core.gui.controls.DirectoryButton" name="directoryButton2">
+                                <Component class="com.sfc.sf2.core.gui.controls.DirectoryButton" name="directoryButtonExportImages">
                                   <Properties>
                                     <Property name="directoryPath" type="java.lang.String" value=".\u005cexport\u005c" containsInvalidXMLChars="true"/>
                                     <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="Image directory :"/>
+                                    <Property name="name" type="java.lang.String" value="Export Images" noResource="true"/>
                                   </Properties>
                                 </Component>
                                 <Container class="javax.swing.JPanel" name="jPanel6">
@@ -513,11 +517,11 @@
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" alignment="0" attributes="0">
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jLabelFormat" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jRadioButton1" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jRadioButtonPNG" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jRadioButton2" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jRadioButtonGIF" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="infoButton2" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="32767" attributes="0"/>
@@ -530,9 +534,9 @@
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="2" attributes="0">
                                                   <Component id="infoButton2" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jRadioButton2" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jRadioButton1" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jLabel4" alignment="2" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="jRadioButtonGIF" alignment="2" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="jRadioButtonPNG" alignment="2" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="jLabelFormat" alignment="2" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                               <EmptySpace max="-2" attributes="0"/>
                                           </Group>
@@ -546,7 +550,7 @@
                                         <Property name="text" type="java.lang.String" value=""/>
                                       </Properties>
                                     </Component>
-                                    <Component class="javax.swing.JRadioButton" name="jRadioButton2">
+                                    <Component class="javax.swing.JRadioButton" name="jRadioButtonGIF">
                                       <Properties>
                                         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                                           <ComponentRef name="buttonGroupExport"/>
@@ -554,10 +558,10 @@
                                         <Property name="text" type="java.lang.String" value="GIF"/>
                                       </Properties>
                                       <Events>
-                                        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jRadioButton2jRadioStateChanged_Gif"/>
+                                        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jRadioButtonFormatStateChanged"/>
                                       </Events>
                                     </Component>
-                                    <Component class="javax.swing.JRadioButton" name="jRadioButton1">
+                                    <Component class="javax.swing.JRadioButton" name="jRadioButtonPNG">
                                       <Properties>
                                         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                                           <ComponentRef name="buttonGroupExport"/>
@@ -566,22 +570,22 @@
                                         <Property name="text" type="java.lang.String" value="PNG"/>
                                       </Properties>
                                       <Events>
-                                        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jRadioButton1jRadioStateChanged_Png"/>
+                                        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jRadioButtonFormatStateChanged"/>
                                       </Events>
                                     </Component>
-                                    <Component class="javax.swing.JLabel" name="jLabel4">
+                                    <Component class="javax.swing.JLabel" name="jLabelFormat">
                                       <Properties>
                                         <Property name="text" type="java.lang.String" value="File format :"/>
                                       </Properties>
                                     </Component>
                                   </SubComponents>
                                 </Container>
-                                <Component class="javax.swing.JButton" name="jButton13">
+                                <Component class="javax.swing.JButton" name="jButtonExportImages">
                                   <Properties>
                                     <Property name="text" type="java.lang.String" value="Export"/>
                                   </Properties>
                                   <Events>
-                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton13ActionPerformed"/>
+                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonExportImagesActionPerformed"/>
                                   </Events>
                                 </Component>
                               </SubComponents>
@@ -609,18 +613,17 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jPanel16" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jScrollPane2" alignment="1" pref="0" max="32767" attributes="0"/>
+                          <Component id="jScrollPane2" pref="390" max="32767" attributes="0"/>
+                          <Component id="viewPanel1" alignment="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                              <Component id="jScrollPane2" pref="360" max="32767" attributes="0"/>
+                              <Component id="jScrollPane2" pref="366" max="32767" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                              <Component id="jPanel16" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="viewPanel1" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -635,7 +638,7 @@
                           <Layout>
                             <DimensionLayout dim="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <EmptySpace min="0" pref="385" max="32767" attributes="0"/>
+                                  <EmptySpace min="0" pref="438" max="32767" attributes="0"/>
                               </Group>
                             </DimensionLayout>
                             <DimensionLayout dim="1">
@@ -647,116 +650,8 @@
                         </Container>
                       </SubComponents>
                     </Container>
-                    <Container class="javax.swing.JPanel" name="jPanel16">
-                      <Properties>
-                        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                            <TitledBorder title="View"/>
-                          </Border>
-                        </Property>
-                      </Properties>
-
-                      <Layout>
-                        <DimensionLayout dim="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="1" attributes="0">
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jLabel55" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="colorPicker1" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="80" max="32767" attributes="0"/>
-                                  <Component id="jCheckBox1" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="infoButton1" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jComboBox1" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                        </DimensionLayout>
-                        <DimensionLayout dim="1">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="2" attributes="0">
-                                      <Component id="jComboBox1" alignment="2" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabel10" alignment="2" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jCheckBox1" alignment="2" min="-2" max="-2" attributes="0"/>
-                                      <Component id="colorPicker1" alignment="2" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabel55" alignment="2" min="-2" max="-2" attributes="0"/>
-                                      <Component id="infoButton1" alignment="2" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
-                        </DimensionLayout>
-                      </Layout>
-                      <SubComponents>
-                        <Component class="javax.swing.JComboBox" name="jComboBox1">
-                          <Properties>
-                            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                              <StringArray count="4">
-                                <StringItem index="0" value="x1"/>
-                                <StringItem index="1" value="x2"/>
-                                <StringItem index="2" value="x3"/>
-                                <StringItem index="3" value="x4"/>
-                              </StringArray>
-                            </Property>
-                            <Property name="selectedIndex" type="int" value="1"/>
-                          </Properties>
-                          <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBox1ActionPerformed"/>
-                          </Events>
-                          <AuxValues>
-                            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-                          </AuxValues>
-                        </Component>
-                        <Component class="javax.swing.JLabel" name="jLabel10">
-                          <Properties>
-                            <Property name="text" type="java.lang.String" value="Scale :"/>
-                          </Properties>
-                        </Component>
-                        <Component class="javax.swing.JCheckBox" name="jCheckBox1">
-                          <Properties>
-                            <Property name="text" type="java.lang.String" value="Show grid"/>
-                          </Properties>
-                          <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBox1ActionPerformed"/>
-                          </Events>
-                        </Component>
-                        <Component class="javax.swing.JLabel" name="jLabel55">
-                          <Properties>
-                            <Property name="text" type="java.lang.String" value="BG :"/>
-                          </Properties>
-                        </Component>
-                        <Container class="com.sfc.sf2.core.gui.controls.ColorPicker" name="colorPicker1">
-                          <Events>
-                            <EventHandler event="colorChanged" listener="com.sfc.sf2.core.gui.controls.ColorPicker$ColorChangedListener" parameters="java.awt.event.ActionEvent" handler="colorPicker1ColorChanged"/>
-                          </Events>
-
-                          <Layout>
-                            <DimensionLayout dim="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <EmptySpace min="0" pref="22" max="32767" attributes="0"/>
-                              </Group>
-                            </DimensionLayout>
-                            <DimensionLayout dim="1">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <EmptySpace min="0" pref="22" max="32767" attributes="0"/>
-                              </Group>
-                            </DimensionLayout>
-                          </Layout>
-                        </Container>
-                        <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton1">
-                          <Properties>
-                            <Property name="messageText" type="java.lang.String" value="&lt;html&gt;Alongside the grid, each symbol will also show a vertical line indicating the width of the symbol.&lt;/html&gt;"/>
-                            <Property name="text" type="java.lang.String" value=""/>
-                          </Properties>
-                        </Component>
-                      </SubComponents>
-                    </Container>
+                    <Component class="com.sfc.sf2.vwfont.gui.VWFontViewPanel" name="viewPanel1">
+                    </Component>
                   </SubComponents>
                 </Container>
               </SubComponents>

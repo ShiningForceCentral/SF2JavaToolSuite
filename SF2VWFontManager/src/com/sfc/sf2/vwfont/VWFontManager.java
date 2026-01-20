@@ -23,8 +23,6 @@ import java.util.ArrayList;
  * @author wiz
  */
 public class VWFontManager extends AbstractManager {
-    private final VWFontDisassemblyProcessor fontDisassemblyProcessor = new VWFontDisassemblyProcessor();
-    private final VWFontRawImageProcessor fontRawImageProcessor = new VWFontRawImageProcessor();
     
     public FontSymbol[] symbols;
 
@@ -40,7 +38,7 @@ public class VWFontManager extends AbstractManager {
        
     public FontSymbol[] importDisassembly(Path fontFilePath) throws IOException, DisassemblyException {
         Console.logger().finest("ENTERING importDisassembly");
-        symbols = fontDisassemblyProcessor.importDisassembly(fontFilePath, null);
+        symbols = new VWFontDisassemblyProcessor().importDisassembly(fontFilePath, null);
         Console.logger().info("VW fonts successfully imported from : " + fontFilePath);
         Console.logger().finest("EXITING importDisassembly");
         return symbols;
@@ -49,7 +47,7 @@ public class VWFontManager extends AbstractManager {
     public void exportDisassembly(Path fontFilePath, FontSymbol[] fontSymbols) throws IOException, DisassemblyException {
         Console.logger().finest("ENTERING exportDisassembly");
         this.symbols = fontSymbols;
-        fontDisassemblyProcessor.exportDisassembly(fontFilePath, symbols, null);
+        new VWFontDisassemblyProcessor().exportDisassembly(fontFilePath, symbols, null);
         Console.logger().info("VW fonts successfully exported to : " + fontFilePath);
         Console.logger().finest("EXITING exportDisassembly");
     }
@@ -68,6 +66,7 @@ public class VWFontManager extends AbstractManager {
             oldFormat = true;
         }
         //Now load
+        VWFontRawImageProcessor fontRawImageProcessor = new VWFontRawImageProcessor();
         for (File file : files) {
             Path symbolPath = file.toPath();
             try {
@@ -103,6 +102,7 @@ public class VWFontManager extends AbstractManager {
             index000.delete();
         }
         //Now save
+        VWFontRawImageProcessor fontRawImageProcessor = new VWFontRawImageProcessor();
         for (FontSymbol symbol : symbols) {
             try {
                 int id = symbol.getId()+1;  //Offset by 1 because engine is expecting a hidden value at 000
