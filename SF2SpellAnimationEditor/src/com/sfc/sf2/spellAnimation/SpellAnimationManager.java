@@ -22,22 +22,13 @@ import java.nio.file.Path;
  *
  * @author TiMMy
  */
-public class SpellAnimationManager extends AbstractManager {
-    private final SpellGraphicManager spellGraphicManager = new SpellGraphicManager();
-    private final BackgroundManager backgroundManager = new BackgroundManager();
-    private final GroundManager groundManager = new GroundManager();
-    private final SpellAnimationAsmProcessor spellAnimationAsmProcessor = new SpellAnimationAsmProcessor();
-    
+public class SpellAnimationManager extends AbstractManager {    
     private SpellAnimation spellAnimation;
     private Background background;
     private Ground ground;
 
     @Override
-    public void clearData() {
-        spellGraphicManager.clearData();
-        backgroundManager.clearData();
-        groundManager.clearData();
-        
+    public void clearData() {        
         spellAnimation = null;
         background = null;
         ground = null;
@@ -49,16 +40,16 @@ public class SpellAnimationManager extends AbstractManager {
     
     public SpellAnimation importDisassembly(Path spellAnimationPath, Path spellGraphicPath, Path spellPalettePath, Path backgroundPath, Path groundBasePalettePath, Path groundPalettePath, Path groundPath) throws IOException, DisassemblyException {
         Console.logger().finest("ENTERING importDisassembly");
-        Tileset spellGraphic = spellGraphicManager.importDisassembly(spellGraphicPath, spellPalettePath, 16);
-        spellAnimation = spellAnimationAsmProcessor.importAsmData(groundPath, null);
+        Tileset spellGraphic = new SpellGraphicManager().importDisassembly(spellGraphicPath, spellPalettePath, 16);
+        spellAnimation = new SpellAnimationAsmProcessor().importAsmData(groundPath, null);
         spellAnimation.setSpellGraphic(spellGraphic);
         background = null;
         if (backgroundPath != null) {
-            background = backgroundManager.importDisassembly(backgroundPath);
+            background = new BackgroundManager().importDisassembly(backgroundPath);
         }
         ground = null;
         if (groundPath != null) {
-            ground = groundManager.importDisassembly(groundBasePalettePath, groundPalettePath, groundPath);
+            ground = new GroundManager().importDisassembly(groundBasePalettePath, groundPalettePath, groundPath);
         }
         Console.logger().info("Spell Animation successfully imported from : " + spellAnimationPath);
         Console.logger().finest("EXITING exportDisassembly");
@@ -68,7 +59,7 @@ public class SpellAnimationManager extends AbstractManager {
     public void exportDisassembly(Path filePath, SpellAnimation spellAnimation) throws IOException, DisassemblyException {
         Console.logger().finest("ENTERING importDisassembly");
         this.spellAnimation = spellAnimation;
-        spellAnimationAsmProcessor.exportAsmData(filePath, spellAnimation);
+        new SpellAnimationAsmProcessor().exportAsmData(filePath, spellAnimation);
         Console.logger().info("Spell Animation successfully exported to : " + filePath);
         Console.logger().finest("EXITING exportDisassembly");   
     }

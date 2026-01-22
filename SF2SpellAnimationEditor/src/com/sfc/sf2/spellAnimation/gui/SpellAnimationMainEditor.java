@@ -5,9 +5,12 @@
  */
 package com.sfc.sf2.spellAnimation.gui;
 
+import com.sfc.sf2.core.actions.Action;
+import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.helpers.PathHelpers;
+import com.sfc.sf2.spellAnimation.SpellAnimation;
 import com.sfc.sf2.spellAnimation.SpellAnimationManager;
 import com.sfc.sf2.spellAnimation.SpellSubAnimation;
 import java.nio.file.Path;
@@ -35,27 +38,22 @@ public class SpellAnimationMainEditor extends AbstractMainEditor {
     protected void initEditor() {
         super.initEditor();
         
+        viewPanel1.setLayoutPanel(spellAnimationLayoutPanel);
         accordionPanel1.setExpanded(false);
-        
-        spellAnimationLayoutPanel.setDisplayScale((int)jSpinner1.getValue());
     }
     
     @Override
     protected void onDataLoaded() {
         super.onDataLoaded();
-        
-        spellAnimationLayoutPanel.setSpellAnimation(spellAnimationManager.getSpellAnimation());
         spellAnimationLayoutPanel.setBackground(spellAnimationManager.getBackground());
         spellAnimationLayoutPanel.setGround(spellAnimationManager.getGround());
+        ActionManager.setAndExecuteAction(new Action<SpellAnimation>(this, "Spell Animaton Imported", this::actionSpellAnimationLoaded, spellAnimationManager.getSpellAnimation(), spellAnimationLayoutPanel.getSpellAnimation()));
+    }
+    
+    private void actionSpellAnimationLoaded(SpellAnimation spellAnimation) {
+        spellAnimationLayoutPanel.setSpellAnimation(spellAnimation);
         spellAnimationLayoutPanel.setSubAnimationIndex(0);
-        
-        SpellSubAnimation[] subAnimations = spellAnimationManager.getSpellAnimation().getSpellSubAnimations();
-        String[] names = new String[subAnimations.length];
-        for (int i = 0; i < names.length; i++) {
-            names[i] = subAnimations[i].getName();
-        }
-        jComboBox1.setModel(new DefaultComboBoxModel<>(names));
-        jComboBox1.setSelectedIndex(0);
+        viewPanel1.setSubAnimationsList(spellAnimation.getSpellSubAnimations());
     }
     
     /**
@@ -94,14 +92,7 @@ public class SpellAnimationMainEditor extends AbstractMainEditor {
         jScrollPane2 = new javax.swing.JScrollPane();
         spellAnimationLayoutPanel = new com.sfc.sf2.spellAnimation.gui.SpellAnimationLayoutPanel();
         jPanel4 = new javax.swing.JPanel();
-        jPanel12 = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jSpinner1 = new javax.swing.JSpinner();
-        jSpinner2 = new javax.swing.JSpinner();
-        jLabel9 = new javax.swing.JLabel();
-        jCheckBox4 = new javax.swing.JCheckBox();
+        viewPanel1 = new com.sfc.sf2.spellAnimation.gui.SpellAnimationViewPanel();
         jPanel9 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
@@ -338,77 +329,6 @@ public class SpellAnimationMainEditor extends AbstractMainEditor {
 
         jSplitPane3.setTopComponent(jPanel1);
 
-        jPanel12.setBorder(javax.swing.BorderFactory.createTitledBorder("Display"));
-
-        jLabel7.setText("<html>Display size : </html>");
-
-        jLabel8.setText("Animation :");
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jComboBox1ItemStateChanged(evt);
-            }
-        });
-
-        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(1, 1, 5, 1));
-        jSpinner1.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jSpinner1StateChanged(evt);
-            }
-        });
-
-        jSpinner2.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
-        jSpinner2.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jSpinner2StateChanged(evt);
-            }
-        });
-
-        jLabel9.setText("Anim frame :");
-
-        jCheckBox4.setText("Animate");
-        jCheckBox4.setActionCommand("Animate spell");
-        jCheckBox4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox4ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
-        jPanel12.setLayout(jPanel12Layout);
-        jPanel12Layout.setHorizontalGroup(
-            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel12Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jCheckBox4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 238, Short.MAX_VALUE)
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(8, 8, 8)
-                .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        jPanel12Layout.setVerticalGroup(
-            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel12Layout.createSequentialGroup()
-                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel8)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9)
-                    .addComponent(jCheckBox4))
-                .addGap(0, 0, 0))
-        );
-
         jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder("Frames"));
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
@@ -439,24 +359,20 @@ public class SpellAnimationMainEditor extends AbstractMainEditor {
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE))
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel12, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 0, 0))
+            .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(viewPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(viewPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
@@ -547,31 +463,7 @@ public class SpellAnimationMainEditor extends AbstractMainEditor {
         }
         onDataLoaded();
     }//GEN-LAST:event_jButton18ActionPerformed
-    
-    private void jSpinner1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner1StateChanged
-        spellAnimationLayoutPanel.setDisplayScale((int)jSpinner1.getValue());
-    }//GEN-LAST:event_jSpinner1StateChanged
-
-    private void jSpinner2StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner2StateChanged
-        spellAnimationLayoutPanel.getAnimator().setFrame((int)jSpinner2.getValue());
-    }//GEN-LAST:event_jSpinner2StateChanged
-
-    private void jCheckBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox4ActionPerformed
-        if (jCheckBox4.isSelected()) {
-            if (spellAnimationLayoutPanel.hasData()) {
-                int speed = 1;//spellAnimationLayoutPanel.getSpellAnimation().getSpellSubAnimations()[0].getDuration();
-                int frames = spellAnimationLayoutPanel.getSpellAnimation().getSpellSubAnimations().length-1;
-                spellAnimationLayoutPanel.getAnimator().startAnimation(speed, frames, true, false);
-            }
-        } else {
-            spellAnimationLayoutPanel.getAnimator().stopAnimation();
-        }
-    }//GEN-LAST:event_jCheckBox4ActionPerformed
-
-    private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
-        spellAnimationLayoutPanel.setSubAnimationIndex(jComboBox1.getSelectedIndex());
-    }//GEN-LAST:event_jComboBox1ItemStateChanged
-    
+        
     /**
      * To create a new Main Editor, copy the below code
      * Don't forget to change the new main class (below)
@@ -601,17 +493,11 @@ public class SpellAnimationMainEditor extends AbstractMainEditor {
     private com.sfc.sf2.core.gui.controls.FileButton fileButton8;
     private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton2;
-    private javax.swing.JCheckBox jCheckBox4;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel3;
@@ -621,12 +507,11 @@ public class SpellAnimationMainEditor extends AbstractMainEditor {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JSpinner jSpinner2;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JSplitPane jSplitPane2;
     private javax.swing.JSplitPane jSplitPane3;
     private javax.swing.JTable jTable2;
     private com.sfc.sf2.spellAnimation.gui.SpellAnimationLayoutPanel spellAnimationLayoutPanel;
+    private com.sfc.sf2.spellAnimation.gui.SpellAnimationViewPanel viewPanel1;
     // End of variables declaration//GEN-END:variables
 }

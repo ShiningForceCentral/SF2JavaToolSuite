@@ -494,20 +494,14 @@
                               <Layout>
                                 <DimensionLayout dim="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" attributes="0">
-                                          <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="jPanel12" alignment="1" max="32767" attributes="0"/>
-                                              <Component id="jPanel9" alignment="0" max="32767" attributes="0"/>
-                                          </Group>
-                                          <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                                      </Group>
+                                      <Component id="jPanel9" max="32767" attributes="0"/>
+                                      <Component id="viewPanel1" alignment="1" max="32767" attributes="0"/>
                                   </Group>
                                 </DimensionLayout>
                                 <DimensionLayout dim="1">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
-                                          <Component id="jPanel12" min="-2" max="-2" attributes="0"/>
+                                          <Component id="viewPanel1" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                                           <Component id="jPanel9" max="32767" attributes="0"/>
                                           <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
@@ -516,118 +510,8 @@
                                 </DimensionLayout>
                               </Layout>
                               <SubComponents>
-                                <Container class="javax.swing.JPanel" name="jPanel12">
-                                  <Properties>
-                                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                                      <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                                        <TitledBorder title="Display"/>
-                                      </Border>
-                                    </Property>
-                                  </Properties>
-
-                                  <Layout>
-                                    <DimensionLayout dim="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jComboBox1" min="-2" pref="119" max="-2" attributes="0"/>
-                                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                                              <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jSpinner2" min="-2" pref="74" max="-2" attributes="0"/>
-                                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                                              <Component id="jCheckBox4" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace pref="238" max="32767" attributes="0"/>
-                                              <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
-                                              <Component id="jSpinner1" min="-2" pref="74" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                    </DimensionLayout>
-                                    <DimensionLayout dim="1">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Group type="103" groupAlignment="2" attributes="0">
-                                                  <Component id="jLabel8" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jComboBox1" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jLabel7" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jSpinner1" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jSpinner2" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jLabel9" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jCheckBox4" alignment="2" min="-2" max="-2" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                    </DimensionLayout>
-                                  </Layout>
-                                  <SubComponents>
-                                    <Component class="javax.swing.JLabel" name="jLabel7">
-                                      <Properties>
-                                        <Property name="text" type="java.lang.String" value="&lt;html&gt;Display size : &lt;/html&gt;"/>
-                                      </Properties>
-                                    </Component>
-                                    <Component class="javax.swing.JLabel" name="jLabel8">
-                                      <Properties>
-                                        <Property name="text" type="java.lang.String" value="Animation :"/>
-                                      </Properties>
-                                    </Component>
-                                    <Component class="javax.swing.JComboBox" name="jComboBox1">
-                                      <Properties>
-                                        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                                          <StringArray count="4">
-                                            <StringItem index="0" value="Item 1"/>
-                                            <StringItem index="1" value="Item 2"/>
-                                            <StringItem index="2" value="Item 3"/>
-                                            <StringItem index="3" value="Item 4"/>
-                                          </StringArray>
-                                        </Property>
-                                      </Properties>
-                                      <Events>
-                                        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jComboBox1ItemStateChanged"/>
-                                      </Events>
-                                      <AuxValues>
-                                        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-                                      </AuxValues>
-                                    </Component>
-                                    <Component class="javax.swing.JSpinner" name="jSpinner1">
-                                      <Properties>
-                                        <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-                                          <SpinnerModel initial="1" maximum="5" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
-                                        </Property>
-                                      </Properties>
-                                      <Events>
-                                        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jSpinner1StateChanged"/>
-                                      </Events>
-                                    </Component>
-                                    <Component class="javax.swing.JSpinner" name="jSpinner2">
-                                      <Properties>
-                                        <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-                                          <SpinnerModel initial="0" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
-                                        </Property>
-                                      </Properties>
-                                      <Events>
-                                        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jSpinner2StateChanged"/>
-                                      </Events>
-                                    </Component>
-                                    <Component class="javax.swing.JLabel" name="jLabel9">
-                                      <Properties>
-                                        <Property name="text" type="java.lang.String" value="Anim frame :"/>
-                                      </Properties>
-                                    </Component>
-                                    <Component class="javax.swing.JCheckBox" name="jCheckBox4">
-                                      <Properties>
-                                        <Property name="text" type="java.lang.String" value="Animate"/>
-                                        <Property name="actionCommand" type="java.lang.String" value="Animate spell"/>
-                                      </Properties>
-                                      <Events>
-                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBox4ActionPerformed"/>
-                                      </Events>
-                                    </Component>
-                                  </SubComponents>
-                                </Container>
+                                <Component class="com.sfc.sf2.spellAnimation.gui.SpellAnimationViewPanel" name="viewPanel1">
+                                </Component>
                                 <Container class="javax.swing.JPanel" name="jPanel9">
                                   <Properties>
                                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -640,14 +524,14 @@
                                   <Layout>
                                     <DimensionLayout dim="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jScrollPane4" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="jScrollPane4" max="32767" attributes="0"/>
                                       </Group>
                                     </DimensionLayout>
                                     <DimensionLayout dim="1">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" alignment="1" attributes="0">
                                               <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                                              <Component id="jScrollPane4" pref="117" max="32767" attributes="0"/>
+                                              <Component id="jScrollPane4" pref="111" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
                                     </DimensionLayout>
