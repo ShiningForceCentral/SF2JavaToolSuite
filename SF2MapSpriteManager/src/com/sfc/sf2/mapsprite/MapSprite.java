@@ -45,6 +45,15 @@ public class MapSprite {
         return facingIndex;
     }
     
+    public int getCombinedIndex() {
+        return index*3 + facingIndex;
+    }
+    
+    public void setCombinedIndex(int index) {
+        this.index = index/3;
+        this.facingIndex = index%3;
+    }
+    
     public Block[] getFrames() {
         return frames;
     }

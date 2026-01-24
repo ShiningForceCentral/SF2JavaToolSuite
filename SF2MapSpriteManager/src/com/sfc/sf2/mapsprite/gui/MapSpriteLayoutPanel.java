@@ -42,16 +42,16 @@ public class MapSpriteLayoutPanel extends AbstractLayoutPanel {
 
     @Override
     protected boolean hasData() {
-        return mapsprites != null && mapsprites.getMapSprites().length > 0;
+        return mapsprites != null && mapsprites.getMapSpritesArray().length > 0;
     }
 
     @Override
     protected Dimension getImageDimensions() {
-        if (mapsprites.getMapSprites().length == 1) {
-            return new Dimension(mapsprites.getMapSprites()[0].getSpritesWidth()*PIXEL_WIDTH, mapsprites.getMapSprites()[0].getSpritesHeight()*PIXEL_HEIGHT);
+        if (mapsprites.getMapSpritesArray().length == 1) {
+            return new Dimension(mapsprites.getMapSpritesArray()[0].getSpritesWidth()*PIXEL_WIDTH, mapsprites.getMapSpritesArray()[0].getSpritesHeight()*PIXEL_HEIGHT);
         } else {
             int w = 6*PIXEL_WIDTH;    //6 sprites per mapsprite (2x up, 2x left, 2x down)
-            int h = mapsprites.getMapSprites().length/3*PIXEL_HEIGHT;
+            int h = mapsprites.getEntriesArray().length/3*PIXEL_HEIGHT;
             return new Dimension(w, h);
         }
     }
@@ -61,20 +61,19 @@ public class MapSpriteLayoutPanel extends AbstractLayoutPanel {
         if (drawReferenceLabels) {
             graphics.setFont(LABEL_FONT);
         }
-        MapSprite[] sprites = mapsprites.getMapSprites();
-        for (int i = 0; i < sprites.length; i++) {
-            int index = mapsprites.getEntries()[i];
-            if (index >= 0) {
-                if (sprites[index] != null) {
-                    graphics.drawImage(sprites[index].getIndexedColorImage(), (i%3)*2*PIXEL_WIDTH, (i/3)*PIXEL_HEIGHT, null);
-                    
-                    if (drawReferenceLabels && mapsprites.isDuplicateEntry(i)) {
-                        graphics.setColor(LABEL_BG);
-                        graphics.drawRect(((i%3)*2)*PIXEL_WIDTH, (i/3)*PIXEL_HEIGHT, 2*PIXEL_WIDTH-1, PIXEL_HEIGHT-1);
-                        graphics.fillRect(((i%3)*2+1)*PIXEL_WIDTH, (i/3)*PIXEL_HEIGHT+14, PIXEL_WIDTH, 9);
-                        graphics.setColor(Color.BLACK);
-                        graphics.drawString(sprites[index].toString(), ((i%3)*2+1)*PIXEL_WIDTH+1, (i/3)*PIXEL_HEIGHT+22);
-                    }
+        int[] entries = mapsprites.getEntriesArray();
+        for (int i = 0; i < entries.length; i++) {
+            if (entries[i] >= 0) {
+                MapSprite sprite = mapsprites.getMapSprite(i);
+                if (sprite != null) {
+                    graphics.drawImage(sprite.getIndexedColorImage(), (i%3)*2*PIXEL_WIDTH, (i/3)*PIXEL_HEIGHT, null);
+                }
+                if (drawReferenceLabels && mapsprites.isDuplicateEntry(i)) {
+                    graphics.setColor(LABEL_BG);
+                    graphics.drawRect(((i%3)*2)*PIXEL_WIDTH, (i/3)*PIXEL_HEIGHT, 2*PIXEL_WIDTH-1, PIXEL_HEIGHT-1);
+                    graphics.fillRect(((i%3)*2+1)*PIXEL_WIDTH, (i/3)*PIXEL_HEIGHT+14, PIXEL_WIDTH, 9);
+                    graphics.setColor(Color.BLACK);
+                    graphics.drawString(String.format("%03d-%01d", entries[i]/3, entries[i]%3), ((i%3)*2+1)*PIXEL_WIDTH+1, (i/3)*PIXEL_HEIGHT+22);
                 }
             }
         }
