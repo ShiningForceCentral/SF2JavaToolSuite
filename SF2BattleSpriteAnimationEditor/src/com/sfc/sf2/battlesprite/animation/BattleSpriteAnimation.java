@@ -7,26 +7,33 @@ package com.sfc.sf2.battlesprite.animation;
 
 import com.sfc.sf2.battlesprite.BattleSprite;
 import com.sfc.sf2.battlesprite.BattleSprite.BattleSpriteType;
+import com.sfc.sf2.core.INameable;
 
 /**
  *
  * @author wiz
  */
-public class BattleSpriteAnimation {
-        
-    private BattleSprite battleSprite;
+public class BattleSpriteAnimation implements INameable {
+    
+    private final String name;
+    private final BattleSprite battleSprite;
     private BattleSpriteAnimationFrame[] frames;
     
     private byte spellInitFrame;
     private byte spellAnim;
     private boolean endSpellAnim;
 
-    public BattleSpriteAnimation(BattleSprite battleSprite, BattleSpriteAnimationFrame[] frames, byte spellInitFrame, byte spellAnim, boolean endSpellAnim) {
+    public BattleSpriteAnimation(String name, BattleSprite battleSprite, BattleSpriteAnimationFrame[] frames, byte spellInitFrame, byte spellAnim, boolean endSpellAnim) {
+        this.name = name;
         this.battleSprite = battleSprite;
         this.spellInitFrame = spellInitFrame;
         this.spellAnim = spellAnim;
         this.endSpellAnim = endSpellAnim;
         setFrames(frames);
+    }
+
+    public String getName() {
+        return String.format("%s (%s)", name, battleSprite.getName());
     }
 
     public BattleSprite getBattleSprite() {
@@ -80,11 +87,11 @@ public class BattleSpriteAnimation {
     
     @Override
     public BattleSpriteAnimation clone() {
-        return new BattleSpriteAnimation(battleSprite, frames, spellInitFrame, spellAnim, endSpellAnim);
+        return new BattleSpriteAnimation(name, battleSprite, frames, spellInitFrame, spellAnim, endSpellAnim);
     }
         
     public static BattleSpriteAnimation EmptyAnimation(BattleSprite battleSprite) {
         BattleSpriteAnimationFrame[] frames = new BattleSpriteAnimationFrame[] { BattleSpriteAnimationFrame.EmptyFrame() };
-        return new BattleSpriteAnimation(battleSprite, frames, (byte)0, (byte)0, true);
+        return new BattleSpriteAnimation("Empty Anim", battleSprite, frames, (byte)0, (byte)0, true);
     }
 }

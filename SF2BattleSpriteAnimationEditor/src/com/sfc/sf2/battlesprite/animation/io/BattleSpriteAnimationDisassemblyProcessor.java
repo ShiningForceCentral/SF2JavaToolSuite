@@ -63,7 +63,7 @@ public class BattleSpriteAnimationDisassemblyProcessor extends AbstractDisassemb
                 frames[i] = new BattleSpriteAnimationFrame(battleSpriteIndex, duration, x, y);
             }
         }
-        return new BattleSpriteAnimation(pckg.battleSprite(), frames, initFrame, spellAnim, endSpellAnim);
+        return new BattleSpriteAnimation(pckg.name(), pckg.battleSprite(), frames, initFrame, spellAnim, endSpellAnim);
     }
 
     @Override

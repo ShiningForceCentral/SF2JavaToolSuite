@@ -113,6 +113,10 @@ public class BattleSpriteAnimationLayoutPanel extends BattleSceneLayoutPanel imp
         redraw();
     }
 
+    public WeaponSprite getWeaponsprite() {
+        return weaponsprite;
+    }
+
     public void setWeaponsprite(WeaponSprite weaponsprite) {
         this.weaponsprite = weaponsprite;
         redraw();

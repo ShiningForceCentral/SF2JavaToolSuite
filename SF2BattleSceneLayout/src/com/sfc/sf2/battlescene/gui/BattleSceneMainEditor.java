@@ -38,7 +38,7 @@ public class BattleSceneMainEditor extends AbstractMainEditor {
     protected void onDataLoaded() {
         super.onDataLoaded();
         
-        battleSceneLayoutPanel.setBackground(battlespriteanimationManager.getBackground());
+        battleSceneLayoutPanel.setBg(battlespriteanimationManager.getBackground());
         battleSceneLayoutPanel.setGround(battlespriteanimationManager.getGround());
     }
     

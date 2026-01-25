@@ -33,33 +33,22 @@ import java.util.logging.Level;
  * @author TiMMy
  */
 public class InvocationGraphicManager extends AbstractManager {
+    private BattleSceneManager battleSceneManager = new BattleSceneManager();
     
     private InvocationGraphic invocationGraphic;
-    private Background background;
-    private Ground ground;
 
     @Override
     public void clearData() {
+        battleSceneManager.clearData();
         if (invocationGraphic != null) {
             invocationGraphic.clearIndexedColorImage();
+            invocationGraphic = null;
         }
-        if (background != null) {
-            background.getTileset().clearIndexedColorImage(true);
-        }
-        if (ground != null) {
-            ground.getTileset().clearIndexedColorImage(true);
-        }
-        invocationGraphic = null;
-        background = null;
-        ground = null;
     }
        
     public InvocationGraphic importDisassembly(Path filePath, Path backgroundPath, Path groundBasePalettePath, Path groundPalettePath, Path groundPath) throws IOException, DisassemblyException, AsmException {
         Console.logger().finest("ENTERING importDisassembly");
-        BattleSceneManager battleSceneManager = new BattleSceneManager();
         battleSceneManager.importDisassembly(backgroundPath, groundBasePalettePath, groundPalettePath, groundPath);
-        background = battleSceneManager.getBackground();
-        ground = battleSceneManager.getGround();
         InvocationPackage pckg = new InvocationPackage(PathHelpers.filenameFromPath(filePath));
         invocationGraphic = new InvocationDisassemblyProcessor().importDisassembly(filePath, pckg);
         Console.logger().info("Invocation with " + invocationGraphic.getFrames().length + " frames successfully imported from : " + filePath);
@@ -77,10 +66,7 @@ public class InvocationGraphicManager extends AbstractManager {
     
     public InvocationGraphic importImage(Path filePath, Path backgroundPath, Path groundBasePalettePath, Path groundPalettePath, Path groundPath) throws RawImageException, IOException, DisassemblyException, AsmException {
         Console.logger().finest("ENTERING importImage");
-        BattleSceneManager battleSceneManager = new BattleSceneManager();
         battleSceneManager.importDisassembly(backgroundPath, groundBasePalettePath, groundPalettePath, groundPath);
-        background = battleSceneManager.getBackground();
-        ground = battleSceneManager.getGround();
         Path dir = filePath.getParent();
         String name = getImageName(filePath.getFileName().toString());
         FileFormat format = FileFormat.getFormat(filePath);
@@ -162,10 +148,10 @@ public class InvocationGraphicManager extends AbstractManager {
     }
 
     public Background getBackground() {
-        return background;
+        return battleSceneManager.getBackground();
     }
 
     public Ground getGround() {
-        return ground;
+        return battleSceneManager.getGround();
     }
 }

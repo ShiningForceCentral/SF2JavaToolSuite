@@ -9,7 +9,6 @@ import com.sfc.sf2.core.actions.Action;
 import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
-import com.sfc.sf2.core.settings.SettingsManager;
 import com.sfc.sf2.helpers.PathHelpers;
 import com.sfc.sf2.palette.Palette;
 import com.sfc.sf2.weaponsprite.WeaponSprite;

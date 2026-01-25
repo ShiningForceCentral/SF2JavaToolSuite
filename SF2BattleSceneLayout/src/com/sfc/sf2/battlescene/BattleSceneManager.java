@@ -41,7 +41,7 @@ public class BattleSceneManager extends AbstractManager {
         Console.logger().finest("ENTERING importDisassembly");
         background = new BackgroundManager().importDisassembly(backgroundPath);
         ground = new GroundManager().importDisassembly(groundBasePalettePath, groundPalettePath, groundPath);
-        Console.logger().info("Animation successfully imported.");
+        Console.logger().info("Battle Scene successfully imported.");
         Console.logger().finest("EXITING importDisassembly");
     }
 

@@ -82,9 +82,17 @@ public class BattleSceneLayoutPanel extends AbstractLayoutPanel {
         g2.drawRect(BATTLESPRITE_ENEMY_BASE_X, BATTLESPRITE_ENEMY_BASE_Y, 16*PIXEL_WIDTH, 12*PIXEL_HEIGHT);
     }
 
-    public void setBackground(Background background) {
+    public Background getBg() {
+        return bg;
+    }
+
+    public void setBg(Background background) {
         this.bg = background;
         redraw();
+    }
+
+    public Ground getGround() {
+        return ground;
     }
 
     public void setGround(Ground ground) {
