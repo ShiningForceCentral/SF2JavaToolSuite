@@ -86,7 +86,7 @@ public class TerrainKeyPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroupTerrain = new javax.swing.ButtonGroup();
+        buttonGroupTerrain = new com.sfc.sf2.core.gui.controls.NameableButtonGroup();
         flatOptionPaneWarningIcon1 = new com.formdev.flatlaf.icons.FlatOptionPaneWarningIcon();
         jLabel2 = new javax.swing.JLabel();
         jComboBox2 = new javax.swing.JComboBox<>();
@@ -657,7 +657,7 @@ public class TerrainKeyPanel extends javax.swing.JPanel {
     private com.sfc.sf2.battle.mapterrain.gui.controls.TerrainIconPanel TerrainIconPanel7;
     private com.sfc.sf2.battle.mapterrain.gui.controls.TerrainIconPanel TerrainIconPanel8;
     private com.sfc.sf2.battle.mapterrain.gui.controls.TerrainIconPanel TerrainIconPanel9;
-    private javax.swing.ButtonGroup buttonGroupTerrain;
+    private com.sfc.sf2.core.gui.controls.NameableButtonGroup buttonGroupTerrain;
     private com.formdev.flatlaf.icons.FlatOptionPaneWarningIcon flatOptionPaneWarningIcon1;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton1;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton10;

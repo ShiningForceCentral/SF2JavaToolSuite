@@ -113,7 +113,7 @@ public class MapBlockMainEditor extends AbstractMainEditor {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup1 = new com.sfc.sf2.core.gui.controls.NameableButtonGroup();
         jPanel13 = new javax.swing.JPanel();
         jSplitPane1 = new javax.swing.JSplitPane();
         jPanel15 = new javax.swing.JPanel();
@@ -1551,7 +1551,7 @@ public class MapBlockMainEditor extends AbstractMainEditor {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.sfc.sf2.core.gui.controls.AccordionPanel accordionPanel1;
-    private javax.swing.ButtonGroup buttonGroup1;
+    private com.sfc.sf2.core.gui.controls.NameableButtonGroup buttonGroup1;
     private com.sfc.sf2.core.gui.controls.ColorPicker colorPickerBlocks;
     private com.sfc.sf2.core.gui.controls.ColorPicker colorPickerBlockset;
     private com.sfc.sf2.core.gui.controls.ColorPicker colorPickerTileset;

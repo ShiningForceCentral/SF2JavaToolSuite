@@ -163,8 +163,8 @@ public class MainEditor extends javax.swing.JFrame {
 
         jFileChooser1 = new javax.swing.JFileChooser();
         jFileChooser2 = new javax.swing.JFileChooser();
-        buttonGroup1 = new javax.swing.ButtonGroup();
-        buttonGroup2 = new javax.swing.ButtonGroup();
+        buttonGroup1 = new com.sfc.sf2.core.gui.controls.NameableButtonGroup();
+        buttonGroup2 = new com.sfc.sf2.core.gui.controls.NameableButtonGroup();
         jPanel13 = new javax.swing.JPanel();
         jSplitPane1 = new javax.swing.JSplitPane();
         jPanel15 = new javax.swing.JPanel();
@@ -3132,8 +3132,8 @@ public class MainEditor extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.ButtonGroup buttonGroup2;
+    private com.sfc.sf2.core.gui.controls.NameableButtonGroup buttonGroup1;
+    private com.sfc.sf2.core.gui.controls.NameableButtonGroup buttonGroup2;
     private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton19;
     private javax.swing.JButton jButton2;

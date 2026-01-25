@@ -305,8 +305,8 @@ public class MapEditorMainEditor extends AbstractMainEditor {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroupMapActions = new javax.swing.ButtonGroup();
-        buttonGroupTileEditing = new javax.swing.ButtonGroup();
+        buttonGroupMapActions = new com.sfc.sf2.core.gui.controls.NameableButtonGroup();
+        buttonGroupTileEditing = new com.sfc.sf2.core.gui.controls.NameableButtonGroup();
         mapAreaTableModel = new com.sfc.sf2.map.models.MapAreaTableModel();
         mapFlagCopyTableModel = new com.sfc.sf2.map.models.MapFlagCopyEventTableModel();
         mapChestItemTableModel = new com.sfc.sf2.map.models.MapItemTableModel();
@@ -4242,8 +4242,8 @@ public class MapEditorMainEditor extends AbstractMainEditor {
     private com.sfc.sf2.core.gui.controls.AccordionPanel accordionPanel2;
     private com.sfc.sf2.map.block.gui.BlockSlotPanel blockSlotPanelLeft;
     private com.sfc.sf2.map.block.gui.BlockSlotPanel blockSlotPanelRight;
-    private javax.swing.ButtonGroup buttonGroupMapActions;
-    private javax.swing.ButtonGroup buttonGroupTileEditing;
+    private com.sfc.sf2.core.gui.controls.NameableButtonGroup buttonGroupMapActions;
+    private com.sfc.sf2.core.gui.controls.NameableButtonGroup buttonGroupTileEditing;
     private com.sfc.sf2.core.gui.controls.ColorPicker colorPicker1;
     private com.sfc.sf2.core.gui.controls.ColorPicker colorPickerBlocks;
     private com.sfc.sf2.core.gui.controls.ColorPicker colorPickerBlockset;

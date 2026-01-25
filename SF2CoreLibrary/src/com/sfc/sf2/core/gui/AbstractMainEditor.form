@@ -180,7 +180,10 @@
         </Container>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.ButtonGroup" name="buttonGroupTheme">
+    <Component class="com.sfc.sf2.core.gui.controls.NameableButtonGroup" name="buttonGroupTheme">
+      <Properties>
+        <Property name="name" type="java.lang.String" value="Theme Button Group"/>
+      </Properties>
     </Component>
     <Container class="javax.swing.JFrame" name="jFrameActionHistory">
       <Properties>

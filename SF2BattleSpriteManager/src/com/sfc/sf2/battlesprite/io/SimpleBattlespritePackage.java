@@ -3,12 +3,12 @@
 * To change this template file, choose Tools | Templates
 * and open the template in the editor.
  */
-package com.sfc.sf2.mapsprite.gui;
+package com.sfc.sf2.battlesprite.io;
 
 /**
  *
  * @author TiMMy
  */
-public class MapSpriteTableModel {
+public record SimpleBattlespritePackage(String name) {
     
 }

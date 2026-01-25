@@ -24,10 +24,10 @@ import java.util.ArrayList;
  *
  * @author wiz
  */
-public class BattleSpriteDisassemblyProcessor extends AbstractDisassemblyProcessor<BattleSprite, EmptyPackage> {
+public class BattleSpriteDisassemblyProcessor extends AbstractDisassemblyProcessor<BattleSprite, SimpleBattlespritePackage> {
     
     @Override
-    protected BattleSprite parseDisassemblyData(byte[] data, EmptyPackage pckg) throws DisassemblyException {
+    protected BattleSprite parseDisassemblyData(byte[] data, SimpleBattlespritePackage pckg) throws DisassemblyException {
         if (data.length < 42) {
             throw new DisassemblyException("File ignored because of too small length (must be a dummy file) " + data.length);
         }
@@ -66,11 +66,11 @@ public class BattleSpriteDisassemblyProcessor extends AbstractDisassemblyProcess
         }
         Tileset[] frames = frameList.toArray(new Tileset[frameList.size()]);
         
-        return new BattleSprite(type, frames, palettes, animSpeed, statusOffsetX, statusOffsetY);
+        return new BattleSprite(pckg.name(), type, frames, palettes, animSpeed, statusOffsetX, statusOffsetY);
     }
 
     @Override
-    protected byte[] packageDisassemblyData(BattleSprite item, EmptyPackage pckg) throws DisassemblyException {
+    protected byte[] packageDisassemblyData(BattleSprite item, SimpleBattlespritePackage pckg) throws DisassemblyException {
         short animSpeed = (short)(item.getAnimSpeed()&0xFFFF);
         byte statusOffsetX = item.getStatusOffsetX();
         byte statusOffsetY = item.getStatusOffsetY();

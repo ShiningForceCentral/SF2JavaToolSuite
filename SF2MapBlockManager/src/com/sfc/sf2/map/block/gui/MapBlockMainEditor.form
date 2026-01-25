@@ -2,7 +2,7 @@
 
 <Form version="1.8" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
-    <Component class="javax.swing.ButtonGroup" name="buttonGroup1">
+    <Component class="com.sfc.sf2.core.gui.controls.NameableButtonGroup" name="buttonGroup1">
     </Component>
   </NonVisualComponents>
   <Properties>
@@ -1694,7 +1694,7 @@
                                 </Container>
                                 <Component class="javax.swing.JRadioButton" name="jRadioButton1">
                                   <Properties>
-                                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                                    <Property name="buttonGroup" type="com.sfc.sf2.core.gui.controls.NameableButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                                       <ComponentRef name="buttonGroup1"/>
                                     </Property>
                                     <Property name="selected" type="boolean" value="true"/>
@@ -1707,7 +1707,7 @@
                                 </Component>
                                 <Component class="javax.swing.JRadioButton" name="jRadioButton2">
                                   <Properties>
-                                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                                    <Property name="buttonGroup" type="com.sfc.sf2.core.gui.controls.NameableButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                                       <ComponentRef name="buttonGroup1"/>
                                     </Property>
                                     <Property name="text" type="java.lang.String" value="Toggle priority flag"/>
@@ -1718,7 +1718,7 @@
                                 </Component>
                                 <Component class="javax.swing.JRadioButton" name="jRadioButton3">
                                   <Properties>
-                                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                                    <Property name="buttonGroup" type="com.sfc.sf2.core.gui.controls.NameableButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                                       <ComponentRef name="buttonGroup1"/>
                                     </Property>
                                     <Property name="text" type="java.lang.String" value="Flip tiles"/>

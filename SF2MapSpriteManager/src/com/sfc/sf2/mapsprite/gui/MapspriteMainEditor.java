@@ -98,8 +98,8 @@ public class MapspriteMainEditor extends AbstractMainEditor {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroupExport = new javax.swing.ButtonGroup();
-        buttonGroupOptimise = new javax.swing.ButtonGroup();
+        buttonGroupExport = new com.sfc.sf2.core.gui.controls.NameableButtonGroup();
+        buttonGroupOptimise = new com.sfc.sf2.core.gui.controls.NameableButtonGroup();
         mapSpriteTableModel = new com.sfc.sf2.mapsprite.gui.MapSpriteTableModel();
         jPanel13 = new javax.swing.JPanel();
         jSplitPane1 = new javax.swing.JSplitPane();
@@ -172,6 +172,10 @@ public class MapspriteMainEditor extends AbstractMainEditor {
         infoButton5 = new com.sfc.sf2.core.gui.controls.InfoButton();
         tableUnreferenced = new com.sfc.sf2.core.gui.controls.Table();
         console1 = new com.sfc.sf2.core.gui.controls.Console();
+
+        buttonGroupExport.setName("Export Button Group");
+
+        buttonGroupOptimise.setName("Optimise Button Group");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SF2MapSpriteManager");
@@ -799,7 +803,6 @@ public class MapspriteMainEditor extends AbstractMainEditor {
 
                         tableUnreferenced.setBorder(null);
                         tableUnreferenced.setButtonsVisible(false);
-                        tableUnreferenced.setModel(mapSpriteTableModel);
                         tableUnreferenced.setName("Table Unreferenced"); // NOI18N
 
                         javax.swing.GroupLayout jPanelUnreferencedLayout = new javax.swing.GroupLayout(jPanelUnreferenced);
@@ -1037,8 +1040,8 @@ public class MapspriteMainEditor extends AbstractMainEditor {
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.ButtonGroup buttonGroupExport;
-    private javax.swing.ButtonGroup buttonGroupOptimise;
+    private com.sfc.sf2.core.gui.controls.NameableButtonGroup buttonGroupExport;
+    private com.sfc.sf2.core.gui.controls.NameableButtonGroup buttonGroupOptimise;
     private com.sfc.sf2.core.gui.controls.Console console1;
     private com.sfc.sf2.core.gui.controls.DirectoryButton directoryButtonExportImages;
     private com.sfc.sf2.core.gui.controls.DirectoryButton directoryButtonExportMapsprites;

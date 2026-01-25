@@ -8,13 +8,16 @@ package com.sfc.sf2.battlesprite.gui;
 import com.sfc.sf2.battlesprite.BattleSprite;
 import com.sfc.sf2.battlesprite.settings.BattleSpriteSettings;
 import com.sfc.sf2.battlesprite.BattleSpriteManager;
+import com.sfc.sf2.core.actions.Action;
+import com.sfc.sf2.core.actions.ActionManager;
+import com.sfc.sf2.core.actions.RadioButtonAction;
+import com.sfc.sf2.core.actions.SpinnerAction;
+import com.sfc.sf2.core.actions.ToggleAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.core.io.FileFormat;
 import com.sfc.sf2.core.settings.SettingsManager;
 import com.sfc.sf2.helpers.PathHelpers;
-import com.sfc.sf2.palette.Palette;
-import java.awt.event.ActionEvent;
 import java.nio.file.Path;
 import java.util.logging.Level;
 import javax.swing.JRadioButton;
@@ -27,7 +30,7 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
     private final BattleSpriteSettings battlespriteSettings = new BattleSpriteSettings();
     private final BattleSpriteManager battleSpriteManager = new BattleSpriteManager();
     
-    private boolean settingFileFormat = false;
+    private boolean actionExportFormat = false;
     
     public BattleSpriteMainEditor() {
         super();
@@ -40,38 +43,28 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
     protected void initEditor() {
         super.initEditor();
         
-        battleSpriteLayoutPanel.setShowGrid(jCheckBox5.isSelected());                                           
-        battleSpriteLayoutPanel.setDisplayScale(jComboBox2.getSelectedIndex()+1);
-        colorPicker1.setColor(SettingsManager.getGlobalSettings().getTransparentBGColor());
-        battleSpriteLayoutPanel.setBGColor(colorPicker1.getBackground());
+        viewPanel1.setLayoutPanel(battleSpriteLayoutPanel);
         
-        jRadioButton1.setSelected(battlespriteSettings.getExportFileFormat() == FileFormat.PNG);
-        jRadioButton2.setSelected(battlespriteSettings.getExportFileFormat() != FileFormat.PNG);
-        
-        paletteButton1.setupPaletteButton(() -> {
-            BattleSprite battleSprite = battleSpriteLayoutPanel.getBattleSprite();
-            return battleSprite == null ? null : battleSprite.getPalettes()[jComboBox1.getSelectedIndex()];
-        }, this::onPaletteColorChange);
+        jRadioButtonFormatPNG.setSelected(battlespriteSettings.getExportFileFormat() == FileFormat.PNG);
+        jRadioButtonFormatGIF.setSelected(battlespriteSettings.getExportFileFormat() != FileFormat.PNG);
+        actionExportFormat = jRadioButtonFormatPNG.isSelected();
     }
     
     @Override
     protected void onDataLoaded() {
         super.onDataLoaded();
-        
-        jComboBox1.removeAllItems();
-        BattleSprite battleSprite = battleSpriteManager.getBattleSprite();
+        ActionManager.setAndExecuteAction(new Action<BattleSprite>(this, "Battlesprite Imported", this::actionBattlespriteLoaded, battleSpriteManager.getBattleSprite(), battleSpriteLayoutPanel.getBattleSprite()));
+    }
+    
+    private void actionBattlespriteLoaded(BattleSprite battleSprite) {
         battleSpriteLayoutPanel.setBattleSprite(battleSprite);
         battleSpriteLayoutPanel.getAnimator().stopAnimation();
-        jCheckBox3.setSelected(false);
+        jCheckBoxPreviewIdle.setSelected(false);
+        viewPanel1.setPalettesList(battleSprite);
         if (battleSprite != null) {
-            Palette[] palettes = battleSprite.getPalettes();
-            for (int i=0; i < palettes.length; i++) {
-                jComboBox1.addItem(palettes[i].getName());
-            }
-            jComboBox1.setSelectedIndex(0);
-            jSpinner4.setValue(battleSprite.getAnimSpeed());
-            jSpinner3.setValue(battleSprite.getStatusOffsetX());
-            jSpinner2.setValue(battleSprite.getStatusOffsetY());
+            jSpinnerIdleSpeed.setValue(battleSprite.getAnimSpeed());
+            jSpinnerStatusX.setValue(battleSprite.getStatusOffsetX());
+            jSpinnerStatusY.setValue(battleSprite.getStatusOffsetY());
         }
     }
     
@@ -84,7 +77,7 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroupExport = new javax.swing.ButtonGroup();
+        buttonGroupExport = new com.sfc.sf2.core.gui.controls.NameableButtonGroup();
         jPanel13 = new javax.swing.JPanel();
         jSplitPane1 = new javax.swing.JSplitPane();
         jPanel15 = new javax.swing.JPanel();
@@ -95,31 +88,31 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
         jPanel4 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         infoButton3 = new com.sfc.sf2.core.gui.controls.InfoButton();
-        fileButton1 = new com.sfc.sf2.core.gui.controls.FileButton();
-        jButton18 = new javax.swing.JButton();
+        fileButtonImportBattlesprite = new com.sfc.sf2.core.gui.controls.FileButton();
+        jButtonImportBattlesprite = new javax.swing.JButton();
         jPanel9 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         infoButton5 = new com.sfc.sf2.core.gui.controls.InfoButton();
-        fileButton2 = new com.sfc.sf2.core.gui.controls.FileButton();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        fileButtonImportImage = new com.sfc.sf2.core.gui.controls.FileButton();
+        jCheckBoxUseImagePalette = new javax.swing.JCheckBox();
         infoButton6 = new com.sfc.sf2.core.gui.controls.InfoButton();
-        jButton12 = new javax.swing.JButton();
+        jButtonImportImage = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jTabbedPane2 = new javax.swing.JTabbedPane();
         jPanel11 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        fileButton3 = new com.sfc.sf2.core.gui.controls.FileButton();
-        jButton2 = new javax.swing.JButton();
+        fileButtonExportBattlesprite = new com.sfc.sf2.core.gui.controls.FileButton();
+        jButtonExportBattlesprite = new javax.swing.JButton();
         jPanel14 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         infoButton8 = new com.sfc.sf2.core.gui.controls.InfoButton();
-        fileButton4 = new com.sfc.sf2.core.gui.controls.FileButton();
+        fileButtonExportImages = new com.sfc.sf2.core.gui.controls.FileButton();
         jPanel2 = new javax.swing.JPanel();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jLabel8 = new javax.swing.JLabel();
-        infoButton4 = new com.sfc.sf2.core.gui.controls.InfoButton();
-        jButton13 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jRadioButtonFormatPNG = new javax.swing.JRadioButton();
+        jRadioButtonFormatGIF = new javax.swing.JRadioButton();
+        infoButton7 = new com.sfc.sf2.core.gui.controls.InfoButton();
+        jButtonExportImages = new javax.swing.JButton();
         jPanel10 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -127,26 +120,19 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
         jPanel16 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jCheckBox3 = new javax.swing.JCheckBox();
-        jCheckBox4 = new javax.swing.JCheckBox();
-        jSpinner2 = new javax.swing.JSpinner();
-        jSpinner3 = new javax.swing.JSpinner();
+        jCheckBoxPreviewIdle = new javax.swing.JCheckBox();
+        jCheckBoxShowStatus = new javax.swing.JCheckBox();
+        jSpinnerStatusY = new javax.swing.JSpinner();
+        jSpinnerStatusX = new javax.swing.JSpinner();
         jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
-        jSpinner4 = new javax.swing.JSpinner();
+        jSpinnerIdleSpeed = new javax.swing.JSpinner();
         infoButton1 = new com.sfc.sf2.core.gui.controls.InfoButton();
         infoButton2 = new com.sfc.sf2.core.gui.controls.InfoButton();
-        jPanel12 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jCheckBox5 = new javax.swing.JCheckBox();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jLabel21 = new javax.swing.JLabel();
-        colorPicker1 = new com.sfc.sf2.core.gui.controls.ColorPicker();
-        jLabel55 = new javax.swing.JLabel();
-        paletteButton1 = new com.sfc.sf2.palette.gui.controls.PaletteButton();
-        jLabel7 = new javax.swing.JLabel();
+        viewPanel1 = new com.sfc.sf2.battlesprite.gui.BattlespriteViewPanel();
         console1 = new com.sfc.sf2.core.gui.controls.Console();
+
+        buttonGroupExport.setName("Export Button Group");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SF2BattleSpriteManager");
@@ -167,15 +153,16 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
         infoButton3.setMessageText("<html>Typical disassembly \\battlesprites\\allies\\ and \\battlesprites\\enemies\\</html>");
         infoButton3.setText("");
 
-        fileButton1.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButton1.setFilePath(".\\allies\\allybattlesprite01.bin");
-        fileButton1.setInfoMessage("");
-        fileButton1.setLabelText("File :");
+        fileButtonImportBattlesprite.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
+        fileButtonImportBattlesprite.setFilePath(".\\allies\\allybattlesprite01.bin");
+        fileButtonImportBattlesprite.setInfoMessage("");
+        fileButtonImportBattlesprite.setLabelText("File :");
+        fileButtonImportBattlesprite.setName("Import Battlesprites"); // NOI18N
 
-        jButton18.setText("Import");
-        jButton18.addActionListener(new java.awt.event.ActionListener() {
+        jButtonImportBattlesprite.setText("Import");
+        jButtonImportBattlesprite.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton18ActionPerformed(evt);
+                jButtonImportBattlespriteActionPerformed(evt);
             }
         });
 
@@ -186,10 +173,10 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fileButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
+                    .addComponent(fileButtonImportBattlesprite, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton18))
+                        .addComponent(jButtonImportBattlesprite))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -205,9 +192,9 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(infoButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fileButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fileButtonImportBattlesprite, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton18)
+                .addComponent(jButtonImportBattlesprite)
                 .addContainerGap())
         );
 
@@ -218,21 +205,22 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
         infoButton5.setMessageText("<html>Enter an image prefix or select an image, palette, or meta file. Examples of valid search patterns:<br>- .\\allies\\export\\allybattlesprite01<br>- .\\allies\\export\\allybattlesprite01-frame<br>- .\\allies\\export\\allybattlesprite01-frame-0<br>- .\\allies\\export\\allybattlesprite01-frame-3.png<br>- .\\allies\\export\\allybattlesprite01.meta<br>- .\\allies\\export\\allybattlesprite01-palette<br>- .\\allies\\export\\allybattlesprite01-palette-0.bin<br><br>Supported image formats: PNG or GIF. Automatically detects valid image formats that match the file pattern.<br><br>Color format should be 4BPP / 16 indexed colors. Images of 8BPP / 256 indexed colors will be converted to 4 BPP / 16 (some colors may be lost).<br>Colors will be convered to CRAM format (the color format used by the SEGA Genesis).<br>Color index 0 is treated as transparent.</html>");
         infoButton5.setText("");
 
-        fileButton2.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ALL_BATTLE_SPRITES_FORMAT);
-        fileButton2.setFilePath(".\\allies\\export\\allybattlesprite01");
-        fileButton2.setInfoMessage("");
-        fileButton2.setLabelText("Image prefix :");
+        fileButtonImportImage.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ALL_BATTLE_SPRITES_FORMAT);
+        fileButtonImportImage.setFilePath(".\\allies\\export\\allybattlesprite01");
+        fileButtonImportImage.setInfoMessage("");
+        fileButtonImportImage.setLabelText("Image prefix :");
+        fileButtonImportImage.setName("Import Images"); // NOI18N
 
-        jCheckBox1.setText("Use image palette as 1st palette");
-        jCheckBox1.setActionCommand("");
+        jCheckBoxUseImagePalette.setText("Use image palette as 1st palette");
+        jCheckBoxUseImagePalette.setActionCommand("");
 
         infoButton6.setMessageText("<html>Uses the colors from the imported image as the 1st palette (palette0). Image colors will be converted to CRAM color format.</html>");
         infoButton6.setText("");
 
-        jButton12.setText("Import");
-        jButton12.addActionListener(new java.awt.event.ActionListener() {
+        jButtonImportImage.setText("Import");
+        jButtonImportImage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton12ActionPerformed(evt);
+                jButtonImportImageActionPerformed(evt);
             }
         });
 
@@ -244,12 +232,12 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
                 .addContainerGap()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(jCheckBox1)
+                        .addComponent(jCheckBoxUseImagePalette)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(infoButton6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                        .addComponent(jButton12))
-                    .addComponent(fileButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(jButtonImportImage))
+                    .addComponent(fileButtonImportImage, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -265,13 +253,13 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(infoButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fileButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fileButtonImportImage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton12)
+                    .addComponent(jButtonImportImage)
                     .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                         .addComponent(infoButton6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jCheckBox1)))
+                        .addComponent(jCheckBoxUseImagePalette)))
                 .addContainerGap())
         );
 
@@ -296,15 +284,16 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
 
         jLabel1.setText("<html>Export battlesprite disassembly.</html>");
 
-        fileButton3.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButton3.setFilePath(".\\allies\\allybattlesprite01.bin");
-        fileButton3.setInfoMessage("");
-        fileButton3.setLabelText("File :");
+        fileButtonExportBattlesprite.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
+        fileButtonExportBattlesprite.setFilePath(".\\allies\\allybattlesprite01.bin");
+        fileButtonExportBattlesprite.setInfoMessage("");
+        fileButtonExportBattlesprite.setLabelText("File :");
+        fileButtonExportBattlesprite.setName("Export Battlesprites"); // NOI18N
 
-        jButton2.setText("Export");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButtonExportBattlesprite.setText("Export");
+        jButtonExportBattlesprite.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButtonExportBattlespriteActionPerformed(evt);
             }
         });
 
@@ -315,10 +304,10 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fileButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
+                    .addComponent(fileButtonExportBattlesprite, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton2))
+                        .addComponent(jButtonExportBattlesprite))
                     .addGroup(jPanel11Layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -330,9 +319,9 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fileButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fileButtonExportBattlesprite, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
+                .addComponent(jButtonExportBattlesprite)
                 .addContainerGap())
         );
 
@@ -343,34 +332,33 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
         infoButton8.setMessageText("<html>Enter an image prefix or select an image, palette, or meta file. Examples of valid search patterns:<br>- .\\allies\\export\\allybattlesprite01<br>- .\\allies\\export\\allybattlesprite01-frame<br>- .\\allies\\export\\allybattlesprite01-frame-0<br>- .\\allies\\export\\allybattlesprite01-frame-3.png<br>- .\\allies\\export\\allybattlesprite01.meta<br>- .\\allies\\export\\allybattlesprite01-palette<br>- .\\allies\\export\\allybattlesprite01-palette-0.bin<br><br>Supported image formats: PNG or GIF.<br><br>Exported color format will be 4BPP / 16 indexed colors.<br>Color index 0 is treated as transparent.</html>");
         infoButton8.setText("");
 
-        fileButton4.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ALL_BATTLE_SPRITES_FORMAT);
-        fileButton4.setFilePath(".\\allies\\export\\allybattlesprite01");
-        fileButton4.setInfoMessage("<html>Exports the Battlesprite as:<br>- Multiple image files (one per frame) with naming pattern \"battlespriteXX-frame-Y.png).<br>- 1 or more Palette data files (one for each Palette used by the Battlesprite) with naming pattern \"battlespriteXX-palette-Y.bin).<br>- A metadata file with naming pattern \"battlespriteXX.meta\".<br><br><html>Examples of valid search patterns:<br>- .\\allies\\export\\allybattlesprite01<br>- .\\allies\\export\\allybattlesprite01-frame<br>- .\\allies\\export\\allybattlesprite01-frame-0<br>- .\\allies\\export\\allybattlesprite01-frame-3.png<br>- .\\allies\\export\\allybattlesprite01.meta<br>- .\\allies\\export\\allybattlesprite01-palette<br>- .\\allies\\export\\allybattlesprite01-palette-0.bin<br><br>Supported image formats: PNG or GIF.<br><br>Exported color format will be 4BPP / 16 indexed colors.<br>Color index 0 is treated as transparent.</html>");
-        fileButton4.setLabelText("Path prefix :");
+        fileButtonExportImages.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ALL_BATTLE_SPRITES_FORMAT);
+        fileButtonExportImages.setFilePath(".\\allies\\export\\allybattlesprite01");
+        fileButtonExportImages.setInfoMessage("<html>Exports the Battlesprite as:<br>- Multiple image files (one per frame) with naming pattern \"battlespriteXX-frame-Y.png).<br>- 1 or more Palette data files (one for each Palette used by the Battlesprite) with naming pattern \"battlespriteXX-palette-Y.bin).<br>- A metadata file with naming pattern \"battlespriteXX.meta\".<br><br><html>Examples of valid search patterns:<br>- .\\allies\\export\\allybattlesprite01<br>- .\\allies\\export\\allybattlesprite01-frame<br>- .\\allies\\export\\allybattlesprite01-frame-0<br>- .\\allies\\export\\allybattlesprite01-frame-3.png<br>- .\\allies\\export\\allybattlesprite01.meta<br>- .\\allies\\export\\allybattlesprite01-palette<br>- .\\allies\\export\\allybattlesprite01-palette-0.bin<br><br>Supported image formats: PNG or GIF.<br><br>Exported color format will be 4BPP / 16 indexed colors.<br>Color index 0 is treated as transparent.</html>");
+        fileButtonExportImages.setLabelText("Path prefix :");
+        fileButtonExportImages.setName("Export Images"); // NOI18N
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
-        buttonGroupExport.add(jRadioButton2);
-        jRadioButton2.setText("GIF");
-        jRadioButton2.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jRadioButton2jRadioStateChanged_Gif(evt);
+        jLabel4.setText("File format :");
+
+        jRadioButtonFormatPNG.setSelected(true);
+        jRadioButtonFormatPNG.setText("PNG");
+        jRadioButtonFormatPNG.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jRadioButtonFormatRadioItemStateChanged(evt);
             }
         });
 
-        buttonGroupExport.add(jRadioButton1);
-        jRadioButton1.setSelected(true);
-        jRadioButton1.setText("PNG");
-        jRadioButton1.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jRadioButton1jRadioStateChanged_Png(evt);
+        jRadioButtonFormatGIF.setText("GIF");
+        jRadioButtonFormatGIF.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jRadioButtonFormatRadioItemStateChanged(evt);
             }
         });
 
-        jLabel8.setText("File format :");
-
-        infoButton4.setMessageText("Export the images as .PNG or .GIF format.");
-        infoButton4.setText("");
+        infoButton7.setMessageText("Export the images as .PNG or .GIF format.");
+        infoButton7.setText("");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -378,31 +366,31 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel8)
+                .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton1)
+                .addComponent(jRadioButtonFormatPNG)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton2)
+                .addComponent(jRadioButtonFormatGIF)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(infoButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(infoButton7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(infoButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jRadioButton2)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jLabel8))
-                .addContainerGap())
+                    .addComponent(infoButton7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jRadioButtonFormatGIF)
+                    .addComponent(jRadioButtonFormatPNG)
+                    .addComponent(jLabel4))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jButton13.setText("Export");
-        jButton13.addActionListener(new java.awt.event.ActionListener() {
+        jButtonExportImages.setText("Export");
+        jButtonExportImages.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton13ActionPerformed(evt);
+                jButtonExportImagesActionPerformed(evt);
             }
         });
 
@@ -413,12 +401,12 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
             .addGroup(jPanel14Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fileButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(fileButtonExportImages, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
                         .addGap(0, 22, Short.MAX_VALUE)
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton13))
+                        .addComponent(jButtonExportImages))
                     .addGroup(jPanel14Layout.createSequentialGroup()
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -434,10 +422,10 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(infoButton8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fileButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fileButtonExportImages, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton13)
+                    .addComponent(jButtonExportImages)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -482,7 +470,7 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
         battleSpriteLayoutPanel.setLayout(battleSpriteLayoutPanelLayout);
         battleSpriteLayoutPanelLayout.setHorizontalGroup(
             battleSpriteLayoutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 563, Short.MAX_VALUE)
+            .addGap(0, 679, Short.MAX_VALUE)
         );
         battleSpriteLayoutPanelLayout.setVerticalGroup(
             battleSpriteLayoutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -508,31 +496,35 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
 
         jLabel6.setText("Status marker offset :");
 
-        jCheckBox3.setText("Preview");
-        jCheckBox3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox3ActionPerformed(evt);
+        jCheckBoxPreviewIdle.setText("Preview");
+        jCheckBoxPreviewIdle.setName("Anim Preview"); // NOI18N
+        jCheckBoxPreviewIdle.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCheckBoxPreviewIdleItemStateChanged(evt);
             }
         });
 
-        jCheckBox4.setText("Show");
-        jCheckBox4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox4ActionPerformed(evt);
+        jCheckBoxShowStatus.setText("Show");
+        jCheckBoxShowStatus.setName("Show Status Marker"); // NOI18N
+        jCheckBoxShowStatus.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCheckBoxShowStatusItemStateChanged(evt);
             }
         });
 
-        jSpinner2.setModel(new javax.swing.SpinnerNumberModel((byte)0, (byte)0, null, (byte)1));
-        jSpinner2.addChangeListener(new javax.swing.event.ChangeListener() {
+        jSpinnerStatusY.setModel(new javax.swing.SpinnerNumberModel((byte)0, (byte)0, null, (byte)1));
+        jSpinnerStatusY.setName("Status Marker Y"); // NOI18N
+        jSpinnerStatusY.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jSpinner2StateChanged(evt);
+                jSpinnerStatusYStateChanged(evt);
             }
         });
 
-        jSpinner3.setModel(new javax.swing.SpinnerNumberModel((byte)0, (byte)0, null, (byte)1));
-        jSpinner3.addChangeListener(new javax.swing.event.ChangeListener() {
+        jSpinnerStatusX.setModel(new javax.swing.SpinnerNumberModel((byte)0, (byte)0, null, (byte)1));
+        jSpinnerStatusX.setName("Status Marker X"); // NOI18N
+        jSpinnerStatusX.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jSpinner3StateChanged(evt);
+                jSpinnerStatusXStateChanged(evt);
             }
         });
 
@@ -540,10 +532,11 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
 
         jLabel23.setText("Y :");
 
-        jSpinner4.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
-        jSpinner4.addChangeListener(new javax.swing.event.ChangeListener() {
+        jSpinnerIdleSpeed.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+        jSpinnerIdleSpeed.setName("Idle Anim Speed"); // NOI18N
+        jSpinnerIdleSpeed.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jSpinner4StateChanged(evt);
+                jSpinnerIdleSpeedStateChanged(evt);
             }
         });
 
@@ -565,9 +558,9 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSpinner4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jSpinnerIdleSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jCheckBox3))
+                        .addComponent(jCheckBoxPreviewIdle))
                     .addGroup(jPanel16Layout.createSequentialGroup()
                         .addComponent(infoButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -575,13 +568,13 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel22)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSpinner3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jSpinnerStatusX, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel23)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSpinner2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jSpinnerStatusY, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jCheckBox4)))
+                        .addComponent(jCheckBoxShowStatus)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel16Layout.setVerticalGroup(
@@ -589,110 +582,20 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
             .addGroup(jPanel16Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jSpinner4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSpinnerIdleSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
-                    .addComponent(jCheckBox3)
+                    .addComponent(jCheckBoxPreviewIdle)
                     .addComponent(infoButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel6)
                     .addComponent(infoButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jSpinner3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jSpinnerStatusY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jSpinnerStatusX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel22)
                         .addComponent(jLabel23)
-                        .addComponent(jCheckBox4)))
-                .addContainerGap())
-        );
-
-        jPanel12.setBorder(javax.swing.BorderFactory.createTitledBorder("Display"));
-
-        jLabel4.setText("Palette : ");
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
-            }
-        });
-
-        jCheckBox5.setText("Show grid");
-        jCheckBox5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox5ActionPerformed(evt);
-            }
-        });
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "x1", "x2", "x3", "x4" }));
-        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox2ActionPerformed(evt);
-            }
-        });
-
-        jLabel21.setText("Scale :");
-
-        colorPicker1.addColorChangedListener(new com.sfc.sf2.core.gui.controls.ColorPicker.ColorChangedListener() {
-            public void colorChanged(java.awt.event.ActionEvent evt) {
-                colorPicker1ColorChanged(evt);
-            }
-        });
-
-        javax.swing.GroupLayout colorPicker1Layout = new javax.swing.GroupLayout(colorPicker1);
-        colorPicker1.setLayout(colorPicker1Layout);
-        colorPicker1Layout.setHorizontalGroup(
-            colorPicker1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 22, Short.MAX_VALUE)
-        );
-        colorPicker1Layout.setVerticalGroup(
-            colorPicker1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 22, Short.MAX_VALUE)
-        );
-
-        jLabel55.setText("BG :");
-
-        jLabel7.setText("Recolor :");
-
-        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
-        jPanel12.setLayout(jPanel12Layout);
-        jPanel12Layout.setHorizontalGroup(
-            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel12Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(paletteButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel55)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(colorPicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
-                .addComponent(jCheckBox5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel21)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        jPanel12Layout.setVerticalGroup(
-            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel12Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel21)
-                    .addComponent(jCheckBox5)
-                    .addComponent(jLabel55)
-                    .addComponent(colorPicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(paletteButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
+                        .addComponent(jCheckBoxShowStatus)))
                 .addContainerGap())
         );
 
@@ -700,12 +603,12 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel10Layout.createSequentialGroup()
+            .addGroup(jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(viewPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel10Layout.setVerticalGroup(
@@ -715,7 +618,7 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
                 .addGap(0, 0, 0)
                 .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(viewPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -761,8 +664,8 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Path spritePath = PathHelpers.getBasePath().resolve(fileButton3.getFilePath());
+    private void jButtonExportBattlespriteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExportBattlespriteActionPerformed
+        Path spritePath = PathHelpers.getBasePath().resolve(fileButtonExportBattlesprite.getFilePath());
         if (!PathHelpers.createPathIfRequred(spritePath)) return;
         try {
             battleSpriteManager.exportDisassembly(spritePath, battleSpriteLayoutPanel.getBattleSprite());
@@ -770,27 +673,27 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Battle Sprite disasm could not be exported to : " + spritePath);
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jButtonExportBattlespriteActionPerformed
 
-    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
-        Path imagePath = PathHelpers.getBasePath().resolve(fileButton4.getFilePath());
+    private void jButtonExportImagesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExportImagesActionPerformed
+        Path imagePath = PathHelpers.getBasePath().resolve(fileButtonExportImages.getFilePath());
         if (imagePath.getFileName().toString().contains(".")) {
             if (!PathHelpers.createPathIfRequred(imagePath)) return;
         } else {
             if (!PathHelpers.createPathIfRequred(imagePath.getParent())) return;
         }
         try {
-            FileFormat format = jRadioButton1.isSelected() ? FileFormat.PNG : FileFormat.GIF;
-            battleSpriteManager.exportImage(imagePath, battleSpriteLayoutPanel.getBattleSprite(), battleSpriteLayoutPanel.getCurrentPalette(), format);
+            FileFormat format = jRadioButtonFormatPNG.isSelected() ? FileFormat.PNG : FileFormat.GIF;
+            battleSpriteManager.exportImage(imagePath, battleSpriteLayoutPanel.getBattleSprite(), battleSpriteLayoutPanel.getBattleSprite().getCurrentPaletteIndex(), format);
         } catch (Exception ex) {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Battle Sprite image could not be exported to : " + imagePath);
         }
-    }//GEN-LAST:event_jButton13ActionPerformed
+    }//GEN-LAST:event_jButtonExportImagesActionPerformed
 
-    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-        Path spritePath = PathHelpers.getBasePath().resolve(fileButton2.getFilePath());
-        boolean useImagePalette = jCheckBox1.isSelected();
+    private void jButtonImportImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportImageActionPerformed
+        Path spritePath = PathHelpers.getBasePath().resolve(fileButtonImportImage.getFilePath());
+        boolean useImagePalette = jCheckBoxUseImagePalette.isSelected();
         try {
             battleSpriteManager.importImage(spritePath, useImagePalette);
         } catch (Exception ex) {
@@ -800,12 +703,12 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
         }
         onDataLoaded();
         if (useImagePalette && battleSpriteManager.getBattleSprite() != null) {
-            jComboBox1.setSelectedIndex(battleSpriteManager.getBattleSprite().getPalettes().length-1);
+            viewPanel1.getjComboBoxPalette().setSelectedIndex(battleSpriteManager.getBattleSprite().getPalettes().length-1);
         }
-    }//GEN-LAST:event_jButton12ActionPerformed
+    }//GEN-LAST:event_jButtonImportImageActionPerformed
 
-    private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
-        Path imagePath = PathHelpers.getBasePath().resolve(fileButton1.getFilePath());
+    private void jButtonImportBattlespriteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportBattlespriteActionPerformed
+        Path imagePath = PathHelpers.getBasePath().resolve(fileButtonImportBattlesprite.getFilePath());
         try {
             battleSpriteManager.importDisassembly(imagePath);
         } catch (Exception ex) {
@@ -814,111 +717,80 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
             Console.logger().severe("ERROR Battle Sprite disasm could not be imported from : " + imagePath);
         }
         onDataLoaded();
-    }//GEN-LAST:event_jButton18ActionPerformed
+    }//GEN-LAST:event_jButtonImportBattlespriteActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        if(jComboBox1.getSelectedItem()!=null){
-            battleSpriteLayoutPanel.setCurrentPalette(jComboBox1.getSelectedIndex());
-        }  
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    private void jSpinnerIdleSpeedStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinnerIdleSpeedStateChanged
+        BattleSprite battleSprite = battleSpriteManager.getBattleSprite();
+        if (battleSprite == null) return;
+        if (!ActionManager.isActionTriggering()) {
+            ActionManager.setActionWithoutExecute(new SpinnerAction(jSpinnerIdleSpeed, jSpinnerIdleSpeed.getValue(), battleSprite.getAnimSpeed()));
+        }
+        battleSprite.setAnimSpeed((int)jSpinnerIdleSpeed.getValue());
+        if (battleSpriteLayoutPanel.getAnimator().isAnimating()) {
+            battleSpriteLayoutPanel.getAnimator().stopAnimation();
+            battleSpriteLayoutPanel.getAnimator().startAnimation(battleSprite.getAnimSpeed(), 1, true);
+        }
+    }//GEN-LAST:event_jSpinnerIdleSpeedStateChanged
 
-    private void jCheckBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox4ActionPerformed
-        battleSpriteLayoutPanel.setShowStatusMarker(jCheckBox4.isSelected());
-    }//GEN-LAST:event_jCheckBox4ActionPerformed
+    private void jSpinnerStatusXStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinnerStatusXStateChanged
+        BattleSprite battleSprite = battleSpriteManager.getBattleSprite();
+        if (battleSprite == null) return;
+        if (!ActionManager.isActionTriggering()) {
+            ActionManager.setActionWithoutExecute(new SpinnerAction(jSpinnerStatusX, jSpinnerStatusX.getValue(), battleSprite.getStatusOffsetX()));
+        }
+        battleSprite.setStatusOffsetX((byte)jSpinnerStatusX.getValue());
+        if (jCheckBoxShowStatus.isSelected()) {
+            battleSpriteLayoutPanel.redraw();
+        }
+    }//GEN-LAST:event_jSpinnerStatusXStateChanged
 
-    private void jCheckBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox3ActionPerformed
+    private void jSpinnerStatusYStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinnerStatusYStateChanged
+        BattleSprite battleSprite = battleSpriteManager.getBattleSprite();
+        if (battleSprite == null) return;
+        if (!ActionManager.isActionTriggering()) {
+            ActionManager.setActionWithoutExecute(new SpinnerAction(jSpinnerStatusY, jSpinnerStatusY.getValue(), battleSprite.getStatusOffsetY()));
+        }
+        battleSprite.setStatusOffsetY((byte)jSpinnerStatusY.getValue());
+        if (jCheckBoxShowStatus.isSelected()) {
+            battleSpriteLayoutPanel.redraw();
+        }
+    }//GEN-LAST:event_jSpinnerStatusYStateChanged
+
+    private void jRadioButtonFormatRadioItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jRadioButtonFormatRadioItemStateChanged
+        if (!ActionManager.isActionTriggering()) {
+            JRadioButton previous = actionExportFormat ? jRadioButtonFormatPNG : jRadioButtonFormatGIF;
+            ActionManager.setActionWithoutExecute(new RadioButtonAction(buttonGroupExport, (JRadioButton)evt.getSource(), previous));
+        }
+        actionExportFormat = jRadioButtonFormatPNG.isSelected();
+
+        if (actionExportFormat) {
+            battlespriteSettings.setExportFileFormat(actionExportFormat ? FileFormat.PNG : FileFormat.GIF);
+            SettingsManager.saveSettingsFile();
+        }
+    }//GEN-LAST:event_jRadioButtonFormatRadioItemStateChanged
+
+    private void jCheckBoxPreviewIdleItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBoxPreviewIdleItemStateChanged
+        if (!ActionManager.isActionTriggering()) {
+            ActionManager.setActionWithoutExecute(new ToggleAction(jCheckBoxPreviewIdle, jCheckBoxPreviewIdle.isSelected()));
+        }
         BattleSprite battleSprite = battleSpriteLayoutPanel.getBattleSprite();
         if (battleSprite != null) {
-            if (jCheckBox3.isSelected()) {
+            if (jCheckBoxPreviewIdle.isSelected()) {
                 battleSpriteLayoutPanel.getAnimator().startAnimation(battleSprite.getAnimSpeed(), 1, true);
             } else {
                 battleSpriteLayoutPanel.getAnimator().stopAnimation();
                 battleSpriteLayoutPanel.redraw();
             }
         }
-    }//GEN-LAST:event_jCheckBox3ActionPerformed
+    }//GEN-LAST:event_jCheckBoxPreviewIdleItemStateChanged
 
-    private void jCheckBox5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox5ActionPerformed
-        battleSpriteLayoutPanel.setShowGrid(jCheckBox5.isSelected());
-    }//GEN-LAST:event_jCheckBox5ActionPerformed
-
-    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
-        battleSpriteLayoutPanel.setDisplayScale(jComboBox2.getSelectedIndex()+1);
-    }//GEN-LAST:event_jComboBox2ActionPerformed
-
-    private void jSpinner4StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner4StateChanged
-        BattleSprite battleSprite = battleSpriteManager.getBattleSprite();
-        if (battleSprite != null) {
-            battleSprite.setAnimSpeed((int)jSpinner4.getValue());
-            if (battleSpriteLayoutPanel.getAnimator().isAnimating()) {
-                battleSpriteLayoutPanel.getAnimator().stopAnimation();
-                battleSpriteLayoutPanel.getAnimator().startAnimation(battleSprite.getAnimSpeed(), 1, true);
-            }
+    private void jCheckBoxShowStatusItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBoxShowStatusItemStateChanged
+        if (!ActionManager.isActionTriggering()) {
+            ActionManager.setActionWithoutExecute(new ToggleAction(jCheckBoxShowStatus, jCheckBoxShowStatus.isSelected()));
         }
-    }//GEN-LAST:event_jSpinner4StateChanged
+        battleSpriteLayoutPanel.setShowStatusMarker(jCheckBoxShowStatus.isSelected());
+    }//GEN-LAST:event_jCheckBoxShowStatusItemStateChanged
 
-    private void jSpinner3StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner3StateChanged
-        BattleSprite battleSprite = battleSpriteManager.getBattleSprite();
-        if (battleSprite != null) {
-            battleSprite.setStatusOffsetX((byte)jSpinner3.getValue());
-            if (jCheckBox4.isSelected()) {
-                battleSpriteLayoutPanel.redraw();
-            }
-        }
-    }//GEN-LAST:event_jSpinner3StateChanged
-
-    private void jSpinner2StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner2StateChanged
-        BattleSprite battleSprite = battleSpriteManager.getBattleSprite();
-        if (battleSprite != null) {
-            battleSprite.setStatusOffsetY((byte)jSpinner2.getValue());
-            if (jCheckBox4.isSelected()) {
-                battleSpriteLayoutPanel.redraw();
-            }
-        }
-    }//GEN-LAST:event_jSpinner2StateChanged
-
-    private void colorPicker1ColorChanged(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorPicker1ColorChanged
-        battleSpriteLayoutPanel.setBGColor(colorPicker1.getColor());
-        SettingsManager.getGlobalSettings().setTransparentBGColor(colorPicker1.getColor());
-        SettingsManager.saveGlobalSettingsFile();
-    }//GEN-LAST:event_colorPicker1ColorChanged
-
-    private void jRadioButton2jRadioStateChanged_Gif(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jRadioButton2jRadioStateChanged_Gif
-        if (settingFileFormat) return;
-        settingFileFormat = true;
-        JRadioButton radioButton = (JRadioButton)evt.getSource();
-        if (radioButton != null && radioButton.isSelected() && battlespriteSettings.getExportFileFormat() != FileFormat.GIF) {
-            FileFormat format = FileFormat.GIF;
-            jRadioButton2.setSelected(true);
-            battlespriteSettings.setExportFileFormat(format);
-            SettingsManager.saveSettingsFile();
-        }
-        settingFileFormat = false;
-    }//GEN-LAST:event_jRadioButton2jRadioStateChanged_Gif
-
-    private void jRadioButton1jRadioStateChanged_Png(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jRadioButton1jRadioStateChanged_Png
-        if (settingFileFormat) return;
-        settingFileFormat = true;
-        JRadioButton radioButton = (JRadioButton)evt.getSource();
-        if (radioButton != null && radioButton.isSelected() && battlespriteSettings.getExportFileFormat() != FileFormat.PNG) {
-            FileFormat format = FileFormat.PNG;
-            jRadioButton1.setSelected(true);
-            battlespriteSettings.setExportFileFormat(format);
-            SettingsManager.saveSettingsFile();
-        }
-        settingFileFormat = false;
-    }//GEN-LAST:event_jRadioButton1jRadioStateChanged_Png
-    
-    private void onPaletteColorChange(ActionEvent e) {
-        Palette palette = (Palette)e.getSource();
-        if (palette == null) return;
-        BattleSprite battleSprite = battleSpriteLayoutPanel.getBattleSprite();
-        if (battleSprite == null) return;
-        palette.rebuildIcm();
-        battleSprite.clearIndexedColorImage(true);
-        battleSpriteLayoutPanel.redraw();
-    }
-    
     /**
      * To create a new Main Editor, copy the below code
      * Don't forget to change the new main class (below)
@@ -937,47 +809,38 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.sfc.sf2.battlesprite.gui.BattleSpriteLayoutPanel battleSpriteLayoutPanel;
-    private javax.swing.ButtonGroup buttonGroupExport;
-    private com.sfc.sf2.core.gui.controls.ColorPicker colorPicker1;
+    private com.sfc.sf2.core.gui.controls.NameableButtonGroup buttonGroupExport;
     private com.sfc.sf2.core.gui.controls.Console console1;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton1;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton2;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton3;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton4;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonExportBattlesprite;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonExportImages;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonImportBattlesprite;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonImportImage;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton1;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton2;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton3;
-    private com.sfc.sf2.core.gui.controls.InfoButton infoButton4;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton5;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton6;
+    private com.sfc.sf2.core.gui.controls.InfoButton infoButton7;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton8;
-    private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton13;
-    private javax.swing.JButton jButton18;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox3;
-    private javax.swing.JCheckBox jCheckBox4;
-    private javax.swing.JCheckBox jCheckBox5;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JButton jButtonExportBattlesprite;
+    private javax.swing.JButton jButtonExportImages;
+    private javax.swing.JButton jButtonImportBattlesprite;
+    private javax.swing.JButton jButtonImportImage;
+    private javax.swing.JCheckBox jCheckBoxPreviewIdle;
+    private javax.swing.JCheckBox jCheckBoxShowStatus;
+    private javax.swing.JCheckBox jCheckBoxUseImagePalette;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel55;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
@@ -988,17 +851,17 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JRadioButton jRadioButtonFormatGIF;
+    private javax.swing.JRadioButton jRadioButtonFormatPNG;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JSpinner jSpinner2;
-    private javax.swing.JSpinner jSpinner3;
-    private javax.swing.JSpinner jSpinner4;
+    private javax.swing.JSpinner jSpinnerIdleSpeed;
+    private javax.swing.JSpinner jSpinnerStatusX;
+    private javax.swing.JSpinner jSpinnerStatusY;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JSplitPane jSplitPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
-    private com.sfc.sf2.palette.gui.controls.PaletteButton paletteButton1;
+    private com.sfc.sf2.battlesprite.gui.BattlespriteViewPanel viewPanel1;
     // End of variables declaration//GEN-END:variables
 
 }

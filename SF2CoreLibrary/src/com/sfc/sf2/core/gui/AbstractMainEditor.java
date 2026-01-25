@@ -120,7 +120,7 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
         jRadioThemeDark = new javax.swing.JRadioButton();
         jLabel6 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        buttonGroupTheme = new javax.swing.ButtonGroup();
+        buttonGroupTheme = new com.sfc.sf2.core.gui.controls.NameableButtonGroup();
         jFrameActionHistory = new javax.swing.JFrame();
         jPanelActions = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -262,6 +262,8 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
                 .addGap(10, 10, 10)
                 .addComponent(jPanelSettings, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE))
         );
+
+        buttonGroupTheme.setName("Theme Button Group");
 
         jFrameActionHistory.setTitle("Action History");
         jFrameActionHistory.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -756,7 +758,7 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonVersionHistoryActionPerformed
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.ButtonGroup buttonGroupTheme;
+    private com.sfc.sf2.core.gui.controls.NameableButtonGroup buttonGroupTheme;
     private com.sfc.sf2.core.gui.controls.DirectoryButton directoryButtonBasePath;
     private com.sfc.sf2.core.gui.controls.DirectoryButton directoryButtonIncbinPath;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton3;

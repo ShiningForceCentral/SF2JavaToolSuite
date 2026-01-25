@@ -38,13 +38,12 @@ public class BattleSpriteLayoutPanel extends AbstractLayoutPanel implements Anim
     }
     
     private BattleSprite battleSprite;
-    private int currentPalette;
     
     private boolean showStatusMarker = false;
     
     @Override
     protected boolean hasData() {
-        return battleSprite != null && (currentPalette >= 0 && currentPalette < battleSprite.getPalettes().length);
+        return battleSprite != null;
     }
 
     @Override
@@ -112,18 +111,7 @@ public class BattleSpriteLayoutPanel extends AbstractLayoutPanel implements Anim
 
     public void setBattleSprite(BattleSprite battleSprite) {
         this.battleSprite = battleSprite;
-    }
-    
-    public int getCurrentPalette() {
-        return currentPalette;
-    }
-
-    public void setCurrentPalette(int currentPalette) {
-        this.currentPalette = currentPalette;
-        if (battleSprite != null) {
-            battleSprite.setRenderPalette(battleSprite.getPalettes()[currentPalette]);
             redraw();
-        }
     }
 
     public void setShowStatusMarker(boolean showStatusMarker) {

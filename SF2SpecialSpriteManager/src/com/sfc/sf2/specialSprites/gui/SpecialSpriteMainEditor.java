@@ -66,7 +66,7 @@ public class SpecialSpriteMainEditor extends AbstractMainEditor {
 
         jFileChooser1 = new javax.swing.JFileChooser();
         jFileChooser2 = new javax.swing.JFileChooser();
-        buttonGroupPresets = new javax.swing.ButtonGroup();
+        buttonGroupPresets = new com.sfc.sf2.core.gui.controls.NameableButtonGroup();
         jPanel13 = new javax.swing.JPanel();
         jSplitPane1 = new javax.swing.JSplitPane();
         jPanel15 = new javax.swing.JPanel();
@@ -720,7 +720,7 @@ public class SpecialSpriteMainEditor extends AbstractMainEditor {
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.ButtonGroup buttonGroupPresets;
+    private com.sfc.sf2.core.gui.controls.NameableButtonGroup buttonGroupPresets;
     private com.sfc.sf2.core.gui.controls.Console console1;
     private com.sfc.sf2.core.gui.controls.FileButton fileButtonExportImage;
     private com.sfc.sf2.core.gui.controls.FileButton fileButtonExpotSpecialSprite;

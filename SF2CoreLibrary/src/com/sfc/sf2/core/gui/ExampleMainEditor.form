@@ -6,7 +6,10 @@
     </Component>
     <Component class="com.sfc.sf2.core.models.combobox.ComboTableModel" name="comboTableModel">
     </Component>
-    <Component class="javax.swing.ButtonGroup" name="buttonGroupTest">
+    <Component class="com.sfc.sf2.core.gui.controls.NameableButtonGroup" name="buttonGroupTest">
+      <Properties>
+        <Property name="name" type="java.lang.String" value="Test Button Group"/>
+      </Properties>
     </Component>
   </NonVisualComponents>
   <Properties>

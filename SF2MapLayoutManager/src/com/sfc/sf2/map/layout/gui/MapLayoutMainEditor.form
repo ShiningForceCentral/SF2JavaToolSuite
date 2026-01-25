@@ -9,9 +9,9 @@
         <Property name="fileSelectionMode" type="int" value="1"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.ButtonGroup" name="buttonGroup1">
+    <Component class="com.sfc.sf2.core.gui.controls.NameableButtonGroup" name="buttonGroup1">
     </Component>
-    <Component class="javax.swing.ButtonGroup" name="buttonGroup2">
+    <Component class="com.sfc.sf2.core.gui.controls.NameableButtonGroup" name="buttonGroup2">
     </Component>
     <Component class="javax.swing.JColorChooser" name="jColorChooser1">
     </Component>

@@ -76,7 +76,7 @@ public class IconsMainEditor extends AbstractMainEditor {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroupExport = new javax.swing.ButtonGroup();
+        buttonGroupExport = new com.sfc.sf2.core.gui.controls.NameableButtonGroup();
         jPanel13 = new javax.swing.JPanel();
         jSplitPane1 = new javax.swing.JSplitPane();
         jPanel15 = new javax.swing.JPanel();
@@ -664,7 +664,7 @@ public class IconsMainEditor extends AbstractMainEditor {
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.ButtonGroup buttonGroupExport;
+    private com.sfc.sf2.core.gui.controls.NameableButtonGroup buttonGroupExport;
     private com.sfc.sf2.core.gui.controls.Console console1;
     private com.sfc.sf2.core.gui.controls.DirectoryButton directoryButton1;
     private com.sfc.sf2.core.gui.controls.DirectoryButton directoryButton2;

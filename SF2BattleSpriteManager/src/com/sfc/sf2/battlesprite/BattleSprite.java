@@ -5,6 +5,7 @@
  */
 package com.sfc.sf2.battlesprite;
 
+import com.sfc.sf2.core.INameable;
 import com.sfc.sf2.graphics.Tileset;
 import com.sfc.sf2.palette.Palette;
 
@@ -12,7 +13,7 @@ import com.sfc.sf2.palette.Palette;
  *
  * @author wiz
  */
-public class BattleSprite {
+public class BattleSprite implements INameable {
     public static final int BATTLE_SPRITE_TILE_HEIGHT = 12;
     
     public enum BattleSpriteType {
@@ -20,30 +21,33 @@ public class BattleSprite {
         ENEMY,
     }
     
+    private String name;
     private BattleSpriteType type;
     private Palette[] palettes;
+    private int currentPaletteIndex;
     private Tileset[] frames;
     
     private int animSpeed;
     private byte statusOffsetX;
     private byte statusOffsetY;
     
-    public BattleSprite(BattleSpriteType type, Tileset[] frames, Palette[] palettes) {
-        this.type = type;
-        this.frames = frames;
-        this.palettes = palettes;
-        this.animSpeed = 0;
-        this.statusOffsetX = 0;
-        this.statusOffsetY = 0;
+    public BattleSprite(String name, BattleSpriteType type, Tileset[] frames, Palette[] palettes) {
+        this(name, type, frames, palettes, 0, (byte)0, (byte)0);
     }
     
-    public BattleSprite(BattleSpriteType type, Tileset[] frames, Palette[] palettes, int animSpeed, byte statusOffsetX, byte statusOffsetY) {
+    public BattleSprite(String name, BattleSpriteType type, Tileset[] frames, Palette[] palettes, int animSpeed, byte statusOffsetX, byte statusOffsetY) {
+        this.name = name;
         this.type = type;
         this.frames = frames;
         this.palettes = palettes;
+        setCurrentPaletteIndex(0);
         this.animSpeed = animSpeed;
         this.statusOffsetX = statusOffsetX;
         this.statusOffsetY = statusOffsetY;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public BattleSpriteType getType() {
@@ -78,6 +82,25 @@ public class BattleSprite {
         this.palettes = palettes;
     }
 
+    public Palette getCurrentPalette() {
+        if (currentPaletteIndex < 0 || currentPaletteIndex >= palettes.length) return null;
+        return palettes[currentPaletteIndex];
+    }
+
+    public int getCurrentPaletteIndex() {
+        return currentPaletteIndex;
+    }
+
+    public void setCurrentPaletteIndex(int currentPalette) {
+        if (currentPalette < 0 || currentPalette >= palettes.length) return;
+        if (frames == null || frames.length == 0) return;
+        this.currentPaletteIndex = currentPalette;
+        for (int i = 0; i < frames.length; i++) {
+            frames[i].setPalette(palettes[currentPalette]);
+            frames[i].clearIndexedColorImage(true);
+        }
+    }
+
     public int getAnimSpeed() {
         return animSpeed;
     }
@@ -100,16 +123,6 @@ public class BattleSprite {
 
     public void setStatusOffsetY(byte statusOffsetY) {
         this.statusOffsetY = statusOffsetY;
-    }
-    
-    public void setRenderPalette(Palette palette) {
-        if (frames == null || frames.length == 0) {
-            return;
-        }
-        for (int i = 0; i < frames.length; i++) {
-            frames[i].setPalette(palette);
-            frames[i].clearIndexedColorImage(true);
-        }
     }
     
     public void clearIndexedColorImage(boolean alsoClearTiles) {

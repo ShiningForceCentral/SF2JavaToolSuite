@@ -71,7 +71,7 @@ public final class ExampleMainEditor extends AbstractMainEditor {
 
         stringTableModel = new com.sfc.sf2.core.models.StringTableModel();
         comboTableModel = new com.sfc.sf2.core.models.combobox.ComboTableModel();
-        buttonGroupTest = new javax.swing.ButtonGroup();
+        buttonGroupTest = new com.sfc.sf2.core.gui.controls.NameableButtonGroup();
         jPanel13 = new javax.swing.JPanel();
         jSplitPane1 = new javax.swing.JSplitPane();
         jPanel15 = new javax.swing.JPanel();
@@ -111,6 +111,8 @@ public final class ExampleMainEditor extends AbstractMainEditor {
         jTable2 = new javax.swing.JTable();
         table2 = new com.sfc.sf2.core.gui.controls.Table();
         console1 = new com.sfc.sf2.core.gui.controls.Console();
+
+        buttonGroupTest.setName("Test Button Group");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SF2 App");
@@ -679,7 +681,7 @@ public final class ExampleMainEditor extends AbstractMainEditor {
     private com.sfc.sf2.core.gui.controls.AccordionPanel accordionPanel1;
     private com.sfc.sf2.core.gui.controls.AccordionPanel accordionPanel2;
     private com.sfc.sf2.core.gui.controls.AccordionPanel accordionPanel3;
-    private javax.swing.ButtonGroup buttonGroupTest;
+    private com.sfc.sf2.core.gui.controls.NameableButtonGroup buttonGroupTest;
     private com.sfc.sf2.core.gui.controls.ColorPicker colorPicker1;
     private com.sfc.sf2.core.models.combobox.ComboTableModel comboTableModel;
     private com.sfc.sf2.core.gui.controls.Console console1;

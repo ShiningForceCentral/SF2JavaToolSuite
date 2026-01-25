@@ -8,6 +8,7 @@ package com.sfc.sf2.battlesprite;
 import com.sfc.sf2.battlesprite.BattleSprite.BattleSpriteType;
 import com.sfc.sf2.battlesprite.io.BattleSpriteDisassemblyProcessor;
 import com.sfc.sf2.battlesprite.io.BattleSpriteMetadataProcessor;
+import com.sfc.sf2.battlesprite.io.SimpleBattlespritePackage;
 import com.sfc.sf2.core.AbstractManager;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.core.io.DisassemblyException;
@@ -30,17 +31,10 @@ import java.nio.file.Path;
  */
 public class BattleSpriteManager extends AbstractManager {
     
-    private final BattleSpriteDisassemblyProcessor battleSpriteDisassemblyProcessor = new BattleSpriteDisassemblyProcessor();
-    private final BattleSpriteMetadataProcessor battleSpriteMetadataProcessor = new BattleSpriteMetadataProcessor();
-    private final TilesetManager tilesetManager = new TilesetManager();
-    private final PaletteManager paletteManager = new PaletteManager();
-    
     private BattleSprite battlesprite;
     
     @Override
     public void clearData() {
-        tilesetManager.clearData();
-        paletteManager.clearData();
         if (battlesprite != null) {
             battlesprite.clearIndexedColorImage(true);
             battlesprite = null;
@@ -49,7 +43,8 @@ public class BattleSpriteManager extends AbstractManager {
     
     public BattleSprite importDisassembly(Path filePath) throws IOException, DisassemblyException {
         Console.logger().finest("ENTERING importDisassembly");
-        battlesprite = battleSpriteDisassemblyProcessor.importDisassembly(filePath, null);
+        SimpleBattlespritePackage pckg = new SimpleBattlespritePackage(getImageName(filePath.getFileName().toString()));
+        battlesprite = new BattleSpriteDisassemblyProcessor().importDisassembly(filePath, pckg);
         Console.logger().info("Battle Sprite successfully imported from : " + filePath);
         Console.logger().finest("EXITING importDisassembly");
         return battlesprite;
@@ -58,7 +53,7 @@ public class BattleSpriteManager extends AbstractManager {
     public void exportDisassembly(Path filePath, BattleSprite battlesprite) throws IOException, DisassemblyException {
         Console.logger().finest("ENTERING exportDisassembly");
         this.battlesprite = battlesprite;
-        battleSpriteDisassemblyProcessor.exportDisassembly(filePath, battlesprite, null);
+        new BattleSpriteDisassemblyProcessor().exportDisassembly(filePath, battlesprite, null);
         Console.logger().info("Battle Sprite successfully exported to : " + filePath);
         Console.logger().finest("EXITING exportDisassembly");
     }
@@ -73,6 +68,7 @@ public class BattleSpriteManager extends AbstractManager {
         filePath = filePath.getParent();
         File[] files = FileHelpers.findAllFilesInDirectory(filePath, filename+"-palette-", FileFormat.BIN);
         Palette[] palettes = new Palette[files.length == 0 ? files.length+1 : files.length];
+        PaletteManager paletteManager = new PaletteManager();
         for (int f=0; f < files.length; f++) {
             Palette palette = paletteManager.importDisassembly(files[f].toPath(), true);
             palettes[f] = palette;
@@ -81,6 +77,7 @@ public class BattleSpriteManager extends AbstractManager {
         Palette defaultPalette = useImagePalette || palettes.length == 0 || palettes[0] == null ? null : palettes[0];
         files = FileHelpers.findAllFilesInDirectory(filePath, filename+"-frame-", format);
         Tileset[] frames = new Tileset[files.length];
+        TilesetManager tilesetManager = new TilesetManager();
         for (int f=0; f < files.length; f++) {
             Tileset frame = tilesetManager.importImage(files[f].toPath(), true);
             if (defaultPalette == null) {
@@ -97,11 +94,11 @@ public class BattleSpriteManager extends AbstractManager {
             frames[f] = frame;
         }
         BattleSpriteType type = frames[0].getTiles().length > 144 ? BattleSpriteType.ENEMY : BattleSpriteType.ALLY;
-        battlesprite = new BattleSprite(type, frames, palettes);
+        battlesprite = new BattleSprite(filename, type, frames, palettes);
         
         Path metaPath = filePath.resolve(filename + ".meta");
         if (metaPath.toFile().exists()) {
-            battleSpriteMetadataProcessor.importMetadata(metaPath, battlesprite);
+            new BattleSpriteMetadataProcessor().importMetadata(metaPath, battlesprite);
         } else {
             Console.logger().warning("WARNING Metadata file could not be found so Battle sprite will load without meta data. Path : " + filePath);
         }
@@ -120,11 +117,13 @@ public class BattleSpriteManager extends AbstractManager {
         Tileset[] frames = battlesprite.getFrames();
         String filename = getImageName(filePath.getFileName().toString());
         filePath = filePath.getParent();
+        TilesetManager tilesetManager = new TilesetManager();
         for (int i=0; i < frames.length; i++) {
             Path framePath = filePath.resolve(filename+"-frame-"+String.valueOf(i)+format.getExt());
             tilesetManager.exportImage(framePath, frames[i]);
         }
         Palette[] palettes = battlesprite.getPalettes();
+        PaletteManager paletteManager = new PaletteManager();
         if (palettes.length > 0) {
             for (int i=0; i < palettes.length; i++) {
                 Path palettePath = filePath.resolve(filename + "-palette-" + String.valueOf(i) + FileFormat.BIN.getExt());
@@ -133,7 +132,7 @@ public class BattleSpriteManager extends AbstractManager {
             Console.logger().info(palettes.length + " Battle Sprite palettes successfully exported");
         }
         Path metaPath = filePath.resolve(filename + ".meta");
-        battleSpriteMetadataProcessor.exportMetadata(metaPath, battlesprite);
+        new BattleSpriteMetadataProcessor().exportMetadata(metaPath, battlesprite);
         Console.logger().info("Battle Sprite metadata successfully exported to : " + metaPath);
         Console.logger().info("Battle Sprite successfully exported to : " + filePath);
         Console.logger().finest("EXITING exportImage");

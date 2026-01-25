@@ -71,7 +71,7 @@ public class BackgroundMainEditor extends AbstractMainEditor {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroupExport = new javax.swing.ButtonGroup();
+        buttonGroupExport = new com.sfc.sf2.core.gui.controls.NameableButtonGroup();
         jPanel13 = new javax.swing.JPanel();
         jSplitPane1 = new javax.swing.JSplitPane();
         jPanel15 = new javax.swing.JPanel();
@@ -596,7 +596,7 @@ public class BackgroundMainEditor extends AbstractMainEditor {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.sfc.sf2.background.gui.BackgroundLayoutPanel backgroundLayoutPanel;
     private com.sfc.sf2.background.gui.BackgroundsViewPanel backgroundsViewPanel1;
-    private javax.swing.ButtonGroup buttonGroupExport;
+    private com.sfc.sf2.core.gui.controls.NameableButtonGroup buttonGroupExport;
     private com.sfc.sf2.core.gui.controls.Console console1;
     private com.sfc.sf2.core.gui.controls.DirectoryButton directoryButtonExportBackgrounds;
     private com.sfc.sf2.core.gui.controls.DirectoryButton directoryButtonExportImages;
