@@ -5,6 +5,8 @@
  */
 package com.sfc.sf2.map.block.gui;
 
+import com.sfc.sf2.core.actions.Action;
+import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.core.gui.AbstractLayoutPanel;
 import com.sfc.sf2.core.gui.layout.*;
 import static com.sfc.sf2.graphics.Block.PIXEL_HEIGHT;
@@ -45,7 +47,7 @@ public class MapBlocksetLayoutPanel extends AbstractLayoutPanel {
     public MapBlocksetLayoutPanel() {
         super();
         background = new LayoutBackground(Color.LIGHT_GRAY, PIXEL_WIDTH/3);
-        scale = new LayoutScale(2);
+        scale = new LayoutScale();
         grid = new LayoutGrid(PIXEL_WIDTH, PIXEL_HEIGHT);
         coordsGrid = new LayoutCoordsGridDisplay(PIXEL_WIDTH, PIXEL_HEIGHT, true, 0, 10, 1);
         coordsHeader = new LayoutCoordsHeader(this, PIXEL_WIDTH, PIXEL_HEIGHT, true);
@@ -203,19 +205,13 @@ public class MapBlocksetLayoutPanel extends AbstractLayoutPanel {
             return;
         }
         if (evt.mouseButton() == MouseEvent.BUTTON1) {
-            if (selectedBlockIndexLeft == blockIndex) {
-                setLeftSelectedIndex(-1);
-            } else {
-                setLeftSelectedIndex(blockIndex);
-            }
+            int index = selectedBlockIndexLeft == blockIndex ? -1 : blockIndex;
+            ActionManager.setAndExecuteAction(new Action<Integer>(this, "Block Selection - Left", this::setLeftSelectedIndex, index, selectedBlockIndexLeft));
             this.revalidate();
             this.repaint();
         } else if (evt.mouseButton() == MouseEvent.BUTTON3) {
-            if (selectedBlockIndexRight == blockIndex) {
-                setRightSelectedIndex(-1);
-            } else {
-                setRightSelectedIndex(blockIndex);
-            }
+            int index = selectedBlockIndexRight == blockIndex ? -1 : blockIndex;
+            ActionManager.setAndExecuteAction(new Action<Integer>(this, "Block Selection - Right", this::setRightSelectedIndex, index, selectedBlockIndexRight));
             this.revalidate();
             this.repaint();
         }

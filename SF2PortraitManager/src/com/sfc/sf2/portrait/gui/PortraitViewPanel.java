@@ -36,10 +36,9 @@ public class PortraitViewPanel extends AbstractViewPanel<PortraitLayoutPanel> {
 
     @Override
     public void setLayoutPanel(PortraitLayoutPanel layoutPanel) {
+        super.setLayoutPanel(layoutPanel);
         PortraitSettings portraitSettings = SettingsManager.getSettingsStore("portrait");
         jComboBoxScale.setSelectedIndex(portraitSettings.getRenderScaleIndex());
-        
-        super.setLayoutPanel(layoutPanel);
     }
 
     /**

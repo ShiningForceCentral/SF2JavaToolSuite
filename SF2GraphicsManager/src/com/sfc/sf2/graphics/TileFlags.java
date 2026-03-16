@@ -70,4 +70,8 @@ public class TileFlags {
         TileFlags flag = (TileFlags)obj;
         return value() == flag.value();
     }
+    
+    public TileFlags clone() {
+        return new TileFlags(flag);
+    }
 }

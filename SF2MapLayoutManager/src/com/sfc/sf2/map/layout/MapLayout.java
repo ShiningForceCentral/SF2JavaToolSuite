@@ -100,7 +100,7 @@ public class MapLayout {
         for (int i = 0; i < BLOCK_COUNT; i++) {
             blocks[i] = this.blocks[i].getMapBlock();
         }
-        return new MapBlockset(blocks, BLOCK_WIDTH);
+        return new MapBlockset(Integer.toString(this.index), blocks, BLOCK_WIDTH);
     }
 
     public Palette getPalette() {

@@ -5,6 +5,9 @@
  */
 package com.sfc.sf2.map;
 
+import java.awt.Point;
+import java.awt.Rectangle;
+
 /**
  *
  * @author wiz
@@ -50,6 +53,17 @@ public class MapArea {
         this.layerType = layerType;
         this.defaultMusic = defaultMusic;
     }
+    
+    public Rectangle getLayer1() {
+        return new Rectangle(layer1StartX, layer1StartY, layer1EndX-layer1StartX, layer1EndY-layer1StartY);
+    }
+    
+    public void setLayer1(Rectangle rect) {
+        layer1StartX = rect.x;
+        layer1StartY = rect.y;
+        layer1EndX = rect.x+rect.width;
+        layer1EndY = rect.y+rect.height;
+    }
 
     public int getLayer1StartX() {
         return layer1StartX;
@@ -94,6 +108,15 @@ public class MapArea {
     public boolean hasForegroundLayer2() {
         return foregroundLayer2StartX != 0 || foregroundLayer2StartY != 0;
     }
+    
+    public Point getForegroundLayer2() {
+        return new Point(foregroundLayer2StartX, foregroundLayer2StartY);
+    }
+    
+    public void setForegroundLayer2(Point point) {
+        foregroundLayer2StartX = point.x;
+        foregroundLayer2StartY = point.y;
+    }
 
     public int getForegroundLayer2StartX() {
         return foregroundLayer2StartX;
@@ -114,6 +137,15 @@ public class MapArea {
     public boolean hasBackgroundLayer2() {
         return backgroundLayer2StartX != 0 || backgroundLayer2StartY != 0;
     }
+    
+    public Point getBackgroundLayer2() {
+        return new Point(backgroundLayer2StartX, backgroundLayer2StartY);
+    }
+    
+    public void setBackgroundLayer2(Point point) {
+        backgroundLayer2StartX = point.x;
+        backgroundLayer2StartY = point.y;
+    }
 
     public int getBackgroundLayer2StartX() {
         return backgroundLayer2StartX;
@@ -131,8 +163,17 @@ public class MapArea {
         this.backgroundLayer2StartY = backgroundLayer2StartY;
     }
     
-    public boolean doesLayer1Paralax() {
+    public boolean doesLayer1Parallax() {
         return layer1ParallaxX != 0 || layer1ParallaxY != 0;
+    }
+    
+    public Point getLayer1Parallax() {
+        return new Point(layer1ParallaxX, layer1ParallaxY);
+    }
+    
+    public void setLayer1Parallax(Point point) {
+        layer1ParallaxX = point.x;
+        layer1ParallaxY = point.y;
     }
 
     public int getLayer1ParallaxX() {
@@ -151,8 +192,17 @@ public class MapArea {
         this.layer1ParallaxY = layer1ParallaxY;
     }
     
-    public boolean doesLayer2Paralax() {
+    public boolean doesLayer2Parallax() {
         return layer2ParallaxX != 0 || layer2ParallaxY != 0;
+    }
+    
+    public Point getLayer2Parallax() {
+        return new Point(layer2ParallaxX, layer2ParallaxY);
+    }
+    
+    public void setLayer2Parallax(Point point) {
+        layer2ParallaxX = point.x;
+        layer2ParallaxY = point.y;
     }
 
     public int getLayer2ParallaxX() {
@@ -174,6 +224,15 @@ public class MapArea {
     public boolean doesLayer1AutoScroll() {
         return layer1AutoscrollX != 0 || layer1AutoscrollY != 0;
     }
+    
+    public Point getLayer1AutoScroll() {
+        return new Point(layer1AutoscrollX, layer1AutoscrollY);
+    }
+    
+    public void setLayer1AutoScroll(Point point) {
+        layer1AutoscrollX = point.x;
+        layer1AutoscrollY = point.y;
+    }
 
     public int getLayer1AutoscrollX() {
         return layer1AutoscrollX;
@@ -193,6 +252,15 @@ public class MapArea {
     
     public boolean doesLayer2AutoScroll() {
         return layer2AutoscrollX != 0 || layer2AutoscrollY != 0;
+    }
+    
+    public Point getLayer2AutoScroll() {
+        return new Point(layer2AutoscrollX, layer2AutoscrollY);
+    }
+    
+    public void setLayer2AutoScroll(Point point) {
+        layer2AutoscrollX = point.x;
+        layer2AutoscrollY = point.y;
     }
 
     public int getLayer2AutoscrollX() {

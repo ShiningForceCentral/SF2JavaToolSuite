@@ -5,6 +5,7 @@
  */
 package com.sfc.sf2.core.gui.layout;
 
+import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.core.gui.AbstractLayoutPanel;
 import com.sfc.sf2.core.gui.controls.Console;
 import java.awt.Dimension;
@@ -149,6 +150,8 @@ public abstract class BaseMouseCoordsComponent extends BaseLayoutComponent imple
             buttonListener.mousePressed(new GridMousePressedEvent(x, y, buttonHeld, false, true));
         }
         buttonHeld = -1;
+        //When mouse is released then stop any action from combining
+        ActionManager.preventActionsCombining();
     }
     
     public record GridMousePressedEvent(int x, int y, int mouseButton, boolean dragging, boolean released) { }

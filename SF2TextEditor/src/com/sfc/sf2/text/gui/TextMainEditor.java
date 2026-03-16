@@ -58,8 +58,6 @@ public class TextMainEditor extends AbstractMainEditor {
         
         accordionPanel2.setExpanded(false);
         
-        textPreviewLayoutPanel.setRenderScaleIndex(RenderScaleHelpers.stringToIndex("2x"));
-        
         sorter = new TableRowSorter<>(textTableModel);
         tableText.jTable.setRowSorter(sorter);
         tableText.addListSelectionListener(this::onSelectionChanged);

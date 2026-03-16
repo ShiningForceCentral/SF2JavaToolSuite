@@ -5,6 +5,7 @@
  */
 package com.sfc.sf2.map.gui;
 
+import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.core.gui.layout.BaseLayoutComponent;
 import com.sfc.sf2.core.gui.layout.BaseMouseCoordsComponent;
 import com.sfc.sf2.core.gui.layout.LayoutMouseInput;
@@ -18,6 +19,12 @@ import com.sfc.sf2.map.MapCopyEvent;
 import com.sfc.sf2.map.MapFlagCopyEvent;
 import com.sfc.sf2.map.MapItem;
 import com.sfc.sf2.map.MapWarpEvent;
+import com.sfc.sf2.map.actions.ActionMapCopySourceEvent;
+import com.sfc.sf2.map.actions.ActionMapDataPoint;
+import com.sfc.sf2.map.actions.ActionMapDataRect;
+import com.sfc.sf2.map.actions.MapCopyEventSourceAction;
+import com.sfc.sf2.map.actions.MapDataPointAction;
+import com.sfc.sf2.map.actions.MapDataRectAction;
 import com.sfc.sf2.map.block.MapBlock;
 import com.sfc.sf2.map.block.gui.BlockSlotPanel;
 import com.sfc.sf2.map.block.gui.MapBlocksetLayoutPanel;
@@ -34,6 +41,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.AdjustmentEvent;
@@ -53,21 +61,21 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
     
     public static final int MAP_FLAG_EDIT_BLOCK = 0;
         
-    public static final int DRAW_MODE_NONE = 0;
-    public static final int DRAW_MODE_EXPLORATION_FLAGS = 1;
-    public static final int DRAW_MODE_INTERACTION_FLAGS = 1<<1;
-    public static final int DRAW_MODE_GRID = 1<<2;
-    public static final int DRAW_MODE_AREAS = 1<<3;
-    public static final int DRAW_MODE_FLAG_COPIES = 1<<4;
-    public static final int DRAW_MODE_STEP_COPIES = 1<<5;
-    public static final int DRAW_MODE_ROOF_COPIES = 1<<6;
-    public static final int DRAW_MODE_WARPS = 1<<7;
-    public static final int DRAW_MODE_CHEST_ITEMS = 1<<8;
-    public static final int DRAW_MODE_OTHER_ITEMS = 1<<9;
-    public static final int DRAW_MODE_TRIGGERS = 1<<10;
-    public static final int DRAW_MODE_VEHICLES = 1<<11;
-    public static final int DRAW_MODE_ACTION_FLAGS = 1<<12;
-    public static final int DRAW_MODE_ALL = (1<<13)-1;
+    public static final int DRAW_MODE_NONE = 0x0;
+    public static final int DRAW_MODE_EXPLORATION_FLAGS = 0x1;
+    public static final int DRAW_MODE_INTERACTION_FLAGS = 0x2;
+    public static final int DRAW_MODE_GRID = 0x4;
+    public static final int DRAW_MODE_AREAS = 0x8;
+    public static final int DRAW_MODE_FLAG_COPIES = 0x10;
+    public static final int DRAW_MODE_STEP_COPIES = 0x20;
+    public static final int DRAW_MODE_ROOF_COPIES = 0x40;
+    public static final int DRAW_MODE_WARPS = 0x80;
+    public static final int DRAW_MODE_CHEST_ITEMS = 0x100;
+    public static final int DRAW_MODE_OTHER_ITEMS = 0x200;
+    public static final int DRAW_MODE_TRIGGERS = 0x400;
+    public static final int DRAW_MODE_VEHICLES = 0x800;
+    public static final int DRAW_MODE_ACTION_FLAGS = 0x1000;
+    public static final int DRAW_MODE_ALL = (0x2000)-1;
     
     private static final int ACTION_CHANGE_BLOCK_VALUE = 0;
     private static final int ACTION_CHANGE_BLOCK_FLAGS = 1;
@@ -870,9 +878,8 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
 
     public void setMap(Map map) {
         this.map = map;
-        if (map != null) {
-            setMapLayout(map.getLayout());
-        }
+        MapLayout layout = map == null ? null : map.getLayout();
+        setMapLayout(layout);
         redraw();
     }
 
@@ -1012,7 +1019,6 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
         } else if (selectedTabsDrawMode != DRAW_MODE_NONE) {
             editMapEvents(evt);
         }
-        repaint();
     }
     
     private void editMapEvents(BaseMouseCoordsComponent.GridMousePressedEvent evt) {
@@ -1043,38 +1049,46 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
                         ey = temp;
                         pointsSwapped = true;
                     }
-                    area.setLayer1StartX(sx);
-                    area.setLayer1StartY(sy);
-                    area.setLayer1EndX(ex);
-                    area.setLayer1EndY(ey);
+                    Rectangle rect = new Rectangle(sx, sy, ex-sx, ey-sy);
+                    ActionMapDataRect newValue = new ActionMapDataRect(area, selectedItemIndex, "Area-Layer1", rect);
+                    ActionMapDataRect oldValue = new ActionMapDataRect(area, selectedItemIndex, "Area-Layer1", area.getLayer1());
+                    ActionManager.setAndExecuteAction(new MapDataRectAction(area, "Set Area Layer 1", this::actionSetAreaLayer1, newValue, oldValue));
+                    
                     if (pointsSwapped) {
                         closestSelectedPointIndex = findClosestAreaPoint(area, x, y);
                     }
                 } else {
                     //Second rect
                     if (area.hasBackgroundLayer2()) {
-                        area.setBackgroundLayer2StartX(x);
-                        area.setBackgroundLayer2StartY(y);
+                        Point point = new Point(x, y);
+                        ActionMapDataPoint newValue = new ActionMapDataPoint(area, selectedItemIndex, "Area-Background2", point);
+                        ActionMapDataPoint oldValue = new ActionMapDataPoint(area, selectedItemIndex, "Area-Background2", area.getBackgroundLayer2());
+                        ActionManager.setAndExecuteAction(new MapDataPointAction(area, "Set Area Background 2", this::actionSetAreaBackground2, newValue, oldValue));
                     } else {
-                        area.setForegroundLayer2StartX(x-area.getLayer1StartX());
-                        area.setForegroundLayer2StartY(y-area.getLayer1StartY());
+                        Point point = new Point(x-area.getLayer1StartX(), y-area.getLayer1StartY());
+                        ActionMapDataPoint newValue = new ActionMapDataPoint(area, selectedItemIndex, "Area-Foreground2", point);
+                        ActionMapDataPoint oldValue = new ActionMapDataPoint(area, selectedItemIndex, "Area-Foreground2", area.getForegroundLayer2());
+                        ActionManager.setAndExecuteAction(new MapDataPointAction(area, "Set Area Foreground 2", this::actionSetAreaForeground2, newValue, oldValue));
                     }
-                }
-                redraw();
-                if (eventEditedListener != null) {
-                    eventEditedListener.actionPerformed(new ActionEvent(this, selectedItemIndex, "Area"));
                 }
                 break;
             case DRAW_MODE_FLAG_COPIES:
             case DRAW_MODE_STEP_COPIES:
             case DRAW_MODE_ROOF_COPIES:
                 MapCopyEvent copy = selectedTabsDrawMode == DRAW_MODE_FLAG_COPIES ? map.getFlagCopies()[selectedItemIndex] : selectedTabsDrawMode == DRAW_MODE_STEP_COPIES ? map.getStepCopies()[selectedItemIndex] : map.getRoofCopies()[selectedItemIndex];
+                String copyType = selectedTabsDrawMode == DRAW_MODE_FLAG_COPIES ? "FlagCopy" : selectedTabsDrawMode == DRAW_MODE_STEP_COPIES ? "StepCopy" : "RoofCopy";
                 if (closestSelectedPointIndex == 0) {
-                    copy.setTriggerX(x);
-                    copy.setTriggerY(y);
+                    //Trigger
+                    Point point = new Point(x, y);
+                    ActionMapDataPoint newValue = new ActionMapDataPoint(copy, selectedItemIndex, copyType+"-Trigger", point);
+                    ActionMapDataPoint oldValue = new ActionMapDataPoint(copy, selectedItemIndex, copyType+"-Trigger", copy.getTrigger());
+                    ActionManager.setAndExecuteAction(new MapDataPointAction(copy, "Set "+copyType+" Trigger", this::actionSetCopyFlagTriggerPos, newValue, oldValue));
                 } else if (closestSelectedPointIndex == 5) {
-                    copy.SetDestStartX(x);
-                    copy.setDestStartY(y);
+                    //Destination
+                    Point point = new Point(x, y);
+                    ActionMapDataPoint newValue = new ActionMapDataPoint(copy, selectedItemIndex, copyType+"-Dest", point);
+                    ActionMapDataPoint oldValue = new ActionMapDataPoint(copy, selectedItemIndex, copyType+"-Dest", copy.getDest());
+                    ActionManager.setAndExecuteAction(new MapDataPointAction(copy, "Set "+copyType+" Destination", this::actionSetCopyFlagDestPos, newValue, oldValue));
                 } else if (copy.getSourceStartX() == 0xFF && copy.getSourceStartY() == 0xFF) {
                     //Main rect when infering source from roof (dest) position
                     MapArea mainArea = map.getAreas()[0];
@@ -1097,12 +1111,12 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
                         ey = temp;
                         pointsSwapped = true;
                     }
-                    copy.SetDestStartX(copy.getDestStartX()+(sx-startX));
-                    copy.setDestStartY(copy.getDestStartY()+(sy-startY));
-                    copy.setSourceEndX(ex-sx);
-                    if (copy.getSourceEndX() <= 0) copy.setSourceEndX(1);
-                    copy.setSourceEndY(ey-sy);
-                    if (copy.getSourceEndY() <= 0) copy.setSourceEndY(1);
+                    Point point = new Point(copy.getDestStartX()+(sx-startX), copy.getDestStartY()+(sy-startY));
+                    Rectangle rect = new Rectangle(sx, sy, ex-sx <= 0 ? 1 : ex-sx, ey-sy <= 0 ? 1 : ey-sy);
+                    ActionMapCopySourceEvent newValue = new ActionMapCopySourceEvent(copy, selectedItemIndex, copyType+"-Source", rect, point);
+                    ActionMapCopySourceEvent oldValue = new ActionMapCopySourceEvent(copy, selectedItemIndex, copyType+"-Source", copy.getSource(), copy.getDest());
+                    ActionManager.setAndExecuteAction(new MapCopyEventSourceAction(copy, "Set "+copyType+" Source and Dest", this::actionSetFlagSourceAndDest, newValue, oldValue));
+                    
                     if (pointsSwapped) {
                         closestSelectedPointIndex = findClosestCopyPoint(copy, x, y, true);
                     }
@@ -1125,54 +1139,123 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
                         ey = temp;
                         pointsSwapped = true;
                     }
-                    copy.SetDestStartX(copy.getDestStartX()+(sx-copy.getSourceStartX()));
-                    copy.setDestStartY(copy.getDestStartY()+(sy-copy.getSourceStartY()));
-                    copy.setSourceStartX(sx);
-                    copy.setSourceStartY(sy);
-                    copy.setSourceEndX(ex);
-                    copy.setSourceEndY(ey);
+                    Point point = new Point(copy.getDestStartX()+(sx-copy.getSourceStartX()), copy.getDestStartY()+(sy-copy.getSourceStartY()));
+                    Rectangle rect = new Rectangle(sx, sy, ex-sx, ey-sy);
+                    ActionMapCopySourceEvent newValue = new ActionMapCopySourceEvent(copy, selectedItemIndex, copyType+"-Source", rect, point);
+                    ActionMapCopySourceEvent oldValue = new ActionMapCopySourceEvent(copy, selectedItemIndex, copyType+"-Source", copy.getSource(), copy.getDest());
+                    ActionManager.setAndExecuteAction(new MapCopyEventSourceAction(copy, "Set "+copyType+" Source and Dest", this::actionSetFlagSourceAndDest, newValue, oldValue));
+                    
                     if (pointsSwapped) {
                         closestSelectedPointIndex = findClosestCopyPoint(copy, x, y, true);
                     }
-                }
-                redraw();
-                if (eventEditedListener != null) {
-                    String copyType = selectedTabsDrawMode == DRAW_MODE_FLAG_COPIES ? "FlagCopy" : selectedTabsDrawMode == DRAW_MODE_STEP_COPIES ? "StepCopy" : "RoofCopy";
-                    eventEditedListener.actionPerformed(new ActionEvent(this, selectedItemIndex, copyType));
                 }
                 break;
             case DRAW_MODE_WARPS:
                 MapWarpEvent warp = map.getWarps()[selectedItemIndex];
                 if (closestSelectedPointIndex == 0) {
-                    if (warp.getTriggerX() != 0xFF) warp.setTriggerX(x);
-                    if (warp.getTriggerY() != 0xFF) warp.setTriggerY(y);
+                    if (warp.getTriggerX() == 0xFF) x = 0xFF;
+                    if (warp.getTriggerY() == 0xFF) y = 0xFF;
+                    Point point = new Point(x, y);
+                    ActionMapDataPoint newValue = new ActionMapDataPoint(warp, selectedItemIndex, "Warp-Trigger", point);
+                    ActionMapDataPoint oldValue = new ActionMapDataPoint(warp, selectedItemIndex, "Warp-Trigger", warp.getTrigger());
+                    ActionManager.setAndExecuteAction(new MapDataPointAction(warp, "Set Warp Trigger", this::actionSetWarpTrigger, newValue, oldValue));
                 } else {
-                    warp.setDestX(x);
-                    warp.setDestY(y);
-                }
-                redraw();
-                if (eventEditedListener != null) {
-                    eventEditedListener.actionPerformed(new ActionEvent(this, selectedItemIndex, "Warp"));
+                    Point point = new Point(x, y);
+                    ActionMapDataPoint newValue = new ActionMapDataPoint(warp, selectedItemIndex, "Warp-Dest", point);
+                    ActionMapDataPoint oldValue = new ActionMapDataPoint(warp, selectedItemIndex, "Warp-Dest", warp.getDest());
+                    ActionManager.setAndExecuteAction(new MapDataPointAction(warp, "Set Warp Destination", this::actionSetWarpDest, newValue, oldValue));
                 }
                 break;
             case DRAW_MODE_CHEST_ITEMS:
                 MapItem chestItem = map.getChestItems()[selectedItemIndex];
-                chestItem.setX(x);
-                chestItem.setY(y);
-                redraw();
-                if (eventEditedListener != null) {
-                    eventEditedListener.actionPerformed(new ActionEvent(this, selectedItemIndex, "ChestItem"));
+                if (chestItem != null) {
+                    Point point = new Point(x, y);
+                    ActionMapDataPoint newValue = new ActionMapDataPoint(chestItem, selectedItemIndex, "ChestItem-Pos", point);
+                    ActionMapDataPoint oldValue = new ActionMapDataPoint(chestItem, selectedItemIndex, "ChestItem-Pos", chestItem.getPos());
+                    ActionManager.setAndExecuteAction(new MapDataPointAction(chestItem, "Set Chest Item Position", this::actionSetChestItemPos, newValue, oldValue));
                 }
                 break;
             case DRAW_MODE_OTHER_ITEMS:
                 MapItem otherItem = map.getOtherItems()[selectedItemIndex];
-                otherItem.setX(x);
-                otherItem.setY(y);
-                redraw();
-                if (eventEditedListener != null) {
-                    eventEditedListener.actionPerformed(new ActionEvent(this, selectedItemIndex, "OtherItem"));
+                if (otherItem != null) {
+                    Point point = new Point(x, y);
+                    ActionMapDataPoint newValue = new ActionMapDataPoint(otherItem, selectedItemIndex, "OtherItem-Pos", point);
+                    ActionMapDataPoint oldValue = new ActionMapDataPoint(otherItem, selectedItemIndex, "OtherItem-Pos", otherItem.getPos());
+                    ActionManager.setAndExecuteAction(new MapDataPointAction(otherItem, "Set Chest Item Position", this::actionSetOtherItemPos, newValue, oldValue));
                 }
                 break;
+        }
+    }
+    
+    private void actionSetAreaLayer1(ActionMapDataRect value) {
+        MapArea area = (MapArea)value.mapDataItem();
+        area.setLayer1(value.rect());
+        triggerActionEventListener(value.itemIndex(), "Area");
+    }
+    
+    private void actionSetAreaForeground2(ActionMapDataPoint value) {
+        MapArea area = (MapArea)value.mapDataItem();
+        area.setForegroundLayer2(value.point());
+        triggerActionEventListener(value.itemIndex(), "Area");
+    }
+    
+    private void actionSetAreaBackground2(ActionMapDataPoint value) {
+        MapArea area = (MapArea)value.mapDataItem();
+        area.setBackgroundLayer2(value.point());
+        triggerActionEventListener(value.itemIndex(), "Area");
+    }
+    
+    private void actionSetCopyFlagTriggerPos(ActionMapDataPoint value) {
+        MapCopyEvent flag = (MapCopyEvent)value.mapDataItem();
+        flag.setTrigger(value.point());
+        String copyType = value.event().substring(0, value.event().indexOf('-'));
+        triggerActionEventListener(value.itemIndex(), copyType);
+    }
+    
+    private void actionSetCopyFlagDestPos(ActionMapDataPoint value) {
+        MapCopyEvent flag = (MapCopyEvent)value.mapDataItem();
+        flag.setDest(value.point());
+        String copyType = value.event().substring(0, value.event().indexOf('-'));
+        triggerActionEventListener(value.itemIndex(), copyType);
+    }
+    
+    private void actionSetFlagSourceAndDest(ActionMapCopySourceEvent value) {
+        MapCopyEvent flag = value.copyEvent();
+        flag.setSource(value.source());
+        flag.setDest(value.dest());
+        String copyType = value.event().substring(0, value.event().indexOf('-'));
+        triggerActionEventListener(value.itemIndex(), copyType);
+    }
+    
+    private void actionSetWarpTrigger(ActionMapDataPoint value) {
+        MapWarpEvent warp = (MapWarpEvent)value.mapDataItem();
+        warp.setTrigger(value.point());
+        triggerActionEventListener(value.itemIndex(), "Warp");
+    }
+    
+    private void actionSetWarpDest(ActionMapDataPoint value) {
+        MapWarpEvent warp = (MapWarpEvent)value.mapDataItem();
+        warp.setDest(value.point());
+        triggerActionEventListener(value.itemIndex(), "Warp");
+    }
+    
+    private void actionSetChestItemPos(ActionMapDataPoint value) {
+        MapItem chestItem = (MapItem)value.mapDataItem();
+        chestItem.setPos(value.point());
+        triggerActionEventListener(value.itemIndex(), "ChestItem");
+    }
+    
+    private void actionSetOtherItemPos(ActionMapDataPoint value) {
+        MapItem otherItem = (MapItem)value.mapDataItem();
+        otherItem.setPos(value.point());
+        triggerActionEventListener(value.itemIndex(), "OtherItem");
+    }
+    
+    private void triggerActionEventListener(int index, String command) {
+        selectedItemIndex = index;
+        redraw();
+        if (eventEditedListener != null) {
+            eventEditedListener.actionPerformed(new ActionEvent(this, index, command));
         }
     }
     

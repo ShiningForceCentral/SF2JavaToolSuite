@@ -5,7 +5,7 @@
  */
 package com.sfc.sf2.map;
 
-import com.sfc.sf2.map.block.MapBlock;
+import com.sfc.sf2.core.INameable;
 import com.sfc.sf2.map.layout.MapLayout;
 import com.sfc.sf2.map.animation.MapAnimation;
 import com.sfc.sf2.map.block.MapBlockset;
@@ -16,7 +16,8 @@ import com.sfc.sf2.map.layout.MapLayoutBlock;
  *
  * @author wiz
  */
-public class Map {
+public class Map implements INameable {
+    private String name;
     private MapBlockset blockset;
     private MapLayout layout;
     private MapArea[] areas;
@@ -28,7 +29,8 @@ public class Map {
     private MapItem[] otherItems;
     private MapAnimation animation;
 
-    public Map(MapBlockset blockset, MapLayout layout, MapArea[] areas, MapFlagCopyEvent[] flagCopies, MapCopyEvent[] stepCopies, MapCopyEvent[] roofCopies, MapWarpEvent[] warps, MapItem[] chestItems, MapItem[] otherItems, MapAnimation animation) {
+    public Map(String name, MapBlockset blockset, MapLayout layout, MapArea[] areas, MapFlagCopyEvent[] flagCopies, MapCopyEvent[] stepCopies, MapCopyEvent[] roofCopies, MapWarpEvent[] warps, MapItem[] chestItems, MapItem[] otherItems, MapAnimation animation) {
+        this.name = name;
         this.blockset = blockset;
         this.layout = layout;
         this.areas = areas;
@@ -39,6 +41,10 @@ public class Map {
         this.chestItems = chestItems;
         this.otherItems = otherItems;
         this.animation = animation;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public MapBlockset getBlockset() {

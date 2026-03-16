@@ -33,22 +33,12 @@ import java.nio.file.Path;
  *
  * @author wiz
  */
-public class MapBlocksetManager extends AbstractManager {
-    private final PaletteManager paletteManager = new PaletteManager();
-    private final TilesetManager tilesetManager = new TilesetManager();
-    private final MapBlocksetDisassemblyProcessor blocksetDisassemblyProcessor = new MapBlocksetDisassemblyProcessor();
-    private final MapBlocksetRawImageProcessor blocksetRawImageProcessor = new MapBlocksetRawImageProcessor();
-    private final MapBlocksetMetaProcessor blocksetMetaProcessor = new MapBlocksetMetaProcessor();
-    private final MapTilesetsAsmProcessor mapTilesetsAsmProcessor = new MapTilesetsAsmProcessor();
-    private final EntriesAsmProcessor entriesAsmProcessor = new EntriesAsmProcessor();
-    
+public class MapBlocksetManager extends AbstractManager {    
     private Tileset[] tilesets;
     private MapBlockset mapBlockset;
 
     @Override
     public void clearData() {
-        paletteManager.clearData();
-        tilesetManager.clearData();
         if (tilesets != null) {
             for (int i = 0; i < tilesets.length; i++) {
                 if (tilesets[i] != null) {
@@ -65,78 +55,72 @@ public class MapBlocksetManager extends AbstractManager {
        
     public MapBlockset importDisassembly(Path palettePath, Path[] tilesetPaths, Path blocksetPath) throws IOException, DisassemblyException {
         Console.logger().finest("ENTERING importDisassembly");
-        Palette palette = paletteManager.importDisassembly(palettePath, true);
+        Palette palette = new PaletteManager().importDisassembly(palettePath, true);
         tilesets = new Tileset[tilesetPaths.length];
         for (int i = 0; i < tilesets.length; i++) {
             if (tilesetPaths[i] != null) {
-                tilesets[i] = tilesetManager.importDisassembly(tilesetPaths[i], palette, TilesetDisassemblyProcessor.TilesetCompression.STACK, 8);
+                tilesets[i] = new TilesetManager().importDisassembly(tilesetPaths[i], palette, TilesetDisassemblyProcessor.TilesetCompression.STACK, 8);
             }
         }
-        mapBlockset = blocksetDisassemblyProcessor.importDisassembly(blocksetPath, null);
+        MapBlockPackage pckg = new MapBlockPackage(PathHelpers.filenameFromPath(blocksetPath), tilesets, palette);
+        mapBlockset = new MapBlocksetDisassemblyProcessor().importDisassembly(blocksetPath, pckg);
         Console.logger().info("Map blocks successfully imported from palette and tilesets : " + blocksetPath);
-        Console.logger().finest("EXITING importDisassembly");
-        return mapBlockset;
-    }
-       
-    public MapBlockset importDisassembly(Path palettePath, Path[] tilesetsFilePath, Path blocksetPath, Path animTilesetPath, int animTilesetStart, int animTilesetLength, int animTilesetDest) {
-        Console.logger().finest("ENTERING importDisassembly");
-        //blocks = disassemblyManager.importDisassembly(palettePath, tilesetsFilePath, blocksetPath, animTilesetPath, animTilesetStart, animTilesetLength, animTilesetDest);
-        //tilesets = disassemblyManager.getTilesets();
-        //graphicsManager.setTiles(tiles);
         Console.logger().finest("EXITING importDisassembly");
         return mapBlockset;
     }
        
     public MapBlockset importDisassemblyFromEntries(Path paletteEntriesPath, Path tilesetEntriesPath, Path tilesetsFilePath, Path blocksetPath) throws IOException, AsmException, DisassemblyException {
         Console.logger().finest("ENTERING importDisassembly");
-        EntriesAsmData paletteData = entriesAsmProcessor.importAsmData(paletteEntriesPath, null);
-        EntriesAsmData tilesetData = entriesAsmProcessor.importAsmData(tilesetEntriesPath, null);
-        MapTilesetData mapData = mapTilesetsAsmProcessor.importAsmData(tilesetsFilePath, null);
+        EntriesAsmData paletteData = new EntriesAsmProcessor().importAsmData(paletteEntriesPath, null);
+        EntriesAsmData tilesetData = new EntriesAsmProcessor().importAsmData(tilesetEntriesPath, null);
+        MapTilesetData mapData = new MapTilesetsAsmProcessor().importAsmData(tilesetsFilePath, null);
         Path palettePath = PathHelpers.getIncbinPath().resolve(paletteData.getPathForEntry(mapData.paletteIndex()));
-        Palette palette = paletteManager.importDisassembly(palettePath, true);
+        Palette palette = new PaletteManager().importDisassembly(palettePath, true);
         tilesets = new Tileset[mapData.tilesetIndices().length];
+        TilesetManager tilesetManager = new TilesetManager();
         for (int i = 0; i < tilesets.length; i++) {
             if (mapData.tilesetIndices()[i] != -1) {
                 Path tilesetPath = PathHelpers.getIncbinPath().resolve(tilesetData.getPathForEntry(mapData.tilesetIndices()[i]));
                 tilesets[i] = tilesetManager.importDisassembly(tilesetPath, palette, TilesetDisassemblyProcessor.TilesetCompression.STACK, 8);
             }
         }
-        mapBlockset = blocksetDisassemblyProcessor.importDisassembly(blocksetPath, null);
+        MapBlockPackage pckg = new MapBlockPackage(PathHelpers.filenameFromPath(blocksetPath), tilesets, palette);
+        mapBlockset = new MapBlocksetDisassemblyProcessor().importDisassembly(blocksetPath, pckg);
         Console.logger().info("Map blocks successfully imported from entries paths. Map data : " + tilesetsFilePath);
         Console.logger().finest("EXITING importDisassembly");
         return mapBlockset;
     }
     
+    public void importImage(Path filepath, Path hpFilePath) throws IOException, RawImageException, MetadataException {
+        Console.logger().finest("ENTERING importImage");
+        mapBlockset = new MapBlocksetRawImageProcessor().importRawImage(filepath, null);
+        new MapBlocksetMetaProcessor().importMetadata(hpFilePath, mapBlockset);
+        Console.logger().info("Map blocks successfully imported from image : " + filepath + " and hpTiles : " + hpFilePath);
+        Console.logger().finest("EXITING importImage");
+    }
+    
     public void exportDisassembly(Path tilesetsFilePath, Path blocksetPath, MapBlockset mapBlockset, Tileset[] mapTilesets) throws IOException, DisassemblyException, AsmException {
         Console.logger().finest("ENTERING exportDisassembly");
         this.mapBlockset = mapBlockset;
-        MapBlockPackage pckg = new MapBlockPackage(mapTilesets, mapTilesets[0].getPalette());
-        blocksetDisassemblyProcessor.exportDisassembly(blocksetPath, mapBlockset, pckg);
+        MapBlockPackage pckg = new MapBlockPackage(mapBlockset.getName(), mapTilesets, mapTilesets[0].getPalette());
+        new MapBlocksetDisassemblyProcessor().exportDisassembly(blocksetPath, mapBlockset, pckg);
         int paletteIndex = StringHelpers.getNumberFromString(mapTilesets[0].getPalette().getName());
         int[] tilesetIndices = new int[mapTilesets.length];
         for (int i = 0; i < tilesetIndices.length; i++) {
             tilesetIndices[i] = mapTilesets[i] == null ? -1 : StringHelpers.getNumberFromString(mapTilesets[i].getName());
         }
-        mapTilesetsAsmProcessor.exportAsmData(tilesetsFilePath, new MapTilesetData(paletteIndex, tilesetIndices), null);
+        new MapTilesetsAsmProcessor().exportAsmData(tilesetsFilePath, new MapTilesetData(paletteIndex, tilesetIndices), null);
         Console.logger().info("Map blocks successfully exported to : " + blocksetPath);
         Console.logger().finest("EXITING exportDisassembly");
-    }
-    
-    public void importImage(Path filepath, Path hpFilePath) throws IOException, RawImageException, MetadataException {
-        Console.logger().finest("ENTERING importImage");
-        mapBlockset = blocksetRawImageProcessor.importRawImage(filepath, null);
-        blocksetMetaProcessor.importMetadata(hpFilePath, mapBlockset);
-        Console.logger().info("Map blocks successfully imported from image : " + filepath + " and hpTiles : " + hpFilePath);
-        Console.logger().finest("EXITING importImage");
     }
     
     public void exportImage(Path filepath, Path hpFilePath, int blocksPerRow, MapBlockset mapBlockset, Tileset[] tilesets) throws IOException, RawImageException, MetadataException {
         Console.logger().finest("ENTERING exportImage");
         mapBlockset.setBlocksPerRow(blocksPerRow);
         this.mapBlockset = mapBlockset;
-        MapBlockPackage pckg = new MapBlockPackage(tilesets, tilesets[0].getPalette());
-        blocksetRawImageProcessor.exportRawImage(filepath, mapBlockset, pckg);
-        blocksetMetaProcessor.exportMetadata(hpFilePath, mapBlockset);
+        MapBlockPackage pckg = new MapBlockPackage(mapBlockset.getName(), tilesets, tilesets[0].getPalette());
+        new MapBlocksetRawImageProcessor().exportRawImage(filepath, mapBlockset, pckg);
+        new MapBlocksetMetaProcessor().exportMetadata(hpFilePath, mapBlockset);
         Console.logger().info("Map blocks successfully exported to image : " + filepath + " and hpTiles : " + hpFilePath);
         Console.logger().finest("EXITING exportImage");
     }

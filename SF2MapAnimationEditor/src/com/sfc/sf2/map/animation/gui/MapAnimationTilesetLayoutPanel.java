@@ -78,9 +78,13 @@ public class MapAnimationTilesetLayoutPanel extends TilesetLayoutPanel  {
         graphics.fillArc(((start+length)%tilesPerRow)*PIXEL_WIDTH-4, ((start+length)/tilesPerRow)*PIXEL_HEIGHT-1, PIXEL_WIDTH+1, PIXEL_HEIGHT+2, 315, 90);
     }
 
+    public MapAnimation getMapAnimation() {
+        return mapAnimation;
+    }
+
     public void setMapAnimation(MapAnimation mapAnimation) {
         this.mapAnimation = mapAnimation;
-        setTileset(mapAnimation.getAnimationTileset());
+        setTileset(mapAnimation == null ? null : mapAnimation.getAnimationTileset());
         redraw();
     }
 

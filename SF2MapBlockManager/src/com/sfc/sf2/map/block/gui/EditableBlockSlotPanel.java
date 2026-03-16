@@ -5,6 +5,7 @@
  */
 package com.sfc.sf2.map.block.gui;
 
+import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.core.gui.layout.BaseMouseCoordsComponent.GridMousePressedEvent;
 import com.sfc.sf2.core.gui.layout.LayoutGrid;
 import com.sfc.sf2.core.gui.layout.LayoutMouseInput;
@@ -13,7 +14,12 @@ import static com.sfc.sf2.graphics.Tile.PIXEL_HEIGHT;
 import static com.sfc.sf2.graphics.Tile.PIXEL_WIDTH;
 import com.sfc.sf2.graphics.TileFlags;
 import com.sfc.sf2.helpers.MapBlockHelpers;
+import com.sfc.sf2.helpers.RenderScaleHelpers;
 import com.sfc.sf2.map.block.MapTile;
+import com.sfc.sf2.map.block.actions.ActionSetBlockTile;
+import com.sfc.sf2.map.block.actions.ActionSetBlockTileFlags;
+import com.sfc.sf2.map.block.actions.SetBlockTileAction;
+import com.sfc.sf2.map.block.actions.SetBlockTileFlagsAction;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -49,7 +55,7 @@ public class EditableBlockSlotPanel extends BlockSlotPanel {
         super();
         grid = new LayoutGrid(PIXEL_WIDTH, PIXEL_HEIGHT);
         mouseInput = new LayoutMouseInput(this, this::onMouseButtonInput, PIXEL_WIDTH, PIXEL_HEIGHT);
-        setRenderScaleIndex(4);
+        setRenderScaleIndex(RenderScaleHelpers.stringToIndex("4x"));
     }
     
     @Override
@@ -109,56 +115,57 @@ public class EditableBlockSlotPanel extends BlockSlotPanel {
         if (evt.released()) return;
         if (block == null) return;
         int index = evt.x()+evt.y()*TILE_WIDTH;
-        switch (currentMode) {
-            case MODE_PAINT_TILE:
+        MapTile tile = block.getMapTiles()[index];
+        if (currentMode == BlockSlotEditMode.MODE_PAINT_TILE) {
+            MapTile newTile = null;
+            if (evt.mouseButton() == MouseEvent.BUTTON1) {
+                newTile = leftTileSlotPanel.getTile();
+            } else if (evt.mouseButton() == MouseEvent.BUTTON3) {
+                newTile = rightTileSlotPanel.getTile();
+            }
+            
+            if (newTile != null) {
+                ActionSetBlockTile newValue = new ActionSetBlockTile(block, index, newTile.clone());
+                ActionSetBlockTile oldValue = new ActionSetBlockTile(block, index, tile);
+                ActionManager.setAndExecuteAction(new SetBlockTileAction(this, "Set Block Tile", this::ActionChangeTile, newValue, oldValue));
+            }
+        } else {
+            if (tile == null) return;
+            TileFlags newFlags = null;
+            if (currentMode == BlockSlotEditMode.MODE_TOGGLE_FLIP) {
+                newFlags = tile.getTileFlags().clone();
                 if (evt.mouseButton() == MouseEvent.BUTTON1) {
-                    MapTile leftSlotTile = leftTileSlotPanel.getTile();
-                    if (leftSlotTile != null) {
-                        MapTile[] tiles = block.getMapTiles();
-                        tiles[index] = leftSlotTile.clone();
-                        onBlockEdited();
-                    }
-                }
-                else if (evt.mouseButton() == MouseEvent.BUTTON3) {
-                    MapTile rightSlotTile = rightTileSlotPanel.getTile();
-                    if (rightSlotTile != null) {
-                        MapTile[] tiles = block.getMapTiles();
-                        tiles[index] = rightSlotTile.clone();
-                        onBlockEdited();
-                    }
-                }
-                break;
-            case MODE_TOGGLE_FLIP:
-                MapTile tile = block.getMapTiles()[index];
-                if (evt.mouseButton() == MouseEvent.BUTTON1) {
-                    tile = tile.clone();
-                    tile.getTileFlags().toggleFlag(TileFlags.TILE_FLAG_HFLIP);
-                }
-                else if (evt.mouseButton() == MouseEvent.BUTTON2) {
-                    TileFlags flags = block.getMapTiles()[index].getTileFlags();
-                    if (flags.isHFlip() || flags.isVFlip()) {
-                        tile = tile.clone();
-                        flags = tile.getTileFlags();
-                        flags.removeFlag(TileFlags.TILE_FLAG_HFLIP);
-                        flags.removeFlag(TileFlags.TILE_FLAG_VFLIP);
-                    }
-                }
-                else if (evt.mouseButton() == MouseEvent.BUTTON3) {
-                    tile = tile.clone();
-                    tile.getTileFlags().toggleFlag(TileFlags.TILE_FLAG_VFLIP);
-                }
-                block.getMapTiles()[index] = tile;
-                onBlockEdited();
-                break;
-            case MODE_TOGGLE_PRIORITY:
-                if (evt.mouseButton() == MouseEvent.BUTTON1) {
-                    block.getMapTiles()[index].getTileFlags().addFlag(TileFlags.TILE_FLAG_PRIORITY);
-                    onBlockEdited();
+                    newFlags.toggleFlag(TileFlags.TILE_FLAG_HFLIP);
+                } else if (evt.mouseButton() == MouseEvent.BUTTON2) {
+                    newFlags.removeFlag(TileFlags.TILE_FLAG_HFLIP);
+                    newFlags.removeFlag(TileFlags.TILE_FLAG_VFLIP);
                 } else if (evt.mouseButton() == MouseEvent.BUTTON3) {
-                    block.getMapTiles()[index].getTileFlags().removeFlag(TileFlags.TILE_FLAG_PRIORITY);
-                    onBlockEdited();
+                    newFlags.toggleFlag(TileFlags.TILE_FLAG_VFLIP);
                 }
-                break;
+            } else if (currentMode == BlockSlotEditMode.MODE_TOGGLE_PRIORITY) {
+                newFlags = tile.getTileFlags().clone();
+                if (evt.mouseButton() == MouseEvent.BUTTON1) {
+                    newFlags.addFlag(TileFlags.TILE_FLAG_PRIORITY);
+                } else if (evt.mouseButton() == MouseEvent.BUTTON3) {
+                    newFlags.removeFlag(TileFlags.TILE_FLAG_PRIORITY);
+                }
+            }
+            
+            if (newFlags != null) {
+                ActionSetBlockTileFlags newValue = new ActionSetBlockTileFlags(tile, index, newFlags);
+                ActionSetBlockTileFlags oldValue = new ActionSetBlockTileFlags(tile, index, tile.getTileFlags());
+                ActionManager.setAndExecuteAction(new SetBlockTileFlagsAction(this, "Set Tile Flags", this::ActionSetTileFlags, newValue, oldValue));
+            }
         }
+    }
+    
+    private void ActionChangeTile(ActionSetBlockTile value) {
+        value.block().getMapTiles()[value.index()] = value.tile();
+        onBlockEdited();
+    }
+    
+    private void ActionSetTileFlags(ActionSetBlockTileFlags value) {
+        value.tile().setTileFlags(value.flags());
+        onBlockEdited();
     }
 }

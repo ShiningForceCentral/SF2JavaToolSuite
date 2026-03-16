@@ -5,6 +5,9 @@
  */
 package com.sfc.sf2.map;
 
+import java.awt.Point;
+import java.awt.Rectangle;
+
 /**
  *
  * @author wiz
@@ -33,6 +36,15 @@ public class MapCopyEvent {
         this.comment = comment;
     }
 
+    public Point getTrigger() {
+        return new Point(triggerX, triggerY);
+    }
+
+    public void setTrigger(Point point) {
+        this.triggerX = point.x;
+        this.triggerY = point.y;
+    }
+
     public int getTriggerX() {
         return triggerX;
     }
@@ -47,6 +59,17 @@ public class MapCopyEvent {
 
     public void setTriggerY(int triggerY) {
         this.triggerY = triggerY;
+    }
+
+    public Rectangle getSource() {
+        return new Rectangle(sourceStartX, sourceStartY, sourceEndX-sourceStartX, sourceEndY-sourceStartY);
+    }
+
+    public void setSource(Rectangle rect) {
+        this.sourceStartX = rect.x;
+        this.sourceStartY = rect.y;
+        this.sourceEndX = rect.x+rect.width;
+        this.sourceEndY = rect.y+rect.height;
     }
     
     public int getSourceStartX() {
@@ -87,6 +110,15 @@ public class MapCopyEvent {
     
     public int getHeight() {
         return sourceStartY == 0xFF ? sourceEndY : sourceEndY-sourceStartY+1;
+    }
+
+    public Point getDest() {
+        return new Point(destStartX, destStartY);
+    }
+
+    public void setDest(Point point) {
+        this.destStartX = point.x;
+        this.destStartY = point.y;
     }
 
     public int getDestStartX() {

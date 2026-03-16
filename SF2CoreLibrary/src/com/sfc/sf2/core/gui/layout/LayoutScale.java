@@ -16,11 +16,17 @@ import java.awt.image.BufferedImage;
  */
 public class LayoutScale extends BaseLayoutComponent {
     
-    private int renderScaleIndex = RenderScaleHelpers.DEFAULT_RENDER_SCALE_INDEX;
-    private float renderScale = 1f;
+    private int renderScaleIndex;
+    private float renderScale;
     
     public LayoutScale() {
         this.renderScaleIndex = RenderScaleHelpers.DEFAULT_RENDER_SCALE_INDEX;
+        this.renderScale = 1f;
+    }
+    
+    public LayoutScale(int layoutScale) {
+        this.renderScaleIndex = RenderScaleHelpers.DEFAULT_RENDER_SCALE_INDEX + layoutScale-1;
+        this.renderScale = layoutScale;
     }
 
     public float getScale() {
@@ -33,7 +39,7 @@ public class LayoutScale extends BaseLayoutComponent {
 
     public void setScaleIndex(int renderScaleIndex) {
         this.renderScaleIndex = renderScaleIndex;
-        this.renderScale = RenderScaleHelpers.indexToRenderScale(renderScaleIndex);;
+        this.renderScale = RenderScaleHelpers.indexToRenderScale(renderScaleIndex);
     }
     
     public BufferedImage resizeImage(BufferedImage image) {

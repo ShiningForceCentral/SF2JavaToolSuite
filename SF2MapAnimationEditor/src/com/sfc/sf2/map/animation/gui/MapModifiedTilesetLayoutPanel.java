@@ -36,7 +36,9 @@ public class MapModifiedTilesetLayoutPanel extends MapAnimationTilesetLayoutPane
     
     public void setSelectedTileset(int tileset) {
         selectedTileset = tileset;
-        if (selectedTileset == -1) {
+        if (mapAnimation == null) {
+            setTileset(null);
+        } else if (selectedTileset == -1) {
             setTileset(mapAnimation.getAnimationTileset());
         } else {
             setTileset(mapAnimation.getModifiedTilesets()[selectedTileset]);

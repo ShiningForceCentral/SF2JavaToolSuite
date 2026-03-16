@@ -36,10 +36,6 @@ public abstract class AbstractLayoutPanel extends JPanel implements AnimationLis
     private BufferedImage currentImage;
     private boolean redraw = true;
 
-    public AbstractLayoutPanel() {
-        super();
-    }
-
     protected abstract boolean hasData();    
     protected abstract Dimension getImageDimensions();
     protected abstract void drawImage(Graphics graphics);

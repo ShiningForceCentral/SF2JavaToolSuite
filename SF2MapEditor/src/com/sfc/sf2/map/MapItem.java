@@ -5,6 +5,8 @@
  */
 package com.sfc.sf2.map;
 
+import java.awt.Point;
+
 /**
  *
  * @author wiz
@@ -23,6 +25,15 @@ public class MapItem {
         this.flag = flag;
         this.item = item;
         this.comment = comment;
+    }
+
+    public Point getPos() {
+        return new Point(x, y);
+    }
+
+    public void setPos(Point point) {
+        this.x = point.x;
+        this.y = point.y;
     }
 
     public int getX() {

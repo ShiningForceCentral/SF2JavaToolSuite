@@ -44,7 +44,6 @@ public class VWFontMainEditor extends AbstractMainEditor {
         super.initEditor();
         
         viewPanel1.setLayoutPanel(fontSymbolLayoutPanel);
-        viewPanel1.getScaleComboBox().setSelectedIndex(RenderScaleHelpers.stringToIndex("2x"));
         
         if (fontSettings.getExportFileFormat() == FileFormat.PNG) {
             actionPreviousFormat = jRadioButtonPNG;

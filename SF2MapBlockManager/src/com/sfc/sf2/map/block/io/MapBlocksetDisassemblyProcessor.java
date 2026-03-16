@@ -25,7 +25,7 @@ public class MapBlocksetDisassemblyProcessor extends AbstractDisassemblyProcesso
         }
         MapBlock[] blocks = new MapBlocksetDecoder().decode(data);
         Console.logger().finest("Created MapBlocks with " + blocks.length + " blocks.");
-        return new MapBlockset(blocks, 12);
+        return new MapBlockset(pckg.name(), blocks, 12);
     }
 
     @Override

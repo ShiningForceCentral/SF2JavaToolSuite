@@ -7,6 +7,7 @@ package com.sfc.sf2.vwfont.settings;
 
 import com.sfc.sf2.core.io.FileFormat;
 import com.sfc.sf2.core.settings.AbstractSettings;
+import com.sfc.sf2.helpers.ColorHelpers;
 import java.awt.Color;
 import java.util.HashMap;
 
@@ -51,14 +52,13 @@ public class FontSettings implements AbstractSettings {
             initialiseNewUser();
         }
         if (data.containsKey("transparentBGColor")) {
-            String[] colorSplit = data.get("transparentBGColor").split(",");
-            transparentBGColor = new Color(Integer.parseInt(colorSplit[0].trim()), Integer.parseInt(colorSplit[1].trim()), Integer.parseInt(colorSplit[2].trim()));
+            transparentBGColor = ColorHelpers.parseColorString(data.get("transparentBGColor"));
         }
     }
 
     @Override
     public void encodeSettings(HashMap<String, String> data) {
-        data.put("transparentBGColor", String.format("%d, %d, %d", transparentBGColor.getRed(), transparentBGColor.getGreen(), transparentBGColor.getBlue()));
+        data.put("transparentBGColor", ColorHelpers.toHexString(transparentBGColor));
         data.put("exportFileFormat", exportFileFormat.toString());
     }
 }

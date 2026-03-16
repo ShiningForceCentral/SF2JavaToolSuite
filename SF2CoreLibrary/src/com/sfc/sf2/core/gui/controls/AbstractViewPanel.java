@@ -51,7 +51,7 @@ public class AbstractViewPanel<T extends AbstractLayoutPanel> extends javax.swin
     
     public void setLayoutPanel(T layoutPanel) {
         this.layoutPanel = layoutPanel;
-        if (jComboBoxScale != null) layoutPanel.setRenderScaleIndex(jComboBoxScale.getSelectedIndex());
+        if (jComboBoxScale != null) jComboBoxScale.setSelectedIndex(layoutPanel.getRenderScaleIndex());
         if (jCheckBoxGrid != null) layoutPanel.setShowGrid(jCheckBoxGrid.isSelected());
         if (jSpinnerItemsPerRow != null) layoutPanel.setItemsPerRow((int)jSpinnerItemsPerRow.getValue());
         if (colorPickerBG != null) layoutPanel.setBGColor(colorPickerBG.getColor());

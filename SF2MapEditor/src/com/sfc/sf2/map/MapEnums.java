@@ -35,4 +35,9 @@ public class MapEnums extends AbstractEnums {
     public LinkedHashMap<String, Integer> getMusic() {
         return music;
     }
+
+    @Override
+    public String toString() {
+        return String.format("Items: %d, Maps: %d, Music: %d", items.size(), maps.size(), music.size());
+    }
 }

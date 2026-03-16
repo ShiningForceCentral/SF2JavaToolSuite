@@ -21,18 +21,28 @@ public class ActionManager {
     private static int stackPointer = 0;
     
     private static boolean actionTriggering = false;
+    private static boolean externalActionTriggering = false;
     private static long lastActionTime = 0;
 
     public static boolean isActionTriggering() {
-        return actionTriggering || !SettingsManager.isSavingAllowed();
+        return actionTriggering || externalActionTriggering || !SettingsManager.isSavingAllowed();
+    }
+
+    public static void setExternalActionTriggering(boolean tempActionTriggering) {
+        ActionManager.externalActionTriggering = tempActionTriggering;
+    }
+
+    private static void setActionTriggering(boolean actionTriggering) {
+        ActionManager.actionTriggering = actionTriggering;
+        ActionManager.externalActionTriggering = false;
     }
     
     public static void setAndExecuteAction(Action action) {
         if (action == null) return;
         setActionWithoutExecute(action);
-        actionTriggering = true;
+        setActionTriggering(true);
         action.execute();
-        actionTriggering = false;
+        setActionTriggering(false);
     }
         
     public static void setActionWithoutExecute(Action action) {
@@ -60,6 +70,7 @@ public class ActionManager {
         lastActionTime = time;
         history[stackPointer] = action;
         shiftPointerForward(true);
+        clearInvalidRedos();
     }
     
     public static void undo() {
@@ -69,10 +80,10 @@ public class ActionManager {
             return;
         }
         shiftPointerBack();
-        actionTriggering = true;
+        setActionTriggering(true);
         history[stackPointer].undo();
         Console.logger().finest(String.format("Undo (%d/%d) performed on : %s", getCurrentHistoryIndex(), ACTION_HISTORY_LIMIT, actionToString(history[stackPointer])));
-        actionTriggering = false;
+        setActionTriggering(false);
     }
     
     public static void redo() {
@@ -82,10 +93,10 @@ public class ActionManager {
         }
         int pointer = stackPointer;
         shiftPointerForward(false);
-        actionTriggering = true;
+        setActionTriggering(true);
         history[pointer].execute();
         Console.logger().finest(String.format("Redo (%d/%d) performed on : %s", getCurrentHistoryIndex(), ACTION_HISTORY_LIMIT, actionToString(history[pointer])));
-        actionTriggering = false;
+        setActionTriggering(false);
     }
     
     private static void shiftPointerBack() {
@@ -114,6 +125,24 @@ public class ActionManager {
         stackPointer = pointer;
     }
     
+    public static void preventActionsCombining() {
+        lastActionTime = 0;
+    }
+    
+    public static void clearInvalidRedos() {
+        for (int i = stackPointer; i < ACTION_HISTORY_LIMIT; i++) {
+            int index = i;
+            if (index > history.length)
+                index -= history.length;
+            if (history[i] != null) {
+                history[i].dispose();
+                history[i] = null;
+            } else {
+                break;
+            }
+        }
+    }
+    
     public static void clearActionhistory() {
         stackStart = 0;
         stackPointer = 0;
@@ -123,7 +152,7 @@ public class ActionManager {
             }
             history[i] = null;
         }
-        actionTriggering = false;
+        setActionTriggering(false);
     }
     
     /**

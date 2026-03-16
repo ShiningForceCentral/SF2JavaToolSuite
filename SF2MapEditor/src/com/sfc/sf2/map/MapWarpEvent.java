@@ -6,6 +6,7 @@
 package com.sfc.sf2.map;
 
 import com.sfc.sf2.helpers.Direction;
+import java.awt.Point;
 
 /**
  *
@@ -33,6 +34,15 @@ public class MapWarpEvent {
         this.destY = destY;
         this.facing = facing;
         this.comment = comment;
+    }
+
+    public Point getTrigger() {
+        return new Point(triggerX, triggerY);
+    }
+
+    public void setTrigger(Point point) {
+        this.triggerX = point.x;
+        this.triggerY = point.y;
     }
 
     public int getTriggerX() {
@@ -73,6 +83,15 @@ public class MapWarpEvent {
 
     public void setDestMap(String destMap) {
         this.destMap = destMap;
+    }
+
+    public Point getDest() {
+        return new Point(destX, destY);
+    }
+
+    public void setDest(Point point) {
+        this.destX = point.x;
+        this.destY = point.y;
     }
 
     public int getDestX() {
