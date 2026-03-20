@@ -71,7 +71,7 @@ public class CustomAction<T extends IActionData> implements IAction<CustomAction
     @Override
     public void combine(IAction other) {
         CustomAction otherA = (CustomAction)other;
-        newValue = (T)newValue.combine(oldValue);
+        newValue = (T)newValue.combine(otherA.newValue);
     }
     
     public void dispose() { }
