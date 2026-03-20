@@ -5,7 +5,7 @@
  */
 package com.sfc.sf2.map.block.actions;
 
-import com.sfc.sf2.core.actions.IActionData;
+import com.sfc.sf2.core.actions.ICumulativeActionData;
 import com.sfc.sf2.map.block.MapBlock;
 import com.sfc.sf2.map.block.MapTile;
 
@@ -13,46 +13,51 @@ import com.sfc.sf2.map.block.MapTile;
  *
  * @author TiMMy
  */
-public class BlockTileActionData implements IActionData<BlockTileActionData> {
+public class BlockTileActionData implements ICumulativeActionData<BlockTileActionData> {
     private MapBlock block;
-    private int index;
     private MapTile tile;
+    private int tileIndex;
 
-    public BlockTileActionData(MapBlock block, int index, MapTile tile) {
+    public BlockTileActionData(MapBlock block, MapTile tile, int tileIndex) {
         this.block = block;
-        this.index = index;
         this.tile = tile;
+        this.tileIndex = tileIndex;
     }
 
     public MapBlock block() {
         return block;
     }
 
-    public int index() {
-        return index;
-    }
-
     public MapTile tile() {
         return tile;
     }
 
+    public int tileIndex() {
+        return tileIndex;
+    }
+
     @Override
     public boolean isInvalidated(BlockTileActionData other) {
-        return this.block.equals(other.block) && this.index == other.index && this.tile.equals(other.tile);
+        return this.block.equals(other.block) && this.tile.equals(other.tile) && this.tileIndex == other.tileIndex;
     }
 
     @Override
     public boolean canBeCombined(BlockTileActionData other) {
-        return this.block.equals(other.block) && this.index == other.index;
+        return this.block.equals(other.block) && this.tile.equals(other.tile);
     }
 
     @Override
     public BlockTileActionData combine(BlockTileActionData other) {
         return other;
     }
+
+    @Override
+    public String toCumulativeString(int number) {
+        return String.format("Block(%d) set to Tile(%d) - Indices: %d", block.getIndex(), tile.getTileIndex(), number);
+    }
     
     @Override
     public String toString() {
-        return String.format("Block: %s Index: {%s} - Tile: {%s}", index, block.getIndex(), tile.getTileIndex());
+        return String.format("Block(%d) set to Tile(%d) - index: %d", block.getIndex(), tile.getTileIndex(), tileIndex);
     }
 }

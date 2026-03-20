@@ -15,7 +15,7 @@ import javax.swing.JComponent;
  */
 public class BasicAction<T extends Object> implements IAction<BasicAction> {
 
-    private final Object owner;
+    protected final Object owner;
     protected final String operation;
     
     private final IActionable<T> action;

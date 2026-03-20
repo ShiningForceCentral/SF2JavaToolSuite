@@ -63,12 +63,31 @@ public class TileFlags {
     }
 
     @Override
+    public String toString() {
+        switch (flag) {
+            case TileFlags.TILE_FLAG_HFLIP: return "HFlip";
+            case TileFlags.TILE_FLAG_VFLIP: return "VFlip";
+            case TileFlags.TILE_FLAG_BOTHFLIP: return "BothFlip";
+            case TileFlags.TILE_FLAG_PRIORITY: return "Priority";
+            default: return "All";
+        }
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (obj == null) return false;
         if (obj == this) return true;
-        if (!(obj instanceof TileFlags)) return false;
-        TileFlags flag = (TileFlags)obj;
-        return value() == flag.value();
+        if ((obj instanceof TileFlags)) {
+            TileFlags other = (TileFlags)obj;
+            return flag == other.value();
+        } else if (obj instanceof Byte) {
+            Byte other = (Byte)obj;
+            return flag == other;
+        } else if (obj instanceof Integer) {
+            Integer other = (Integer)obj;
+            return flag == other;
+        }
+        return false;
     }
     
     public TileFlags clone() {
