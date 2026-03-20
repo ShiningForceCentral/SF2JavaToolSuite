@@ -5,10 +5,10 @@
  */
 package com.sfc.sf2.core.models;
 
-import com.sfc.sf2.core.actions.Action;
 import com.sfc.sf2.core.actions.ActionManager;
-import com.sfc.sf2.core.actions.ActionTableCellData;
-import com.sfc.sf2.core.actions.TableCellAction;
+import com.sfc.sf2.core.actions.BasicAction;
+import com.sfc.sf2.core.actions.CustomAction;
+import com.sfc.sf2.core.actions.TableCellActionData;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.core.gui.controls.Table;
 import java.lang.reflect.Array;
@@ -57,7 +57,7 @@ public abstract class AbstractTableModel<T> extends javax.swing.table.AbstractTa
         if (ActionManager.isActionTriggering()) {
             actionSetTableData(tableData);
         } else {
-            ActionManager.setAndExecuteAction(new Action(this, "Table Data Added", this::actionSetTableData, tableData, getTableData()));
+            ActionManager.setAndExecuteAction(new BasicAction(this, "Table Data Added", this::actionSetTableData, tableData, getTableData()));
         }
     }
     
@@ -134,14 +134,19 @@ public abstract class AbstractTableModel<T> extends javax.swing.table.AbstractTa
         if (row < 0 || row >= tableItems.size() || col < 0 || col >= columns.length) {
             return;
         }
+        if (value.equals(getValueAt(row, col))) {
+            return;
+        }
         if (ActionManager.isActionTriggering()) {
             actionSetValueAt(row, col, value);
         } else {
-            ActionManager.setAndExecuteAction(new TableCellAction(this, linkedTable, this::actionSetValueAt, new ActionTableCellData(row, col, value), new ActionTableCellData(row, col, getValueAt(row, col))));
+            TableCellActionData newValue = new TableCellActionData(this, row, col, value);
+            TableCellActionData oldValue = new TableCellActionData(this, row, col, getValueAt(row, col));
+            ActionManager.setAndExecuteAction(new CustomAction<TableCellActionData>(linkedTable, "Cell Changed", this::actionSetValueAt, newValue, oldValue));
         }
     }
     
-    private void actionSetValueAt(ActionTableCellData data) {
+    private void actionSetValueAt(TableCellActionData data) {
         actionSetValueAt(data.row(), data.column(), data.data());
         linkedTable.jTable.clearSelection();
         linkedTable.jTable.setRowSelectionInterval(data.row(), data.row());

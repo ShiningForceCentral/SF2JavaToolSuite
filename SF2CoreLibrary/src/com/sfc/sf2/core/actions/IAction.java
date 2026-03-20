@@ -9,7 +9,7 @@ package com.sfc.sf2.core.actions;
  *
  * @author TiMMy
  */
-public interface IAction {
+public interface IAction<T extends IAction> {
     
     /**
      * Execute and redo the action
@@ -22,19 +22,20 @@ public interface IAction {
     public void undo();
 
     /**
-     * If any 2 actions should be combined
-     */
-    public boolean canBeCombined(IAction action);
-
-    /**
-     * When 2 actions are identical their data is combined. This effectively collapses the number of actions in the history and reduces the number of repeated actions (e.g. if the same value is changed in succession)
-     */
-    public void combine(IAction action);
-
-    /**
      * @return <code>True</code> if the undo/redo data is no longer valid (e.g. if the data is identical)
      */
     public boolean isInvalidated();
+
+    /**
+     * If any 2 actions should be combined
+     * @return <code>FALSE</code> if actions cannot be combined
+     */
+    public boolean canBeCombined(IAction other);
+
+    /**
+     * Combines the data in the events
+     */
+    public void combine(IAction other);
 
     /**
      * Dispose the action and its data

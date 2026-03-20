@@ -60,6 +60,8 @@ public class BattleSpriteAnimationLayoutPanel extends BattleSceneLayoutPanel imp
     protected void drawImage(Graphics graphics) {
         super.drawImage(graphics);
         
+        if (animator.getFrame() >= animation.getFrameCount())
+            animator.setFrame(0);
         BattleSpriteAnimationFrame animFrame = animation.getFrames()[animator.getFrame()];
         Tileset spriteFrame = null;
         spriteFrame = battlesprite.getFrames()[animFrame.getBattleSpriteIndex()];   

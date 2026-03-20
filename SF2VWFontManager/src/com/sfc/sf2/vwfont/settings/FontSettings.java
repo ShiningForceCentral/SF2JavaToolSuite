@@ -17,8 +17,8 @@ import java.util.HashMap;
  */
 public class FontSettings implements AbstractSettings {
     
-    private Color transparentBGColor;
     private FileFormat exportFileFormat;
+    private Color transparentBGColor;
     
     public void setTransparentBGColor(Color transparentBGColor) {
         this.transparentBGColor = transparentBGColor;
@@ -58,7 +58,7 @@ public class FontSettings implements AbstractSettings {
 
     @Override
     public void encodeSettings(HashMap<String, String> data) {
-        data.put("transparentBGColor", ColorHelpers.toHexString(transparentBGColor));
         data.put("exportFileFormat", exportFileFormat.toString());
+        data.put("transparentBGColor", ColorHelpers.toHexString(transparentBGColor));
     }
 }

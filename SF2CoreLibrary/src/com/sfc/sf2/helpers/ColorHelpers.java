@@ -13,11 +13,15 @@ import java.awt.Color;
  */
 public class ColorHelpers {
     public static String toHexString(Color c) {
-        return String.format("#%02X%02X%02X", c.getRed(), c.getGreen(), c.getBlue());
+        if (c == null) {
+            return toHexString(Color.WHITE);
+        } else {
+            return String.format("#%02X%02X%02X", c.getRed(), c.getGreen(), c.getBlue());
+        }
     }
     
     public static Color parseColorString(String s) {
-        if (s == null || s.length() == 0) return null;
+        if (s == null || s.length() == 0) return Color.WHITE;
         if (s.contains(",")) {
             String[] split = s.split(",");
             return new Color(Integer.parseInt(split[0].trim()), Integer.parseInt(split[1].trim()), Integer.parseInt(split[2].trim()));

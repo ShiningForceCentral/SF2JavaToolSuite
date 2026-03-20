@@ -5,11 +5,10 @@
  */
 package com.sfc.sf2.spellGraphic.gui;
 
-import com.sfc.sf2.core.actions.Action;
 import com.sfc.sf2.core.actions.ActionManager;
+import com.sfc.sf2.core.actions.BasicAction;
 import com.sfc.sf2.core.actions.SpinnerAction;
 import com.sfc.sf2.core.actions.ToggleAction;
-import com.sfc.sf2.core.settings.SettingsManager;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.spellGraphic.SpellGraphicManager;
@@ -17,7 +16,6 @@ import com.sfc.sf2.graphics.Tileset;
 import com.sfc.sf2.helpers.PathHelpers;
 import com.sfc.sf2.palette.CRAMColor;
 import com.sfc.sf2.palette.Palette;
-import com.sfc.sf2.palette.gui.controls.CRAMColorEditor;
 import com.sfc.sf2.spellGraphic.InvocationGraphic;
 import com.sfc.sf2.spellGraphic.InvocationGraphicManager;
 import java.nio.file.Path;
@@ -64,9 +62,9 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
         super.onDataLoaded();
         
         if (invocationGraphicManager.getInvocationGraphic() == null) {
-            ActionManager.setAndExecuteAction(new Action<Tileset>(this, "Spell Imported", this::actionSpellLoaded, spellGraphicManager.getSpellTileset(), spellLayoutPanel.getTileset()));
+            ActionManager.setAndExecuteAction(new BasicAction<Tileset>(this, "Spell Imported", this::actionSpellLoaded, spellGraphicManager.getSpellTileset(), spellLayoutPanel.getTileset()));
         } else {
-            ActionManager.setAndExecuteAction(new Action<InvocationGraphic>(this, "Invocation Imported", this::actionInvocationLoaded, invocationGraphicManager.getInvocationGraphic(), invocationLayoutPanel.getInvocationGraphic()));
+            ActionManager.setAndExecuteAction(new BasicAction<InvocationGraphic>(this, "Invocation Imported", this::actionInvocationLoaded, invocationGraphicManager.getInvocationGraphic(), invocationLayoutPanel.getInvocationGraphic()));
         }
     }
     
@@ -87,7 +85,7 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
     
     private void actionInvocationLoaded(InvocationGraphic invocation) {
         invocationLayoutPanel.setInvocationGraphic(invocation);
-        invocationLayoutPanel.setBackground(invocationGraphicManager.getBackground());
+        invocationLayoutPanel.setBg(invocationGraphicManager.getBackground());
         invocationLayoutPanel.setGround(invocationGraphicManager.getGround());
         if (invocation != null) {
             jSpinnerPosX.setValue(invocation.getPosX());

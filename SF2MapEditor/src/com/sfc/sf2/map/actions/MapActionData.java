@@ -5,6 +5,7 @@
  */
 package com.sfc.sf2.map.actions;
 
+import com.sfc.sf2.core.actions.IActionData;
 import com.sfc.sf2.map.Map;
 import com.sfc.sf2.map.MapEnums;
 
@@ -12,11 +13,11 @@ import com.sfc.sf2.map.MapEnums;
  *
  * @author TiMMy
  */
-public class ActionMapData {
+public class MapActionData implements IActionData<MapActionData> {
     private Map map;
     private MapEnums mapEnums;
 
-    public ActionMapData(Map map, MapEnums mapEnums) {
+    public MapActionData(Map map, MapEnums mapEnums) {
         this.map = map;
         this.mapEnums = mapEnums;
     }
@@ -31,12 +32,27 @@ public class ActionMapData {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof ActionMapData) {
-            ActionMapData other = (ActionMapData)obj;
+        if (obj instanceof MapActionData) {
+            MapActionData other = (MapActionData)obj;
             return map == other.map && mapEnums == other.mapEnums;
         } else {
             return super.equals(obj);
         }
+    }
+
+    @Override
+    public boolean isInvalidated(MapActionData other) {
+        return map.equals(other.map) && mapEnums.equals(other.mapEnums);
+    }
+
+    @Override
+    public boolean canBeCombined(MapActionData other) {
+        return false;
+    }
+
+    @Override
+    public MapActionData combine(MapActionData other) {
+        return other;
     }
 
     @Override

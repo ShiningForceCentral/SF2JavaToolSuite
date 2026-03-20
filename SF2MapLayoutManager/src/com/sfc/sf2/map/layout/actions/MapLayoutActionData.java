@@ -5,6 +5,7 @@
  */
 package com.sfc.sf2.map.layout.actions;
 
+import com.sfc.sf2.core.actions.IActionData;
 import com.sfc.sf2.map.block.MapBlockset;
 import com.sfc.sf2.map.layout.MapLayout;
 
@@ -12,13 +13,13 @@ import com.sfc.sf2.map.layout.MapLayout;
  *
  * @author TiMMy
  */
-public class ActionMapLayoutData {
+public class MapLayoutActionData implements IActionData<MapLayoutActionData> {
     
     private final MapLayout layout;
     private final MapBlockset blockset;
     private final String sharedBlockInfo;
 
-    public ActionMapLayoutData(MapLayout layout, MapBlockset blockset, String sharedBlockInfo) {
+    public MapLayoutActionData(MapLayout layout, MapBlockset blockset, String sharedBlockInfo) {
         this.layout = layout;
         this.blockset = blockset;
         this.sharedBlockInfo = sharedBlockInfo;
@@ -35,24 +36,24 @@ public class ActionMapLayoutData {
     public String sharedBlockInfo() {
         return sharedBlockInfo;
     }
-    
+
     @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof ActionMapLayoutData) {
-            ActionMapLayoutData other = (ActionMapLayoutData)obj;
-            if (!layout.equals(other.layout)) return false;
-            return blockset.equals(other.blockset);
-        } else {
-            return super.equals(obj);
-        }
+    public boolean isInvalidated(MapLayoutActionData other) {
+        return layout.equals(other.layout) && blockset.equals(other.blockset);
+    }
+
+    @Override
+    public boolean canBeCombined(MapLayoutActionData other) {
+        return layout.equals(other.layout);
+    }
+
+    @Override
+    public MapLayoutActionData combine(MapLayoutActionData other) {
+        return other;
     }
 
     @Override
     public String toString() {
-        if (layout == null) {
-            return String.format("Layout: NULL");
-        } else {
-            return String.format("Layout: map%d", layout.getIndex());
-        }
+        return String.format("Layout: map%d", layout.getIndex());
     }
 }

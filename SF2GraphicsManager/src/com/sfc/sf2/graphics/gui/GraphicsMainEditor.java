@@ -5,8 +5,8 @@
  */
 package com.sfc.sf2.graphics.gui;
 
-import com.sfc.sf2.core.actions.Action;
 import com.sfc.sf2.core.actions.ActionManager;
+import com.sfc.sf2.core.actions.BasicAction;
 import com.sfc.sf2.core.actions.ComboAction;
 import com.sfc.sf2.core.actions.SpinnerAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
@@ -52,7 +52,7 @@ public class GraphicsMainEditor extends AbstractMainEditor {
     @Override
     protected void onDataLoaded() {
         super.onDataLoaded();
-        ActionManager.setAndExecuteAction(new Action<Tileset>(this, "Graphic Imported", this::actionTilesetLoaded, tilesetManager.getTileset(), tilesetLayoutPanel.getTileset()));
+        ActionManager.setAndExecuteAction(new BasicAction<Tileset>(this, "Graphic Imported", this::actionTilesetLoaded, tilesetManager.getTileset(), tilesetLayoutPanel.getTileset()));
     }
     
     private void actionTilesetLoaded(Tileset tileset) {

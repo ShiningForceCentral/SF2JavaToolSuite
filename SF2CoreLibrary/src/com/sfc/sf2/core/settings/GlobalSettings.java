@@ -17,6 +17,7 @@ public class GlobalSettings implements AbstractSettings {
     
     private boolean darkTheme;
     private Color transparentBGColor;
+    private Color battleSceneBGColor;
     
     public boolean getIsDarkTheme() {
         return darkTheme;
@@ -34,10 +35,19 @@ public class GlobalSettings implements AbstractSettings {
         this.transparentBGColor = transparentBGColor;
     }
 
+    public Color getBattleSceneBGColor() {
+        return battleSceneBGColor;
+    }
+
+    public void setBattleSceneBGColor(Color battleSceneBGColor) {
+        this.battleSceneBGColor = battleSceneBGColor;
+    }
+
     @Override
     public void initialiseNewUser() {
         darkTheme = false;
         transparentBGColor = new Color(200, 0, 200);
+        battleSceneBGColor = Color.BLACK;
     }
     
     @Override
@@ -48,11 +58,15 @@ public class GlobalSettings implements AbstractSettings {
         if (data.containsKey("transparentBGColor")) {
             transparentBGColor = ColorHelpers.parseColorString(data.get("transparentBGColor"));
         }
+        if (data.containsKey("battleSceneBGColor")) {
+            battleSceneBGColor = ColorHelpers.parseColorString(data.get("battleSceneBGColor"));
+        }
     }
 
     @Override
     public void encodeSettings(HashMap<String, String> data) {
         data.put("darkTheme", Boolean.toString(darkTheme));
         data.put("transparentBGColor", ColorHelpers.toHexString(transparentBGColor));
+        data.put("battleSceneBGColor", ColorHelpers.toHexString(battleSceneBGColor));
     }
 }

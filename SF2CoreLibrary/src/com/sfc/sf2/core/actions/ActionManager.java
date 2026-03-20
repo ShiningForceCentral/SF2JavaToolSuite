@@ -16,7 +16,7 @@ import java.util.Stack;
 public class ActionManager {
     private static final int ACTION_HISTORY_LIMIT = 100;
     
-    private static final Action[] history = new Action[ACTION_HISTORY_LIMIT];
+    private static final IAction[] history = new IAction[ACTION_HISTORY_LIMIT];
     private static int stackStart = 0;
     private static int stackPointer = 0;
     
@@ -37,7 +37,7 @@ public class ActionManager {
         ActionManager.externalActionTriggering = false;
     }
     
-    public static void setAndExecuteAction(Action action) {
+    public static void setAndExecuteAction(IAction action) {
         if (action == null) return;
         setActionWithoutExecute(action);
         setActionTriggering(true);
@@ -45,7 +45,7 @@ public class ActionManager {
         setActionTriggering(false);
     }
         
-    public static void setActionWithoutExecute(Action action) {
+    public static void setActionWithoutExecute(IAction action) {
         if (action == null) return;
         long time = System.currentTimeMillis();
         if (time - lastActionTime < 20000) {
@@ -198,7 +198,7 @@ public class ActionManager {
     /**
      * Converts an action to a string in similar format to how the tables are displayed
      */
-    private static String actionToString(Action action) {
+    private static String actionToString(IAction action) {
         Object[] data = formatTableData(action.toTableData());
         return String.format("%s (%s): New Data = %s, Old Data = %s", data[0], data[1], data[2], data[3]);
     }

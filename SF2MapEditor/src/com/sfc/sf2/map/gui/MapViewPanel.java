@@ -5,8 +5,8 @@
  */
 package com.sfc.sf2.map.gui;
 
-import com.sfc.sf2.core.actions.Action;
 import com.sfc.sf2.core.actions.ActionManager;
+import com.sfc.sf2.core.actions.BasicAction;
 import com.sfc.sf2.core.actions.ToggleAction;
 import com.sfc.sf2.core.gui.controls.AbstractViewPanel;
 import com.sfc.sf2.core.settings.SettingsManager;
@@ -373,7 +373,7 @@ public class MapViewPanel extends AbstractViewPanel<MapLayoutPanel> {
 
     private void jCheckBoxPreviewAnimItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBoxPreviewAnimItemStateChanged
         if (!ActionManager.isActionTriggering()) {
-            ActionManager.setAndExecuteAction(new Action<Boolean>(this, "Toggle Map Animation", this::actionPreviewAnimToggled, jCheckBoxPreviewAnim.isSelected(), !jCheckBoxPreviewAnim.isSelected()));
+            ActionManager.setAndExecuteAction(new BasicAction<Boolean>(this, "Toggle Map Animation", this::actionPreviewAnimToggled, jCheckBoxPreviewAnim.isSelected(), !jCheckBoxPreviewAnim.isSelected()));
         }
     }//GEN-LAST:event_jCheckBoxPreviewAnimItemStateChanged
 

@@ -100,7 +100,7 @@ public class MapspriteMainEditor extends AbstractMainEditor {
 
         buttonGroupExport = new com.sfc.sf2.core.gui.controls.NameableButtonGroup();
         buttonGroupOptimise = new com.sfc.sf2.core.gui.controls.NameableButtonGroup();
-        mapSpriteTableModel = new com.sfc.sf2.mapsprite.gui.MapSpriteTableModel();
+        mapSpriteTableModel = new com.sfc.sf2.mapsprite.models.MapSpriteTableModel();
         jPanel13 = new javax.swing.JPanel();
         jSplitPane1 = new javax.swing.JSplitPane();
         jPanel15 = new javax.swing.JPanel();
@@ -1111,7 +1111,7 @@ public class MapspriteMainEditor extends AbstractMainEditor {
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTabbedPane jTabbedPaneSprites;
     private com.sfc.sf2.mapsprite.gui.MapSpriteLayoutPanel mapSpriteLayoutPanel;
-    private com.sfc.sf2.mapsprite.gui.MapSpriteTableModel mapSpriteTableModel;
+    private com.sfc.sf2.mapsprite.models.MapSpriteTableModel mapSpriteTableModel;
     private com.sfc.sf2.core.gui.controls.Table tableUnreferenced;
     private com.sfc.sf2.mapsprite.gui.MapspriteViewPanel viewPanel1;
     // End of variables declaration//GEN-END:variables

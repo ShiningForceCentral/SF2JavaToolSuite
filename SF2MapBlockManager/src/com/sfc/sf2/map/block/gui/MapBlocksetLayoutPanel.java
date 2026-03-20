@@ -5,8 +5,8 @@
  */
 package com.sfc.sf2.map.block.gui;
 
-import com.sfc.sf2.core.actions.Action;
 import com.sfc.sf2.core.actions.ActionManager;
+import com.sfc.sf2.core.actions.BasicAction;
 import com.sfc.sf2.core.gui.AbstractLayoutPanel;
 import com.sfc.sf2.core.gui.layout.*;
 import static com.sfc.sf2.graphics.Block.PIXEL_HEIGHT;
@@ -123,7 +123,7 @@ public class MapBlocksetLayoutPanel extends AbstractLayoutPanel {
     }
     
     public void setLeftSelectedIndex(int index) {
-        if (leftSlotBlockPanel != null | editableBlockPanel != null) {
+        if (leftSlotBlockPanel != null || editableBlockPanel != null) {
             MapBlock block = null;
             if (index < (canSelectInitialBlocks ? 0 : 3) || index >= blockset.getBlocks().length) {
                 index = -1;
@@ -205,13 +205,15 @@ public class MapBlocksetLayoutPanel extends AbstractLayoutPanel {
             return;
         }
         if (evt.mouseButton() == MouseEvent.BUTTON1) {
+            if (leftSlotBlockPanel == null && editableBlockPanel == null) return;
             int index = selectedBlockIndexLeft == blockIndex ? -1 : blockIndex;
-            ActionManager.setAndExecuteAction(new Action<Integer>(this, "Block Selection - Left", this::setLeftSelectedIndex, index, selectedBlockIndexLeft));
+            ActionManager.setAndExecuteAction(new BasicAction<Integer>(this, "Block Selection - Left", this::setLeftSelectedIndex, index, selectedBlockIndexLeft));
             this.revalidate();
             this.repaint();
         } else if (evt.mouseButton() == MouseEvent.BUTTON3) {
+            if (rightSlotBlockPanel == null) return;
             int index = selectedBlockIndexRight == blockIndex ? -1 : blockIndex;
-            ActionManager.setAndExecuteAction(new Action<Integer>(this, "Block Selection - Right", this::setRightSelectedIndex, index, selectedBlockIndexRight));
+            ActionManager.setAndExecuteAction(new BasicAction<Integer>(this, "Block Selection - Right", this::setRightSelectedIndex, index, selectedBlockIndexRight));
             this.revalidate();
             this.repaint();
         }

@@ -5,17 +5,15 @@
  */
 package com.sfc.sf2.spellAnimation.gui;
 
-import com.sfc.sf2.core.actions.Action;
 import com.sfc.sf2.core.actions.ActionManager;
+import com.sfc.sf2.core.actions.BasicAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.helpers.PathHelpers;
 import com.sfc.sf2.spellAnimation.SpellAnimation;
 import com.sfc.sf2.spellAnimation.SpellAnimationManager;
-import com.sfc.sf2.spellAnimation.SpellSubAnimation;
 import java.nio.file.Path;
 import java.util.logging.Level;
-import javax.swing.DefaultComboBoxModel;
 
 /**
  *
@@ -47,7 +45,7 @@ public class SpellAnimationMainEditor extends AbstractMainEditor {
         super.onDataLoaded();
         spellAnimationLayoutPanel.setBackground(spellAnimationManager.getBackground());
         spellAnimationLayoutPanel.setGround(spellAnimationManager.getGround());
-        ActionManager.setAndExecuteAction(new Action<SpellAnimation>(this, "Spell Animaton Imported", this::actionSpellAnimationLoaded, spellAnimationManager.getSpellAnimation(), spellAnimationLayoutPanel.getSpellAnimation()));
+        ActionManager.setAndExecuteAction(new BasicAction<SpellAnimation>(this, "Spell Animaton Imported", this::actionSpellAnimationLoaded, spellAnimationManager.getSpellAnimation(), spellAnimationLayoutPanel.getSpellAnimation()));
     }
     
     private void actionSpellAnimationLoaded(SpellAnimation spellAnimation) {

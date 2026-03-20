@@ -11,7 +11,7 @@ import javax.swing.JSpinner;
  *
  * @author TiMMy
  */
-public class SpinnerAction extends Action<Object> {
+public class SpinnerAction extends BasicAction<Object> {
 
     private JSpinner spinner;
     

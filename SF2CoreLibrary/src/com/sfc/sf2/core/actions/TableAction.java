@@ -12,37 +12,44 @@ import java.util.ArrayList;
  *
  * @author TiMMy
  */
-public class TableAction extends Action<ActionTableData> {
+public class TableAction extends CustomAction<TableActionData> {
     
-    public TableAction(Object owner, String operation, IActionable<ActionTableData> action, ActionTableData newValue, ActionTableData oldValue) {
+    public TableAction(Object owner, String operation, IActionable<TableActionData> action, TableActionData newValue, TableActionData oldValue) {
         super(owner, operation, action, newValue, oldValue);
     }
 
-    public TableAction(Object owner, String operation, IActionable<ActionTableData> redoAction, ActionTableData redoValue, IActionable<ActionTableData> undoAction, ActionTableData undoValue) {
+    public TableAction(Object owner, String operation, IActionable<TableActionData> redoAction, TableActionData redoValue, IActionable<TableActionData> undoAction, TableActionData undoValue) {
         super(owner, operation, redoAction, redoValue, undoAction, undoValue);
     }
 
     @Override
-    public boolean canBeCombined(IAction action) {
-        if (!super.canBeCombined(action)) return false;
-        TableAction other = (TableAction)action;
-        if (operation.equals("Delete Rows")) {
-            if (oldValue.selection().length != other.oldValue.selection().length) return false;
-        } else {
-            if (newValue.selection().length != other.newValue.selection().length) return false;
+    public boolean isInvalidated() {
+        if (newValue.tableData().length != oldValue.tableData().length) return false;
+        for (int i = 0; i < newValue.tableData().length; i++) {
+            if (!newValue.tableData()[i].equals(oldValue.tableData()[i])) return false;
         }
         return true;
     }
 
     @Override
-    public void combine(IAction action) {
-        TableAction other = (TableAction)action;
-        if (other == null) return;
+    public boolean canBeCombined(IAction other) {
+        if (!super.canBeCombined(other)) return false;
+        TableAction otherTA = (TableAction)other;
+        if (operation.equals("Delete Rows")) {
+            return oldValue.selection().length == otherTA.oldValue.selection().length;
+        } else {
+            return newValue.selection().length == otherTA.newValue.selection().length;
+        }
+    }
+
+    @Override
+    public void combine(IAction other) {
+        TableAction otherTA = (TableAction)other;        
         if (operation.startsWith("Shift")) {
-            newValue = other.newValue;
+            newValue = otherTA.newValue;
         } else {
             SelectionInterval[] selection = this.newValue.selection();
-            SelectionInterval[] otherSelection = other.newValue.selection();
+            SelectionInterval[] otherSelection = otherTA.newValue.selection();
             ArrayList combinedSelection = new ArrayList();
             boolean foundMatch;
             for (int o = 0; o < otherSelection.length; o++) {
@@ -63,25 +70,16 @@ public class TableAction extends Action<ActionTableData> {
             SelectionInterval[] newSelection = new SelectionInterval[combinedSelection.size()];
             newSelection = (SelectionInterval[])combinedSelection.toArray(newSelection);
             if (operation.startsWith("Delete")) {
-                newValue = other.newValue;
-                oldValue = new ActionTableData(this.oldValue.tableData(), newSelection);
+                newValue = otherTA.newValue;
+                oldValue = new TableActionData(this.oldValue.tableData(), newSelection);
             } else {
-                newValue = new ActionTableData(other.newValue.tableData(), newSelection);
+                newValue = new TableActionData(otherTA.newValue.tableData(), newSelection);
             }
         }
     }
 
     @Override
-    public boolean isInvalidated() {
-        if (newValue.tableData().length != oldValue.tableData().length) return false;
-        for (int i = 0; i < newValue.tableData().length; i++) {
-            if (!newValue.tableData()[i].equals(oldValue.tableData()[i])) return false;
-        }
-        return true;
-    }
-
-    @Override
-    protected String dataToString(ActionTableData data) {
+    protected String dataToString(TableActionData data) {
         StringBuilder sb = new StringBuilder();
         if (operation.startsWith("Delete")) {
             sb.append("Deleted: ");
@@ -92,17 +90,7 @@ public class TableAction extends Action<ActionTableData> {
         } else if (operation.startsWith("Clone")) {
             sb.append("Cloned: ");
         }
-        for (int i = 0; i < data.selection().length; i++) {
-            SelectionInterval interval = data.selection()[i];
-            for (int j = interval.start(); j <= interval.end(); j++) {
-                sb.append(j);
-                if (i < data.selection().length - 1 || j < interval.end()) {
-                    sb.append(", ");
-                }
-            }
-        }
-        sb.append(" - Total Rows: ");
-        sb.append(data.tableData().length);
+        sb.append(data.toString());
         return sb.toString();
     }
 }

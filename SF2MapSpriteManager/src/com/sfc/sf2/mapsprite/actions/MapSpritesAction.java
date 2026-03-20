@@ -5,7 +5,7 @@
  */
 package com.sfc.sf2.mapsprite.actions;
 
-import com.sfc.sf2.core.actions.Action;
+import com.sfc.sf2.core.actions.BasicAction;
 import com.sfc.sf2.core.actions.IAction;
 import com.sfc.sf2.core.actions.IActionable;
 import com.sfc.sf2.mapsprite.MapSpriteEntries;
@@ -14,7 +14,7 @@ import com.sfc.sf2.mapsprite.MapSpriteEntries;
  *
  * @author TiMMy
  */
-public class MapSpritesAction extends Action<MapSpriteEntries> {
+public class MapSpritesAction extends BasicAction<MapSpriteEntries> {
     
     public MapSpritesAction(Object owner, String operation, IActionable<MapSpriteEntries> action, MapSpriteEntries newValue, MapSpriteEntries oldValue) {
         super(owner, operation, action, newValue, oldValue);

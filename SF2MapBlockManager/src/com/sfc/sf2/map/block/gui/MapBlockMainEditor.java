@@ -5,8 +5,8 @@
  */
 package com.sfc.sf2.map.block.gui;
 
-import com.sfc.sf2.core.actions.Action;
 import com.sfc.sf2.core.actions.ActionManager;
+import com.sfc.sf2.core.actions.CustomAction;
 import com.sfc.sf2.core.actions.RadioButtonAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
@@ -17,9 +17,8 @@ import com.sfc.sf2.helpers.RenderScaleHelpers;
 import com.sfc.sf2.map.block.MapBlock;
 import com.sfc.sf2.map.block.MapBlocksetManager;
 import com.sfc.sf2.map.block.MapBlockset;
-import com.sfc.sf2.map.block.actions.ActionBlockChange;
-import com.sfc.sf2.map.block.actions.ActionMapBlocksetData;
-import com.sfc.sf2.map.block.actions.ChangeBlockAction;
+import com.sfc.sf2.map.block.actions.BlockChangeActionData;
+import com.sfc.sf2.map.block.actions.MapBlocksetActionData;
 import com.sfc.sf2.map.block.settings.MapBlockSettings;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -69,12 +68,12 @@ public class MapBlockMainEditor extends AbstractMainEditor {
     @Override
     protected void onDataLoaded() {
         super.onDataLoaded();
-        ActionMapBlocksetData newValue = new ActionMapBlocksetData(mapblockManager.getMapBlockset(), mapblockManager.getTilesets());
-        ActionMapBlocksetData oldValue = new ActionMapBlocksetData(mapBlocksetLayoutPanel.getBlockset(), tilesetsLayoutPanel.getTilesets());
-        ActionManager.setAndExecuteAction(new Action<ActionMapBlocksetData>(this, "Blockset Imported", this::actionBlocksetLoaded, newValue, oldValue));
+        MapBlocksetActionData newValue = new MapBlocksetActionData(mapblockManager.getMapBlockset(), mapblockManager.getTilesets());
+        MapBlocksetActionData oldValue = new MapBlocksetActionData(mapBlocksetLayoutPanel.getBlockset(), tilesetsLayoutPanel.getTilesets());
+        ActionManager.setAndExecuteAction(new CustomAction<MapBlocksetActionData>(this, "Blockset Imported", this::actionBlocksetLoaded, newValue, oldValue));
     }
     
-    private void actionBlocksetLoaded(ActionMapBlocksetData blocksetData) {  
+    private void actionBlocksetLoaded(MapBlocksetActionData blocksetData) {  
         
         Tileset[] tilesets = blocksetData.tilesets();
         MapBlockset mapBlockset = blocksetData.blockset();
@@ -1117,8 +1116,8 @@ public class MapBlockMainEditor extends AbstractMainEditor {
             index++;
             block = blockset.getBlocks()[0];
         }
-        ActionBlockChange data = new ActionBlockChange(block, index);
-        ActionManager.setAndExecuteAction(new ChangeBlockAction(this, "Add Block", this::actionAddBlock, data, this::actionRemoveBlock, data));
+        BlockChangeActionData data = new BlockChangeActionData(block, index);
+        ActionManager.setAndExecuteAction(new CustomAction<BlockChangeActionData>(this, "Add Block", this::actionAddBlock, data, this::actionRemoveBlock, data));
     }//GEN-LAST:event_jButtonAddBlockActionPerformed
     
     private void jButtonRemoveBlockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoveBlockActionPerformed
@@ -1131,8 +1130,8 @@ public class MapBlockMainEditor extends AbstractMainEditor {
             return;
         }
         MapBlock block = blockset.getBlocks()[index];
-        ActionBlockChange data = new ActionBlockChange(block, index);
-        ActionManager.setAndExecuteAction(new ChangeBlockAction(this, "Remove Block", this::actionRemoveBlock, data, this::actionAddBlock, data));
+        BlockChangeActionData data = new BlockChangeActionData(block, index);
+        ActionManager.setAndExecuteAction(new CustomAction<BlockChangeActionData>(this, "Remove Block", this::actionRemoveBlock, data, this::actionAddBlock, data));
     }//GEN-LAST:event_jButtonRemoveBlockActionPerformed
     
     private void jButtonExportBlocksetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExportBlocksetActionPerformed
@@ -1158,8 +1157,8 @@ public class MapBlockMainEditor extends AbstractMainEditor {
             return;
         }
         MapBlock block = blockset.getBlocks()[index];
-        ActionBlockChange data = new ActionBlockChange(block, index+1);
-        ActionManager.setAndExecuteAction(new ChangeBlockAction(this, "Clone Block", this::actionAddBlock, data, this::actionRemoveBlock, data));
+        BlockChangeActionData data = new BlockChangeActionData(block, index+1);
+        ActionManager.setAndExecuteAction(new CustomAction<BlockChangeActionData>(this, "Clone Block", this::actionAddBlock, data, this::actionRemoveBlock, data));
     }//GEN-LAST:event_jButtonCloneBlockActionPerformed
 
     private void jRadioButtonApplyTileItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jRadioButtonApplyTileItemStateChanged
@@ -1204,7 +1203,7 @@ public class MapBlockMainEditor extends AbstractMainEditor {
         }
     }//GEN-LAST:event_jRadioButtonSetPriorityItemStateChanged
 
-    private void actionAddBlock(ActionBlockChange data) {   
+    private void actionAddBlock(BlockChangeActionData data) {   
         MapBlockset blockset = mapBlocksetLayoutPanel.getBlockset();                                        
         blockset.insertBlock(data.index(), data.block());
         mapBlocksetLayoutPanel.setLeftSelectedIndex(data.index());
@@ -1216,7 +1215,7 @@ public class MapBlockMainEditor extends AbstractMainEditor {
         }
     }
     
-    private void actionRemoveBlock(ActionBlockChange data) {
+    private void actionRemoveBlock(BlockChangeActionData data) {
         MapBlockset blockset = mapBlocksetLayoutPanel.getBlockset();
         blockset.removeBlock(data.index());
         mapBlocksetLayoutPanel.setLeftSelectedIndex(data.index() <= 3 ? 3 : data.index()-1);

@@ -11,13 +11,18 @@ import javax.swing.JToggleButton;
  *
  * @author TiMMy
  */
-public class ToggleAction extends Action<Boolean> {
+public class ToggleAction extends BasicAction<Boolean> {
 
     private JToggleButton toggle;
     
     public ToggleAction(JToggleButton toggle, boolean newValue) {
         super(toggle, "Toggle Value", null, newValue, !newValue);
         this.toggle = toggle;
+    }
+
+    @Override
+    public boolean isInvalidated() {
+        return newValue.equals(oldValue);
     }
     
     @Override
@@ -30,10 +35,5 @@ public class ToggleAction extends Action<Boolean> {
     public void undo() {
         toggle.setSelected(oldValue);
         super.undo();
-    }
-
-    @Override
-    public boolean isInvalidated() {
-        return newValue.equals(oldValue);
     }
 }

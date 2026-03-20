@@ -6,6 +6,9 @@
 package com.sfc.sf2.battlescene.gui;
 
 import com.sfc.sf2.battlescene.BattleSceneManager;
+import com.sfc.sf2.battlescene.actions.BattleSceneActionData;
+import com.sfc.sf2.core.actions.ActionManager;
+import com.sfc.sf2.core.actions.CustomAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.helpers.PathHelpers;
@@ -18,7 +21,7 @@ import java.util.logging.Level;
  */
 public class BattleSceneMainEditor extends AbstractMainEditor {
     
-    BattleSceneManager battlespriteanimationManager = new BattleSceneManager();
+    BattleSceneManager battleSceneManager = new BattleSceneManager();
         
     public BattleSceneMainEditor() {
         super();
@@ -30,16 +33,22 @@ public class BattleSceneMainEditor extends AbstractMainEditor {
     protected void initEditor() {
         super.initEditor();
                            
-        viewPanel1.setLayoutPanel(battleSceneLayoutPanel);
+        battleSceneViewPanel1.setLayoutPanel(battleSceneLayoutPanel);
         jCheckBox1.setSelected(battleSceneLayoutPanel.shouldShowPositions());
     }
     
     @Override
     protected void onDataLoaded() {
         super.onDataLoaded();
+        BattleSceneActionData newValue = new BattleSceneActionData(battleSceneManager.getBackground(), battleSceneManager.getGround());
+        BattleSceneActionData oldValue = new BattleSceneActionData(battleSceneLayoutPanel.getBg(), battleSceneLayoutPanel.getGround());
+        ActionManager.setAndExecuteAction(new CustomAction<BattleSceneActionData>(this, "Battle Scene Imported", this::actionBattleSceneLoaded, newValue, oldValue));
+    }
+    
+    private void actionBattleSceneLoaded(BattleSceneActionData data) {  
         
-        battleSceneLayoutPanel.setBg(battlespriteanimationManager.getBackground());
-        battleSceneLayoutPanel.setGround(battlespriteanimationManager.getGround());
+        battleSceneLayoutPanel.setBg(data.background());
+        battleSceneLayoutPanel.setGround(data.ground());
     }
     
     /**
@@ -66,8 +75,8 @@ public class BattleSceneMainEditor extends AbstractMainEditor {
         jPanel10 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         battleSceneLayoutPanel = new com.sfc.sf2.battlescene.gui.BattleSceneLayoutPanel();
-        viewPanel1 = new com.sfc.sf2.core.gui.controls.ViewPanel();
         jCheckBox1 = new javax.swing.JCheckBox();
+        battleSceneViewPanel1 = new com.sfc.sf2.battlescene.gui.BattleSceneViewPanel();
         console1 = new com.sfc.sf2.core.gui.controls.Console();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -200,7 +209,7 @@ public class BattleSceneMainEditor extends AbstractMainEditor {
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addComponent(jCheckBox1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(viewPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(battleSceneViewPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel10Layout.setVerticalGroup(
@@ -208,9 +217,9 @@ public class BattleSceneMainEditor extends AbstractMainEditor {
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(viewPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(battleSceneViewPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jCheckBox1))
                 .addContainerGap())
         );
@@ -263,9 +272,9 @@ public class BattleSceneMainEditor extends AbstractMainEditor {
         Path groundPalettePath = PathHelpers.getBasePath().resolve(fileButton3.getFilePath());
         Path groundPath = PathHelpers.getBasePath().resolve(fileButton4.getFilePath());
         try {
-            battlespriteanimationManager.importDisassembly(bgPath, groundBasePalettePath, groundPalettePath, groundPath);
+            battleSceneManager.importDisassembly(bgPath, groundBasePalettePath, groundPalettePath, groundPath);
         } catch (Exception ex) {
-            battlespriteanimationManager.clearData();
+            battleSceneManager.clearData();
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Battle scene could not be imported.");
         }
@@ -294,6 +303,7 @@ public class BattleSceneMainEditor extends AbstractMainEditor {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.sfc.sf2.battlescene.gui.BattleSceneLayoutPanel battleSceneLayoutPanel;
+    private com.sfc.sf2.battlescene.gui.BattleSceneViewPanel battleSceneViewPanel1;
     private com.sfc.sf2.core.gui.controls.Console console1;
     private com.sfc.sf2.core.gui.controls.FileButton fileButton1;
     private com.sfc.sf2.core.gui.controls.FileButton fileButton2;
@@ -310,6 +320,5 @@ public class BattleSceneMainEditor extends AbstractMainEditor {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JSplitPane jSplitPane2;
-    private com.sfc.sf2.core.gui.controls.ViewPanel viewPanel1;
     // End of variables declaration//GEN-END:variables
 }

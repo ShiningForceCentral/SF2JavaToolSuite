@@ -137,8 +137,10 @@ public class IconsViewPanel extends AbstractViewPanel<IconsLayoutPanel> {
     private void jSpinnerItemsPerRowStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinnerItemsPerRowStateChanged
         super.onItemsPerRowChanged(evt);
         IconSettings iconSettings = SettingsManager.getSettingsStore("icons");
-        iconSettings.setItemsPerRow((int)jSpinnerItemsPerRow.getValue());
-        SettingsManager.saveSettingsFile();
+        if (iconSettings != null) {
+            iconSettings.setItemsPerRow((int)jSpinnerItemsPerRow.getValue());
+            SettingsManager.saveSettingsFile();
+        }
     }//GEN-LAST:event_jSpinnerItemsPerRowStateChanged
 
     private void colorPickerBGColorChanged(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorPickerBGColorChanged
@@ -148,8 +150,10 @@ public class IconsViewPanel extends AbstractViewPanel<IconsLayoutPanel> {
     private void jComboBoxScaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxScaleActionPerformed
         super.onScaleChanged(evt);
         IconSettings iconSettings = SettingsManager.getSettingsStore("icons");
-        iconSettings.setRenderScaleIndex(jComboBoxScale.getSelectedIndex());
-        SettingsManager.saveSettingsFile();
+        if (iconSettings != null) {
+            iconSettings.setRenderScaleIndex(jComboBoxScale.getSelectedIndex());
+            SettingsManager.saveSettingsFile();
+        }
     }//GEN-LAST:event_jComboBoxScaleActionPerformed
 
     private void jCheckBoxGridItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBoxGridItemStateChanged

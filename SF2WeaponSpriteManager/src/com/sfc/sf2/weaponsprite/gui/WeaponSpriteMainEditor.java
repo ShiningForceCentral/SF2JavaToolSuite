@@ -5,8 +5,8 @@
  */
 package com.sfc.sf2.weaponsprite.gui;
 
-import com.sfc.sf2.core.actions.Action;
 import com.sfc.sf2.core.actions.ActionManager;
+import com.sfc.sf2.core.actions.BasicAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.helpers.PathHelpers;
@@ -42,10 +42,10 @@ public class WeaponSpriteMainEditor extends AbstractMainEditor {
     protected void onDataLoaded() {
         super.onDataLoaded();
         
-        ActionManager.setAndExecuteAction(new Action<WeaponSprite>(this, "Weapon Sprite Imported", this::actionTilesetLoaded, weaponspriteManager.getWeaponsprite(), weaponSpriteLayoutPanel.getWeaponSprite()));
+        ActionManager.setAndExecuteAction(new BasicAction<WeaponSprite>(this, "Weapon Sprite Imported", this::actionWeaponLoaded, weaponspriteManager.getWeaponsprite(), weaponSpriteLayoutPanel.getWeaponSprite()));
     }
     
-    private void actionTilesetLoaded(WeaponSprite weaponSprite) {
+    private void actionWeaponLoaded(WeaponSprite weaponSprite) {
         JComboBox paletteComboBox = viewPanel1.getjComboBoxPalette();
         int selectedPalette = paletteComboBox.getSelectedIndex();
         paletteComboBox.removeAllItems();

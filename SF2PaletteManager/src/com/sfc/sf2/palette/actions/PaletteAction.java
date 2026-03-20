@@ -5,7 +5,7 @@
  */
 package com.sfc.sf2.palette.actions;
 
-import com.sfc.sf2.core.actions.Action;
+import com.sfc.sf2.core.actions.BasicAction;
 import com.sfc.sf2.core.actions.IAction;
 import com.sfc.sf2.palette.CRAMColor;
 import com.sfc.sf2.palette.gui.PalettePane;
@@ -14,7 +14,7 @@ import com.sfc.sf2.palette.gui.PalettePane;
  *
  * @author TiMMy
  */
-public class PaletteAction extends Action<CRAMColor> {
+public class PaletteAction extends BasicAction<CRAMColor> {
 
     private PalettePane palettePane;
     private int index;
@@ -36,9 +36,9 @@ public class PaletteAction extends Action<CRAMColor> {
     }
 
     @Override
-    public boolean canBeCombined(IAction action) {
-        if (!super.canBeCombined(action)) return false;
-        PaletteAction other = (PaletteAction)action;
-        return this.index == other.index;
+    public boolean canBeCombined(IAction other) {
+        if (!super.canBeCombined(other)) return false;
+        PaletteAction otherP = (PaletteAction)other;
+        return this.index == otherP.index;
     }
 }

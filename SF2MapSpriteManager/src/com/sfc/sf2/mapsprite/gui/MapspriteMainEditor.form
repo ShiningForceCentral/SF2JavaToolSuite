@@ -12,7 +12,7 @@
         <Property name="name" type="java.lang.String" value="Optimise Button Group"/>
       </Properties>
     </Component>
-    <Component class="com.sfc.sf2.mapsprite.gui.MapSpriteTableModel" name="mapSpriteTableModel">
+    <Component class="com.sfc.sf2.mapsprite.models.MapSpriteTableModel" name="mapSpriteTableModel">
     </Component>
   </NonVisualComponents>
   <Properties>

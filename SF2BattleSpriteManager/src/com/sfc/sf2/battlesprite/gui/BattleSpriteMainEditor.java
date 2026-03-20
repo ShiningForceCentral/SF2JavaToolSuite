@@ -8,8 +8,8 @@ package com.sfc.sf2.battlesprite.gui;
 import com.sfc.sf2.battlesprite.BattleSprite;
 import com.sfc.sf2.battlesprite.settings.BattleSpriteSettings;
 import com.sfc.sf2.battlesprite.BattleSpriteManager;
-import com.sfc.sf2.core.actions.Action;
 import com.sfc.sf2.core.actions.ActionManager;
+import com.sfc.sf2.core.actions.BasicAction;
 import com.sfc.sf2.core.actions.RadioButtonAction;
 import com.sfc.sf2.core.actions.SpinnerAction;
 import com.sfc.sf2.core.actions.ToggleAction;
@@ -53,7 +53,7 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
     @Override
     protected void onDataLoaded() {
         super.onDataLoaded();
-        ActionManager.setAndExecuteAction(new Action<BattleSprite>(this, "Battlesprite Imported", this::actionBattlespriteLoaded, battleSpriteManager.getBattleSprite(), battleSpriteLayoutPanel.getBattleSprite()));
+        ActionManager.setAndExecuteAction(new BasicAction<BattleSprite>(this, "Battlesprite Imported", this::actionBattlespriteLoaded, battleSpriteManager.getBattleSprite(), battleSpriteLayoutPanel.getBattleSprite()));
     }
     
     private void actionBattlespriteLoaded(BattleSprite battleSprite) {
@@ -173,7 +173,7 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fileButtonImportBattlesprite, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
+                    .addComponent(fileButtonImportBattlesprite, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButtonImportBattlesprite))
@@ -235,7 +235,7 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
                         .addComponent(jCheckBoxUseImagePalette)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(infoButton6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButtonImportImage))
                     .addComponent(fileButtonImportImage, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(jPanel9Layout.createSequentialGroup()
@@ -304,7 +304,7 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fileButtonExportBattlesprite, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
+                    .addComponent(fileButtonExportBattlesprite, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButtonExportBattlesprite))
@@ -403,7 +403,7 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(fileButtonExportImages, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
-                        .addGap(0, 22, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonExportImages))
@@ -438,7 +438,7 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane2)
+                .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -642,7 +642,7 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
         jPanel13.setLayout(jPanel13Layout);
         jPanel13Layout.setHorizontalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane1)
+            .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 905, Short.MAX_VALUE)
         );
         jPanel13Layout.setVerticalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -660,7 +660,7 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
             .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        setSize(new java.awt.Dimension(902, 737));
+        setSize(new java.awt.Dimension(921, 737));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 

@@ -6,11 +6,12 @@
 package com.sfc.sf2.dialog.properties.gui;
 
 import com.sfc.sf2.core.actions.ActionManager;
+import com.sfc.sf2.core.actions.CustomAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.dialog.properties.DialogPropertiesManager;
 import com.sfc.sf2.dialog.properties.DialogProperty;
-import com.sfc.sf2.dialog.properties.actions.DialogPropertiesAction;
+import com.sfc.sf2.dialog.properties.actions.DialogPropertiesActionData;
 import com.sfc.sf2.helpers.PathHelpers;
 import java.io.File;
 import java.nio.file.Path;
@@ -53,11 +54,13 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
     protected void onDataLoaded() {
         super.onDataLoaded();
         dialogPropertiesTableModel.setEnums(dialogpropertiesManager.getDialogEnums());
-        ActionManager.setAndExecuteAction(new DialogPropertiesAction(this, "Dialog Properties Imported", this::actionTilesetLoaded, dialogpropertiesManager.getDialogProperties(), dialogPropertiesTableModel.getTableData(DialogProperty[].class)));
+        DialogPropertiesActionData newValue = new DialogPropertiesActionData(dialogpropertiesManager.getDialogProperties());
+        DialogPropertiesActionData oldValue = new DialogPropertiesActionData(dialogPropertiesTableModel.getTableData(DialogProperty[].class));
+        ActionManager.setAndExecuteAction(new CustomAction<DialogPropertiesActionData>(this, "Dialog Properties Imported", this::actionTilesetLoaded, newValue, oldValue));
     }
     
-    private void actionTilesetLoaded(DialogProperty[] dialogProperties) {
-        dialogPropertiesTableModel.setTableData(dialogProperties);
+    private void actionTilesetLoaded(DialogPropertiesActionData data) {
+        dialogPropertiesTableModel.setTableData(data.properties());
     }
     /**
      * This method is called from within the constructor to initialize the form.

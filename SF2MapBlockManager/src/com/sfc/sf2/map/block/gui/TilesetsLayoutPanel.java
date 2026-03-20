@@ -5,8 +5,8 @@
  */
 package com.sfc.sf2.map.block.gui;
 
-import com.sfc.sf2.core.actions.Action;
 import com.sfc.sf2.core.actions.ActionManager;
+import com.sfc.sf2.core.actions.BasicAction;
 import com.sfc.sf2.core.gui.AbstractLayoutPanel;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.core.gui.layout.*;
@@ -175,12 +175,12 @@ public class TilesetsLayoutPanel extends AbstractLayoutPanel {
         if (evt.mouseButton() == MouseEvent.BUTTON1) {
             if (leftSlotTilePanel != null) {
                 int index = selectedTileIndexLeft == tileIndex ? -1 : tileIndex;
-                ActionManager.setAndExecuteAction(new Action<Integer>(this, "Tile Selection - Left", this::setSelectedLeftSlot, index, selectedTileIndexLeft));
+                ActionManager.setAndExecuteAction(new BasicAction<Integer>(this, "Tile Selection - Left", this::setSelectedLeftSlot, index, selectedTileIndexLeft));
             }
         } else if (evt.mouseButton() == MouseEvent.BUTTON3) {
             if (rightSlotTilePanel != null) {
                 int index = selectedTileIndexRight == tileIndex ? -1 : tileIndex;
-                ActionManager.setAndExecuteAction(new Action<Integer>(this, "Tile Selection - Right", this::setSelectedRightSlot, index, selectedTileIndexRight));
+                ActionManager.setAndExecuteAction(new BasicAction<Integer>(this, "Tile Selection - Right", this::setSelectedRightSlot, index, selectedTileIndexRight));
             }
         }
     }

@@ -5,8 +5,8 @@
  */
 package com.sfc.sf2.map.animation.gui;
 
-import com.sfc.sf2.core.actions.Action;
 import com.sfc.sf2.core.actions.ActionManager;
+import com.sfc.sf2.core.actions.CustomAction;
 import com.sfc.sf2.core.actions.SpinnerAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
@@ -18,7 +18,7 @@ import com.sfc.sf2.helpers.RenderScaleHelpers;
 import com.sfc.sf2.map.animation.MapAnimation;
 import com.sfc.sf2.map.animation.MapAnimationFrame;
 import com.sfc.sf2.map.animation.MapAnimationManager;
-import com.sfc.sf2.map.animation.actions.ActionMapAnimationData;
+import com.sfc.sf2.map.animation.actions.MapAnimationActionData;
 import java.nio.file.Path;
 import java.util.logging.Level;
 import javax.swing.event.ListSelectionEvent;
@@ -35,7 +35,7 @@ public class MapAnimationMainEditor extends AbstractMainEditor {
     
     private final MapAnimationManager mapAnimationManager = new MapAnimationManager();
     
-    private ActionMapAnimationData currentAnimData;
+    private MapAnimationActionData currentAnimData;
     
     public MapAnimationMainEditor() {
         super();
@@ -66,15 +66,21 @@ public class MapAnimationMainEditor extends AbstractMainEditor {
     @Override
     protected void onDataLoaded() {
         super.onDataLoaded();
-        ActionMapAnimationData newValue = new ActionMapAnimationData(mapAnimationManager.getMapLayout(), mapAnimationManager.getMapBlockset(), mapAnimationManager.getSharedBlockInfo(), mapAnimationManager.getMapAnimation(), mapAnimationManager.getSharedAnimationInfo());
-        ActionMapAnimationData oldValue = currentAnimData;
-        if (oldValue == null)
-            oldValue = new ActionMapAnimationData(null, null, null, null, null);
-        ActionManager.setAndExecuteAction(new Action<ActionMapAnimationData>(this, "Map Animation Imported", this::actionAnimationLoaded, newValue, oldValue));
+        MapAnimationActionData newValue = new MapAnimationActionData(mapAnimationManager.getMapLayout(), mapAnimationManager.getMapBlockset(), mapAnimationManager.getSharedBlockInfo(), mapAnimationManager.getMapAnimation(), mapAnimationManager.getSharedAnimationInfo());
+        MapAnimationActionData oldValue = currentAnimData;
+        ActionManager.setAndExecuteAction(new CustomAction<MapAnimationActionData>(this, "Map Animation Imported", this::actionAnimationLoaded, newValue, oldValue));
     }
     
-    private void actionAnimationLoaded(ActionMapAnimationData data) {
+    private void actionAnimationLoaded(MapAnimationActionData data) {
         currentAnimData = data;
+        if (data == null) {
+            mapAnimationLayoutPanel.setMapLayout(null);
+            tilesetLayoutPanelAnim.setMapAnimation(null);
+            tilesetLayoutPanelModified.setMapAnimation(null);
+            tilesetLayoutPanelModified.getAnimator().stopAnimation();
+            infoButtonSharedAnimation.setVisible(false);
+            return;
+        }
         mapAnimationLayoutPanel.setMapLayout(data.layout());
         
         MapAnimation animation = data.animation();

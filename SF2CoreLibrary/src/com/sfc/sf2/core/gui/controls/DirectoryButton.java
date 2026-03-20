@@ -5,8 +5,8 @@
  */
 package com.sfc.sf2.core.gui.controls;
 
-import com.sfc.sf2.core.actions.Action;
 import com.sfc.sf2.core.actions.ActionManager;
+import com.sfc.sf2.core.actions.BasicAction;
 import com.sfc.sf2.helpers.PathHelpers;
 import java.beans.BeanProperty;
 import java.io.File;
@@ -151,7 +151,7 @@ public class DirectoryButton extends javax.swing.JPanel {
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             String path = jFileChooserFiles.getSelectedFile().toString();
             path = path.replace(PathHelpers.getBasePath().toString(), ".");
-            ActionManager.setAndExecuteAction(new Action<String>(this, "Directory Change", this::setPath, path, jTextFieldPath.getText()));
+            ActionManager.setAndExecuteAction(new BasicAction<String>(this, "Directory Change", this::setPath, path, jTextFieldPath.getText()));
         }
     }
 

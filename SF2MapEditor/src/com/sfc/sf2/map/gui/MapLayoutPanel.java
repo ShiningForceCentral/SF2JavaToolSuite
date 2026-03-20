@@ -6,6 +6,7 @@
 package com.sfc.sf2.map.gui;
 
 import com.sfc.sf2.core.actions.ActionManager;
+import com.sfc.sf2.core.actions.CustomAction;
 import com.sfc.sf2.core.gui.layout.BaseLayoutComponent;
 import com.sfc.sf2.core.gui.layout.BaseMouseCoordsComponent;
 import com.sfc.sf2.core.gui.layout.LayoutMouseInput;
@@ -20,11 +21,8 @@ import com.sfc.sf2.map.MapFlagCopyEvent;
 import com.sfc.sf2.map.MapItem;
 import com.sfc.sf2.map.MapWarpEvent;
 import com.sfc.sf2.map.actions.ActionMapCopySourceEvent;
-import com.sfc.sf2.map.actions.ActionMapDataPoint;
-import com.sfc.sf2.map.actions.ActionMapDataRect;
-import com.sfc.sf2.map.actions.MapCopyEventSourceAction;
-import com.sfc.sf2.map.actions.MapDataPointAction;
-import com.sfc.sf2.map.actions.MapDataRectAction;
+import com.sfc.sf2.map.actions.MapPointActionData;
+import com.sfc.sf2.map.actions.MapRectActionData;
 import com.sfc.sf2.map.block.MapBlock;
 import com.sfc.sf2.map.block.gui.BlockSlotPanel;
 import com.sfc.sf2.map.block.gui.MapBlocksetLayoutPanel;
@@ -1050,9 +1048,9 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
                         pointsSwapped = true;
                     }
                     Rectangle rect = new Rectangle(sx, sy, ex-sx, ey-sy);
-                    ActionMapDataRect newValue = new ActionMapDataRect(area, selectedItemIndex, "Area-Layer1", rect);
-                    ActionMapDataRect oldValue = new ActionMapDataRect(area, selectedItemIndex, "Area-Layer1", area.getLayer1());
-                    ActionManager.setAndExecuteAction(new MapDataRectAction(area, "Set Area Layer 1", this::actionSetAreaLayer1, newValue, oldValue));
+                    MapRectActionData newValue = new MapRectActionData(area, selectedItemIndex, "Area-Layer1", rect);
+                    MapRectActionData oldValue = new MapRectActionData(area, selectedItemIndex, "Area-Layer1", area.getLayer1());
+                    ActionManager.setAndExecuteAction(new CustomAction<MapRectActionData>(area, "Set Area Layer 1", this::actionSetAreaLayer1, newValue, oldValue));
                     
                     if (pointsSwapped) {
                         closestSelectedPointIndex = findClosestAreaPoint(area, x, y);
@@ -1061,14 +1059,14 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
                     //Second rect
                     if (area.hasBackgroundLayer2()) {
                         Point point = new Point(x, y);
-                        ActionMapDataPoint newValue = new ActionMapDataPoint(area, selectedItemIndex, "Area-Background2", point);
-                        ActionMapDataPoint oldValue = new ActionMapDataPoint(area, selectedItemIndex, "Area-Background2", area.getBackgroundLayer2());
-                        ActionManager.setAndExecuteAction(new MapDataPointAction(area, "Set Area Background 2", this::actionSetAreaBackground2, newValue, oldValue));
+                        MapPointActionData newValue = new MapPointActionData(area, selectedItemIndex, "Area-Background2", point);
+                        MapPointActionData oldValue = new MapPointActionData(area, selectedItemIndex, "Area-Background2", area.getBackgroundLayer2());
+                        ActionManager.setAndExecuteAction(new CustomAction<MapPointActionData>(area, "Set Area Background 2", this::actionSetAreaBackground2, newValue, oldValue));
                     } else {
                         Point point = new Point(x-area.getLayer1StartX(), y-area.getLayer1StartY());
-                        ActionMapDataPoint newValue = new ActionMapDataPoint(area, selectedItemIndex, "Area-Foreground2", point);
-                        ActionMapDataPoint oldValue = new ActionMapDataPoint(area, selectedItemIndex, "Area-Foreground2", area.getForegroundLayer2());
-                        ActionManager.setAndExecuteAction(new MapDataPointAction(area, "Set Area Foreground 2", this::actionSetAreaForeground2, newValue, oldValue));
+                        MapPointActionData newValue = new MapPointActionData(area, selectedItemIndex, "Area-Foreground2", point);
+                        MapPointActionData oldValue = new MapPointActionData(area, selectedItemIndex, "Area-Foreground2", area.getForegroundLayer2());
+                        ActionManager.setAndExecuteAction(new CustomAction<MapPointActionData>(area, "Set Area Foreground 2", this::actionSetAreaForeground2, newValue, oldValue));
                     }
                 }
                 break;
@@ -1080,15 +1078,15 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
                 if (closestSelectedPointIndex == 0) {
                     //Trigger
                     Point point = new Point(x, y);
-                    ActionMapDataPoint newValue = new ActionMapDataPoint(copy, selectedItemIndex, copyType+"-Trigger", point);
-                    ActionMapDataPoint oldValue = new ActionMapDataPoint(copy, selectedItemIndex, copyType+"-Trigger", copy.getTrigger());
-                    ActionManager.setAndExecuteAction(new MapDataPointAction(copy, "Set "+copyType+" Trigger", this::actionSetCopyFlagTriggerPos, newValue, oldValue));
+                    MapPointActionData newValue = new MapPointActionData(copy, selectedItemIndex, copyType+"-Trigger", point);
+                    MapPointActionData oldValue = new MapPointActionData(copy, selectedItemIndex, copyType+"-Trigger", copy.getTrigger());
+                    ActionManager.setAndExecuteAction(new CustomAction<MapPointActionData>(copy, "Set "+copyType+" Trigger", this::actionSetCopyFlagTriggerPos, newValue, oldValue));
                 } else if (closestSelectedPointIndex == 5) {
                     //Destination
                     Point point = new Point(x, y);
-                    ActionMapDataPoint newValue = new ActionMapDataPoint(copy, selectedItemIndex, copyType+"-Dest", point);
-                    ActionMapDataPoint oldValue = new ActionMapDataPoint(copy, selectedItemIndex, copyType+"-Dest", copy.getDest());
-                    ActionManager.setAndExecuteAction(new MapDataPointAction(copy, "Set "+copyType+" Destination", this::actionSetCopyFlagDestPos, newValue, oldValue));
+                    MapPointActionData newValue = new MapPointActionData(copy, selectedItemIndex, copyType+"-Dest", point);
+                    MapPointActionData oldValue = new MapPointActionData(copy, selectedItemIndex, copyType+"-Dest", copy.getDest());
+                    ActionManager.setAndExecuteAction(new CustomAction<MapPointActionData>(copy, "Set "+copyType+" Destination", this::actionSetCopyFlagDestPos, newValue, oldValue));
                 } else if (copy.getSourceStartX() == 0xFF && copy.getSourceStartY() == 0xFF) {
                     //Main rect when infering source from roof (dest) position
                     MapArea mainArea = map.getAreas()[0];
@@ -1115,7 +1113,7 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
                     Rectangle rect = new Rectangle(sx, sy, ex-sx <= 0 ? 1 : ex-sx, ey-sy <= 0 ? 1 : ey-sy);
                     ActionMapCopySourceEvent newValue = new ActionMapCopySourceEvent(copy, selectedItemIndex, copyType+"-Source", rect, point);
                     ActionMapCopySourceEvent oldValue = new ActionMapCopySourceEvent(copy, selectedItemIndex, copyType+"-Source", copy.getSource(), copy.getDest());
-                    ActionManager.setAndExecuteAction(new MapCopyEventSourceAction(copy, "Set "+copyType+" Source and Dest", this::actionSetFlagSourceAndDest, newValue, oldValue));
+                    ActionManager.setAndExecuteAction(new CustomAction<ActionMapCopySourceEvent>(copy, "Set "+copyType+" Source and Dest", this::actionSetFlagSourceAndDest, newValue, oldValue));
                     
                     if (pointsSwapped) {
                         closestSelectedPointIndex = findClosestCopyPoint(copy, x, y, true);
@@ -1143,7 +1141,7 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
                     Rectangle rect = new Rectangle(sx, sy, ex-sx, ey-sy);
                     ActionMapCopySourceEvent newValue = new ActionMapCopySourceEvent(copy, selectedItemIndex, copyType+"-Source", rect, point);
                     ActionMapCopySourceEvent oldValue = new ActionMapCopySourceEvent(copy, selectedItemIndex, copyType+"-Source", copy.getSource(), copy.getDest());
-                    ActionManager.setAndExecuteAction(new MapCopyEventSourceAction(copy, "Set "+copyType+" Source and Dest", this::actionSetFlagSourceAndDest, newValue, oldValue));
+                    ActionManager.setAndExecuteAction(new CustomAction<ActionMapCopySourceEvent>(copy, "Set "+copyType+" Source and Dest", this::actionSetFlagSourceAndDest, newValue, oldValue));
                     
                     if (pointsSwapped) {
                         closestSelectedPointIndex = findClosestCopyPoint(copy, x, y, true);
@@ -1156,63 +1154,63 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
                     if (warp.getTriggerX() == 0xFF) x = 0xFF;
                     if (warp.getTriggerY() == 0xFF) y = 0xFF;
                     Point point = new Point(x, y);
-                    ActionMapDataPoint newValue = new ActionMapDataPoint(warp, selectedItemIndex, "Warp-Trigger", point);
-                    ActionMapDataPoint oldValue = new ActionMapDataPoint(warp, selectedItemIndex, "Warp-Trigger", warp.getTrigger());
-                    ActionManager.setAndExecuteAction(new MapDataPointAction(warp, "Set Warp Trigger", this::actionSetWarpTrigger, newValue, oldValue));
+                    MapPointActionData newValue = new MapPointActionData(warp, selectedItemIndex, "Warp-Trigger", point);
+                    MapPointActionData oldValue = new MapPointActionData(warp, selectedItemIndex, "Warp-Trigger", warp.getTrigger());
+                    ActionManager.setAndExecuteAction(new CustomAction<MapPointActionData>(warp, "Set Warp Trigger", this::actionSetWarpTrigger, newValue, oldValue));
                 } else {
                     Point point = new Point(x, y);
-                    ActionMapDataPoint newValue = new ActionMapDataPoint(warp, selectedItemIndex, "Warp-Dest", point);
-                    ActionMapDataPoint oldValue = new ActionMapDataPoint(warp, selectedItemIndex, "Warp-Dest", warp.getDest());
-                    ActionManager.setAndExecuteAction(new MapDataPointAction(warp, "Set Warp Destination", this::actionSetWarpDest, newValue, oldValue));
+                    MapPointActionData newValue = new MapPointActionData(warp, selectedItemIndex, "Warp-Dest", point);
+                    MapPointActionData oldValue = new MapPointActionData(warp, selectedItemIndex, "Warp-Dest", warp.getDest());
+                    ActionManager.setAndExecuteAction(new CustomAction<MapPointActionData>(warp, "Set Warp Destination", this::actionSetWarpDest, newValue, oldValue));
                 }
                 break;
             case DRAW_MODE_CHEST_ITEMS:
                 MapItem chestItem = map.getChestItems()[selectedItemIndex];
                 if (chestItem != null) {
                     Point point = new Point(x, y);
-                    ActionMapDataPoint newValue = new ActionMapDataPoint(chestItem, selectedItemIndex, "ChestItem-Pos", point);
-                    ActionMapDataPoint oldValue = new ActionMapDataPoint(chestItem, selectedItemIndex, "ChestItem-Pos", chestItem.getPos());
-                    ActionManager.setAndExecuteAction(new MapDataPointAction(chestItem, "Set Chest Item Position", this::actionSetChestItemPos, newValue, oldValue));
+                    MapPointActionData newValue = new MapPointActionData(chestItem, selectedItemIndex, "ChestItem-Pos", point);
+                    MapPointActionData oldValue = new MapPointActionData(chestItem, selectedItemIndex, "ChestItem-Pos", chestItem.getPos());
+                    ActionManager.setAndExecuteAction(new CustomAction<MapPointActionData>(chestItem, "Set Chest Item Position", this::actionSetChestItemPos, newValue, oldValue));
                 }
                 break;
             case DRAW_MODE_OTHER_ITEMS:
                 MapItem otherItem = map.getOtherItems()[selectedItemIndex];
                 if (otherItem != null) {
                     Point point = new Point(x, y);
-                    ActionMapDataPoint newValue = new ActionMapDataPoint(otherItem, selectedItemIndex, "OtherItem-Pos", point);
-                    ActionMapDataPoint oldValue = new ActionMapDataPoint(otherItem, selectedItemIndex, "OtherItem-Pos", otherItem.getPos());
-                    ActionManager.setAndExecuteAction(new MapDataPointAction(otherItem, "Set Chest Item Position", this::actionSetOtherItemPos, newValue, oldValue));
+                    MapPointActionData newValue = new MapPointActionData(otherItem, selectedItemIndex, "OtherItem-Pos", point);
+                    MapPointActionData oldValue = new MapPointActionData(otherItem, selectedItemIndex, "OtherItem-Pos", otherItem.getPos());
+                    ActionManager.setAndExecuteAction(new CustomAction<MapPointActionData>(otherItem, "Set Chest Item Position", this::actionSetOtherItemPos, newValue, oldValue));
                 }
                 break;
         }
     }
     
-    private void actionSetAreaLayer1(ActionMapDataRect value) {
+    private void actionSetAreaLayer1(MapRectActionData value) {
         MapArea area = (MapArea)value.mapDataItem();
         area.setLayer1(value.rect());
         triggerActionEventListener(value.itemIndex(), "Area");
     }
     
-    private void actionSetAreaForeground2(ActionMapDataPoint value) {
+    private void actionSetAreaForeground2(MapPointActionData value) {
         MapArea area = (MapArea)value.mapDataItem();
         area.setForegroundLayer2(value.point());
         triggerActionEventListener(value.itemIndex(), "Area");
     }
     
-    private void actionSetAreaBackground2(ActionMapDataPoint value) {
+    private void actionSetAreaBackground2(MapPointActionData value) {
         MapArea area = (MapArea)value.mapDataItem();
         area.setBackgroundLayer2(value.point());
         triggerActionEventListener(value.itemIndex(), "Area");
     }
     
-    private void actionSetCopyFlagTriggerPos(ActionMapDataPoint value) {
+    private void actionSetCopyFlagTriggerPos(MapPointActionData value) {
         MapCopyEvent flag = (MapCopyEvent)value.mapDataItem();
         flag.setTrigger(value.point());
         String copyType = value.event().substring(0, value.event().indexOf('-'));
         triggerActionEventListener(value.itemIndex(), copyType);
     }
     
-    private void actionSetCopyFlagDestPos(ActionMapDataPoint value) {
+    private void actionSetCopyFlagDestPos(MapPointActionData value) {
         MapCopyEvent flag = (MapCopyEvent)value.mapDataItem();
         flag.setDest(value.point());
         String copyType = value.event().substring(0, value.event().indexOf('-'));
@@ -1227,25 +1225,25 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
         triggerActionEventListener(value.itemIndex(), copyType);
     }
     
-    private void actionSetWarpTrigger(ActionMapDataPoint value) {
+    private void actionSetWarpTrigger(MapPointActionData value) {
         MapWarpEvent warp = (MapWarpEvent)value.mapDataItem();
         warp.setTrigger(value.point());
         triggerActionEventListener(value.itemIndex(), "Warp");
     }
     
-    private void actionSetWarpDest(ActionMapDataPoint value) {
+    private void actionSetWarpDest(MapPointActionData value) {
         MapWarpEvent warp = (MapWarpEvent)value.mapDataItem();
         warp.setDest(value.point());
         triggerActionEventListener(value.itemIndex(), "Warp");
     }
     
-    private void actionSetChestItemPos(ActionMapDataPoint value) {
+    private void actionSetChestItemPos(MapPointActionData value) {
         MapItem chestItem = (MapItem)value.mapDataItem();
         chestItem.setPos(value.point());
         triggerActionEventListener(value.itemIndex(), "ChestItem");
     }
     
-    private void actionSetOtherItemPos(ActionMapDataPoint value) {
+    private void actionSetOtherItemPos(MapPointActionData value) {
         MapItem otherItem = (MapItem)value.mapDataItem();
         otherItem.setPos(value.point());
         triggerActionEventListener(value.itemIndex(), "OtherItem");

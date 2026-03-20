@@ -11,7 +11,7 @@ import javax.swing.JSlider;
  *
  * @author TiMMy
  */
-public class SliderAction extends Action<Integer> {
+public class SliderAction extends BasicAction<Integer> {
 
     private JSlider slider;
     

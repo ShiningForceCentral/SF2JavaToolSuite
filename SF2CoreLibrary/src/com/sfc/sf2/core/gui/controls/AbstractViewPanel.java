@@ -33,7 +33,7 @@ public class AbstractViewPanel<T extends AbstractLayoutPanel> extends javax.swin
     public JCheckBox getGridCheckBox() { return jCheckBoxGrid; }
     public JSpinner getItemsPerRowSpinner() { return jSpinnerItemsPerRow; }
     public ColorPicker getBackgroundColorPicker() { return colorPickerBG; }
-        
+
     protected void init(JComboBox jComboBoxScale, JCheckBox jCheckBoxGrid, JSpinner jSpinnerItemsPerRow, ColorPicker colorPickerBG) {
         this.jComboBoxScale = jComboBoxScale;
         this.jCheckBoxGrid = jCheckBoxGrid;

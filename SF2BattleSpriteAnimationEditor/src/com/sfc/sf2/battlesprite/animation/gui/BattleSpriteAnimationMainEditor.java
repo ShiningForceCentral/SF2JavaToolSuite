@@ -5,15 +5,15 @@
  */
 package com.sfc.sf2.battlesprite.animation.gui;
 
-import com.sfc.sf2.battlescene.BattleSceneAction;
-import com.sfc.sf2.battlescene.actions.ActionBattleScene;
+import com.sfc.sf2.battlescene.actions.BattleSceneActionData;
 import com.sfc.sf2.battlesprite.BattleSprite;
 import com.sfc.sf2.battlesprite.animation.BattleSpriteAnimation;
 import com.sfc.sf2.battlesprite.animation.BattleSpriteAnimationFrame;
 import com.sfc.sf2.battlesprite.animation.BattleSpriteAnimationManager;
-import com.sfc.sf2.core.actions.Action;
 import com.sfc.sf2.core.actions.ActionManager;
+import com.sfc.sf2.core.actions.BasicAction;
 import com.sfc.sf2.core.actions.ComboAction;
+import com.sfc.sf2.core.actions.CustomAction;
 import com.sfc.sf2.core.actions.SpinnerAction;
 import com.sfc.sf2.core.actions.ToggleAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
@@ -68,11 +68,11 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
     protected void onDataLoaded() {
         super.onDataLoaded();
         
-        ActionManager.setAndExecuteAction(new Action<BattleSpriteAnimation>(this, "Animation Imported", this::actionAnimationLoaded, battlespriteanimationManager.getBattleSpriteAnimation(), battleSpriteAnimationLayoutPanel.getAnimation()));
+        ActionManager.setAndExecuteAction(new BasicAction<BattleSpriteAnimation>(this, "Animation Imported", this::actionAnimationLoaded, battlespriteanimationManager.getBattleSpriteAnimation(), battleSpriteAnimationLayoutPanel.getAnimation()));
     }
     
     private void actionAnimationLoaded(BattleSpriteAnimation animation) {
-        actionBattleSceneLoaded(new ActionBattleScene(battlespriteanimationManager.getBackground(), battlespriteanimationManager.getGround()));
+        actionBattleSceneLoaded(new BattleSceneActionData(battlespriteanimationManager.getBackground(), battlespriteanimationManager.getGround()));
         actionWeaponLoaded(battlespriteanimationManager.getWeaponsprite());
         battleSpriteAnimationLayoutPanel.setAnimation(animation);
         
@@ -99,12 +99,12 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
     protected void onBattleSceneDataLoaded() {
         super.onDataLoaded();
         
-        ActionBattleScene newValue = new ActionBattleScene(battlespriteanimationManager.getBackground(), battlespriteanimationManager.getGround());
-        ActionBattleScene oldValue = new ActionBattleScene(battleSpriteAnimationLayoutPanel.getBg(), battleSpriteAnimationLayoutPanel.getGround());
-        ActionManager.setAndExecuteAction(new BattleSceneAction(this, "Battle Scene Imported", this::actionBattleSceneLoaded, newValue, oldValue));
+        BattleSceneActionData newValue = new BattleSceneActionData(battlespriteanimationManager.getBackground(), battlespriteanimationManager.getGround());
+        BattleSceneActionData oldValue = new BattleSceneActionData(battleSpriteAnimationLayoutPanel.getBg(), battleSpriteAnimationLayoutPanel.getGround());
+        ActionManager.setAndExecuteAction(new CustomAction<BattleSceneActionData>(this, "Battle Scene Imported", this::actionBattleSceneLoaded, newValue, oldValue));
     }
     
-    private void actionBattleSceneLoaded(ActionBattleScene battleScene) {
+    private void actionBattleSceneLoaded(BattleSceneActionData battleScene) {
         battleSpriteAnimationLayoutPanel.setBg(battleScene.background());
         battleSpriteAnimationLayoutPanel.setGround(battleScene.ground());
     }
@@ -112,7 +112,7 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
     protected void onWeaponDataLoaded() {
         super.onDataLoaded();
         
-        ActionManager.setAndExecuteAction(new Action<WeaponSprite>(this, "Weapon Imported", this::actionWeaponLoaded, battlespriteanimationManager.getWeaponsprite(), battleSpriteAnimationLayoutPanel.getWeaponsprite()));
+        ActionManager.setAndExecuteAction(new BasicAction<WeaponSprite>(this, "Weapon Imported", this::actionWeaponLoaded, battlespriteanimationManager.getWeaponsprite(), battleSpriteAnimationLayoutPanel.getWeaponsprite()));
     }
     
     private void actionWeaponLoaded(WeaponSprite weaponSprite) {

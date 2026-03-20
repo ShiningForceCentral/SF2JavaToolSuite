@@ -239,7 +239,7 @@
                                   <SubComponents>
                                     <Component class="javax.swing.JRadioButton" name="jRadio4x2Palette">
                                       <Properties>
-                                        <Property name="buttonGroup" type="com.sfc.sf2.core.gui.controls.NameableButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                                        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                                           <ComponentRef name="buttonGroupPresets"/>
                                         </Property>
                                         <Property name="selected" type="boolean" value="true"/>
@@ -253,7 +253,7 @@
                                     </Component>
                                     <Component class="javax.swing.JRadioButton" name="jRadio4x2NoPalette">
                                       <Properties>
-                                        <Property name="buttonGroup" type="com.sfc.sf2.core.gui.controls.NameableButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                                        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                                           <ComponentRef name="buttonGroupPresets"/>
                                         </Property>
                                         <Property name="text" type="java.lang.String" value="4x2 (x3) - wo/ palette - (evilspiritalt)"/>
@@ -363,7 +363,7 @@
                                         </Component>
                                         <Component class="javax.swing.JRadioButton" name="jRadioCustom">
                                           <Properties>
-                                            <Property name="buttonGroup" type="com.sfc.sf2.core.gui.controls.NameableButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                                            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                                               <ComponentRef name="buttonGroupPresets"/>
                                             </Property>
                                             <Property name="text" type="java.lang.String" value="Custom"/>
@@ -394,7 +394,7 @@
                                     </Container>
                                     <Component class="javax.swing.JRadioButton" name="jRadio6x3">
                                       <Properties>
-                                        <Property name="buttonGroup" type="com.sfc.sf2.core.gui.controls.NameableButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                                        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                                           <ComponentRef name="buttonGroupPresets"/>
                                         </Property>
                                         <Property name="text" type="java.lang.String" value="6x3 (x3) - (nazcaship)"/>

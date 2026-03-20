@@ -5,15 +5,14 @@
  */
 package com.sfc.sf2.vwfont.gui;
 
-import com.sfc.sf2.core.actions.Action;
 import com.sfc.sf2.core.actions.ActionManager;
+import com.sfc.sf2.core.actions.BasicAction;
 import com.sfc.sf2.core.actions.RadioButtonAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.core.io.FileFormat;
 import com.sfc.sf2.core.settings.SettingsManager;
 import com.sfc.sf2.helpers.PathHelpers;
-import com.sfc.sf2.helpers.RenderScaleHelpers;
 import com.sfc.sf2.vwfont.FontSymbol;
 import com.sfc.sf2.vwfont.VWFontManager;
 import com.sfc.sf2.vwfont.settings.FontSettings;
@@ -57,7 +56,7 @@ public class VWFontMainEditor extends AbstractMainEditor {
     @Override
     protected void onDataLoaded() {
         super.onDataLoaded();
-        ActionManager.setAndExecuteAction(new Action<FontSymbol[]>(this, "Font Symbols Imported", this::actionSymbolsLoaded, fontManager.getFontSymbols(), fontSymbolLayoutPanel.getFontSymbols()));
+        ActionManager.setAndExecuteAction(new BasicAction<FontSymbol[]>(this, "Font Symbols Imported", this::actionSymbolsLoaded, fontManager.getFontSymbols(), fontSymbolLayoutPanel.getFontSymbols()));
     }
     
     private void actionSymbolsLoaded(FontSymbol[] symbols) {

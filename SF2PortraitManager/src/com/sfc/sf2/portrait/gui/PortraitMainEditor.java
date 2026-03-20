@@ -5,16 +5,16 @@
  */
 package com.sfc.sf2.portrait.gui;
 
-import com.sfc.sf2.core.actions.Action;
 import com.sfc.sf2.core.actions.ActionManager;
+import com.sfc.sf2.core.actions.BasicAction;
+import com.sfc.sf2.core.actions.CustomAction;
 import com.sfc.sf2.core.settings.SettingsManager;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.helpers.PathHelpers;
 import com.sfc.sf2.portrait.Portrait;
 import com.sfc.sf2.portrait.PortraitManager;
-import com.sfc.sf2.portrait.actions.ActionPortraitData;
-import com.sfc.sf2.portrait.actions.PortraitAction;
+import com.sfc.sf2.portrait.actions.PortraitActionData;
 import com.sfc.sf2.portrait.models.PortraitDataTableModel;
 import com.sfc.sf2.portrait.settings.PortraitSettings;
 import java.awt.event.ActionEvent;
@@ -65,10 +65,10 @@ public class PortraitMainEditor extends AbstractMainEditor {
     @Override
     protected void onDataLoaded() {
         super.onDataLoaded();
-        ActionManager.setAndExecuteAction(new Action<Portrait>(this, "Portrait Imported", this::actionportraitLoaded, portraitManager.getPortrait(), portraitLayoutPanel.getPortrait()));
+        ActionManager.setAndExecuteAction(new BasicAction<Portrait>(this, "Portrait Imported", this::actionPortraitLoaded, portraitManager.getPortrait(), portraitLayoutPanel.getPortrait()));
     }
     
-    private void actionportraitLoaded(Portrait portrait) {        
+    private void actionPortraitLoaded(Portrait portrait) {        
         portraitLayoutPanel.setPortrait(portrait);
         selectedEyesRow = selectedMouthsRow = -1;
         if (portrait == null) {
@@ -595,9 +595,9 @@ public class PortraitMainEditor extends AbstractMainEditor {
     private void eyesListValueChanged(ActionEvent evt) {
         if (selectedEyesRow == -1 || selectedEyesRow != tableEyes.jTable.getSelectedRow()) return;
         if (!ActionManager.isActionTriggering()) {
-            ActionPortraitData newData = new ActionPortraitData(tableEyes.jTable.getSelectedRow(), portraitLayoutPanel.getPortrait().getEyeTiles()[selectedEyesRow]);
-            ActionPortraitData oldData = new ActionPortraitData(tableEyes.jTable.getSelectedRow(), eyeTable.getRow(selectedEyesRow));
-            ActionManager.setActionWithoutExecute(new PortraitAction(tableEyes, "Eyes Changed", this::actionEyesListValueChanged, newData, oldData));
+            PortraitActionData newData = new PortraitActionData(tableEyes.jTable.getSelectedRow(), portraitLayoutPanel.getPortrait().getEyeTiles()[selectedEyesRow]);
+            PortraitActionData oldData = new PortraitActionData(tableEyes.jTable.getSelectedRow(), eyeTable.getRow(selectedEyesRow));
+            ActionManager.setActionWithoutExecute(new CustomAction<PortraitActionData>(tableEyes, "Eyes Changed", this::actionEyesListValueChanged, newData, oldData));
         }
         Portrait portrait = portraitLayoutPanel.getPortrait();
         if (portrait != null) {
@@ -605,7 +605,7 @@ public class PortraitMainEditor extends AbstractMainEditor {
         }
     }
     
-    private void actionEyesListValueChanged(ActionPortraitData data) {
+    private void actionEyesListValueChanged(PortraitActionData data) {
         int row = data.row();
         Portrait portrait = portraitLayoutPanel.getPortrait();
         if (portrait != null) {
@@ -621,9 +621,9 @@ public class PortraitMainEditor extends AbstractMainEditor {
     private void mouthListValueChanged(ActionEvent evt) {
         if (selectedMouthsRow == -1 || selectedMouthsRow != tableMouth.jTable.getSelectedRow()) return;
         if (!ActionManager.isActionTriggering()) {
-            ActionPortraitData newData = new ActionPortraitData(tableMouth.jTable.getSelectedRow(), portraitLayoutPanel.getPortrait().getMouthTiles()[selectedMouthsRow]);
-            ActionPortraitData oldData = new ActionPortraitData(tableMouth.jTable.getSelectedRow(), mouthTable.getRow(selectedMouthsRow));
-            ActionManager.setActionWithoutExecute(new PortraitAction(tableMouth, "Mouths Changed", this::actionMouthsListValueChanged, newData, oldData));
+            PortraitActionData newData = new PortraitActionData(tableMouth.jTable.getSelectedRow(), portraitLayoutPanel.getPortrait().getMouthTiles()[selectedMouthsRow]);
+            PortraitActionData oldData = new PortraitActionData(tableMouth.jTable.getSelectedRow(), mouthTable.getRow(selectedMouthsRow));
+            ActionManager.setActionWithoutExecute(new CustomAction<PortraitActionData>(tableMouth, "Mouths Changed", this::actionMouthsListValueChanged, newData, oldData));
         }
         Portrait portrait = portraitLayoutPanel.getPortrait();
         if (portrait != null) {
@@ -631,7 +631,7 @@ public class PortraitMainEditor extends AbstractMainEditor {
         }
     }
     
-    private void actionMouthsListValueChanged(ActionPortraitData data) {
+    private void actionMouthsListValueChanged(PortraitActionData data) {
         int row = data.row();
         Portrait portrait = portraitLayoutPanel.getPortrait();
         if (portrait != null) {

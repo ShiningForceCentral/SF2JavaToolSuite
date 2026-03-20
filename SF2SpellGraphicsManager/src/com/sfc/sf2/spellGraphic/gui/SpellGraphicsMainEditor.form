@@ -1426,9 +1426,6 @@
                                               <Properties>
                                                 <Property name="dialogTitle" type="java.lang.String" value="Spell Color 9"/>
                                                 <Property name="name" type="java.lang.String" value="Spell Color 9" noResource="true"/>
-                                                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                                                  <Dimension value="[30, 30]"/>
-                                                </Property>
                                               </Properties>
                                               <Events>
                                                 <EventHandler event="colorChanged" listener="com.sfc.sf2.palette.CRAMColorPicker$ColorChangedListener" parameters="java.awt.event.ActionEvent" handler="cRAMColor09ColorChanged"/>
@@ -1437,12 +1434,12 @@
                                               <Layout>
                                                 <DimensionLayout dim="0">
                                                   <Group type="103" groupAlignment="0" attributes="0">
-                                                      <EmptySpace min="0" pref="28" max="32767" attributes="0"/>
+                                                      <EmptySpace min="0" pref="26" max="32767" attributes="0"/>
                                                   </Group>
                                                 </DimensionLayout>
                                                 <DimensionLayout dim="1">
                                                   <Group type="103" groupAlignment="0" attributes="0">
-                                                      <EmptySpace min="0" pref="28" max="32767" attributes="0"/>
+                                                      <EmptySpace min="0" pref="26" max="32767" attributes="0"/>
                                                   </Group>
                                                 </DimensionLayout>
                                               </Layout>
@@ -1451,9 +1448,6 @@
                                               <Properties>
                                                 <Property name="dialogTitle" type="java.lang.String" value="Spell Color 13"/>
                                                 <Property name="name" type="java.lang.String" value="Spell Color 13" noResource="true"/>
-                                                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                                                  <Dimension value="[30, 30]"/>
-                                                </Property>
                                               </Properties>
                                               <Events>
                                                 <EventHandler event="colorChanged" listener="com.sfc.sf2.palette.CRAMColorPicker$ColorChangedListener" parameters="java.awt.event.ActionEvent" handler="cRAMColor13ColorChanged"/>
@@ -1462,12 +1456,12 @@
                                               <Layout>
                                                 <DimensionLayout dim="0">
                                                   <Group type="103" groupAlignment="0" attributes="0">
-                                                      <EmptySpace min="0" pref="28" max="32767" attributes="0"/>
+                                                      <EmptySpace min="0" pref="26" max="32767" attributes="0"/>
                                                   </Group>
                                                 </DimensionLayout>
                                                 <DimensionLayout dim="1">
                                                   <Group type="103" groupAlignment="0" attributes="0">
-                                                      <EmptySpace min="0" pref="28" max="32767" attributes="0"/>
+                                                      <EmptySpace min="0" pref="26" max="32767" attributes="0"/>
                                                   </Group>
                                                 </DimensionLayout>
                                               </Layout>
@@ -1476,9 +1470,6 @@
                                               <Properties>
                                                 <Property name="dialogTitle" type="java.lang.String" value="Spell Color 14"/>
                                                 <Property name="name" type="java.lang.String" value="Spell Color 14" noResource="true"/>
-                                                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                                                  <Dimension value="[30, 30]"/>
-                                                </Property>
                                               </Properties>
                                               <Events>
                                                 <EventHandler event="colorChanged" listener="com.sfc.sf2.palette.CRAMColorPicker$ColorChangedListener" parameters="java.awt.event.ActionEvent" handler="cRAMColor14ColorChanged"/>
@@ -1487,12 +1478,12 @@
                                               <Layout>
                                                 <DimensionLayout dim="0">
                                                   <Group type="103" groupAlignment="0" attributes="0">
-                                                      <EmptySpace min="0" pref="28" max="32767" attributes="0"/>
+                                                      <EmptySpace min="0" pref="26" max="32767" attributes="0"/>
                                                   </Group>
                                                 </DimensionLayout>
                                                 <DimensionLayout dim="1">
                                                   <Group type="103" groupAlignment="0" attributes="0">
-                                                      <EmptySpace min="0" pref="28" max="32767" attributes="0"/>
+                                                      <EmptySpace min="0" pref="26" max="32767" attributes="0"/>
                                                   </Group>
                                                 </DimensionLayout>
                                               </Layout>

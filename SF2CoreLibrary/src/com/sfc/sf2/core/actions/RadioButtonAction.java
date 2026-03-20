@@ -12,7 +12,7 @@ import javax.swing.JRadioButton;
  *
  * @author TiMMy
  */
-public class RadioButtonAction extends Action<JRadioButton> {
+public class RadioButtonAction extends BasicAction<JRadioButton> {
         
     public RadioButtonAction(ButtonGroup group, JRadioButton newValue, JRadioButton oldValue) {
         super(group, "Radio Button Value", null, newValue, oldValue);

@@ -5,19 +5,21 @@
  */
 package com.sfc.sf2.map.layout.gui;
 
-import com.sfc.sf2.core.actions.Action;
 import com.sfc.sf2.core.actions.ActionManager;
+import com.sfc.sf2.core.actions.CustomAction;
+import com.sfc.sf2.core.actions.SpinnerAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.core.settings.SettingsManager;
 import com.sfc.sf2.helpers.PathHelpers;
 import com.sfc.sf2.helpers.RenderScaleHelpers;
 import com.sfc.sf2.map.layout.MapLayoutManager;
-import com.sfc.sf2.map.layout.actions.ActionMapLayoutData;
+import com.sfc.sf2.map.layout.actions.MapLayoutActionData;
 import com.sfc.sf2.map.block.settings.MapBlockSettings;
 import java.awt.Color;
 import java.nio.file.Path;
 import java.util.logging.Level;
+import javax.swing.JSpinner;
 
 /**
  *
@@ -26,6 +28,8 @@ import java.util.logging.Level;
 public class MapLayoutMainEditor extends AbstractMainEditor {
     
     private final MapLayoutManager maplayoutManager = new MapLayoutManager();
+    
+    private int actionImportMapNumber;
     
     public MapLayoutMainEditor() {
         super();
@@ -49,12 +53,12 @@ public class MapLayoutMainEditor extends AbstractMainEditor {
     @Override
     protected void onDataLoaded() {
         super.onDataLoaded();
-        ActionMapLayoutData newValue = new ActionMapLayoutData(maplayoutManager.getMapLayout(), maplayoutManager.getMapBlockset(), maplayoutManager.getSharedBlockInfo());
-        ActionMapLayoutData oldValue = new ActionMapLayoutData(mapLayoutPanel.getMapLayout(), mapBlocksetPanel.getBlockset(), blocksetViewPanel1.getSharedBlockInfo());
-        ActionManager.setAndExecuteAction(new Action<ActionMapLayoutData>(this, "Layout Imported", this::actionLayoutLoaded, newValue, oldValue));
+        MapLayoutActionData newValue = new MapLayoutActionData(maplayoutManager.getMapLayout(), maplayoutManager.getMapBlockset(), maplayoutManager.getSharedBlockInfo());
+        MapLayoutActionData oldValue = new MapLayoutActionData(mapLayoutPanel.getMapLayout(), mapBlocksetPanel.getBlockset(), blocksetViewPanel1.getSharedBlockInfo());
+        ActionManager.setAndExecuteAction(new CustomAction<MapLayoutActionData>(this, "Layout Imported", this::actionLayoutLoaded, newValue, oldValue));
     }
     
-    private void actionLayoutLoaded(ActionMapLayoutData data) {
+    private void actionLayoutLoaded(MapLayoutActionData data) {
         mapLayoutPanel.setMapLayout(data.layout());
         mapBlocksetPanel.setBlockset(data.blockset());
         mapBlocksetPanel.setTilesets(data.layout() == null ? null : data.layout().getTilesets());
@@ -272,6 +276,11 @@ public class MapLayoutMainEditor extends AbstractMainEditor {
 
             jSpinnerImportMapNumber.setModel(new javax.swing.SpinnerNumberModel(3, 0, 255, 1));
             jSpinnerImportMapNumber.setName("Import Map Number"); // NOI18N
+            jSpinnerImportMapNumber.addChangeListener(new javax.swing.event.ChangeListener() {
+                public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                    jSpinnerImportMapNumberStateChanged(evt);
+                }
+            });
 
             jButtonImportMap.setText("Import");
             jButtonImportMap.addActionListener(new java.awt.event.ActionListener() {
@@ -318,6 +327,11 @@ public class MapLayoutMainEditor extends AbstractMainEditor {
 
             jSpinnerExportMapNumber.setModel(new javax.swing.SpinnerNumberModel(3, 0, 255, 1));
             jSpinnerExportMapNumber.setName("Export map Number"); // NOI18N
+            jSpinnerExportMapNumber.addChangeListener(new javax.swing.event.ChangeListener() {
+                public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                    jSpinnerImportMapNumberStateChanged(evt);
+                }
+            });
 
             jButtonExportMap.setText("Export");
             jButtonExportMap.addActionListener(new java.awt.event.ActionListener() {
@@ -949,7 +963,19 @@ public class MapLayoutMainEditor extends AbstractMainEditor {
             Console.logger().severe("ERROR New map entry could not be created.");
         }*/
     }//GEN-LAST:event_jButton32ActionPerformed
-	
+
+    private void jSpinnerImportMapNumberStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinnerImportMapNumberStateChanged
+        int newValue = (int)((JSpinner)(evt.getSource())).getValue();
+        int oldValue = actionImportMapNumber;
+        if (!ActionManager.isActionTriggering()) {
+            ActionManager.setActionWithoutExecute(new SpinnerAction((JSpinner)(evt.getSource()), newValue, oldValue));
+        }
+        if (actionImportMapNumber == newValue) return;
+        actionImportMapNumber = (int)jSpinnerImportMapNumber.getValue();
+        jSpinnerImportMapNumber.setValue(newValue);
+        jSpinnerExportMapNumber.setValue(newValue);
+    }//GEN-LAST:event_jSpinnerImportMapNumberStateChanged
+    
     /*
     * To create a new Main Editor, copy the below code
     * Don't forget to change the new main class (below)

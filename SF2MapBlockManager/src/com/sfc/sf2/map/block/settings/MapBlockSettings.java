@@ -19,7 +19,7 @@ public class MapBlockSettings implements AbstractSettings {
 
     private int blocksPerRow;
     private int blockScale;
-    private Color blockBGColor;
+    private Color blockBGColor = Color.LIGHT_GRAY;
     
     private final int defaultBlocksPerRow;
     private final int defaultBlockScale;

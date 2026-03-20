@@ -69,6 +69,7 @@ public class BattlespriteViewPanel extends AbstractViewPanel<BattleSpriteLayoutP
 
         jLabelBG.setText("BG :");
 
+        colorPickerBG.setCheckerPattern(true);
         colorPickerBG.setName("BG Color Picker"); // NOI18N
         colorPickerBG.addColorChangedListener(new com.sfc.sf2.core.gui.controls.ColorPicker.ColorChangedListener() {
             public void colorChanged(java.awt.event.ActionEvent evt) {

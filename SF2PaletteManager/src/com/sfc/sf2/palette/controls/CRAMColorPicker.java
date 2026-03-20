@@ -5,8 +5,8 @@
  */
 package com.sfc.sf2.palette;
 
-import com.sfc.sf2.core.actions.Action;
 import com.sfc.sf2.core.actions.ActionManager;
+import com.sfc.sf2.core.actions.BasicAction;
 import com.sfc.sf2.palette.gui.controls.CRAMColorEditor;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -87,7 +87,7 @@ public class CRAMColorPicker extends javax.swing.JPanel {
         CRAMColor returnCol = CRAMColorEditor.showDialog(this, colorDialogTitle, new CRAMColor(getBackground()));
         if (returnCol != null) {
             CRAMColor oldColor = this.getCRAMColor();
-            ActionManager.setAndExecuteAction(new Action<CRAMColor>(this, "Change CRAM Color", this::setColorUpdated, returnCol, oldColor));
+            ActionManager.setAndExecuteAction(new BasicAction<CRAMColor>(this, "Change CRAM Color", this::setColorUpdated, returnCol, oldColor));
         }
     }//GEN-LAST:event_formMouseClicked
     

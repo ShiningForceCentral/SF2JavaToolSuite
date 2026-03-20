@@ -5,6 +5,7 @@
  */
 package com.sfc.sf2.map.block.actions;
 
+import com.sfc.sf2.core.actions.IActionData;
 import com.sfc.sf2.graphics.Tileset;
 import com.sfc.sf2.map.block.MapBlockset;
 
@@ -12,12 +13,12 @@ import com.sfc.sf2.map.block.MapBlockset;
  *
  * @author TiMMy
  */
-public class ActionMapBlocksetData {
+public class MapBlocksetActionData implements IActionData<MapBlocksetActionData> {
     
     private MapBlockset blockset;
     private Tileset[] tilesets;
 
-    public ActionMapBlocksetData(MapBlockset blockset, Tileset[] tilesets) {
+    public MapBlocksetActionData(MapBlockset blockset, Tileset[] tilesets) {
         this.blockset = blockset;
         this.tilesets = tilesets;
     }
@@ -31,20 +32,22 @@ public class ActionMapBlocksetData {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof ActionMapBlocksetData) {
-            ActionMapBlocksetData other = (ActionMapBlocksetData)obj;
-            if (blockset != other.blockset) return false;
-            if (tilesets == null && other.tilesets == null) return true;
-            if (tilesets != other.tilesets || tilesets == null || other.tilesets == null) return false;
-            if (tilesets.length != other.tilesets.length) return false;
-            for (int i = 0; i < tilesets.length; i++) {
-                if (tilesets[i] != other.tilesets[i]) return false;
-            }
-            return true;
-        } else {
-            return super.equals(obj);
+    public boolean isInvalidated(MapBlocksetActionData other) {
+        if (!this.blockset.equals(other.blockset)) return false;
+        for (int i = 0; i < tilesets.length; i++) {
+            if (!this.tilesets[i].equals(other.tilesets[i])) return false;
         }
+        return true;
+    }
+
+    @Override
+    public boolean canBeCombined(MapBlocksetActionData other) {
+        return this.blockset.equals(other.blockset);
+    }
+
+    @Override
+    public MapBlocksetActionData combine(MapBlocksetActionData other) {
+        return other;
     }
 
     @Override

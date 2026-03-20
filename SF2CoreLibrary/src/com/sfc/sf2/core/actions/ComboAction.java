@@ -11,7 +11,7 @@ import javax.swing.JComboBox;
  *
  * @author TiMMy
  */
-public class ComboAction extends Action<Integer> {
+public class ComboAction extends BasicAction<Integer> {
 
     private JComboBox comboBox;
     

@@ -11,7 +11,7 @@ import com.sfc.sf2.core.gui.controls.MultiComboBox;
  *
  * @author TiMMy
  */
-public class MultiComboAction extends Action<String[]> {
+public class MultiComboAction extends BasicAction<String[]> {
 
     private MultiComboBox comboBox;
     

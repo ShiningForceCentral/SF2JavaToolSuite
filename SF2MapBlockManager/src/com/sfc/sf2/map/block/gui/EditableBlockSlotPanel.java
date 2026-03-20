@@ -6,6 +6,7 @@
 package com.sfc.sf2.map.block.gui;
 
 import com.sfc.sf2.core.actions.ActionManager;
+import com.sfc.sf2.core.actions.CustomAction;
 import com.sfc.sf2.core.gui.layout.BaseMouseCoordsComponent.GridMousePressedEvent;
 import com.sfc.sf2.core.gui.layout.LayoutGrid;
 import com.sfc.sf2.core.gui.layout.LayoutMouseInput;
@@ -16,10 +17,8 @@ import com.sfc.sf2.graphics.TileFlags;
 import com.sfc.sf2.helpers.MapBlockHelpers;
 import com.sfc.sf2.helpers.RenderScaleHelpers;
 import com.sfc.sf2.map.block.MapTile;
-import com.sfc.sf2.map.block.actions.ActionSetBlockTile;
-import com.sfc.sf2.map.block.actions.ActionSetBlockTileFlags;
-import com.sfc.sf2.map.block.actions.SetBlockTileAction;
-import com.sfc.sf2.map.block.actions.SetBlockTileFlagsAction;
+import com.sfc.sf2.map.block.actions.BlockTileActionData;
+import com.sfc.sf2.map.block.actions.TileFlagsActionData;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -125,9 +124,9 @@ public class EditableBlockSlotPanel extends BlockSlotPanel {
             }
             
             if (newTile != null) {
-                ActionSetBlockTile newValue = new ActionSetBlockTile(block, index, newTile.clone());
-                ActionSetBlockTile oldValue = new ActionSetBlockTile(block, index, tile);
-                ActionManager.setAndExecuteAction(new SetBlockTileAction(this, "Set Block Tile", this::ActionChangeTile, newValue, oldValue));
+                BlockTileActionData newValue = new BlockTileActionData(block, index, newTile.clone());
+                BlockTileActionData oldValue = new BlockTileActionData(block, index, tile);
+                ActionManager.setAndExecuteAction(new CustomAction<BlockTileActionData>(this, "Set Block Tile", this::ActionChangeTile, newValue, oldValue));
             }
         } else {
             if (tile == null) return;
@@ -152,19 +151,19 @@ public class EditableBlockSlotPanel extends BlockSlotPanel {
             }
             
             if (newFlags != null) {
-                ActionSetBlockTileFlags newValue = new ActionSetBlockTileFlags(tile, index, newFlags);
-                ActionSetBlockTileFlags oldValue = new ActionSetBlockTileFlags(tile, index, tile.getTileFlags());
-                ActionManager.setAndExecuteAction(new SetBlockTileFlagsAction(this, "Set Tile Flags", this::ActionSetTileFlags, newValue, oldValue));
+                TileFlagsActionData newValue = new TileFlagsActionData(tile, index, newFlags);
+                TileFlagsActionData oldValue = new TileFlagsActionData(tile, index, tile.getTileFlags());
+                ActionManager.setAndExecuteAction(new CustomAction<TileFlagsActionData>(this, "Set Tile Flags", this::ActionSetTileFlags, newValue, oldValue));
             }
         }
     }
     
-    private void ActionChangeTile(ActionSetBlockTile value) {
+    private void ActionChangeTile(BlockTileActionData value) {
         value.block().getMapTiles()[value.index()] = value.tile();
         onBlockEdited();
     }
     
-    private void ActionSetTileFlags(ActionSetBlockTileFlags value) {
+    private void ActionSetTileFlags(TileFlagsActionData value) {
         value.tile().setTileFlags(value.flags());
         onBlockEdited();
     }

@@ -85,8 +85,9 @@ public class DialogPropertiesManager extends AbstractManager {
         }
         if (mapsprites == null) {
             MapSpriteEntries items = new MapSpriteManager().importDisassemblyFromEntryFile(palettePath, mapspritesPath);
-            mapsprites = new HashMap<>(items.getEntries().length);
-            for (int i = 0; i < items.getEntries().length; i++) {
+            int[] entries = items.getEntriesArray();
+            mapsprites = new HashMap<>(entries.length);
+            for (int i = 0; i < entries.length; i++) {
                 mapsprites.put(i, items.getMapSprite(i));
             }
             Console.logger().info("Mapsprites successfully imported from : " + mapspritesPath);

@@ -99,15 +99,14 @@ public class SettingsManager {
         Console.logger().finest("ENTERING loadGlobalSettings");
         String line = null;
         try {
+            globalSettings.initialiseNewUser();
             File file = getGlobalSettingsFilePath().toFile();
             if (file.exists()) {
                 BufferedReader reader = new BufferedReader(new FileReader(file));
                 readStoreData(reader, globalSettings);
                 reader.close();
             } else {
-                Console.logger().info("Initialising new global settings...");
-                globalSettings.initialiseNewUser();
-                saveGlobalSettingsFile();
+                Console.logger().info("Global settings not found. Using default settings...");
             }
         } catch (IOException ex) {
             Console.logger().log(Level.SEVERE, "Could not load settings file from : " + getSettingsFilePath(), ex);
