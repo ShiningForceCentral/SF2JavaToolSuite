@@ -25,11 +25,13 @@ import com.sfc.sf2.map.MapWarpEvent;
 import com.sfc.sf2.map.actions.ActionMapCopySourceEvent;
 import com.sfc.sf2.map.actions.MapBlockActionData;
 import com.sfc.sf2.map.actions.MapCopyBlocksActionData;
+import com.sfc.sf2.map.actions.MapFlagActionData;
 import com.sfc.sf2.map.actions.MapPointActionData;
 import com.sfc.sf2.map.actions.MapRectActionData;
 import com.sfc.sf2.map.block.MapBlock;
 import com.sfc.sf2.map.block.gui.BlockSlotPanel;
 import com.sfc.sf2.map.block.gui.MapBlocksetLayoutPanel;
+import com.sfc.sf2.map.layout.BlockFlags;
 import com.sfc.sf2.map.layout.MapLayout;
 import static com.sfc.sf2.map.layout.MapLayout.BLOCK_HEIGHT;
 import static com.sfc.sf2.map.layout.MapLayout.BLOCK_WIDTH;
@@ -571,8 +573,8 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
         g2.setStroke(new BasicStroke(1));
         for (int y=0; y < BLOCK_HEIGHT; y++) {
             for (int x=0; x < BLOCK_WIDTH; x++) {
-                int itemFlag = blocks[x+y*BLOCK_WIDTH].getEventFlags();
-                if (itemFlag == MapLayoutBlock.MAP_FLAG_STEP) {
+                int itemFlag = blocks[x+y*BLOCK_WIDTH].getFlags().getEventFlags();
+                if (itemFlag == BlockFlags.MAP_FLAG_STEP) {
                     g2.drawImage(MapLayoutFlagIcons.getStepIcon().getImage(), x*PIXEL_WIDTH, y*PIXEL_HEIGHT, null);
                 }
             }
@@ -585,11 +587,11 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
         g2.setStroke(new BasicStroke(1));
         for (int y=0; y < BLOCK_HEIGHT; y++) {
             for (int x=0; x < BLOCK_WIDTH; x++) {
-                int itemFlag = blocks[x+y*BLOCK_WIDTH].getEventFlags();
-                if (itemFlag == MapLayoutBlock.MAP_FLAG_SHOW) {
+                int itemFlag = blocks[x+y*BLOCK_WIDTH].getFlags().getEventFlags();
+                if (itemFlag == BlockFlags.MAP_FLAG_SHOW) {
                     g2.drawImage(MapLayoutFlagIcons.getShowIcon().getImage(), x*PIXEL_WIDTH, y*PIXEL_HEIGHT, null);
                 }
-                else if (itemFlag == MapLayoutBlock.MAP_FLAG_HIDE) {
+                else if (itemFlag == BlockFlags.MAP_FLAG_HIDE) {
                     g2.drawImage(MapLayoutFlagIcons.getHideIcon().getImage(), x*PIXEL_WIDTH, y*PIXEL_HEIGHT, null);
                 }
             }
@@ -662,8 +664,8 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
         g2.setStroke(new BasicStroke(1));
         for (int y=0; y < BLOCK_HEIGHT; y++) {
             for (int x=0; x < BLOCK_WIDTH; x++) {
-                int itemFlag = blocks[x+y*BLOCK_WIDTH].getEventFlags();
-                if (itemFlag == MapLayoutBlock.MAP_FLAG_WARP) {
+                int itemFlag = blocks[x+y*BLOCK_WIDTH].getFlags().getEventFlags();
+                if (itemFlag == BlockFlags.MAP_FLAG_WARP) {
                     g2.drawImage(MapLayoutFlagIcons.getWarpIcon().getImage(), x*PIXEL_WIDTH, y*PIXEL_HEIGHT, null);
                 }
             }
@@ -709,7 +711,7 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
         MapLayoutBlock[] blocks = layout.getBlocks();
         for (int y=0; y < BLOCK_HEIGHT; y++) {
             for (int x=0; x < BLOCK_WIDTH; x++) {
-                ImageIcon icon = MapLayoutFlagIcons.getBlockItemFlagIcon(blocks[x+y*BLOCK_WIDTH].getEventFlags());
+                ImageIcon icon = MapLayoutFlagIcons.getBlockItemFlagIcon(blocks[x+y*BLOCK_WIDTH].getFlags().getEventFlags());
                 if (icon != null) {
                     g2.drawImage(icon.getImage(), x*PIXEL_WIDTH, y*PIXEL_HEIGHT, null);
                 }
@@ -727,7 +729,7 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
         MapLayoutBlock[] blocks = layout.getBlocks();
         for (int y=0; y < BLOCK_HEIGHT; y++) {
             for (int x=0; x < BLOCK_WIDTH; x++) {
-                ImageIcon icon = MapLayoutFlagIcons.getBlockTriggersFlagIcon(blocks[x+y*BLOCK_WIDTH].getEventFlags());
+                ImageIcon icon = MapLayoutFlagIcons.getBlockTriggersFlagIcon(blocks[x+y*BLOCK_WIDTH].getFlags().getEventFlags());
                 if (icon != null) {
                     g2.drawImage(icon.getImage(), x*PIXEL_WIDTH, y*PIXEL_HEIGHT, null);
                 }
@@ -739,9 +741,9 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
         MapLayoutBlock[] blocks = layout.getBlocks();
         for (int y=0; y < BLOCK_HEIGHT; y++) {
             for (int x=0; x < BLOCK_WIDTH; x++) {
-                if (blocks[x+y*BLOCK_WIDTH].getEventFlags() == MapLayoutBlock.MAP_FLAG_CARAVAN) {
+                if (blocks[x+y*BLOCK_WIDTH].getFlags().getEventFlags() == BlockFlags.MAP_FLAG_CARAVAN) {
                     g2.drawImage(MapLayoutFlagIcons.getCaravanIcon().getImage(), x*PIXEL_WIDTH, y*PIXEL_HEIGHT, null);
-                } else if (blocks[x+y*BLOCK_WIDTH].getEventFlags() == MapLayoutBlock.MAP_FLAG_RAFT) {
+                } else if (blocks[x+y*BLOCK_WIDTH].getFlags().getEventFlags() == BlockFlags.MAP_FLAG_RAFT) {
                     g2.drawImage(MapLayoutFlagIcons.getRaftIcon().getImage(), x*PIXEL_WIDTH, y*PIXEL_HEIGHT, null);
                 }
             }
@@ -921,30 +923,30 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
         if (!isOnActionsTab) return false;        
         switch (currentPaintMode)
         {
-            case MapLayoutBlock.MAP_FLAG_OBSTRUCTED:
-            case MapLayoutBlock.MAP_FLAG_STAIRS_RIGHT:
-            case MapLayoutBlock.MAP_FLAG_STAIRS_LEFT:
+            case BlockFlags.MAP_FLAG_OBSTRUCTED:
+            case BlockFlags.MAP_FLAG_STAIRS_RIGHT:
+            case BlockFlags.MAP_FLAG_STAIRS_LEFT:
                 return (DRAW_MODE_EXPLORATION_FLAGS & drawFlag) != 0;
-            case MapLayoutBlock.MAP_FLAG_CHEST:
-            case MapLayoutBlock.MAP_FLAG_SEARCH:
-            case MapLayoutBlock.MAP_FLAG_TABLE:
-            case MapLayoutBlock.MAP_FLAG_VASE:
-            case MapLayoutBlock.MAP_FLAG_BARREL:
-            case MapLayoutBlock.MAP_FLAG_SHELF:
+            case BlockFlags.MAP_FLAG_CHEST:
+            case BlockFlags.MAP_FLAG_SEARCH:
+            case BlockFlags.MAP_FLAG_TABLE:
+            case BlockFlags.MAP_FLAG_VASE:
+            case BlockFlags.MAP_FLAG_BARREL:
+            case BlockFlags.MAP_FLAG_SHELF:
                 return (DRAW_MODE_CHEST_ITEMS & drawFlag) != 0 || (DRAW_MODE_OTHER_ITEMS & drawFlag) != 0;
-            case MapLayoutBlock.MAP_FLAG_WARP:
+            case BlockFlags.MAP_FLAG_WARP:
                 return (DRAW_MODE_WARPS & drawFlag) != 0;
-            case MapLayoutBlock.MAP_FLAG_TRIGGER:
-            case MapLayoutBlock.MAP_FLAG_LAYER_UP:
-            case MapLayoutBlock.MAP_FLAG_LAYER_DOWN:
+            case BlockFlags.MAP_FLAG_TRIGGER:
+            case BlockFlags.MAP_FLAG_LAYER_UP:
+            case BlockFlags.MAP_FLAG_LAYER_DOWN:
                 return (DRAW_MODE_TRIGGERS & drawFlag) != 0;
-            case MapLayoutBlock.MAP_FLAG_HIDE:
-            case MapLayoutBlock.MAP_FLAG_SHOW:
+            case BlockFlags.MAP_FLAG_HIDE:
+            case BlockFlags.MAP_FLAG_SHOW:
                 return (DRAW_MODE_ROOF_COPIES & drawFlag) != 0;
-            case MapLayoutBlock.MAP_FLAG_STEP:
+            case BlockFlags.MAP_FLAG_STEP:
                 return (DRAW_MODE_STEP_COPIES & drawFlag) != 0;
-            case MapLayoutBlock.MAP_FLAG_CARAVAN:
-            case MapLayoutBlock.MAP_FLAG_RAFT:
+            case BlockFlags.MAP_FLAG_CARAVAN:
+            case BlockFlags.MAP_FLAG_RAFT:
                 return (DRAW_MODE_VEHICLES & drawFlag) != 0;
             default:
                 return false;
@@ -1427,31 +1429,68 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
     
     private void editMapFlags(BaseMouseCoordsComponent.GridMousePressedEvent evt) {
         if (evt.released()) return;
-        int x = evt.x();
-        int y = evt.y();
+        int index = evt.x()+evt.y()*BLOCK_WIDTH;
+        MapLayoutBlock block = layout.getBlocks()[index];
         switch (evt.mouseButton()) {
             case MouseEvent.BUTTON1:
+            {
                 int flagVal = currentPaintMode;
-                if (flagVal == MapLayoutBlock.MAP_FLAG_STAIRS_RIGHT) {
-                    if (layout.getBlocks()[x+y*BLOCK_WIDTH].getExplorationFlags() == MapLayoutBlock.MAP_FLAG_STAIRS_RIGHT) {
-                        flagVal = MapLayoutBlock.MAP_FLAG_STAIRS_LEFT;
+                if (flagVal == BlockFlags.MAP_FLAG_STAIRS_RIGHT) {
+                    if (layout.getBlocks()[index].getFlags().getExplorationFlags() == BlockFlags.MAP_FLAG_STAIRS_RIGHT) {
+                        flagVal = BlockFlags.MAP_FLAG_STAIRS_LEFT;
                     }
                 }
-                setFlagValue(x, y, flagVal);
+                BlockFlags newFlags = block.getFlags().clone();
+                if ((flagVal & BlockFlags.MAP_FLAG_MASK_EXPLORE) != 0) {
+                    newFlags.removeFlag(BlockFlags.MAP_FLAG_MASK_EXPLORE);
+                    newFlags.setFlag(flagVal, true);
+                } else if ((flagVal & BlockFlags.MAP_FLAG_MASK_EVENTS) != 0) {
+                    newFlags.removeFlag(BlockFlags.MAP_FLAG_MASK_EVENTS);
+                    newFlags.setFlag(flagVal, true);
+                }
+                MapFlagActionData newValue = new MapFlagActionData(layout, newFlags, index);
+                MapFlagActionData oldValue = new MapFlagActionData(layout, block.getFlags(), index);
+                ActionManager.setAndExecuteAction(new CumulativeAction<MapFlagActionData>(this, "Set Map Flag", this::actionMapFlagSet, newValue, oldValue));
                 break;
+            }
             case MouseEvent.BUTTON2:
-                clearFlagValue(x, y, 0xFF00);
+            {
+                MapFlagActionData newValue = new MapFlagActionData(layout, new BlockFlags(0), index);
+                MapFlagActionData oldValue = new MapFlagActionData(layout, block.getFlags(), index);
+                ActionManager.setAndExecuteAction(new CumulativeAction<MapFlagActionData>(this, "Clear Map Flag", this::actionMapFlagSet, newValue, oldValue));
                 break;
+            }
             case MouseEvent.BUTTON3:
-                flagVal = currentPaintMode;
-                if (flagVal == MapLayoutBlock.MAP_FLAG_STAIRS_RIGHT) {
-                    if (layout.getBlocks()[x+y*BLOCK_WIDTH].getExplorationFlags() == MapLayoutBlock.MAP_FLAG_STAIRS_LEFT) {
-                        flagVal = MapLayoutBlock.MAP_FLAG_STAIRS_LEFT;
+            {
+                int flagVal = currentPaintMode;
+                if (flagVal == BlockFlags.MAP_FLAG_STAIRS_RIGHT) {
+                    if (layout.getBlocks()[index].getFlags().getExplorationFlags() == BlockFlags.MAP_FLAG_STAIRS_LEFT) {
+                        flagVal = BlockFlags.MAP_FLAG_STAIRS_LEFT;
                     }
                 }
-                clearFlagValue(x, y, flagVal);
+                BlockFlags newFlags = block.getFlags().clone();
+                if ((flagVal & BlockFlags.MAP_FLAG_MASK_EXPLORE) != 0) {
+                    newFlags.removeFlag(BlockFlags.MAP_FLAG_MASK_EXPLORE);
+                    newFlags.setFlag(flagVal, false);
+                } else if ((flagVal & BlockFlags.MAP_FLAG_MASK_EVENTS) != 0) {
+                    newFlags.removeFlag(BlockFlags.MAP_FLAG_MASK_EVENTS);
+                    newFlags.setFlag(flagVal, false);
+                }
+                MapFlagActionData newValue = new MapFlagActionData(layout, newFlags, index);
+                MapFlagActionData oldValue = new MapFlagActionData(layout, block.getFlags(), index);
+                ActionManager.setAndExecuteAction(new CumulativeAction<MapFlagActionData>(this, "Clear Map Flag", this::actionMapFlagSet, newValue, oldValue));
                 break;
+            }
         }
+    }
+    
+    private void actionMapFlagSet(List<MapFlagActionData> values) {
+        for (MapFlagActionData value : values) {
+            MapLayoutBlock[] blocks = value.layout().getBlocks();
+            MapLayoutBlock block = blocks[value.layoutIndex()];
+            block.setFlags(value.mapFlag());
+        }
+        redraw();
     }
 
     private void onMouseMove(BaseMouseCoordsComponent.GridMouseMoveEvent evt) {
@@ -1486,48 +1525,6 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
             }*/
         }
         repaint();
-    }
-    
-    public void setFlagValue(int x, int y, int value) {
-        MapLayoutBlock[] blocks = layout.getBlocks();
-        MapLayoutBlock block = blocks[x+y*BLOCK_WIDTH];
-        if (block.getFlags() != value) {
-            int origFlags = block.getFlags();
-            int newFlags = 0;
-            if ((value & MapLayoutBlock.MAP_FLAG_MASK_EXPLORE) != 0) {
-                newFlags = value & MapLayoutBlock.MAP_FLAG_MASK_EXPLORE;
-                newFlags += origFlags & MapLayoutBlock.MAP_FLAG_MASK_EVENTS;
-            } else {
-                newFlags = origFlags & MapLayoutBlock.MAP_FLAG_MASK_EXPLORE;
-                newFlags += value & MapLayoutBlock.MAP_FLAG_MASK_EVENTS;
-            }
-            block.setFlags(newFlags);
-            redraw();
-        }
-    }
-    
-    public void clearFlagValue(int x, int y, int value) {
-        MapLayoutBlock[] blocks = layout.getBlocks();
-        MapLayoutBlock block = blocks[x+y*BLOCK_WIDTH];
-        if (block.getFlags() != 0) {
-            int origFlags = block.getFlags();
-            int newFlags = -1;
-            if (value == 0xFF00) {
-                newFlags = origFlags & ~value;
-            } else if ((value & MapLayoutBlock.MAP_FLAG_MASK_EXPLORE) != 0) {
-                if (block.getExplorationFlags() == value) {
-                    newFlags = block.getExplorationFlags() & ~value;
-                }
-            } else {
-                if (block.getEventFlags() == value) {
-                    newFlags = block.getEventFlags() & ~value;
-                }
-            }
-            if (newFlags >= 0) {
-                block.setFlags(newFlags);
-                redraw();
-            }
-        }
     }
     
     private int findClosestAreaPoint(MapArea area, int x, int y) {

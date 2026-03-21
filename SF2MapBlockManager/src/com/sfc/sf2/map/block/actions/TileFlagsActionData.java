@@ -8,7 +8,6 @@ package com.sfc.sf2.map.block.actions;
 import com.sfc.sf2.core.actions.ICumulativeActionData;
 import com.sfc.sf2.graphics.TileFlags;
 import com.sfc.sf2.map.block.MapBlock;
-import com.sfc.sf2.map.block.MapTile;
 
 /**
  *

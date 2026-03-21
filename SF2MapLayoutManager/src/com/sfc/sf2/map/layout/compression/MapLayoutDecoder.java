@@ -8,6 +8,7 @@ package com.sfc.sf2.map.layout.compression;
 import com.sfc.sf2.helpers.BinaryHelpers;
 import com.sfc.sf2.map.block.MapBlock;
 import com.sfc.sf2.map.block.MapBlockset;
+import com.sfc.sf2.map.layout.BlockFlags;
 import com.sfc.sf2.map.layout.MapLayout;
 import static com.sfc.sf2.map.layout.MapLayout.BLOCK_COUNT;
 import com.sfc.sf2.map.layout.MapLayoutBlock;
@@ -54,7 +55,7 @@ public class MapLayoutDecoder {
                     /* 00 */
                     //Console.logger().finest("Block=$" + Integer.toHexString(blockCursor)+" - 00 : Output next block from block set.");
                     blocksetCursor++;
-                    block = new MapLayoutBlock(blocks[blocksetCursor], 0);
+                    block = new MapLayoutBlock(blocks[blocksetCursor], new BlockFlags(0));
                     applyFlags(block);
                     layoutBlocks[blockCursor] = block;
                     if (blockCursor > 0) {
@@ -203,14 +204,14 @@ public class MapLayoutDecoder {
                             length--;
                         }
                         //Console.logger().finest(" blocksetCursor=="+blocksetCursor+" / "+Integer.toString(blocksetCursor,2)+", length="+Integer.toString(blocksetCursor,2).length()+", Value="+value);
-                        targetBlock = new MapLayoutBlock(blocks[value], 0);
+                        targetBlock = new MapLayoutBlock(blocks[value], new BlockFlags(0));
                         block = targetBlock;
                         applyFlags(block);
                         break;
                 }
 
                 if (block == null) {
-                    block = new MapLayoutBlock(blocks[0], 0);
+                    block = new MapLayoutBlock(blocks[0], new BlockFlags(0));
                 }
                 layoutBlocks[blockCursor] = block;
 
@@ -233,7 +234,7 @@ public class MapLayoutDecoder {
             }
             //Console.logger().finest(debugSb.substring(debugSb.lastIndexOf(" ")));
         }
-        MapLayoutBlock emptyBlock = new MapLayoutBlock(blocks[0], 0);
+        MapLayoutBlock emptyBlock = new MapLayoutBlock(blocks[0], new BlockFlags(0));
         for (int i = 0; i < layoutBlocks.length; i++) {
             if (layoutBlocks[i] == null) {
                 layoutBlocks[i] = emptyBlock;
@@ -249,16 +250,16 @@ public class MapLayoutDecoder {
                 /* 00 : no flag set */
             } else {
                 /* 01 : $C000*/
-                flags = (short)MapLayoutBlock.MAP_FLAG_OBSTRUCTED;
+                flags = (short)BlockFlags.MAP_FLAG_OBSTRUCTED;
             }
         } else {
             if (getNextBit() == 0) {
                 if (getNextBit() == 0) {
                     /* 100 : $4000 */
-                    flags = (short)MapLayoutBlock.MAP_FLAG_STAIRS_RIGHT;
+                    flags = (short)BlockFlags.MAP_FLAG_STAIRS_RIGHT;
                 } else {
                     /* 101 : $8000 */
-                    flags = (short)MapLayoutBlock.MAP_FLAG_STAIRS_LEFT;
+                    flags = (short)BlockFlags.MAP_FLAG_STAIRS_LEFT;
                 }
             } else {
                 /* 11 : next 6 bits = flag mask XXXX XX00 0000 0000 */
@@ -270,7 +271,7 @@ public class MapLayoutDecoder {
                         + getNextBit() * 0x0400);
             }
         }
-        block.setFlags(flags & 0xFFFF);
+        block.setFlags(new BlockFlags(flags & 0xFFFF));
     }
 
     private void saveBlockToLeftStackMap(int leftBlockIndex, MapLayoutBlock block) {
@@ -680,9 +681,10 @@ public class MapLayoutDecoder {
         return index;
     }
 
-    private String produceFlagBits(int flags) {
+    private String produceFlagBits(BlockFlags flags) {
         String flagBits;
-        switch (flags) {
+        int flag = flags.value();
+        switch (flag) {
             case 0:
                 flagBits = "00";
                 break;
@@ -699,7 +701,7 @@ public class MapLayoutDecoder {
                 StringBuilder sb = new StringBuilder();
                 sb.append("11");
                 for (int i = 0; i < 6; i++) {
-                    if (((flags >> (15 - i)) & 1) == 0) {
+                    if (((flag >> (15 - i)) & 1) == 0) {
                         sb.append("0");
                     } else {
                         sb.append("1");

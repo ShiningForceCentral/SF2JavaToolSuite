@@ -9,6 +9,7 @@ import com.sfc.sf2.core.INameable;
 import com.sfc.sf2.map.layout.MapLayout;
 import com.sfc.sf2.map.animation.MapAnimation;
 import com.sfc.sf2.map.block.MapBlockset;
+import com.sfc.sf2.map.layout.BlockFlags;
 import static com.sfc.sf2.map.layout.MapLayout.BLOCK_WIDTH;
 import com.sfc.sf2.map.layout.MapLayoutBlock;
 
@@ -127,14 +128,14 @@ public class Map implements INameable {
         this.animation = animation;
     }
 
-    public void setActionFlag(int x, int y, int value) {
+    public void setActionFlag(int x, int y, BlockFlags value) {
         MapLayoutBlock block = this.layout.getBlocks()[y*BLOCK_WIDTH+x];
-        int origFlags = block.getFlags();
-        int newValue = value;
-        if ((origFlags & MapLayoutBlock.MAP_FLAG_STEP) != 0 && newValue == MapLayoutBlock.MAP_FLAG_SHOW) {
-            newValue = MapLayoutBlock.MAP_FLAG_STEP;
+        BlockFlags origFlags = block.getFlags();
+        BlockFlags newValue = value.clone();
+        if (origFlags.isFlagOn(BlockFlags.MAP_FLAG_STEP) && newValue.equals(BlockFlags.MAP_FLAG_SHOW)) {
+            newValue.setValue(BlockFlags.MAP_FLAG_STEP);
         }
-        int newFlags = (origFlags & MapLayoutBlock.MAP_FLAG_HIDE)+(newValue & 0x3FFF);
+        BlockFlags newFlags = new BlockFlags((origFlags.value() & BlockFlags.MAP_FLAG_HIDE)+(newValue.value() & 0x3FFF));
         block.setFlags(newFlags);
     }
 }

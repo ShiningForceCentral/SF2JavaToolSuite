@@ -99,13 +99,13 @@ public class MapLayoutPanel extends AbstractLayoutPanel {
         for (int y=0; y < BLOCK_HEIGHT; y++) {
             for (int x=0; x < BLOCK_WIDTH; x++) {
                 if (showExplorationFlags) {
-                    ImageIcon icon = MapLayoutFlagIcons.getBlockExplorationFlagIcon(blocks[x+y*BLOCK_WIDTH].getExplorationFlags());
+                    ImageIcon icon = MapLayoutFlagIcons.getBlockExplorationFlagIcon(blocks[x+y*BLOCK_WIDTH].getFlags().getExplorationFlags());
                     if (icon != null) {
                         graphics.drawImage(icon.getImage(), x*PIXEL_WIDTH, y*PIXEL_HEIGHT, null); 
                     }
                 }
                 if (showInteractionFlags) {
-                    ImageIcon icon = MapLayoutFlagIcons.getBlockInteractionFlagIcon(blocks[x+y*BLOCK_WIDTH].getEventFlags());
+                    ImageIcon icon = MapLayoutFlagIcons.getBlockInteractionFlagIcon(blocks[x+y*BLOCK_WIDTH].getFlags().getEventFlags());
                     if (icon != null) {
                         graphics.drawImage(icon.getImage(), x*PIXEL_WIDTH, y*PIXEL_HEIGHT, null); 
                     }

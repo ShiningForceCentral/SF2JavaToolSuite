@@ -7,6 +7,7 @@ package com.sfc.sf2.map.layout.io;
 
 import com.sfc.sf2.core.io.AbstractMetadataProcessor;
 import com.sfc.sf2.core.io.MetadataException;
+import com.sfc.sf2.map.layout.BlockFlags;
 import com.sfc.sf2.map.layout.MapLayout;
 import static com.sfc.sf2.map.layout.MapLayout.BLOCK_WIDTH;
 import com.sfc.sf2.map.layout.MapLayoutBlock;
@@ -30,7 +31,7 @@ public class MapLayoutMetaProcessor extends AbstractMetadataProcessor<MapLayout>
             while (cursor < line.length()) {
                 int blockIndex = lineIndex*BLOCK_WIDTH + cursor/2;
                 int value = Integer.parseInt(line.substring(cursor, cursor+2), 16);
-                blocks[blockIndex].setFlags(value<<8);
+                blocks[blockIndex].setFlags(new BlockFlags(value<<8));
                 cursor++;
             }
             cursor = 0;
@@ -45,7 +46,7 @@ public class MapLayoutMetaProcessor extends AbstractMetadataProcessor<MapLayout>
             if (b > 0 && (b%BLOCK_WIDTH) == 0) {
                 writer.write("\n");
             }
-            writer.write(String.format("%02X", blocks[b].getFlags()>>8));
+            writer.write(String.format("%02X", blocks[b].getFlags().value()>>8));
         }
     }
 }
