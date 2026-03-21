@@ -18,11 +18,13 @@ public class MapFlagActionData implements ICumulativeActionData<MapFlagActionDat
     private final MapLayout mapLayout;
     private final BlockFlags mapFlag;
     private final int layoutIndex;
+    private final BlockFlags blockNewFlag;
 
-    public MapFlagActionData(MapLayout mapLayout, BlockFlags mapFlag, int layoutIndex) {
+    public MapFlagActionData(MapLayout mapLayout, BlockFlags mapFlag, int layoutIndex, BlockFlags blockNewFlag) {
         this.mapLayout = mapLayout;
         this.mapFlag = mapFlag;
         this.layoutIndex = layoutIndex;
+        this.blockNewFlag = blockNewFlag;
     }
 
     public MapLayout layout() {
@@ -37,9 +39,13 @@ public class MapFlagActionData implements ICumulativeActionData<MapFlagActionDat
         return layoutIndex;
     }
 
+    public BlockFlags blockNewFlag() {
+        return blockNewFlag;
+    }
+
     @Override
     public boolean isInvalidated(MapFlagActionData other) {
-        return this.mapLayout.equals(other.mapLayout) && this.mapFlag.equals(other.mapFlag) && this.layoutIndex == other.layoutIndex;
+        return this.mapLayout.equals(other.mapLayout) && this.mapFlag.equals(other.mapFlag) && this.layoutIndex == other.layoutIndex && this.blockNewFlag.equals(other.blockNewFlag);
     }
 
     @Override

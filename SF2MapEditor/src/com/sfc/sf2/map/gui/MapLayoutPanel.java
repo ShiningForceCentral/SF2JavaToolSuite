@@ -1440,24 +1440,28 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
                         flagVal = BlockFlags.MAP_FLAG_STAIRS_LEFT;
                     }
                 }
-                BlockFlags newFlags = block.getFlags().clone();
-                if ((flagVal & BlockFlags.MAP_FLAG_MASK_EXPLORE) != 0) {
-                    newFlags.removeFlag(BlockFlags.MAP_FLAG_MASK_EXPLORE);
-                    newFlags.setFlag(flagVal, true);
-                } else if ((flagVal & BlockFlags.MAP_FLAG_MASK_EVENTS) != 0) {
-                    newFlags.removeFlag(BlockFlags.MAP_FLAG_MASK_EVENTS);
-                    newFlags.setFlag(flagVal, true);
+                if (!block.getFlags().isFlagOn(flagVal)) {
+                    BlockFlags newFlags = block.getFlags().clone();
+                    if ((flagVal & BlockFlags.MAP_FLAG_MASK_EXPLORE) != 0) {
+                        newFlags.removeFlag(BlockFlags.MAP_FLAG_MASK_EXPLORE);
+                        newFlags.setFlag(flagVal, true);
+                    } else if ((flagVal & BlockFlags.MAP_FLAG_MASK_EVENTS) != 0) {
+                        newFlags.removeFlag(BlockFlags.MAP_FLAG_MASK_EVENTS);
+                        newFlags.setFlag(flagVal, true);
+                    }
+                    MapFlagActionData newValue = new MapFlagActionData(layout, new BlockFlags(flagVal), index, newFlags);
+                    MapFlagActionData oldValue = new MapFlagActionData(layout, new BlockFlags(flagVal), index, block.getFlags());
+                    ActionManager.setAndExecuteAction(new CumulativeAction<MapFlagActionData>(this, "Set Map Flag", this::actionMapFlagSet, newValue, oldValue));
                 }
-                MapFlagActionData newValue = new MapFlagActionData(layout, newFlags, index);
-                MapFlagActionData oldValue = new MapFlagActionData(layout, block.getFlags(), index);
-                ActionManager.setAndExecuteAction(new CumulativeAction<MapFlagActionData>(this, "Set Map Flag", this::actionMapFlagSet, newValue, oldValue));
                 break;
             }
             case MouseEvent.BUTTON2:
             {
-                MapFlagActionData newValue = new MapFlagActionData(layout, new BlockFlags(0), index);
-                MapFlagActionData oldValue = new MapFlagActionData(layout, block.getFlags(), index);
-                ActionManager.setAndExecuteAction(new CumulativeAction<MapFlagActionData>(this, "Clear Map Flag", this::actionMapFlagSet, newValue, oldValue));
+                if (block.getFlags().value() != 0) {
+                    MapFlagActionData newValue = new MapFlagActionData(layout, new BlockFlags(0), index, new BlockFlags(0));
+                    MapFlagActionData oldValue = new MapFlagActionData(layout, new BlockFlags(0), index, block.getFlags());
+                    ActionManager.setAndExecuteAction(new CumulativeAction<MapFlagActionData>(this, "Clear Map Flag", this::actionMapFlagSet, newValue, oldValue));
+                }
                 break;
             }
             case MouseEvent.BUTTON3:
@@ -1468,17 +1472,19 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
                         flagVal = BlockFlags.MAP_FLAG_STAIRS_LEFT;
                     }
                 }
-                BlockFlags newFlags = block.getFlags().clone();
-                if ((flagVal & BlockFlags.MAP_FLAG_MASK_EXPLORE) != 0) {
-                    newFlags.removeFlag(BlockFlags.MAP_FLAG_MASK_EXPLORE);
-                    newFlags.setFlag(flagVal, false);
-                } else if ((flagVal & BlockFlags.MAP_FLAG_MASK_EVENTS) != 0) {
-                    newFlags.removeFlag(BlockFlags.MAP_FLAG_MASK_EVENTS);
-                    newFlags.setFlag(flagVal, false);
+                if (!block.getFlags().isFlagOn(flagVal)) {
+                    BlockFlags newFlags = block.getFlags().clone();
+                    if ((flagVal & BlockFlags.MAP_FLAG_MASK_EXPLORE) != 0) {
+                        newFlags.removeFlag(BlockFlags.MAP_FLAG_MASK_EXPLORE);
+                        newFlags.setFlag(flagVal, false);
+                    } else if ((flagVal & BlockFlags.MAP_FLAG_MASK_EVENTS) != 0) {
+                        newFlags.removeFlag(BlockFlags.MAP_FLAG_MASK_EVENTS);
+                        newFlags.setFlag(flagVal, false);
+                    }
+                    MapFlagActionData newValue = new MapFlagActionData(layout, new BlockFlags(flagVal), index, newFlags);
+                    MapFlagActionData oldValue = new MapFlagActionData(layout, new BlockFlags(flagVal), index, block.getFlags());
+                    ActionManager.setAndExecuteAction(new CumulativeAction<MapFlagActionData>(this, "Clear Map Flag", this::actionMapFlagSet, newValue, oldValue));
                 }
-                MapFlagActionData newValue = new MapFlagActionData(layout, newFlags, index);
-                MapFlagActionData oldValue = new MapFlagActionData(layout, block.getFlags(), index);
-                ActionManager.setAndExecuteAction(new CumulativeAction<MapFlagActionData>(this, "Clear Map Flag", this::actionMapFlagSet, newValue, oldValue));
                 break;
             }
         }
@@ -1488,7 +1494,7 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
         for (MapFlagActionData value : values) {
             MapLayoutBlock[] blocks = value.layout().getBlocks();
             MapLayoutBlock block = blocks[value.layoutIndex()];
-            block.setFlags(value.mapFlag());
+            block.setFlags(value.blockNewFlag());
         }
         redraw();
     }
