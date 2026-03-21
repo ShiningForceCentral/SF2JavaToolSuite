@@ -7,8 +7,9 @@ package com.sfc.sf2.map.block.gui;
 
 import com.sfc.sf2.core.gui.AbstractLayoutPanel;
 import com.sfc.sf2.core.gui.layout.*;
-import static com.sfc.sf2.graphics.Tile.PIXEL_HEIGHT;
-import static com.sfc.sf2.graphics.Tile.PIXEL_WIDTH;
+import static com.sfc.sf2.graphics.Block.PIXEL_HEIGHT;
+import static com.sfc.sf2.graphics.Block.PIXEL_WIDTH;
+import com.sfc.sf2.graphics.Tile;
 import com.sfc.sf2.graphics.Tileset;
 import com.sfc.sf2.map.block.MapBlock;
 import java.awt.Color;
@@ -32,7 +33,7 @@ public class BlockSlotPanel extends AbstractLayoutPanel {
     
     public BlockSlotPanel() {
         super();
-        background = new LayoutBackground(Color.LIGHT_GRAY, PIXEL_WIDTH/2);
+        background = new LayoutBackground(Color.LIGHT_GRAY, Tile.PIXEL_WIDTH/2);
         scale = new LayoutScale(2);
         grid = null;
         coordsGrid = null;
@@ -48,14 +49,20 @@ public class BlockSlotPanel extends AbstractLayoutPanel {
 
     @Override
     protected Dimension getImageDimensions() {
-        return new Dimension(PIXEL_WIDTH*3, PIXEL_HEIGHT*3);
+        return new Dimension(PIXEL_WIDTH, PIXEL_HEIGHT);
     }
 
     @Override
-    protected void drawImage(Graphics graphics) {
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
         if (overrideImage != null) {
-            graphics.drawImage(overrideImage, 0, 0, null);
-        } else if (block != null) {
+            g.drawImage(overrideImage, 0, 0, getWidth(), getHeight(), null);
+        }
+    }
+    
+    @Override
+    protected void drawImage(Graphics graphics) {
+        if (overrideImage == null) {
             graphics.drawImage(block.getIndexedColorImage(tilesets), 0, 0, null);
         }
     }

@@ -96,8 +96,6 @@ public class MapEditorMainEditor extends AbstractMainEditor {
         
         infoButtonSharedAnimation.setVisible(false);
         
-        //colorPickerTilesetAnim.setColor(mapLayoutSettings.getTilesetBGColor());
-        
         //Map editing
         mapLayoutPanel.setShowInteractionFlags(false);
         mapLayoutPanel.setDrawMode_Tabs(MapLayoutPanel.DRAW_MODE_NONE);
@@ -443,7 +441,6 @@ public class MapEditorMainEditor extends AbstractMainEditor {
         jTabbedPane2 = new javax.swing.JTabbedPane();
         jPanel4 = new javax.swing.JPanel();
         jPanel14 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
         jPanel16 = new javax.swing.JPanel();
         jRadioButtonObstructed = new javax.swing.JRadioButton();
         jRadioButtonStars = new javax.swing.JRadioButton();
@@ -1579,7 +1576,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
                 jPanel23Layout.setVerticalGroup(
                     jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel23Layout.createSequentialGroup()
-                        .addComponent(jPanel21, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
+                        .addComponent(jPanel21, javax.swing.GroupLayout.DEFAULT_SIZE, 769, Short.MAX_VALUE)
                         .addGap(0, 0, Short.MAX_VALUE))
                 );
 
@@ -2157,13 +2154,6 @@ public class MapEditorMainEditor extends AbstractMainEditor {
                 jPanel14.setBorder(javax.swing.BorderFactory.createTitledBorder("Actions"));
                 jPanel14.setMinimumSize(new java.awt.Dimension(904, 160));
 
-                jButton1.setText("Undo");
-                jButton1.addActionListener(new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        jButton1ActionPerformed(evt);
-                    }
-                });
-
                 jPanel16.setBorder(javax.swing.BorderFactory.createTitledBorder("Exploration Flags"));
 
                 buttonGroupMapActions.add(jRadioButtonObstructed);
@@ -2218,7 +2208,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
                         .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jRadioButtonStars, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(infoButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap())
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 );
 
                 jPanel17.setBorder(javax.swing.BorderFactory.createTitledBorder("Selected Blocks"));
@@ -2682,9 +2672,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
                         .addContainerGap()
                         .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel31, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -2694,13 +2682,10 @@ public class MapEditorMainEditor extends AbstractMainEditor {
                     .addGroup(jPanel14Layout.createSequentialGroup()
                         .addGap(0, 0, 0)
                         .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(jPanel14Layout.createSequentialGroup()
-                                    .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jPanel31, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jPanel16, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jPanel31, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 );
 
@@ -3161,10 +3146,6 @@ public class MapEditorMainEditor extends AbstractMainEditor {
     private void jCheckBoxShowUpperLayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxShowUpperLayerActionPerformed
         mapLayoutPanel.setShowAreasOverlay(jCheckBoxShowUpperLayer.isSelected());
     }//GEN-LAST:event_jCheckBoxShowUpperLayerActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        mapLayoutPanel.revertLastAction();
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTabbedPane5StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane5StateChanged
         int index = jTabbedPane5.getSelectedIndex();
@@ -3649,7 +3630,6 @@ public class MapEditorMainEditor extends AbstractMainEditor {
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton8;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton9;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButtonSharedAnimation;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton33;
     private javax.swing.JButton jButtonAddBlock;
     private javax.swing.JButton jButtonCloneBlock;

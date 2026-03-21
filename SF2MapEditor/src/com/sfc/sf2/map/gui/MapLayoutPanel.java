@@ -6,6 +6,8 @@
 package com.sfc.sf2.map.gui;
 
 import com.sfc.sf2.core.actions.ActionManager;
+import com.sfc.sf2.core.actions.BasicAction;
+import com.sfc.sf2.core.actions.CumulativeAction;
 import com.sfc.sf2.core.actions.CustomAction;
 import com.sfc.sf2.core.gui.layout.BaseLayoutComponent;
 import com.sfc.sf2.core.gui.layout.BaseMouseCoordsComponent;
@@ -21,6 +23,8 @@ import com.sfc.sf2.map.MapFlagCopyEvent;
 import com.sfc.sf2.map.MapItem;
 import com.sfc.sf2.map.MapWarpEvent;
 import com.sfc.sf2.map.actions.ActionMapCopySourceEvent;
+import com.sfc.sf2.map.actions.MapBlockActionData;
+import com.sfc.sf2.map.actions.MapCopyBlocksActionData;
 import com.sfc.sf2.map.actions.MapPointActionData;
 import com.sfc.sf2.map.actions.MapRectActionData;
 import com.sfc.sf2.map.block.MapBlock;
@@ -45,7 +49,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
 
@@ -74,10 +77,6 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
     public static final int DRAW_MODE_VEHICLES = 0x800;
     public static final int DRAW_MODE_ACTION_FLAGS = 0x1000;
     public static final int DRAW_MODE_ALL = (0x2000)-1;
-    
-    private static final int ACTION_CHANGE_BLOCK_VALUE = 0;
-    private static final int ACTION_CHANGE_BLOCK_FLAGS = 1;
-    private static final int ACTION_MASS_COPY = 2;
         
     MapBlocksetLayoutPanel mapBlockLayoutPanel = null;
     BlockSlotPanel leftSlot = null;
@@ -107,8 +106,6 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
     private int lastMapX;
     private int lastMapY;
     private int previewIndex = -1;
-    
-    private List<int[]> actions = new ArrayList<int[]>();
     
     private Map map;
 
@@ -835,14 +832,15 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
 
     public void setSelectedBlock(MapBlock selectedBlock) {
         this.selectedBlock = selectedBlock;
+        if (this.selectedBlock != null) {
+            clearCopiedBlocks();
+        }
     }
-
-    public List<int[]> getActions() {
-        return actions;
-    }
-
-    public void setActions(List<int[]> actions) {
-        this.actions = actions;
+    
+    private void clearCopiedBlocks() {
+        copiedBlocksStartX = copiedBlocksStartY = -1;
+        copiedBlocks = null;
+        previewImage = null;
     }
 
     public int getCurrentPaintMode() {
@@ -1261,46 +1259,44 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
         int x = evt.x();
         int y = evt.y();
         switch (evt.mouseButton()) {
+            case MouseEvent.BUTTON3:
+                if (!evt.released() && mapBlockLayoutPanel.selectedBlockIndexRight !=- 1) {
+                    int index = x+y*BLOCK_WIDTH;
+                    MapBlockActionData newValue = new MapBlockActionData(layout, map.getBlockset().getBlocks()[mapBlockLayoutPanel.selectedBlockIndexRight], index);
+                    MapBlockActionData olValue = new MapBlockActionData(layout, layout.getBlocks()[index].getMapBlock(), index);
+                    ActionManager.setAndExecuteAction(new CumulativeAction<MapBlockActionData>(this, "Set Block", this::actionSetBlock, newValue, olValue));
+                }
+                break;
             case MouseEvent.BUTTON1:
                 if (!evt.released()) {
                     if (mapBlockLayoutPanel.selectedBlockIndexLeft !=- 1) {
-                        setBlockValue(x, y, mapBlockLayoutPanel.selectedBlockIndexLeft);
-                    } else if (copiedBlocks != null && !evt.dragging()) {
+                        int index = x+y*BLOCK_WIDTH;
+                        MapBlockActionData newValue = new MapBlockActionData(layout, map.getBlockset().getBlocks()[mapBlockLayoutPanel.selectedBlockIndexLeft], index);
+                        MapBlockActionData olValue = new MapBlockActionData(layout, layout.getBlocks()[index].getMapBlock(), index);
+                        ActionManager.setAndExecuteAction(new CumulativeAction<MapBlockActionData>(this, "Set Block", this::actionSetBlock, newValue, olValue));
+                        
+                    } else if (evt.pressed() && copiedBlocks != null) {
                         int width = copiedBlocks.length;
                         int height = copiedBlocks[0].length;
-                        int[] action = new int[4+2*width*height];
-                        action[0] = ACTION_MASS_COPY;
-                        int blockIndex = x+y*BLOCK_WIDTH;
-                        action[1] = blockIndex;
-                        action[2] = width;
-                        action[3] = height;
+                        MapLayoutBlock[] mapBlocks = layout.getBlocks();
+                        MapLayoutBlock[][] currentBlocks = new MapLayoutBlock[width][height];
                         for (int j=0; j < height; j++) {
                             for (int i=0; i < width; i++) {
-                                if ((i+(blockIndex%BLOCK_WIDTH)) < BLOCK_WIDTH && (blockIndex+i+j*BLOCK_WIDTH) < MapLayout.BLOCK_COUNT) {
-                                    MapLayoutBlock layoutBlock = layout.getBlocks()[blockIndex+i+j*BLOCK_WIDTH];
-                                    action[4+2*(i+j*width)] = layoutBlock.getMapBlock().getIndex();
-                                    int origFlags = layoutBlock.getFlags();
-                                    action[4+2*(i+j*width)+1] = origFlags;
-                                    layoutBlock.setMapBlock(copiedBlocks[i][j].getMapBlock());
-                                    layoutBlock.setFlags(copiedBlocks[i][j].getFlags());
-                                } else {
-                                    action[4+2*(i+j*width)] = -1;
-                                    action[4+2*(i+j*width)+1] = -1;
-                                }
+                                currentBlocks[i][j] = mapBlocks[x+i+(y+j)*BLOCK_WIDTH];
                             }
                         }
-                        actions.add(action);
-                        redraw();
+                        MapCopyBlocksActionData newValue = new MapCopyBlocksActionData(x, y, copiedBlocks);
+                        MapCopyBlocksActionData oldValue = new MapCopyBlocksActionData(x, y, currentBlocks);
+                        ActionManager.setAndExecuteAction(new CustomAction<MapCopyBlocksActionData>(this, "Paste Blocks", this::actionBlockPaste, newValue, oldValue));
                     }
                 }
                 break;
             case MouseEvent.BUTTON2:
                 if (evt.released()) {
                     if (x == copiedBlocksStartX && y == copiedBlocksStartY) {
-                        selectedBlock = layout.getBlocks()[x+y*64].getMapBlock();
+                        selectedBlock = layout.getBlocks()[x+y*BLOCK_WIDTH].getMapBlock();
                         if (selectedBlock == null) selectedBlock = map.getBlockset().getBlocks()[0];
-                        mapBlockLayoutPanel.selectedBlockIndexLeft = selectedBlock.getIndex();
-                        updateLeftSlot(selectedBlock);
+                        ActionManager.setAndExecuteAction(new BasicAction<MapBlock>(this, "Block Selection - Left (Copy)", this::actionUpdateLeftSlot, selectedBlock, leftSlot.getBlock()));
                     } else {
                         // Mass copy
                         int xStart, xEnd, yStart, yEnd;
@@ -1320,22 +1316,22 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
                         }
                         int width = xEnd - xStart + 1;
                         int height = yEnd - yStart + 1;
-                        copiedBlocks = new MapLayoutBlock[width][height];
+                        MapLayoutBlock[][] copyBlocks = new MapLayoutBlock[width][height];
                         MapLayoutBlock[] blocks = layout.getBlocks();
                         for(int j=0; j < height; j++) {
                             for (int i=0; i < width;i++){
-                                copiedBlocks[i][j] = blocks[xStart+i+(yStart+j)*BLOCK_WIDTH];
+                                copyBlocks[i][j] = blocks[xStart+i+(yStart+j)*BLOCK_WIDTH];
                             }
                         }
-                        mapBlockLayoutPanel.selectedBlockIndexLeft = -1;
-                        BufferedImage img = new BufferedImage(PIXEL_WIDTH, PIXEL_HEIGHT, BufferedImage.TYPE_INT_ARGB);
-                        Graphics2D g2 = (Graphics2D)img.getGraphics();
-                        g2.setColor(Color.YELLOW);
-                        g2.drawRect(0, 0, img.getWidth()-1, img.getHeight()-1);
-                        g2.setColor(Color.BLACK);
-                        g2.drawString("copy", -1, 15);
-                        g2.dispose();
-                        leftSlot.setOverrideImage(img);
+                        MapCopyBlocksActionData newValue = new MapCopyBlocksActionData(xStart, yStart, copyBlocks);
+                        MapCopyBlocksActionData oldValue = null;
+                        if (mapBlockLayoutPanel.selectedBlockIndexLeft == -1) {
+                            oldValue = null;
+                        } else {
+                            //Sentinel (x = -1 means no copy data. y = index of currently selected)
+                            oldValue = new MapCopyBlocksActionData(-1, mapBlockLayoutPanel.selectedBlockIndexLeft, null);
+                        }
+                        ActionManager.setAndExecuteAction(new CustomAction<MapCopyBlocksActionData>(this, "Copy Blocks", this::actionBlockCopy, newValue, oldValue));
                     }
                     copiedBlocksStartX = copiedBlocksStartY = -1;
                     copiedBlocksDrawX = x;
@@ -1348,19 +1344,85 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
                         lastMapY = y;
                         redraw();
                     }
-                } else {
+                } else if (evt.pressed()) {
                     copiedBlocksStartX = lastMapX = x;
                     copiedBlocksStartY = lastMapY = y;
                     copiedBlocks = null;
                     redraw();
                 }
                 break;
-            case MouseEvent.BUTTON3:
-                if (!evt.released()) {
-                    setBlockValue(x, y, mapBlockLayoutPanel.selectedBlockIndexRight);
-                }
-                break;
         }
+    }
+    
+    private void actionSetBlock(List<MapBlockActionData> values) {
+        for (MapBlockActionData value : values) {
+            value.layout().getBlocks()[value.layoutIndex()].setMapBlock(value.block());
+        }
+        redraw();
+    }
+    
+    private void actionBlockCopy(MapCopyBlocksActionData value) {
+        if (value == null) {
+            clearCopiedBlocks();
+            mapBlockLayoutPanel.selectedBlockIndexLeft = -1;
+        } else if (value.x() == -1) {
+            //Sentienl
+            clearCopiedBlocks();
+            mapBlockLayoutPanel.selectedBlockIndexLeft = value.y();
+        } else {
+            copiedBlocksStartX = value.x();
+            copiedBlocksStartY = value.y();
+            copiedBlocks = value.copyData();
+            
+            mapBlockLayoutPanel.selectedBlockIndexLeft = -1;
+            previewImage = null;
+            
+            //Create preview image
+            int dim;
+            Point offset = new Point();
+            if (copiedBlocks.length*PIXEL_WIDTH > copiedBlocks[0].length*PIXEL_HEIGHT) {
+                dim = copiedBlocks.length*PIXEL_WIDTH;
+                offset.y = (copiedBlocks.length*PIXEL_WIDTH-copiedBlocks[0].length*PIXEL_HEIGHT)/2;
+            } else {
+                dim = copiedBlocks[0].length*PIXEL_HEIGHT;
+                offset.x = (copiedBlocks[0].length*PIXEL_HEIGHT-copiedBlocks.length*PIXEL_WIDTH)/2;
+            }
+            BufferedImage preview = new BufferedImage(dim, dim, BufferedImage.TYPE_INT_ARGB);
+            Graphics2D graphics = (Graphics2D)preview.getGraphics();
+            graphics.setColor(Color.BLACK);
+            graphics.fillRect(0, 0, dim, dim);
+            for (int i=0; i < copiedBlocks.length; i++) {
+                for (int j=0; j < copiedBlocks[i].length; j++) {
+                    graphics.drawImage(copiedBlocks[i][j].getMapBlock().getIndexedColorImage(layout.getTilesets()), offset.x+i*PIXEL_WIDTH, offset.y+j*PIXEL_HEIGHT, null);
+                }
+            }
+            graphics.dispose();
+            leftSlot.setOverrideImage(preview);
+        }
+        redraw();
+    }
+    
+    private void actionBlockPaste(MapCopyBlocksActionData value) {
+        MapLayoutBlock[] blocks = layout.getBlocks();
+        int x = value.x();
+        int y = value.y();
+        MapLayoutBlock[][] copyData = value.copyData();
+        for (int i = 0; i < copyData.length; i++) {
+            for (int j = 0; j < copyData[0].length; j++) {
+                blocks[x+i + (y+j)*BLOCK_WIDTH] = copyData[i][j];
+            }
+        }
+        redraw();
+    }
+    
+    private void actionUpdateLeftSlot(MapBlock block) {
+        copiedBlocksStartX = -1;
+        copiedBlocksStartY = -1;
+        copiedBlocks = null;
+        previewImage = null;
+        selectedBlock = block;
+        mapBlockLayoutPanel.selectedBlockIndexLeft = block == null ? -1 : block.getIndex();
+        leftSlot.setBlock(block);
     }
     
     private void editMapFlags(BaseMouseCoordsComponent.GridMousePressedEvent evt) {
@@ -1426,35 +1488,11 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
         repaint();
     }
     
-    private void updateLeftSlot(MapBlock block){
-        leftSlot.setBlock(block);
-    }
-    
-    public void setBlockValue(int x, int y, int value) {
-        if (value == -1) return;
-        MapBlock[] blockset = map.getBlockset().getBlocks();
-        MapLayoutBlock[] layoutBlocks = layout.getBlocks();
-        MapLayoutBlock block = layoutBlocks[x+y*BLOCK_WIDTH];
-        if (block.getMapBlock().getIndex() != value) {
-            int[] action = new int[3];
-            action[0] = ACTION_CHANGE_BLOCK_VALUE;
-            action[1] = x+y*BLOCK_WIDTH;
-            action[2] = block.getMapBlock().getIndex();
-            layoutBlocks[x+y*BLOCK_WIDTH].setMapBlock(blockset[value]);
-            actions.add(action);
-            redraw();
-        }
-    }
-    
     public void setFlagValue(int x, int y, int value) {
         MapLayoutBlock[] blocks = layout.getBlocks();
         MapLayoutBlock block = blocks[x+y*BLOCK_WIDTH];
         if (block.getFlags() != value) {
-            int[] action = new int[3];
-            action[0] = ACTION_CHANGE_BLOCK_FLAGS;
-            action[1] = x+y*BLOCK_WIDTH;
             int origFlags = block.getFlags();
-            action[2] = origFlags;
             int newFlags = 0;
             if ((value & MapLayoutBlock.MAP_FLAG_MASK_EXPLORE) != 0) {
                 newFlags = value & MapLayoutBlock.MAP_FLAG_MASK_EXPLORE;
@@ -1464,7 +1502,6 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
                 newFlags += value & MapLayoutBlock.MAP_FLAG_MASK_EVENTS;
             }
             block.setFlags(newFlags);
-            actions.add(action);
             redraw();
         }
     }
@@ -1473,11 +1510,7 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
         MapLayoutBlock[] blocks = layout.getBlocks();
         MapLayoutBlock block = blocks[x+y*BLOCK_WIDTH];
         if (block.getFlags() != 0) {
-            int[] action = new int[3];
-            action[0] = ACTION_CHANGE_BLOCK_FLAGS;
-            action[1] = x+y*BLOCK_WIDTH;
             int origFlags = block.getFlags();
-            action[2] = origFlags;
             int newFlags = -1;
             if (value == 0xFF00) {
                 newFlags = origFlags & ~value;
@@ -1492,50 +1525,8 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
             }
             if (newFlags >= 0) {
                 block.setFlags(newFlags);
-                actions.add(action);
                 redraw();
             }
-        }
-    }
-    
-    public void revertLastAction() {
-        if (actions.isEmpty()) return;
-        int[] action = actions.get(actions.size()-1);
-        switch (action[0]) {
-            case ACTION_CHANGE_BLOCK_VALUE:
-                {
-                    MapBlock[] blockset = map.getBlockset().getBlocks();
-                    MapLayoutBlock[] layoutBlocks = layout.getBlocks();
-                    layoutBlocks[action[1]].setMapBlock(blockset[action[2]]);
-                    actions.remove(actions.size()-1);
-                    redraw();
-                    break;
-                }
-            case ACTION_CHANGE_BLOCK_FLAGS:
-                {
-                    MapLayoutBlock block = layout.getBlocks()[action[1]];
-                    block.setFlags(action[2]);
-                    actions.remove(actions.size()-1);
-                    redraw();
-                    break;
-                }
-            case ACTION_MASS_COPY:
-                int blockIndex = action[1];
-                int width = action[2];
-                int height = action[3];
-                for (int j=0; j < height; j++) {
-                    for (int i=0; i < width; i++) {
-                        int value = action[4+2*(j*width+i)];
-                        int flags = action[4+2*(j*width+i)+1];
-                        if (value != -1 && flags != -1) {
-                            layout.getBlocks()[i+blockIndex+j*BLOCK_WIDTH].setMapBlock(map.getBlockset().getBlocks()[value]);
-                        }
-                    }
-                }   actions.remove(actions.size()-1);
-                redraw();
-                break;
-            default:
-                break;
         }
     }
     

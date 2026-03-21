@@ -30,8 +30,8 @@ public class MapBlocksetLayoutPanel extends AbstractLayoutPanel {
     
     private static final int DEFAULT_BLOCKS_PER_ROW = 10;
     
-    public static int selectedBlockIndexLeft = -1;
-    public static int selectedBlockIndexRight = -1;
+    public int selectedBlockIndexLeft = -1;
+    public int selectedBlockIndexRight = -1;
     private boolean canSelectInitialBlocks = false;
     
     private BlockSlotPanel leftSlotBlockPanel;

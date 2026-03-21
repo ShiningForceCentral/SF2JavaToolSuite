@@ -1620,7 +1620,7 @@
                                     <DimensionLayout dim="1">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" alignment="0" attributes="0">
-                                              <Component id="jPanel21" pref="768" max="32767" attributes="0"/>
+                                              <Component id="jPanel21" pref="769" max="32767" attributes="0"/>
                                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
@@ -2809,10 +2809,7 @@
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="jPanel17" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="jPanel16" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jButton1" min="-2" pref="70" max="-2" attributes="0"/>
-                                              </Group>
+                                              <Component id="jPanel16" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="jPanel31" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="32767" attributes="0"/>
@@ -2824,15 +2821,11 @@
                                           <Group type="102" attributes="0">
                                               <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                      <Component id="jPanel17" min="-2" max="-2" attributes="0"/>
-                                                      <Group type="102" attributes="0">
-                                                          <Component id="jPanel16" min="-2" max="-2" attributes="0"/>
-                                                          <EmptySpace max="32767" attributes="0"/>
-                                                          <Component id="jButton1" min="-2" pref="37" max="-2" attributes="0"/>
-                                                      </Group>
+                                                  <Component id="jPanel17" min="-2" max="-2" attributes="0"/>
+                                                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                                      <Component id="jPanel16" alignment="0" max="32767" attributes="0"/>
+                                                      <Component id="jPanel31" alignment="0" max="32767" attributes="0"/>
                                                   </Group>
-                                                  <Component id="jPanel31" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                               <EmptySpace max="32767" attributes="0"/>
                                           </Group>
@@ -2840,14 +2833,6 @@
                                     </DimensionLayout>
                                   </Layout>
                                   <SubComponents>
-                                    <Component class="javax.swing.JButton" name="jButton1">
-                                      <Properties>
-                                        <Property name="text" type="java.lang.String" value="Undo"/>
-                                      </Properties>
-                                      <Events>
-                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
-                                      </Events>
-                                    </Component>
                                     <Container class="javax.swing.JPanel" name="jPanel16">
                                       <Properties>
                                         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -2889,7 +2874,7 @@
                                                       <Component id="jRadioButtonStars" alignment="1" min="-2" max="-2" attributes="0"/>
                                                       <Component id="infoButton3" alignment="1" min="-2" max="-2" attributes="0"/>
                                                   </Group>
-                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <EmptySpace max="32767" attributes="0"/>
                                               </Group>
                                           </Group>
                                         </DimensionLayout>
