@@ -104,7 +104,9 @@ public class Table extends javax.swing.JPanel {
             singleclick.setClickCountToStart(1);
             jTable.setDefaultEditor(String.class, singleclick);
         } else {
-            jTable.setDefaultEditor(String.class, null);
+            if (jTable.getDefaultEditor(String.class) instanceof DefaultCellEditor) {
+                jTable.setDefaultEditor(String.class, null);
+            }
         }
     }
     
@@ -120,10 +122,18 @@ public class Table extends javax.swing.JPanel {
             model = new SpinnerNumberModel(Byte.valueOf((byte)0), Byte.valueOf(Byte.MIN_VALUE), Byte.valueOf(Byte.MAX_VALUE), Byte.valueOf((byte)1));
             jTable.setDefaultRenderer(Byte.class, new SpinnerTableRenderer(model));
         } else {
-            jTable.setDefaultEditor(Integer.class, null);
-            jTable.setDefaultEditor(Byte.class, null);
-            jTable.setDefaultRenderer(Integer.class, null);
-            jTable.setDefaultRenderer(Byte.class, null);
+            if (jTable.getDefaultEditor(Integer.class) instanceof SpinnerTableEditor) {
+                jTable.setDefaultEditor(Integer.class, null);
+            }
+            if (jTable.getDefaultEditor(Byte.class) instanceof SpinnerTableEditor) {
+                jTable.setDefaultEditor(Byte.class, null);
+            }
+            if (jTable.getDefaultRenderer(Integer.class) instanceof SpinnerTableRenderer) {
+                jTable.setDefaultRenderer(Integer.class, null);
+            }
+            if (jTable.getDefaultRenderer(Byte.class) instanceof SpinnerTableRenderer) {
+                jTable.setDefaultRenderer(Byte.class, null);
+            }
         }
     }
     

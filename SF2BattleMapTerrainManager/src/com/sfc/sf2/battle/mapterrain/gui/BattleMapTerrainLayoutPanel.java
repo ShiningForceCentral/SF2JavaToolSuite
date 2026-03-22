@@ -5,22 +5,27 @@
  */
 package com.sfc.sf2.battle.mapterrain.gui;
 
-import com.sfc.sf2.battle.mapcoords.gui.BattleMapCoordsLayout;
+import static com.sfc.sf2.battle.mapcoords.BattleMapCoords.BATTLE_SIZE;
+import com.sfc.sf2.battle.mapcoords.gui.BattleMapCoordsLayoutPanel;
 import com.sfc.sf2.battle.mapterrain.BattleMapTerrain;
+import com.sfc.sf2.battle.mapterrain.actions.TerrainChangeActionData;
 import com.sfc.sf2.battle.mapterrain.gui.TerrainKeyPanel.TerrainDrawMode;
 import com.sfc.sf2.battle.mapterrain.gui.resources.BattleTerrainIcons;
+import com.sfc.sf2.core.actions.ActionManager;
+import com.sfc.sf2.core.actions.CumulativeAction;
 import com.sfc.sf2.core.gui.layout.BaseMouseCoordsComponent.GridMousePressedEvent;
 import com.sfc.sf2.core.gui.layout.LayoutMouseInput;
 import static com.sfc.sf2.graphics.Block.PIXEL_HEIGHT;
 import static com.sfc.sf2.graphics.Block.PIXEL_WIDTH;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 /**
  *
  * @author TiMMy
  */
-public class BattleMapTerrainLayoutPanel extends BattleMapCoordsLayout {
+public class BattleMapTerrainLayoutPanel extends BattleMapCoordsLayoutPanel {
     
     private BattleMapTerrain terrain;
     private boolean drawTerrain;
@@ -153,9 +158,18 @@ public class BattleMapTerrainLayoutPanel extends BattleMapCoordsLayout {
         }
         x -= startX;
         y -=startY;
-        if (terrain.getData()[x+y*48] != selectedTerrainType) {
-            terrain.getData()[x+y*48] = selectedTerrainType;
-            redraw();
+        int index = x+y*BATTLE_SIZE;
+        if (terrain.getData()[index] != selectedTerrainType) {
+            TerrainChangeActionData newValue = new TerrainChangeActionData(terrain, selectedTerrainType, index);
+            TerrainChangeActionData oldValue = new TerrainChangeActionData(terrain, terrain.getData()[index], index);
+            ActionManager.setAndExecuteAction(new CumulativeAction<TerrainChangeActionData>(this, "Terrain Chainge", this::actionTerrainChanged, newValue, oldValue));
         }
+    }
+    
+    private void actionTerrainChanged(List<TerrainChangeActionData> values) {
+        for (TerrainChangeActionData value : values) {
+            value.terrainData().getData()[value.index()] = value.terrain();
+        }
+        redraw();
     }
 }

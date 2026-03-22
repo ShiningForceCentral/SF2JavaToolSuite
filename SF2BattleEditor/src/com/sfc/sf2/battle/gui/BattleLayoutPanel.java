@@ -85,8 +85,8 @@ public class BattleLayoutPanel extends BattleMapTerrainLayoutPanel {
         super.drawImage(graphics);
         Graphics2D g2 = (Graphics2D)graphics;
         
-        int x = battle.getMapCoords().getX();
-        int y = battle.getMapCoords().getY();
+        int x = battle.getBattleCoords().getX();
+        int y = battle.getBattleCoords().getY();
         drawAllies(g2, x, y);
         drawEnemies(g2, x, y);
         drawAIRegions(g2, x, y);
@@ -335,17 +335,17 @@ public class BattleLayoutPanel extends BattleMapTerrainLayoutPanel {
     private void drawAIRegionNode(Graphics graphics) {
         //Draw a node to show closest node to mouse cursor (when in AI Region edit mode)
         if (spritesetMode != SpritesetPaintMode.AiRegion || selectedSpritesetEntity == -1) return;
-        int battleX = battle.getMapCoords().getX();
-        int battleY = battle.getMapCoords().getY();
+        int battleX = battle.getBattleCoords().getX();
+        int battleY = battle.getBattleCoords().getY();
         AIRegion region = battle.getSpriteset().getAiRegions()[selectedSpritesetEntity];
         Point point = region.getPoint(closestRegionPoint);
-        int scale = getDisplayScale();
+        float scale = this.getRenderScale();
         int nodeX = (battleX+point.x)*PIXEL_WIDTH;
         int nodeY = (battleY+point.y)*PIXEL_HEIGHT;
         graphics.setColor(Color.CYAN);
-        graphics.fillArc((nodeX+8)*scale, (nodeY+8)*scale, 12*scale, 12*scale, 0, 360);
+        graphics.fillArc((int)((nodeX+8)*scale), (int)((nodeY+8)*scale), (int)(12*scale), (int)(12*scale), 0, 360);
         graphics.setColor(Color.BLUE);
-        graphics.fillArc((nodeX+16)*scale, (nodeY+16)*scale, 8*scale, 8*scale, 0, 360);
+        graphics.fillArc((int)((nodeX+16)*scale), (int)((nodeY+16)*scale), (int)(8*scale), (int)(8*scale), 0, 360);
     }
 
     public void setSpritesetEditedListener(ActionListener spritesetEditedListener) {
@@ -451,8 +451,8 @@ public class BattleLayoutPanel extends BattleMapTerrainLayoutPanel {
     
     private void onMouseMove(BaseMouseCoordsComponent.GridMouseMoveEvent evt) {
         if (spritesetMode == SpritesetPaintMode.AiRegion && selectedSpritesetEntity >= 0) {
-            int x = evt.x() - battle.getMapCoords().getX();
-            int y = evt.y() - battle.getMapCoords().getY();
+            int x = evt.x() - battle.getBattleCoords().getX();
+            int y = evt.y() - battle.getBattleCoords().getY();
             int region = findClosestRegionPoint(battle.getSpriteset().getAiRegions()[selectedSpritesetEntity], x, y);
             if (closestRegionPoint != region) {
                 closestRegionPoint = region;
@@ -473,8 +473,8 @@ public class BattleLayoutPanel extends BattleMapTerrainLayoutPanel {
         if (selectedSpritesetEntity == -1) return;
         
         //Edit spritesets
-        int x = evt.x() - battle.getMapCoords().getX();
-        int y = evt.y() - battle.getMapCoords().getY();
+        int x = evt.x() - battle.getBattleCoords().getX();
+        int y = evt.y() - battle.getBattleCoords().getY();
         switch (evt.mouseButton()) {
             case MouseEvent.BUTTON1:
                 switch (spritesetMode) {

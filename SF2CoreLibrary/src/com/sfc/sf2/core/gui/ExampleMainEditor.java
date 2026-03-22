@@ -15,6 +15,7 @@ import com.sfc.sf2.core.settings.SettingsManager;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.core.models.combobox.ComboBoxTableEditor;
 import com.sfc.sf2.core.models.combobox.ComboBoxTableRenderer;
+import com.sfc.sf2.core.models.combobox.MultiComboBoxTableEditor;
 import com.sfc.sf2.helpers.SwingControlsHelpers;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JRadioButton;
@@ -48,7 +49,7 @@ public final class ExampleMainEditor extends AbstractMainEditor {
         comboTableModel.setComboModel(model);
         jTable2.setDefaultEditor(String.class, new ComboBoxTableEditor(model));
         jTable2.setDefaultRenderer(String.class, new ComboBoxTableRenderer());
-        table2.jTable.setDefaultEditor(String.class, new ComboBoxTableEditor(model));
+        table2.jTable.setDefaultEditor(String.class, new MultiComboBoxTableEditor(model));
         table2.jTable.setDefaultRenderer(String.class, new ComboBoxTableRenderer());
         multiComboBox1.setSelected(3, true);
     }

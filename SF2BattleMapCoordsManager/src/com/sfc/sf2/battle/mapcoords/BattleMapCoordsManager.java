@@ -20,16 +20,12 @@ import java.nio.file.Path;
  * @author wiz
  */
 public class BattleMapCoordsManager extends AbstractManager {
-
-    private final MapLayoutManager mapLayoutManager = new MapLayoutManager();
-    private final BattleMapCoordsAsmProcessor coordsAsmProcessor = new BattleMapCoordsAsmProcessor();
     
     private BattleMapCoords[] coords;
     private MapLayout battleMapLayout;
 
     @Override
     public void clearData() {
-        mapLayoutManager.clearData();
         if (battleMapLayout != null) {
             battleMapLayout.clearIndexedColorImage(true);
             battleMapLayout = null;
@@ -39,7 +35,7 @@ public class BattleMapCoordsManager extends AbstractManager {
     
     public BattleMapCoords[] importDisassembly(Path battleMapCoordsPath) throws IOException, AsmException {
         Console.logger().finest("ENTERING importDisassembly");
-        coords = coordsAsmProcessor.importAsmData(battleMapCoordsPath, null);
+        coords = new BattleMapCoordsAsmProcessor().importAsmData(battleMapCoordsPath, null);
         Console.logger().info("Battle map coords successfully imported from : " + battleMapCoordsPath);
         Console.logger().finest("EXITING importDisassembly");
         return coords;
@@ -48,12 +44,13 @@ public class BattleMapCoordsManager extends AbstractManager {
     public void exportDisassembly(Path battleMapCoordsPath, BattleMapCoords[] coords) throws IOException, AsmException {
         Console.logger().finest("ENTERING exportDisassembly");
         this.coords = coords;
-        coordsAsmProcessor.exportAsmData(battleMapCoordsPath, coords, null);
+        new BattleMapCoordsAsmProcessor().exportAsmData(battleMapCoordsPath, coords, null);
         Console.logger().info("Battle coords successfully exported to : " + battleMapCoordsPath);
         Console.logger().finest("EXITING exportDisassembly");
     }
     
     public MapLayout importMapFromEntries(Path paletteEntriesPath, Path tilesetsEntriesPath, Path mapEntriesPath, int mapId) throws IOException, AsmException, DisassemblyException {
+        MapLayoutManager mapLayoutManager = new MapLayoutManager();
         mapLayoutManager.ImportMapEntries(mapEntriesPath);
         battleMapLayout = mapLayoutManager.importDisassemblyFromMapEntries(paletteEntriesPath, tilesetsEntriesPath, mapEntriesPath, mapId);
         return battleMapLayout;

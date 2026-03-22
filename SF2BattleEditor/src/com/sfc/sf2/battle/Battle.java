@@ -7,6 +7,7 @@ package com.sfc.sf2.battle;
 
 import com.sfc.sf2.battle.mapcoords.BattleMapCoords;
 import com.sfc.sf2.battle.mapterrain.BattleMapTerrain;
+import com.sfc.sf2.map.layout.MapLayout;
 
 /**
  *
@@ -15,12 +16,14 @@ import com.sfc.sf2.battle.mapterrain.BattleMapTerrain;
 public class Battle {
     
     private int index;
+    private MapLayout layout;
     private BattleMapCoords mapCoords;
     private BattleMapTerrain terrain;
     private BattleSpriteset spriteset;
 
-    public Battle(int index, BattleMapCoords mapCoords, BattleMapTerrain terrain, BattleSpriteset spriteset) {
+    public Battle(int index, MapLayout layout, BattleMapCoords mapCoords, BattleMapTerrain terrain, BattleSpriteset spriteset) {
         this.index = index;
+        this.layout = layout;
         this.mapCoords = mapCoords;
         this.terrain = terrain;
         this.spriteset = spriteset;
@@ -33,8 +36,16 @@ public class Battle {
     public void setIndex(int index) {
         this.index = index;
     }
+
+    public MapLayout getMapLayout() {
+        return layout;
+    }
+
+    public void setMapLayout(MapLayout layout) {
+        this.layout = layout;
+    }
     
-    public BattleMapCoords getMapCoords() {
+    public BattleMapCoords getBattleCoords() {
         return mapCoords;
     }
 
@@ -56,5 +67,14 @@ public class Battle {
 
     public void setSpriteset(BattleSpriteset spriteset) {
         this.spriteset = spriteset;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return this == null;
+        if (obj == this) return true;
+        if (!(obj instanceof Battle)) return false;
+        Battle other = (Battle)obj;
+        return this.index == other.index && this.layout.equals(other.layout) && this.mapCoords.equals(other.mapCoords) && this.terrain.equals(other.terrain) && this.spriteset.equals(other.spriteset);
     }
 }

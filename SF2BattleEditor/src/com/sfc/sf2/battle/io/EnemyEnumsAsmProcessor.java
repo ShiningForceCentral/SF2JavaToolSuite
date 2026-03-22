@@ -92,6 +92,7 @@ public class EnemyEnumsAsmProcessor extends SF2EnumsAsmProcessor<EnemyEnums> {
                         foundItemFlags = true;
                         value = itemNothingValue;
                         asmData.put(item, value);
+                        itemFlags.put(item, value);
                     } else if (item.equals("EQUIPPED")) {
                         value = itemEquippedValue;
                         itemFlags.put(item, value);

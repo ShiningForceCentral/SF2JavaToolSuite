@@ -6,6 +6,7 @@
 package com.sfc.sf2.battle.mapcoords.gui;
 
 import com.sfc.sf2.battle.mapcoords.BattleMapCoords;
+import com.sfc.sf2.battle.mapcoords.layout.LayoutBattleCoordsHeader;
 import static com.sfc.sf2.graphics.Block.PIXEL_HEIGHT;
 import static com.sfc.sf2.graphics.Block.PIXEL_WIDTH;
 import static com.sfc.sf2.map.layout.MapLayout.BLOCK_HEIGHT;
@@ -20,10 +21,15 @@ import java.awt.Graphics2D;
  *
  * @author wiz
  */
-public class BattleMapCoordsLayout extends MapLayoutPanel {
+public class BattleMapCoordsLayoutPanel extends MapLayoutPanel {
     
     protected BattleMapCoords battleCoords;
     protected boolean showBattleCoords = true;
+
+    public BattleMapCoordsLayoutPanel() {
+        super();
+        coordsHeader = new LayoutBattleCoordsHeader(this, PIXEL_WIDTH, PIXEL_HEIGHT);
+    }
     
     @Override
     protected void drawImage(Graphics graphics) {
@@ -58,8 +64,11 @@ public class BattleMapCoordsLayout extends MapLayoutPanel {
     public void setBattleCoords(BattleMapCoords battleCoords) {
         if (this.battleCoords != battleCoords) {
             this.battleCoords = battleCoords;
+            ((LayoutBattleCoordsHeader)coordsHeader).setBattleMapCoords(battleCoords);
             redraw();
-            scrollToPosition((battleCoords.getX()-1)*PIXEL_WIDTH, (battleCoords.getY()-1)*PIXEL_HEIGHT);
+            if (battleCoords != null) {
+                scrollToPosition((battleCoords.getX()-1)/(float)BLOCK_WIDTH, (battleCoords.getY()-1)/(float)BLOCK_HEIGHT);
+            }
         }
     }
 

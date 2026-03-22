@@ -9,6 +9,8 @@ import com.sfc.sf2.battle.Enemy;
 import com.sfc.sf2.battle.EnemyData;
 import com.sfc.sf2.battle.EnemyEnums;
 import com.sfc.sf2.core.models.AbstractTableModel;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 
 /**
  *
@@ -18,6 +20,12 @@ public class EnemyPropertiesTableModel extends AbstractTableModel<Enemy> {
     
     private EnemyData[] enemyData;
     private EnemyEnums enemyEnums;
+    private DefaultComboBoxModel enemiesModel;
+    private DefaultComboBoxModel aiModel;
+    private DefaultComboBoxModel itemModel;
+    private DefaultComboBoxModel itemFlagsModel;
+    private DefaultComboBoxModel moveOrderModel;
+    private DefaultComboBoxModel spawnModel;
     
     public EnemyPropertiesTableModel() {
         super(new String[] { "Id", "Name", "X", "Y", "AI", "Item", "Flags", "Move Order", "Target", "Region 1", "Region 2", "Bkup Order", "Bkup Target", "Byte10", "Spawn" }, 64);
@@ -26,6 +34,20 @@ public class EnemyPropertiesTableModel extends AbstractTableModel<Enemy> {
     public void setEnemyData(EnemyData[] enemyData, EnemyEnums enemyEnums) {
         this.enemyData = enemyData;
         this.enemyEnums = enemyEnums;
+        enemiesModel = new DefaultComboBoxModel(enemyEnums.getEnemies().keySet().toArray());
+        aiModel = new DefaultComboBoxModel(enemyEnums.getCommandSets().keySet().toArray());
+        itemModel = new DefaultComboBoxModel(enemyEnums.getItems().keySet().toArray());
+        itemFlagsModel = new DefaultComboBoxModel(enemyEnums.getItemFlags().keySet().toArray());
+        moveOrderModel = new DefaultComboBoxModel(enemyEnums.getOrders().keySet().toArray());
+        spawnModel = new DefaultComboBoxModel(enemyEnums.getSpawnParams().keySet().toArray());
+    }
+
+    public EnemyData[] getEnemyData() {
+        return enemyData;
+    }
+
+    public EnemyEnums getEnemyEnums() {
+        return enemyEnums;
     }
     
     @Override
@@ -41,11 +63,6 @@ public class EnemyPropertiesTableModel extends AbstractTableModel<Enemy> {
                 return String.class;
             default: return Integer.class;
         }
-    }
- 
-    @Override
-    public boolean isCellEditable(int row, int column) {
-        return false;
     }
 
     @Override
@@ -124,6 +141,20 @@ public class EnemyPropertiesTableModel extends AbstractTableModel<Enemy> {
             case 10:
                 return 15;
             default: return Byte.MAX_VALUE;
+        }
+    }
+    
+    @Override
+    public ComboBoxModel getComboBoxModel(int row, int col) {
+        switch (col) {
+            case 1: return enemiesModel;
+            case 4: return aiModel;
+            case 5: return itemModel;
+            case 6: return itemFlagsModel;
+            case 7:
+            case 11: return moveOrderModel;
+            case 14: return spawnModel;
+            default: return null;
         }
     }
 }

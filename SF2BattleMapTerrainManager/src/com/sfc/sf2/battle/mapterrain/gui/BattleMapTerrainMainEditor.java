@@ -6,14 +6,20 @@
 package com.sfc.sf2.battle.mapterrain.gui;
 
 import com.sfc.sf2.battle.mapterrain.BattleMapTerrainManager;
-import com.sfc.sf2.battle.mapterrain.LandEffectEnums;
 import com.sfc.sf2.battle.mapterrain.LandEffectMovementType;
+import com.sfc.sf2.battle.mapterrain.actions.BattleMapTerrainActionData;
 import com.sfc.sf2.battle.mapterrain.gui.TerrainKeyPanel.TerrainDrawMode;
+import com.sfc.sf2.core.actions.ActionManager;
+import com.sfc.sf2.core.actions.BasicAction;
+import com.sfc.sf2.core.actions.SpinnerAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.core.settings.SettingsManager;
 import com.sfc.sf2.helpers.PathHelpers;
+import com.sfc.sf2.helpers.RenderScaleHelpers;
+import com.sfc.sf2.map.block.settings.MapBlockSettings;
 import com.sfc.sf2.settings.TerrainSettings;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.nio.file.Path;
 import java.util.logging.Level;
@@ -26,10 +32,14 @@ public class BattleMapTerrainMainEditor extends AbstractMainEditor {
 
     private final TerrainSettings terrainSettings = new TerrainSettings();
     private final BattleMapTerrainManager battlemapterrainManager = new BattleMapTerrainManager();
+    
+    private int actionBattleIndex = 1;
+    private String actionSharedTerrainInfo;
         
     public BattleMapTerrainMainEditor() {
         super();
         SettingsManager.registerSettingsStore("terrain", terrainSettings);
+        SettingsManager.registerSettingsStore("mapLayout", new MapBlockSettings(20, RenderScaleHelpers.DEFAULT_RENDER_SCALE_INDEX, new Color(200, 0, 200)));
         initComponents();
         initCore(console1);
     }
@@ -38,37 +48,36 @@ public class BattleMapTerrainMainEditor extends AbstractMainEditor {
     protected void initEditor() {
         super.initEditor();
         
+        battleMapTerrainViewPanel1.setLayoutPanel(battleMapTerrainLayoutPanel);
         accordionPanel1.setExpanded(false);
         terrainKeyPanel1.setActionListener(this::onTerrainSelectionChanged);
         terrainKeyPanel1.setModeChangedListener(this::onTerrainModeChanged);
         TerrainDrawMode terrainDrawMode = terrainSettings.getTerrainDrawMode();
         battleMapTerrainLayoutPanel.setTerrainDrawMode(terrainDrawMode);
         terrainKeyPanel1.setDrawMode(terrainDrawMode);
-        
-        colorPicker1.setColor(SettingsManager.getGlobalSettings().getTransparentBGColor());
-        
-        battleMapTerrainLayoutPanel.setDisplayScale(jComboBox1.getSelectedIndex()+1);
-        battleMapTerrainLayoutPanel.setShowGrid(jCheckBox2.isSelected());
-        battleMapTerrainLayoutPanel.setBGColor(colorPicker1.getColor());
-        battleMapTerrainLayoutPanel.setShowExplorationFlags(jCheckBox1.isSelected());
-        battleMapTerrainLayoutPanel.setDrawTerrain(jCheckBox3.isSelected());
-        battleMapTerrainLayoutPanel.setShowBattleCoords(true);
     }
     
     @Override
     protected void onDataLoaded() {
         super.onDataLoaded();
+        BattleMapTerrainActionData newValue = new BattleMapTerrainActionData((int)jSpinnerBattleIndex.getValue(), battlemapterrainManager.getMapLayout(), battlemapterrainManager.getCoords(), battlemapterrainManager.getTerrain(),
+                battlemapterrainManager.getLandEffects(), battlemapterrainManager.getSharedTerrainInfo());
+        BattleMapTerrainActionData oldValue = new BattleMapTerrainActionData(actionBattleIndex, battleMapTerrainLayoutPanel.getMapLayout(), battleMapTerrainLayoutPanel.getBattleCoords(), battleMapTerrainLayoutPanel.getTerrain(),
+                landEffectTableModel.getTableData(LandEffectMovementType[].class), actionSharedTerrainInfo);
+        ActionManager.setAndExecuteAction(new BasicAction<BattleMapTerrainActionData>(this, "Battle Terrain Imported", this::actionBattleMapTerrainLoaded, newValue, oldValue));
+    }
+    
+    private void actionBattleMapTerrainLoaded(BattleMapTerrainActionData value) {
         
-        battleMapTerrainLayoutPanel.setMapLayout(battlemapterrainManager.getMapLayout());
-        battleMapTerrainLayoutPanel.setBattleCoords(battlemapterrainManager.getCoords());
-        battleMapTerrainLayoutPanel.setTerrain(battlemapterrainManager.getTerrain());
+        battleMapTerrainLayoutPanel.setMapLayout(value.layout());
+        battleMapTerrainLayoutPanel.setBattleCoords(value.coords());
+        battleMapTerrainLayoutPanel.setTerrain(value.terrain());
         
-        LandEffectEnums landEffectEnums = battlemapterrainManager.getLandEffectEnums();
-        landEffectTable.setLandEffectData(landEffectEnums);
-        landEffectTableModel.setTableData(battlemapterrainManager.getLandEffects());
+        landEffectTable.setLandEffectData(battlemapterrainManager.getLandEffectEnums());
+        landEffectTableModel.setTableData(value.landEffects());
         
-        String sharedTerrainInfo = battlemapterrainManager.getSharedTerrainInfo();
-        terrainKeyPanel1.setSharedTerrainInfo(sharedTerrainInfo);
+        actionSharedTerrainInfo = value.sharedTerraininfo();
+        terrainKeyPanel1.setSharedTerrainInfo(actionSharedTerrainInfo);
     }
     
     /**
@@ -86,29 +95,31 @@ public class BattleMapTerrainMainEditor extends AbstractMainEditor {
         jPanel15 = new javax.swing.JPanel();
         jSplitPane2 = new javax.swing.JSplitPane();
         jPanel8 = new javax.swing.JPanel();
+        jSplitPane3 = new javax.swing.JSplitPane();
         jPanel9 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
-        jButton18 = new javax.swing.JButton();
-        jSpinner1 = new javax.swing.JSpinner();
+        jButtonImport = new javax.swing.JButton();
+        jSpinnerBattleIndex = new javax.swing.JSpinner();
         jLabel3 = new javax.swing.JLabel();
         accordionPanel1 = new com.sfc.sf2.core.gui.controls.AccordionPanel();
-        fileButton2 = new com.sfc.sf2.core.gui.controls.FileButton();
-        directoryButton1 = new com.sfc.sf2.core.gui.controls.DirectoryButton();
-        directoryButton2 = new com.sfc.sf2.core.gui.controls.DirectoryButton();
-        fileButton1 = new com.sfc.sf2.core.gui.controls.FileButton();
-        fileButton5 = new com.sfc.sf2.core.gui.controls.FileButton();
-        fileButton3 = new com.sfc.sf2.core.gui.controls.FileButton();
-        fileButton6 = new com.sfc.sf2.core.gui.controls.FileButton();
+        fileButtonTerrainEntries = new com.sfc.sf2.core.gui.controls.FileButton();
+        directoryButtonPaletteEntries = new com.sfc.sf2.core.gui.controls.DirectoryButton();
+        directoryButtonTilesetEntries = new com.sfc.sf2.core.gui.controls.DirectoryButton();
+        fileButtonMapEntries = new com.sfc.sf2.core.gui.controls.FileButton();
+        fileButtonLandEffectEntries = new com.sfc.sf2.core.gui.controls.FileButton();
+        fileButtonBattleMapCoords = new com.sfc.sf2.core.gui.controls.FileButton();
+        fileButtonLandEffects = new com.sfc.sf2.core.gui.controls.FileButton();
         jPanel5 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel6 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        fileButton4 = new com.sfc.sf2.core.gui.controls.FileButton();
+        jButtonExportTerrain = new javax.swing.JButton();
+        fileButtonExportTerrain = new com.sfc.sf2.core.gui.controls.FileButton();
         jPanel7 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
-        fileButton7 = new com.sfc.sf2.core.gui.controls.FileButton();
+        jButtonExportLandEffect = new javax.swing.JButton();
+        fileButtonExportLandeffect = new com.sfc.sf2.core.gui.controls.FileButton();
+        jPanel11 = new javax.swing.JPanel();
         terrainKeyPanel1 = new com.sfc.sf2.battle.mapterrain.gui.TerrainKeyPanel();
         jPanel2 = new javax.swing.JPanel();
         jTabbedPane2 = new javax.swing.JTabbedPane();
@@ -116,14 +127,7 @@ public class BattleMapTerrainMainEditor extends AbstractMainEditor {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         battleMapTerrainLayoutPanel = new com.sfc.sf2.battle.mapterrain.gui.BattleMapTerrainLayoutPanel();
-        jPanel12 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
-        jCheckBox3 = new javax.swing.JCheckBox();
-        jLabel8 = new javax.swing.JLabel();
-        colorPicker1 = new com.sfc.sf2.core.gui.controls.ColorPicker();
+        battleMapTerrainViewPanel1 = new com.sfc.sf2.battle.mapterrain.gui.BattleMapTerrainViewPanel();
         jPanel4 = new javax.swing.JPanel();
         landEffectTable = new com.sfc.sf2.battle.mapterrain.gui.LandEffectTable();
         infoButton11 = new com.sfc.sf2.core.gui.controls.InfoButton();
@@ -133,51 +137,64 @@ public class BattleMapTerrainMainEditor extends AbstractMainEditor {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SF2BattleMapTerrainManager");
 
-        jSplitPane1.setDividerLocation(800);
+        jSplitPane1.setDividerLocation(700);
         jSplitPane1.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
         jSplitPane1.setOneTouchExpandable(true);
 
-        jSplitPane2.setDividerLocation(400);
+        jSplitPane2.setDividerLocation(550);
         jSplitPane2.setOneTouchExpandable(true);
+
+        jSplitPane3.setDividerLocation(300);
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Import from :"));
         jPanel3.setPreferredSize(new java.awt.Dimension(590, 135));
 
-        jButton18.setText("Import");
-        jButton18.addActionListener(new java.awt.event.ActionListener() {
+        jButtonImport.setText("Import");
+        jButtonImport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton18ActionPerformed(evt);
+                jButtonImportActionPerformed(evt);
             }
         });
 
-        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(1, 0, 255, 1));
+        jSpinnerBattleIndex.setModel(new javax.swing.SpinnerNumberModel(1, 0, 255, 1));
+        jSpinnerBattleIndex.setName("Battle Index Spinner"); // NOI18N
+        jSpinnerBattleIndex.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jSpinnerBattleIndexStateChanged(evt);
+            }
+        });
 
         jLabel3.setText("Battle index :");
 
         accordionPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Entries data"));
 
-        fileButton2.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButton2.setFilePath(".\\terrainentries.asm");
-        fileButton2.setInfoMessage("");
-        fileButton2.setLabelText("Terrain entries :");
+        fileButtonTerrainEntries.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
+        fileButtonTerrainEntries.setFilePath(".\\terrainentries.asm");
+        fileButtonTerrainEntries.setInfoMessage("");
+        fileButtonTerrainEntries.setLabelText("Terrain entries :");
+        fileButtonTerrainEntries.setName("Import Terrain Entries"); // NOI18N
 
-        directoryButton1.setDirectoryPath("..\\graphics\\maps\\mappalettes\\entries.asm");
-        directoryButton1.setInfoMessage("");
-        directoryButton1.setLabelText("Map palette entries :");
+        directoryButtonPaletteEntries.setDirectoryPath("..\\graphics\\maps\\mappalettes\\entries.asm");
+        directoryButtonPaletteEntries.setInfoMessage("");
+        directoryButtonPaletteEntries.setLabelText("Map palette entries :");
+        directoryButtonPaletteEntries.setName("Import Palette Entries"); // NOI18N
 
-        directoryButton2.setDirectoryPath("..\\graphics\\maps\\maptilesets\\entries.asm");
-        directoryButton2.setInfoMessage("");
-        directoryButton2.setLabelText("Map tileset entries :");
+        directoryButtonTilesetEntries.setDirectoryPath("..\\graphics\\maps\\maptilesets\\entries.asm");
+        directoryButtonTilesetEntries.setInfoMessage("");
+        directoryButtonTilesetEntries.setLabelText("Map tileset entries :");
+        directoryButtonTilesetEntries.setName("Import Tileset Entries"); // NOI18N
 
-        fileButton1.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButton1.setFilePath("..\\maps\\entries.asm");
-        fileButton1.setInfoMessage("");
-        fileButton1.setLabelText("Map entries :");
+        fileButtonMapEntries.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
+        fileButtonMapEntries.setFilePath("..\\maps\\entries.asm");
+        fileButtonMapEntries.setInfoMessage("");
+        fileButtonMapEntries.setLabelText("Map entries :");
+        fileButtonMapEntries.setName("Import Map Entries"); // NOI18N
 
-        fileButton5.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButton5.setFilePath("..\\..\\sf2enums.asm");
-        fileButton5.setInfoMessage("");
-        fileButton5.setLabelText("Land effect enums :");
+        fileButtonLandEffectEntries.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
+        fileButtonLandEffectEntries.setFilePath("..\\..\\sf2enums.asm");
+        fileButtonLandEffectEntries.setInfoMessage("");
+        fileButtonLandEffectEntries.setLabelText("Land effect enums :");
+        fileButtonLandEffectEntries.setName("Import Land Effect Entries"); // NOI18N
 
         javax.swing.GroupLayout accordionPanel1Layout = new javax.swing.GroupLayout(accordionPanel1);
         accordionPanel1.setLayout(accordionPanel1Layout);
@@ -186,38 +203,40 @@ public class BattleMapTerrainMainEditor extends AbstractMainEditor {
             .addGroup(accordionPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(accordionPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(directoryButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(directoryButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(fileButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(fileButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(fileButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(directoryButtonPaletteEntries, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(directoryButtonTilesetEntries, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(fileButtonMapEntries, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(fileButtonTerrainEntries, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(fileButtonLandEffectEntries, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
         accordionPanel1Layout.setVerticalGroup(
             accordionPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(accordionPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(directoryButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(directoryButtonPaletteEntries, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(directoryButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(directoryButtonTilesetEntries, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fileButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fileButtonMapEntries, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fileButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fileButtonTerrainEntries, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fileButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fileButtonLandEffectEntries, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
-        fileButton3.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ANY_ASSEMBLY);
-        fileButton3.setFilePath(".\\global\\battlemapcoords.asm");
-        fileButton3.setInfoMessage("");
-        fileButton3.setLabelText("Battlemap coords :");
+        fileButtonBattleMapCoords.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ANY_ASSEMBLY);
+        fileButtonBattleMapCoords.setFilePath(".\\global\\battlemapcoords.asm");
+        fileButtonBattleMapCoords.setInfoMessage("");
+        fileButtonBattleMapCoords.setLabelText("Battlemap coords :");
+        fileButtonBattleMapCoords.setName("Import Battle Coords"); // NOI18N
 
-        fileButton6.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ANY_ASSEMBLY);
-        fileButton6.setFilePath(".\\global\\landeffectsettingsandmovecosts.asm");
-        fileButton6.setInfoMessage("");
-        fileButton6.setLabelText("Land effects :");
+        fileButtonLandEffects.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ANY_ASSEMBLY);
+        fileButtonLandEffects.setFilePath(".\\global\\landeffectsettingsandmovecosts.asm");
+        fileButtonLandEffects.setInfoMessage("");
+        fileButtonLandEffects.setLabelText("Land effects :");
+        fileButtonLandEffects.setName("Import Land Effects"); // NOI18N
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -227,16 +246,16 @@ public class BattleMapTerrainMainEditor extends AbstractMainEditor {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jSpinnerBattleIndex, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton18)
+                .addComponent(jButtonImport)
                 .addGap(6, 6, 6))
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(accordionPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(fileButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(fileButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(fileButtonBattleMapCoords, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(fileButtonLandEffects, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -245,13 +264,13 @@ public class BattleMapTerrainMainEditor extends AbstractMainEditor {
                 .addContainerGap()
                 .addComponent(accordionPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fileButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fileButtonBattleMapCoords, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fileButton6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fileButtonLandEffects, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jButton18)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonImport)
+                    .addComponent(jSpinnerBattleIndex, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addContainerGap())
         );
@@ -262,17 +281,18 @@ public class BattleMapTerrainMainEditor extends AbstractMainEditor {
         jLabel1.setText("<html>Select target file.</html>");
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
-        jButton2.setText("Export");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButtonExportTerrain.setText("Export");
+        jButtonExportTerrain.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButtonExportTerrainActionPerformed(evt);
             }
         });
 
-        fileButton4.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButton4.setFilePath(".\\entries\\battle01\\terrain.bin");
-        fileButton4.setInfoMessage("");
-        fileButton4.setLabelText("Battlemap terrain :");
+        fileButtonExportTerrain.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
+        fileButtonExportTerrain.setFilePath(".\\entries\\battle01\\terrain.bin");
+        fileButtonExportTerrain.setInfoMessage("");
+        fileButtonExportTerrain.setLabelText("Battlemap terrain :");
+        fileButtonExportTerrain.setName("Export Terrain"); // NOI18N
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -281,40 +301,43 @@ public class BattleMapTerrainMainEditor extends AbstractMainEditor {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fileButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(fileButtonExportTerrain, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)))
+                        .addComponent(jButtonExportTerrain)))
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(fileButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fileButtonExportTerrain, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jButtonExportTerrain)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         jTabbedPane1.addTab("Terrain", jPanel6);
 
+        jPanel7.setPreferredSize(new java.awt.Dimension(271, 110));
+
         jLabel2.setText("<html>Select target file.</html>");
         jLabel2.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
-        jButton3.setText("Export");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jButtonExportLandEffect.setText("Export");
+        jButtonExportLandEffect.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jButtonExportLandEffectActionPerformed(evt);
             }
         });
 
-        fileButton7.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButton7.setFilePath(".\\global\\landeffectsettingsandmovecosts.asm");
-        fileButton7.setInfoMessage("");
-        fileButton7.setLabelText("Land effects :");
+        fileButtonExportLandeffect.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
+        fileButtonExportLandeffect.setFilePath(".\\global\\landeffectsettingsandmovecosts.asm");
+        fileButtonExportLandeffect.setInfoMessage("");
+        fileButtonExportLandeffect.setLabelText("Land effects :");
+        fileButtonExportLandeffect.setName("Export Land Effects"); // NOI18N
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -323,22 +346,22 @@ public class BattleMapTerrainMainEditor extends AbstractMainEditor {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fileButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(fileButtonExportLandeffect, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3)))
+                        .addComponent(jButtonExportLandEffect)))
                 .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(fileButton7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fileButtonExportLandeffect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jButtonExportLandEffect)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         jTabbedPane1.addTab("Land effect", jPanel7);
@@ -356,7 +379,7 @@ public class BattleMapTerrainMainEditor extends AbstractMainEditor {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1))
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE))
         );
 
         jTabbedPane1.getAccessibleContext().setAccessibleName("Terrain");
@@ -368,32 +391,47 @@ public class BattleMapTerrainMainEditor extends AbstractMainEditor {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
-                    .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(terrainKeyPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 394, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(11, 11, 11)
-                .addComponent(terrainKeyPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 36, Short.MAX_VALUE)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 208, Short.MAX_VALUE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
+
+        jSplitPane3.setLeftComponent(jPanel9);
+
+        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
+        jPanel11.setLayout(jPanel11Layout);
+        jPanel11Layout.setHorizontalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(terrainKeyPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
+        );
+        jPanel11Layout.setVerticalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(terrainKeyPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 688, Short.MAX_VALUE)
+        );
+
+        jSplitPane3.setRightComponent(jPanel11);
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jSplitPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 544, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jSplitPane3)
+                .addContainerGap())
         );
 
         jSplitPane2.setLeftComponent(jPanel8);
@@ -420,121 +458,30 @@ public class BattleMapTerrainMainEditor extends AbstractMainEditor {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 662, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 675, Short.MAX_VALUE)
-        );
-
-        jPanel12.setBorder(javax.swing.BorderFactory.createTitledBorder("Display"));
-
-        jLabel4.setText("Scale :");
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "x1", "x2", "x3", "x4" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
-            }
-        });
-
-        jCheckBox1.setText("Exploration");
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
-            }
-        });
-
-        jCheckBox2.setText("Show grid");
-        jCheckBox2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox2ActionPerformed(evt);
-            }
-        });
-
-        jCheckBox3.setSelected(true);
-        jCheckBox3.setText("Terrain");
-        jCheckBox3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox3ActionPerformed(evt);
-            }
-        });
-
-        jLabel8.setText("BG :");
-
-        colorPicker1.addColorChangedListener(new com.sfc.sf2.core.gui.controls.ColorPicker.ColorChangedListener() {
-            public void colorChanged(java.awt.event.ActionEvent evt) {
-                colorPicker1ColorChanged(evt);
-            }
-        });
-
-        javax.swing.GroupLayout colorPicker1Layout = new javax.swing.GroupLayout(colorPicker1);
-        colorPicker1.setLayout(colorPicker1Layout);
-        colorPicker1Layout.setHorizontalGroup(
-            colorPicker1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 22, Short.MAX_VALUE)
-        );
-        colorPicker1Layout.setVerticalGroup(
-            colorPicker1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 22, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
-        jPanel12.setLayout(jPanel12Layout);
-        jPanel12Layout.setHorizontalGroup(
-            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel12Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jCheckBox1)
-                .addGap(18, 18, 18)
-                .addComponent(jCheckBox3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 279, Short.MAX_VALUE)
-                .addComponent(jCheckBox2)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(colorPicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        jPanel12Layout.setVerticalGroup(
-            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel12Layout.createSequentialGroup()
-                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel8)
-                    .addComponent(colorPicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jCheckBox1)
-                        .addComponent(jCheckBox3)
-                        .addComponent(jCheckBox2)))
-                .addContainerGap())
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(4, 4, 4))))
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(battleMapTerrainViewPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 672, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(4, 4, 4))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(battleMapTerrainViewPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -557,7 +504,7 @@ public class BattleMapTerrainMainEditor extends AbstractMainEditor {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addContainerGap(624, Short.MAX_VALUE)
+                        .addContainerGap(561, Short.MAX_VALUE)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(infoButton11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -572,7 +519,7 @@ public class BattleMapTerrainMainEditor extends AbstractMainEditor {
                     .addComponent(infoButton11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(landEffectTable, javax.swing.GroupLayout.DEFAULT_SIZE, 721, Short.MAX_VALUE)
+                .addComponent(landEffectTable, javax.swing.GroupLayout.DEFAULT_SIZE, 621, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -582,13 +529,13 @@ public class BattleMapTerrainMainEditor extends AbstractMainEditor {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 745, Short.MAX_VALUE)
+            .addGap(0, 682, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jTabbedPane2))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 778, Short.MAX_VALUE)
+            .addGap(0, 700, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jTabbedPane2))
         );
@@ -613,11 +560,11 @@ public class BattleMapTerrainMainEditor extends AbstractMainEditor {
         jPanel13.setLayout(jPanel13Layout);
         jPanel13Layout.setHorizontalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane1)
+            .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1237, Short.MAX_VALUE)
         );
         jPanel13Layout.setVerticalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 933, Short.MAX_VALUE)
+            .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 727, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -631,12 +578,12 @@ public class BattleMapTerrainMainEditor extends AbstractMainEditor {
             .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        setSize(new java.awt.Dimension(1166, 908));
+        setSize(new java.awt.Dimension(1253, 735));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Path terrainPath = PathHelpers.getBasePath().resolve(fileButton4.getFilePath());
+    private void jButtonExportTerrainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExportTerrainActionPerformed
+        Path terrainPath = PathHelpers.getBasePath().resolve(fileButtonExportTerrain.getFilePath());
         if (!PathHelpers.createPathIfRequred(terrainPath)) return;
         try {
             battlemapterrainManager.exportDisassembly(terrainPath, battleMapTerrainLayoutPanel.getTerrain());
@@ -644,17 +591,17 @@ public class BattleMapTerrainMainEditor extends AbstractMainEditor {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Terrrain disasm could not be exported to : " + terrainPath);
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jButtonExportTerrainActionPerformed
 
-    private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
-        Path palettesPath = PathHelpers.getBasePath().resolve(directoryButton1.getDirectoryPath());
-        Path tilesetsPath = PathHelpers.getBasePath().resolve(directoryButton2.getDirectoryPath());
-        Path mapEntriesPath = PathHelpers.getBasePath().resolve(fileButton1.getFilePath());
-        Path terrainEntriesPath = PathHelpers.getBasePath().resolve(fileButton2.getFilePath());
-        Path coordsPath = PathHelpers.getBasePath().resolve(fileButton3.getFilePath());
-        Path sf2EnumsPath = PathHelpers.getBasePath().resolve(fileButton5.getFilePath());
-        Path landEffectPath = PathHelpers.getBasePath().resolve(fileButton6.getFilePath());
-        int battleIndex = (int)jSpinner1.getValue();
+    private void jButtonImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportActionPerformed
+        Path palettesPath = PathHelpers.getBasePath().resolve(directoryButtonPaletteEntries.getDirectoryPath());
+        Path tilesetsPath = PathHelpers.getBasePath().resolve(directoryButtonTilesetEntries.getDirectoryPath());
+        Path mapEntriesPath = PathHelpers.getBasePath().resolve(fileButtonMapEntries.getFilePath());
+        Path terrainEntriesPath = PathHelpers.getBasePath().resolve(fileButtonTerrainEntries.getFilePath());
+        Path coordsPath = PathHelpers.getBasePath().resolve(fileButtonBattleMapCoords.getFilePath());
+        Path sf2EnumsPath = PathHelpers.getBasePath().resolve(fileButtonLandEffectEntries.getFilePath());
+        Path landEffectPath = PathHelpers.getBasePath().resolve(fileButtonLandEffects.getFilePath());
+        int battleIndex = (int)jSpinnerBattleIndex.getValue();
         try {
             battlemapterrainManager.importLandEffects(sf2EnumsPath, landEffectPath);
         } catch (Exception ex) {
@@ -669,34 +616,10 @@ public class BattleMapTerrainMainEditor extends AbstractMainEditor {
             Console.logger().severe("ERROR Terrrain disasm could not be imported from : " + coordsPath);
         }
         onDataLoaded();
-    }//GEN-LAST:event_jButton18ActionPerformed
+    }//GEN-LAST:event_jButtonImportActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        if (jComboBox1.getSelectedIndex() >= 0) {
-            battleMapTerrainLayoutPanel.setDisplayScale(jComboBox1.getSelectedIndex()+1);
-        }
-    }//GEN-LAST:event_jComboBox1ActionPerformed
-
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
-        battleMapTerrainLayoutPanel.setShowExplorationFlags(jCheckBox1.isSelected());
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
-
-    private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox2ActionPerformed
-        battleMapTerrainLayoutPanel.setShowGrid(jCheckBox2.isSelected());
-    }//GEN-LAST:event_jCheckBox2ActionPerformed
-
-    private void jCheckBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox3ActionPerformed
-        battleMapTerrainLayoutPanel.setDrawTerrain(jCheckBox3.isSelected());
-    }//GEN-LAST:event_jCheckBox3ActionPerformed
-
-    private void colorPicker1ColorChanged(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorPicker1ColorChanged
-        battleMapTerrainLayoutPanel.setBGColor(colorPicker1.getColor());
-        SettingsManager.getGlobalSettings().setTransparentBGColor(colorPicker1.getColor());
-        SettingsManager.saveGlobalSettingsFile();
-    }//GEN-LAST:event_colorPicker1ColorChanged
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        Path landEffectPath = PathHelpers.getBasePath().resolve(fileButton7.getFilePath());
+    private void jButtonExportLandEffectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExportLandEffectActionPerformed
+        Path landEffectPath = PathHelpers.getBasePath().resolve(fileButtonExportLandeffect.getFilePath());
         if (!PathHelpers.createPathIfRequred(landEffectPath)) return;
         try {
             battlemapterrainManager.exportLandEffects(landEffectPath, landEffectTableModel.getTableData(LandEffectMovementType[].class));
@@ -704,7 +627,14 @@ public class BattleMapTerrainMainEditor extends AbstractMainEditor {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Land effect disasm could not be exported to : " + landEffectPath);
         }
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_jButtonExportLandEffectActionPerformed
+
+    private void jSpinnerBattleIndexStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinnerBattleIndexStateChanged
+        if (!ActionManager.isActionTriggering()) {
+            ActionManager.setActionWithoutExecute(new SpinnerAction(jSpinnerBattleIndex, jSpinnerBattleIndex.getValue(), actionBattleIndex));
+        }
+        actionBattleIndex = (int)jSpinnerBattleIndex.getValue();
+    }//GEN-LAST:event_jSpinnerBattleIndexStateChanged
     
     private void onTerrainSelectionChanged(ActionEvent e) {
         int terrain = Integer.parseInt(e.getActionCommand());
@@ -735,34 +665,28 @@ public class BattleMapTerrainMainEditor extends AbstractMainEditor {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.sfc.sf2.core.gui.controls.AccordionPanel accordionPanel1;
     private com.sfc.sf2.battle.mapterrain.gui.BattleMapTerrainLayoutPanel battleMapTerrainLayoutPanel;
-    private com.sfc.sf2.core.gui.controls.ColorPicker colorPicker1;
+    private com.sfc.sf2.battle.mapterrain.gui.BattleMapTerrainViewPanel battleMapTerrainViewPanel1;
     private com.sfc.sf2.core.gui.controls.Console console1;
-    private com.sfc.sf2.core.gui.controls.DirectoryButton directoryButton1;
-    private com.sfc.sf2.core.gui.controls.DirectoryButton directoryButton2;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton1;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton2;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton3;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton4;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton5;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton6;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton7;
+    private com.sfc.sf2.core.gui.controls.DirectoryButton directoryButtonPaletteEntries;
+    private com.sfc.sf2.core.gui.controls.DirectoryButton directoryButtonTilesetEntries;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonBattleMapCoords;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonExportLandeffect;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonExportTerrain;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonLandEffectEntries;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonLandEffects;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonMapEntries;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonTerrainEntries;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton11;
-    private javax.swing.JButton jButton18;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JCheckBox jCheckBox3;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JButton jButtonExportLandEffect;
+    private javax.swing.JButton jButtonExportTerrain;
+    private javax.swing.JButton jButtonImport;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel2;
@@ -774,9 +698,10 @@ public class BattleMapTerrainMainEditor extends AbstractMainEditor {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JSpinner jSpinner1;
+    private javax.swing.JSpinner jSpinnerBattleIndex;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JSplitPane jSplitPane2;
+    private javax.swing.JSplitPane jSplitPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private com.sfc.sf2.battle.mapterrain.gui.LandEffectTable landEffectTable;

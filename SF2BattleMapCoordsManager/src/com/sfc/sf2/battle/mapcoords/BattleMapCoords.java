@@ -5,13 +5,17 @@
  */
 package com.sfc.sf2.battle.mapcoords;
 
+import com.sfc.sf2.map.layout.MapLayout;
+
 /**
  *
  * @author wiz
  */
 public class BattleMapCoords {
     
-    private int map;
+    public static int BATTLE_SIZE = 48;
+    
+    private int mapIndex;
     private int x;
     private int y;
     private int width;
@@ -19,8 +23,8 @@ public class BattleMapCoords {
     private int trigX;
     private int trigY;
 
-    public BattleMapCoords(int map, int x, int y, int width, int height, int trigX, int trigY) {
-        this.map = map;
+    public BattleMapCoords(int mapIndex, int x, int y, int width, int height, int trigX, int trigY) {
+        this.mapIndex = mapIndex;
         this.x = x;
         this.y = y;
         this.width = width;
@@ -29,12 +33,12 @@ public class BattleMapCoords {
         this.trigY = trigY;
     }
 
-    public int getMap() {
-        return map;
+    public int getMapIndex() {
+        return mapIndex;
     }
 
-    public void setMap(int map) {
-        this.map = map;
+    public void setMapIndex(int map) {
+        this.mapIndex = map;
     }
 
     public int getX() {
@@ -91,6 +95,15 @@ public class BattleMapCoords {
 
     @Override
     public BattleMapCoords clone() {
-        return new BattleMapCoords(map, x, y, width, height, trigX, trigY);
+        return new BattleMapCoords(mapIndex, x, y, width, height, trigX, trigY);
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return this == null;
+        if (obj == this) return true;
+        if (!(obj instanceof BattleMapCoords)) return false;
+        BattleMapCoords coords = (BattleMapCoords)obj;
+        return this.mapIndex == coords.mapIndex && this.x == coords.x && this.y == coords.y && this.width == coords.width && this.height == coords.height;
     }
 }

@@ -3,6 +3,9 @@
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <NonVisualComponents>
     <Component class="com.sfc.sf2.core.gui.controls.NameableButtonGroup" name="buttonGroupTerrain">
+      <Properties>
+        <Property name="name" type="java.lang.String" value="Terrain Type Group"/>
+      </Properties>
     </Component>
     <Component class="com.formdev.flatlaf.icons.FlatOptionPaneWarningIcon" name="flatOptionPaneWarningIcon1">
     </Component>
@@ -12,6 +15,12 @@
       <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
         <TitledBorder title="Terrain"/>
       </Border>
+    </Property>
+    <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+      <Dimension value="[32767, 500]"/>
+    </Property>
+    <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+      <Dimension value="[240, 500]"/>
     </Property>
   </Properties>
   <AuxValues>
@@ -29,24 +38,26 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jTabbedPane1" pref="368" max="32767" attributes="0"/>
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jComboBoxTerrainView" min="-2" pref="100" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="infoButton13" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="48" max="32767" attributes="0"/>
+                      <Component id="infoButtonSharedTerrain" min="-2" pref="38" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="infoButton12" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="infoButtonSharedTerrain" min="-2" pref="38" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="infoButton13" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jComboBox2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
           </Group>
+          <Component id="jTabbedPane1" pref="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -54,44 +65,78 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="2" attributes="0">
-                  <Component id="jLabel2" alignment="2" min="-2" max="-2" attributes="0"/>
-                  <Component id="jComboBox2" alignment="2" min="-2" max="-2" attributes="0"/>
-                  <Component id="infoButton12" alignment="2" min="-2" max="-2" attributes="0"/>
                   <Component id="infoButton13" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Component id="jComboBoxTerrainView" alignment="2" min="-2" max="-2" attributes="0"/>
                   <Component id="infoButtonSharedTerrain" alignment="2" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="jTabbedPane1" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="2" attributes="0">
+                  <Component id="jLabel2" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Component id="infoButton12" alignment="2" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jTabbedPane1" min="-2" pref="405" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
+    <Component class="javax.swing.JComboBox" name="jComboBoxTerrainView">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="new javax.swing.DefaultComboBoxModel(TerrainDrawMode.values())" type="code"/>
+        </Property>
+        <Property name="name" type="java.lang.String" value="Terrain View Combo" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBoxTerrainViewActionPerformed"/>
+      </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
+    </Component>
+    <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton13">
+      <Properties>
+        <Property name="messageText" type="java.lang.String" value="&lt;html&gt;Terrain can be visualised as a representative icon, a flat color, or their internal number value.&lt;br&gt;&lt;br&gt;For the additional terrains (which are not defined by default), icons are misc. placeholders.&lt;br&gt;&lt;br&gt;If you want to use custom icons, follow these steps:&lt;br&gt;1. Create the folder : /data/battles/terrain_icons/&lt;br&gt;2. Create a replacement icon that is 8x8 pixels. Icons should be named &quot;00.png&quot; to correspond to the terrain value (00-15).&lt;br&gt;3. Restart the Terrain Editor or Battle Editor. Your custom icons should be loaded in.&lt;/html&gt;"/>
+        <Property name="text" type="java.lang.String" value=""/>
+      </Properties>
+    </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
         <Property name="text" type="java.lang.String" value="Select a terrain type to paint "/>
         <Property name="verticalAlignment" type="int" value="1"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JComboBox" name="jComboBox2">
+    <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton12">
       <Properties>
-        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="new javax.swing.DefaultComboBoxModel(TerrainDrawMode.values())" type="code"/>
-        </Property>
+        <Property name="messageText" type="java.lang.String" value="&lt;html&gt;Select a terrain type then click and drag on the map to paint that terrain.&lt;br&gt;&lt;br&gt;The base game only utilises 9 terrains (plus &quot;Obstructed&quot;) but can support up to 15.&lt;br&gt;The icons and colors in this context are just generic placeholders.&lt;/html&gt; "/>
+        <Property name="text" type="java.lang.String" value=""/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBox2ActionPerformed"/>
-      </Events>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-      </AuxValues>
+    </Component>
+    <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButtonSharedTerrain">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection component="flatOptionPaneWarningIcon1" type="bean"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value=""/>
+      </Properties>
     </Component>
     <Container class="javax.swing.JTabbedPane" name="jTabbedPane1">
+      <Properties>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[250, 200]"/>
+        </Property>
+      </Properties>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
       <SubComponents>
         <Container class="javax.swing.JPanel" name="jPanel1">
+          <Properties>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[250, 200]"/>
+            </Property>
+          </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="Base Terrains">
@@ -103,7 +148,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
@@ -141,9 +186,6 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="infoButton5" min="-2" max="-2" attributes="0"/>
                           </Group>
-                      </Group>
-                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="TerrainIconPanel10" min="-2" pref="24" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
@@ -180,7 +222,7 @@
                               <Component id="infoButton8" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="48" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -192,42 +234,57 @@
                           <Component id="TerrainIconPanel1" alignment="2" min="-2" pref="24" max="-2" attributes="0"/>
                           <Component id="jRadioButtonObstructed" alignment="2" min="-2" max="-2" attributes="0"/>
                           <Component id="infoButton1" alignment="2" min="-2" max="-2" attributes="0"/>
-                          <Component id="TerrainIconPanel6" alignment="2" min="-2" pref="24" max="-2" attributes="0"/>
-                          <Component id="jRadioButtonForest" alignment="2" min="-2" max="-2" attributes="0"/>
-                          <Component id="infoButton6" alignment="2" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="2" attributes="0">
                           <Component id="TerrainIconPanel2" alignment="2" min="-2" pref="24" max="-2" attributes="0"/>
                           <Component id="jRadioButtonWall" alignment="2" min="-2" max="-2" attributes="0"/>
                           <Component id="infoButton2" alignment="2" min="-2" max="-2" attributes="0"/>
-                          <Component id="TerrainIconPanel7" alignment="2" min="-2" pref="24" max="-2" attributes="0"/>
-                          <Component id="jRadioButtonHills" alignment="2" min="-2" max="-2" attributes="0"/>
-                          <Component id="infoButton7" alignment="2" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="2" attributes="0">
                           <Component id="TerrainIconPanel3" alignment="2" min="-2" pref="24" max="-2" attributes="0"/>
                           <Component id="jRadioButtonPlains" alignment="2" min="-2" max="-2" attributes="0"/>
                           <Component id="infoButton3" alignment="2" min="-2" max="-2" attributes="0"/>
-                          <Component id="TerrainIconPanel8" alignment="2" min="-2" pref="24" max="-2" attributes="0"/>
-                          <Component id="jRadioButtonDesert" alignment="2" min="-2" max="-2" attributes="0"/>
-                          <Component id="infoButton8" alignment="2" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="2" attributes="0">
                           <Component id="TerrainIconPanel4" alignment="2" min="-2" pref="24" max="-2" attributes="0"/>
                           <Component id="jRadioButtonPath" alignment="2" min="-2" max="-2" attributes="0"/>
                           <Component id="infoButton4" alignment="2" min="-2" max="-2" attributes="0"/>
-                          <Component id="TerrainIconPanel9" alignment="2" min="-2" pref="24" max="-2" attributes="0"/>
-                          <Component id="jRadioButtonMountain" alignment="2" min="-2" max="-2" attributes="0"/>
-                          <Component id="infoButton9" alignment="2" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="2" attributes="0">
                           <Component id="TerrainIconPanel5" alignment="2" min="-2" pref="24" max="-2" attributes="0"/>
                           <Component id="jRadioButtonGrass" alignment="2" min="-2" max="-2" attributes="0"/>
                           <Component id="infoButton5" alignment="2" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="2" attributes="0">
+                          <Component id="TerrainIconPanel6" alignment="2" min="-2" pref="24" max="-2" attributes="0"/>
+                          <Component id="jRadioButtonForest" alignment="2" min="-2" max="-2" attributes="0"/>
+                          <Component id="infoButton6" alignment="2" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="2" attributes="0">
+                          <Component id="TerrainIconPanel7" alignment="2" min="-2" pref="24" max="-2" attributes="0"/>
+                          <Component id="jRadioButtonHills" alignment="2" min="-2" max="-2" attributes="0"/>
+                          <Component id="infoButton7" alignment="2" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="2" attributes="0">
+                          <Component id="TerrainIconPanel8" alignment="2" min="-2" pref="24" max="-2" attributes="0"/>
+                          <Component id="jRadioButtonDesert" alignment="2" min="-2" max="-2" attributes="0"/>
+                          <Component id="infoButton8" alignment="2" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="2" attributes="0">
+                          <Component id="TerrainIconPanel9" alignment="2" min="-2" pref="24" max="-2" attributes="0"/>
+                          <Component id="jRadioButtonMountain" alignment="2" min="-2" max="-2" attributes="0"/>
+                          <Component id="infoButton9" alignment="2" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="2" attributes="0">
                           <Component id="TerrainIconPanel10" alignment="2" min="-2" pref="24" max="-2" attributes="0"/>
                           <Component id="jRadioButtonWater" alignment="2" min="-2" max="-2" attributes="0"/>
                           <Component id="infoButton10" alignment="2" min="-2" max="-2" attributes="0"/>
@@ -240,14 +297,15 @@
           <SubComponents>
             <Component class="javax.swing.JRadioButton" name="jRadioButtonWall">
               <Properties>
-                <Property name="buttonGroup" type="com.sfc.sf2.core.gui.controls.NameableButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                   <ComponentRef name="buttonGroupTerrain"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Sky / Wall"/>
                 <Property name="actionCommand" type="java.lang.String" value="0"/>
+                <Property name="name" type="java.lang.String" value="Sky Radio" noResource="true"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="onRadioButtonPressed"/>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="onTerrainRadioStateChanged"/>
               </Events>
             </Component>
             <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton9">
@@ -280,26 +338,28 @@
             </Component>
             <Component class="javax.swing.JRadioButton" name="jRadioButtonWater">
               <Properties>
-                <Property name="buttonGroup" type="com.sfc.sf2.core.gui.controls.NameableButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                   <ComponentRef name="buttonGroupTerrain"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Water"/>
                 <Property name="actionCommand" type="java.lang.String" value="8"/>
+                <Property name="name" type="java.lang.String" value="Water Radio" noResource="true"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="onRadioButtonPressed"/>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="onTerrainRadioStateChanged"/>
               </Events>
             </Component>
             <Component class="javax.swing.JRadioButton" name="jRadioButtonPlains">
               <Properties>
-                <Property name="buttonGroup" type="com.sfc.sf2.core.gui.controls.NameableButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                   <ComponentRef name="buttonGroupTerrain"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Plains"/>
                 <Property name="actionCommand" type="java.lang.String" value="1"/>
+                <Property name="name" type="java.lang.String" value="Plains Radio" noResource="true"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="onRadioButtonPressed"/>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="onTerrainRadioStateChanged"/>
               </Events>
             </Component>
             <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton10">
@@ -324,14 +384,15 @@
             </Component>
             <Component class="javax.swing.JRadioButton" name="jRadioButtonPath">
               <Properties>
-                <Property name="buttonGroup" type="com.sfc.sf2.core.gui.controls.NameableButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                   <ComponentRef name="buttonGroupTerrain"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Path / Bridge"/>
                 <Property name="actionCommand" type="java.lang.String" value="2"/>
+                <Property name="name" type="java.lang.String" value="Path Radio" noResource="true"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="onRadioButtonPressed"/>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="onTerrainRadioStateChanged"/>
               </Events>
             </Component>
             <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton4">
@@ -350,14 +411,15 @@
             </Component>
             <Component class="javax.swing.JRadioButton" name="jRadioButtonGrass">
               <Properties>
-                <Property name="buttonGroup" type="com.sfc.sf2.core.gui.controls.NameableButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                   <ComponentRef name="buttonGroupTerrain"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Overgrowth"/>
                 <Property name="actionCommand" type="java.lang.String" value="3"/>
+                <Property name="name" type="java.lang.String" value="Overgrowth Radio" noResource="true"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="onRadioButtonPressed"/>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="onTerrainRadioStateChanged"/>
               </Events>
             </Component>
             <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton5">
@@ -376,15 +438,16 @@
             </Component>
             <Component class="javax.swing.JRadioButton" name="jRadioButtonForest">
               <Properties>
-                <Property name="buttonGroup" type="com.sfc.sf2.core.gui.controls.NameableButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                   <ComponentRef name="buttonGroupTerrain"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Forest"/>
                 <Property name="toolTipText" type="java.lang.String" value=""/>
                 <Property name="actionCommand" type="java.lang.String" value="4"/>
+                <Property name="name" type="java.lang.String" value="Forest Radio" noResource="true"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="onRadioButtonPressed"/>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="onTerrainRadioStateChanged"/>
               </Events>
             </Component>
             <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton6">
@@ -403,14 +466,15 @@
             </Component>
             <Component class="javax.swing.JRadioButton" name="jRadioButtonHills">
               <Properties>
-                <Property name="buttonGroup" type="com.sfc.sf2.core.gui.controls.NameableButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                   <ComponentRef name="buttonGroupTerrain"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Hills"/>
                 <Property name="actionCommand" type="java.lang.String" value="5"/>
+                <Property name="name" type="java.lang.String" value="Hills Radio" noResource="true"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="onRadioButtonPressed"/>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="onTerrainRadioStateChanged"/>
               </Events>
             </Component>
             <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton7">
@@ -437,26 +501,28 @@
             </Component>
             <Component class="javax.swing.JRadioButton" name="jRadioButtonDesert">
               <Properties>
-                <Property name="buttonGroup" type="com.sfc.sf2.core.gui.controls.NameableButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                   <ComponentRef name="buttonGroupTerrain"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Sand / Desert"/>
                 <Property name="actionCommand" type="java.lang.String" value="6"/>
+                <Property name="name" type="java.lang.String" value="Sand Radio" noResource="true"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="onRadioButtonPressed"/>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="onTerrainRadioStateChanged"/>
               </Events>
             </Component>
             <Component class="javax.swing.JRadioButton" name="jRadioButtonObstructed">
               <Properties>
-                <Property name="buttonGroup" type="com.sfc.sf2.core.gui.controls.NameableButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                   <ComponentRef name="buttonGroupTerrain"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Obstructed"/>
                 <Property name="actionCommand" type="java.lang.String" value="-1"/>
+                <Property name="name" type="java.lang.String" value="Obstructed Radio" noResource="true"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="onRadioButtonPressed"/>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="onTerrainRadioStateChanged"/>
               </Events>
             </Component>
             <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton8">
@@ -488,19 +554,25 @@
             </Component>
             <Component class="javax.swing.JRadioButton" name="jRadioButtonMountain">
               <Properties>
-                <Property name="buttonGroup" type="com.sfc.sf2.core.gui.controls.NameableButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                   <ComponentRef name="buttonGroupTerrain"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Sky / Mountain"/>
                 <Property name="actionCommand" type="java.lang.String" value="7"/>
+                <Property name="name" type="java.lang.String" value="Mountain Radio" noResource="true"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="onRadioButtonPressed"/>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="onTerrainRadioStateChanged"/>
               </Events>
             </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="jPanel2">
+          <Properties>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[250, 200]"/>
+            </Property>
+          </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="Additional Terrains">
@@ -512,9 +584,24 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="TerrainIconPanel17" min="-2" pref="24" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jRadioButtonTerrain15" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="TerrainIconPanel16" min="-2" pref="24" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jRadioButtonTerrain14" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="TerrainIconPanel15" min="-2" pref="24" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jRadioButtonTerrain13" min="-2" max="-2" attributes="0"/>
+                          </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="TerrainIconPanel11" min="-2" pref="24" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
@@ -536,25 +623,7 @@
                               <Component id="jRadioButtonTerrain12" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="TerrainIconPanel17" min="-2" pref="24" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jRadioButtonTerrain15" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Component id="TerrainIconPanel16" min="-2" pref="24" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jRadioButtonTerrain14" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Component id="TerrainIconPanel15" min="-2" pref="24" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jRadioButtonTerrain13" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <EmptySpace pref="52" max="32767" attributes="0"/>
+                      <EmptySpace pref="97" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -565,29 +634,38 @@
                       <Group type="103" groupAlignment="2" attributes="0">
                           <Component id="TerrainIconPanel11" alignment="2" min="-2" pref="24" max="-2" attributes="0"/>
                           <Component id="jRadioButtonTerrain9" alignment="2" min="-2" max="-2" attributes="0"/>
-                          <Component id="TerrainIconPanel15" alignment="2" min="-2" pref="24" max="-2" attributes="0"/>
-                          <Component id="jRadioButtonTerrain13" alignment="2" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="2" attributes="0">
                           <Component id="TerrainIconPanel12" alignment="2" min="-2" pref="24" max="-2" attributes="0"/>
                           <Component id="jRadioButtonTerrain10" alignment="2" min="-2" max="-2" attributes="0"/>
-                          <Component id="TerrainIconPanel16" alignment="2" min="-2" pref="24" max="-2" attributes="0"/>
-                          <Component id="jRadioButtonTerrain14" alignment="2" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="2" attributes="0">
                           <Component id="TerrainIconPanel13" alignment="2" min="-2" pref="24" max="-2" attributes="0"/>
                           <Component id="jRadioButtonTerrain11" alignment="2" min="-2" max="-2" attributes="0"/>
-                          <Component id="TerrainIconPanel17" alignment="2" min="-2" pref="24" max="-2" attributes="0"/>
-                          <Component id="jRadioButtonTerrain15" alignment="2" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="2" attributes="0">
                           <Component id="TerrainIconPanel14" alignment="2" min="-2" pref="24" max="-2" attributes="0"/>
                           <Component id="jRadioButtonTerrain12" alignment="2" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="47" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="2" attributes="0">
+                          <Component id="TerrainIconPanel15" alignment="2" min="-2" pref="24" max="-2" attributes="0"/>
+                          <Component id="jRadioButtonTerrain13" alignment="2" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="2" attributes="0">
+                          <Component id="TerrainIconPanel16" alignment="2" min="-2" pref="24" max="-2" attributes="0"/>
+                          <Component id="jRadioButtonTerrain14" alignment="2" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="2" attributes="0">
+                          <Component id="TerrainIconPanel17" alignment="2" min="-2" pref="24" max="-2" attributes="0"/>
+                          <Component id="jRadioButtonTerrain15" alignment="2" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="128" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -603,14 +681,15 @@
             </Component>
             <Component class="javax.swing.JRadioButton" name="jRadioButtonTerrain9">
               <Properties>
-                <Property name="buttonGroup" type="com.sfc.sf2.core.gui.controls.NameableButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                   <ComponentRef name="buttonGroupTerrain"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Additional 1"/>
                 <Property name="actionCommand" type="java.lang.String" value="9"/>
+                <Property name="name" type="java.lang.String" value="Additional 1 Radio" noResource="true"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="onRadioButtonPressed"/>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="onTerrainRadioStateChanged"/>
               </Events>
             </Component>
             <Component class="com.sfc.sf2.battle.mapterrain.gui.controls.TerrainIconPanel" name="TerrainIconPanel12">
@@ -623,14 +702,15 @@
             </Component>
             <Component class="javax.swing.JRadioButton" name="jRadioButtonTerrain10">
               <Properties>
-                <Property name="buttonGroup" type="com.sfc.sf2.core.gui.controls.NameableButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                   <ComponentRef name="buttonGroupTerrain"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Additional 2"/>
                 <Property name="actionCommand" type="java.lang.String" value="10"/>
+                <Property name="name" type="java.lang.String" value="Additional 2 Radio" noResource="true"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="onRadioButtonPressed"/>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="onTerrainRadioStateChanged"/>
               </Events>
             </Component>
             <Component class="com.sfc.sf2.battle.mapterrain.gui.controls.TerrainIconPanel" name="TerrainIconPanel13">
@@ -643,14 +723,15 @@
             </Component>
             <Component class="javax.swing.JRadioButton" name="jRadioButtonTerrain11">
               <Properties>
-                <Property name="buttonGroup" type="com.sfc.sf2.core.gui.controls.NameableButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                   <ComponentRef name="buttonGroupTerrain"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Additional 3"/>
                 <Property name="actionCommand" type="java.lang.String" value="11"/>
+                <Property name="name" type="java.lang.String" value="Additional 3 Radio" noResource="true"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="onRadioButtonPressed"/>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="onTerrainRadioStateChanged"/>
               </Events>
             </Component>
             <Component class="com.sfc.sf2.battle.mapterrain.gui.controls.TerrainIconPanel" name="TerrainIconPanel14">
@@ -663,14 +744,15 @@
             </Component>
             <Component class="javax.swing.JRadioButton" name="jRadioButtonTerrain12">
               <Properties>
-                <Property name="buttonGroup" type="com.sfc.sf2.core.gui.controls.NameableButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                   <ComponentRef name="buttonGroupTerrain"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Additional 4"/>
                 <Property name="actionCommand" type="java.lang.String" value="12"/>
+                <Property name="name" type="java.lang.String" value="Additional 4 Radio" noResource="true"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="onRadioButtonPressed"/>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="onTerrainRadioStateChanged"/>
               </Events>
             </Component>
             <Component class="com.sfc.sf2.battle.mapterrain.gui.controls.TerrainIconPanel" name="TerrainIconPanel15">
@@ -683,14 +765,15 @@
             </Component>
             <Component class="javax.swing.JRadioButton" name="jRadioButtonTerrain13">
               <Properties>
-                <Property name="buttonGroup" type="com.sfc.sf2.core.gui.controls.NameableButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                   <ComponentRef name="buttonGroupTerrain"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Additional 5"/>
                 <Property name="actionCommand" type="java.lang.String" value="13"/>
+                <Property name="name" type="java.lang.String" value="Additional 5 Radio" noResource="true"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="onRadioButtonPressed"/>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="onTerrainRadioStateChanged"/>
               </Events>
             </Component>
             <Component class="com.sfc.sf2.battle.mapterrain.gui.controls.TerrainIconPanel" name="TerrainIconPanel16">
@@ -703,14 +786,15 @@
             </Component>
             <Component class="javax.swing.JRadioButton" name="jRadioButtonTerrain14">
               <Properties>
-                <Property name="buttonGroup" type="com.sfc.sf2.core.gui.controls.NameableButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                   <ComponentRef name="buttonGroupTerrain"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Additional 6"/>
                 <Property name="actionCommand" type="java.lang.String" value="14"/>
+                <Property name="name" type="java.lang.String" value="Additional 6 Radio" noResource="true"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="onRadioButtonPressed"/>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="onTerrainRadioStateChanged"/>
               </Events>
             </Component>
             <Component class="com.sfc.sf2.battle.mapterrain.gui.controls.TerrainIconPanel" name="TerrainIconPanel17">
@@ -723,39 +807,20 @@
             </Component>
             <Component class="javax.swing.JRadioButton" name="jRadioButtonTerrain15">
               <Properties>
-                <Property name="buttonGroup" type="com.sfc.sf2.core.gui.controls.NameableButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                   <ComponentRef name="buttonGroupTerrain"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Additional 7"/>
                 <Property name="actionCommand" type="java.lang.String" value="15"/>
+                <Property name="name" type="java.lang.String" value="Additional 7 Radio" noResource="true"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="onRadioButtonPressed"/>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="onTerrainRadioStateChanged"/>
               </Events>
             </Component>
           </SubComponents>
         </Container>
       </SubComponents>
     </Container>
-    <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton12">
-      <Properties>
-        <Property name="messageText" type="java.lang.String" value="&lt;html&gt;Select a terrain type then click and drag on the map to paint that terrain.&lt;br&gt;&lt;br&gt;The base game only utilises 9 terrains (plus &quot;Obstructed&quot;) but can support up to 15.&lt;br&gt;The icons and colors in this context are just generic placeholders.&lt;/html&gt; "/>
-        <Property name="text" type="java.lang.String" value=""/>
-      </Properties>
-    </Component>
-    <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton13">
-      <Properties>
-        <Property name="messageText" type="java.lang.String" value="&lt;html&gt;Terrain can be visualised as a representative icon, a flat color, or their internal number value.&lt;br&gt;&lt;br&gt;For the additional terrains (which are not defined by default), icons are misc. placeholders.&lt;br&gt;&lt;br&gt;If you want to use custom icons, follow these steps:&lt;br&gt;1. Create the folder : /data/battles/terrain_icons/&lt;br&gt;2. Create a replacement icon that is 8x8 pixels. Icons should be named &quot;00.png&quot; to correspond to the terrain value (00-15).&lt;br&gt;3. Restart the Terrain Editor or Battle Editor. Your custom icons should be loaded in.&lt;/html&gt;"/>
-        <Property name="text" type="java.lang.String" value=""/>
-      </Properties>
-    </Component>
-    <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButtonSharedTerrain">
-      <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection component="flatOptionPaneWarningIcon1" type="bean"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value=""/>
-      </Properties>
-    </Component>
   </SubComponents>
 </Form>

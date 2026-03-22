@@ -81,7 +81,7 @@ public class LandEffectAsmProcessor extends AbstractAsmProcessor<LandEffectMovem
                 } else {
                     effectString = String.format("%s|%d \t", effects[e].getDefense(), effects[e].getMoveCost());
                 }
-                writer.write(String.format("\t\t\tlandEffectAndMoveCost %s\t; %d: %s\n", effectString, e, BattleMapTerrain.TERRAIN_EXTENDED_NAMES[e]));
+                writer.write(String.format("\t\t\tlandEffectAndMoveCost %s\t; %d: %s\n", effectString, e, BattleMapTerrain.getTerrainName(e)));
             }
         }
     }

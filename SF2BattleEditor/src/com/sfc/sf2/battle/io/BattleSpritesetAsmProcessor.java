@@ -122,7 +122,9 @@ public class BattleSpritesetAsmProcessor extends AbstractAsmProcessor<BattleSpri
                     int flagsIndex = params[1].indexOf('|');
                     if (flagsIndex >= 0) {
                         item = params[1].substring(0, flagsIndex);
+                        if (item == null) item = "NOTHING";
                         itemFlags = params[1].substring(flagsIndex+1);
+                        if (itemFlags == null) itemFlags = "NOTHING";
                     } else {
                         item = params[1];
                         itemFlags = null;
@@ -235,7 +237,7 @@ public class BattleSpritesetAsmProcessor extends AbstractAsmProcessor<BattleSpri
             String name = enemy.getEnemyData().getName();
             String command = enemy.getAi();
             String itemData = enemy.getItem();
-            if (!itemData.equals("NOTHING")) itemData = itemData+"|"+enemy.getItemFlags();
+            if (!itemData.equals("NOTHING") && !enemy.getItemFlags().equals("NOTHING")) itemData = itemData+"|"+enemy.getItemFlags();
             String moveOrder1 = enemy.getMoveOrder();
             if (!moveOrder1.equals("NONE")) moveOrder1 = moveOrder1+"|"+enemy.getMoveOrderTarget();
             String moveOrder2 = enemy.getBackupMoveOrder();

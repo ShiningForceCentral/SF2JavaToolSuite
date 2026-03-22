@@ -7,10 +7,17 @@ package com.sfc.sf2.battle.mapcoords.gui;
 
 import com.sfc.sf2.battle.mapcoords.BattleMapCoords;
 import com.sfc.sf2.battle.mapcoords.BattleMapCoordsManager;
+import com.sfc.sf2.battle.mapcoords.actions.MapLoadActionData;
+import com.sfc.sf2.core.actions.ActionManager;
+import com.sfc.sf2.core.actions.BasicAction;
+import com.sfc.sf2.core.actions.CustomAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.core.settings.SettingsManager;
 import com.sfc.sf2.helpers.PathHelpers;
+import com.sfc.sf2.helpers.RenderScaleHelpers;
+import com.sfc.sf2.map.block.settings.MapBlockSettings;
+import java.awt.Color;
 import java.nio.file.Path;
 import java.util.logging.Level;
 import javax.swing.event.ListSelectionEvent;
@@ -27,9 +34,11 @@ public class BattleCoordsMainEditor extends AbstractMainEditor {
     
     BattleMapCoords[] coords;
     int selectedCoords;
+    int previousCoords = -1;
     
     public BattleCoordsMainEditor() {
         super();
+        SettingsManager.registerSettingsStore("mapLayout", new MapBlockSettings(20, RenderScaleHelpers.DEFAULT_RENDER_SCALE_INDEX, new Color(200, 0, 200)));
         initComponents();
         initCore(console1);
     }
@@ -38,14 +47,8 @@ public class BattleCoordsMainEditor extends AbstractMainEditor {
     protected void initEditor() {
         super.initEditor();
         
+        battleMapViewPanel1.setLayoutPanel(battleMapCoordsLayoutPanel);
         accordionPanel1.setExpanded(false);
-        
-        colorPicker1.setColor(SettingsManager.getGlobalSettings().getTransparentBGColor());
-        
-        battleMapCoordsLayoutPanel.setDisplayScale(jComboBox1.getSelectedIndex()+1);
-        battleMapCoordsLayoutPanel.setShowGrid(jCheckBox2.isSelected());
-        battleMapCoordsLayoutPanel.setBGColor(colorPicker1.getColor());
-        battleMapCoordsLayoutPanel.setShowExplorationFlags(jCheckBox1.isSelected());
         battleMapCoordsLayoutPanel.setShowBattleCoords(true);
         
         tableCoords.addTableModelListener(this::onTableFrameDataChanged);
@@ -57,15 +60,35 @@ public class BattleCoordsMainEditor extends AbstractMainEditor {
     @Override
     protected void onDataLoaded() {
         super.onDataLoaded();
-        
-        coords = battlemapcoordsManager.getCoords();
+        ActionManager.setAndExecuteAction(new BasicAction<BattleMapCoords[]>(this, "Battle Map Coords Imported", this::actionBattleCoordsLoaded, battlemapcoordsManager.getCoords(), battleMapCoordsTableModel.getTableData(BattleMapCoords[].class)));
+    }
+    
+    private void actionBattleCoordsLoaded(BattleMapCoords[] coords) {
         battleMapCoordsTableModel.setTableData(coords);
-        tableCoords.jTable.setRowSelectionInterval(0, 0);
+        if (coords.length == 0) {
+            tableCoords.jTable.clearSelection();
+        } else {
+            tableCoords.jTable.setRowSelectionInterval(0, 0);
+        }
     }
     
     private void UpdateMapLoaded() {
-        battleMapCoordsLayoutPanel.setMapLayout(battlemapcoordsManager.getMapLayout());
-        battleMapCoordsLayoutPanel.setBattleCoords(coords[selectedCoords]);
+        MapLoadActionData newValue = new MapLoadActionData(selectedCoords, battlemapcoordsManager.getMapLayout());
+        MapLoadActionData oldValue = new MapLoadActionData(previousCoords, battleMapCoordsLayoutPanel.getMapLayout());
+        ActionManager.setAndExecuteAction(new CustomAction<MapLoadActionData>(this, "Battle Map Loaded", this::actionMapLoaded, newValue, oldValue));
+    }
+    
+    private void actionMapLoaded(MapLoadActionData value) {
+        previousCoords = value == null ? -1 : value.coordsIndex();
+        if (previousCoords == -1) {
+            battleMapCoordsLayoutPanel.setMapLayout(null);
+            battleMapCoordsLayoutPanel.setBattleCoords(null);
+            tableCoords.jTable.clearSelection();
+        } else {
+            battleMapCoordsLayoutPanel.setMapLayout(value.layout());
+            battleMapCoordsLayoutPanel.setBattleCoords(coords[value.coordsIndex()]);
+            tableCoords.jTable.setRowSelectionInterval(previousCoords, previousCoords);
+        }
     }
     
     /**
@@ -86,28 +109,22 @@ public class BattleCoordsMainEditor extends AbstractMainEditor {
         jPanel9 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jButton18 = new javax.swing.JButton();
-        fileButton4 = new com.sfc.sf2.core.gui.controls.FileButton();
+        jButtonImport = new javax.swing.JButton();
+        fileButtonImportBattleCoords = new com.sfc.sf2.core.gui.controls.FileButton();
         accordionPanel1 = new com.sfc.sf2.core.gui.controls.AccordionPanel();
-        fileButton1 = new com.sfc.sf2.core.gui.controls.FileButton();
-        fileButton2 = new com.sfc.sf2.core.gui.controls.FileButton();
-        fileButton3 = new com.sfc.sf2.core.gui.controls.FileButton();
+        fileButtonPaletteEntries = new com.sfc.sf2.core.gui.controls.FileButton();
+        fileButtonTilesetsEntries = new com.sfc.sf2.core.gui.controls.FileButton();
+        fileButtonMapEntries = new com.sfc.sf2.core.gui.controls.FileButton();
         jPanel5 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        fileButton5 = new com.sfc.sf2.core.gui.controls.FileButton();
+        jButtonExport = new javax.swing.JButton();
+        fileButtonExportBattleCoords = new com.sfc.sf2.core.gui.controls.FileButton();
         tableCoords = new com.sfc.sf2.core.gui.controls.Table();
         jPanel10 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        battleMapCoordsLayoutPanel = new com.sfc.sf2.battle.mapcoords.gui.BattleMapCoordsLayout();
-        jPanel25 = new javax.swing.JPanel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jLabel8 = new javax.swing.JLabel();
-        jCheckBox2 = new javax.swing.JCheckBox();
-        colorPicker1 = new com.sfc.sf2.core.gui.controls.ColorPicker();
-        jLabel59 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        battleMapCoordsLayoutPanel = new com.sfc.sf2.battle.mapcoords.gui.BattleMapCoordsLayoutPanel();
+        battleMapViewPanel1 = new com.sfc.sf2.battle.mapcoords.gui.BattleMapViewPanel();
         console1 = new com.sfc.sf2.core.gui.controls.Console();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -130,32 +147,36 @@ public class BattleCoordsMainEditor extends AbstractMainEditor {
         jLabel2.setText("Select disassembly files.");
         jLabel2.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
-        jButton18.setText("Import");
-        jButton18.addActionListener(new java.awt.event.ActionListener() {
+        jButtonImport.setText("Import");
+        jButtonImport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton18ActionPerformed(evt);
+                jButtonImportActionPerformed(evt);
             }
         });
 
-        fileButton4.setFilePath(".\\global\\battlemapcoords.asm");
-        fileButton4.setLabelText("Battle map coords :");
+        fileButtonImportBattleCoords.setFilePath(".\\global\\battlemapcoords.asm");
+        fileButtonImportBattleCoords.setLabelText("Battle map coords :");
+        fileButtonImportBattleCoords.setName("Import Battle Coords"); // NOI18N
 
         accordionPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Entries"));
 
-        fileButton1.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButton1.setFilePath("..\\graphics\\maps\\mappalettes\\entries.asm");
-        fileButton1.setInfoMessage("");
-        fileButton1.setLabelText("Palette entries :");
+        fileButtonPaletteEntries.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
+        fileButtonPaletteEntries.setFilePath("..\\graphics\\maps\\mappalettes\\entries.asm");
+        fileButtonPaletteEntries.setInfoMessage("");
+        fileButtonPaletteEntries.setLabelText("Palette entries :");
+        fileButtonPaletteEntries.setName("Import Palette Entries"); // NOI18N
 
-        fileButton2.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButton2.setFilePath("..\\graphics\\maps\\maptilesets\\entries.asm");
-        fileButton2.setInfoMessage("");
-        fileButton2.setLabelText("Tilesets entries :");
+        fileButtonTilesetsEntries.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
+        fileButtonTilesetsEntries.setFilePath("..\\graphics\\maps\\maptilesets\\entries.asm");
+        fileButtonTilesetsEntries.setInfoMessage("");
+        fileButtonTilesetsEntries.setLabelText("Tilesets entries :");
+        fileButtonTilesetsEntries.setName("Import Tilesets Entries"); // NOI18N
 
-        fileButton3.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButton3.setFilePath("..\\maps\\entries.asm");
-        fileButton3.setInfoMessage("");
-        fileButton3.setLabelText("Map entries :");
+        fileButtonMapEntries.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
+        fileButtonMapEntries.setFilePath("..\\maps\\entries.asm");
+        fileButtonMapEntries.setInfoMessage("");
+        fileButtonMapEntries.setLabelText("Map entries :");
+        fileButtonMapEntries.setName("Import Map Entries"); // NOI18N
 
         javax.swing.GroupLayout accordionPanel1Layout = new javax.swing.GroupLayout(accordionPanel1);
         accordionPanel1.setLayout(accordionPanel1Layout);
@@ -164,20 +185,20 @@ public class BattleCoordsMainEditor extends AbstractMainEditor {
             .addGroup(accordionPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(accordionPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(fileButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(fileButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(fileButton3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(fileButtonPaletteEntries, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(fileButtonTilesetsEntries, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(fileButtonMapEntries, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
         accordionPanel1Layout.setVerticalGroup(
             accordionPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(accordionPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(fileButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fileButtonPaletteEntries, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fileButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fileButtonTilesetsEntries, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fileButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fileButtonMapEntries, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -192,8 +213,8 @@ public class BattleCoordsMainEditor extends AbstractMainEditor {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton18))
-                    .addComponent(fileButton4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addComponent(jButtonImport))
+                    .addComponent(fileButtonImportBattleCoords, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -202,10 +223,10 @@ public class BattleCoordsMainEditor extends AbstractMainEditor {
                 .addContainerGap()
                 .addComponent(accordionPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fileButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fileButtonImportBattleCoords, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton18)
+                    .addComponent(jButtonImport)
                     .addComponent(jLabel2))
                 .addContainerGap())
         );
@@ -216,17 +237,18 @@ public class BattleCoordsMainEditor extends AbstractMainEditor {
         jLabel1.setText("<html>Select target file.</html>");
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
-        jButton2.setText("Export");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButtonExport.setText("Export");
+        jButtonExport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButtonExportActionPerformed(evt);
             }
         });
 
-        fileButton5.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButton5.setFilePath(".\\global\\battlemapcoords.asm");
-        fileButton5.setInfoMessage("");
-        fileButton5.setLabelText("Battle map coords :");
+        fileButtonExportBattleCoords.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
+        fileButtonExportBattleCoords.setFilePath(".\\global\\battlemapcoords.asm");
+        fileButtonExportBattleCoords.setInfoMessage("");
+        fileButtonExportBattleCoords.setLabelText("Battle map coords :");
+        fileButtonExportBattleCoords.setName("Export Map Coords"); // NOI18N
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -235,21 +257,21 @@ public class BattleCoordsMainEditor extends AbstractMainEditor {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fileButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(fileButtonExportBattleCoords, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)))
+                        .addComponent(jButtonExport)))
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(fileButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fileButtonExportBattleCoords, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
+                    .addComponent(jButtonExport)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -320,88 +342,11 @@ public class BattleCoordsMainEditor extends AbstractMainEditor {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 657, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 616, Short.MAX_VALUE)
-        );
-
-        jPanel25.setBorder(javax.swing.BorderFactory.createTitledBorder("Map view"));
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "x1", "x2", "x3", "x4" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
-            }
-        });
-
-        jLabel8.setText("Scale :");
-
-        jCheckBox2.setText("Show grid");
-        jCheckBox2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox2ActionPerformed(evt);
-            }
-        });
-
-        colorPicker1.addColorChangedListener(new com.sfc.sf2.core.gui.controls.ColorPicker.ColorChangedListener() {
-            public void colorChanged(java.awt.event.ActionEvent evt) {
-                colorPicker1ColorChanged(evt);
-            }
-        });
-
-        javax.swing.GroupLayout colorPicker1Layout = new javax.swing.GroupLayout(colorPicker1);
-        colorPicker1.setLayout(colorPicker1Layout);
-        colorPicker1Layout.setHorizontalGroup(
-            colorPicker1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 22, Short.MAX_VALUE)
-        );
-        colorPicker1Layout.setVerticalGroup(
-            colorPicker1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 22, Short.MAX_VALUE)
-        );
-
-        jLabel59.setText("BG :");
-
-        jCheckBox1.setText("Exploration flags");
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel25Layout = new javax.swing.GroupLayout(jPanel25);
-        jPanel25.setLayout(jPanel25Layout);
-        jPanel25Layout.setHorizontalGroup(
-            jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel25Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jCheckBox1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 264, Short.MAX_VALUE)
-                .addComponent(jLabel59)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(colorPicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jCheckBox2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        jPanel25Layout.setVerticalGroup(
-            jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel25Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addGroup(jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jCheckBox1)
-                    .addComponent(jLabel8)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel59)
-                    .addComponent(colorPicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jCheckBox2))
-                .addContainerGap())
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 606, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
@@ -410,17 +355,18 @@ public class BattleCoordsMainEditor extends AbstractMainEditor {
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 667, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 667, Short.MAX_VALUE)
+                    .addComponent(battleMapViewPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 639, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 629, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
-                .addComponent(jPanel25, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(battleMapViewPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jSplitPane2.setRightComponent(jPanel10);
@@ -465,8 +411,8 @@ public class BattleCoordsMainEditor extends AbstractMainEditor {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Path coordsPath = PathHelpers.getBasePath().resolve(fileButton5.getFilePath());
+    private void jButtonExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExportActionPerformed
+        Path coordsPath = PathHelpers.getBasePath().resolve(fileButtonExportBattleCoords.getFilePath());
         if (!PathHelpers.createPathIfRequred(coordsPath)) return;
         try {
             battlemapcoordsManager.exportDisassembly(coordsPath, coords);
@@ -474,49 +420,33 @@ public class BattleCoordsMainEditor extends AbstractMainEditor {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Battle coords disasm could not be exported to : " + coordsPath);
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jButtonExportActionPerformed
 
-    private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
-        Path mapEntriesPath = PathHelpers.getBasePath().resolve(fileButton3.getFilePath());
-        Path battleCoordsPath = PathHelpers.getBasePath().resolve(fileButton4.getFilePath());
+    private void jButtonImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportActionPerformed
+        Path mapEntriesPath = PathHelpers.getBasePath().resolve(fileButtonMapEntries.getFilePath());
+        Path battleCoordsPath = PathHelpers.getBasePath().resolve(fileButtonImportBattleCoords.getFilePath());
         try {
             coords = battlemapcoordsManager.importDisassembly(battleCoordsPath);
             selectedCoords = 0;
+            onDataLoaded();
             loadMap(0);
         } catch (Exception ex) {
             battlemapcoordsManager.clearData();
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Battle coords disasm could not be imported from : " + battleCoordsPath);
+            onDataLoaded();
         }
-        onDataLoaded();
-    }//GEN-LAST:event_jButton18ActionPerformed
-
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        battleMapCoordsLayoutPanel.setDisplayScale(jComboBox1.getSelectedIndex()+1);
-    }//GEN-LAST:event_jComboBox1ActionPerformed
-
-    private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox2ActionPerformed
-        battleMapCoordsLayoutPanel.setShowGrid(jCheckBox2.isSelected());
-    }//GEN-LAST:event_jCheckBox2ActionPerformed
-
-    private void colorPicker1ColorChanged(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorPicker1ColorChanged
-        battleMapCoordsLayoutPanel.setBGColor(colorPicker1.getColor());
-        SettingsManager.getGlobalSettings().setTransparentBGColor(colorPicker1.getColor());
-        SettingsManager.saveGlobalSettingsFile();
-    }//GEN-LAST:event_colorPicker1ColorChanged
-
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
-        battleMapCoordsLayoutPanel.setShowExplorationFlags(jCheckBox1.isSelected());
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
+    }//GEN-LAST:event_jButtonImportActionPerformed
     
     private void loadMap(int index) {
         if (index < 0 || index >= coords.length) return;
-        Path mapEntriesPath = PathHelpers.getBasePath().resolve(fileButton3.getFilePath());
-        Path paletteEntriesPath = PathHelpers.getBasePath().resolve(fileButton1.getFilePath());
-        Path tilesetEntriesPath = PathHelpers.getBasePath().resolve(fileButton2.getFilePath());
+        Path mapEntriesPath = PathHelpers.getBasePath().resolve(fileButtonMapEntries.getFilePath());
+        Path paletteEntriesPath = PathHelpers.getBasePath().resolve(fileButtonPaletteEntries.getFilePath());
+        Path tilesetEntriesPath = PathHelpers.getBasePath().resolve(fileButtonTilesetsEntries.getFilePath());
         int mapId = -1;
         try {
-            mapId = coords[index].getMap();
+            mapId = coords[index].getMapIndex();
+            battlemapcoordsManager.setCoords(coords);
             battlemapcoordsManager.importMapFromEntries(paletteEntriesPath, tilesetEntriesPath, mapEntriesPath, mapId);
         } catch (Exception ex) {
             battlemapcoordsManager.setMapLayout(null);
@@ -529,7 +459,14 @@ public class BattleCoordsMainEditor extends AbstractMainEditor {
     
     private void onTableFrameDataChanged(TableModelEvent e) {
         int row = tableCoords.jTable.getSelectedRow();
-        if (row != -1 && row == selectedCoords) {
+        if (e.getType() == TableModelEvent.DELETE) {
+            if (selectedCoords >= coords.length) {
+                selectedCoords = coords.length-1;
+            }
+            if (selectedCoords >= 0) {
+                loadMap(selectedCoords);
+            }
+        } else if ((row != -1 && row == selectedCoords)) {
             if (e.getColumn() == 1) {
                 loadMap(row);
             } else {
@@ -539,11 +476,12 @@ public class BattleCoordsMainEditor extends AbstractMainEditor {
     }
 
     private void onTableFrameSelectionChanged(ListSelectionEvent e) {
+        if (ActionManager.isActionTriggering()) return;
         int row = tableCoords.jTable.getSelectedRow();
         if (row == -1) {
-            battlemapcoordsManager.setMapLayout(null);
-            UpdateMapLoaded();
-        } else {
+            coords = battleMapCoordsTableModel.getTableData(BattleMapCoords[].class);
+            actionMapLoaded(null);
+        } else if (!e.getValueIsAdjusting()) {
             loadMap(row);
         }
     }
@@ -566,29 +504,23 @@ public class BattleCoordsMainEditor extends AbstractMainEditor {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.sfc.sf2.core.gui.controls.AccordionPanel accordionPanel1;
-    private com.sfc.sf2.battle.mapcoords.gui.BattleMapCoordsLayout battleMapCoordsLayoutPanel;
+    private com.sfc.sf2.battle.mapcoords.gui.BattleMapCoordsLayoutPanel battleMapCoordsLayoutPanel;
     private com.sfc.sf2.battle.mapcoords.models.BattleMapCoordsTableModel battleMapCoordsTableModel;
-    private com.sfc.sf2.core.gui.controls.ColorPicker colorPicker1;
+    private com.sfc.sf2.battle.mapcoords.gui.BattleMapViewPanel battleMapViewPanel1;
     private com.sfc.sf2.core.gui.controls.Console console1;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton1;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton2;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton3;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton4;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton5;
-    private javax.swing.JButton jButton18;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonExportBattleCoords;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonImportBattleCoords;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonMapEntries;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonPaletteEntries;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonTilesetsEntries;
+    private javax.swing.JButton jButtonExport;
+    private javax.swing.JButton jButtonImport;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel59;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel15;
-    private javax.swing.JPanel jPanel25;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel8;

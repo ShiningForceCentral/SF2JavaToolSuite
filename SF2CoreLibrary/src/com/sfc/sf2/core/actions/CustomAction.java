@@ -15,7 +15,7 @@ import javax.swing.JComponent;
  */
 public class CustomAction<T extends IActionData> implements IAction<CustomAction> {
 
-    private final Object owner;
+    protected final Object owner;
     protected final String operation;
     
     private final IActionable<T> action;

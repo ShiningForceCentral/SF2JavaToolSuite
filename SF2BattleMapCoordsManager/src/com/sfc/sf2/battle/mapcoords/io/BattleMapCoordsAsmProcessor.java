@@ -41,7 +41,7 @@ public class BattleMapCoordsAsmProcessor extends ListAsmProcessor<BattleMapCoord
     @Override
     protected String packageItem(int index, BattleMapCoords item) {
         StringBuilder sb = new StringBuilder();
-        sb.append(item.getMap());
+        sb.append(item.getMapIndex());
         sb.append(", ");
         sb.append(item.getX());
         sb.append(", ");

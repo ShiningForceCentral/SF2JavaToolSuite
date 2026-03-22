@@ -21,7 +21,7 @@ public class LandEffectTableModel extends AbstractTableModel<LandEffectMovementT
     }
     
     public static String[] getLabels() {
-        String[] baseLabels = BattleMapTerrain.TERRAIN_EXTENDED_NAMES;
+        String[] baseLabels = BattleMapTerrain.TERRAIN_NAMES;
         String[] labels = new String[baseLabels.length+1];
         labels[0] = "Terrain type";
         for (int i = 0; i < baseLabels.length; i++) {

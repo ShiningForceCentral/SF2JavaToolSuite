@@ -7,7 +7,7 @@ package com.sfc.sf2.core.models;
 
 import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.core.actions.BasicAction;
-import com.sfc.sf2.core.actions.CustomAction;
+import com.sfc.sf2.core.actions.TableCellAction;
 import com.sfc.sf2.core.actions.TableCellActionData;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.core.gui.controls.Table;
@@ -131,18 +131,16 @@ public abstract class AbstractTableModel<T> extends javax.swing.table.AbstractTa
     
     @Override
     public void setValueAt(Object value, int row, int col) {
-        if (row < 0 || row >= tableItems.size() || col < 0 || col >= columns.length) {
-            return;
-        }
-        if (value.equals(getValueAt(row, col))) {
-            return;
-        }
+        if (row < 0 || row >= tableItems.size() || col < 0 || col >= columns.length) return;
+        if (value == null && getValueAt(row, col) == null) return;
+        if (value.equals(getValueAt(row, col))) return;
+        
         if (ActionManager.isActionTriggering()) {
             actionSetValueAt(row, col, value);
         } else {
             TableCellActionData newValue = new TableCellActionData(this, row, col, value);
             TableCellActionData oldValue = new TableCellActionData(this, row, col, getValueAt(row, col));
-            ActionManager.setAndExecuteAction(new CustomAction<TableCellActionData>(linkedTable, "Cell Changed", this::actionSetValueAt, newValue, oldValue));
+            ActionManager.setAndExecuteAction(new TableCellAction(linkedTable, "Cell Changed", this::actionSetValueAt, newValue, oldValue));
         }
     }
     

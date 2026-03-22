@@ -87,4 +87,38 @@ public class BattleSpriteset {
             aiPoints[i].setY(aiPoints[i].getY()+yShift);
         }
     }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return this == null;
+        if (obj == this) return true;
+        if (!(obj instanceof BattleSpriteset)) return false;
+        BattleSpriteset other = (BattleSpriteset)obj;
+        if (this.index != other.index) return false;
+        if (this.allies.length != other.allies.length) return false;
+        for (int i=0; i < this.allies.length; i++) {
+            if (!this.allies[i].equals(other.allies[i])) {
+                return false;
+            }
+        }
+        if (this.enemies.length != other.enemies.length) return false;
+        for (int i=0; i < this.enemies.length; i++) {
+            if (!this.enemies[i].equals(other.enemies[i])) {
+                return false;
+            }
+        }
+        if (this.aiRegions.length != other.aiRegions.length) return false;
+        for (int i=0; i < this.aiRegions.length; i++) {
+            if (!this.aiRegions[i].equals(other.aiRegions[i])) {
+                return false;
+            }
+        }
+        if (this.aiPoints.length != other.aiPoints.length) return false;
+        for (int i=0; i < this.aiPoints.length; i++) {
+            if (!this.aiPoints[i].equals(other.aiPoints[i])) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

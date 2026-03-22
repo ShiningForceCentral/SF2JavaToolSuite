@@ -112,4 +112,25 @@ public class MapLayout {
         }
         return null;
     }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return this == null;
+        if (obj == this) return true;
+        if (!(obj instanceof MapLayout)) return false;
+        MapLayout layout = (MapLayout)obj;
+        if (this.tilesets.length != layout.tilesets.length) return false;
+        for (int i=0; i < this.tilesets.length; i++) {
+            if (!this.tilesets[i].equals(layout.tilesets[i])) {
+                return false;
+            }
+        }
+        if (this.blocks.length != layout.blocks.length) return false;
+        for (int i=0; i < this.blocks.length; i++) {
+            if (!this.blocks[i].equals(layout.blocks[i])) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

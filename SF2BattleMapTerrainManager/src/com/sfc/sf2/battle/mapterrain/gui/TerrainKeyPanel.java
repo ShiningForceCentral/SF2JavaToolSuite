@@ -5,10 +5,14 @@
  */
 package com.sfc.sf2.battle.mapterrain.gui;
 
+import com.sfc.sf2.core.actions.ActionManager;
+import com.sfc.sf2.core.actions.ComboAction;
+import com.sfc.sf2.core.actions.RadioButtonAction;
 import com.sfc.sf2.core.settings.SettingsManager;
 import com.sfc.sf2.settings.TerrainSettings;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JRadioButton;
 
 /**
  *
@@ -25,13 +29,16 @@ public class TerrainKeyPanel extends javax.swing.JPanel {
     private ActionListener buttonSelected;
     private ActionListener modeChanged;
     
+    private JRadioButton actionTerrainRadioButton;
+    private TerrainDrawMode actionTerrainDrawMode;
+    
     public TerrainKeyPanel() {
         initComponents();
         infoButtonSharedTerrain.setVisible(false);
     }
     
     public void setDrawMode(TerrainDrawMode drawMode) {
-        jComboBox2.setSelectedItem(drawMode);
+        jComboBoxTerrainView.setSelectedItem(drawMode);
         updateDrawModePanels(drawMode);
     }
     
@@ -88,8 +95,11 @@ public class TerrainKeyPanel extends javax.swing.JPanel {
 
         buttonGroupTerrain = new com.sfc.sf2.core.gui.controls.NameableButtonGroup();
         flatOptionPaneWarningIcon1 = new com.formdev.flatlaf.icons.FlatOptionPaneWarningIcon();
+        jComboBoxTerrainView = new javax.swing.JComboBox<>();
+        infoButton13 = new com.sfc.sf2.core.gui.controls.InfoButton();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        infoButton12 = new com.sfc.sf2.core.gui.controls.InfoButton();
+        infoButtonSharedTerrain = new com.sfc.sf2.core.gui.controls.InfoButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jRadioButtonWall = new javax.swing.JRadioButton();
@@ -137,28 +147,44 @@ public class TerrainKeyPanel extends javax.swing.JPanel {
         jRadioButtonTerrain14 = new javax.swing.JRadioButton();
         TerrainIconPanel17 = new com.sfc.sf2.battle.mapterrain.gui.controls.TerrainIconPanel();
         jRadioButtonTerrain15 = new javax.swing.JRadioButton();
-        infoButton12 = new com.sfc.sf2.core.gui.controls.InfoButton();
-        infoButton13 = new com.sfc.sf2.core.gui.controls.InfoButton();
-        infoButtonSharedTerrain = new com.sfc.sf2.core.gui.controls.InfoButton();
+
+        buttonGroupTerrain.setName("Terrain Type Group");
 
         setBorder(javax.swing.BorderFactory.createTitledBorder("Terrain"));
+        setMaximumSize(new java.awt.Dimension(32767, 500));
+        setMinimumSize(new java.awt.Dimension(240, 500));
+
+        jComboBoxTerrainView.setModel(new javax.swing.DefaultComboBoxModel(TerrainDrawMode.values()));
+        jComboBoxTerrainView.setName("Terrain View Combo"); // NOI18N
+        jComboBoxTerrainView.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxTerrainViewActionPerformed(evt);
+            }
+        });
+
+        infoButton13.setMessageText("<html>Terrain can be visualised as a representative icon, a flat color, or their internal number value.<br><br>For the additional terrains (which are not defined by default), icons are misc. placeholders.<br><br>If you want to use custom icons, follow these steps:<br>1. Create the folder : /data/battles/terrain_icons/<br>2. Create a replacement icon that is 8x8 pixels. Icons should be named \"00.png\" to correspond to the terrain value (00-15).<br>3. Restart the Terrain Editor or Battle Editor. Your custom icons should be loaded in.</html>");
+        infoButton13.setText("");
 
         jLabel2.setText("Select a terrain type to paint ");
         jLabel2.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(TerrainDrawMode.values()));
-        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox2ActionPerformed(evt);
-            }
-        });
+        infoButton12.setMessageText("<html>Select a terrain type then click and drag on the map to paint that terrain.<br><br>The base game only utilises 9 terrains (plus \"Obstructed\") but can support up to 15.<br>The icons and colors in this context are just generic placeholders.</html> ");
+        infoButton12.setText("");
+
+        infoButtonSharedTerrain.setIcon(flatOptionPaneWarningIcon1);
+        infoButtonSharedTerrain.setText("");
+
+        jTabbedPane1.setPreferredSize(new java.awt.Dimension(250, 200));
+
+        jPanel1.setPreferredSize(new java.awt.Dimension(250, 200));
 
         buttonGroupTerrain.add(jRadioButtonWall);
         jRadioButtonWall.setText("Sky / Wall");
         jRadioButtonWall.setActionCommand("0");
-        jRadioButtonWall.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                onRadioButtonPressed(evt);
+        jRadioButtonWall.setName("Sky Radio"); // NOI18N
+        jRadioButtonWall.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                onTerrainRadioStateChanged(evt);
             }
         });
 
@@ -177,18 +203,20 @@ public class TerrainKeyPanel extends javax.swing.JPanel {
         buttonGroupTerrain.add(jRadioButtonWater);
         jRadioButtonWater.setText("Water");
         jRadioButtonWater.setActionCommand("8");
-        jRadioButtonWater.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                onRadioButtonPressed(evt);
+        jRadioButtonWater.setName("Water Radio"); // NOI18N
+        jRadioButtonWater.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                onTerrainRadioStateChanged(evt);
             }
         });
 
         buttonGroupTerrain.add(jRadioButtonPlains);
         jRadioButtonPlains.setText("Plains");
         jRadioButtonPlains.setActionCommand("1");
-        jRadioButtonPlains.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                onRadioButtonPressed(evt);
+        jRadioButtonPlains.setName("Plains Radio"); // NOI18N
+        jRadioButtonPlains.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                onTerrainRadioStateChanged(evt);
             }
         });
 
@@ -204,9 +232,10 @@ public class TerrainKeyPanel extends javax.swing.JPanel {
         buttonGroupTerrain.add(jRadioButtonPath);
         jRadioButtonPath.setText("Path / Bridge");
         jRadioButtonPath.setActionCommand("2");
-        jRadioButtonPath.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                onRadioButtonPressed(evt);
+        jRadioButtonPath.setName("Path Radio"); // NOI18N
+        jRadioButtonPath.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                onTerrainRadioStateChanged(evt);
             }
         });
 
@@ -219,9 +248,10 @@ public class TerrainKeyPanel extends javax.swing.JPanel {
         buttonGroupTerrain.add(jRadioButtonGrass);
         jRadioButtonGrass.setText("Overgrowth");
         jRadioButtonGrass.setActionCommand("3");
-        jRadioButtonGrass.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                onRadioButtonPressed(evt);
+        jRadioButtonGrass.setName("Overgrowth Radio"); // NOI18N
+        jRadioButtonGrass.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                onTerrainRadioStateChanged(evt);
             }
         });
 
@@ -235,9 +265,10 @@ public class TerrainKeyPanel extends javax.swing.JPanel {
         jRadioButtonForest.setText("Forest");
         jRadioButtonForest.setToolTipText("");
         jRadioButtonForest.setActionCommand("4");
-        jRadioButtonForest.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                onRadioButtonPressed(evt);
+        jRadioButtonForest.setName("Forest Radio"); // NOI18N
+        jRadioButtonForest.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                onTerrainRadioStateChanged(evt);
             }
         });
 
@@ -250,9 +281,10 @@ public class TerrainKeyPanel extends javax.swing.JPanel {
         buttonGroupTerrain.add(jRadioButtonHills);
         jRadioButtonHills.setText("Hills");
         jRadioButtonHills.setActionCommand("5");
-        jRadioButtonHills.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                onRadioButtonPressed(evt);
+        jRadioButtonHills.setName("Hills Radio"); // NOI18N
+        jRadioButtonHills.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                onTerrainRadioStateChanged(evt);
             }
         });
 
@@ -268,18 +300,20 @@ public class TerrainKeyPanel extends javax.swing.JPanel {
         buttonGroupTerrain.add(jRadioButtonDesert);
         jRadioButtonDesert.setText("Sand / Desert");
         jRadioButtonDesert.setActionCommand("6");
-        jRadioButtonDesert.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                onRadioButtonPressed(evt);
+        jRadioButtonDesert.setName("Sand Radio"); // NOI18N
+        jRadioButtonDesert.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                onTerrainRadioStateChanged(evt);
             }
         });
 
         buttonGroupTerrain.add(jRadioButtonObstructed);
         jRadioButtonObstructed.setText("Obstructed");
         jRadioButtonObstructed.setActionCommand("-1");
-        jRadioButtonObstructed.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                onRadioButtonPressed(evt);
+        jRadioButtonObstructed.setName("Obstructed Radio"); // NOI18N
+        jRadioButtonObstructed.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                onTerrainRadioStateChanged(evt);
             }
         });
 
@@ -297,9 +331,10 @@ public class TerrainKeyPanel extends javax.swing.JPanel {
         buttonGroupTerrain.add(jRadioButtonMountain);
         jRadioButtonMountain.setText("Sky / Mountain");
         jRadioButtonMountain.setActionCommand("7");
-        jRadioButtonMountain.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                onRadioButtonPressed(evt);
+        jRadioButtonMountain.setName("Mountain Radio"); // NOI18N
+        jRadioButtonMountain.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                onTerrainRadioStateChanged(evt);
             }
         });
 
@@ -339,9 +374,7 @@ public class TerrainKeyPanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jRadioButtonGrass)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(infoButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(20, 20, 20)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(infoButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(TerrainIconPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -372,7 +405,7 @@ public class TerrainKeyPanel extends javax.swing.JPanel {
                         .addComponent(jRadioButtonDesert)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(infoButton8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -381,39 +414,49 @@ public class TerrainKeyPanel extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(TerrainIconPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jRadioButtonObstructed)
-                    .addComponent(infoButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(infoButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(TerrainIconPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jRadioButtonWall)
+                    .addComponent(infoButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(TerrainIconPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jRadioButtonPlains)
+                    .addComponent(infoButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(TerrainIconPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jRadioButtonPath)
+                    .addComponent(infoButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(TerrainIconPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jRadioButtonGrass)
+                    .addComponent(infoButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(TerrainIconPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jRadioButtonForest)
                     .addComponent(infoButton6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(TerrainIconPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jRadioButtonWall)
-                    .addComponent(infoButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(TerrainIconPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jRadioButtonHills)
                     .addComponent(infoButton7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(TerrainIconPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jRadioButtonPlains)
-                    .addComponent(infoButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(TerrainIconPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jRadioButtonDesert)
                     .addComponent(infoButton8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(TerrainIconPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jRadioButtonPath)
-                    .addComponent(infoButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(TerrainIconPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jRadioButtonMountain)
                     .addComponent(infoButton9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(TerrainIconPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jRadioButtonGrass)
-                    .addComponent(infoButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(TerrainIconPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jRadioButtonWater)
                     .addComponent(infoButton10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -422,15 +465,18 @@ public class TerrainKeyPanel extends javax.swing.JPanel {
 
         jTabbedPane1.addTab("Base Terrains", jPanel1);
 
+        jPanel2.setPreferredSize(new java.awt.Dimension(250, 200));
+
         TerrainIconPanel11.setNumber(9);
         TerrainIconPanel11.setFont(new java.awt.Font("Dialog", 0, 20)); // NOI18N
 
         buttonGroupTerrain.add(jRadioButtonTerrain9);
         jRadioButtonTerrain9.setText("Additional 1");
         jRadioButtonTerrain9.setActionCommand("9");
-        jRadioButtonTerrain9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                onRadioButtonPressed(evt);
+        jRadioButtonTerrain9.setName("Additional 1 Radio"); // NOI18N
+        jRadioButtonTerrain9.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                onTerrainRadioStateChanged(evt);
             }
         });
 
@@ -440,9 +486,10 @@ public class TerrainKeyPanel extends javax.swing.JPanel {
         buttonGroupTerrain.add(jRadioButtonTerrain10);
         jRadioButtonTerrain10.setText("Additional 2");
         jRadioButtonTerrain10.setActionCommand("10");
-        jRadioButtonTerrain10.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                onRadioButtonPressed(evt);
+        jRadioButtonTerrain10.setName("Additional 2 Radio"); // NOI18N
+        jRadioButtonTerrain10.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                onTerrainRadioStateChanged(evt);
             }
         });
 
@@ -452,9 +499,10 @@ public class TerrainKeyPanel extends javax.swing.JPanel {
         buttonGroupTerrain.add(jRadioButtonTerrain11);
         jRadioButtonTerrain11.setText("Additional 3");
         jRadioButtonTerrain11.setActionCommand("11");
-        jRadioButtonTerrain11.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                onRadioButtonPressed(evt);
+        jRadioButtonTerrain11.setName("Additional 3 Radio"); // NOI18N
+        jRadioButtonTerrain11.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                onTerrainRadioStateChanged(evt);
             }
         });
 
@@ -464,9 +512,10 @@ public class TerrainKeyPanel extends javax.swing.JPanel {
         buttonGroupTerrain.add(jRadioButtonTerrain12);
         jRadioButtonTerrain12.setText("Additional 4");
         jRadioButtonTerrain12.setActionCommand("12");
-        jRadioButtonTerrain12.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                onRadioButtonPressed(evt);
+        jRadioButtonTerrain12.setName("Additional 4 Radio"); // NOI18N
+        jRadioButtonTerrain12.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                onTerrainRadioStateChanged(evt);
             }
         });
 
@@ -476,9 +525,10 @@ public class TerrainKeyPanel extends javax.swing.JPanel {
         buttonGroupTerrain.add(jRadioButtonTerrain13);
         jRadioButtonTerrain13.setText("Additional 5");
         jRadioButtonTerrain13.setActionCommand("13");
-        jRadioButtonTerrain13.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                onRadioButtonPressed(evt);
+        jRadioButtonTerrain13.setName("Additional 5 Radio"); // NOI18N
+        jRadioButtonTerrain13.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                onTerrainRadioStateChanged(evt);
             }
         });
 
@@ -488,9 +538,10 @@ public class TerrainKeyPanel extends javax.swing.JPanel {
         buttonGroupTerrain.add(jRadioButtonTerrain14);
         jRadioButtonTerrain14.setText("Additional 6");
         jRadioButtonTerrain14.setActionCommand("14");
-        jRadioButtonTerrain14.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                onRadioButtonPressed(evt);
+        jRadioButtonTerrain14.setName("Additional 6 Radio"); // NOI18N
+        jRadioButtonTerrain14.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                onTerrainRadioStateChanged(evt);
             }
         });
 
@@ -500,9 +551,10 @@ public class TerrainKeyPanel extends javax.swing.JPanel {
         buttonGroupTerrain.add(jRadioButtonTerrain15);
         jRadioButtonTerrain15.setText("Additional 7");
         jRadioButtonTerrain15.setActionCommand("15");
-        jRadioButtonTerrain15.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                onRadioButtonPressed(evt);
+        jRadioButtonTerrain15.setName("Additional 7 Radio"); // NOI18N
+        jRadioButtonTerrain15.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                onTerrainRadioStateChanged(evt);
             }
         });
 
@@ -513,6 +565,18 @@ public class TerrainKeyPanel extends javax.swing.JPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(TerrainIconPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jRadioButtonTerrain15))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(TerrainIconPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jRadioButtonTerrain14))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(TerrainIconPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jRadioButtonTerrain13))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(TerrainIconPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -529,21 +593,7 @@ public class TerrainKeyPanel extends javax.swing.JPanel {
                         .addComponent(TerrainIconPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jRadioButtonTerrain12)))
-                .addGap(60, 60, 60)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(TerrainIconPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jRadioButtonTerrain15))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(TerrainIconPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jRadioButtonTerrain14))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(TerrainIconPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jRadioButtonTerrain13)))
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addContainerGap(97, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -551,38 +601,35 @@ public class TerrainKeyPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(TerrainIconPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jRadioButtonTerrain9)
-                    .addComponent(TerrainIconPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jRadioButtonTerrain13))
+                    .addComponent(jRadioButtonTerrain9))
                 .addGap(11, 11, 11)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(TerrainIconPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jRadioButtonTerrain10)
-                    .addComponent(TerrainIconPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jRadioButtonTerrain14))
+                    .addComponent(jRadioButtonTerrain10))
                 .addGap(11, 11, 11)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(TerrainIconPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jRadioButtonTerrain11)
-                    .addComponent(TerrainIconPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jRadioButtonTerrain15))
+                    .addComponent(jRadioButtonTerrain11))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(TerrainIconPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jRadioButtonTerrain12))
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(TerrainIconPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jRadioButtonTerrain13))
+                .addGap(11, 11, 11)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(TerrainIconPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jRadioButtonTerrain14))
+                .addGap(11, 11, 11)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(TerrainIconPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jRadioButtonTerrain15))
+                .addContainerGap(128, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Additional Terrains", jPanel2);
-
-        infoButton12.setMessageText("<html>Select a terrain type then click and drag on the map to paint that terrain.<br><br>The base game only utilises 9 terrains (plus \"Obstructed\") but can support up to 15.<br>The icons and colors in this context are just generic placeholders.</html> ");
-        infoButton12.setText("");
-
-        infoButton13.setMessageText("<html>Terrain can be visualised as a representative icon, a flat color, or their internal number value.<br><br>For the additional terrains (which are not defined by default), icons are misc. placeholders.<br><br>If you want to use custom icons, follow these steps:<br>1. Create the folder : /data/battles/terrain_icons/<br>2. Create a replacement icon that is 8x8 pixels. Icons should be named \"00.png\" to correspond to the terrain value (00-15).<br>3. Restart the Terrain Editor or Battle Editor. Your custom icons should be loaded in.</html>");
-        infoButton13.setText("");
-
-        infoButtonSharedTerrain.setIcon(flatOptionPaneWarningIcon1);
-        infoButtonSharedTerrain.setText("");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -591,53 +638,68 @@ public class TerrainKeyPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jComboBoxTerrainView, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(infoButton13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                        .addComponent(infoButtonSharedTerrain, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(infoButton12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(infoButtonSharedTerrain, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(infoButton13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                        .addGap(0, 0, Short.MAX_VALUE))))
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel2)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(infoButton12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(infoButton13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxTerrainView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(infoButtonSharedTerrain, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTabbedPane1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel2)
+                    .addComponent(infoButton12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void onRadioButtonPressed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onRadioButtonPressed
-        if (buttonSelected != null) {
-            buttonSelected.actionPerformed(evt);
+    private void jComboBoxTerrainViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxTerrainViewActionPerformed
+        if (!ActionManager.isActionTriggering()) {
+            ActionManager.setActionWithoutExecute(new ComboAction(jComboBoxTerrainView, jComboBoxTerrainView.getSelectedIndex(), actionTerrainDrawMode.ordinal()));
         }
-    }//GEN-LAST:event_onRadioButtonPressed
-
-    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
-        if (jComboBox2.getSelectedIndex() >= 0) {
-            TerrainDrawMode terrainDrawMode = (TerrainDrawMode)jComboBox2.getSelectedItem();
-            updateDrawModePanels(terrainDrawMode);
+        if (jComboBoxTerrainView.getSelectedIndex() >= 0) {
+            actionTerrainDrawMode = (TerrainDrawMode)jComboBoxTerrainView.getSelectedItem();
+            updateDrawModePanels(actionTerrainDrawMode);
             if (modeChanged != null) {
-                modeChanged.actionPerformed(new ActionEvent(terrainDrawMode, jComboBox2.getSelectedIndex(), null));
+                modeChanged.actionPerformed(new ActionEvent(actionTerrainDrawMode, jComboBoxTerrainView.getSelectedIndex(), null));
             }
             TerrainSettings terrainSettings = SettingsManager.getSettingsStore("terrain");
-            terrainSettings.setTerrainDrawMode(terrainDrawMode);
+            terrainSettings.setTerrainDrawMode(actionTerrainDrawMode);
             SettingsManager.saveSettingsFile();
         }
-    }//GEN-LAST:event_jComboBox2ActionPerformed
+    }//GEN-LAST:event_jComboBoxTerrainViewActionPerformed
+
+    private void onTerrainRadioStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_onTerrainRadioStateChanged
+        JRadioButton radioButton = (JRadioButton)evt.getSource();
+        if (!ActionManager.isActionTriggering()) {
+            ActionManager.setActionWithoutExecute(new RadioButtonAction(buttonGroupTerrain, radioButton, actionTerrainRadioButton));
+        } else {
+            int index = Integer.parseInt(radioButton.getActionCommand());
+            jTabbedPane1.setSelectedIndex(index < 9 ? 0 : 1);
+        }
+        actionTerrainRadioButton = radioButton;
+        if (buttonSelected != null) {
+            ActionEvent event = new ActionEvent(radioButton, evt.getID(), radioButton.getActionCommand(), 0);
+            buttonSelected.actionPerformed(event);
+        }
+    }//GEN-LAST:event_onTerrainRadioStateChanged
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.sfc.sf2.battle.mapterrain.gui.controls.TerrainIconPanel TerrainIconPanel1;
@@ -672,7 +734,7 @@ public class TerrainKeyPanel extends javax.swing.JPanel {
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton8;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton9;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButtonSharedTerrain;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> jComboBoxTerrainView;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

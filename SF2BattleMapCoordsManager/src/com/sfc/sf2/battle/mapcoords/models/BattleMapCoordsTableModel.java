@@ -38,7 +38,7 @@ public class BattleMapCoordsTableModel extends AbstractTableModel<BattleMapCoord
     protected Object getValue(BattleMapCoords item, int row, int col) {
         switch (col) {
             case 0: return row;
-            case 1: return item.getMap();
+            case 1: return item.getMapIndex();
             case 2: return item.getX();
             case 3: return item.getY();
             case 4: return item.getWidth();
@@ -59,7 +59,7 @@ public class BattleMapCoordsTableModel extends AbstractTableModel<BattleMapCoord
             else if (oldVal > newVal) newVal = MapLayout.BLOCK_WIDTH-1;
         }
         switch (col) {
-            case 1: item.setMap(newVal); break;
+            case 1: item.setMapIndex(newVal); break;
             case 2: item.setX(newVal); break;
             case 3: item.setY(newVal); break;
             case 4: item.setWidth(newVal); break;
@@ -77,7 +77,9 @@ public class BattleMapCoordsTableModel extends AbstractTableModel<BattleMapCoord
 
     @Override
     protected Comparable<?> getMaxLimit(BattleMapCoords item, int col) {
-        if (col <= 1 || col >= 6) {
+        if (col == 2 || col == 3) {
+            return BattleMapCoords.BATTLE_SIZE;
+        } else if (col <= 1 || col >= 6) {
             return 255;
         } else {
             return MapLayout.BLOCK_WIDTH-1;
