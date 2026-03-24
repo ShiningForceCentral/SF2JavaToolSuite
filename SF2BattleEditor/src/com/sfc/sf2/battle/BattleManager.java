@@ -81,7 +81,9 @@ public class BattleManager extends AbstractManager {
     
     public LandEffectMovementType[] importLandEffects(Path enumsPath, Path landEffectPath) throws IOException, AsmException {
         Console.logger().finest("ENTERING importLandEffects");
-        landEffects = new BattleMapTerrainManager().importLandEffects(enumsPath, landEffectPath);
+        BattleMapTerrainManager battleMapTerrainManager = new BattleMapTerrainManager();
+        landEffects = battleMapTerrainManager.importLandEffects(enumsPath, landEffectPath);
+        landEffectEnums = battleMapTerrainManager.getLandEffectEnums();
         Console.logger().finest("EXITING importLandEffects");
         return landEffects;
     }
