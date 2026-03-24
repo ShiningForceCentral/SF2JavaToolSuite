@@ -31,7 +31,7 @@ public class BattleMapTerrainLayoutPanel extends BattleMapCoordsLayoutPanel {
     private boolean drawTerrain;
     private TerrainDrawMode terrainDrawMode;
     
-    private byte selectedTerrainType;
+    private byte selectedTerrainType = -1;
     
     public BattleMapTerrainLayoutPanel() {
         super();

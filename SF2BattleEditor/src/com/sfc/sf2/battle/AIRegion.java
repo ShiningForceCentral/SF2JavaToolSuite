@@ -12,6 +12,8 @@ import java.awt.Point;
  * @author wiz
  */
 public class AIRegion {
+    private static String[] typeToString = new String[] { "NONE", "??? (point?)", "??? (line?)", "Triangle", "Rectangle" };
+    
     private int type;
     private Point[] points = new Point[4];
 
@@ -35,12 +37,24 @@ public class AIRegion {
         this.type = type;
     }
     
+    public String getTypeString() {
+        if (type < 0 || type >= typeToString.length) {
+            return "???";
+        } else {
+            return typeToString[type];
+        }
+    }
+    
     public Point[] getPoints() {
         return points;
     }
     
     public Point getPoint(int index) {
         return points[index];
+    }
+    
+    public void setPoint(int index, Point point) {
+        points[index] = point;
     }
     
     @Override

@@ -19,6 +19,31 @@ import javax.swing.JCheckBox;
 public class BattleViewPanel extends AbstractViewPanel<BattleLayoutPanel> {
     
     private MapBlockSettings settings;
+    
+    private boolean drawTerrain;
+    private boolean drawSprites;
+    private boolean drawRegions;
+    private boolean drawPoints;
+
+    public boolean getDrawTerrain() {
+        return drawTerrain;
+    }
+
+    public boolean getDrawSprites() {
+        return drawSprites;
+    }
+
+    public boolean getDrawRegions() {
+        return drawRegions;
+    }
+    
+    public boolean getDrawPoints() {
+        return drawPoints;
+    }
+
+    public JCheckBox getjCheckBoxTerrain() {
+        return jCheckBoxTerrain;
+    }
 
     public JCheckBox getjCheckBoxSprites() {
         return jCheckBoxSprites;
@@ -27,7 +52,7 @@ public class BattleViewPanel extends AbstractViewPanel<BattleLayoutPanel> {
     public JCheckBox getjCheckBoxRegions() {
         return jCheckBoxRegions;
     }
-    
+
     public JCheckBox getjCheckBoxPoints() {
         return jCheckBoxPoints;
     }
@@ -39,6 +64,11 @@ public class BattleViewPanel extends AbstractViewPanel<BattleLayoutPanel> {
         super();
         initComponents();
         init(jComboBoxScale, jCheckBoxGrid, null, colorPickerBG);
+        
+        drawTerrain = jCheckBoxTerrain.isSelected();
+        drawSprites = jCheckBoxSprites.isSelected();
+        drawRegions = jCheckBoxRegions.isSelected();
+        drawPoints = jCheckBoxPoints.isSelected();
     }
 
     @Override
@@ -239,6 +269,7 @@ public class BattleViewPanel extends AbstractViewPanel<BattleLayoutPanel> {
 
     private void jCheckBoxTerrainItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBoxTerrainItemStateChanged
         if (!ActionManager.isActionTriggering()) {
+            drawTerrain = jCheckBoxTerrain.isSelected();
             ActionManager.setActionWithoutExecute(new ToggleAction(jCheckBoxTerrain, jCheckBoxTerrain.isSelected()));
         }
         if (layoutPanel != null) {
@@ -248,6 +279,7 @@ public class BattleViewPanel extends AbstractViewPanel<BattleLayoutPanel> {
 
     private void jCheckBoxSpritesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBoxSpritesItemStateChanged
         if (!ActionManager.isActionTriggering()) {
+            drawSprites = jCheckBoxSprites.isSelected();
             ActionManager.setActionWithoutExecute(new ToggleAction(jCheckBoxSprites, jCheckBoxSprites.isSelected()));
         }
         if (layoutPanel != null) {
@@ -257,6 +289,7 @@ public class BattleViewPanel extends AbstractViewPanel<BattleLayoutPanel> {
 
     private void jCheckBoxRegionsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBoxRegionsItemStateChanged
         if (!ActionManager.isActionTriggering()) {
+            drawRegions = jCheckBoxRegions.isSelected();
             ActionManager.setActionWithoutExecute(new ToggleAction(jCheckBoxRegions, jCheckBoxRegions.isSelected()));
         }
         if (layoutPanel != null) {
@@ -266,6 +299,7 @@ public class BattleViewPanel extends AbstractViewPanel<BattleLayoutPanel> {
 
     private void jCheckBoxPointsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBoxPointsItemStateChanged
         if (!ActionManager.isActionTriggering()) {
+            drawPoints = jCheckBoxPoints.isSelected();
             ActionManager.setActionWithoutExecute(new ToggleAction(jCheckBoxPoints, jCheckBoxPoints.isSelected()));
         }
         if (layoutPanel != null) {

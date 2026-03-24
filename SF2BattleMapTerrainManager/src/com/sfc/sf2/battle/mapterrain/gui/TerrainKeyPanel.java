@@ -150,7 +150,6 @@ public class TerrainKeyPanel extends javax.swing.JPanel {
 
         buttonGroupTerrain.setName("Terrain Type Group");
 
-        setBorder(javax.swing.BorderFactory.createTitledBorder("Terrain"));
         setMaximumSize(new java.awt.Dimension(32767, 500));
         setMinimumSize(new java.awt.Dimension(240, 500));
 
@@ -308,6 +307,7 @@ public class TerrainKeyPanel extends javax.swing.JPanel {
         });
 
         buttonGroupTerrain.add(jRadioButtonObstructed);
+        jRadioButtonObstructed.setSelected(true);
         jRadioButtonObstructed.setText("Obstructed");
         jRadioButtonObstructed.setActionCommand("-1");
         jRadioButtonObstructed.setName("Obstructed Radio"); // NOI18N
@@ -405,7 +405,7 @@ public class TerrainKeyPanel extends javax.swing.JPanel {
                         .addComponent(jRadioButtonDesert)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(infoButton8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(48, Short.MAX_VALUE))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -593,7 +593,7 @@ public class TerrainKeyPanel extends javax.swing.JPanel {
                         .addComponent(TerrainIconPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jRadioButtonTerrain12)))
-                .addContainerGap(97, Short.MAX_VALUE))
+                .addContainerGap(107, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -642,7 +642,7 @@ public class TerrainKeyPanel extends javax.swing.JPanel {
                         .addComponent(jComboBoxTerrainView, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(infoButton13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
                         .addComponent(infoButtonSharedTerrain, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()

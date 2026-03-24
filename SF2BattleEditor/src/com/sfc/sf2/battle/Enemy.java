@@ -5,6 +5,8 @@
  */
 package com.sfc.sf2.battle;
 
+import java.awt.Point;
+
 /**
  *
  * @author wiz
@@ -49,6 +51,15 @@ public class Enemy {
 
     public void setEnemyData(EnemyData data) {
         this.enemyData = data;
+    }
+
+    public Point getPos() {
+        return new Point(x, y);
+    }
+
+    public void setPos(Point pos) {
+        this.x = pos.x;
+        this.y = pos.y;
     }
 
     public int getX() {
