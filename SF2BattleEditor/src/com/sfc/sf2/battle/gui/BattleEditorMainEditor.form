@@ -1107,15 +1107,7 @@
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Group type="102" attributes="0">
                                                   <EmptySpace max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Component id="tableAllies" alignment="1" max="32767" attributes="0"/>
-                                                      <Group type="102" alignment="0" attributes="0">
-                                                          <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
-                                                          <EmptySpace max="-2" attributes="0"/>
-                                                          <Component id="infoButton2" min="-2" max="-2" attributes="0"/>
-                                                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                                      </Group>
-                                                  </Group>
+                                                  <Component id="tableAllies" pref="1127" max="32767" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
@@ -1124,12 +1116,7 @@
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Group type="102" alignment="1" attributes="0">
                                                   <EmptySpace max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="2" attributes="0">
-                                                      <Component id="infoButton2" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="jLabel12" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                  </Group>
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="tableAllies" pref="146" max="32767" attributes="0"/>
+                                                  <Component id="tableAllies" pref="213" max="32767" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
@@ -1141,6 +1128,7 @@
                                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                                               <Border info="null"/>
                                             </Property>
+                                            <Property name="infoMessage" type="java.lang.String" value="&lt;html&gt;Indicates where allies will spawn during a battle. Ally order is determined by battle order (ally join order).&lt;br&gt;Edit the positions in the table directly - or select a row then click on the map to place the ally battle start position.&lt;/html&gt;"/>
                                             <Property name="model" type="com.sfc.sf2.core.models.AbstractTableModel" editor="org.netbeans.modules.form.ComponentChooserEditor">
                                               <ComponentRef name="allyPropertiesTableModel"/>
                                             </Property>
@@ -1150,17 +1138,6 @@
                                             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                                               <Dimension value="[300, 100]"/>
                                             </Property>
-                                          </Properties>
-                                        </Component>
-                                        <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton2">
-                                          <Properties>
-                                            <Property name="messageText" type="java.lang.String" value="&lt;html&gt;Indicates where allies will spawn during a battle. Ally order is determined by battle order (ally join order).&lt;br&gt;Edit the positions in the table directly - or select a row then click on the map to place the ally battle start position.&lt;/html&gt;"/>
-                                            <Property name="text" type="java.lang.String" value=""/>
-                                          </Properties>
-                                        </Component>
-                                        <Component class="javax.swing.JLabel" name="jLabel12">
-                                          <Properties>
-                                            <Property name="text" type="java.lang.String" value="Editing ally battle start positions :"/>
                                           </Properties>
                                         </Component>
                                       </SubComponents>
@@ -1179,29 +1156,16 @@
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Group type="102" attributes="0">
                                                   <EmptySpace max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Component id="tableEnemies" alignment="0" pref="1127" max="32767" attributes="0"/>
-                                                      <Group type="102" alignment="0" attributes="0">
-                                                          <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
-                                                          <EmptySpace max="-2" attributes="0"/>
-                                                          <Component id="infoButton3" min="-2" max="-2" attributes="0"/>
-                                                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                                      </Group>
-                                                  </Group>
+                                                  <Component id="tableEnemies" pref="1127" max="32767" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
                                         </DimensionLayout>
                                         <DimensionLayout dim="1">
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Group type="102" alignment="0" attributes="0">
+                                              <Group type="102" alignment="1" attributes="0">
                                                   <EmptySpace max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="2" attributes="0">
-                                                      <Component id="infoButton3" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="jLabel13" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                  </Group>
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="tableEnemies" pref="146" max="32767" attributes="0"/>
+                                                  <Component id="tableEnemies" pref="213" max="32767" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
@@ -1214,6 +1178,7 @@
                                               <Border info="null"/>
                                             </Property>
                                             <Property name="horizontalScrolling" type="boolean" value="true"/>
+                                            <Property name="infoMessage" type="java.lang.String" value="&lt;html&gt;When you select an enemy in the table, its data can then be edited in the controls below.&lt;br&gt;Like allies, selecting an enemy and then clicking on the map will move the enemy to the new position.&lt;br&gt;Enemy info:&lt;br&gt;&lt;b&gt;Enemy&lt;/b&gt;: The Id of the enemy. Determines which enemy.&lt;br&gt;&lt;b&gt;X/Y&lt;/b&gt;: The position of the enemy, relative to the top-left corner of the battle area.&lt;br&gt;&lt;b&gt;AI&lt;/b&gt;: Which AI logic the enemy will use.&lt;br&gt;&lt;b&gt;Spawn&lt;/b&gt;: AI Spawn rules:&lt;br&gt;    &lt;b&gt;Starting&lt;/b&gt;: The enemy is visible from the start of the battle.&lt;br&gt;    &lt;b&gt;Respawn&lt;/b&gt;: Enemy will respawn after being kiled, based on triggers.&lt;br&gt;    &lt;b&gt;Hidden&lt;/b&gt;: Enemy does not spawn into the battle until a trigger is activated. If no trigger is activated then enemy will never spawn.&lt;br&gt;&lt;b&gt;Item&lt;/b&gt;: The item the enemy holds and item flags. Item flags:&lt;br&gt;-    &lt;b&gt;EQUIPPED&lt;/b&gt;: Whether the enemy has this item equipped. May not do anything in the base game.&lt;br&gt;-    &lt;b&gt;USABLE_BY_AI&lt;/b&gt;: Flags that the item can be used by the AI. The base game is hard-coded so that this only works with Healing Water.&lt;br&gt;-    &lt;b&gt;UNUSED_ITEM_DROP&lt;/b&gt;: Flags the item to be dropped when enemy dies if it was not consumed (used) by the enemy.&lt;br&gt;-    &lt;b&gt;BROKEN&lt;/b&gt;: Flags the item as broken (cracked) and needs to be repaired.&lt;br&gt;&lt;b&gt;Move Order&lt;/b&gt;: Directs target to stay in place or move towards specific targets.&lt;br&gt;&lt;b&gt;Target (Move order)&lt;/b&gt;: The target of the move order. &lt;br&gt;&lt;b&gt;Trigger region 1/2&lt;/b&gt;: Move orders are activated when region triggers.&lt;br&gt;&lt;b&gt;Backup Move Order&lt;/b&gt;: Backup move order (TODO What does this do specifically).&lt;br&gt;&lt;b&gt;Target (backup)&lt;/b&gt;: Target for the backup move order.&lt;br&gt;&lt;b&gt;Unknown&lt;/b&gt;: It is unknown what this does. Valid values seem to be 0 or 6.&lt;/html&gt;"/>
                                             <Property name="model" type="com.sfc.sf2.core.models.AbstractTableModel" editor="org.netbeans.modules.form.ComponentChooserEditor">
                                               <ComponentRef name="enemyPropertiesTableModel"/>
                                             </Property>
@@ -1223,17 +1188,6 @@
                                             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                                               <Dimension value="[300, 100]"/>
                                             </Property>
-                                          </Properties>
-                                        </Component>
-                                        <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton3">
-                                          <Properties>
-                                            <Property name="messageText" type="java.lang.String" value="&lt;html&gt;When you select an enemy in the table, its data can then be edited in the controls below.&lt;br&gt;Like allies, selecting an enemy and then clicking on the map will move the enemy to the new position.&lt;br&gt;Enemy info:&lt;br&gt;&lt;b&gt;Enemy&lt;/b&gt;: The Id of the enemy. Determines which enemy.&lt;br&gt;&lt;b&gt;X/Y&lt;/b&gt;: The position of the enemy, relative to the top-left corner of the battle area.&lt;br&gt;&lt;b&gt;AI&lt;/b&gt;: Which AI logic the enemy will use.&lt;br&gt;&lt;b&gt;Spawn&lt;/b&gt;: AI Spawn rules:&lt;br&gt;    &lt;b&gt;Starting&lt;/b&gt;: The enemy is visible from the start of the battle.&lt;br&gt;    &lt;b&gt;Respawn&lt;/b&gt;: Enemy will respawn after being kiled, based on triggers.&lt;br&gt;    &lt;b&gt;Hidden&lt;/b&gt;: Enemy does not spawn into the battle until a trigger is activated. If no trigger is activated then enemy will never spawn.&lt;br&gt;&lt;b&gt;Item&lt;/b&gt;: The item the enemy holds and item flags. Item flags:&lt;br&gt;-    &lt;b&gt;EQUIPPED&lt;/b&gt;: Whether the enemy has this item equipped. May not do anything in the base game.&lt;br&gt;-    &lt;b&gt;USABLE_BY_AI&lt;/b&gt;: Flags that the item can be used by the AI. The base game is hard-coded so that this only works with Healing Water.&lt;br&gt;-    &lt;b&gt;UNUSED_ITEM_DROP&lt;/b&gt;: Flags the item to be dropped when enemy dies if it was not consumed (used) by the enemy.&lt;br&gt;-    &lt;b&gt;BROKEN&lt;/b&gt;: Flags the item as broken (cracked) and needs to be repaired.&lt;br&gt;&lt;b&gt;Move Order&lt;/b&gt;: Directs target to stay in place or move towards specific targets.&lt;br&gt;&lt;b&gt;Target (Move order)&lt;/b&gt;: The target of the move order. &lt;br&gt;&lt;b&gt;Trigger region 1/2&lt;/b&gt;: Move orders are activated when region triggers.&lt;br&gt;&lt;b&gt;Backup Move Order&lt;/b&gt;: Backup move order (TODO What does this do specifically).&lt;br&gt;&lt;b&gt;Target (backup)&lt;/b&gt;: Target for the backup move order.&lt;br&gt;&lt;b&gt;Unknown&lt;/b&gt;: It is unknown what this does. Valid values seem to be 0 or 6.&lt;/html&gt;"/>
-                                            <Property name="text" type="java.lang.String" value=""/>
-                                          </Properties>
-                                        </Component>
-                                        <Component class="javax.swing.JLabel" name="jLabel13">
-                                          <Properties>
-                                            <Property name="text" type="java.lang.String" value="Editing enmy data :"/>
                                           </Properties>
                                         </Component>
                                       </SubComponents>
@@ -1252,15 +1206,7 @@
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Group type="102" attributes="0">
                                                   <EmptySpace max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Component id="tableAIRegions" alignment="0" max="32767" attributes="0"/>
-                                                      <Group type="102" alignment="0" attributes="0">
-                                                          <Component id="jLabel20" min="-2" max="-2" attributes="0"/>
-                                                          <EmptySpace max="-2" attributes="0"/>
-                                                          <Component id="infoButton5" min="-2" max="-2" attributes="0"/>
-                                                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                                      </Group>
-                                                  </Group>
+                                                  <Component id="tableAIRegions" pref="1127" max="32767" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
@@ -1269,12 +1215,7 @@
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Group type="102" alignment="1" attributes="0">
                                                   <EmptySpace max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="2" attributes="0">
-                                                      <Component id="infoButton5" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="jLabel20" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                  </Group>
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="tableAIRegions" pref="146" max="32767" attributes="0"/>
+                                                  <Component id="tableAIRegions" pref="213" max="32767" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
@@ -1287,6 +1228,7 @@
                                               <Border info="null"/>
                                             </Property>
                                             <Property name="horizontalScrolling" type="boolean" value="true"/>
+                                            <Property name="infoMessage" type="java.lang.String" value="&lt;html&gt;AI Regions indicate a an area that can influce specific enemy AI.&lt;br&gt;Edit the positions in the table directly - or select a row then click on the map to move the area around: Click near a point (corner) of the region to drag that point to the desired position.&lt;br&gt;&lt;br&gt;&lt;b&gt;Points:&lt;/b&gt;Regions are made up of a number of points: P1, P2, P3, P4. Or, as you will see in the data [x1,y1], [x2,y2], etc.&lt;br&gt;&lt;br&gt;&lt;b&gt;Type 3:&lt;/b&gt; Type 3 = a 3-point region (a triangle) made up of points [P1, P2, P3].&lt;br&gt;&lt;b&gt;Type 4:&lt;/b&gt; Type 4 = a 4-point region; or more accurately, 2 triangles made up of points [P1, P2, P4] &amp; [P2, P3, P4].&lt;/html&gt;"/>
                                             <Property name="model" type="com.sfc.sf2.core.models.AbstractTableModel" editor="org.netbeans.modules.form.ComponentChooserEditor">
                                               <ComponentRef name="aIRegionPropertiesTableModel"/>
                                             </Property>
@@ -1296,17 +1238,6 @@
                                             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                                               <Dimension value="[300, 100]"/>
                                             </Property>
-                                          </Properties>
-                                        </Component>
-                                        <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton5">
-                                          <Properties>
-                                            <Property name="messageText" type="java.lang.String" value="&lt;html&gt;AI Regions indicate a an area that can influce specific enemy AI.&lt;br&gt;Edit the positions in the table directly - or select a row then click on the map to move the area around: Click near a point (corner) of the region to drag that point to the desired position.&lt;br&gt;&lt;br&gt;&lt;b&gt;Points:&lt;/b&gt;Regions are made up of a number of points: P1, P2, P3, P4. Or, as you will see in the data [x1,y1], [x2,y2], etc.&lt;br&gt;&lt;br&gt;&lt;b&gt;Type 3:&lt;/b&gt; Type 3 = a 3-point region (a triangle) made up of points [P1, P2, P3].&lt;br&gt;&lt;b&gt;Type 4:&lt;/b&gt; Type 4 = a 4-point region; or more accurately, 2 triangles made up of points [P1, P2, P4] &amp; [P2, P3, P4].&lt;/html&gt;"/>
-                                            <Property name="text" type="java.lang.String" value=""/>
-                                          </Properties>
-                                        </Component>
-                                        <Component class="javax.swing.JLabel" name="jLabel20">
-                                          <Properties>
-                                            <Property name="text" type="java.lang.String" value="Editing AI Regions :"/>
                                           </Properties>
                                         </Component>
                                       </SubComponents>
@@ -1325,15 +1256,7 @@
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Group type="102" attributes="0">
                                                   <EmptySpace max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Component id="tableAIPoints" alignment="0" max="32767" attributes="0"/>
-                                                      <Group type="102" alignment="0" attributes="0">
-                                                          <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
-                                                          <EmptySpace max="-2" attributes="0"/>
-                                                          <Component id="infoButton4" min="-2" max="-2" attributes="0"/>
-                                                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                                      </Group>
-                                                  </Group>
+                                                  <Component id="tableAIPoints" pref="1127" max="32767" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
@@ -1342,12 +1265,7 @@
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Group type="102" alignment="1" attributes="0">
                                                   <EmptySpace max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="2" attributes="0">
-                                                      <Component id="infoButton4" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="jLabel15" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                  </Group>
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="tableAIPoints" pref="146" max="32767" attributes="0"/>
+                                                  <Component id="tableAIPoints" pref="213" max="32767" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
@@ -1359,6 +1277,7 @@
                                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                                               <Border info="null"/>
                                             </Property>
+                                            <Property name="infoMessage" type="java.lang.String" value="&lt;html&gt;AI Points indicate a point on the map for the enemy AI to target.&lt;br&gt;Edit the positions in the table directly - or select a row then click on the map to place the ally battle start position.&lt;/html&gt;"/>
                                             <Property name="model" type="com.sfc.sf2.core.models.AbstractTableModel" editor="org.netbeans.modules.form.ComponentChooserEditor">
                                               <ComponentRef name="aIPointPropertiesTableModel"/>
                                             </Property>
@@ -1368,17 +1287,6 @@
                                             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                                               <Dimension value="[300, 100]"/>
                                             </Property>
-                                          </Properties>
-                                        </Component>
-                                        <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton4">
-                                          <Properties>
-                                            <Property name="messageText" type="java.lang.String" value="&lt;html&gt;AI Points indicate a point on the map for the enemy AI to target.&lt;br&gt;Edit the positions in the table directly - or select a row then click on the map to place the ally battle start position.&lt;/html&gt;"/>
-                                            <Property name="text" type="java.lang.String" value=""/>
-                                          </Properties>
-                                        </Component>
-                                        <Component class="javax.swing.JLabel" name="jLabel15">
-                                          <Properties>
-                                            <Property name="text" type="java.lang.String" value="Editing AI Points :"/>
                                           </Properties>
                                         </Component>
                                       </SubComponents>

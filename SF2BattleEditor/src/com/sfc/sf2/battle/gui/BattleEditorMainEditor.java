@@ -235,20 +235,12 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
         jTabbedPane3 = new javax.swing.JTabbedPane();
         jPanel24 = new javax.swing.JPanel();
         tableAllies = new com.sfc.sf2.core.gui.controls.Table();
-        infoButton2 = new com.sfc.sf2.core.gui.controls.InfoButton();
-        jLabel12 = new javax.swing.JLabel();
         jPanel25 = new javax.swing.JPanel();
         tableEnemies = new com.sfc.sf2.battle.tables.EnemyPropertiesTable();
-        infoButton3 = new com.sfc.sf2.core.gui.controls.InfoButton();
-        jLabel13 = new javax.swing.JLabel();
         jPanel26 = new javax.swing.JPanel();
         tableAIRegions = new com.sfc.sf2.core.gui.controls.Table();
-        infoButton5 = new com.sfc.sf2.core.gui.controls.InfoButton();
-        jLabel20 = new javax.swing.JLabel();
         jPanel31 = new javax.swing.JPanel();
         tableAIPoints = new com.sfc.sf2.core.gui.controls.Table();
-        infoButton4 = new com.sfc.sf2.core.gui.controls.InfoButton();
-        jLabel15 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         infoButton11 = new com.sfc.sf2.core.gui.controls.InfoButton();
         jLabel22 = new javax.swing.JLabel();
@@ -835,16 +827,12 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
         });
 
         tableAllies.setBorder(null);
+        tableAllies.setInfoMessage("<html>Indicates where allies will spawn during a battle. Ally order is determined by battle order (ally join order).<br>Edit the positions in the table directly - or select a row then click on the map to place the ally battle start position.</html>");
         tableAllies.setModel(allyPropertiesTableModel);
         tableAllies.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tableAllies.setSingleClickText(true);
         tableAllies.setSpinnerNumberEditor(true);
         tableAllies.setMinimumSize(new java.awt.Dimension(300, 100));
-
-        infoButton2.setMessageText("<html>Indicates where allies will spawn during a battle. Ally order is determined by battle order (ally join order).<br>Edit the positions in the table directly - or select a row then click on the map to place the ally battle start position.</html>");
-        infoButton2.setText("");
-
-        jLabel12.setText("Editing ally battle start positions :");
 
         javax.swing.GroupLayout jPanel24Layout = new javax.swing.GroupLayout(jPanel24);
         jPanel24.setLayout(jPanel24Layout);
@@ -852,24 +840,14 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
             jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel24Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tableAllies, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel24Layout.createSequentialGroup()
-                        .addComponent(jLabel12)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(infoButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addComponent(tableAllies, javax.swing.GroupLayout.DEFAULT_SIZE, 1127, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel24Layout.setVerticalGroup(
             jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel24Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(infoButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel12))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tableAllies, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
+                .addComponent(tableAllies, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -877,16 +855,12 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
 
         tableEnemies.setBorder(null);
         tableEnemies.setHorizontalScrolling(true);
+        tableEnemies.setInfoMessage("<html>When you select an enemy in the table, its data can then be edited in the controls below.<br>Like allies, selecting an enemy and then clicking on the map will move the enemy to the new position.<br>Enemy info:<br><b>Enemy</b>: The Id of the enemy. Determines which enemy.<br><b>X/Y</b>: The position of the enemy, relative to the top-left corner of the battle area.<br><b>AI</b>: Which AI logic the enemy will use.<br><b>Spawn</b>: AI Spawn rules:<br>    <b>Starting</b>: The enemy is visible from the start of the battle.<br>    <b>Respawn</b>: Enemy will respawn after being kiled, based on triggers.<br>    <b>Hidden</b>: Enemy does not spawn into the battle until a trigger is activated. If no trigger is activated then enemy will never spawn.<br><b>Item</b>: The item the enemy holds and item flags. Item flags:<br>-    <b>EQUIPPED</b>: Whether the enemy has this item equipped. May not do anything in the base game.<br>-    <b>USABLE_BY_AI</b>: Flags that the item can be used by the AI. The base game is hard-coded so that this only works with Healing Water.<br>-    <b>UNUSED_ITEM_DROP</b>: Flags the item to be dropped when enemy dies if it was not consumed (used) by the enemy.<br>-    <b>BROKEN</b>: Flags the item as broken (cracked) and needs to be repaired.<br><b>Move Order</b>: Directs target to stay in place or move towards specific targets.<br><b>Target (Move order)</b>: The target of the move order. <br><b>Trigger region 1/2</b>: Move orders are activated when region triggers.<br><b>Backup Move Order</b>: Backup move order (TODO What does this do specifically).<br><b>Target (backup)</b>: Target for the backup move order.<br><b>Unknown</b>: It is unknown what this does. Valid values seem to be 0 or 6.</html>");
         tableEnemies.setModel(enemyPropertiesTableModel);
         tableEnemies.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tableEnemies.setSingleClickText(false);
         tableEnemies.setSpinnerNumberEditor(true);
         tableEnemies.setMinimumSize(new java.awt.Dimension(300, 100));
-
-        infoButton3.setMessageText("<html>When you select an enemy in the table, its data can then be edited in the controls below.<br>Like allies, selecting an enemy and then clicking on the map will move the enemy to the new position.<br>Enemy info:<br><b>Enemy</b>: The Id of the enemy. Determines which enemy.<br><b>X/Y</b>: The position of the enemy, relative to the top-left corner of the battle area.<br><b>AI</b>: Which AI logic the enemy will use.<br><b>Spawn</b>: AI Spawn rules:<br>    <b>Starting</b>: The enemy is visible from the start of the battle.<br>    <b>Respawn</b>: Enemy will respawn after being kiled, based on triggers.<br>    <b>Hidden</b>: Enemy does not spawn into the battle until a trigger is activated. If no trigger is activated then enemy will never spawn.<br><b>Item</b>: The item the enemy holds and item flags. Item flags:<br>-    <b>EQUIPPED</b>: Whether the enemy has this item equipped. May not do anything in the base game.<br>-    <b>USABLE_BY_AI</b>: Flags that the item can be used by the AI. The base game is hard-coded so that this only works with Healing Water.<br>-    <b>UNUSED_ITEM_DROP</b>: Flags the item to be dropped when enemy dies if it was not consumed (used) by the enemy.<br>-    <b>BROKEN</b>: Flags the item as broken (cracked) and needs to be repaired.<br><b>Move Order</b>: Directs target to stay in place or move towards specific targets.<br><b>Target (Move order)</b>: The target of the move order. <br><b>Trigger region 1/2</b>: Move orders are activated when region triggers.<br><b>Backup Move Order</b>: Backup move order (TODO What does this do specifically).<br><b>Target (backup)</b>: Target for the backup move order.<br><b>Unknown</b>: It is unknown what this does. Valid values seem to be 0 or 6.</html>");
-        infoButton3.setText("");
-
-        jLabel13.setText("Editing enmy data :");
 
         javax.swing.GroupLayout jPanel25Layout = new javax.swing.GroupLayout(jPanel25);
         jPanel25.setLayout(jPanel25Layout);
@@ -894,24 +868,14 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
             jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel25Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tableEnemies, javax.swing.GroupLayout.DEFAULT_SIZE, 1127, Short.MAX_VALUE)
-                    .addGroup(jPanel25Layout.createSequentialGroup()
-                        .addComponent(jLabel13)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(infoButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addComponent(tableEnemies, javax.swing.GroupLayout.DEFAULT_SIZE, 1127, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel25Layout.setVerticalGroup(
             jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel25Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel25Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(infoButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel13))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tableEnemies, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
+                .addComponent(tableEnemies, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -919,16 +883,12 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
 
         tableAIRegions.setBorder(null);
         tableAIRegions.setHorizontalScrolling(true);
+        tableAIRegions.setInfoMessage("<html>AI Regions indicate a an area that can influce specific enemy AI.<br>Edit the positions in the table directly - or select a row then click on the map to move the area around: Click near a point (corner) of the region to drag that point to the desired position.<br><br><b>Points:</b>Regions are made up of a number of points: P1, P2, P3, P4. Or, as you will see in the data [x1,y1], [x2,y2], etc.<br><br><b>Type 3:</b> Type 3 = a 3-point region (a triangle) made up of points [P1, P2, P3].<br><b>Type 4:</b> Type 4 = a 4-point region; or more accurately, 2 triangles made up of points [P1, P2, P4] & [P2, P3, P4].</html>");
         tableAIRegions.setModel(aIRegionPropertiesTableModel);
         tableAIRegions.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tableAIRegions.setSingleClickText(true);
         tableAIRegions.setSpinnerNumberEditor(true);
         tableAIRegions.setMinimumSize(new java.awt.Dimension(300, 100));
-
-        infoButton5.setMessageText("<html>AI Regions indicate a an area that can influce specific enemy AI.<br>Edit the positions in the table directly - or select a row then click on the map to move the area around: Click near a point (corner) of the region to drag that point to the desired position.<br><br><b>Points:</b>Regions are made up of a number of points: P1, P2, P3, P4. Or, as you will see in the data [x1,y1], [x2,y2], etc.<br><br><b>Type 3:</b> Type 3 = a 3-point region (a triangle) made up of points [P1, P2, P3].<br><b>Type 4:</b> Type 4 = a 4-point region; or more accurately, 2 triangles made up of points [P1, P2, P4] & [P2, P3, P4].</html>");
-        infoButton5.setText("");
-
-        jLabel20.setText("Editing AI Regions :");
 
         javax.swing.GroupLayout jPanel26Layout = new javax.swing.GroupLayout(jPanel26);
         jPanel26.setLayout(jPanel26Layout);
@@ -936,40 +896,26 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
             jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel26Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tableAIRegions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel26Layout.createSequentialGroup()
-                        .addComponent(jLabel20)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(infoButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addComponent(tableAIRegions, javax.swing.GroupLayout.DEFAULT_SIZE, 1127, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel26Layout.setVerticalGroup(
             jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel26Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(infoButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel20))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tableAIRegions, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
+                .addComponent(tableAIRegions, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         jTabbedPane3.addTab("AI Regions", jPanel26);
 
         tableAIPoints.setBorder(null);
+        tableAIPoints.setInfoMessage("<html>AI Points indicate a point on the map for the enemy AI to target.<br>Edit the positions in the table directly - or select a row then click on the map to place the ally battle start position.</html>");
         tableAIPoints.setModel(aIPointPropertiesTableModel);
         tableAIPoints.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tableAIPoints.setSingleClickText(true);
         tableAIPoints.setSpinnerNumberEditor(true);
         tableAIPoints.setMinimumSize(new java.awt.Dimension(300, 100));
-
-        infoButton4.setMessageText("<html>AI Points indicate a point on the map for the enemy AI to target.<br>Edit the positions in the table directly - or select a row then click on the map to place the ally battle start position.</html>");
-        infoButton4.setText("");
-
-        jLabel15.setText("Editing AI Points :");
 
         javax.swing.GroupLayout jPanel31Layout = new javax.swing.GroupLayout(jPanel31);
         jPanel31.setLayout(jPanel31Layout);
@@ -977,24 +923,14 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
             jPanel31Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel31Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel31Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tableAIPoints, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel31Layout.createSequentialGroup()
-                        .addComponent(jLabel15)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(infoButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addComponent(tableAIPoints, javax.swing.GroupLayout.DEFAULT_SIZE, 1127, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel31Layout.setVerticalGroup(
             jPanel31Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel31Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel31Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(infoButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel15))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tableAIPoints, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
+                .addComponent(tableAIPoints, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1422,10 +1358,6 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
     private com.sfc.sf2.core.gui.controls.FileButton fileButtonTilesetEntries;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton10;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton11;
-    private com.sfc.sf2.core.gui.controls.InfoButton infoButton2;
-    private com.sfc.sf2.core.gui.controls.InfoButton infoButton3;
-    private com.sfc.sf2.core.gui.controls.InfoButton infoButton4;
-    private com.sfc.sf2.core.gui.controls.InfoButton infoButton5;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton7;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton8;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton9;
@@ -1435,11 +1367,7 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
     private javax.swing.JButton jButtonImportBattle;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
