@@ -9,6 +9,7 @@ import com.sfc.sf2.palette.Palette;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.awt.image.IndexColorModel;
+import java.util.Arrays;
 
 /**
  *
@@ -190,11 +191,7 @@ public class Tile {
         if (tile.id != this.id) {
             return false;
         }
-        for (int i=0; i < pixels.length; i++) {
-            if (this.pixels[i] != tile.pixels[i]) {
-                return false;
-            }
-        }
+        if (!Arrays.equals(this.pixels, tile.pixels)) return false;
         return true;
     }
     

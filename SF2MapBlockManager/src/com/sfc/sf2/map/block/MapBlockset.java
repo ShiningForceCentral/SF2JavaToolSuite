@@ -12,6 +12,7 @@ import com.sfc.sf2.graphics.Tileset;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.Arrays;
 
 /**
  *
@@ -136,11 +137,7 @@ public class MapBlockset implements INameable {
     public boolean equals(Object obj) {
         if (!(obj instanceof MapBlockset)) return super.equals(obj);
         MapBlockset blockset = (MapBlockset)obj;
-        for (int i=0; i < this.blocks.length; i++) {
-            if (!this.blocks[i].equals(blockset.getBlocks()[i])) {
-                return false;
-            }
-        }
+        if (!Arrays.equals(this.blocks, blockset.blocks)) return false;
         return true;
     }
     

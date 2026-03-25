@@ -12,6 +12,7 @@ import com.sfc.sf2.palette.Palette;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.Arrays;
 
 /**
  *
@@ -136,11 +137,7 @@ public class Tileset implements INameable {
     public boolean equals(Object obj) {
         if (!(obj instanceof Tileset)) return super.equals(obj);
         Tileset tileset = (Tileset)obj;
-        for (int i=0; i < this.tiles.length; i++) {
-            if (!this.tiles[i].equals(tileset.getTiles()[i])) {
-                return false;
-            }
-        }
+        if (!Arrays.equals(this.tiles, tileset.tiles)) return false;
         return true;
     }
     

@@ -6,6 +6,7 @@
 package com.sfc.sf2.battle;
 
 import java.awt.Point;
+import java.util.Arrays;
 
 /**
  *
@@ -93,30 +94,10 @@ public class BattleSpriteset {
         if (!(obj instanceof BattleSpriteset)) return super.equals(obj);
         BattleSpriteset other = (BattleSpriteset)obj;
         if (this.index != other.index) return false;
-        if (this.allies.length != other.allies.length) return false;
-        for (int i=0; i < this.allies.length; i++) {
-            if (!this.allies[i].equals(other.allies[i])) {
-                return false;
-            }
-        }
-        if (this.enemies.length != other.enemies.length) return false;
-        for (int i=0; i < this.enemies.length; i++) {
-            if (!this.enemies[i].equals(other.enemies[i])) {
-                return false;
-            }
-        }
-        if (this.aiRegions.length != other.aiRegions.length) return false;
-        for (int i=0; i < this.aiRegions.length; i++) {
-            if (!this.aiRegions[i].equals(other.aiRegions[i])) {
-                return false;
-            }
-        }
-        if (this.aiPoints.length != other.aiPoints.length) return false;
-        for (int i=0; i < this.aiPoints.length; i++) {
-            if (!this.aiPoints[i].equals(other.aiPoints[i])) {
-                return false;
-            }
-        }
+        if (!Arrays.equals(this.allies, other.allies)) return false;
+        if (!Arrays.equals(this.enemies, other.enemies)) return false;
+        if (!Arrays.equals(this.aiRegions, other.aiRegions)) return false;
+        if (!Arrays.equals(this.aiPoints, other.aiPoints)) return false;
         return true;
     }
 }

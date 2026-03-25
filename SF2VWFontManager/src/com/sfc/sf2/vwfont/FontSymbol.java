@@ -9,6 +9,7 @@ import com.sfc.sf2.palette.CRAMColor;
 import com.sfc.sf2.palette.Palette;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
+import java.util.Arrays;
 
 /**
  *
@@ -86,6 +87,13 @@ public class FontSymbol {
             indexedColorImage.flush();
             indexedColorImage = null;
         }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof FontSymbol)) return false;
+        FontSymbol other = (FontSymbol)obj;
+        return (this.id == other.id && this.width == other.width && Arrays.equals(this.pixels, other.pixels));
     }
     
     private static final int[] EMPTY_PIXELS = new int[PIXEL_WIDTH*PIXEL_HEIGHT];

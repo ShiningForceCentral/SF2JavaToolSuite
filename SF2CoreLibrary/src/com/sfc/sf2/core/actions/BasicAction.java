@@ -6,6 +6,7 @@
 package com.sfc.sf2.core.actions;
 
 import com.sfc.sf2.core.INameable;
+import java.util.Arrays;
 import javax.swing.JComponent;
 
 /**
@@ -60,7 +61,11 @@ public class BasicAction<T extends Object> implements IAction<BasicAction> {
 
     @Override
     public boolean isInvalidated() {
-        return newValue.equals(oldValue);
+        if (newValue instanceof Object[]) {
+            return Arrays.equals((Object[])newValue, (Object[])oldValue);
+        } else {
+            return newValue.equals(oldValue);
+        }
     }
 
     @Override

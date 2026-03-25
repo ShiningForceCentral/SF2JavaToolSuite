@@ -5,6 +5,8 @@
  */
 package com.sfc.sf2.core.actions;
 
+import java.util.Arrays;
+
 /**
  * Defines a {@code BasicAction} that is only combined if identical data is stacked (if invalidated)
  * @author TiMMy
@@ -23,6 +25,10 @@ public class NonCombinableAction<T extends Object> extends BasicAction<T> {
     public boolean canBeCombined(IAction other) {
         if (!(other instanceof NonCombinableAction)) return false;
         NonCombinableAction otherA = (NonCombinableAction)other;
-        return newValue.equals(otherA.newValue);
+        if (newValue instanceof Object[]) {
+            return Arrays.equals((Object[])this.newValue, (Object[])otherA.newValue);
+        } else {
+            return this.newValue.equals(otherA.newValue);
+        }
     }
 }

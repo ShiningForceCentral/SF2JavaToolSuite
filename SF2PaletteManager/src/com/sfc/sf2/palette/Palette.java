@@ -8,6 +8,7 @@ package com.sfc.sf2.palette;
 import com.sfc.sf2.core.INameable;
 import java.awt.Color;
 import java.awt.image.IndexColorModel;
+import java.util.Arrays;
 
 /**
  *
@@ -144,9 +145,7 @@ public class Palette implements INameable {
     public boolean equals(Object obj) {
         if (!(obj instanceof Palette)) return super.equals(obj);
         Palette palette = (Palette)obj;
-        for (int i=0; i < this.colors.length; i++) {
-            if (!this.colors[i].equals(palette.colors[i])) return false;
-        }
+        if (!Arrays.equals(this.colors, palette.colors)) return false;
         return true;
     }
     

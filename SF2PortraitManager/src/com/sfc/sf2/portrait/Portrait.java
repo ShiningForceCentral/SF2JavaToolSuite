@@ -13,6 +13,7 @@ import com.sfc.sf2.graphics.Tileset;
 import com.sfc.sf2.palette.Palette;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.Arrays;
 
 /**
  *
@@ -139,18 +140,8 @@ public class Portrait implements INameable {
         if (!(obj instanceof Portrait)) return super.equals(obj);
         Portrait other = (Portrait)obj;
         if (this.index != other.index || !this.tileset.equals(other.tileset)) return false;
-        if (this.eyeTiles.length != other.eyeTiles.length) return false;
-        for (int i = 0; i < this.eyeTiles.length; i++) {
-            for (int j = 0; j < 4; j++) {
-                if (this.eyeTiles[i][j] != other.eyeTiles[i][j]) return false;
-            }
-        }
-        if (this.mouthTiles.length != other.mouthTiles.length) return false;
-        for (int i = 0; i < this.mouthTiles.length; i++) {
-            for (int j = 0; j < 4; j++) {
-                if (this.mouthTiles[i][j] != other.mouthTiles[i][j]) return false;
-            }
-        }
+        if (!Arrays.deepEquals(this.eyeTiles, other.eyeTiles)) return false;
+        if (!Arrays.deepEquals(this.mouthTiles, other.mouthTiles)) return false;
         return true;
     }
 }

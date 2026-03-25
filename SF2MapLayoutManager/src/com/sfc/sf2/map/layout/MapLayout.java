@@ -13,6 +13,7 @@ import com.sfc.sf2.map.block.MapBlockset;
 import com.sfc.sf2.palette.Palette;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.Arrays;
 
 /**
  *
@@ -117,18 +118,8 @@ public class MapLayout {
     public boolean equals(Object obj) {
         if (!(obj instanceof MapLayout)) return super.equals(obj);
         MapLayout layout = (MapLayout)obj;
-        if (this.tilesets.length != layout.tilesets.length) return false;
-        for (int i=0; i < this.tilesets.length; i++) {
-            if (!this.tilesets[i].equals(layout.tilesets[i])) {
-                return false;
-            }
-        }
-        if (this.blocks.length != layout.blocks.length) return false;
-        for (int i=0; i < this.blocks.length; i++) {
-            if (!this.blocks[i].equals(layout.blocks[i])) {
-                return false;
-            }
-        }
+        if (!Arrays.equals(this.tilesets, layout.tilesets)) return false;
+        if (!Arrays.equals(this.blocks, layout.blocks)) return false;
         return true;
     }
 }
