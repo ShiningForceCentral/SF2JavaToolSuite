@@ -1180,16 +1180,14 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
         int newMapIndex = evt.getID();
         try {
             MapLayout layout = battleManager.loadNewMap(paletteEntriesPath, tilesetEntriesPath, mapEntriesPath, newMapIndex);
-            ActionManager.setActionWithoutExecute(new BasicAction<MapLayout>(this, "Map Changed", this::actionMapChanged, layout, battleLayoutPanel.getMapLayout()));
+            battleLayoutPanel.getBattleCoords().setMapIndex(newMapIndex);
+            battleLayoutPanel.getBattle().setMapLayout(layout);
+            battleLayoutPanel.setMapLayout(layout);
+            battleLayoutPanel.redraw();
         } catch (Exception ex) {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Map " + newMapIndex + " could not be imported");
         }
-    }
-    
-    private void actionMapChanged(MapLayout layout) {
-        battleLayoutPanel.getBattle().setMapLayout(layout);
-        battleLayoutPanel.setMapLayout(layout);
     }
     
     private void changeDrawMode(boolean sprites, boolean aiRegions, boolean aiModes) {
