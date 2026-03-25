@@ -32,8 +32,15 @@ public class VWFontViewPanel extends AbstractViewPanel<AbstractLayoutPanel> {
     @Override
     protected void init(JComboBox jComboBoxScale, JCheckBox jCheckBoxGrid, JSpinner jSpinnerItemsPerRow, ColorPicker colorPickerBG) {
         super.init(jComboBoxScale, jCheckBoxGrid, jSpinnerItemsPerRow, colorPickerBG);
+    }
+
+    @Override
+    public void setLayoutPanel(AbstractLayoutPanel layoutPanel) {
+        super.setLayoutPanel(layoutPanel);
+        
         FontSettings fontSettings = SettingsManager.getSettingsStore("font");
         colorPickerBG.setColor(fontSettings.getTransparentBGColor());
+        layoutPanel.setBGColor(colorPickerBG.getColor());
     }
 
     /**
@@ -53,6 +60,7 @@ public class VWFontViewPanel extends AbstractViewPanel<AbstractLayoutPanel> {
 
         jLabelBG.setText("BG :");
 
+        colorPickerBG.setCheckerPattern(false);
         colorPickerBG.setName("BG Color Picker"); // NOI18N
         colorPickerBG.addColorChangedListener(new com.sfc.sf2.core.gui.controls.ColorPicker.ColorChangedListener() {
             public void colorChanged(java.awt.event.ActionEvent evt) {
@@ -123,10 +131,11 @@ public class VWFontViewPanel extends AbstractViewPanel<AbstractLayoutPanel> {
     private void colorPickerBGColorChanged(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorPickerBGColorChanged
         if (layoutPanel != null) {
             layoutPanel.setBGColor(colorPickerBG.getColor());
+            
+            FontSettings fontSettings = SettingsManager.getSettingsStore("font");
+            fontSettings.setTransparentBGColor(colorPickerBG.getColor());
+            SettingsManager.saveSettingsFile();
         }
-        FontSettings fontSettings = SettingsManager.getSettingsStore("font");
-        fontSettings.setTransparentBGColor(colorPickerBG.getColor());
-        SettingsManager.saveSettingsFile();
     }//GEN-LAST:event_colorPickerBGColorChanged
 
     private void jComboBoxScaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxScaleActionPerformed
