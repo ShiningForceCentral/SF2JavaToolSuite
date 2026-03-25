@@ -6,6 +6,7 @@
 package com.sfc.sf2.mapsprite.gui;
 
 import com.sfc.sf2.core.actions.ActionManager;
+import com.sfc.sf2.core.actions.BasicAction;
 import com.sfc.sf2.core.actions.ComboAction;
 import com.sfc.sf2.core.actions.NonCombinableAction;
 import com.sfc.sf2.core.actions.RadioButtonAction;
@@ -18,7 +19,6 @@ import com.sfc.sf2.helpers.PathHelpers;
 import com.sfc.sf2.mapsprite.MapSpriteEntries;
 import com.sfc.sf2.mapsprite.MapSpriteManager;
 import com.sfc.sf2.mapsprite.MapSpriteManager.MapSpriteExportMode;
-import com.sfc.sf2.mapsprite.actions.MapSpritesAction;
 import com.sfc.sf2.mapsprite.settings.MapSpriteSettings;
 import java.awt.image.BufferedImage;
 import java.nio.file.Path;
@@ -804,6 +804,7 @@ public class MapspriteMainEditor extends AbstractMainEditor {
 
                         tableUnreferenced.setBorder(null);
                         tableUnreferenced.setButtonsVisible(false);
+                        tableUnreferenced.setModel(mapSpriteTableModel);
                         tableUnreferenced.setName("Table Unreferenced"); // NOI18N
 
                         javax.swing.GroupLayout jPanelUnreferencedLayout = new javax.swing.GroupLayout(jPanelUnreferenced);
@@ -952,7 +953,7 @@ public class MapspriteMainEditor extends AbstractMainEditor {
         MapSpriteEntries newValue = oldValue.clone();
         boolean changesMade = newValue.optimiseEntries(jRadioButtonOptimiseCharacters.isSelected());
         if (changesMade) {
-            ActionManager.setAndExecuteAction(new MapSpritesAction(this, "Optimise Map Sprites", this::actionMapSpritesLoaded, newValue, oldValue));
+            ActionManager.setAndExecuteAction(new BasicAction<MapSpriteEntries>(this, "Optimise Map Sprites", this::actionMapSpritesLoaded, newValue, oldValue));
         }
     }//GEN-LAST:event_jButtonOptimiseMapspritesActionPerformed
 
@@ -1020,7 +1021,7 @@ public class MapspriteMainEditor extends AbstractMainEditor {
         MapSpriteEntries newValue = oldValue.clone();
         boolean changesMade = newValue.insertUnreferenced();
         if (changesMade) {
-            ActionManager.setAndExecuteAction(new MapSpritesAction(this, "Insert Unreferenced Map Sprites", this::actionMapSpritesLoaded, newValue, oldValue));
+            ActionManager.setAndExecuteAction(new BasicAction<MapSpriteEntries>(this, "Insert Unreferenced Map Sprites", this::actionMapSpritesLoaded, newValue, oldValue));
         }
     }//GEN-LAST:event_jButtonInsertMapspritesActionPerformed
     

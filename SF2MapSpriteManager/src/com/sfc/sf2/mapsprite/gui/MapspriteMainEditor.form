@@ -1158,7 +1158,7 @@
                                     </Property>
                                     <Property name="buttonsVisible" type="boolean" value="false"/>
                                     <Property name="model" type="com.sfc.sf2.core.models.AbstractTableModel" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                                      <ComponentRef name="default"/>
+                                      <ComponentRef name="mapSpriteTableModel"/>
                                     </Property>
                                     <Property name="name" type="java.lang.String" value="Table Unreferenced" noResource="true"/>
                                   </Properties>
