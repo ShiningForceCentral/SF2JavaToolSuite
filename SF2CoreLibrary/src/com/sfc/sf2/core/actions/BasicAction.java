@@ -38,6 +38,9 @@ public class BasicAction<T extends Object> implements IAction<BasicAction> {
     
     @Override
     public void execute() {
+        if (owner instanceof JComponent) {
+            ((JComponent)owner).requestFocus();
+        }
         if (action != null) {
             action.setActionData(newValue);
         }
@@ -45,6 +48,9 @@ public class BasicAction<T extends Object> implements IAction<BasicAction> {
     
     @Override
     public void undo() {
+        if (owner instanceof JComponent) {
+            ((JComponent)owner).requestFocus();
+        }
         if (undoAction != null) {
             undoAction.setActionData(oldValue);
         } else if (action != null) {

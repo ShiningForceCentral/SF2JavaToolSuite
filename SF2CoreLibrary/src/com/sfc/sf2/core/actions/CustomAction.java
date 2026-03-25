@@ -37,12 +37,18 @@ public class CustomAction<T extends IActionData> implements IAction<CustomAction
     }
     
     public void execute() {
+        if (owner instanceof JComponent) {
+            ((JComponent)owner).requestFocus();
+        }
         if (action != null) {
             action.setActionData(newValue);
         }
     }
     
     public void undo() {
+        if (owner instanceof JComponent) {
+            ((JComponent)owner).requestFocus();
+        }
         if (undoAction != null) {
             undoAction.setActionData(oldValue);
         } else if (action != null) {

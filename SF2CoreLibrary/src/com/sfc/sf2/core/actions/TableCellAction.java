@@ -6,6 +6,7 @@
 package com.sfc.sf2.core.actions;
 
 import com.sfc.sf2.core.gui.controls.Table;
+import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 
 /**
@@ -31,9 +32,11 @@ public class TableCellAction extends CustomAction<TableCellActionData> {
     }
     
     private void ClearTableCellEditor() {
-        TableCellEditor editor = ((Table)owner).jTable.getCellEditor();
+        JTable table = ((Table)owner).jTable;
+        TableCellEditor editor = table.getCellEditor();
         if (editor != null) {
             editor.stopCellEditing();
         }
+        table.requestFocus();
     }
 }

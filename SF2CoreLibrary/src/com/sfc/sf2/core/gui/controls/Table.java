@@ -444,6 +444,11 @@ public class Table extends javax.swing.JPanel {
     }
 
     @Override
+    public void requestFocus() {
+        jTable.requestFocus();
+    }
+
+    @Override
     public String toString() {
         String name = getName();
         if (name == null) {
