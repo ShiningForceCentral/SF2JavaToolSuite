@@ -133,4 +133,24 @@ public class Portrait implements INameable {
     public void clearIndexedColorImage() {
         indexedColorImage = null;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Portrait)) return super.equals(obj);
+        Portrait other = (Portrait)obj;
+        if (this.index != other.index || !this.tileset.equals(other.tileset)) return false;
+        if (this.eyeTiles.length != other.eyeTiles.length) return false;
+        for (int i = 0; i < this.eyeTiles.length; i++) {
+            for (int j = 0; j < 4; j++) {
+                if (this.eyeTiles[i][j] != other.eyeTiles[i][j]) return false;
+            }
+        }
+        if (this.mouthTiles.length != other.mouthTiles.length) return false;
+        for (int i = 0; i < this.mouthTiles.length; i++) {
+            for (int j = 0; j < 4; j++) {
+                if (this.mouthTiles[i][j] != other.mouthTiles[i][j]) return false;
+            }
+        }
+        return true;
+    }
 }
