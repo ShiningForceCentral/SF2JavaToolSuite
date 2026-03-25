@@ -57,15 +57,9 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
         jSpinnerPosY.setEnabled(false);
     }
     
-    @Override
-    protected void onDataLoaded() {
+    protected void onSpellDataLoaded() {
         super.onDataLoaded();
-        
-        if (invocationGraphicManager.getInvocationGraphic() == null) {
-            ActionManager.setAndExecuteAction(new NonCombinableAction<Tileset>(this, "Spell Imported", this::actionSpellLoaded, spellGraphicManager.getSpellTileset(), spellLayoutPanel.getTileset()));
-        } else {
-            ActionManager.setAndExecuteAction(new NonCombinableAction<InvocationGraphic>(this, "Invocation Imported", this::actionInvocationLoaded, invocationGraphicManager.getInvocationGraphic(), invocationLayoutPanel.getInvocationGraphic()));
-        }
+        ActionManager.setAndExecuteAction(new NonCombinableAction<Tileset>(this, "Spell Imported", this::actionSpellLoaded, spellGraphicManager.getSpellTileset(), spellLayoutPanel.getTileset()));
     }
     
     private void actionSpellLoaded(Tileset spell) {
@@ -81,6 +75,10 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
         invocationLayoutPanel.setVisible(false);
         jPanelSpellData.setVisible(true);
         jPanelInvocationData.setVisible(false);
+    }
+    protected void onInvocationDataLoaded() {
+        super.onDataLoaded();
+        ActionManager.setAndExecuteAction(new NonCombinableAction<InvocationGraphic>(this, "Invocation Imported", this::actionInvocationLoaded, invocationGraphicManager.getInvocationGraphic(), invocationLayoutPanel.getInvocationGraphic()));
     }
     
     private void actionInvocationLoaded(InvocationGraphic invocation) {
@@ -1361,7 +1359,7 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Spell image could not be imported from : " + spellPath);
         }
-        onDataLoaded();
+        onSpellDataLoaded();
     }//GEN-LAST:event_jButtonImportSpellImageActionPerformed
 
     private void jButtonImportSpellActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportSpellActionPerformed
@@ -1375,7 +1373,7 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Spell disasm could not be imported from : " + spellPath);
         }
-        onDataLoaded();
+        onSpellDataLoaded();
     }//GEN-LAST:event_jButtonImportSpellActionPerformed
 
     private void jButtonImportInvocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportInvocationActionPerformed
@@ -1392,7 +1390,7 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Invocation disasm could not be imported from : " + invocationPath);
         }
-        onDataLoaded();
+        onInvocationDataLoaded();
     }//GEN-LAST:event_jButtonImportInvocationActionPerformed
 
     private void jButtonImportInvocationImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportInvocationImageActionPerformed
@@ -1409,7 +1407,7 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Invocation images could not be imported from : " + invocationPath);
         }
-        onDataLoaded();
+        onInvocationDataLoaded();
     }//GEN-LAST:event_jButtonImportInvocationImageActionPerformed
 
     private void jButtonExportInvocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExportInvocationActionPerformed
