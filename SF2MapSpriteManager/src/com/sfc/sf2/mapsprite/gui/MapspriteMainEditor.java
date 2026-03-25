@@ -7,6 +7,7 @@ package com.sfc.sf2.mapsprite.gui;
 
 import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.core.actions.ComboAction;
+import com.sfc.sf2.core.actions.NonCombinableAction;
 import com.sfc.sf2.core.actions.RadioButtonAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
@@ -72,7 +73,7 @@ public class MapspriteMainEditor extends AbstractMainEditor {
     @Override
     protected void onDataLoaded() {
         super.onDataLoaded();
-        ActionManager.setAndExecuteAction(new MapSpritesAction(this, "Map Sprites Imported", this::actionMapSpritesLoaded, mapSpriteManager.getMapSprites(), mapSpriteLayoutPanel.getMapSprites()));
+        ActionManager.setAndExecuteAction(new NonCombinableAction<MapSpriteEntries>(this, "Map Sprites Imported", this::actionMapSpritesLoaded, mapSpriteManager.getMapSprites(), mapSpriteLayoutPanel.getMapSprites()));
     }
     
     private void actionMapSpritesLoaded(MapSpriteEntries mapSprites) {

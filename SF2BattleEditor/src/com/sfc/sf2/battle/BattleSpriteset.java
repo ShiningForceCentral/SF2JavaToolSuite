@@ -90,9 +90,7 @@ public class BattleSpriteset {
     
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) return this == null;
-        if (obj == this) return true;
-        if (!(obj instanceof BattleSpriteset)) return false;
+        if (!(obj instanceof BattleSpriteset)) return super.equals(obj);
         BattleSpriteset other = (BattleSpriteset)obj;
         if (this.index != other.index) return false;
         if (this.allies.length != other.allies.length) return false;

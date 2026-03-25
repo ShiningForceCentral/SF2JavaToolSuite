@@ -61,7 +61,6 @@ public class BasicAction<T extends Object> implements IAction<BasicAction> {
     public boolean canBeCombined(IAction other) {
         if (this.getClass() != other.getClass()) return false;
         BasicAction otherA = (BasicAction)other;
-        if (otherA == null) return false;
         if (!this.owner.equals(otherA.owner)) return false;
         if (!this.operation.equals(otherA.operation)) return false;
         if ((this.action == null) != (otherA.action == null)) return false;

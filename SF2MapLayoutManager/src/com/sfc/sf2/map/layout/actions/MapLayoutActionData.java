@@ -44,7 +44,7 @@ public class MapLayoutActionData implements IActionData<MapLayoutActionData> {
 
     @Override
     public boolean canBeCombined(MapLayoutActionData other) {
-        return layout.equals(other.layout);
+        return isInvalidated(other);
     }
 
     @Override

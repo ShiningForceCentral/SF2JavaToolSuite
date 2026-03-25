@@ -6,7 +6,7 @@
 package com.sfc.sf2.text.gui;
 
 import com.sfc.sf2.core.actions.ActionManager;
-import com.sfc.sf2.core.actions.BasicAction;
+import com.sfc.sf2.core.actions.NonCombinableAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.helpers.PathHelpers;
@@ -75,7 +75,7 @@ public class TextMainEditor extends AbstractMainEditor {
         textPreviewLayoutPanel.setBaseTiles(textManager.getBaseTiles());
         textPreviewLayoutPanel.setFontSymbols(textManager.getFontSymbols());
         textPreviewLayoutPanel.setAllyNames(textManager.getAllyNames());
-        ActionManager.setAndExecuteAction(new BasicAction<String[]>(this, "Game Script Imported", this::actionScriptLoaded, textManager.getGameScript(), textTableModel.getTableData(String[].class)));
+        ActionManager.setAndExecuteAction(new NonCombinableAction<String[]>(this, "Game Script Imported", this::actionScriptLoaded, textManager.getGameScript(), textTableModel.getTableData(String[].class)));
     }
     
     private void actionScriptLoaded(String[] script) {

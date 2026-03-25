@@ -148,9 +148,7 @@ public class MapSprite {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) return this == null;
-        if (obj == this) return true;
-        if (!(obj instanceof MapSprite)) return false;
+        if (!(obj instanceof MapSprite)) return super.equals(obj);
         MapSprite sprite = (MapSprite)obj;
         for (int i = 0; i < frames.length; i++) {
             if ((frames[i] == null) != (sprite.frames[i] == null)) return false;

@@ -134,9 +134,7 @@ public class Tileset implements INameable {
     
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) return this == null;
-        if (obj == this) return true;
-        if (!(obj instanceof Tileset)) return false;
+        if (!(obj instanceof Tileset)) return super.equals(obj);
         Tileset tileset = (Tileset)obj;
         for (int i=0; i < this.tiles.length; i++) {
             if (!this.tiles[i].equals(tileset.getTiles()[i])) {

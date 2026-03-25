@@ -11,9 +11,9 @@ import com.sfc.sf2.battlesprite.animation.BattleSpriteAnimation;
 import com.sfc.sf2.battlesprite.animation.BattleSpriteAnimationFrame;
 import com.sfc.sf2.battlesprite.animation.BattleSpriteAnimationManager;
 import com.sfc.sf2.core.actions.ActionManager;
-import com.sfc.sf2.core.actions.BasicAction;
 import com.sfc.sf2.core.actions.ComboAction;
 import com.sfc.sf2.core.actions.CustomAction;
+import com.sfc.sf2.core.actions.NonCombinableAction;
 import com.sfc.sf2.core.actions.SpinnerAction;
 import com.sfc.sf2.core.actions.ToggleAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
@@ -67,8 +67,7 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
     @Override
     protected void onDataLoaded() {
         super.onDataLoaded();
-        
-        ActionManager.setAndExecuteAction(new BasicAction<BattleSpriteAnimation>(this, "Animation Imported", this::actionAnimationLoaded, battlespriteanimationManager.getBattleSpriteAnimation(), battleSpriteAnimationLayoutPanel.getAnimation()));
+        ActionManager.setAndExecuteAction(new NonCombinableAction<BattleSpriteAnimation>(this, "Animation Imported", this::actionAnimationLoaded, battlespriteanimationManager.getBattleSpriteAnimation(), battleSpriteAnimationLayoutPanel.getAnimation()));
     }
     
     private void actionAnimationLoaded(BattleSpriteAnimation animation) {
@@ -97,8 +96,6 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
     }
     
     protected void onBattleSceneDataLoaded() {
-        super.onDataLoaded();
-        
         BattleSceneActionData newValue = new BattleSceneActionData(battlespriteanimationManager.getBackground(), battlespriteanimationManager.getGround());
         BattleSceneActionData oldValue = new BattleSceneActionData(battleSpriteAnimationLayoutPanel.getBg(), battleSpriteAnimationLayoutPanel.getGround());
         ActionManager.setAndExecuteAction(new CustomAction<BattleSceneActionData>(this, "Battle Scene Imported", this::actionBattleSceneLoaded, newValue, oldValue));
@@ -110,9 +107,7 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
     }
     
     protected void onWeaponDataLoaded() {
-        super.onDataLoaded();
-        
-        ActionManager.setAndExecuteAction(new BasicAction<WeaponSprite>(this, "Weapon Imported", this::actionWeaponLoaded, battlespriteanimationManager.getWeaponsprite(), battleSpriteAnimationLayoutPanel.getWeaponsprite()));
+        ActionManager.setAndExecuteAction(new NonCombinableAction<WeaponSprite>(this, "Weapon Imported", this::actionWeaponLoaded, battlespriteanimationManager.getWeaponsprite(), battleSpriteAnimationLayoutPanel.getWeaponsprite()));
     }
     
     private void actionWeaponLoaded(WeaponSprite weaponSprite) {

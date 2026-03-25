@@ -74,7 +74,7 @@ public class BattleActionData implements IActionData<BattleActionData> {
 
     @Override
     public boolean canBeCombined(BattleActionData other) {
-        return this.battle.equals(other.battle) && this.landEffectEnums.equals(other.landEffectEnums) && this.enemyEnums.equals(other.enemyEnums);
+        return isInvalidated(other);
     }
 
     @Override

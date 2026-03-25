@@ -10,7 +10,7 @@ import com.sfc.sf2.battle.mapterrain.LandEffectMovementType;
 import com.sfc.sf2.battle.mapterrain.actions.BattleMapTerrainActionData;
 import com.sfc.sf2.battle.mapterrain.gui.TerrainKeyPanel.TerrainDrawMode;
 import com.sfc.sf2.core.actions.ActionManager;
-import com.sfc.sf2.core.actions.BasicAction;
+import com.sfc.sf2.core.actions.NonCombinableAction;
 import com.sfc.sf2.core.actions.SpinnerAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
@@ -64,7 +64,7 @@ public class BattleMapTerrainMainEditor extends AbstractMainEditor {
                 battlemapterrainManager.getLandEffects(), battlemapterrainManager.getSharedTerrainInfo());
         BattleMapTerrainActionData oldValue = new BattleMapTerrainActionData(actionBattleIndex, battleMapTerrainLayoutPanel.getMapLayout(), battleMapTerrainLayoutPanel.getBattleCoords(), battleMapTerrainLayoutPanel.getTerrain(),
                 landEffectTableModel.getTableData(LandEffectMovementType[].class), actionSharedTerrainInfo);
-        ActionManager.setAndExecuteAction(new BasicAction<BattleMapTerrainActionData>(this, "Battle Terrain Imported", this::actionBattleMapTerrainLoaded, newValue, oldValue));
+        ActionManager.setAndExecuteAction(new NonCombinableAction<BattleMapTerrainActionData>(this, "Battle Terrain Imported", this::actionBattleMapTerrainLoaded, newValue, oldValue));
     }
     
     private void actionBattleMapTerrainLoaded(BattleMapTerrainActionData value) {

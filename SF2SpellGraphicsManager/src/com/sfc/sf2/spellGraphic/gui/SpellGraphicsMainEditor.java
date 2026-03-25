@@ -6,7 +6,7 @@
 package com.sfc.sf2.spellGraphic.gui;
 
 import com.sfc.sf2.core.actions.ActionManager;
-import com.sfc.sf2.core.actions.BasicAction;
+import com.sfc.sf2.core.actions.NonCombinableAction;
 import com.sfc.sf2.core.actions.SpinnerAction;
 import com.sfc.sf2.core.actions.ToggleAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
@@ -62,9 +62,9 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
         super.onDataLoaded();
         
         if (invocationGraphicManager.getInvocationGraphic() == null) {
-            ActionManager.setAndExecuteAction(new BasicAction<Tileset>(this, "Spell Imported", this::actionSpellLoaded, spellGraphicManager.getSpellTileset(), spellLayoutPanel.getTileset()));
+            ActionManager.setAndExecuteAction(new NonCombinableAction<Tileset>(this, "Spell Imported", this::actionSpellLoaded, spellGraphicManager.getSpellTileset(), spellLayoutPanel.getTileset()));
         } else {
-            ActionManager.setAndExecuteAction(new BasicAction<InvocationGraphic>(this, "Invocation Imported", this::actionInvocationLoaded, invocationGraphicManager.getInvocationGraphic(), invocationLayoutPanel.getInvocationGraphic()));
+            ActionManager.setAndExecuteAction(new NonCombinableAction<InvocationGraphic>(this, "Invocation Imported", this::actionInvocationLoaded, invocationGraphicManager.getInvocationGraphic(), invocationLayoutPanel.getInvocationGraphic()));
         }
     }
     

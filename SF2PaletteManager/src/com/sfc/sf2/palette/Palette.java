@@ -139,6 +139,16 @@ public class Palette implements INameable {
         IndexColorModel icm = new IndexColorModel(4,colors.length,reds,greens,blues,alphas);
         return icm;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Palette)) return super.equals(obj);
+        Palette palette = (Palette)obj;
+        for (int i=0; i < this.colors.length; i++) {
+            if (!this.colors[i].equals(palette.colors[i])) return false;
+        }
+        return true;
+    }
     
     public Palette Clone() {
         Palette newPalette = new Palette(colors.clone(), firstColorTransparent);

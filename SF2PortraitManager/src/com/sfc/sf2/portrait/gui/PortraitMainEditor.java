@@ -6,8 +6,8 @@
 package com.sfc.sf2.portrait.gui;
 
 import com.sfc.sf2.core.actions.ActionManager;
-import com.sfc.sf2.core.actions.BasicAction;
 import com.sfc.sf2.core.actions.CustomAction;
+import com.sfc.sf2.core.actions.NonCombinableAction;
 import com.sfc.sf2.core.settings.SettingsManager;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
@@ -65,7 +65,7 @@ public class PortraitMainEditor extends AbstractMainEditor {
     @Override
     protected void onDataLoaded() {
         super.onDataLoaded();
-        ActionManager.setAndExecuteAction(new BasicAction<Portrait>(this, "Portrait Imported", this::actionPortraitLoaded, portraitManager.getPortrait(), portraitLayoutPanel.getPortrait()));
+        ActionManager.setAndExecuteAction(new NonCombinableAction<Portrait>(this, "Portrait Imported", this::actionPortraitLoaded, portraitManager.getPortrait(), portraitLayoutPanel.getPortrait()));
     }
     
     private void actionPortraitLoaded(Portrait portrait) {        

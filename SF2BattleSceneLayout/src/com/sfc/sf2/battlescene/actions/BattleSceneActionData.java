@@ -38,7 +38,7 @@ public class BattleSceneActionData implements IActionData<BattleSceneActionData>
 
     @Override
     public boolean canBeCombined(BattleSceneActionData other) {
-        return false;
+        return isInvalidated(other);
     }
 
     @Override

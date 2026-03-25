@@ -81,16 +81,8 @@ public class CRAMColor {
     
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        } else if (obj.getClass() != this.getClass()) {
-            return false;
-        }
+        if (!(obj instanceof CRAMColor)) return super.equals(obj);
         CRAMColor other = (CRAMColor)obj;
-        if (this.cramColor.equals(other.cramColor)) {
-            return true;
-        } else {
-            return false;
-        }
+        return this.cramColor.equals(other.cramColor);
     }
 }

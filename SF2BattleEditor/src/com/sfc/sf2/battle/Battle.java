@@ -71,9 +71,7 @@ public class Battle {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) return this == null;
-        if (obj == this) return true;
-        if (!(obj instanceof Battle)) return false;
+        if (!(obj instanceof Battle)) return super.equals(obj);
         Battle other = (Battle)obj;
         return this.index == other.index && this.layout.equals(other.layout) && this.mapCoords.equals(other.mapCoords) && this.terrain.equals(other.terrain) && this.spriteset.equals(other.spriteset);
     }

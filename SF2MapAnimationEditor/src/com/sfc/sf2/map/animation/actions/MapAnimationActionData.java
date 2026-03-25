@@ -43,7 +43,7 @@ public class MapAnimationActionData extends MapLayoutActionData {
 
     @Override
     public boolean canBeCombined(MapLayoutActionData other) {
-        return super.isInvalidated(other);
+        return isInvalidated(other);
     }
 
     @Override

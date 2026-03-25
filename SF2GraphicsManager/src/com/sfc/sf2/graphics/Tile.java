@@ -185,9 +185,7 @@ public class Tile {
     
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) return this == null;
-        if (obj == this) return true;
-        if (!(obj instanceof Tile)) return false;
+        if (!(obj instanceof Tile)) return super.equals(obj);
         Tile tile = (Tile)obj;
         if (tile.id != this.id) {
             return false;

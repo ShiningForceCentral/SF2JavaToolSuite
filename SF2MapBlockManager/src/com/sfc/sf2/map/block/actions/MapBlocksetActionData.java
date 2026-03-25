@@ -42,7 +42,7 @@ public class MapBlocksetActionData implements IActionData<MapBlocksetActionData>
 
     @Override
     public boolean canBeCombined(MapBlocksetActionData other) {
-        return this.blockset.equals(other.blockset);
+        return isInvalidated(other);
     }
 
     @Override

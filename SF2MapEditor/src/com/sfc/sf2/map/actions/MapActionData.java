@@ -32,12 +32,9 @@ public class MapActionData implements IActionData<MapActionData> {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof MapActionData) {
-            MapActionData other = (MapActionData)obj;
-            return map == other.map && mapEnums == other.mapEnums;
-        } else {
-            return super.equals(obj);
-        }
+        if (!(obj instanceof MapActionData)) return super.equals(obj);
+        MapActionData other = (MapActionData)obj;
+        return map == other.map && mapEnums == other.mapEnums;
     }
 
     @Override
@@ -47,7 +44,7 @@ public class MapActionData implements IActionData<MapActionData> {
 
     @Override
     public boolean canBeCombined(MapActionData other) {
-        return false;
+        return isInvalidated(other);
     }
 
     @Override

@@ -9,8 +9,8 @@ import com.sfc.sf2.battle.mapcoords.BattleMapCoords;
 import com.sfc.sf2.battle.mapcoords.BattleMapCoordsManager;
 import com.sfc.sf2.battle.mapcoords.actions.MapLoadActionData;
 import com.sfc.sf2.core.actions.ActionManager;
-import com.sfc.sf2.core.actions.BasicAction;
 import com.sfc.sf2.core.actions.CustomAction;
+import com.sfc.sf2.core.actions.NonCombinableAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.core.settings.SettingsManager;
@@ -60,7 +60,7 @@ public class BattleCoordsMainEditor extends AbstractMainEditor {
     @Override
     protected void onDataLoaded() {
         super.onDataLoaded();
-        ActionManager.setAndExecuteAction(new BasicAction<BattleMapCoords[]>(this, "Battle Map Coords Imported", this::actionBattleCoordsLoaded, battlemapcoordsManager.getCoords(), battleMapCoordsTableModel.getTableData(BattleMapCoords[].class)));
+        ActionManager.setAndExecuteAction(new NonCombinableAction<BattleMapCoords[]>(this, "Battle Map Coords Imported", this::actionBattleCoordsLoaded, battlemapcoordsManager.getCoords(), battleMapCoordsTableModel.getTableData(BattleMapCoords[].class)));
     }
     
     private void actionBattleCoordsLoaded(BattleMapCoords[] coords) {

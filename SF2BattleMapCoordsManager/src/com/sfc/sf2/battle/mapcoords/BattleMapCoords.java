@@ -100,9 +100,7 @@ public class BattleMapCoords {
     
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) return this == null;
-        if (obj == this) return true;
-        if (!(obj instanceof BattleMapCoords)) return false;
+        if (!(obj instanceof BattleMapCoords)) return super.equals(obj);
         BattleMapCoords coords = (BattleMapCoords)obj;
         return this.mapIndex == coords.mapIndex && this.x == coords.x && this.y == coords.y && this.width == coords.width && this.height == coords.height;
     }

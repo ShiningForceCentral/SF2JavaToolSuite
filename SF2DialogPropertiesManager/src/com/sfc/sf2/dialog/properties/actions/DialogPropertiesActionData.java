@@ -31,7 +31,7 @@ public class DialogPropertiesActionData implements IActionData<DialogPropertiesA
 
     @Override
     public boolean canBeCombined(DialogPropertiesActionData other) {
-        return properties.length == other.properties.length;
+        return isInvalidated(other);
     }
 
     @Override

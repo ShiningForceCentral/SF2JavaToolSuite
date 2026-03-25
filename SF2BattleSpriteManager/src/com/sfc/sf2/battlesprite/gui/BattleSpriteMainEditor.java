@@ -9,7 +9,7 @@ import com.sfc.sf2.battlesprite.BattleSprite;
 import com.sfc.sf2.battlesprite.settings.BattleSpriteSettings;
 import com.sfc.sf2.battlesprite.BattleSpriteManager;
 import com.sfc.sf2.core.actions.ActionManager;
-import com.sfc.sf2.core.actions.BasicAction;
+import com.sfc.sf2.core.actions.NonCombinableAction;
 import com.sfc.sf2.core.actions.RadioButtonAction;
 import com.sfc.sf2.core.actions.SpinnerAction;
 import com.sfc.sf2.core.actions.ToggleAction;
@@ -53,7 +53,7 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
     @Override
     protected void onDataLoaded() {
         super.onDataLoaded();
-        ActionManager.setAndExecuteAction(new BasicAction<BattleSprite>(this, "Battlesprite Imported", this::actionBattlespriteLoaded, battleSpriteManager.getBattleSprite(), battleSpriteLayoutPanel.getBattleSprite()));
+        ActionManager.setAndExecuteAction(new NonCombinableAction<BattleSprite>(this, "Battlesprite Imported", this::actionBattlespriteLoaded, battleSpriteManager.getBattleSprite(), battleSpriteLayoutPanel.getBattleSprite()));
     }
     
     private void actionBattlespriteLoaded(BattleSprite battleSprite) {

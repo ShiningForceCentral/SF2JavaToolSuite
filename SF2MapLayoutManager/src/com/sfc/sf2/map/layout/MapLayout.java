@@ -115,9 +115,7 @@ public class MapLayout {
     
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) return this == null;
-        if (obj == this) return true;
-        if (!(obj instanceof MapLayout)) return false;
+        if (!(obj instanceof MapLayout)) return super.equals(obj);
         MapLayout layout = (MapLayout)obj;
         if (this.tilesets.length != layout.tilesets.length) return false;
         for (int i=0; i < this.tilesets.length; i++) {

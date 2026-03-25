@@ -47,9 +47,7 @@ public class MapLayoutBlock {
     }
     
     public boolean equalsIgnoreTiles(Object obj) {
-        if (obj == null) return this == null;
-        if (obj == this) return true;
-        if (!(obj instanceof MapLayoutBlock)) return false;
+        if (!(obj instanceof MapLayoutBlock)) return super.equals(obj);
         MapLayoutBlock block = (MapLayoutBlock)obj;
         if (!this.mapBlock.equalsIgnoreTiles(block.mapBlock)) return false;
         return this.flags.equals(block.flags);

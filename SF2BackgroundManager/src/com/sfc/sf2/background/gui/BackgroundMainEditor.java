@@ -9,7 +9,7 @@ import com.sfc.sf2.background.Background;
 import com.sfc.sf2.background.BackgroundManager;
 import com.sfc.sf2.background.settings.BackgroundSettings;
 import com.sfc.sf2.core.actions.ActionManager;
-import com.sfc.sf2.core.actions.BasicAction;
+import com.sfc.sf2.core.actions.NonCombinableAction;
 import com.sfc.sf2.core.actions.RadioButtonAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
@@ -55,7 +55,7 @@ public class BackgroundMainEditor extends AbstractMainEditor {
     @Override
     protected void onDataLoaded() {
         super.onDataLoaded();
-        ActionManager.setAndExecuteAction(new BasicAction<Background[]>(this, "Backgrounds Imported", this::actionBackgroundLoaded, backgroundManager.getBackgrounds(), backgroundLayoutPanel.getBackgrounds()));
+        ActionManager.setAndExecuteAction(new NonCombinableAction<Background[]>(this, "Backgrounds Imported", this::actionBackgroundLoaded, backgroundManager.getBackgrounds(), backgroundLayoutPanel.getBackgrounds()));
     }
     
     private void actionBackgroundLoaded(Background[] backgrounds) {

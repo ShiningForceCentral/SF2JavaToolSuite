@@ -6,7 +6,7 @@
 package com.sfc.sf2.palette.gui;
 
 import com.sfc.sf2.core.actions.ActionManager;
-import com.sfc.sf2.core.actions.BasicAction;
+import com.sfc.sf2.core.actions.NonCombinableAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.helpers.PathHelpers;
@@ -39,7 +39,7 @@ public class PaletteMainEditor extends AbstractMainEditor {
     @Override
     protected void onDataLoaded() {
         super.onDataLoaded();
-        ActionManager.setAndExecuteAction(new BasicAction<Palette>(this, "Palette Imported", this::actionPaletteLoaded, paletteManager.getPalette(), palettePane1.getPalette()));
+        ActionManager.setAndExecuteAction(new NonCombinableAction<Palette>(this, "Palette Imported", this::actionPaletteLoaded, paletteManager.getPalette(), palettePane1.getPalette()));
     }
     
     private void actionPaletteLoaded(Palette palette) {

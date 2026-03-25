@@ -144,6 +144,18 @@ public class MapSpriteEntries {
     public MapSpriteEntries clone() {
         return new MapSpriteEntries(this);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof MapSpriteEntries)) return super.equals(obj);
+        MapSpriteEntries entries = (MapSpriteEntries)obj;
+        return countEntries() == entries.countEntries() && countMapSprites() == entries.countMapSprites() && countUnreferenced() == entries.countUnreferenced();
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Sprites: %d - Uniques: %d - Unreferenced: %d", countEntries(), countUniques(), countUnreferenced());
+    }
     
     /**
      * Inserts unreferenced sprites into the next available slot(s) in the entries

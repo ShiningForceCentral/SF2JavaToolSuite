@@ -6,7 +6,7 @@
 package com.sfc.sf2.ground.gui;
 
 import com.sfc.sf2.core.actions.ActionManager;
-import com.sfc.sf2.core.actions.BasicAction;
+import com.sfc.sf2.core.actions.NonCombinableAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.ground.Ground;
@@ -40,7 +40,7 @@ public class GroundMainEditor extends AbstractMainEditor {
     @Override
     protected void onDataLoaded() {
         super.onDataLoaded();
-        ActionManager.setAndExecuteAction(new BasicAction<Ground>(this, "Ground Imported", this::actionGroundLoaded, groundManager.getGround(), groundLayoutPanel.getGround()));
+        ActionManager.setAndExecuteAction(new NonCombinableAction<Ground>(this, "Ground Imported", this::actionGroundLoaded, groundManager.getGround(), groundLayoutPanel.getGround()));
     }
     
     private void actionGroundLoaded(Ground ground) {

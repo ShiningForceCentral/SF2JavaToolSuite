@@ -134,9 +134,7 @@ public class MapBlockset implements INameable {
     
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) return this == null;
-        if (obj == this) return true;
-        if (!(obj instanceof MapBlockset)) return false;
+        if (!(obj instanceof MapBlockset)) return super.equals(obj);
         MapBlockset blockset = (MapBlockset)obj;
         for (int i=0; i < this.blocks.length; i++) {
             if (!this.blocks[i].equals(blockset.getBlocks()[i])) {

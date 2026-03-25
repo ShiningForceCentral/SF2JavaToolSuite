@@ -42,9 +42,7 @@ public class BattleMapTerrain {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) return this == null;
-        if (obj == this) return true;
-        if (!(obj instanceof BattleMapTerrain)) return false;
+        if (!(obj instanceof BattleMapTerrain)) return super.equals(obj);
         BattleMapTerrain other = (BattleMapTerrain)obj;
         if (this.data.length != other.data.length) return false;
         for (int i=0; i < this.data.length; i++) {

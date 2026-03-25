@@ -6,7 +6,7 @@
 package com.sfc.sf2.specialSprites.gui;
 
 import com.sfc.sf2.core.actions.ActionManager;
-import com.sfc.sf2.core.actions.BasicAction;
+import com.sfc.sf2.core.actions.NonCombinableAction;
 import com.sfc.sf2.core.actions.RadioButtonAction;
 import com.sfc.sf2.core.actions.ToggleAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
@@ -48,7 +48,7 @@ public class SpecialSpriteMainEditor extends AbstractMainEditor {
     protected void onDataLoaded() {
         super.onDataLoaded();
         
-        ActionManager.setAndExecuteAction(new BasicAction<Tileset>(this, "Special Sprite Imported", this::actionTilesetLoaded, specialSpriteManager.getTileset(), specialSpriteLayoutPanel.getTileset()));
+        ActionManager.setAndExecuteAction(new NonCombinableAction<Tileset>(this, "Special Sprite Imported", this::actionTilesetLoaded, specialSpriteManager.getTileset(), specialSpriteLayoutPanel.getTileset()));
     }
     
     private void actionTilesetLoaded(Tileset tileset) {
