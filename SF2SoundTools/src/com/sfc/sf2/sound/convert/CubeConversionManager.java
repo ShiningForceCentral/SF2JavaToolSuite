@@ -119,7 +119,7 @@ public class CubeConversionManager {
     public void exportMusicEntriesAsBinary(String filePath, boolean unroll, boolean optimize){
         System.out.println("CubeConversionManager.exportMusicEntryAsBinary() - Exporting ...");
         for(int i=0;i<32;i++){        
-            String completePath = filePath + String.format("%02d", i+1) + ".bin";
+            String completePath = filePath + String.format("%02d", i+1) + FileFormat.BIN.getExt();
             if(unroll){
                 mes[i].unroll();
                 if(optimize){

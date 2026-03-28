@@ -5,38 +5,38 @@
  */
 package com.sfc.sf2.battle;
 
-import com.sfc.sf2.mapsprite.MapSprite;
+import com.sfc.sf2.graphics.Tileset;
 
 /**
  *
  * @author TiMMy
  */
 public class EnemyData {
-    private String name;
     private int id;
-    private MapSprite mapSprite;
-        
-    public String getName() {
-        return name;
-    }
+    private String name;
+    private Tileset mapSprite;
+    private boolean isSpecialSprite;
 
-    public void setName(String name) {
+    public EnemyData(int id, String name, Tileset mapSprite, boolean isSpecialSprite) {
+        this.id = id;
         this.name = name;
+        this.mapSprite = mapSprite;
+        this.isSpecialSprite = isSpecialSprite;
     }
 
     public int getID() {
         return id;
     }
-
-    public void setID(int id) {
-        this.id = id;
+        
+    public String getName() {
+        return name;
     }
 
-    public MapSprite getMapSprite() {
+    public Tileset getMapSprite() {
         return mapSprite;
     }
 
-    public void setMapSprite(MapSprite mapSprite) {
-        this.mapSprite = mapSprite;
+    public boolean isIsSpecialSprite() {
+        return isSpecialSprite;
     }
 }

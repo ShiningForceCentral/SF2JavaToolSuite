@@ -5,106 +5,207 @@
  */
 package com.sfc.sf2.map.layout;
 
+import com.sfc.sf2.core.AbstractManager;
+import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.core.io.DisassemblyException;
-import com.sfc.sf2.graphics.GraphicsManager;
-import com.sfc.sf2.map.block.MapBlock;
-import com.sfc.sf2.map.layout.io.DisassemblyManager;
+import com.sfc.sf2.core.io.MetadataException;
+import com.sfc.sf2.core.io.RawImageException;
+import com.sfc.sf2.core.io.asm.AsmException;
+import com.sfc.sf2.helpers.FileHelpers;
+import com.sfc.sf2.helpers.PathHelpers;
+import com.sfc.sf2.map.block.MapBlockset;
+import com.sfc.sf2.map.block.MapBlocksetManager;
+import com.sfc.sf2.map.layout.compression.MapLayoutDecoder;
+import com.sfc.sf2.map.layout.io.MapEntriesAsmProcessor;
+import com.sfc.sf2.map.layout.io.MapEntryData;
+import com.sfc.sf2.map.layout.io.MapLayoutDisassemblyProcessor;
+import com.sfc.sf2.map.layout.io.MapLayoutMetaProcessor;
+import com.sfc.sf2.map.layout.io.MapLayoutPackage;
+import java.io.IOException;
+import java.nio.file.Path;
 
 /**
  *
  * @author wiz
  */
-public class MapLayoutManager {
-       
-    private final GraphicsManager graphicsManager = new GraphicsManager();
-    private DisassemblyManager disassemblyManager = null;
-    private MapBlock[] blocks;
+public class MapLayoutManager extends AbstractManager {
+    
     private MapLayout layout;
-    private MapBlock[] blockset;
+    private MapBlockset blockset;
+    private MapEntryData[] mapEntries = null;
+    private String sharedBlockInfo;
+
+    @Override
+    public void clearData() {
+        if (layout != null) {
+            layout.clearIndexedColorImage(true);
+            layout = null;
+        }
+        blockset = null;
+        mapEntries = null;
+        sharedBlockInfo = null;
+    }
+    
+    public MapLayout importDisassembly(Path paletteEntriesPath, Path tilesetEntriesPath, Path tilesetsFilePath, Path blocksetPath, Path layoutPath) throws IOException, DisassemblyException, AsmException {
+        Console.logger().finest("ENTERING importDisassembly");
+        MapBlocksetManager mapBlocksetManager = new MapBlocksetManager();
+        blockset = mapBlocksetManager.importDisassemblyFromEntries(paletteEntriesPath, tilesetEntriesPath, tilesetsFilePath, blocksetPath);
+        int mapId = FileHelpers.getNumberFromFileName(layoutPath.getParent().toFile());
+        MapLayoutPackage pckg = new MapLayoutPackage(mapId, getMapBlockset(), mapBlocksetManager.getTilesets());
+        layout = new MapLayoutDisassemblyProcessor().importDisassembly(layoutPath, pckg);
+        layout.setTilesets(mapBlocksetManager.getTilesets());
+        Console.logger().info("Map layout successfully imported for : " + layoutPath);
+        Console.logger().finest("EXITING importDisassembly");
+        return layout;
+    }
        
-    public void importDisassembly(String palettePath, String tileset1Path, String tileset2Path, String tileset3Path, String tileset4Path, String tileset5Path, String blocksPath, String layoutPath){
-        System.out.println("com.sfc.sf2.maplayout.MapLayoutManager.importDisassembly() - Importing disassembly ...");
-        disassemblyManager = new DisassemblyManager();
-        layout = disassemblyManager.importDisassembly(palettePath, tileset1Path, tileset2Path, tileset3Path, tileset4Path, tileset5Path, blocksPath, layoutPath);
-        blockset = disassemblyManager.getBlockset();
-        System.out.println("com.sfc.sf2.maplayout.MapLayoutManager.importDisassembly() - Disassembly imported.");
+    public MapLayout importDisassemblyFromRawFiles(Path palettePath, Path[] tilesetsFilePath, Path blocksetPath, Path layoutPath) throws IOException, DisassemblyException {
+        Console.logger().finest("ENTERING importDisassemblyFromRawFiles");
+        MapBlocksetManager mapBlocksetManager = new MapBlocksetManager();
+        blockset = mapBlocksetManager.importDisassembly(palettePath, tilesetsFilePath, blocksetPath);
+        int mapId = FileHelpers.getNumberFromFileName(layoutPath.getParent().toFile());
+        MapLayoutPackage pckg = new MapLayoutPackage(mapId, getMapBlockset(), mapBlocksetManager.getTilesets());
+        layout = new MapLayoutDisassemblyProcessor().importDisassembly(layoutPath, pckg);
+        layout.setTilesets(mapBlocksetManager.getTilesets());
+        Console.logger().info("Map layout successfully imported from palette and tilesets for : " + layoutPath);
+        Console.logger().finest("EXITING importDisassemblyFromRawFiles");
+        return layout;
     }
     
-    public void importDisassembly(String palettesPath, String tilesetsPath, String tilesetsFilePath, String blocksPath, String layoutPath)
-        throws DisassemblyException {
-        importDisassembly(palettesPath, tilesetsPath, tilesetsFilePath, blocksPath, layoutPath, null, 0, 0, 0, 0);
+    public MapLayout importDisassemblyFromMapEntries(Path paletteEntriesPath, Path tilesetEntriesPath, Path mapEntriesPath, int mapId) throws IOException, DisassemblyException, AsmException {
+        Console.logger().finest("ENTERING importDisassemblyFromMapEntries");
+        mapEntries = ImportMapEntries(mapEntriesPath);
+        if (mapId < 0 || mapId >= mapEntries.length || mapEntries[mapId] == null) {
+            throw new DisassemblyException("Cannot import map " + mapId + ". Map entry was not found or map entries are corrupted.");
+        }
+        MapEntryData mapEntry = mapEntries[mapId];
+        Path layoutPath = mapEntry.getLayoutPath() == null ? null : PathHelpers.getIncbinPath().resolve(mapEntry.getLayoutPath());
+        Path blocksetPath = mapEntry.getBlocksPath() == null ? null : PathHelpers.getIncbinPath().resolve(mapEntry.getBlocksPath());
+        Path tilesetsPath = mapEntry.getTilesetsPath() == null ? null : PathHelpers.getIncbinPath().resolve(mapEntry.getTilesetsPath());
+        layout = importDisassembly(paletteEntriesPath, tilesetEntriesPath, tilesetsPath, blocksetPath, layoutPath);
+        checkForSharedBlocks(mapEntries, mapEntry.getMapId(), mapEntry.getBlocksPath(), mapEntry.getLayoutPath());
+        Console.logger().info("Map layout successfully imported from entries for : " + layoutPath);
+        Console.logger().finest("EXITING importDisassemblyFromMapEntries");
+        return layout;
     }
     
-    public void importDisassembly(String palettesPath, String tilesetsPath, String tilesetsFilePath, String blocksPath, String layoutPath, Integer animTileset, int animLength, int animFrameStart, int animFrameLength, int animFrameDest)
-        throws DisassemblyException {
-        System.out.println("com.sfc.sf2.maplayout.MapLayoutManager.importDisassembly() - Importing disassembly ...");
-        disassemblyManager = new DisassemblyManager();
-        layout = disassemblyManager.importDisassembly(palettesPath, tilesetsPath, tilesetsFilePath, blocksPath, layoutPath, animTileset, animLength, animFrameStart, animFrameLength, animFrameDest);
-        blockset = disassemblyManager.getBlockset();
-        System.out.println("com.sfc.sf2.maplayout.MapLayoutManager.importDisassembly() - Disassembly imported.");
+    public MapEntryData[] ImportMapEntries(Path mapEntriesPath) throws IOException, AsmException {
+        if (mapEntries == null) {
+            Console.logger().finest("ENTERING importDisassembly");
+            mapEntries = new MapEntriesAsmProcessor().importAsmData(mapEntriesPath, null);
+            Console.logger().info("Map entries successfully imported from : " + mapEntriesPath);
+            Console.logger().finest("EXITING importDisassembly");
+        }
+        return mapEntries;
     }
     
-    public void importDisassemblyFromEntryFiles(String incbinPath, String paletteEntriesPath, String tilesetEntriesPath, String tilesetsFilePath, String blocksPath, String layoutPath)
-        throws DisassemblyException {
+    public void exportDisassembly(Path tilesetsPath, Path blocksetPath, Path layoutPath, MapBlockset mapBlockset, MapLayout mapLayout) throws IOException, DisassemblyException, AsmException {
+        Console.logger().finest("ENTERING exportDisassembly");
+        layout = mapLayout;
+        new MapLayoutDecoder().optimiseBlockset(mapBlockset, mapLayout); //Blockset must be optimised before saving either blockset or layout
+        new MapBlocksetManager().exportDisassembly(tilesetsPath, blocksetPath, mapBlockset, mapLayout.getTilesets());
+        MapLayoutPackage pckg = new MapLayoutPackage(layout.getIndex(), mapBlockset, mapLayout.getTilesets());
+        new MapLayoutDisassemblyProcessor().exportDisassembly(layoutPath, layout, pckg);
+        Console.logger().info("Map layout successfully exported to : " + layoutPath);
+        Console.logger().finest("EXITING exportDisassembly");   
+    }
+    
+    public void exportDisassemblyFromMapEntries(Path mapEntriesPath, int mapId, MapBlockset mapBlockset, MapLayout mapLayout) throws IOException, DisassemblyException, AsmException {
+        Console.logger().finest("ENTERING exportDisassembly");
+        ImportMapEntries(mapEntriesPath);
+        if (mapId < 0 || mapId >= mapEntries.length || mapEntries[mapId] == null) {
+            throw new DisassemblyException("Cannot export map " + mapId + ". Map entry was not found or map entries are corrupted.");
+        }
+        layout = mapLayout;
+        new MapLayoutDecoder().optimiseBlockset(mapBlockset, mapLayout); //Blockset must be optimised before saving either blockset or layout
+        MapEntryData mapEntry = mapEntries[mapId];
+        Path layoutPath = mapEntry.getLayoutPath() == null ? null : PathHelpers.getIncbinPath().resolve(mapEntry.getLayoutPath());
+        Path blocksetPath = mapEntry.getBlocksPath() == null ? null : PathHelpers.getIncbinPath().resolve(mapEntry.getBlocksPath());
+        Path tilesetsPath = mapEntry.getTilesetsPath() == null ? null : PathHelpers.getIncbinPath().resolve(mapEntry.getTilesetsPath());
+        new MapBlocksetManager().exportDisassembly(tilesetsPath, blocksetPath, mapBlockset, mapLayout.getTilesets());
+        MapLayoutPackage pckg = new MapLayoutPackage(layout.getIndex(), mapBlockset, mapLayout.getTilesets());
+        new MapLayoutDisassemblyProcessor().exportDisassembly(layoutPath, layout, pckg);
+        Console.logger().info("Map layout successfully exported from entries to : " + layoutPath);
+        Console.logger().finest("EXITING exportDisassembly");   
+    }
+    
+    public void exportImage(Path filepath, Path flagsPath, Path hpFilePath, MapLayout layout) throws IOException, RawImageException, MetadataException {
+        Console.logger().finest("ENTERING exportImage");
+        new MapBlocksetManager().exportImage(filepath, hpFilePath, MapLayout.BLOCK_WIDTH, layout.layoutToBlockset(), layout.getTilesets());
+        new MapLayoutMetaProcessor().exportMetadata(flagsPath, layout);
+        Console.logger().info("Map layout successfully exported to image : " + filepath + ", flags : " + flagsPath + ", and hpTiles : " + hpFilePath);
+        Console.logger().finest("EXITING exportImage");
+    }
+    
+    //TODO Add support for creating new map entries
+    /*public int createNewMapEntry(Path mapDirectories, Path mapEntriesPath) {
+        int mapId = 0;
+        while (mapId < mapEntries.length && !mapEntries[mapId].IsEmpty()) {
+            mapId++;
+        }
+        File mapDirectory = mapDirectories.resolve(String.format("map%02d", mapId)).toFile();
+        if (!mapDirectory.exists()) {
+            mapDirectory.mkdirs();
+        }
+        if (mapId >= mapEntries.length) {
+            MapEntryData[] newEntries = new MapEntryData[mapEntries.length];
+            System.arraycopy(mapEntries, 0, newEntries, 0, mapEntries.length);
+            newEntries[mapId] = new MapEntryData(mapId);
+            mapEntries = newEntries;
+        }
+        MapEntryData newMap = mapEntries[mapId];
+        Path filePath = PathHelpers.getIncbinPath().relativize(mapDirectory.toPath());
+        newMap.setTilesetsPath(filePath.resolve("00-tilesets.asm").toString());
+        newMap.setBlocksPath(filePath.resolve("0-blocks.bin").toString());
+        newMap.setLayoutPath(filePath.resolve("1-layout.bin").toString());
         
-        importDisassemblyFromEntryFiles(incbinPath, paletteEntriesPath, tilesetEntriesPath, tilesetsFilePath, blocksPath, layoutPath, null, 0, 0, 0, 0);
+        return mapId;
+    }*/
     
+    public boolean doesMapEntryExist(int mapID) {
+        return mapEntries != null && mapID >= 0 && mapID < mapEntries.length && mapEntries[mapID] != null;
     }
     
-    public void importDisassemblyFromEntryFiles(String incbinPath, String paletteEntriesPath, String tilesetEntriesPath, String tilesetsFilePath, String blocksPath, String layoutPath, Integer animTileset, int animLength, int animFrameStart, int animFrameLength, int animFrameDest) 
-        throws DisassemblyException {
-        
-        System.out.println("com.sfc.sf2.maplayout.MapLayoutManager.importDisassemblyFromEntryFiles() - Importing disassembly ...");
-        disassemblyManager = new DisassemblyManager();
-        layout = disassemblyManager.importDisassemblyFromEntryFiles(incbinPath, paletteEntriesPath, tilesetEntriesPath, tilesetsFilePath, blocksPath, layoutPath, animTileset, animLength, animFrameStart, animFrameLength, animFrameDest);
-        blockset = disassemblyManager.getBlockset();
-        System.out.println("com.sfc.sf2.maplayout.MapLayoutManager.importDisassemblyFromEntryFiles() - Disassembly imported.");
+    private void checkForSharedBlocks(MapEntryData[] mapEntries, int mapIndex, String blocksPath, String layoutPath) {
+        StringBuilder sb = new StringBuilder();
+        int count = 0;
+        boolean countedCurrent;
+        for (int i = 0; i < mapEntries.length; i++) {
+            countedCurrent = false;
+            if (blocksPath.equals(mapEntries[i].getBlocksPath())) {
+                sb.append(String.format("- Map%02d - Blocks\n", i));
+                count++;
+                countedCurrent = true;
+            }
+            if (layoutPath.equals(mapEntries[i].getLayoutPath())) {
+                sb.append(String.format("- Map%02d - Layout\n", i));
+                if (!countedCurrent) {
+                    count++;
+                }
+            }
+        }
+        if (count <= 1) {
+            sharedBlockInfo = null;
+            Console.logger().finest("Blocks and layout not shared with other maps");
+        } else {
+            sharedBlockInfo = sb.toString();
+            Console.logger().finest(String.format("Blocks and layout shared between %d maps", count));
+        }
     }
     
-    public void exportDisassembly(String tilesetsPath, String blocksPath, String layoutPath){
-        System.out.println("com.sfc.sf2.maplayout.MapLayoutManager.importDisassembly() - Exporting disassembly ...");
-        disassemblyManager.exportDisassembly(blocks, layout.getTilesets(), blocksPath, layout, layoutPath);
-        disassemblyManager.exportTilesetsFile(tilesetsPath, layout.getPalette(), layout.getTilesets());
-        System.out.println("com.sfc.sf2.maplayout.MapLayoutManager.importDisassembly() - Disassembly exported.");        
-    }
-    
-    public void exportDisassembly(String blocksPath, String layoutPath){
-        System.out.println("com.sfc.sf2.maplayout.MapLayoutManager.importDisassembly() - Exporting disassembly ...");
-        disassemblyManager.exportDisassembly(blocks, layout.getTilesets(), blocksPath, layout, layoutPath);
-        System.out.println("com.sfc.sf2.maplayout.MapLayoutManager.importDisassembly() - Disassembly exported.");        
-    }
-    
-    public void importRom(String romFilePath, String paletteOffset, String paletteLength, String graphicsOffset, String graphicsLength){
-        System.out.println("com.sfc.sf2.maplayout.MapLayoutManager.importOriginalRom() - Importing original ROM ...");
-        graphicsManager.importRom(romFilePath, paletteOffset, paletteLength, graphicsOffset, graphicsLength,GraphicsManager.COMPRESSION_BASIC);
-        System.out.println("com.sfc.sf2.maplayout.MapLayoutManager.importOriginalRom() - Original ROM imported.");
-    }
-    
-    public void exportRom(String originalRomFilePath, String graphicsOffset){
-        System.out.println("com.sfc.sf2.maplayout.MapLayoutManager.exportOriginalRom() - Exporting original ROM ...");
-        graphicsManager.exportRom(originalRomFilePath, graphicsOffset, GraphicsManager.COMPRESSION_BASIC);
-        System.out.println("com.sfc.sf2.maplayout.MapLayoutManager.exportOriginalRom() - Original ROM exported.");        
-    }
-    
-    public void exportPng(String filepath){
-        System.out.println("com.sfc.sf2.maplayout.MapLayoutManager.exportPng() - Exporting PNG ...");
-        com.sfc.sf2.map.block.io.RawImageManager.exportRawImage(layout.getBlocks(), filepath, 64, com.sfc.sf2.graphics.io.RawImageProcessor.FILE_FORMAT_PNG);
-        System.out.println("com.sfc.sf2.maplayout.MapLayoutManager.exportPng() - PNG exported.");       
+    public MapEntryData[] getMapEntries() {
+        return mapEntries;
     }
 
-    public MapLayout getLayout() {
+    public MapLayout getMapLayout() {
         return layout;
     }
 
-    public void setLayout(MapLayout layout) {
-        this.layout = layout;
-    }
-
-    public MapBlock[] getBlockset() {
+    public MapBlockset getMapBlockset() {
         return blockset;
     }
 
-    public void setBlockset(MapBlock[] blockset) {
-        this.blockset = blockset;
+    public String getSharedBlockInfo() {
+        return sharedBlockInfo;
     }
 }

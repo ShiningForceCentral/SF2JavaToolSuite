@@ -27,7 +27,7 @@ public class IconsLayoutPanel extends AbstractLayoutPanel {
     public IconsLayoutPanel() {
         super();
         background = new LayoutBackground(Color.LIGHT_GRAY, PIXEL_WIDTH/2);
-        scale = new LayoutScale(1);
+        scale = new LayoutScale();
         grid = new LayoutGrid(ICON_TILE_WIDTH*PIXEL_WIDTH, ICON_TILE_HEIGHT*PIXEL_HEIGHT);
         coordsGrid = new LayoutCoordsGridDisplay(ICON_TILE_WIDTH*PIXEL_WIDTH, ICON_TILE_HEIGHT*PIXEL_HEIGHT, true);
         coordsHeader = new LayoutCoordsHeader(this, ICON_TILE_WIDTH*PIXEL_WIDTH, ICON_TILE_HEIGHT*PIXEL_HEIGHT, true);

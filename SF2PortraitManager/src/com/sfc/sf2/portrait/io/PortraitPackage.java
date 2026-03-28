@@ -5,10 +5,8 @@
  */
 package com.sfc.sf2.portrait.io;
 
-import com.sfc.sf2.palette.Palette;
-
 /**
  *
  * @author TiMMy
  */
-public record PortraitPackage(String name) { }
+public record PortraitPackage(int index, String name) { }

@@ -5,10 +5,10 @@
  */
 package com.sfc.sf2.battlesprite.animation.io;
 
-import com.sfc.sf2.battlesprite.BattleSprite.BattleSpriteType;
+import com.sfc.sf2.battlesprite.BattleSprite;
 
 /**
  *
  * @author TiMMy
  */
-public record BattleSpriteAnimationPackage(BattleSpriteType type) { }
+public record BattleSpriteAnimationPackage(String name, BattleSprite battleSprite) { }

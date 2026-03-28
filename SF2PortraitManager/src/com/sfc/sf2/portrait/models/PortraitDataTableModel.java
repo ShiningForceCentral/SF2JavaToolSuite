@@ -11,7 +11,7 @@ import com.sfc.sf2.core.models.AbstractTableModel;
  *
  * @author TiMMy
  */
-public class PortraitDataTableModel extends AbstractTableModel<int[]>  {
+public class PortraitDataTableModel extends AbstractTableModel<int[]> {
 
     public PortraitDataTableModel() {
         super(new String[] { "Row", "X", "Y", "X'", "Y'" }, 12);
@@ -20,11 +20,6 @@ public class PortraitDataTableModel extends AbstractTableModel<int[]>  {
     @Override
     public Class<?> getColumnType(int col) {
         return Integer.class;
-    }
- 
-    @Override
-    public boolean isCellEditable(int row, int column) {
-        return column > 0;
     }
 
     @Override
@@ -49,7 +44,7 @@ public class PortraitDataTableModel extends AbstractTableModel<int[]>  {
     }
 
     @Override
-    protected int[] setValue(int[] item, int col, Object value) {
+    protected int[] setValue(int[] item, int row, int col, Object value) {
         if (col > 0) {
             item[col-1] = (int)value;
         }

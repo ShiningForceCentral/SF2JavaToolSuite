@@ -81,16 +81,8 @@ public class CRAMColor {
     
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        } else if (obj.getClass() != this.getClass()) {
-            return false;
-        }
-        CRAMColor other = (CRAMColor)obj;           //Do we care about the raw color?
-        if (this.cramColor.equals(other.cramColor)/* && this.rawColor.equals(other.rawColor)*/) {
-            return true;
-        } else {
-            return false;
-        }
+        if (!(obj instanceof CRAMColor)) return super.equals(obj);
+        CRAMColor other = (CRAMColor)obj;
+        return this.cramColor.equals(other.cramColor);
     }
 }

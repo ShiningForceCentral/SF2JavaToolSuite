@@ -5,20 +5,30 @@
  */
 package com.sfc.sf2.battle;
 
+import java.awt.Point;
+import java.util.Arrays;
+
 /**
  *
  * @author wiz
  */
 public class AIRegion {
+    private static String[] typeToString = new String[] { "NONE", "??? (point?)", "??? (line?)", "Triangle", "Rectangle" };
+    
     private int type;
-    private int x1;
-    private int y1;
-    private int x2;
-    private int y2;
-    private int x3;
-    private int y3;
-    private int x4;
-    private int y4;
+    private Point[] points = new Point[4];
+
+    public AIRegion(int type, Point p0, Point p1, Point p2, Point p3) {
+        this.type = type;
+        points[0] = p0;
+        points[1] = p1;
+        points[2] = p2;
+        points[3] = p3;
+    }
+    public AIRegion(int type, Point[] points) {
+        this.type = type;
+        this.points = points;
+    }
 
     public int getType() {
         return type;
@@ -27,70 +37,40 @@ public class AIRegion {
     public void setType(int type) {
         this.type = type;
     }
-
-    public int getX1() {
-        return x1;
-    }
-
-    public void setX1(int x1) {
-        this.x1 = x1;
-    }
-
-    public int getY1() {
-        return y1;
-    }
-
-    public void setY1(int y1) {
-        this.y1 = y1;
-    }
-
-    public int getX2() {
-        return x2;
-    }
-
-    public void setX2(int x2) {
-        this.x2 = x2;
-    }
-
-    public int getY2() {
-        return y2;
-    }
-
-    public void setY2(int y2) {
-        this.y2 = y2;
-    }
-
-    public int getX3() {
-        return x3;
-    }
-
-    public void setX3(int x3) {
-        this.x3 = x3;
-    }
-
-    public int getY3() {
-        return y3;
-    }
-
-    public void setY3(int y3) {
-        this.y3 = y3;
-    }
-
-    public int getX4() {
-        return x4;
-    }
-
-    public void setX4(int x4) {
-        this.x4 = x4;
-    }
-
-    public int getY4() {
-        return y4;
-    }
-
-    public void setY4(int y4) {
-        this.y4 = y4;
+    
+    public String getTypeString() {
+        if (type < 0 || type >= typeToString.length) {
+            return "???";
+        } else {
+            return typeToString[type];
+        }
     }
     
+    public Point[] getPoints() {
+        return points;
+    }
     
+    public Point getPoint(int index) {
+        return points[index];
+    }
+    
+    public void setPoint(int index, Point point) {
+        points[index] = point;
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof AIRegion)) return super.equals(obj);
+        AIRegion other = (AIRegion)obj;
+        return this.type == other.type && Arrays.equals(this.points, other.points);
+    }
+    
+    @Override
+    public AIRegion clone() {
+        return new AIRegion(type, new Point(points[0]), new Point(points[1]), new Point(points[2]), new Point(points[3]));
+    }
+    
+    public static AIRegion emptyAIRegion() {
+        return new AIRegion(4, new Point(0, 0), new Point(0, 4), new Point(4, 4), new Point(4, 0));
+    }
 }

@@ -20,6 +20,10 @@ public class MapSpriteDisassemblyProcessor extends AbstractDisassemblyProcessor<
     
     @Override
     protected Block[] parseDisassemblyData(byte[] data, MapSpritePackage pckg) throws DisassemblyException {
+        if (data.length <= 2) {
+            //Must be a dummy sprite so return an empty sprite (otherwise many other errors occur)
+            return null;
+        }
         Tile[] tiles = new BasicGraphicsDecoder().decode(data, pckg.palette());
         if (tiles == null || tiles.length == 0) {
             throw new DisassemblyException("Mapsprite tileset not loaded, tiles are empty. Mapsprite : " + pckg.name());
@@ -41,12 +45,18 @@ public class MapSpriteDisassemblyProcessor extends AbstractDisassemblyProcessor<
 
     @Override
     protected byte[] packageDisassemblyData(Block[] item, MapSpritePackage pckg) throws DisassemblyException {
+        if (item == null) {
+            //If no sprite data is found then this is an "empty" entry. Preserve this, since the core game has an empty entry at (mapsprite237-0.bin)
+            return new byte[] { (byte)0xFF, (byte)0xFF };
+        }
         Tile[] tiles = new Tile[Block.TILES_COUNT*item.length];
+        boolean spriteDataFound = false;
         for (int i = 0; i < item.length; i++) {
-            if (tiles != null) {
+            if (item[i] != null) {
                 Tile[] frame = item[i].getTiles();
                 frame = TileHelpers.reorderTilesForDisasssembly(frame, 1, 1, Block.TILE_WIDTH);
                 System.arraycopy(frame, 0, tiles, i*Block.TILES_COUNT, Block.TILES_COUNT);
+                spriteDataFound = true;
             }
         }
         

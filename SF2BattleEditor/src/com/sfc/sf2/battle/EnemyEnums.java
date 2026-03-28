@@ -5,6 +5,7 @@
  */
 package com.sfc.sf2.battle;
 
+import com.sfc.sf2.core.AbstractEnums;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -12,140 +13,99 @@ import java.util.Map;
  *
  * @author TiMMy
  */
-public class EnemyEnums {
+public class EnemyEnums extends AbstractEnums {
         
-    private LinkedHashMap<String, Integer> enemies;
-    private LinkedHashMap<String, Integer> items;
-    private LinkedHashMap<String, Integer> aiCommandSets;
-    private LinkedHashMap<String, Integer> aiOrders;
-    private LinkedHashMap<String, Integer> spawnParams;
+    private final LinkedHashMap<String, Integer> enemies;
+    private final LinkedHashMap<String, Integer> mapSprites;
+    private final LinkedHashMap<String, Integer> aiCommandSets;
+    private final LinkedHashMap<String, Integer> aiOrders;
+    private final LinkedHashMap<String, Integer> spawnParams;
+    private final LinkedHashMap<String, Integer> items;
+    private final LinkedHashMap<String, Integer> itemFlags;
+    
+    private final int specialSpritesStart;
+    private final int specialSpritesEnd;
+
+    public EnemyEnums(LinkedHashMap<String, Integer> enemies, LinkedHashMap<String, Integer> mapSprites, LinkedHashMap<String, Integer> aiCommandSets, LinkedHashMap<String, Integer> aiOrders,
+                LinkedHashMap<String, Integer> spawnParams, LinkedHashMap<String, Integer> items, LinkedHashMap<String, Integer> itemFlags, int specialSpritesStart, int specialSpritesEnd) {
+        this.enemies = enemies;
+        this.mapSprites = mapSprites;
+        this.aiCommandSets = aiCommandSets;
+        this.aiOrders = aiOrders;
+        this.spawnParams = spawnParams;
+        this.items = items;
+        this.itemFlags = itemFlags;
+        this.specialSpritesStart = specialSpritesStart;
+        this.specialSpritesEnd = specialSpritesEnd;
+    }
 
     public LinkedHashMap<String, Integer> getEnemies() {
         return enemies;
     }
 
-    public void setEemies(LinkedHashMap<String, Integer> enemies) {
-        this.enemies = enemies;
+    public LinkedHashMap<String, Integer> getMapSprites() {
+        return mapSprites;
     }
-
-    public LinkedHashMap<String, Integer> getItems() {
-        return items;
-    }
-
-    public void setItems(LinkedHashMap<String, Integer> items) {
-        this.items = items;
-    }
-
+    
     public LinkedHashMap<String, Integer> getCommandSets() {
         return aiCommandSets;
-    }
-
-    public void setCommandSets(LinkedHashMap<String, Integer> aiCommandSets) {
-        this.aiCommandSets = aiCommandSets;
     }
 
     public LinkedHashMap<String, Integer> getOrders() {
         return aiOrders;
     }
 
-    public void setOrders(LinkedHashMap<String, Integer> aiOrders) {
-        this.aiOrders = aiOrders;
-    }
-
     public LinkedHashMap<String, Integer> getSpawnParams() {
         return spawnParams;
     }
 
-    public void setSpawnParams(LinkedHashMap<String, Integer> spawnParams) {
-        this.spawnParams = spawnParams;
+    public LinkedHashMap<String, Integer> getItems() {
+        return items;
+    }
+
+    public LinkedHashMap<String, Integer> getItemFlags() {
+        return itemFlags;
+    }
+
+    public int getSpecialSpritesStart() {
+        return specialSpritesStart;
+    }
+
+    public int getSpecialSpritesEnd() {
+        return specialSpritesEnd;
     }
     
     //Helper functions
-    
-    public static String toEnumString(String data, Map<String, Integer> en) {
-        try{
-            short number = Short.parseShort(data);
-            return toEnumString(number, en);
-        }
-        catch (NumberFormatException ex){
-            //Not a number
-            return data;
-        }
-    }
-    
-    public static String toEnumString(byte data, Map<String, Integer> en) {
-        return toEnumString((short)data, en);
-    }
-    
-    public static String toEnumString(short data, Map<String, Integer> en) {
-        int number = (int)data;
-        for (Map.Entry<String, Integer> entry : en.entrySet()) {
-            if (number == entry.getValue())
-                return entry.getKey();
-        }
-
-        return String.valueOf(data);    //Fallback
-    }
-    
-    public static byte toEnumByte(String data, Map<String, Integer> en) {
-        return (byte)(toEnumShort(data, en)&0xFF);
-    }
-    
-    public static short toEnumShort(String data, Map<String, Integer> en) {
-        try{
-            short number = Short.parseShort(data);
-            return number;
-        }
-        catch (NumberFormatException ex){
-            //Not a number
-        }
-        
-        String[] split = data.split("\\|");
-        short value = 0;
-        for (int i = 0; i < split.length; i++) {
-            if (en.containsKey(split[i]))
-                value = (short)(en.get(split[i])&0xFFFF);
-        }
-        
-        return value;
-    }
-    
-    public static String stringToItemString(String data, Map<String, Integer> items) {
-        try{
-            short number = Short.parseShort(data);
-            return itemNumToString(number, items);
-        }
-        catch (NumberFormatException ex){
-            //Not a number
-            return toEnumString(data, items);
-        }
-    }
-    
-    public static String itemNumToString(short data, Map<String, Integer> items) {
-        String s = "";
-        
-        if (data >= 0x1000){  //If flags
-            for (Map.Entry<String, Integer> entry : items.entrySet()) {
-                if (entry.getValue() > 0x1000 && (data&entry.getValue()) != 0){
-                    s = appendItem(s, entry.getKey());
-                    data = (short)(data&(~entry.getValue()));
-                }
-            }
-        }
-
+    //Items
+    public static String itemNumToItemString(short data, Map<String, Integer> items) {
+        data = (short)(data&0xFFF);
         for (Map.Entry<String, Integer> entry : items.entrySet()) {
             if ((data == entry.getValue())){
-                s = prependItem(s, entry.getKey());
-                return s;
+                return entry.getKey();
             }
         }
-
         return Short.toString(data);    //Fallback
     }
     
-    public static short itemStringToNum(String data, Map<String, Integer> items) {
-        String[] split = data.split("\\|");
-                
+    public static String itemNumToItemFlagsString(short data, Map<String, Integer> items) {
+        if (data >= 0x1000) {  //If flags
+            String s = "";
+            for (Map.Entry<String, Integer> entry : items.entrySet()) {
+                if (entry.getValue() > 0x1000 && (data&entry.getValue()) != 0){
+                    if (s.length() > 0) s += "|";
+                    s += entry.getKey();
+                    data = (short)(data&(~entry.getValue()));
+                }
+            }
+            return s;
+        } else {
+            return null;
+        }
+    }
+    
+    public static short itemStringToNum(String item, Map<String, Integer> items) {
+        if (item == null || item.length() == 0) return 0;
+        String[] split = item.split("\\|");
         short value = 0;
         for (int i = 0; i < split.length; i++) {
             split[i] = split[i].trim();
@@ -154,42 +114,32 @@ public class EnemyEnums {
                     value += items.get(split[i]);
             }
         }
-        
         return value;
     }
     
+    //Orders
     public static String stringToAiOrderString(String data, Map<String, Integer> orders) {
-        try{
+        try {
             byte number = Byte.parseByte(data);
             return aiOrderNumToString(number, orders);
-        }
-        catch (NumberFormatException ex){
+        } catch (NumberFormatException ex) {
             //Not a number
             return toEnumString(data, orders);
         }
     }
     
     public static String aiOrderNumToString(byte data, Map<String, Integer> orders) {        
-        byte value1;
-        byte value2;
+        byte value = data;
         
-        if (data == 0xFF){
-            value1 = data;
-            value2 = 0;
-        }
-        else{
-            value1 = (byte)(data&0xF0);
-            value2 = (byte)(data&0x0F);
+        if (data != 0xFF) {
+            value = (byte)(data&0xF0);
         }
         
-        String s = Byte.toString(value2);
         for (Map.Entry<String, Integer> entry : orders.entrySet()) {
-            if ((value1 == entry.getValue())){
-                s = prependItem(s, entry.getKey());
-                return s;
+            if ((value == entry.getValue())) {
+                return entry.getKey();
             }
         }
-        
         return Byte.toString(data); //Fallback
     }
     
@@ -205,23 +155,6 @@ public class EnemyEnums {
             else
                 value += (byte)(orders.get(split[0])&0xF0);
         }
-        
         return value;
-    }
-    
-    private static String appendItem(String current, String append)
-    {
-        if (current.length() == 0)
-            return append;
-        else
-            return current+"|"+append;
-    }
-    
-    private static String prependItem(String current, String prepend)
-    {
-        if (current.length() == 0)
-            return prepend;
-        else
-            return prepend+"|"+current;
     }
 }

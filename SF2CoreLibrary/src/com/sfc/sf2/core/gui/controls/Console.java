@@ -46,8 +46,7 @@ public class Console extends javax.swing.JPanel {
         handler = new ConsoleHandler();
         logger.addHandler(handler);
         
-        CoreSettings core = SettingsManager.getSettingsStore("core");
-        currentLevel = core.getLogLevel();
+        currentLevel = SettingsManager.getGlobalSettings().getLogLevel();
         setLogLevel(currentLevel);
     }
     
@@ -88,6 +87,7 @@ public class Console extends javax.swing.JPanel {
         jTextAreaConsole = new javax.swing.JTextArea();
 
         setMinimumSize(new java.awt.Dimension(200, 150));
+        setPreferredSize(new java.awt.Dimension(300, 300));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         jPanel1.setToolTipText("");
@@ -148,7 +148,7 @@ public class Console extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPaneConsole, javax.swing.GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE)
+                    .addComponent(jScrollPaneConsole)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, 0))
         );
@@ -158,8 +158,7 @@ public class Console extends javax.swing.JPanel {
                 .addGap(0, 0, 0)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jScrollPaneConsole, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+                .addComponent(jScrollPaneConsole, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -169,9 +168,8 @@ public class Console extends javax.swing.JPanel {
             currentLevel = newLevel;
             setLogLevel(currentLevel);
             
-            CoreSettings core = SettingsManager.getSettingsStore("core");
-            core.setLogLevel(currentLevel);
-            SettingsManager.saveSettingsFile();
+            SettingsManager.getGlobalSettings().setLogLevel(currentLevel);
+            SettingsManager.saveGlobalSettingsFile();
         }
     }//GEN-LAST:event_jComboBoxLogLevelItemStateChanged
 

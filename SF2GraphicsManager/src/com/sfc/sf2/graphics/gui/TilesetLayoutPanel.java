@@ -25,9 +25,9 @@ public class TilesetLayoutPanel extends AbstractLayoutPanel {
     public TilesetLayoutPanel() {
         super();
         background = new LayoutBackground(Color.LIGHT_GRAY, PIXEL_WIDTH);
-        scale = new LayoutScale(1);
+        scale = new LayoutScale();
         grid = new LayoutGrid(PIXEL_WIDTH, PIXEL_HEIGHT);
-        coordsGrid = null;
+        coordsGrid = new LayoutCoordsGridDisplay(PIXEL_WIDTH, PIXEL_HEIGHT, false, 0, PIXEL_WIDTH, 0);
         coordsHeader = new LayoutCoordsHeader(this, PIXEL_WIDTH, PIXEL_HEIGHT);
         mouseInput = null;
         scroller = new LayoutScrollNormaliser(this);

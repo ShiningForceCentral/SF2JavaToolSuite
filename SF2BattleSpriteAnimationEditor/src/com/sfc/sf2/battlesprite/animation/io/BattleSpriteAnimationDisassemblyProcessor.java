@@ -21,7 +21,7 @@ public class BattleSpriteAnimationDisassemblyProcessor extends AbstractDisassemb
     @Override
     protected BattleSpriteAnimation parseDisassemblyData(byte[] data, BattleSpriteAnimationPackage pckg) throws DisassemblyException {
         
-        boolean isAlly = pckg.type() == BattleSprite.BattleSpriteType.ALLY;
+        boolean isAlly = pckg.battleSprite().getType() == BattleSprite.BattleSpriteType.ALLY;
         int offset = isAlly ? 8 : 4;
         byte frameCount = (byte)(BinaryHelpers.getByte(data, 0)+1); //Add 1 because first frame is part of this 'core' data
         BattleSpriteAnimationFrame[] frames = new BattleSpriteAnimationFrame[frameCount];
@@ -63,13 +63,13 @@ public class BattleSpriteAnimationDisassemblyProcessor extends AbstractDisassemb
                 frames[i] = new BattleSpriteAnimationFrame(battleSpriteIndex, duration, x, y);
             }
         }
-        return new BattleSpriteAnimation(pckg.type(), frames, initFrame, spellAnim, endSpellAnim);
+        return new BattleSpriteAnimation(pckg.name(), pckg.battleSprite(), frames, initFrame, spellAnim, endSpellAnim);
     }
 
     @Override
     protected byte[] packageDisassemblyData(BattleSpriteAnimation item, BattleSpriteAnimationPackage pckg) throws DisassemblyException {
         
-        boolean isAlly = pckg.type() == BattleSprite.BattleSpriteType.ALLY;
+        boolean isAlly = pckg.battleSprite().getType() == BattleSprite.BattleSpriteType.ALLY;
         int offset = isAlly ? 8 : 4;
         BattleSpriteAnimationFrame frame;
         byte weaponData;

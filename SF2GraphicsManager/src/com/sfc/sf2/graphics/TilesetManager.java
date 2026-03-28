@@ -25,15 +25,11 @@ import java.nio.file.Path;
  * @author wiz
  */
 public class TilesetManager extends AbstractManager {
-    private final PaletteManager paletteManager = new PaletteManager();
-    private final TilesetDisassemblyProcessor tilesetDisassemblyProcessor = new TilesetDisassemblyProcessor();
-    private final TilesetRawImageProcessor tilesetImageProcessor = new TilesetRawImageProcessor();
     
     private Tileset tileset;
     
     @Override
     public void clearData() {
-        paletteManager.clearData();
         if (tileset != null) {
             tileset.clearIndexedColorImage(true);
             tileset = null;
@@ -43,7 +39,7 @@ public class TilesetManager extends AbstractManager {
     public Tileset importDisassembly(Path graphicsFilePath, Palette palette, TilesetCompression compression, int tilesPerRow) throws IOException, DisassemblyException {
         Console.logger().finest("ENTERING importDisassembly");
         TilesetPackage pckg = new TilesetPackage(PathHelpers.filenameFromPath(graphicsFilePath), compression, palette, tilesPerRow);
-        tileset = tilesetDisassemblyProcessor.importDisassembly(graphicsFilePath, pckg);
+        tileset = new TilesetDisassemblyProcessor().importDisassembly(graphicsFilePath, pckg);
         Console.logger().info("Tileset successfully imported from : " + graphicsFilePath);
         Console.logger().finest("EXITING importDisassembly");
         return tileset;
@@ -51,9 +47,9 @@ public class TilesetManager extends AbstractManager {
        
     public Tileset importDisassembly(Path paletteFilePath, Path graphicsFilePath, TilesetCompression compression, int tilesPerRow) throws IOException, DisassemblyException {
         Console.logger().finest("ENTERING importDisassembly");
-        Palette palette = paletteManager.importDisassembly(paletteFilePath, true);
+        Palette palette = new PaletteManager().importDisassembly(paletteFilePath, true);
         TilesetPackage pckg = new TilesetPackage(PathHelpers.filenameFromPath(graphicsFilePath), compression, palette, tilesPerRow);
-        tileset = tilesetDisassemblyProcessor.importDisassembly(graphicsFilePath, pckg);
+        tileset = new TilesetDisassemblyProcessor().importDisassembly(graphicsFilePath, pckg);
         Console.logger().info("Tileset successfully imported from : " + graphicsFilePath);
         Console.logger().finest("EXITING importDisassembly");
         return tileset;
@@ -63,7 +59,7 @@ public class TilesetManager extends AbstractManager {
         Console.logger().finest("ENTERING exportDisassembly");
         this.tileset = tileset;
         TilesetPackage pckg = new TilesetPackage(PathHelpers.filenameFromPath(graphicsFilePath), compression, tileset.getPalette(), tileset.getTilesPerRow());
-        tilesetDisassemblyProcessor.exportDisassembly(graphicsFilePath, tileset, pckg);
+        new TilesetDisassemblyProcessor().exportDisassembly(graphicsFilePath, tileset, pckg);
         Console.logger().info("Tileset successfully exported to : " + graphicsFilePath);
         Console.logger().finest("EXITING exportDisassembly");
     }
@@ -71,9 +67,9 @@ public class TilesetManager extends AbstractManager {
     public Tileset importImage(Path filePath, boolean firstColorTransparent) throws IOException, RawImageException {
         Console.logger().finest("ENTERING importImage");
         PalettePackage pckg = new PalettePackage(PathHelpers.filenameFromPath(filePath), firstColorTransparent);
-        tileset = tilesetImageProcessor.importRawImage(filePath, pckg);
+        tileset = new TilesetRawImageProcessor().importRawImage(filePath, pckg);
         Console.logger().info("Tileset successfully imported from : " + filePath);
-        paletteManager.setPalette(tileset.getPalette());
+        new PaletteManager().setPalette(tileset.getPalette());
         Console.logger().finest("EXITING importImage");
         return tileset;
     }
@@ -82,12 +78,12 @@ public class TilesetManager extends AbstractManager {
         Console.logger().finest("ENTERING exportImage");
         this.tileset = tileset;
         PalettePackage pckg = new PalettePackage(PathHelpers.filenameFromPath(filePath), true);
-        tilesetImageProcessor.exportRawImage(filePath, tileset, pckg);
+        new TilesetRawImageProcessor().exportRawImage(filePath, tileset, pckg);
         Console.logger().info("Tileset successfully exported to : " + filePath);
         Console.logger().finest("EXITING exportImage");
     }
        
-    public void importDisassemblyWithLayout(Path baseTilesetFilePath,Path palette1FilePath, int palette1Offset, Path palette2FilePath, int palette2Offset, Path palette3FilePath, int palette3Offset, Path palette4FilePath, int palette4Offset,
+    /*public void importDisassemblyWithLayout(Path baseTilesetFilePath,Path palette1FilePath, int palette1Offset, Path palette2FilePath, int palette2Offset, Path palette3FilePath, int palette3Offset, Path palette4FilePath, int palette4Offset,
             Path tileset1FilePath, int tileset1Offset, Path tileset2FilePath, int tileset2Offset, Path layoutFilePath, TilesetCompression compression, int tilesPerRow)
             throws IOException, DisassemblyException {
         Console.logger().finest("ENTERING importDisassemblyWithLayout");
@@ -105,7 +101,7 @@ public class TilesetManager extends AbstractManager {
         paletteManager.exportDisassembly(palettePath, tileset.getPalette());
         tilesetDisassemblyProcessor.exportTilesAndLayout(tileset, tilesPath, layoutPath, graphicsOffset, compression, tileset.getPalette());
         Console.logger().finest("EXITING exportTilesAndLayout");
-    }
+    }*/
 
     public Tileset getTileset() {
         return tileset;

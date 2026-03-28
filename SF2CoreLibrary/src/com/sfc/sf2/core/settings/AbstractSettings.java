@@ -14,8 +14,6 @@ import java.util.HashMap;
 public abstract interface AbstractSettings {
     
     public void initialiseNewUser();
-    
     public void decodeSettings(HashMap<String, String> data);
-
     public void encodeSettings(HashMap<String, String> data);
 }

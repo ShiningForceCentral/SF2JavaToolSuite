@@ -5,7 +5,8 @@
  */
 package com.sfc.sf2.spellAnimation;
 
-import com.sfc.sf2.spellGraphic.SpellGraphic;
+import com.sfc.sf2.graphics.Tileset;
+import com.sfc.sf2.palette.Palette;
 
 /**
  *
@@ -13,15 +14,22 @@ import com.sfc.sf2.spellGraphic.SpellGraphic;
  */
 public class SpellAnimation {
     
-    private SpellGraphic spellGraphic;
+    private Tileset spellGraphic;
     private SpellSubAnimation[] spellSubAnimations;
 
-    public SpellGraphic getSpellGraphic() {
+    public Tileset getSpellGraphic() {
         return spellGraphic;
     }
 
-    public void setSpellGraphic(SpellGraphic spellGraphic) {
+    public void setSpellGraphic(Tileset spellGraphic) {
         this.spellGraphic = spellGraphic;
+    }
+    
+    public Palette getPalette() {
+        if (spellGraphic == null) {
+            return null;
+        }
+        return spellGraphic.getPalette();
     }
 
     public SpellSubAnimation[] getSpellSubAnimations() {

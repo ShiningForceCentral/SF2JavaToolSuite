@@ -7,7 +7,6 @@ package com.sfc.sf2.ground.io;
 
 import com.sfc.sf2.core.io.AbstractDisassemblyProcessor;
 import com.sfc.sf2.core.io.DisassemblyException;
-import com.sfc.sf2.core.io.EmptyPackage;
 import com.sfc.sf2.graphics.Tile;
 import com.sfc.sf2.graphics.Tileset;
 import com.sfc.sf2.graphics.compression.StackGraphicsDecoder;
@@ -26,7 +25,7 @@ public class GroundDisassemblyProcessor extends AbstractDisassemblyProcessor<Gro
     protected Ground parseDisassemblyData(byte[] data, GroundPackage pckg) throws DisassemblyException {
         Tile[] tiles = new StackGraphicsDecoder().decode(data, pckg.palette());
         tiles = TileHelpers.reorderTilesSequentially(tiles, 3, 1, 4);
-        return new Ground(new Tileset(null, tiles, GROUND_TILES_PER_ROW));
+        return new Ground(new Tileset(pckg.name(), tiles, GROUND_TILES_PER_ROW));
     }
     
     @Override

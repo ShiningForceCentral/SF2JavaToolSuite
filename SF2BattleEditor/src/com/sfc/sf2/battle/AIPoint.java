@@ -5,6 +5,8 @@
  */
 package com.sfc.sf2.battle;
 
+import java.awt.Point;
+
 /**
  *
  * @author wiz
@@ -12,6 +14,20 @@ package com.sfc.sf2.battle;
 public class AIPoint {
     private int x;
     private int y;
+
+    public AIPoint(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public Point getPos() {
+        return new Point(x, y);
+    }
+
+    public void setPos(Point pos) {
+        this.x = pos.x;
+        this.y = pos.y;
+    }
 
     public int getX() {
         return x;
@@ -29,5 +45,19 @@ public class AIPoint {
         this.y = y;
     }
     
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof AIPoint)) return super.equals(obj);
+        AIPoint other = (AIPoint)obj;
+        return this.x == other.x && this.y == other.y;
+    }
     
+    @Override
+    public AIPoint clone() {
+        return new AIPoint(x, y);
+    }
+    
+    public static AIPoint emptyAIPoint() {
+        return new AIPoint(0, 0);
+    }
 }

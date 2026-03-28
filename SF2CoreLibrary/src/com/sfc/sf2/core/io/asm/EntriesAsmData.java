@@ -63,6 +63,14 @@ public class EntriesAsmData {
         }
     }
     
+    public int getEntryValue(int index) {
+        if (index >= 0 && index < entryIndices.size()) {
+            return entryIndices.get(index);
+        } else {
+            return -1;
+        }
+    }
+    
     public String getUniqueEntries(int index) {
         if (index >= 0 && index < uniqueEntryIndices.size()) {
             return entries.get(uniqueEntryIndices.get(index));
@@ -74,6 +82,15 @@ public class EntriesAsmData {
     public Path getPathForEntry(int index) {
         if (index >= 0 && index < entryIndices.size()) {
             return paths.get(entryIndices.get(index));
+        } else {
+            return null;
+        }
+    }
+    
+    public Path getPathForEntry(String entry) {
+        int hash = entry.hashCode();
+        if (hashMap.containsKey(hash)) {
+            return paths.get(hashMap.get(hash));
         } else {
             return null;
         }
@@ -91,8 +108,9 @@ public class EntriesAsmData {
         int hash = entry.hashCode();
         if (hashMap.containsKey(hash)) {
             int index = hashMap.get(hash);
+            entries.add(entry);
             entryIndices.add(index);
-            
+            paths.add(null);
         } else {
             int index = entries.size();
             entries.add(entry);
@@ -113,5 +131,32 @@ public class EntriesAsmData {
         if (existing == null) {
             paths.set(index, path);
         }
+    }
+    
+    public boolean isEntryShared(int index) {
+        int count = 0;
+        for (int i = 0; i < entryIndices.size(); i++) {
+            if (entryIndices.get(i) == index) {
+                count++;
+                if (count >= 2) {
+                    return true;    //Multiple matches found
+                }
+            }
+        }
+        return false;
+    }
+    
+    public int[] getSharedEntries(int index) {
+        ArrayList<Integer> sharedList = new ArrayList<>();
+        for (int i = 0; i < entryIndices.size(); i++) {
+            if (entryIndices.get(i) == index) {
+                sharedList.add(i);
+            }
+        }
+        int[] shared = new int[sharedList.size()];
+        for (int i = 0; i < shared.length; i++) {
+            shared[i] = sharedList.get(i).intValue();
+        }
+        return shared;
     }
 }

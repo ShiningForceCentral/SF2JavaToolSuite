@@ -29,7 +29,7 @@ public class SettingsManager {
     private static Path globalSettingsPath = null;
     
     private static boolean isRunningInEditor = true;
-    private static boolean preventSaving = true;
+    private static boolean allowSaving = false;
 
     static {
         globalSettings = new GlobalSettings();
@@ -46,7 +46,11 @@ public class SettingsManager {
     }
     
     public static void setSavingAllowed(boolean allowed) {
-        preventSaving = !allowed;
+        allowSaving = allowed;
+    }
+    
+    public static boolean isSavingAllowed() {
+        return allowSaving;
     }
     
     private static Path getGlobalSettingsFilePath() {
@@ -95,15 +99,14 @@ public class SettingsManager {
         Console.logger().finest("ENTERING loadGlobalSettings");
         String line = null;
         try {
+            globalSettings.initialiseNewUser();
             File file = getGlobalSettingsFilePath().toFile();
             if (file.exists()) {
                 BufferedReader reader = new BufferedReader(new FileReader(file));
                 readStoreData(reader, globalSettings);
                 reader.close();
             } else {
-                Console.logger().info("Initialising new global settings...");
-                globalSettings.initialiseNewUser();
-                saveGlobalSettingsFile();
+                Console.logger().info("Global settings not found. Using default settings...");
             }
         } catch (IOException ex) {
             Console.logger().log(Level.SEVERE, "Could not load settings file from : " + getSettingsFilePath(), ex);
@@ -188,7 +191,7 @@ public class SettingsManager {
     }
     
     public static void saveGlobalSettingsFile() {
-        if (preventSaving) return;
+        if (!allowSaving) return;
         Console.logger().finest("ENTERING saveGlobalSettingsFile");
         try {
             StringBuilder sb = new StringBuilder();
@@ -203,7 +206,7 @@ public class SettingsManager {
     }
     
     public static void saveSettingsFile() {
-        if (preventSaving) return;
+        if (!allowSaving) return;
         Console.logger().finest("ENTERING saveSettingsFile");
         try {
             StringBuilder sb = new StringBuilder();

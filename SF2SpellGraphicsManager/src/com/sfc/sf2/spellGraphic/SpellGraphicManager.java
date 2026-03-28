@@ -27,17 +27,12 @@ import java.nio.file.Path;
  */
 public class SpellGraphicManager extends AbstractManager {
     private static final int[] paletteReplaceIndices = new int[] { 9, 13, 14 };
-    
-    private final PaletteManager paletteManager = new PaletteManager();
-    private final SpellDisassemblyProcessor spellDisassemblyProcessor = new SpellDisassemblyProcessor();
-    private final TilesetRawImageProcessor tilesetImageProcessor = new TilesetRawImageProcessor();
-    
+        
     private Palette defaultPalette;
     private Tileset spellTileset;
 
     @Override
     public void clearData() {
-        paletteManager.clearData();
         defaultPalette = null;
         spellTileset = null;
     }
@@ -46,7 +41,7 @@ public class SpellGraphicManager extends AbstractManager {
         Console.logger().finest("ENTERING importDisassembly");
         importDefaultPalette(defaultPalettePath);
         SpellTilesetPackage pckg = new SpellTilesetPackage(PathHelpers.filenameFromPath(filepath), defaultPalette, tilesPerRow);
-        spellTileset = spellDisassemblyProcessor.importDisassembly(filepath, pckg);
+        spellTileset = new SpellDisassemblyProcessor().importDisassembly(filepath, pckg);
         Console.logger().info("Spell successfully imported from : " + filepath);
         Console.logger().finest("EXITING importDisassembly");
         return spellTileset;
@@ -55,7 +50,7 @@ public class SpellGraphicManager extends AbstractManager {
     public void exportDisassembly(Path filePath, Tileset spellTileset) throws IOException, DisassemblyException {
         Console.logger().finest("ENTERING exportDisassembly");
         this.spellTileset = spellTileset;
-        spellDisassemblyProcessor.exportDisassembly(filePath, spellTileset, null);
+        new SpellDisassemblyProcessor().exportDisassembly(filePath, spellTileset, null);
         Console.logger().info("Spell successfully exported to : " + filePath);
         Console.logger().finest("EXITING exportDisassembly");
     }
@@ -64,7 +59,7 @@ public class SpellGraphicManager extends AbstractManager {
         Console.logger().finest("ENTERING importImage");
         importDefaultPalette(defaultPalettePath);
         PalettePackage pckg = new PalettePackage(PathHelpers.filenameFromPath(filePath), true);
-        spellTileset = tilesetImageProcessor.importRawImage(filePath, pckg);
+        spellTileset = new TilesetRawImageProcessor().importRawImage(filePath, pckg);
         Palette palette = spellTileset.getPalette();
         palette = PaletteHelpers.combinePalettes(defaultPalette, palette, paletteReplaceIndices, paletteReplaceIndices);
         Console.logger().info("Spell successfully imported from : " + filePath);
@@ -77,23 +72,19 @@ public class SpellGraphicManager extends AbstractManager {
         this.spellTileset = spellTileset;
         spellTileset.setTilesPerRow(tilesPerRow);
         PalettePackage pckg = new PalettePackage(PathHelpers.filenameFromPath(filePath), true);
-        tilesetImageProcessor.exportRawImage(filePath, spellTileset, pckg);
+        new TilesetRawImageProcessor().exportRawImage(filePath, spellTileset, pckg);
         Console.logger().info("Spell successfully exported to : " + filePath);
         Console.logger().finest("EXITING exportImage");
     }
     
     private void importDefaultPalette(Path defaultPalettePath) throws IOException, DisassemblyException {        
         if (defaultPalette == null) {
-            defaultPalette = paletteManager.importDisassembly(defaultPalettePath, true);
+            defaultPalette = new PaletteManager().importDisassembly(defaultPalettePath, true);
         }
     }
 
     public Tileset getSpellTileset() {
         return spellTileset;
-    }
-
-    public void setSpellTileset(Tileset spellTileset) {
-        this.spellTileset = spellTileset;
     }
 
     public Palette getDefaultPalette() {

@@ -7,9 +7,8 @@ package com.sfc.sf2.vwfont;
 
 import com.sfc.sf2.core.AbstractManager;
 import com.sfc.sf2.core.gui.controls.Console;
-import com.sfc.sf2.core.io.AbstractRawImageProcessor;
-import com.sfc.sf2.core.io.AbstractRawImageProcessor.FileFormat;
 import com.sfc.sf2.core.io.DisassemblyException;
+import com.sfc.sf2.core.io.FileFormat;
 import com.sfc.sf2.helpers.FileHelpers;
 import com.sfc.sf2.vwfont.io.FontSymbolPackage;
 import com.sfc.sf2.vwfont.io.VWFontDisassemblyProcessor;
@@ -24,8 +23,6 @@ import java.util.ArrayList;
  * @author wiz
  */
 public class VWFontManager extends AbstractManager {
-    private final VWFontDisassemblyProcessor fontDisassemblyProcessor = new VWFontDisassemblyProcessor();
-    private final VWFontRawImageProcessor fontRawImageProcessor = new VWFontRawImageProcessor();
     
     public FontSymbol[] symbols;
 
@@ -41,7 +38,7 @@ public class VWFontManager extends AbstractManager {
        
     public FontSymbol[] importDisassembly(Path fontFilePath) throws IOException, DisassemblyException {
         Console.logger().finest("ENTERING importDisassembly");
-        symbols = fontDisassemblyProcessor.importDisassembly(fontFilePath, null);
+        symbols = new VWFontDisassemblyProcessor().importDisassembly(fontFilePath, null);
         Console.logger().info("VW fonts successfully imported from : " + fontFilePath);
         Console.logger().finest("EXITING importDisassembly");
         return symbols;
@@ -50,25 +47,26 @@ public class VWFontManager extends AbstractManager {
     public void exportDisassembly(Path fontFilePath, FontSymbol[] fontSymbols) throws IOException, DisassemblyException {
         Console.logger().finest("ENTERING exportDisassembly");
         this.symbols = fontSymbols;
-        fontDisassemblyProcessor.exportDisassembly(fontFilePath, symbols, null);
+        new VWFontDisassemblyProcessor().exportDisassembly(fontFilePath, symbols, null);
         Console.logger().info("VW fonts successfully exported to : " + fontFilePath);
         Console.logger().finest("EXITING exportDisassembly");
     }
     
     public FontSymbol[] importAllImages(Path basePath, FileFormat format) throws IOException, DisassemblyException {
         Console.logger().finest("ENTERING importAllImages");
-        File[] files = FileHelpers.findAllFilesInDirectory(basePath, "symbol", AbstractRawImageProcessor.GetFileExtensionString(format));
+        File[] files = FileHelpers.findAllFilesInDirectory(basePath, "symbol", format);
         Console.logger().info(files.length + " font symbol images found.");
         ArrayList<FontSymbol> symbolsList = new ArrayList<>();
         int failedToLoad = 0;
         //Symbol indexes are offset by 1 because engine is expecting a hidden value at 000. Old format exported to 000 so check for old format by finding 000
         boolean oldFormat = false;
-        Path filePath = basePath.resolve("symbol000" + AbstractRawImageProcessor.GetFileExtensionString(format));
+        Path filePath = basePath.resolve("symbol000"+format.getExt());
         File index000 = filePath.toFile();
         if (index000.exists()) {
             oldFormat = true;
         }
         //Now load
+        VWFontRawImageProcessor fontRawImageProcessor = new VWFontRawImageProcessor();
         for (File file : files) {
             Path symbolPath = file.toPath();
             try {
@@ -98,16 +96,17 @@ public class VWFontManager extends AbstractManager {
         Path filePath = null;
         int fileCount = 0;
         //Remove index 000 (for preexisting exports)
-        filePath = basePath.resolve("symbol000" + AbstractRawImageProcessor.GetFileExtensionString(format));
+        filePath = basePath.resolve("symbol000" + format.getExt());
         File index000 = filePath.toFile();
         if (index000.exists()) {
             index000.delete();
         }
         //Now save
+        VWFontRawImageProcessor fontRawImageProcessor = new VWFontRawImageProcessor();
         for (FontSymbol symbol : symbols) {
             try {
                 int id = symbol.getId()+1;  //Offset by 1 because engine is expecting a hidden value at 000
-                filePath = basePath.resolve(String.format("symbol%03d%s", id, AbstractRawImageProcessor.GetFileExtensionString(format)));
+                filePath = basePath.resolve(String.format("symbol%03d%s", id, format.getExt()));
                 fontRawImageProcessor.exportRawImage(filePath, symbol, null);
                 fileCount++;
             }catch (Exception e) {

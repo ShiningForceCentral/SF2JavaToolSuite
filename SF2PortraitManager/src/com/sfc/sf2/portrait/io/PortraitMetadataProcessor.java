@@ -32,7 +32,7 @@ public class PortraitMetadataProcessor extends AbstractMetadataProcessor<Portrai
             }
         }
         data = reader.readLine();
-        int mouthsCount = Integer.parseInt(data.split(" ")[1].trim());
+        int mouthsCount = Integer.parseInt(data.split("\\s+")[1].trim());
         int[][] mouthTiles = new int[mouthsCount][4];
         for (int i = 0; i < mouthsCount; i++) {
             data = reader.readLine();

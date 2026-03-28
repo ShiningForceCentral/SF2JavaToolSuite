@@ -59,7 +59,7 @@ public class PortraitDisassemblyProcessor extends AbstractDisassemblyProcessor<P
         tiles = new StackGraphicsDecoder().decode(tileData, palette);
         Tileset tileset = new Tileset(pckg.name(), tiles, Portrait.PORTRAIT_TILES_FULL_WIDTH);
         
-        return new Portrait(pckg.name(), tileset, eyesTiles, mouthTiles);
+        return new Portrait(pckg.index(), pckg.name(), tileset, eyesTiles, mouthTiles);
     }
 
     @Override

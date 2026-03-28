@@ -9,6 +9,7 @@ import com.sfc.sf2.palette.Palette;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.awt.image.IndexColorModel;
+import java.util.Arrays;
 
 /**
  *
@@ -18,22 +19,22 @@ public class Tile {
     
     public static final int PIXEL_WIDTH = 8;
     public static final int PIXEL_HEIGHT = 8;
+    public static final int PIXEL_COUNT = PIXEL_WIDTH*PIXEL_HEIGHT;
     
     private int id;
+    protected byte[] pixels = new byte[PIXEL_COUNT];
     private Palette palette;
-    protected int[] pixels = new int[PIXEL_WIDTH*PIXEL_HEIGHT];
-    private BufferedImage indexedColorImage = null;
     
-    private boolean highPriority = false;
-    private boolean hFlip = false;
-    private boolean vFlip = false;
-        
-    public int[] getPixels() {
-        return pixels;
-    }
+    private final BufferedImage[] indexedColorImages = new BufferedImage[4];
 
-    public void setPixels(int[] pixels) {
+    public Tile(int id, byte[] pixels, Palette palette) {
+        this.id = id;
         this.pixels = pixels;
+        this.palette = palette;
+    }
+        
+    public byte[] getPixels() {
+        return pixels;
     }
     
     public int getId() {
@@ -42,47 +43,6 @@ public class Tile {
 
     public void setId(int id) {
         this.id = id;
-    }
-    public boolean isHighPriority() {
-        return highPriority;
-    }
-
-    public void setHighPriority(boolean highPriority) {
-        this.highPriority = highPriority;
-    }
-
-    public boolean ishFlip() {
-        return hFlip;
-    }
-
-    public void sethFlip(boolean hFlip) {
-        this.hFlip = hFlip;
-        clearIndexedColorImage();
-    }
-
-    public boolean isvFlip() {
-        return vFlip;
-    }
-
-    public void setvFlip(boolean vFlip) {
-        this.vFlip = vFlip;
-        clearIndexedColorImage();
-    }
-    
-    public static Tile vFlip(Tile tile) {
-        return tile.clone(tile.isHighPriority(), tile.ishFlip(), !tile.isvFlip(), tile.getPalette());
-    }
-    
-    public static Tile hFlip(Tile tile) {
-        return tile.clone(tile.isHighPriority(), !tile.ishFlip(), tile.isvFlip(), tile.getPalette());
-    }
-    
-    public static Tile clearFlip(Tile tile) {
-        return tile.clone(tile.isHighPriority(), false, false, tile.getPalette());
-    }
-    
-    public static Tile paletteSwap(Tile tile, Palette palette) {
-        return tile.clone(tile.isHighPriority(), tile.ishFlip(), tile.isvFlip(), palette);
     }
     
     public Palette getPalette() {
@@ -101,44 +61,117 @@ public class Tile {
             return palette.getIcm();
         }
     }
-
-    public BufferedImage getIndexedColorImage() {
-        if (indexedColorImage == null) {
-            IndexColorModel icm = palette.getIcm();
-            indexedColorImage = new BufferedImage(PIXEL_WIDTH, PIXEL_HEIGHT, BufferedImage.TYPE_BYTE_INDEXED, icm);
-            byte[] data = ((DataBufferByte)(indexedColorImage.getRaster().getDataBuffer())).getData();
-            drawPixelData(data);
-        }
-        return indexedColorImage;        
-    }
     
-    private void drawPixelData(byte[] imageData) {
-        if (ishFlip() || isvFlip()) {
-            for (int i=0; i < pixels.length; i++) {
-                int index = (ishFlip() ? PIXEL_WIDTH-(i%PIXEL_WIDTH)-1 : i%PIXEL_WIDTH) + (isvFlip()? PIXEL_HEIGHT-(i/PIXEL_HEIGHT)-1 : i/PIXEL_HEIGHT)*PIXEL_WIDTH;
-                imageData[i] = (byte)(pixels[index]);
-            }
-        } else {
-            for (int i=0; i < pixels.length; i++) {
-                imageData[i] = (byte)(pixels[i]);
+    public BufferedImage getIndexedColorImage() {
+        return getIndexedColorImage(0);
+    }
+
+    public BufferedImage getIndexedColorImage(TileFlags tileFlags) {
+        return getIndexedColorImage(tileFlags.value()&0x3);
+    }
+
+    private BufferedImage getIndexedColorImage(int flagValue) {
+        BufferedImage image = indexedColorImages[flagValue];
+        if (image == null) {
+            IndexColorModel icm = palette.getIcm();
+            image = new BufferedImage(PIXEL_WIDTH, PIXEL_HEIGHT, BufferedImage.TYPE_BYTE_INDEXED, icm);
+            indexedColorImages[flagValue] = image;
+            byte[] data = ((DataBufferByte)(image.getRaster().getDataBuffer())).getData();
+            switch ((byte)flagValue) {
+                case TileFlags.TILE_FLAG_NONE:
+                    for (int j=0; j < PIXEL_HEIGHT; j++) {
+                        for (int i=0; i < PIXEL_WIDTH; i++) {
+                            int index = i + j*PIXEL_WIDTH;
+                            data[i+j*PIXEL_WIDTH] = pixels[index];
+                        }
+                    }
+                    break;
+                case TileFlags.TILE_FLAG_BOTHFLIP:
+                    for (int j=0; j < PIXEL_HEIGHT; j++) {
+                        for (int i=0; i < PIXEL_WIDTH; i++) {
+                            int index = (PIXEL_WIDTH-1-i) + (PIXEL_HEIGHT-1-j)*PIXEL_WIDTH;
+                            data[i+j*PIXEL_WIDTH] = pixels[index];
+                        }
+                    }
+                    break;
+                case TileFlags.TILE_FLAG_HFLIP:
+                    for (int j=0; j < PIXEL_HEIGHT; j++) {
+                        for (int i=0; i < PIXEL_WIDTH; i++) {
+                            int index = (PIXEL_WIDTH-1-i) + j*PIXEL_WIDTH;
+                            data[i+j*PIXEL_WIDTH] = pixels[index];
+                        }
+                    }
+                    break;
+                case TileFlags.TILE_FLAG_VFLIP:
+                    for (int j=0; j < PIXEL_HEIGHT; j++) {
+                        for (int i=0; i < PIXEL_WIDTH; i++) {
+                            int index = i + (PIXEL_HEIGHT-1-j)*PIXEL_WIDTH;
+                            data[i+j*PIXEL_WIDTH] = pixels[index];
+                        }
+                    }
+                    break;
             }
         }
+        return image;
     }
     
     public void clearIndexedColorImage() {
-        if (indexedColorImage != null) {
-            indexedColorImage.flush();
-            indexedColorImage = null;
+        for (int i = 0; i < indexedColorImages.length; i++) {
+            if (indexedColorImages[i] != null) {
+                indexedColorImages[i].flush();
+                indexedColorImages[i] = null;
+            }
         }
     }
     
-    public void drawIndexedColorPixels(BufferedImage image, int[][] pixels, int x, int y){
+    public int[] getRenderPixels() {
+        return getRenderPixels(0);
+    }
+
+    public int[] getRenderPixels(TileFlags tileFlags) {
+        return getRenderPixels(tileFlags.value()&0x3);
     }
     
-    public void setPixel(int x, int y, int colorIndex){
-        this.pixels[x+y*PIXEL_WIDTH] = colorIndex;
+    private int[] getRenderPixels(int flagValue) {
+        int[] renderPixels = new int[PIXEL_COUNT];
+        switch ((byte)flagValue) {
+            case TileFlags.TILE_FLAG_NONE:
+                for (int j=0; j < PIXEL_HEIGHT; j++) {
+                    for (int i=0; i < PIXEL_WIDTH; i++) {
+                        int index = i + j*PIXEL_WIDTH;
+                        renderPixels[i+j*PIXEL_WIDTH] = pixels[index];
+                    }
+                }
+                break;
+            case TileFlags.TILE_FLAG_BOTHFLIP:
+                for (int j=0; j < PIXEL_HEIGHT; j++) {
+                    for (int i=0; i < PIXEL_WIDTH; i++) {
+                        int index = (PIXEL_WIDTH-1-i) + (PIXEL_HEIGHT-1-j)*PIXEL_WIDTH;
+                        renderPixels[i+j*PIXEL_WIDTH] = pixels[index];
+                    }
+                }
+                break;
+            case TileFlags.TILE_FLAG_HFLIP:
+                for (int j=0; j < PIXEL_HEIGHT; j++) {
+                    for (int i=0; i < PIXEL_WIDTH; i++) {
+                        int index = (PIXEL_WIDTH-1-i) + j*PIXEL_WIDTH;
+                        renderPixels[i+j*PIXEL_WIDTH] = pixels[index];
+                    }
+                }
+                break;
+            case TileFlags.TILE_FLAG_VFLIP:
+                for (int j=0; j < PIXEL_HEIGHT; j++) {
+                    for (int i=0; i < PIXEL_WIDTH; i++) {
+                        int index = i + (PIXEL_HEIGHT-1-j)*PIXEL_WIDTH;
+                        renderPixels[i+j*PIXEL_WIDTH] = pixels[index];
+                    }
+                }
+                break;
+        }
+        return renderPixels;
     }
     
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Tile " + id +" :\n");
@@ -153,44 +186,25 @@ public class Tile {
     
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) return false;
-        if (obj == this) return true;
-        if (!(obj instanceof Tile)) return false;
+        if (!(obj instanceof Tile)) return super.equals(obj);
         Tile tile = (Tile)obj;
-        if (tile.id != this.id || tile.vFlip != this.vFlip || tile.hFlip != this.hFlip) {
+        if (tile.id != this.id) {
             return false;
         }
-        for (int i=0; i < pixels.length; i++) {
-            if (this.pixels[i] != tile.pixels[i]) {
-                return false;
-            }
-        }
-        return true;
+        return Arrays.equals(this.pixels, tile.pixels);
     }
     
-    public boolean equalsWithPriority(Object obj) {
-        boolean equals = equals(obj);
-        if (equals) {
-            Tile tile = (Tile)obj;
-            equals = this.highPriority == tile.isHighPriority();
-        }
-        return equals;
+    public static Tile paletteSwap(Tile tile, Palette palette) {
+        return tile.clone(palette);
     }
     
     @Override
     public Tile clone() {
-        return clone(isHighPriority(), ishFlip(), isvFlip(), getPalette());
+        return clone(getPalette());
     }
     
-    public Tile clone(boolean priority, boolean hFlip, boolean vFlip, Palette newPalette) {
-        Tile newTile = new Tile();
-        newTile.setId(getId());
-        newTile.setPalette(newPalette);
-        newTile.setPixels(getPixels());
-        newTile.setHighPriority(priority);
-        newTile.sethFlip(hFlip);
-        newTile.setvFlip(vFlip);
-        return newTile;
+    public Tile clone(Palette newPalette) {
+        return new Tile(id, pixels, newPalette);
     }
     
     public boolean isTileEmpty() {
@@ -206,9 +220,6 @@ public class Tile {
     }
     
     public static Tile EmptyTile(Palette palette) {
-        Tile emptyTile = new Tile();
-        emptyTile.setPalette(palette);
-        emptyTile.setPixels(new int[PIXEL_WIDTH*PIXEL_HEIGHT]);
-        return emptyTile;
+        return new Tile(-1, new byte[PIXEL_COUNT], palette);
     }
 }

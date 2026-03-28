@@ -27,11 +27,18 @@ public class PathHelpers {
     }
     
     public static Path getBasePath() {
-        return Path.of(coreSettings.getBasePath());
+        return Path.of(coreSettings.getActiveBasePath());
     }
     
     public static Path getIncbinPath() {
-        return Path.of(coreSettings.getIncbinPath());
+        return Path.of(coreSettings.getActiveIncbinPath());
+    }
+    
+    public static Path makeAbsolute(Path path) {
+        if (!path.isAbsolute()) {
+            path = getBasePath().resolve(path);
+        }
+        return path;
     }
     
     public static String filenameFromPath(Path path) {
@@ -55,9 +62,7 @@ public class PathHelpers {
     }
     
     public static File getNearestValidParent(Path path) {
-        if (!path.isAbsolute()) {
-            path = getBasePath().resolve(path);
-        }
+        path = makeAbsolute(path);
         return getNearestValidParent(path.toFile());
     }
     

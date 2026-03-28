@@ -8,6 +8,7 @@ package com.sfc.sf2.weaponsprite;
 import com.sfc.sf2.graphics.Tile;
 import com.sfc.sf2.graphics.Tileset;
 import com.sfc.sf2.palette.Palette;
+import java.util.Arrays;
 
 /**
  *
@@ -80,5 +81,12 @@ public class WeaponSprite {
         for (int i = 0; i < frames.length; i++) {
             frames[i].clearIndexedColorImage(alsoClearTiles);
         }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof WeaponSprite)) return false;
+        WeaponSprite other = (WeaponSprite)obj;
+        return this.index == other.index && Arrays.equals(this.frames, other.frames);
     }
 }

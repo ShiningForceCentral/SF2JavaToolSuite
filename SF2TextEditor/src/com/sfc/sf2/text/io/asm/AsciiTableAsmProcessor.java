@@ -5,6 +5,7 @@
  */
 package com.sfc.sf2.text.io.asm;
 
+import com.sfc.sf2.core.io.EmptyPackage;
 import com.sfc.sf2.core.io.asm.AbstractAsmProcessor;
 import com.sfc.sf2.core.io.asm.AsmException;
 import com.sfc.sf2.helpers.StringHelpers;
@@ -17,10 +18,10 @@ import java.util.ArrayList;
  *
  * @author TiMMy
  */
-public class AsciiTableAsmProcessor extends AbstractAsmProcessor<int[]> {
+public class AsciiTableAsmProcessor extends AbstractAsmProcessor<int[], EmptyPackage> {
 
     @Override
-    protected int[] parseAsmData(BufferedReader reader) throws IOException, AsmException {
+    protected int[] parseAsmData(BufferedReader reader, EmptyPackage pckg) throws IOException, AsmException {
         ArrayList<Integer> bytesList = new ArrayList<>();
         String line;
         while ((line = reader.readLine()) != null) {
@@ -50,12 +51,12 @@ public class AsciiTableAsmProcessor extends AbstractAsmProcessor<int[]> {
     }
 
     @Override
-    protected String getHeaderName(int[] item) {
+    protected String getHeaderName(int[] item, EmptyPackage pckg) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    protected void packageAsmData(FileWriter writer, int[] item) throws IOException, AsmException {
+    protected void packageAsmData(FileWriter writer, int[] item, EmptyPackage pckg) throws IOException, AsmException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

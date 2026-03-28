@@ -14,6 +14,8 @@ import com.sfc.sf2.palette.Palette;
  */
 public class MapBlockPackage {
     
+    private String name;
+    public String name() { return name; }
     private Tileset[] tilesets;
     public Tileset[] tilesets() { return tilesets; }
     private Palette palette;
@@ -26,12 +28,14 @@ public class MapBlockPackage {
     private int animTilesetDest;
     public int animTilesetDest() { return animTilesetDest; }
     
-    public MapBlockPackage(Tileset[] tilesets, Palette palette) {
+    public MapBlockPackage(String name, Tileset[] tilesets, Palette palette) {
+        this.name = name;
         this.tilesets = tilesets;
         this.palette = palette;
     }
     
-    public MapBlockPackage(Tileset[] tilesets, Palette palette, int animTilesetStart, int animTilesetLength, int animTilesetDest) {
+    public MapBlockPackage(String name, Tileset[] tilesets, Palette palette, int animTilesetStart, int animTilesetLength, int animTilesetDest) {
+        this.name = name;
         this.tilesets = tilesets;
         this.palette = palette;
         this.animTilesetStart = animTilesetStart;

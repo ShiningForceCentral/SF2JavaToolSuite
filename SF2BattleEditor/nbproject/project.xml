@@ -7,6 +7,7 @@
             <explicit-platform explicit-source-supported="true"/>
             <source-roots>
                 <root id="src.dir"/>
+                <root id="src.res.dir" name="Resources"/>
             </source-roots>
             <test-roots>
                 <root id="test.src.dir"/>
@@ -23,6 +24,14 @@
             </reference>
             <reference>
                 <foreign-project>SF2BattleMapTerrainManager</foreign-project>
+                <artifact-type>jar</artifact-type>
+                <script>build.xml</script>
+                <target>jar</target>
+                <clean-target>clean</clean-target>
+                <id>jar</id>
+            </reference>
+            <reference>
+                <foreign-project>SF2CoreLibrary</foreign-project>
                 <artifact-type>jar</artifact-type>
                 <script>build.xml</script>
                 <target>jar</target>
@@ -63,6 +72,14 @@
             </reference>
             <reference>
                 <foreign-project>SF2PaletteManager</foreign-project>
+                <artifact-type>jar</artifact-type>
+                <script>build.xml</script>
+                <target>jar</target>
+                <clean-target>clean</clean-target>
+                <id>jar</id>
+            </reference>
+            <reference>
+                <foreign-project>SF2SpecialSpriteManager</foreign-project>
                 <artifact-type>jar</artifact-type>
                 <script>build.xml</script>
                 <target>jar</target>

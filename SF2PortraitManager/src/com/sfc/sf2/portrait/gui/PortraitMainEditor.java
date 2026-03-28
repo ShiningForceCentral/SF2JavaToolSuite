@@ -5,18 +5,23 @@
  */
 package com.sfc.sf2.portrait.gui;
 
+import com.sfc.sf2.core.actions.ActionManager;
+import com.sfc.sf2.core.actions.CustomAction;
+import com.sfc.sf2.core.actions.NonCombinableAction;
 import com.sfc.sf2.core.settings.SettingsManager;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
+import com.sfc.sf2.core.settings.ViewSettings;
 import com.sfc.sf2.helpers.PathHelpers;
+import com.sfc.sf2.helpers.RenderScaleHelpers;
 import com.sfc.sf2.portrait.Portrait;
 import com.sfc.sf2.portrait.PortraitManager;
+import com.sfc.sf2.portrait.actions.PortraitActionData;
 import com.sfc.sf2.portrait.models.PortraitDataTableModel;
-import com.sfc.sf2.portrait.settings.PortraitSettings;
+import java.awt.event.ActionEvent;
 import java.util.logging.Level;
 import java.nio.file.Path;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.TableModelEvent;
 import javax.swing.table.TableColumnModel;
 
 /**
@@ -25,7 +30,7 @@ import javax.swing.table.TableColumnModel;
  */
 public class PortraitMainEditor extends AbstractMainEditor {
     
-    private final PortraitSettings portraitSettings = new PortraitSettings();
+    private final ViewSettings viewSettings = new ViewSettings(RenderScaleHelpers.RENDER_SCALE_4X);
     private final PortraitManager portraitManager = new PortraitManager();
     
     private PortraitDataTableModel eyeTable;
@@ -35,7 +40,7 @@ public class PortraitMainEditor extends AbstractMainEditor {
     
     public PortraitMainEditor() {
         super();
-        SettingsManager.registerSettingsStore("portrait", portraitSettings);
+        SettingsManager.registerSettingsStore("view", viewSettings);
         initComponents();
         initCore(console1);
     }
@@ -44,45 +49,35 @@ public class PortraitMainEditor extends AbstractMainEditor {
     protected void initEditor() {
         super.initEditor();
         
-        portraitLayoutPanel.setShowGrid(jCheckBox3.isSelected());                                           
-        portraitLayoutPanel.setDisplayScale(jComboBox1.getSelectedIndex()+1);
-        colorPicker1.setColor(SettingsManager.getGlobalSettings().getTransparentBGColor());
-        portraitLayoutPanel.setBGColor(colorPicker1.getBackground());
+        portraitViewPanel1.setLayoutPanel(portraitLayoutPanel, viewSettings);
         
         eyeTable = (PortraitDataTableModel)tableEyes.getModel();
         mouthTable = (PortraitDataTableModel)tableMouth.getModel();
-        portraitLayoutPanel.setEyeAnimTable(eyeTable);
-        portraitLayoutPanel.setMouthAnimTable(mouthTable);
         tableEyes.addListSelectionListener(this::eyesListSelectionChanged);
         tableMouth.addListSelectionListener(this::mouthListSelectionChanged);
-        tableEyes.addTableModelListener(this::eyesListValueChanged);
-        tableMouth.addTableModelListener(this::mouthListValueChanged);
+        portraitLayoutPanel.setEyesChangedListener(this::eyesListValueChanged);
+        portraitLayoutPanel.SetMouthChangedListener(this::mouthListValueChanged);
         TableColumnModel columns = tableEyes.jTable.getColumnModel();
         columns.getColumn(0).setMaxWidth(40);
         columns = tableMouth.jTable.getColumnModel();
         columns.getColumn(0).setMaxWidth(40);
-        
-        jComboBox1.setSelectedIndex(portraitSettings.getZoom()-1);
     }
     
     @Override
     protected void onDataLoaded() {
         super.onDataLoaded();
-        
-        portraitLayoutPanel.setPortrait(portraitManager.getPortrait());
-        jCheckBox1.setSelected(portraitLayoutPanel.getBlinking());
-        jCheckBox2.setSelected(portraitLayoutPanel.getSpeaking());
-        
-        portraitLayoutPanel.setEyeAnimTable(eyeTable);
-        portraitLayoutPanel.setMouthAnimTable(mouthTable);
-        portraitLayoutPanel.setShowGrid(jCheckBox3.isSelected());
-        portraitLayoutPanel.setDisplayScale(jComboBox1.getSelectedIndex()+1);
-        
-        Portrait portrait = portraitManager.getPortrait();
-        if (portrait != null) {
+        ActionManager.setAndExecuteAction(new NonCombinableAction<Portrait>(this, "Portrait Imported", this::actionPortraitLoaded, portraitManager.getPortrait(), portraitLayoutPanel.getPortrait()));
+    }
+    
+    private void actionPortraitLoaded(Portrait portrait) {        
+        portraitLayoutPanel.setPortrait(portrait);
+        selectedEyesRow = selectedMouthsRow = -1;
+        if (portrait == null) {
+            eyeTable.setTableData(null);
+            mouthTable.setTableData(null);
+        } else {
             eyeTable.setTableData(portrait.getEyeTiles());
             mouthTable.setTableData(portrait.getMouthTiles());
-            selectedEyesRow = selectedMouthsRow = -1;
         }
     }
     
@@ -108,37 +103,30 @@ public class PortraitMainEditor extends AbstractMainEditor {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         portraitLayoutPanel = new com.sfc.sf2.portrait.gui.PortraitLayoutPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
-        jCheckBox3 = new javax.swing.JCheckBox();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        colorPicker1 = new com.sfc.sf2.core.gui.controls.ColorPicker();
-        jLabel55 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        portraitViewPanel1 = new com.sfc.sf2.portrait.gui.PortraitViewPanel();
         jPanel8 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel4 = new javax.swing.JPanel();
-        jButton18 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        fileButton1 = new com.sfc.sf2.core.gui.controls.FileButton();
+        fileButtonImportPortrait = new com.sfc.sf2.core.gui.controls.FileButton();
+        jButtonImportPortrait = new javax.swing.JButton();
         jPanel9 = new javax.swing.JPanel();
-        jButton12 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        fileButton2 = new com.sfc.sf2.core.gui.controls.FileButton();
-        fileButton3 = new com.sfc.sf2.core.gui.controls.FileButton();
+        fileButtonImportImage = new com.sfc.sf2.core.gui.controls.FileButton();
+        fileButtonImportMeta = new com.sfc.sf2.core.gui.controls.FileButton();
+        jButtonImportImage = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jTabbedPane2 = new javax.swing.JTabbedPane();
         jPanel11 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        fileButton4 = new com.sfc.sf2.core.gui.controls.FileButton();
+        fileButtonExportPortrait = new com.sfc.sf2.core.gui.controls.FileButton();
+        jButtonExportportrait = new javax.swing.JButton();
         jPanel14 = new javax.swing.JPanel();
-        jButton13 = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
-        fileButton5 = new com.sfc.sf2.core.gui.controls.FileButton();
-        fileButton6 = new com.sfc.sf2.core.gui.controls.FileButton();
+        fileButtonExportImage = new com.sfc.sf2.core.gui.controls.FileButton();
+        fileButtonExportMeta = new com.sfc.sf2.core.gui.controls.FileButton();
+        jButtonExportImage = new javax.swing.JButton();
         console1 = new com.sfc.sf2.core.gui.controls.Console();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -146,7 +134,6 @@ public class PortraitMainEditor extends AbstractMainEditor {
 
         jSplitPane1.setDividerLocation(425);
         jSplitPane1.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
-        jSplitPane1.setResizeWeight(0.5);
         jSplitPane1.setOneTouchExpandable(true);
 
         jSplitPane2.setDividerLocation(400);
@@ -156,24 +143,28 @@ public class PortraitMainEditor extends AbstractMainEditor {
         jPanel6.setPreferredSize(new java.awt.Dimension(325, 200));
 
         tableEyes.setBorder(javax.swing.BorderFactory.createTitledBorder("Eyes"));
+        tableEyes.setInfoMessage("<html>The \"animation\" of making the character blink.<br>- X/Y: The tile (8x8 pixels) on the portrait to replace.<br>- X'/Y': The tile outside of the portrait (right-side) that replaces at X/Y.<br><br>See the \"Blink frame\" toggle under the portrait.</html>");
         tableEyes.setModel(portraitDataModelEyes);
         tableEyes.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tableEyes.setSpinnerNumberEditor(true);
         tableEyes.setMinimumSize(new java.awt.Dimension(200, 200));
+        tableEyes.setName("Eyes Table"); // NOI18N
         tableEyes.setPreferredSize(new java.awt.Dimension(350, 250));
 
         tableMouth.setBorder(javax.swing.BorderFactory.createTitledBorder("Mouth"));
+        tableMouth.setInfoMessage("<html>The \"animation\" of making the character talk.<br>- X/Y: The tile (8x8 pixels) on the portrait to replace.<br>- X'/Y': The tile outside of the portrait (right-side) that replaces at X/Y.<br><br>See the \"Talk frame\" toggle under the portrait.</html>");
         tableMouth.setModel(portraitDataModelMouth);
         tableMouth.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tableMouth.setSpinnerNumberEditor(true);
         tableMouth.setMinimumSize(new java.awt.Dimension(200, 200));
+        tableMouth.setName("Mouth Table"); // NOI18N
         tableMouth.setPreferredSize(new java.awt.Dimension(350, 250));
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tableEyes, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)
+            .addComponent(tableEyes, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
             .addComponent(tableMouth, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
         jPanel6Layout.setVerticalGroup(
@@ -196,11 +187,11 @@ public class PortraitMainEditor extends AbstractMainEditor {
         portraitLayoutPanel.setLayout(portraitLayoutPanelLayout);
         portraitLayoutPanelLayout.setHorizontalGroup(
             portraitLayoutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGap(0, 320, Short.MAX_VALUE)
         );
         portraitLayoutPanelLayout.setVerticalGroup(
             portraitLayoutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGap(0, 291, Short.MAX_VALUE)
         );
 
         jScrollPane2.setViewportView(portraitLayoutPanel);
@@ -210,108 +201,12 @@ public class PortraitMainEditor extends AbstractMainEditor {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 326, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
-        );
-
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("View"));
-
-        jCheckBox1.setText("Blink frame");
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
-            }
-        });
-
-        jCheckBox2.setText("Talk frame");
-        jCheckBox2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox2ActionPerformed(evt);
-            }
-        });
-
-        jCheckBox3.setText("Show grid");
-        jCheckBox3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox3ActionPerformed(evt);
-            }
-        });
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "x1", "x2", "x3", "x4" }));
-        jComboBox1.setSelectedIndex(1);
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
-            }
-        });
-
-        colorPicker1.addColorChangedListener(new com.sfc.sf2.core.gui.controls.ColorPicker.ColorChangedListener() {
-            public void colorChanged(java.awt.event.ActionEvent evt) {
-                colorPicker1ColorChanged(evt);
-            }
-        });
-
-        javax.swing.GroupLayout colorPicker1Layout = new javax.swing.GroupLayout(colorPicker1);
-        colorPicker1.setLayout(colorPicker1Layout);
-        colorPicker1Layout.setHorizontalGroup(
-            colorPicker1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 22, Short.MAX_VALUE)
-        );
-        colorPicker1Layout.setVerticalGroup(
-            colorPicker1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 22, Short.MAX_VALUE)
-        );
-
-        jLabel55.setText("BG :");
-
-        jLabel7.setText("Scale :");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel55)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(colorPicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jCheckBox3))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jCheckBox1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jCheckBox2, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addContainerGap())
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(jLabel55)
-                            .addComponent(colorPicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jCheckBox3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jCheckBox1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCheckBox2)))
-                .addContainerGap(26, Short.MAX_VALUE))
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
@@ -320,11 +215,11 @@ public class PortraitMainEditor extends AbstractMainEditor {
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(portraitViewPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         jPanel10Layout.setVerticalGroup(
@@ -333,9 +228,9 @@ public class PortraitMainEditor extends AbstractMainEditor {
                 .addContainerGap()
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(portraitViewPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 419, Short.MAX_VALUE)))
         );
 
@@ -344,18 +239,20 @@ public class PortraitMainEditor extends AbstractMainEditor {
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Import from :"));
         jPanel3.setPreferredSize(new java.awt.Dimension(590, 135));
 
-        jButton18.setText("Import");
-        jButton18.addActionListener(new java.awt.event.ActionListener() {
+        jLabel2.setText("Import portrait disassembly.");
+
+        fileButtonImportPortrait.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
+        fileButtonImportPortrait.setFilePath(".\\portrait00.bin");
+        fileButtonImportPortrait.setInfoMessage("");
+        fileButtonImportPortrait.setLabelText("Portrait file :");
+        fileButtonImportPortrait.setName("Import Portrait"); // NOI18N
+
+        jButtonImportPortrait.setText("Import");
+        jButtonImportPortrait.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton18ActionPerformed(evt);
+                jButtonImportPortraitActionPerformed(evt);
             }
         });
-
-        jLabel2.setText("<html>Select a portrait file.<br/>Typical disassembly path : data/graphics/portraits/</html>");
-        jLabel2.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-
-        fileButton1.setFilePath(".\\portrait00.bin");
-        fileButton1.setLabelText("Portrait file :");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -364,42 +261,51 @@ public class PortraitMainEditor extends AbstractMainEditor {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fileButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton18)))
-                .addContainerGap())
+                        .addComponent(jLabel2)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(fileButtonImportPortrait, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jButtonImportPortrait)))
+                        .addContainerGap())))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(fileButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton18)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE))
-                .addContainerGap(56, Short.MAX_VALUE))
+                .addComponent(fileButtonImportPortrait, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonImportPortrait)
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab("Disassembly", jPanel4);
 
-        jButton12.setText("Import");
-        jButton12.addActionListener(new java.awt.event.ActionListener() {
+        jLabel3.setText("Import portrait from image and meta.");
+
+        fileButtonImportImage.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ANY_IMAGE);
+        fileButtonImportImage.setFilePath(".\\export\\portrait00.png");
+        fileButtonImportImage.setInfoMessage("<html>Supported image formats: PNG or GIF.<br><br>Color format should be 4BPP / 16 indexed colors. Images of 8BPP / 256 indexed colors will be converted to 4 BPP / 16 (some colors may be lost).<br>When imported, icons will use the base palette colors.<br>Color index 0 is treated as transparent.</html>");
+        fileButtonImportImage.setLabelText("Image file :");
+        fileButtonImportImage.setName("Import Image"); // NOI18N
+
+        fileButtonImportMeta.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.META);
+        fileButtonImportMeta.setFilePath(".meta");
+        fileButtonImportMeta.setInfoMessage("<html>Meta file stores the eye and mouth 'animation' data for the portrait.</html>");
+        fileButtonImportMeta.setLabelText("Meta file :");
+        fileButtonImportMeta.setName("Import Meta"); // NOI18N
+
+        jButtonImportImage.setText("Import");
+        jButtonImportImage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton12ActionPerformed(evt);
+                jButtonImportImageActionPerformed(evt);
             }
         });
-
-        jLabel3.setText("<html> Select an image File (e.g. PNG or GIF).<br> Color format should be 4BPP / 16 indexed colors.<br> (Images of 8BPP / 256 indexed colors will be converted to 4 BPP / 16). </html>");
-        jLabel3.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-
-        fileButton2.setFilePath(".\\export\\portrait00.png");
-        fileButton2.setLabelText("Image file :");
-
-        fileButton3.setFilePath(".meta");
-        fileButton3.setLabelText("Meta file :");
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -408,25 +314,25 @@ public class PortraitMainEditor extends AbstractMainEditor {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fileButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton12))
-                    .addComponent(fileButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 366, Short.MAX_VALUE))
+                    .addComponent(fileButtonImportImage, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE)
+                    .addComponent(fileButtonImportMeta, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE)
+                    .addComponent(jLabel3)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButtonImportImage)))
                 .addContainerGap())
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(fileButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fileButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fileButtonImportImage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton12)
-                    .addComponent(jLabel3))
+                .addComponent(fileButtonImportMeta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonImportImage)
                 .addContainerGap())
         );
 
@@ -443,24 +349,26 @@ public class PortraitMainEditor extends AbstractMainEditor {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1)
         );
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Export to :"));
         jPanel5.setPreferredSize(new java.awt.Dimension(32, 135));
 
-        jButton2.setText("Export");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jLabel1.setText("Export portrait disassembly.");
+
+        fileButtonExportPortrait.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
+        fileButtonExportPortrait.setFilePath(".\\portrait00.bin");
+        fileButtonExportPortrait.setInfoMessage("");
+        fileButtonExportPortrait.setLabelText("Portrait file :");
+        fileButtonExportPortrait.setName("Export Portrait"); // NOI18N
+
+        jButtonExportportrait.setText("Export");
+        jButtonExportportrait.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButtonExportportraitActionPerformed(evt);
             }
         });
-
-        jLabel1.setText("<html>Creates a new file, or overwrites existing file.<br/>(MAKE BACKUPS !)</html>");
-        jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-
-        fileButton4.setFilePath(".\\portrait00.bin");
-        fileButton4.setLabelText("Portrait file :");
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
@@ -469,42 +377,49 @@ public class PortraitMainEditor extends AbstractMainEditor {
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fileButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(fileButtonExportPortrait, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButtonExportportrait))
+                    .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(fileButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jLabel1))
-                .addContainerGap(66, Short.MAX_VALUE))
+                .addComponent(fileButtonExportPortrait, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonExportportrait)
+                .addContainerGap())
         );
 
         jTabbedPane2.addTab("Disassembly", jPanel11);
 
-        jButton13.setText("Export");
-        jButton13.addActionListener(new java.awt.event.ActionListener() {
+        jLabel9.setText("Export portrait as image.");
+
+        fileButtonExportImage.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ANY_IMAGE);
+        fileButtonExportImage.setFilePath(".\\export\\portrait00.png");
+        fileButtonExportImage.setInfoMessage("<html>Supported image formats: PNG or GIF.<br><br>Exported color format will be 4BPP / 16 indexed colors.<br>Color index 0 is treated as transparent.</html>");
+        fileButtonExportImage.setLabelText("Image file :");
+        fileButtonExportImage.setName("Export Image"); // NOI18N
+
+        fileButtonExportMeta.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.META);
+        fileButtonExportMeta.setFilePath(".meta");
+        fileButtonExportMeta.setInfoMessage("<html>Meta file stores the eye and mouth 'animation' data for the portrait.</html>");
+        fileButtonExportMeta.setLabelText("Meta file :");
+        fileButtonExportMeta.setName("Export Meta"); // NOI18N
+
+        jButtonExportImage.setText("Export");
+        jButtonExportImage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton13ActionPerformed(evt);
+                jButtonExportImageActionPerformed(evt);
             }
         });
-
-        jLabel9.setText("<html>Export data to a new image file. <br> Recommended to save as PNG or GIF.<br> Exported color format : 4BPP / 16 indexed colors.<br>Transparent color at index 0.</html>");
-        jLabel9.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-
-        fileButton5.setFilePath(".\\export\\portrait00.png");
-        fileButton5.setLabelText("Image file :");
-
-        fileButton6.setFilePath(".meta");
-        fileButton6.setLabelText("Meta file :");
 
         javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
         jPanel14.setLayout(jPanel14Layout);
@@ -513,25 +428,27 @@ public class PortraitMainEditor extends AbstractMainEditor {
             .addGroup(jPanel14Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fileButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(fileButtonExportImage, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
-                        .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton13))
-                    .addComponent(fileButton6, javax.swing.GroupLayout.DEFAULT_SIZE, 366, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButtonExportImage))
+                    .addComponent(fileButtonExportMeta, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(jPanel14Layout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel14Layout.setVerticalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel14Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(fileButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fileButton6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fileButtonExportImage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton13)
-                    .addComponent(jLabel9))
+                .addComponent(fileButtonExportMeta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonExportImage)
                 .addContainerGap())
         );
 
@@ -561,9 +478,9 @@ public class PortraitMainEditor extends AbstractMainEditor {
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
         );
 
@@ -573,7 +490,7 @@ public class PortraitMainEditor extends AbstractMainEditor {
         jPanel15.setLayout(jPanel15Layout);
         jPanel15Layout.setHorizontalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1040, Short.MAX_VALUE)
+            .addComponent(jSplitPane2)
         );
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -587,11 +504,11 @@ public class PortraitMainEditor extends AbstractMainEditor {
         jPanel13.setLayout(jPanel13Layout);
         jPanel13Layout.setHorizontalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1040, Short.MAX_VALUE)
+            .addComponent(jSplitPane1)
         );
         jPanel13Layout.setVerticalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE)
+            .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -605,12 +522,12 @@ public class PortraitMainEditor extends AbstractMainEditor {
             .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        setSize(new java.awt.Dimension(1056, 708));
+        setSize(new java.awt.Dimension(1096, 658));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Path portraitPath = PathHelpers.getBasePath().resolve(fileButton4.getFilePath());
+    private void jButtonExportportraitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExportportraitActionPerformed
+        Path portraitPath = PathHelpers.getBasePath().resolve(fileButtonExportPortrait.getFilePath());
         if (!PathHelpers.createPathIfRequred(portraitPath)) return;
         try {
             portraitManager.exportDisassembly(portraitPath, portraitLayoutPanel.getPortrait());
@@ -618,11 +535,11 @@ public class PortraitMainEditor extends AbstractMainEditor {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Portrait disasm could not be exported to : " + portraitPath);
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jButtonExportportraitActionPerformed
 
-    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
-        Path imagePath = PathHelpers.getBasePath().resolve(fileButton5.getFilePath());
-        Path metaPath = PathHelpers.replaceExtension(imagePath, fileButton6.getFilePath());
+    private void jButtonExportImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExportImageActionPerformed
+        Path imagePath = PathHelpers.getBasePath().resolve(fileButtonExportImage.getFilePath());
+        Path metaPath = PathHelpers.replaceExtension(imagePath, fileButtonExportMeta.getFilePath());
         if (!PathHelpers.createPathIfRequred(imagePath)) return;
         if (!PathHelpers.createPathIfRequred(metaPath)) return;
         try {
@@ -631,23 +548,11 @@ public class PortraitMainEditor extends AbstractMainEditor {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Portrait image could not be exported to : " + imagePath);
         }
-    }//GEN-LAST:event_jButton13ActionPerformed
+    }//GEN-LAST:event_jButtonExportImageActionPerformed
 
-    private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox2ActionPerformed
-        portraitLayoutPanel.setSpeaking(jCheckBox2.isSelected());
-    }//GEN-LAST:event_jCheckBox2ActionPerformed
-
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
-        portraitLayoutPanel.setBlinking(jCheckBox1.isSelected());
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
-
-    private void jCheckBox3ActionPerformed(java.awt.event.ActionEvent evt) {                                           
-        portraitLayoutPanel.setShowGrid(jCheckBox3.isSelected());
-    }                                                                                 
-
-    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-        Path imagePath = PathHelpers.getBasePath().resolve(fileButton2.getFilePath());
-        Path metaPath = PathHelpers.replaceExtension(imagePath, fileButton3.getFilePath());
+    private void jButtonImportImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportImageActionPerformed
+        Path imagePath = PathHelpers.getBasePath().resolve(fileButtonImportImage.getFilePath());
+        Path metaPath = PathHelpers.replaceExtension(imagePath, fileButtonImportMeta.getFilePath());
         try {
             portraitManager.importImage(imagePath, metaPath);
         } catch (Exception ex) {
@@ -656,10 +561,10 @@ public class PortraitMainEditor extends AbstractMainEditor {
             Console.logger().severe("ERROR Portrait image or meta could not be imported from : " + imagePath);
         }
         onDataLoaded();
-    }//GEN-LAST:event_jButton12ActionPerformed
+    }//GEN-LAST:event_jButtonImportImageActionPerformed
 
-    private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
-        Path portraitPath = PathHelpers.getBasePath().resolve(fileButton1.getFilePath());
+    private void jButtonImportPortraitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportPortraitActionPerformed
+        Path portraitPath = PathHelpers.getBasePath().resolve(fileButtonImportPortrait.getFilePath());
         try {
             portraitManager.importDisassembly(portraitPath);
         } catch (Exception ex) {
@@ -668,28 +573,13 @@ public class PortraitMainEditor extends AbstractMainEditor {
             Console.logger().severe("ERROR Portrait disasm could not be imported from : " + portraitPath);
         }
         onDataLoaded();
-    }//GEN-LAST:event_jButton18ActionPerformed
+    }//GEN-LAST:event_jButtonImportPortraitActionPerformed
     
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        if (portraitLayoutPanel != null && portraitSettings.getZoom() != jComboBox1.getSelectedIndex()+1) {
-            portraitLayoutPanel.setDisplayScale(jComboBox1.getSelectedIndex()+1);
-            portraitSettings.setZoom(jComboBox1.getSelectedIndex()+1);
-            SettingsManager.saveSettingsFile();
-        }
-    }//GEN-LAST:event_jComboBox1ActionPerformed
-
-    private void colorPicker1ColorChanged(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorPicker1ColorChanged
-        portraitLayoutPanel.setBGColor(colorPicker1.getColor());
-        SettingsManager.getGlobalSettings().setTransparentBGColor(colorPicker1.getColor());
-        SettingsManager.saveGlobalSettingsFile();
-    }//GEN-LAST:event_colorPicker1ColorChanged
-
     private void eyesListSelectionChanged(ListSelectionEvent evt) {
         if (evt.getValueIsAdjusting() && selectedEyesRow == tableEyes.jTable.getSelectedRow()) return;
         selectedEyesRow = tableEyes.jTable.getSelectedRow();
         Portrait portrait = portraitLayoutPanel.getPortrait();
         if (portrait != null) {
-            portrait.setEyeTiles(eyeTable.getTableData(int[][].class));
             portraitLayoutPanel.setSelectedEyeTile(selectedEyesRow);
         }
     }
@@ -699,30 +589,59 @@ public class PortraitMainEditor extends AbstractMainEditor {
         selectedMouthsRow = tableMouth.jTable.getSelectedRow();
         Portrait portrait = portraitLayoutPanel.getPortrait();
         if (portrait != null) {
-            portrait.setMouthTiles(mouthTable.getTableData(int[][].class));
             portraitLayoutPanel.setSelectedMouthTile(selectedMouthsRow);
         }
-    }                                         
+    }
 
-    private void eyesListValueChanged(TableModelEvent evt) {
-        if (selectedEyesRow == tableEyes.jTable.getSelectedRow()) {
-            selectedEyesRow = tableEyes.jTable.getSelectedRow();
-            Portrait portrait = portraitLayoutPanel.getPortrait();
-            if (portrait != null) {
-                portrait.setEyeTiles(eyeTable.getTableData(int[][].class));
-                portraitLayoutPanel.setSelectedEyeTile(selectedEyesRow);
-            }
+    private void eyesListValueChanged(ActionEvent evt) {
+        if (selectedEyesRow == -1 || selectedEyesRow != tableEyes.jTable.getSelectedRow()) return;
+        if (!ActionManager.isActionTriggering()) {
+            PortraitActionData newData = new PortraitActionData(tableEyes.jTable.getSelectedRow(), portraitLayoutPanel.getPortrait().getEyeTiles()[selectedEyesRow]);
+            PortraitActionData oldData = new PortraitActionData(tableEyes.jTable.getSelectedRow(), eyeTable.getRow(selectedEyesRow));
+            ActionManager.setActionWithoutExecute(new CustomAction<PortraitActionData>(tableEyes, "Eyes Changed", this::actionEyesListValueChanged, newData, oldData));
+        }
+        Portrait portrait = portraitLayoutPanel.getPortrait();
+        if (portrait != null) {
+            eyeTable.SetRow(selectedEyesRow, portrait.getEyeTiles()[selectedEyesRow]);
         }
     }
     
-    private void mouthListValueChanged(TableModelEvent evt) {
-        if (selectedMouthsRow == tableMouth.jTable.getSelectedRow()) {
-            selectedMouthsRow = tableMouth.jTable.getSelectedRow();
-            Portrait portrait = portraitLayoutPanel.getPortrait();
-            if (portrait != null) {
-                portrait.setMouthTiles(mouthTable.getTableData(int[][].class));
-                portraitLayoutPanel.setSelectedMouthTile(selectedMouthsRow);
-            }
+    private void actionEyesListValueChanged(PortraitActionData data) {
+        int row = data.row();
+        Portrait portrait = portraitLayoutPanel.getPortrait();
+        if (portrait != null) {
+            tableEyes.jTable.clearSelection();
+            portrait.getEyeTiles()[row] = data.data();
+            eyeTable.SetRow(selectedEyesRow, data.data());
+            tableEyes.jTable.addRowSelectionInterval(row, row);
+            portraitLayoutPanel.setSelectedEyeTile(row);
+            selectedEyesRow = row;
+        }
+    }
+    
+    private void mouthListValueChanged(ActionEvent evt) {
+        if (selectedMouthsRow == -1 || selectedMouthsRow != tableMouth.jTable.getSelectedRow()) return;
+        if (!ActionManager.isActionTriggering()) {
+            PortraitActionData newData = new PortraitActionData(tableMouth.jTable.getSelectedRow(), portraitLayoutPanel.getPortrait().getMouthTiles()[selectedMouthsRow]);
+            PortraitActionData oldData = new PortraitActionData(tableMouth.jTable.getSelectedRow(), mouthTable.getRow(selectedMouthsRow));
+            ActionManager.setActionWithoutExecute(new CustomAction<PortraitActionData>(tableMouth, "Mouths Changed", this::actionMouthsListValueChanged, newData, oldData));
+        }
+        Portrait portrait = portraitLayoutPanel.getPortrait();
+        if (portrait != null) {
+            mouthTable.SetRow(selectedMouthsRow, portrait.getMouthTiles()[selectedMouthsRow]);
+        }
+    }
+    
+    private void actionMouthsListValueChanged(PortraitActionData data) {
+        int row = data.row();
+        Portrait portrait = portraitLayoutPanel.getPortrait();
+        if (portrait != null) {
+            tableMouth.jTable.clearSelection();
+            portrait.getMouthTiles()[row] = data.data();
+            mouthTable.SetRow(selectedMouthsRow, data.data());
+            tableMouth.jTable.addRowSelectionInterval(row, row);
+            portraitLayoutPanel.setSelectedMouthTile(row);
+            selectedMouthsRow = row;
         }
     }
     
@@ -743,27 +662,20 @@ public class PortraitMainEditor extends AbstractMainEditor {
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.sfc.sf2.core.gui.controls.ColorPicker colorPicker1;
     private com.sfc.sf2.core.gui.controls.Console console1;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton1;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton2;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton3;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton4;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton5;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton6;
-    private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton13;
-    private javax.swing.JButton jButton18;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JCheckBox jCheckBox3;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonExportImage;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonExportMeta;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonExportPortrait;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonImportImage;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonImportMeta;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonImportPortrait;
+    private javax.swing.JButton jButtonExportImage;
+    private javax.swing.JButton jButtonExportportrait;
+    private javax.swing.JButton jButtonImportImage;
+    private javax.swing.JButton jButtonImportPortrait;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel55;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
@@ -771,7 +683,6 @@ public class PortraitMainEditor extends AbstractMainEditor {
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -786,8 +697,8 @@ public class PortraitMainEditor extends AbstractMainEditor {
     private com.sfc.sf2.portrait.models.PortraitDataTableModel portraitDataModelEyes;
     private com.sfc.sf2.portrait.models.PortraitDataTableModel portraitDataModelMouth;
     private com.sfc.sf2.portrait.gui.PortraitLayoutPanel portraitLayoutPanel;
+    private com.sfc.sf2.portrait.gui.PortraitViewPanel portraitViewPanel1;
     private com.sfc.sf2.core.gui.controls.Table tableEyes;
     private com.sfc.sf2.core.gui.controls.Table tableMouth;
     // End of variables declaration//GEN-END:variables
-
 }

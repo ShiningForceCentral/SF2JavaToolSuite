@@ -25,7 +25,7 @@ public class AsciiReplaceProcessor extends AbstractMetadataProcessor<HashMap<Cha
         while ((line = reader.readLine()) != null) {
             if (line.length() == 0 || line.charAt(0) == ';') continue;
             line = StringHelpers.trimAndRemoveComments(line);
-            String[] split = line.split(" ");
+            String[] split = line.split("\\s+");
             char key = parseChar(split[0]);
             char val = parseChar(split[1]);
             item.put(key, val);

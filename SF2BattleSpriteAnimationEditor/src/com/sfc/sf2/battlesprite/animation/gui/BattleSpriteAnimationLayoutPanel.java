@@ -5,17 +5,16 @@
  */
 package com.sfc.sf2.battlesprite.animation.gui;
 
-import com.sfc.sf2.background.Background;
+import com.sfc.sf2.battlescene.gui.BattleSceneLayoutPanel;
 import com.sfc.sf2.battlesprite.BattleSprite;
 import com.sfc.sf2.battlesprite.BattleSprite.BattleSpriteType;
 import com.sfc.sf2.battlesprite.animation.BattleSpriteAnimation;
 import com.sfc.sf2.battlesprite.animation.BattleSpriteAnimationFrame;
-import com.sfc.sf2.core.gui.AnimatedLayoutPanel;
 import com.sfc.sf2.core.gui.layout.*;
+import com.sfc.sf2.core.gui.layout.LayoutAnimator.AnimationController;
 import static com.sfc.sf2.graphics.Tile.PIXEL_HEIGHT;
 import static com.sfc.sf2.graphics.Tile.PIXEL_WIDTH;
 import com.sfc.sf2.graphics.Tileset;
-import com.sfc.sf2.ground.Ground;
 import com.sfc.sf2.weaponsprite.WeaponSprite;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -25,39 +24,26 @@ import java.awt.Graphics;
  *
  * @author wiz
  */
-public class BattleSpriteAnimationLayoutPanel extends AnimatedLayoutPanel {
+public class BattleSpriteAnimationLayoutPanel extends BattleSceneLayoutPanel implements AnimationController {
     
     private static final Dimension IMAGE_SIZE = new Dimension(256, 224);
-    
-    private static final int BACKGROUND_BASE_X = 0;
-    private static final int BACKGROUND_BASE_Y = 56;
-    private static final int GROUND_BASE_X = 136;
-    private static final int GROUND_BASE_Y = 140;
-    private static final int BATTLESPRITE_ALLY_BASE_X = 136;
-    private static final int BATTLESPRITE_ALLY_BASE_Y = 64;
-    private static final int BATTLESPRITE_ENEMY_BASE_X = 0;
-    private static final int BATTLESPRITE_ENEMY_BASE_Y = 56;
-    private static final int WEAPONSPRITE_BASE_X = 136;
-    private static final int WEAPONSPRITE_BASE_Y = 64;
         
-    private Background bg;
-    private Ground ground;
+    private BattleSpriteAnimation animation;
     private BattleSprite battlesprite;
     private WeaponSprite weaponsprite;
-    private BattleSpriteAnimation animation;
     
-    private int currentAnimationFrame = 0;
     private boolean hideWeapon = false;
     
     public BattleSpriteAnimationLayoutPanel() {
         super();
         background = new LayoutBackground(Color.BLACK);
-        scale = new LayoutScale(1);
+        scale = new LayoutScale();
         grid = null;
         coordsGrid = null;
         coordsHeader = null;
         mouseInput = null;
         scroller = new LayoutScrollNormaliser(this);
+        animator = new LayoutAnimator(this);
     }
 
     @Override
@@ -72,11 +58,13 @@ public class BattleSpriteAnimationLayoutPanel extends AnimatedLayoutPanel {
 
     @Override
     protected void drawImage(Graphics graphics) {
-        BattleSpriteAnimationFrame animFrame = animation.getFrames()[currentAnimationFrame];
+        super.drawImage(graphics);
+        
+        if (animator.getFrame() >= animation.getFrameCount())
+            animator.setFrame(0);
+        BattleSpriteAnimationFrame animFrame = animation.getFrames()[animator.getFrame()];
         Tileset spriteFrame = null;
         spriteFrame = battlesprite.getFrames()[animFrame.getBattleSpriteIndex()];   
-        graphics.drawImage(bg.getTileset().getIndexedColorImage(), BACKGROUND_BASE_X, BACKGROUND_BASE_Y, null);
-        graphics.drawImage(ground.getTileset().getIndexedColorImage(), GROUND_BASE_X, GROUND_BASE_Y, null);
         if (battlesprite.getType() == BattleSpriteType.ENEMY) {
             drawBattleSpriteFrame(graphics, spriteFrame, BATTLESPRITE_ENEMY_BASE_X+animFrame.getX(), BATTLESPRITE_ENEMY_BASE_Y+animFrame.getY());
         } else {
@@ -113,34 +101,22 @@ public class BattleSpriteAnimationLayoutPanel extends AnimatedLayoutPanel {
     }
 
     @Override
-    protected void animationFrameUpdated(int frame) {
-        super.animationFrameUpdated(frame);
-        setFrame(frame);
-    }
-    
-    @Override
-    protected int getFrameSpeed(int frame) {
+    public int getAnimationFrameSpeed(int currentAnimFrame) {
         if (hasData()) {
-            return animation.getFrames()[frame].getDuration();
+            return animation.getFrames()[currentAnimFrame].getDuration();
         } else {
-            stopAnimation();
+            animator.stopAnimation();
             return 0;
         }
-    }
-
-    public void setBackground(Background background) {
-        this.bg = background;
-        redraw();
-    }
-
-    public void setGround(Ground ground) {
-        this.ground = ground;
-        redraw();
     }
 
     public void setBattlesprite(BattleSprite battlesprite) {
         this.battlesprite = battlesprite;
         redraw();
+    }
+
+    public WeaponSprite getWeaponsprite() {
+        return weaponsprite;
     }
 
     public void setWeaponsprite(WeaponSprite weaponsprite) {
@@ -154,18 +130,6 @@ public class BattleSpriteAnimationLayoutPanel extends AnimatedLayoutPanel {
 
     public void setAnimation(BattleSpriteAnimation animation) {
         this.animation = animation;
-    }
-    
-    public int getFrame() {
-        return currentAnimationFrame;
-    }
-
-    public void setFrame(int currentFrame) {
-        if (animation == null || currentFrame < 0) return;
-        if (this.currentAnimationFrame != currentFrame) {
-            currentAnimationFrame = currentFrame;
-            redraw();
-        }
     }
 
     public boolean isHideWeapon() {

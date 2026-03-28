@@ -20,24 +20,24 @@ import java.nio.file.Path;
  * @author TiMMy
  * @param <TType> The type of data being loaded
  */
-public abstract class AbstractAsmProcessor<TType extends Object> {
+public abstract class AbstractAsmProcessor<TType extends Object, TPackage extends Object> {
     
-    public TType importAsmData(Path filePath) throws IOException, AsmException, FileNotFoundException {
+    public TType importAsmData(Path filePath, TPackage pckg) throws IOException, AsmException, FileNotFoundException {
         Console.logger().finest("ENTERING importAsmData : " + filePath);
         File asmFile = filePath.toFile();
         if (!asmFile.exists()) {
             throw new FileNotFoundException("ASM data file not found : " + filePath);
         }
         BufferedReader reader = new BufferedReader(new FileReader(asmFile));
-        TType item = parseAsmData(reader);
+        TType item = parseAsmData(reader, pckg);
         reader.close();
         Console.logger().finest("EXITING importAsmData");
         return item;
     }
     
-    protected abstract TType parseAsmData(BufferedReader reader) throws IOException, AsmException;
+    protected abstract TType parseAsmData(BufferedReader reader, TPackage pckg) throws IOException, AsmException;
     
-    public void exportAsmData(Path filePath, TType item) throws IOException, AsmException {
+    public void exportAsmData(Path filePath, TType item, TPackage pckg) throws IOException, AsmException {
         Console.logger().finest("ENTERING exportAsmData : " + filePath);
         File asmFile = filePath.toFile();
         FileWriter writer = new FileWriter(asmFile, false);
@@ -46,14 +46,14 @@ public abstract class AbstractAsmProcessor<TType extends Object> {
         writer.write(PathHelpers.getIncbinPath().relativize(filePath).toString());
         writer.write(" :\n");
         writer.write("; --- : ");
-        writer.write(getHeaderName(item));
+        writer.write(getHeaderName(item, pckg));
         writer.write("\n");
         //Data
-        packageAsmData(writer, item);
+        packageAsmData(writer, item, pckg);
         writer.close();
         Console.logger().finest("EXITING exportAsmData");
     }
     
-    protected abstract String getHeaderName(TType item);
-    protected abstract void packageAsmData(FileWriter writer, TType item) throws IOException, AsmException;
+    protected abstract String getHeaderName(TType item, TPackage pckg);
+    protected abstract void packageAsmData(FileWriter writer, TType item, TPackage pckg) throws IOException, AsmException;
 }

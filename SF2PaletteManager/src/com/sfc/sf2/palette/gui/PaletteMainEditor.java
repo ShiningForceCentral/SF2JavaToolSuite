@@ -5,11 +5,12 @@
  */
 package com.sfc.sf2.palette.gui;
 
-import com.sfc.sf2.palette.gui.controls.CRAMColorEditor;
+import com.sfc.sf2.core.actions.ActionManager;
+import com.sfc.sf2.core.actions.NonCombinableAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.helpers.PathHelpers;
-import com.sfc.sf2.palette.CRAMColor;
+import com.sfc.sf2.palette.Palette;
 import com.sfc.sf2.palette.PaletteManager;
 import java.nio.file.Path;
 import java.util.logging.Level;
@@ -38,8 +39,11 @@ public class PaletteMainEditor extends AbstractMainEditor {
     @Override
     protected void onDataLoaded() {
         super.onDataLoaded();
-        
-        palettePane1.setPalette(paletteManager.getPalette());
+        ActionManager.setAndExecuteAction(new NonCombinableAction<Palette>(this, "Palette Imported", this::actionPaletteLoaded, paletteManager.getPalette(), palettePane1.getPalette()));
+    }
+    
+    private void actionPaletteLoaded(Palette palette) {
+        palettePane1.setPalette(palette);
     }
 
     /**
@@ -54,26 +58,29 @@ public class PaletteMainEditor extends AbstractMainEditor {
         jPanel3 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel4 = new javax.swing.JPanel();
-        jButton18 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        fileButton1 = new com.sfc.sf2.core.gui.controls.FileButton();
-        jPanel2 = new javax.swing.JPanel();
+        infoButton1 = new com.sfc.sf2.core.gui.controls.InfoButton();
+        fileButtonImportPalette = new com.sfc.sf2.core.gui.controls.FileButton();
+        jButtonImportPalette = new javax.swing.JButton();
+        jPanelImportImage = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jButton20 = new javax.swing.JButton();
+        infoButton2 = new com.sfc.sf2.core.gui.controls.InfoButton();
         fileButton2 = new com.sfc.sf2.core.gui.controls.FileButton();
+        jButtonImportImage = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         palettePane1 = new com.sfc.sf2.palette.gui.PalettePane();
         colorEditor1 = new com.sfc.sf2.palette.gui.controls.CRAMColorEditor();
         jPanel5 = new javax.swing.JPanel();
         jTabbedPane2 = new javax.swing.JTabbedPane();
         jPanel11 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        fileButton4 = new com.sfc.sf2.core.gui.controls.FileButton();
+        fileButtonExportPalette = new com.sfc.sf2.core.gui.controls.FileButton();
+        jButtonExportPalette = new javax.swing.JButton();
         jPanel9 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
-        fileButton3 = new com.sfc.sf2.core.gui.controls.FileButton();
+        fileButtonExportImage = new com.sfc.sf2.core.gui.controls.FileButton();
+        jButtonExportImage = new javax.swing.JButton();
+        infoButton3 = new com.sfc.sf2.core.gui.controls.InfoButton();
         console1 = new com.sfc.sf2.core.gui.controls.Console();
 
         setTitle("SF2PaletteManager");
@@ -81,18 +88,23 @@ public class PaletteMainEditor extends AbstractMainEditor {
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Import from :"));
         jPanel3.setPreferredSize(new java.awt.Dimension(590, 135));
 
-        jButton18.setText("Import");
-        jButton18.addActionListener(new java.awt.event.ActionListener() {
+        jLabel2.setText("Import palette disassembly.");
+
+        infoButton1.setMessageText("<html>Palettes control the colors that graphics are rendered in.<br>Most can be found at following directory : graphics/tech/</html>");
+        infoButton1.setText("");
+
+        fileButtonImportPalette.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
+        fileButtonImportPalette.setFilePath(".\\tech\\basepalette.bin");
+        fileButtonImportPalette.setInfoMessage("");
+        fileButtonImportPalette.setLabelText("Bin file :");
+        fileButtonImportPalette.setName("Import Palette"); // NOI18N
+
+        jButtonImportPalette.setText("Import");
+        jButtonImportPalette.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton18ActionPerformed(evt);
+                jButtonImportPaletteActionPerformed(evt);
             }
         });
-
-        jLabel2.setText("<html>Select a disassembly palette file.<br>Most can be found at following directory : graphics/tech/</html>");
-        jLabel2.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-
-        fileButton1.setFilePath(".\\tech\\basepalette.bin");
-        fileButton1.setLabelText("Bin file :");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -101,73 +113,84 @@ public class PaletteMainEditor extends AbstractMainEditor {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fileButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(fileButtonImportPalette, javax.swing.GroupLayout.DEFAULT_SIZE, 754, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 672, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButtonImportPalette))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton18)))
+                        .addComponent(infoButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(fileButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(infoButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jButton18)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jLabel2))
+                .addComponent(fileButtonImportPalette, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonImportPalette)
                 .addContainerGap())
         );
 
         jTabbedPane1.addTab("Disassembly", jPanel4);
 
-        jLabel3.setText("<html>\nSelect an image File (e.g. PNG or GIF).<br>\nColor format should be 4BPP / 16 indexed colors.<br>\n(Images of 8BPP / 256 indexed colors will be converted to 4 BPP / 16).\n</html>");
-        jLabel3.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jLabel3.setText("Extract palette from image.");
 
-        jButton20.setText("Import");
-        jButton20.addActionListener(new java.awt.event.ActionListener() {
+        infoButton2.setMessageText("<html>Imports a palette from an image. Image can be of any size, uses the first 16 colors from the palette of the image.<br>Supported image formats: PNG or GIF.<br><br>Color format should be 4BPP / 16 indexed colors. Images of 8BPP / 256 indexed colors will be converted to 4 BPP / 16 (some colors may be lost).<br>Colors will be convered to CRAM format (the color format used by the SEGA Genesis).</html>");
+        infoButton2.setText("");
+
+        fileButton2.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ANY_IMAGE);
+        fileButton2.setFilePath(".\\export\\palette.png");
+        fileButton2.setInfoMessage("");
+        fileButton2.setLabelText("Image file :");
+        fileButton2.setName("Import Image"); // NOI18N
+
+        jButtonImportImage.setText("Import");
+        jButtonImportImage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton20ActionPerformed(evt);
+                jButtonImportImageActionPerformed(evt);
             }
         });
 
-        fileButton2.setFilePath(".\\export\\palette.png");
-        fileButton2.setLabelText("Image file :");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanelImportImageLayout = new javax.swing.GroupLayout(jPanelImportImage);
+        jPanelImportImage.setLayout(jPanelImportImageLayout);
+        jPanelImportImageLayout.setHorizontalGroup(
+            jPanelImportImageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelImportImageLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(fileButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 672, Short.MAX_VALUE)
+                .addGroup(jPanelImportImageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(fileButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 754, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelImportImageLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButtonImportImage))
+                    .addGroup(jPanelImportImageLayout.createSequentialGroup()
+                        .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton20)))
+                        .addComponent(infoButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        jPanelImportImageLayout.setVerticalGroup(
+            jPanelImportImageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelImportImageLayout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(jPanelImportImageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(infoButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(fileButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jButton20)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(5, 5, 5)
-                        .addComponent(jLabel3)))
+                .addComponent(jButtonImportImage)
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Image", jPanel2);
+        jTabbedPane1.addTab("Image", jPanelImportImage);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -207,18 +230,20 @@ public class PaletteMainEditor extends AbstractMainEditor {
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Export to :"));
         jPanel5.setPreferredSize(new java.awt.Dimension(32, 135));
 
-        jButton2.setText("Export");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jLabel1.setText("Export palette disassembly.");
+
+        fileButtonExportPalette.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
+        fileButtonExportPalette.setFilePath(".\\tech\\basepalette.bin");
+        fileButtonExportPalette.setInfoMessage("");
+        fileButtonExportPalette.setLabelText("Bin file :");
+        fileButtonExportPalette.setName("Export Palette"); // NOI18N
+
+        jButtonExportPalette.setText("Export");
+        jButtonExportPalette.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButtonExportPaletteActionPerformed(evt);
             }
         });
-
-        jLabel1.setText("<html>Select a new target file. This export will create a new file.</html>");
-        jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-
-        fileButton4.setFilePath(".\\tech\\basepalette.bin");
-        fileButton4.setLabelText("Bin file :");
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
@@ -227,39 +252,46 @@ public class PaletteMainEditor extends AbstractMainEditor {
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fileButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 754, Short.MAX_VALUE)
+                    .addComponent(fileButtonExportPalette, javax.swing.GroupLayout.DEFAULT_SIZE, 754, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButtonExportPalette))
+                    .addGroup(jPanel11Layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+            .addGroup(jPanel11Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(fileButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1))
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addComponent(fileButtonExportPalette, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonExportPalette)
+                .addContainerGap())
         );
 
         jTabbedPane2.addTab("Disassembly", jPanel11);
 
-        jLabel7.setText("<html>Export data to a new image file. <br>\nRecommended to save as PNG or GIF.<br>\nExported color format : 4BPP / 16 indexed colors.<br>Transparent color at index 0.</html>");
-        jLabel7.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jLabel7.setText("<html>Export palette to image.</html>");
 
-        jButton3.setText("Export");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        fileButtonExportImage.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ANY_IMAGE);
+        fileButtonExportImage.setFilePath(".\\export\\palette.png");
+        fileButtonExportImage.setInfoMessage("");
+        fileButtonExportImage.setLabelText("Image file :");
+        fileButtonExportImage.setName("Export Image"); // NOI18N
+
+        jButtonExportImage.setText("Export");
+        jButtonExportImage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jButtonExportImageActionPerformed(evt);
             }
         });
 
-        fileButton3.setFilePath(".\\export\\palette.png");
-        fileButton3.setLabelText("Image file :");
+        infoButton3.setMessageText("<html>Creates a 16x1 pixel image of the palette.<br>Supported image formats: PNG or GIF.<br><br>Exported color format will be 4BPP / 16 indexed colors.<br>Color index 0 is treated as transparent.</html>");
+        infoButton3.setText("");
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -268,23 +300,29 @@ public class PaletteMainEditor extends AbstractMainEditor {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fileButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 754, Short.MAX_VALUE)
+                    .addComponent(fileButtonExportImage, javax.swing.GroupLayout.DEFAULT_SIZE, 754, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                        .addComponent(jLabel7)
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButtonExportImage))
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3)))
+                        .addComponent(infoButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+            .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(fileButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(infoButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton3)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(fileButtonExportImage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonExportImage)
+                .addContainerGap())
         );
 
         jTabbedPane2.addTab("Image", jPanel9);
@@ -300,7 +338,7 @@ public class PaletteMainEditor extends AbstractMainEditor {
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 122, Short.MAX_VALUE)
+            .addComponent(jTabbedPane2)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -320,22 +358,22 @@ public class PaletteMainEditor extends AbstractMainEditor {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(console1, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
+                .addComponent(console1, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        setSize(new java.awt.Dimension(816, 742));
+        setSize(new java.awt.Dimension(816, 768));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Path palettePath = PathHelpers.getBasePath().resolve(fileButton4.getFilePath());
+    private void jButtonExportPaletteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExportPaletteActionPerformed
+        Path palettePath = PathHelpers.getBasePath().resolve(fileButtonExportPalette.getFilePath());
         if (!PathHelpers.createPathIfRequred(palettePath)) return;
         try {
             paletteManager.exportDisassembly(palettePath, palettePane1.getUpdatedPalette());
@@ -343,10 +381,10 @@ public class PaletteMainEditor extends AbstractMainEditor {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Palette disasm could not be exported to : " + palettePath);
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jButtonExportPaletteActionPerformed
 
-    private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
-        Path palettePath = PathHelpers.getBasePath().resolve(fileButton1.getFilePath());
+    private void jButtonImportPaletteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportPaletteActionPerformed
+        Path palettePath = PathHelpers.getBasePath().resolve(fileButtonImportPalette.getFilePath());
         try {
             paletteManager.importDisassembly(palettePath, false);
         } catch (Exception ex) {
@@ -355,9 +393,9 @@ public class PaletteMainEditor extends AbstractMainEditor {
             Console.logger().severe("ERROR Palette disasm could not be imported from : " + palettePath);
         }
         onDataLoaded();
-    }//GEN-LAST:event_jButton18ActionPerformed
+    }//GEN-LAST:event_jButtonImportPaletteActionPerformed
 
-    private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
+    private void jButtonImportImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportImageActionPerformed
         Path palettePath = PathHelpers.getBasePath().resolve(fileButton2.getFilePath());
         try {
             paletteManager.importImage(palettePath, false);
@@ -367,10 +405,10 @@ public class PaletteMainEditor extends AbstractMainEditor {
             Console.logger().severe("ERROR Palette image could not be imported from : " + palettePath);
         }
         onDataLoaded();
-    }//GEN-LAST:event_jButton20ActionPerformed
+    }//GEN-LAST:event_jButtonImportImageActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        Path palettePath = PathHelpers.getBasePath().resolve(fileButton3.getFilePath());
+    private void jButtonExportImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExportImageActionPerformed
+        Path palettePath = PathHelpers.getBasePath().resolve(fileButtonExportImage.getFilePath());
         if (!PathHelpers.createPathIfRequred(palettePath)) return;
         try {
             paletteManager.exportImage(palettePath,palettePane1.getUpdatedPalette(),true);
@@ -378,7 +416,7 @@ public class PaletteMainEditor extends AbstractMainEditor {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Palette image could not be exported to : " + palettePath);
         }
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_jButtonExportImageActionPerformed
     
     /**
      * To create a new Main Editor, copy the below code
@@ -399,25 +437,28 @@ public class PaletteMainEditor extends AbstractMainEditor {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.sfc.sf2.palette.gui.controls.CRAMColorEditor colorEditor1;
     private com.sfc.sf2.core.gui.controls.Console console1;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton1;
     private com.sfc.sf2.core.gui.controls.FileButton fileButton2;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton3;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton4;
-    private javax.swing.JButton jButton18;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton20;
-    private javax.swing.JButton jButton3;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonExportImage;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonExportPalette;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonImportPalette;
+    private com.sfc.sf2.core.gui.controls.InfoButton infoButton1;
+    private com.sfc.sf2.core.gui.controls.InfoButton infoButton2;
+    private com.sfc.sf2.core.gui.controls.InfoButton infoButton3;
+    private javax.swing.JButton jButtonExportImage;
+    private javax.swing.JButton jButtonExportPalette;
+    private javax.swing.JButton jButtonImportImage;
+    private javax.swing.JButton jButtonImportPalette;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JPanel jPanelImportImage;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private com.sfc.sf2.palette.gui.PalettePane palettePane1;

@@ -73,5 +73,5 @@ public class SpinnerTableEditor extends AbstractCellEditor implements TableCellE
     
     private void spinnerStateChanged(ChangeEvent evt) {
         fireEditingStopped();
-    }  
+    }
 }

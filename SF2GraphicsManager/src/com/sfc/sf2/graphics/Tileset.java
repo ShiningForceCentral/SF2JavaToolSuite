@@ -5,18 +5,20 @@
  */
 package com.sfc.sf2.graphics;
 
+import com.sfc.sf2.core.INameable;
 import static com.sfc.sf2.graphics.Tile.PIXEL_HEIGHT;
 import static com.sfc.sf2.graphics.Tile.PIXEL_WIDTH;
 import com.sfc.sf2.palette.Palette;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.Arrays;
 
 /**
  *
  * @author TiMMy
  */
-public class Tileset {
+public class Tileset implements INameable {
     
     private String name;
     protected Tile[] tiles;
@@ -30,6 +32,7 @@ public class Tileset {
         this.tilesPerRow = tilesPerRow;
     }
     
+    @Override
     public String getName() {
         return name;
     }
@@ -84,10 +87,14 @@ public class Tileset {
         for (int i = 0; i < tiles.length; i++) {
             tiles[i].setPalette(palette);
         }
-        clearIndexedColorImage(false);
+        clearIndexedColorImage(true);
     }
     
     public BufferedImage getIndexedColorImage() {
+        return getIndexedColorImage(1);
+    }
+    
+    public BufferedImage getIndexedColorImage(int scale) {
         if (tiles == null || tiles.length == 0) {
             return null;
         }
@@ -96,7 +103,7 @@ public class Tileset {
             int height = tiles.length/tilesPerRow;
             if (tiles.length%tilesPerRow != 0)
                 height++;
-            indexedColorImage = new BufferedImage(width*PIXEL_WIDTH, height*PIXEL_HEIGHT, BufferedImage.TYPE_INT_ARGB);
+            indexedColorImage = new BufferedImage(width*PIXEL_WIDTH*scale, height*PIXEL_HEIGHT*scale, BufferedImage.TYPE_INT_ARGB);
             Graphics graphics = indexedColorImage.getGraphics();
             for(int j=0;j<height;j++){
                 for(int i=0;i<width;i++){
@@ -104,7 +111,7 @@ public class Tileset {
                     if (tileID >= tiles.length) {
                         break;
                     } else {
-                        graphics.drawImage(tiles[tileID].getIndexedColorImage(), i*PIXEL_WIDTH, j*PIXEL_HEIGHT, null);
+                        graphics.drawImage(tiles[tileID].getIndexedColorImage(), i*PIXEL_WIDTH*scale, j*PIXEL_HEIGHT*scale, PIXEL_WIDTH*scale, PIXEL_HEIGHT*scale, null);
                     }
                 }
             }
@@ -128,16 +135,9 @@ public class Tileset {
     
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) return false;
-        if (obj == this) return true;
-        if (!(obj instanceof Tileset)) return false;
+        if (!(obj instanceof Tileset)) return super.equals(obj);
         Tileset tileset = (Tileset)obj;
-        for (int i=0; i < this.tiles.length; i++) {
-            if (!this.tiles[i].equals(tileset.getTiles()[i])) {
-                return false;
-            }
-        }
-        return true;
+        return Arrays.equals(this.tiles, tileset.tiles);
     }
     
     public Tileset clone() {
@@ -156,9 +156,9 @@ public class Tileset {
         return true;
     }
     
-    public static Tileset EmptyTilset(Palette palette, int tilesPerRow) {
+    public static Tileset EmptyTilset(Palette palette, int numberOfTiles, int tilesPerRow) {
         Tile emptyTile = Tile.EmptyTile(palette);
-        Tile[] tiles = new Tile[128];
+        Tile[] tiles = new Tile[numberOfTiles];
         for(int i=0; i < tiles.length; i++) {
             tiles[i] = emptyTile;
         }

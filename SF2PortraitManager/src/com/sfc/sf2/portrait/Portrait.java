@@ -5,6 +5,7 @@
  */
 package com.sfc.sf2.portrait;
 
+import com.sfc.sf2.core.INameable;
 import com.sfc.sf2.graphics.Tile;
 import static com.sfc.sf2.graphics.Tile.PIXEL_HEIGHT;
 import static com.sfc.sf2.graphics.Tile.PIXEL_WIDTH;
@@ -12,17 +13,19 @@ import com.sfc.sf2.graphics.Tileset;
 import com.sfc.sf2.palette.Palette;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.Arrays;
 
 /**
  *
  * @author wiz
  */
-public class Portrait {
+public class Portrait implements INameable {
     
     public static final int PORTRAIT_TILES_FULL_WIDTH = 8;
     public static final int PORTRAIT_TILES_WIDTH = 6;
     public static final int PORTRAIT_TILES_HEIGHT = 8;
     
+    private int index;
     private String name;
     private Tileset tileset;
     private BufferedImage indexedColorImage = null;
@@ -30,16 +33,24 @@ public class Portrait {
     private int[][] eyeTiles;    
     private int[][] mouthTiles;
     
-    public Portrait(String name, Tileset tileset) {
-        this.name = name;
-        this.tileset = tileset;
+    public Portrait(int index, String name, Tileset tileset) {
+        this(index, name, tileset, null, null);
     }
     
-    public Portrait(String name, Tileset tileset, int[][] eyeTiles, int[][] mouthTiles) {
+    public Portrait(int index, String name, Tileset tileset, int[][] eyeTiles, int[][] mouthTiles) {
+        this.index = index;
         this.name = name;
         this.tileset = tileset;
         this.eyeTiles = eyeTiles;
         this.mouthTiles = mouthTiles;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
     }
     
     public String getName() {
@@ -122,5 +133,15 @@ public class Portrait {
     
     public void clearIndexedColorImage() {
         indexedColorImage = null;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Portrait)) return super.equals(obj);
+        Portrait other = (Portrait)obj;
+        if (this.index != other.index || !this.tileset.equals(other.tileset)) return false;
+        if (!Arrays.deepEquals(this.eyeTiles, other.eyeTiles)) return false;
+        if (!Arrays.deepEquals(this.mouthTiles, other.mouthTiles)) return false;
+        return true;
     }
 }

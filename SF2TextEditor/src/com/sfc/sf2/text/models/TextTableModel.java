@@ -54,7 +54,7 @@ public class TextTableModel extends AbstractTableModel<String> {
     }
 
     @Override
-    protected String setValue(String item, int col, Object value) {
+    protected String setValue(String item, int row, int col, Object value) {
         switch (col) {
             case 2: return (String)value;
             default: break;

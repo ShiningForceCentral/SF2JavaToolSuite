@@ -5,8 +5,21 @@
  */
 package com.sfc.sf2.core.gui;
 
+import com.sfc.sf2.core.actions.ActionManager;
+import com.sfc.sf2.core.actions.ComboAction;
+import com.sfc.sf2.core.actions.MultiComboAction;
+import com.sfc.sf2.core.actions.RadioButtonAction;
+import com.sfc.sf2.core.actions.SpinnerAction;
+import com.sfc.sf2.core.actions.ToggleAction;
 import com.sfc.sf2.core.settings.SettingsManager;
 import com.sfc.sf2.core.gui.controls.Console;
+import com.sfc.sf2.core.models.combobox.ComboBoxTableEditor;
+import com.sfc.sf2.core.models.combobox.ComboBoxTableRenderer;
+import com.sfc.sf2.core.models.combobox.MultiComboBoxTableEditor;
+import com.sfc.sf2.core.settings.ViewSettings;
+import com.sfc.sf2.helpers.SwingControlsHelpers;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JRadioButton;
 import javax.swing.table.TableColumnModel;
 
 /**
@@ -15,8 +28,11 @@ import javax.swing.table.TableColumnModel;
  */
 public final class ExampleMainEditor extends AbstractMainEditor {
     
+    private final ViewSettings testSettings = new ViewSettings();
+    
     public ExampleMainEditor() {
         super();
+        SettingsManager.registerSettingsStore("test", testSettings);
         initComponents();       //<--- This is required
         initCore(console1);     //<--- This is required
     }
@@ -25,11 +41,22 @@ public final class ExampleMainEditor extends AbstractMainEditor {
     protected void initEditor() {
         super.initEditor();
         
+        viewPanelStacked1.setLayoutPanel(testLayoutPanel1, testSettings);
+        viewPanelStacked1.getBackgroundColorPicker().addColorChangedListener(this::onViewPanelColorChange);
+        
         //One-time setup
-        colorPicker1.setColor(SettingsManager.getGlobalSettings().getTransparentBGColor());
-        TableColumnModel columns = table1.jTable.getColumnModel();
+        colorPicker1.setColor(testSettings.getBGColor());
+        TableColumnModel columns = table2.jTable.getColumnModel();
         columns.getColumn(0).setMaxWidth(50);
         columns.getColumn(2).setMaxWidth(50);
+        
+        DefaultComboBoxModel model = new DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" });
+        comboTableModel.setComboModel(model);
+        jTable2.setDefaultEditor(String.class, new ComboBoxTableEditor(model));
+        jTable2.setDefaultRenderer(String.class, new ComboBoxTableRenderer());
+        table2.jTable.setDefaultEditor(String.class, new MultiComboBoxTableEditor(model));
+        table2.jTable.setDefaultRenderer(String.class, new ComboBoxTableRenderer());
+        multiComboBox1.setSelected(3, true);
     }
     
     @Override
@@ -48,14 +75,14 @@ public final class ExampleMainEditor extends AbstractMainEditor {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        stringTableModel = new com.sfc.sf2.core.models.StringTableModel();
+        comboTableModel = new com.sfc.sf2.core.models.combobox.ComboTableModel();
+        buttonGroupTest = new com.sfc.sf2.core.gui.controls.NameableButtonGroup();
         jPanel13 = new javax.swing.JPanel();
         jSplitPane1 = new javax.swing.JSplitPane();
         jPanel15 = new javax.swing.JPanel();
-        table1 = new com.sfc.sf2.core.gui.controls.Table();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        testLayoutPanel1 = new com.sfc.sf2.core.gui.TestLayoutPanel();
+        jPanel4 = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
         accordionPanel2 = new com.sfc.sf2.core.gui.controls.AccordionPanel();
         colorPicker1 = new com.sfc.sf2.core.gui.controls.ColorPicker();
         accordionPanel3 = new com.sfc.sf2.core.gui.controls.AccordionPanel();
@@ -63,50 +90,42 @@ public final class ExampleMainEditor extends AbstractMainEditor {
         fileButton1 = new com.sfc.sf2.core.gui.controls.FileButton();
         jLabel1 = new javax.swing.JLabel();
         accordionPanel1 = new com.sfc.sf2.core.gui.controls.AccordionPanel();
-        jSpinner1 = new javax.swing.JSpinner();
-        jSpinner2 = new javax.swing.JSpinner();
-        jSpinner3 = new javax.swing.JSpinner();
         jSpinner4 = new javax.swing.JSpinner();
+        multiComboBox1 = new com.sfc.sf2.core.gui.controls.MultiComboBox();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jCheckBox1 = new javax.swing.JCheckBox();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jRadioButton1 = new javax.swing.JRadioButton();
+        jRadioButton2 = new javax.swing.JRadioButton();
+        jRadioButton3 = new javax.swing.JRadioButton();
+        jLabel7 = new javax.swing.JLabel();
+        jRadioButton4 = new javax.swing.JRadioButton();
+        jPanel5 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        testLayoutPanel1 = new com.sfc.sf2.core.gui.TestLayoutPanel();
+        viewPanelStacked1 = new com.sfc.sf2.core.gui.controls.ViewPanelStacked();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        table1 = new com.sfc.sf2.core.gui.controls.Table();
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        table2 = new com.sfc.sf2.core.gui.controls.Table();
         console1 = new com.sfc.sf2.core.gui.controls.Console();
+
+        buttonGroupTest.setName("Test Button Group");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SF2 App");
 
-        jSplitPane1.setDividerLocation(500);
+        jSplitPane1.setDividerLocation(550);
         jSplitPane1.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
         jSplitPane1.setOneTouchExpandable(true);
-
-        table1.setBorder(javax.swing.BorderFactory.createTitledBorder("Table test"));
-        table1.setSingleClickText(true);
-        table1.setSpinnerNumberEditor(false);
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {"dasd", null, null, null},
-                {null, "asd", null, null},
-                {null, null, "asd", null},
-                {null, null, null, "asd"}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
-
-        jScrollPane2.setViewportBorder(javax.swing.BorderFactory.createTitledBorder("Test Layout Panel"));
-
-        javax.swing.GroupLayout testLayoutPanel1Layout = new javax.swing.GroupLayout(testLayoutPanel1);
-        testLayoutPanel1.setLayout(testLayoutPanel1Layout);
-        testLayoutPanel1Layout.setHorizontalGroup(
-            testLayoutPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 304, Short.MAX_VALUE)
-        );
-        testLayoutPanel1Layout.setVerticalGroup(
-            testLayoutPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 462, Short.MAX_VALUE)
-        );
-
-        jScrollPane2.setViewportView(testLayoutPanel1);
 
         accordionPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Color picker test"));
 
@@ -151,7 +170,9 @@ public final class ExampleMainEditor extends AbstractMainEditor {
         infoButton1.setText("");
 
         fileButton1.setFilePath(".\\newFolder\\file.txt");
+        fileButton1.setInfoMessage("<html>This also has a help button.</html>");
         fileButton1.setLabelText("Test file button :");
+        fileButton1.setName("Test File Button"); // NOI18N
 
         jLabel1.setText("Test help button:");
 
@@ -162,10 +183,10 @@ public final class ExampleMainEditor extends AbstractMainEditor {
             .addGroup(accordionPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(accordionPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fileButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fileButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(accordionPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 154, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 194, Short.MAX_VALUE)
                         .addComponent(infoButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -183,45 +204,376 @@ public final class ExampleMainEditor extends AbstractMainEditor {
                 .addContainerGap())
         );
 
-        jSpinner1.setUI(new com.sfc.sf2.core.models.spinner.LeftRightSpinnerUI());
-        jSpinner1.setEnabled(false);
-
-        jSpinner2.setUI(new com.sfc.sf2.core.models.spinner.LeftRightSpinnerUI());
-
-        jSpinner3.setUI(new com.sfc.sf2.core.models.spinner.LeftRightSpinnerUI());
-
         jSpinner4.setUI(new com.sfc.sf2.core.models.spinner.LeftRightSpinnerUI());
+        jSpinner4.setName("Action Test Spinner"); // NOI18N
+        jSpinner4.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jSpinnerTestStateChanged(evt);
+            }
+        });
+
+        multiComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "fwefwrg ", "rgththsr", "ghjkyjjrtn", "5tehgxdh", "ws" }));
+        multiComboBox1.setName("Action Test Multicombo"); // NOI18N
+        multiComboBox1.setPreferredSize(new java.awt.Dimension(76, 26));
+        multiComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                multiComboBox1ActionPerformed(evt);
+            }
+        });
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setName("Action Test Combo"); // NOI18N
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+
+        jCheckBox1.setText("Toggle");
+        jCheckBox1.setName("Action Test Toggle"); // NOI18N
+        jCheckBox1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCheckBox1ItemStateChanged(evt);
+            }
+        });
+
+        jLabel2.setText("Test Undo/Redo");
+
+        jLabel3.setText("ws");
+
+        jLabel4.setText("0");
+
+        jLabel5.setText("0");
+
+        jLabel6.setText("False");
+
+        buttonGroupTest.add(jRadioButton1);
+        jRadioButton1.setSelected(true);
+        jRadioButton1.setText("jRadioTest1");
+        jRadioButton1.setName("Action Test Radio 1"); // NOI18N
+        jRadioButton1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jRadioTestItemStateChanged(evt);
+            }
+        });
+
+        buttonGroupTest.add(jRadioButton2);
+        jRadioButton2.setText("jRadioTest2");
+        jRadioButton2.setName("Action Test Radio 2"); // NOI18N
+        jRadioButton2.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jRadioTestItemStateChanged(evt);
+            }
+        });
+
+        buttonGroupTest.add(jRadioButton3);
+        jRadioButton3.setText("jRadioTest3");
+        jRadioButton3.setName("Action Test Radio 3"); // NOI18N
+        jRadioButton3.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jRadioTestItemStateChanged(evt);
+            }
+        });
+
+        jLabel7.setText("Action Test Radio 1");
+
+        buttonGroupTest.add(jRadioButton4);
+        jRadioButton4.setText("jRadioTest4");
+        jRadioButton4.setName("Action Test Radio 4"); // NOI18N
+        jRadioButton4.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jRadioTestItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout accordionPanel1Layout = new javax.swing.GroupLayout(accordionPanel1);
         accordionPanel1.setLayout(accordionPanel1Layout);
         accordionPanel1Layout.setHorizontalGroup(
             accordionPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(accordionPanel1Layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addGroup(accordionPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jSpinner4, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap()
                 .addGroup(accordionPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(accordionPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, 0)
-                        .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(accordionPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel2)
+                            .addComponent(jCheckBox1)
+                            .addComponent(jSpinner4)
+                            .addComponent(jComboBox1, 0, 103, Short.MAX_VALUE)
+                            .addComponent(multiComboBox1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(accordionPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(accordionPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, 0)
-                        .addComponent(jSpinner3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(accordionPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(accordionPanel1Layout.createSequentialGroup()
+                                .addComponent(jRadioButton1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jRadioButton2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(accordionPanel1Layout.createSequentialGroup()
+                                .addComponent(jRadioButton3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jRadioButton4)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(6, 6, 6))))
         );
         accordionPanel1Layout.setVerticalGroup(
             accordionPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(accordionPanel1Layout.createSequentialGroup()
-                .addGap(78, 78, 78)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, accordionPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(accordionPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jCheckBox1)
+                    .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(accordionPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jSpinner4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(accordionPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(accordionPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel3)
+                    .addComponent(multiComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(accordionPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jRadioButton1)
+                    .addComponent(jRadioButton2)
+                    .addComponent(jLabel7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(accordionPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jRadioButton3)
+                    .addComponent(jRadioButton4))
+                .addGap(53, 53, 53))
+        );
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(accordionPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(accordionPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(accordionPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(accordionPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(accordionPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(accordionPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jScrollPane2.setViewportBorder(javax.swing.BorderFactory.createTitledBorder("Test Layout Panel"));
+
+        javax.swing.GroupLayout testLayoutPanel1Layout = new javax.swing.GroupLayout(testLayoutPanel1);
+        testLayoutPanel1.setLayout(testLayoutPanel1Layout);
+        testLayoutPanel1Layout.setHorizontalGroup(
+            testLayoutPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 436, Short.MAX_VALUE)
+        );
+        testLayoutPanel1Layout.setVerticalGroup(
+            testLayoutPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 782, Short.MAX_VALUE)
+        );
+
+        jScrollPane2.setViewportView(testLayoutPanel1);
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(viewPanelStacked1, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
-                .addGroup(accordionPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jSpinner3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSpinner4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(viewPanelStacked1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {"Data", null, null, null},
+                {null, "Goes", null, null},
+                {null, null, "Here", null},
+                {null, null, null, "!!!!!"}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jTable1.setName("String jTable"); // NOI18N
+        jScrollPane1.setViewportView(jTable1);
+
+        table1.setBorder(javax.swing.BorderFactory.createTitledBorder("String table test"));
+        table1.setHorizontalScrolling(false);
+        table1.setInfoMessage("<html>This also has a help button.</html>");
+        table1.setModel(stringTableModel);
+        table1.setRowBorders(false);
+        table1.setSingleClickText(true);
+        table1.setSpinnerNumberEditor(false);
+        table1.setName("String Test Table"); // NOI18N
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(table1, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE))
+                .addGap(0, 0, 0))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(table1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {"Data", null, null},
+                {null, "Goes", null},
+                {null, null, "Here"},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jTable2.setName("combo jTable"); // NOI18N
+        jScrollPane3.setViewportView(jTable2);
+
+        table2.setBorder(javax.swing.BorderFactory.createTitledBorder("ComboBox table test"));
+        table2.setInfoMessage("");
+        table2.setModel(comboTableModel);
+        table2.setRowBorders(false);
+        table2.setSingleClickText(false);
+        table2.setSpinnerNumberEditor(false);
+        table2.setName("Combo Test Table"); // NOI18N
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(table2, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE))
+                .addGap(0, 0, 0))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(table2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
@@ -230,36 +582,15 @@ public final class ExampleMainEditor extends AbstractMainEditor {
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel15Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(accordionPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(accordionPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(accordionPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(table1, javax.swing.GroupLayout.DEFAULT_SIZE, 355, Short.MAX_VALUE))
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel15Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel15Layout.createSequentialGroup()
-                        .addComponent(accordionPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(accordionPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(accordionPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jScrollPane2)
-                        .addGroup(jPanel15Layout.createSequentialGroup()
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(table1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jSplitPane1.setTopComponent(jPanel15);
@@ -287,15 +618,59 @@ public final class ExampleMainEditor extends AbstractMainEditor {
             .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        setSize(new java.awt.Dimension(1042, 788));
+        setSize(new java.awt.Dimension(1390, 788));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void colorPicker1ColorChanged(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorPicker1ColorChanged
         Console.logger().info("Color changed : " + colorPicker1.getColor());
-        SettingsManager.getGlobalSettings().setTransparentBGColor(colorPicker1.getColor());
-        SettingsManager.saveGlobalSettingsFile();
+        viewPanelStacked1.getBackgroundColorPicker().setColor(colorPicker1.getColor());
+        testSettings.setBGColor(colorPicker1.getColor());
+        SettingsManager.saveSettingsFile();
     }//GEN-LAST:event_colorPicker1ColorChanged
+
+    private void jSpinnerTestStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinnerTestStateChanged
+        if (!ActionManager.isActionTriggering()) {
+            int oldValue = Integer.parseInt(jLabel5.getText());
+            ActionManager.setActionWithoutExecute(new SpinnerAction(jSpinner4, (int)jSpinner4.getValue(), oldValue));
+        }
+        jLabel5.setText(jSpinner4.getValue().toString());
+    }//GEN-LAST:event_jSpinnerTestStateChanged
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        if (!ActionManager.isActionTriggering()) {
+            int oldValue = Integer.parseInt(jLabel4.getText());
+            ActionManager.setActionWithoutExecute(new ComboAction(jComboBox1, jComboBox1.getSelectedIndex(), oldValue));
+        }
+        jLabel4.setText(Integer.toString(jComboBox1.getSelectedIndex()));
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void multiComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_multiComboBox1ActionPerformed
+        if (!ActionManager.isActionTriggering()) {
+            String[] oldValue = jLabel3.getText().split(", ");
+            ActionManager.setActionWithoutExecute(new MultiComboAction(multiComboBox1, multiComboBox1.getObjectsString().split(", "), oldValue));
+        }
+        jLabel3.setText(multiComboBox1.getObjectsString());
+    }//GEN-LAST:event_multiComboBox1ActionPerformed
+
+    private void jCheckBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox1ItemStateChanged
+        if (!ActionManager.isActionTriggering()) {
+            ActionManager.setActionWithoutExecute(new ToggleAction(jCheckBox1, jCheckBox1.isSelected()));
+        }
+        jLabel6.setText(Boolean.toString(jCheckBox1.isSelected()));
+    }//GEN-LAST:event_jCheckBox1ItemStateChanged
+
+    private void jRadioTestItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jRadioTestItemStateChanged
+        if (!ActionManager.isActionTriggering()) {
+            JRadioButton previous = (JRadioButton)SwingControlsHelpers.getButtonByName(buttonGroupTest, jLabel7.getText());
+            ActionManager.setActionWithoutExecute(new RadioButtonAction(buttonGroupTest, (JRadioButton)evt.getSource(), previous));
+        }
+        jLabel7.setText(((JRadioButton)evt.getSource()).getName());
+    }//GEN-LAST:event_jRadioTestItemStateChanged
+    
+    private void onViewPanelColorChange(java.awt.event.ActionEvent evt) {
+        colorPicker1.setColor(viewPanelStacked1.getBackgroundColorPicker().getColor());
+    }
     
     /**
      * To create a new Main Editor, copy the below code
@@ -317,23 +692,45 @@ public final class ExampleMainEditor extends AbstractMainEditor {
     private com.sfc.sf2.core.gui.controls.AccordionPanel accordionPanel1;
     private com.sfc.sf2.core.gui.controls.AccordionPanel accordionPanel2;
     private com.sfc.sf2.core.gui.controls.AccordionPanel accordionPanel3;
+    private com.sfc.sf2.core.gui.controls.NameableButtonGroup buttonGroupTest;
     private com.sfc.sf2.core.gui.controls.ColorPicker colorPicker1;
+    private com.sfc.sf2.core.models.combobox.ComboTableModel comboTableModel;
     private com.sfc.sf2.core.gui.controls.Console console1;
     private com.sfc.sf2.core.gui.controls.FileButton fileButton1;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton1;
+    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel15;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JRadioButton jRadioButton3;
+    private javax.swing.JRadioButton jRadioButton4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JSpinner jSpinner2;
-    private javax.swing.JSpinner jSpinner3;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSpinner jSpinner4;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
+    private com.sfc.sf2.core.gui.controls.MultiComboBox multiComboBox1;
+    private com.sfc.sf2.core.models.StringTableModel stringTableModel;
     private com.sfc.sf2.core.gui.controls.Table table1;
+    private com.sfc.sf2.core.gui.controls.Table table2;
     private com.sfc.sf2.core.gui.TestLayoutPanel testLayoutPanel1;
+    private com.sfc.sf2.core.gui.controls.ViewPanelStacked viewPanelStacked1;
     // End of variables declaration//GEN-END:variables
 
 }

@@ -155,6 +155,24 @@ public class BattleSpriteAnimationFrame {
     }
     
     @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof BattleSpriteAnimationFrame)) return super.equals(obj);
+        BattleSpriteAnimationFrame other = (BattleSpriteAnimationFrame)obj;
+        if (!this.type.equals(other.type)) return false;
+        if (this.battleSpriteIndex != other.battleSpriteIndex) return false;
+        if (this.duration != other.duration) return false;
+        if (this.x != other.x) return false;
+        if (this.y != other.y) return false;
+        if (this.weaponFrame != other.weaponFrame) return false;
+        if (this.weaponFlipH != other.weaponFlipH) return false;
+        if (this.weaponFlipV != other.weaponFlipV) return false;
+        if (this.weaponBehind != other.weaponBehind) return false;
+        if (this.weaponX != other.weaponX) return false;
+        if (this.weaponY != other.weaponY) return false;
+        return true;
+    }
+    
+    @Override
     public BattleSpriteAnimationFrame clone() {
         return new BattleSpriteAnimationFrame(battleSpriteIndex, duration, x, y, weaponFrame, weaponFlipH, weaponFlipV, weaponBehind, weaponX, weaponY);
     }

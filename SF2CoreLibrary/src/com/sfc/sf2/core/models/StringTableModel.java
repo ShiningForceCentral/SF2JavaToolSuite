@@ -12,7 +12,7 @@ package com.sfc.sf2.core.models;
 public class StringTableModel extends AbstractTableModel<String> {
 
     public StringTableModel() {
-        super(new String[] { "Index", "String", "Length" }, -1);
+        super(new String[] { "Index", "String", "Length" }, 10);
     }
     
     @Override
@@ -43,13 +43,13 @@ public class StringTableModel extends AbstractTableModel<String> {
         switch (col) {
             case 0: return row;
             case 1: return item;
-            case 2: return item.length();
+            case 2: return item == null ? 0 : item.length();
         }
         return null;
     }
 
     @Override
-    protected String setValue(String item, int col, Object value) {
+    protected String setValue(String item, int row, int col, Object value) {
         switch (col) {
             case 1: return (String)value;
         }

@@ -12,12 +12,21 @@ import com.sfc.sf2.core.gui.controls.Console;
  * @author TiMMy
  */
 public class StringHelpers {
+    
     public static String trimAndRemoveComments(String line) {
         int commentIndex = line.lastIndexOf(';');
         if (commentIndex < 0) {
             return line.trim();
         } else {
             return line.substring(0, commentIndex).trim();
+        }
+    }
+    public static String extractComment(String line) {
+        int commentIndex = line.lastIndexOf(';');
+        if (commentIndex < 0) {
+            return null;
+        } else {
+            return line.substring(commentIndex+1).trim();
         }
     }
     

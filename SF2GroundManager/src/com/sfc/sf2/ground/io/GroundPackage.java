@@ -11,4 +11,4 @@ import com.sfc.sf2.palette.Palette;
  *
  * @author TiMMy
  */
-public record GroundPackage(Palette palette) { }
+public record GroundPackage(String name, Palette palette) { }

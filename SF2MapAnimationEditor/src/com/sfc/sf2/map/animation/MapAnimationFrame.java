@@ -5,8 +5,8 @@
  */
 package com.sfc.sf2.map.animation;
 
-import com.sfc.sf2.map.block.MapBlock;
-import java.awt.image.BufferedImage;
+import static com.sfc.sf2.helpers.MapBlockHelpers.TILESET_TILES;
+import java.util.Arrays;
 
 /**
  *
@@ -16,10 +16,18 @@ public class MapAnimationFrame {
     
     private int start;
     private int length;
-    private int dest;
+    private int destTileset;
+    private int destTileIndex;
     private int delay;
-    private MapBlock[] blocks;
-    private BufferedImage image;
+
+    public MapAnimationFrame(int start, int length, int dest, int delay) {
+        this.start = start;
+        this.length = length;
+        this.delay = delay;
+        
+        this.destTileset = dest/TILESET_TILES-2;
+        destTileIndex = dest%TILESET_TILES;
+    }
 
     public int getStart() {
         return start;
@@ -37,12 +45,24 @@ public class MapAnimationFrame {
         this.length = length;
     }
 
-    public int getDest() {
-        return dest;
+    public int getDestTileset() {
+        return destTileset;
     }
 
-    public void setDest(int dest) {
-        this.dest = dest;
+    public void setDestTileset(int destTileset) {
+        this.destTileset = destTileset;
+    }
+
+    public int getDestTileIndex() {
+        return destTileIndex;
+    }
+
+    public void setDestTileIndex(int destTileIndex) {
+        this.destTileIndex = destTileIndex;
+    }
+    
+    public int getDestValue() {
+        return (destTileset+2)*TILESET_TILES+destTileIndex;
     }
 
     public int getDelay() {
@@ -53,22 +73,25 @@ public class MapAnimationFrame {
         this.delay = delay;
     }
 
-    public MapBlock[] getBlocks() {
-        return blocks;
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof MapAnimationFrame)) return super.equals(obj);
+        MapAnimationFrame other = (MapAnimationFrame)obj;
+        if (this.start != other.start) return false;
+        if (this.length != other.length) return false;
+        if (this.destTileset != other.destTileset) return false;
+        if (this.destTileIndex != other.destTileIndex) return false;
+        if (this.delay != other.delay) return false;
+        return true;
     }
-
-    public void setBlocks(MapBlock[] blocks) {
-        this.blocks = blocks;
-    }
-
-    public BufferedImage getImage() {
-        return image;
-    }
-
-    public void setImage(BufferedImage image) {
-        this.image = image;
-    }
-
-
     
+    @Override 
+    public MapAnimationFrame clone() {
+        MapAnimationFrame clone = new MapAnimationFrame(start, length, getDestValue(), delay);
+        return clone;
+    }
+    
+    public static MapAnimationFrame EmptyMapAnimationFrame() {
+        return new MapAnimationFrame(0, 32, 768, 20);
+    }
 }

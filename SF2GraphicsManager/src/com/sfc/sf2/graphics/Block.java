@@ -6,7 +6,6 @@
 package com.sfc.sf2.graphics;
 
 import com.sfc.sf2.palette.Palette;
-import java.awt.Dimension;
 
 /**
  *
@@ -57,6 +56,6 @@ public class Block extends Tileset {
     }
     
     public static Block EmptyBlock(int index, Palette palette) {
-        return new Block(index, EmptyTilset(palette, TILE_WIDTH));
+        return new Block(index, EmptyTilset(palette, TILES_COUNT, TILE_WIDTH));
     }
 }

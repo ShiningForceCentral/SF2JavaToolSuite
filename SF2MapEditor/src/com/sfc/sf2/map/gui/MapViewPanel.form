@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+  <Properties>
+    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+      <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+        <TitledBorder title="View"/>
+      </Border>
+    </Property>
+  </Properties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jSeparator4" alignment="1" max="32767" attributes="0"/>
+                  <Component id="jSeparator2" alignment="1" max="32767" attributes="0"/>
+                  <Component id="jSeparator5" alignment="1" max="32767" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="jLabelScale" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jComboBoxScale" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="jLabelBG" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="colorPickerBG" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="jCheckBoxGrid" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="jCheckBoxShowPriority" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCheckBoxPreviewAnim" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCheckBoxShowExplorationFlags" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCheckBoxShowAreas" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCheckBoxShowWarps" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCheckBoxShowTriggers" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCheckBoxShowItems" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCheckBoxShowVehicles" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                              <Component id="jCheckBoxShowRoofCopies" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jCheckBoxShowStepCopies" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jCheckBoxShowFlagCopies" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="2" attributes="0">
+                  <Component id="jComboBoxScale" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabelScale" alignment="2" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="jCheckBoxGrid" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="2" attributes="0">
+                      <Component id="jLabelBG" alignment="2" min="-2" max="-2" attributes="0"/>
+                      <Component id="colorPickerBG" alignment="2" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jCheckBoxShowPriority" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="jSeparator2" min="-2" pref="10" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jCheckBoxShowExplorationFlags" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jCheckBoxShowAreas" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jCheckBoxShowWarps" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jCheckBoxShowTriggers" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jCheckBoxShowItems" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jCheckBoxShowVehicles" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="jSeparator4" min="-2" pref="10" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jCheckBoxShowFlagCopies" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jCheckBoxShowStepCopies" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jCheckBoxShowRoofCopies" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="jSeparator5" min="-2" pref="10" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jCheckBoxPreviewAnim" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Component class="javax.swing.JLabel" name="jLabelBG">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="BG :"/>
+      </Properties>
+    </Component>
+    <Container class="com.sfc.sf2.core.gui.controls.ColorPicker" name="colorPickerBG">
+      <Properties>
+        <Property name="name" type="java.lang.String" value="BG Color Picker" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="colorChanged" listener="com.sfc.sf2.core.gui.controls.ColorPicker$ColorChangedListener" parameters="java.awt.event.ActionEvent" handler="colorPickerBGColorChanged"/>
+      </Events>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <EmptySpace min="0" pref="22" max="32767" attributes="0"/>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <EmptySpace min="0" pref="22" max="32767" attributes="0"/>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+    </Container>
+    <Component class="javax.swing.JCheckBox" name="jCheckBoxGrid">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Show grid"/>
+        <Property name="name" type="java.lang.String" value="Grid Toggle" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jCheckBoxGridItemStateChanged"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabelScale">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Scale :"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="jComboBoxScale">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="1">
+            <StringItem index="0" value="1/8x"/>
+          </StringArray>
+        </Property>
+        <Property name="name" type="java.lang.String" value="View Scale Combo" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBoxScaleActionPerformed"/>
+      </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="jCheckBoxShowPriority">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Show priority"/>
+        <Property name="name" type="java.lang.String" value="Priority Toggle" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jCheckBoxShowPriorityItemStateChanged"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="jCheckBoxShowVehicles">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Vehicles"/>
+        <Property name="actionCommand" type="java.lang.String" value="0x800"/>
+        <Property name="name" type="java.lang.String" value="Vehicles Toggle" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jCheckBoxViewItemStateChanged"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="jCheckBoxShowExplorationFlags">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Exploration flags"/>
+        <Property name="name" type="java.lang.String" value="Exploration Flags Toggle" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jCheckBoxShowExplorationFlagsItemStateChanged"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JSeparator" name="jSeparator2">
+    </Component>
+    <Component class="javax.swing.JSeparator" name="jSeparator4">
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="jCheckBoxShowAreas">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Areas"/>
+        <Property name="actionCommand" type="java.lang.String" value="0x8"/>
+        <Property name="name" type="java.lang.String" value="Areas Toggle" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jCheckBoxViewItemStateChanged"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JSeparator" name="jSeparator5">
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="jCheckBoxShowFlagCopies">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Flag Copies"/>
+        <Property name="actionCommand" type="java.lang.String" value="0x10"/>
+        <Property name="name" type="java.lang.String" value="Flag Copies Toggle" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jCheckBoxViewItemStateChanged"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="jCheckBoxShowStepCopies">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Step Copies"/>
+        <Property name="actionCommand" type="java.lang.String" value="0x20"/>
+        <Property name="name" type="java.lang.String" value="Step Copies Toggle" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jCheckBoxViewItemStateChanged"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="jCheckBoxShowRoofCopies">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Roof Copies"/>
+        <Property name="actionCommand" type="java.lang.String" value="0x40"/>
+        <Property name="name" type="java.lang.String" value="Roof Copies Toggle" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jCheckBoxViewItemStateChanged"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="jCheckBoxShowTriggers">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Triggers"/>
+        <Property name="actionCommand" type="java.lang.String" value="0x400"/>
+        <Property name="name" type="java.lang.String" value="Triggers Toggle" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jCheckBoxViewItemStateChanged"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="jCheckBoxShowItems">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Items"/>
+        <Property name="actionCommand" type="java.lang.String" value="0x100"/>
+        <Property name="name" type="java.lang.String" value="Items Toggle" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jCheckBoxViewItemStateChanged"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="jCheckBoxShowWarps">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Warps"/>
+        <Property name="actionCommand" type="java.lang.String" value="0x80"/>
+        <Property name="name" type="java.lang.String" value="Warps Toggle" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jCheckBoxViewItemStateChanged"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="jCheckBoxPreviewAnim">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Preview anim"/>
+        <Property name="name" type="java.lang.String" value="Preview Anim Toggle" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jCheckBoxPreviewAnimItemStateChanged"/>
+      </Events>
+    </Component>
+  </SubComponents>
+</Form>

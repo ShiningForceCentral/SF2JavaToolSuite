@@ -6,11 +6,12 @@
 package com.sfc.sf2.map.block.compression;
 
 import static com.sfc.sf2.graphics.Block.TILES_COUNT;
-import com.sfc.sf2.graphics.Tile;
+import com.sfc.sf2.graphics.TileFlags;
 import com.sfc.sf2.graphics.Tileset;
 import com.sfc.sf2.helpers.BinaryHelpers;
+import static com.sfc.sf2.helpers.MapBlockHelpers.MAP_TILESETS_TILES;
 import com.sfc.sf2.map.block.MapBlock;
-import com.sfc.sf2.palette.Palette;
+import com.sfc.sf2.map.block.MapTile;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -19,13 +20,8 @@ import java.util.List;
  *
  * @author wiz
  */
-public class MapBlocksetDecoder {
-    public static final int TILESET_TILES = 128;
-    public static final int MAP_TILESETS_TILES = TILESET_TILES*5;
-        
+public class MapBlocksetDecoder {        
     private byte[] inputData;
-    private Tileset[] tilesets;
-    private Palette palette;
     private short inputWord = 0;
     private int inputCursor = -2;
     private int inputBitCursor = 16;
@@ -34,12 +30,12 @@ public class MapBlocksetDecoder {
     private Short[] bottomTileHistory = new Short[0x800];
     
     private List<Short> outputData = null;
-    private Tile[] outputTiles = null;
+    private Tileset[] tilesets;
     
-    public MapBlock[] decode(byte[] inputData, Palette palette, Tileset[] tilesets) {
+    //StringBuilder debugSb;
+    
+    public MapBlock[] decode(byte[] inputData) {
         this.inputData = inputData;
-        this.palette = palette;
-        this.tilesets = tilesets;
         MapBlock[] blocks = null;
         //debugSb = new StringBuilder(inputData.length*8);
         int initialCommandNumber = getCommandNumber();
@@ -100,8 +96,7 @@ public class MapBlocksetDecoder {
     }   
     
     private void outputInitialBlocks() {
-        Tile emptyTile = new Tile();
-        emptyTile.setPalette(palette);
+        //Blank
         outputData.add((short)0);
         outputData.add((short)0);
         outputData.add((short)0);
@@ -111,7 +106,7 @@ public class MapBlocksetDecoder {
         outputData.add((short)0);
         outputData.add((short)0);
         outputData.add((short)0);
-        
+        //Chest closed
         outputData.add((short)0x22E);
         outputData.add((short)0x22F);
         outputData.add((short)0xA2E);
@@ -121,7 +116,7 @@ public class MapBlocksetDecoder {
         outputData.add((short)0x24E);
         outputData.add((short)0x24F);
         outputData.add((short)0xA4E);
-        
+        //Chest open
         outputData.add((short)0x22C);
         outputData.add((short)0x22D);
         outputData.add((short)0xA2C);
@@ -131,7 +126,6 @@ public class MapBlocksetDecoder {
         outputData.add((short)0x24E);
         outputData.add((short)0x24F);
         outputData.add((short)0xA4E);
-                
     }
     
     private int getCommandNumber() {
@@ -231,7 +225,7 @@ public class MapBlocksetDecoder {
             relativeValue = (short)(relativeValue * -1);
         }
         //System.out.println("Relative value = $" + Integer.toString(relativeValue,16));
-        short result = (short)((previousTile&0x3FF) + relativeValue);
+        short result = (short)((previousTile & 0x3FF) + relativeValue);
         return result;
     }
     
@@ -253,34 +247,15 @@ public class MapBlocksetDecoder {
     }
     
     private MapBlock[] produceBlocks() {
-        outputTiles = new Tile[outputData.size()];
-        for(int i=0;i<outputData.size();i++){
+        MapTile[] outputTiles = new MapTile[outputData.size()];
+        for (int i=0; i < outputData.size(); i++) {
             short value = outputData.get(i);
-            Tile origTile = getTile(value&0x3FF);
-            Tile tile;
-            if (origTile == null) {
-                tile = Tile.EmptyTile(palette);
-            } else {
-                tile = new Tile();
-                tile.setPalette(palette);
-                tile.setPixels(origTile.getPixels());
-                if((value&0x8000)!=0){
-                    tile.setHighPriority(true);
-                }
-                if((value&0x1000)!=0){
-                    tile = Tile.vFlip(tile);
-                }
-                if((value&0x0800)!=0){
-                    tile = Tile.hFlip(tile);
-                }
-            }
-            tile.setId(value&0x3FF);
-            outputTiles[i] = tile;
-            //System.out.println(i+"="+tile.getId()+", "+tile.isHighPriority()+" "+tile.ishFlip()+" "+tile.isvFlip());
+            outputTiles[i] = new MapTile(value);
+            //System.out.println(i+"="+outputTiles[i].toString());
         }
-        MapBlock[] blocks = new MapBlock[outputTiles.length/9];
-        for(int i=0;i<blocks.length;i++){
-            MapBlock block = new MapBlock(i, 0, Arrays.copyOfRange(outputTiles,i*TILES_COUNT, i*TILES_COUNT+TILES_COUNT));
+        MapBlock[] blocks = new MapBlock[outputTiles.length/TILES_COUNT];
+        for (int i=0; i < blocks.length; i++) {
+            MapBlock block = new MapBlock(i, Arrays.copyOfRange(outputTiles,i*TILES_COUNT, i*TILES_COUNT+TILES_COUNT));
             blocks[i] = block;
         }
         return blocks;
@@ -299,31 +274,21 @@ public class MapBlocksetDecoder {
         return bit;
     }
     
-    public byte[] encode(MapBlock[] blocks, Palette palette, Tileset[] tilesets) {
-        this.palette = palette;
+    public byte[] encode(MapBlock[] blocks, Tileset[] tilesets) {
         this.tilesets = tilesets;
         rightTileHistory = new Short[0x800];
         bottomTileHistory = new Short[0x800];
         int commandNumber = 0;
         StringBuilder outputSb = new StringBuilder();
         byte[] output;
-        Tile[] tiles = new Tile[blocks.length*9-3*9];
-        for(int i=0;i<blocks.length-3;i++){
-            System.arraycopy(blocks[i+3].getTiles(), 0, tiles, i*9, 9);
+        MapTile[] tiles = new MapTile[blocks.length*TILES_COUNT-3*TILES_COUNT];
+        for (int i=0; i < blocks.length-3; i++) {
+            System.arraycopy(blocks[i+3].getMapTiles(), 0, tiles, i*TILES_COUNT, TILES_COUNT);
         }
         
-        for (int i=0;i<(blocks.length-3)*9;i++) {
-            Tile tile = tiles[i];   
-            short tileValue = (short)tile.getId();
-            if (tile.isHighPriority()) {
-                tileValue = (short)(0x8000 | tileValue);
-            }
-            if (tile.isvFlip()) {
-                tileValue = (short)(0x1000 | tileValue);
-            }
-            if (tile.ishFlip()) {
-                tileValue = (short)(0x0800 | tileValue);
-            }
+        for (int i=0; i < (blocks.length-3)*TILES_COUNT; i++) {
+            MapTile tile = tiles[i];
+            short tileValue = (short)tile.encodeTileData();
             //System.out.println("Next tile=$"+Integer.toString(tileValue,16)); 
             String command = null;
             if (i==0) {
@@ -332,40 +297,34 @@ public class MapBlocksetDecoder {
                 //System.out.println(i + " - Produce value with new flags : " + command);
                 updateHistoryMaps(tiles, i);
             } else {
-                Tile previousTile = tiles[i-1];
-                if (previousTile.getId() == (tile.getId())
-                    && previousTile.isHighPriority() == tile.isHighPriority()
-                    && previousTile.ishFlip() == tile.ishFlip()
-                    && previousTile.isvFlip() == tile.isvFlip()) {
+                MapTile previousTile = tiles[i-1];
+                if (previousTile.equals(tile)) {
                     /* Copy last output tile */
                     command = "00";
                     //System.out.println(i + " - Copy last output tile : 00");
                 } else {
-                    Tile nextTilesetTile = null;
-                    if(previousTile.ishFlip()){
-                        int index = previousTile.getId()-1;
-                        if(index<0){
+                    MapTile nextTilesetTile = null;
+                    if (previousTile.getTileFlags().isHFlip()) {
+                        int index = previousTile.encodeTileID()-1;
+                        if (index < 0) {
                             //System.err.println("WARNING - While pointing to previous tile from tileset, had to put tile value 0 instead of this one : "+index);
                             index = 0;
                         }
-                        nextTilesetTile = getTile(index);
+                        nextTilesetTile = new MapTile(index);
                     } else {
-                        int index = previousTile.getId()+1;
-                        if(index>=MAP_TILESETS_TILES){
+                        int index = previousTile.encodeTileID()+1;
+                        if (index >= MAP_TILESETS_TILES) {
                             //System.err.println("WARNING - While pointing to previous tile from tileset, had to put tile value "+(tileset.length-1)+" instead of this one : "+index);
                             index = MAP_TILESETS_TILES-1;
                         }
-                        nextTilesetTile = getTile(index);
+                        nextTilesetTile = new MapTile(index);
                     }
-                    if (nextTilesetTile.getId() == (tile.getId())
-                            && previousTile.isHighPriority() == tile.isHighPriority()
-                            && previousTile.ishFlip() == tile.ishFlip()
-                            && previousTile.isvFlip() == tile.isvFlip()) {
+                    if (nextTilesetTile.encodeTileID() == tile.encodeTileID() && previousTile.getTileFlags().equals(tile.getTileFlags())) {
                         /* Copy next tile from tileset with previous tile HFlip direction */
                         command = "01";
                         //System.out.println(i + " - Copy next tile from tileset : 01");
                     } else {
-                        int rightTileHistoryOffset = (previousTile.getId() & 0x3FF) + (previousTile.ishFlip()?0x0400:0);
+                        int rightTileHistoryOffset = (previousTile.encodeTileID() & 0x3FF) + (previousTile.getTileFlags().isHFlip()?0x0400:0);
                         Short rightTileValue = rightTileHistory[rightTileHistoryOffset];
                         //System.out.println("rightTileHistory[$"+Integer.toString(rightTileHistoryOffset,16)+"]=$"+((rightTileValue!=null)?Integer.toString(rightTileValue,16):"null")+", tileValue=$"+Integer.toString(tileValue,16));
                         if (rightTileValue!=null && rightTileValue==tileValue) {
@@ -375,21 +334,17 @@ public class MapBlocksetDecoder {
                         } else {
                             Short bottomTileValue = null;
                             if(i>=3){
-                               Tile thirdPreviousTile = tiles[i-3];
-                               int bottomTileHistoryOffset = (thirdPreviousTile.getId() & 0x3FF) + (thirdPreviousTile.ishFlip()?0x0400:0);
+                               MapTile thirdPreviousTile = tiles[i-3];
+                               int bottomTileHistoryOffset = (thirdPreviousTile.encodeTileID() & 0x3FF) + (thirdPreviousTile.getTileFlags().isHFlip()?0x0400:0);
                                bottomTileValue = bottomTileHistory[bottomTileHistoryOffset];
                             }
-                            if (bottomTileValue!=null && bottomTileValue==tileValue) {
+                            if (bottomTileValue != null && bottomTileValue == tileValue) {
                                 /* Copy mapped tile from bottom tile history map */
                                 command = "101";
                                 //System.out.println(i + " - Copy mapped tile from bottom tile history map : 101");
                             } else {
-                                //System.out.println("highPriority tile="+tile.isHighPriority()+",previous="+previousTile.isHighPriority()
-                                //                    + "\nhFlip tile="+tile.ishFlip()+",previous="+previousTile.ishFlip()
-                                //                    + "\nvFlip tile="+tile.isvFlip()+",previous="+previousTile.isvFlip());
-                                if (tile.isHighPriority()==previousTile.isHighPriority()
-                                        && tile.ishFlip()==previousTile.ishFlip()
-                                        && tile.isvFlip()==previousTile.isvFlip()) {
+                                //System.out.println(tile.toString());
+                                if (tile.getTileFlags().equals(previousTile.getTileFlags())) {
                                     /* Produce value with same flags */
                                     command = produceCommand110(tile, previousTile);
                                     //System.out.println(i + " - Produce value with same flags : " + command);
@@ -401,9 +356,7 @@ public class MapBlocksetDecoder {
                                     updateHistoryMaps(tiles, i);
                                 }
                             }
-                            
                         }
-                        
                     }
                 }
             }
@@ -429,74 +382,68 @@ public class MapBlocksetDecoder {
             output[i] = b;
         }
         //System.out.println("output bytes length = " + output.length);
-        //System.out.println("output = " + bytesToHex(output));
+        //System.out.println("output = " + BinaryHelpers.bytesToHex(output));
+        //System.out.println(blocks.length+" Blocks");
         
+        this.tilesets = null;
         return output;
     }
     
-    private void updateHistoryMaps(Tile[] tiles, int cursor){
-        Tile tile = tiles[cursor];
-        short tileValue = (short)tile.getId();
-        if(tile.isHighPriority()){
-            tileValue = (short)(0x8000 | tileValue);
-        }
-        if(tile.isvFlip()){
-            tileValue = (short)(0x1000 | tileValue);
-        }
-        if(tile.ishFlip()){
-            tileValue = (short)(0x0800 | tileValue);
-        }
-        if(cursor>=1){
-            Tile leftTile = tiles[cursor-1];
-            int rightTileHistoryOffset = (leftTile.getId() & 0x3FF) + (leftTile.ishFlip()?0x0400:0);
+    private void updateHistoryMaps(MapTile[] tiles, int cursor) {
+        MapTile tile = tiles[cursor];
+        short tileValue = (short)tile.encodeTileData();
+        if (cursor >= 1) {
+            MapTile leftTile = tiles[cursor-1];
+            int rightTileHistoryOffset = (leftTile.encodeTileID() & 0x3FF) + (leftTile.getTileFlags().isHFlip()?0x0400:0);
             rightTileHistory[rightTileHistoryOffset] = tileValue;
         }
-        if(cursor>=3){
-            Tile upperTile = tiles[cursor-3];
-            int bottomTileHistoryOffset = (upperTile.getId() & 0x3FF) + (upperTile.ishFlip()?0x0400:0);
+        if (cursor >= 3) {
+            MapTile upperTile = tiles[cursor-3];
+            int bottomTileHistoryOffset = (upperTile.encodeTileID() & 0x3FF) + (upperTile.getTileFlags().isHFlip()?0x0400:0);
             bottomTileHistory[bottomTileHistoryOffset] = tileValue;
         }
     }
     
-    private String produceCommand110(Tile tile, Tile previousTile){
+    private String produceCommand110(MapTile tile, MapTile previousTile) {
         String command = null;
         String value = produceValue(tile, previousTile);
         command = "110" + value;
         return command;
     }   
     
-    private String produceCommand111(Tile tile, Tile previousTile){
+    private String produceCommand111(MapTile tile, MapTile previousTile) {
         String command = null;
-        String highPriority = tile.isHighPriority()?"1":"0";
-        String vFlip = tile.isvFlip()?"1":"0";
-        String hFlip = tile.ishFlip()?"1":"0";
+        TileFlags flag = tile.getTileFlags();
+        String highPriority = flag.isPriority() ? "1" : "0";
+        String vFlip = flag.isVFlip() ? "1" : "0";
+        String hFlip = flag.isHFlip() ? "1" : "0";
         String flags = highPriority + vFlip + hFlip;
         String value = produceValue(tile, previousTile);
         command = "111" + flags + value;
         return command;
     }   
     
-    private String produceValue(Tile tile, Tile previousTile){
+    private String produceValue(MapTile tile, MapTile previousTile) {
         String value = null;
-        if(previousTile!=null){
+        if (previousTile != null) {
             value = produceRelativeValue(tile, previousTile);
         }
-        if(value==null){
+        if (value == null) {
             value = produceAbsoluteValue(tile);
         }
         return value;
     }
     
-    private String produceRelativeValue(Tile tile, Tile previousTile){
+    private String produceRelativeValue(MapTile tile, MapTile previousTile){
         String value = null;
-        for(int i=0;i<32;i++){
-            int index = previousTile.getId() - i;
-            if(index>0 && index<MAP_TILESETS_TILES){
-                Tile relativeTile = getTile(index);
+        for (int i=0; i < 32; i++) {
+            int index = previousTile.encodeTileID() - i;
+            if (index > 0 && index < MAP_TILESETS_TILES) {
+                MapTile relativeTile = new MapTile(index);
                 if (relativeTile != null) {
-                    if(tile.getId() == relativeTile.getId()){
+                    if (tile.encodeTileID() == relativeTile.encodeTileID()) {
                         String val = Integer.toString(i, 2);
-                        while(val.length()<5){
+                        while (val.length() < 5) {
                             val = "0" + val;
                         }
                         String sign = "1";
@@ -507,14 +454,14 @@ public class MapBlocksetDecoder {
                 }
             }
         }
-        for (int i=0;i<32;i++) {
-            int index = previousTile.getId() + i;
-            if (index>0 && index<MAP_TILESETS_TILES) {
-                Tile relativeTile = getTile(index);
+        for (int i=0; i < 32; i++) {
+            int index = previousTile.encodeTileID() + i;
+            if (index > 0 && index < MAP_TILESETS_TILES) {
+                MapTile relativeTile = new MapTile(index);
                 if (relativeTile != null) {
-                    if (tile.getId() == relativeTile.getId()) {
+                    if (tile.encodeTileID() == relativeTile.encodeTileID()) {
                         String val = Integer.toString(i, 2);
-                        while(val.length()<5){
+                        while (val.length() < 5) {
                             val = "0" + val;
                         }
                         String sign = "0";
@@ -528,11 +475,11 @@ public class MapBlocksetDecoder {
         return value;
     }   
     
-    private String produceAbsoluteValue(Tile tile) {
+    private String produceAbsoluteValue(MapTile tile) {
         String value = null;
-        int id = tile.getId();
+        int id = tile.encodeTileID();
         int length = 9;
-        if (id>=0x180) {
+        if (id >= 0x180) {
             value = Integer.toString((id + 0x180) / 2,2);
             value += ((id&1)==0)?"0":"1";
             length = 10;
@@ -545,14 +492,5 @@ public class MapBlocksetDecoder {
         //System.out.println("Absolute value = $" + Integer.toString(id,16));
         value = "1" + value;
         return value;
-    }
-    
-    private Tile getTile(int index) {
-        int tilesetIndex = index/TILESET_TILES;
-        int tileIndex = index%TILESET_TILES;
-        if (tilesets[tilesetIndex] == null) return null;
-        if (tilesetIndex < 0 || tilesetIndex >= tilesets.length) return null;
-        if (tileIndex < 0 || tileIndex >= TILESET_TILES) return null;
-        return tilesets[tilesetIndex].getTiles()[index%TILESET_TILES];
     }
 }

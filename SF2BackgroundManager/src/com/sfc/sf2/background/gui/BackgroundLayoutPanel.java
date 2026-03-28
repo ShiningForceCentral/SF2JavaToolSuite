@@ -28,7 +28,7 @@ public class BackgroundLayoutPanel extends AbstractLayoutPanel {
     
     public BackgroundLayoutPanel() {
         background = null;
-        scale = new LayoutScale(1);
+        scale = new LayoutScale();
         grid = new LayoutGrid(PIXEL_WIDTH, PIXEL_HEIGHT, -1, BG_TILES_HEIGHT*PIXEL_HEIGHT);
         coordsGrid = new LayoutCoordsGridDisplay(0, BG_TILES_HEIGHT*PIXEL_HEIGHT, false, 0, PIXEL_WIDTH, 2);
         coordsHeader = null;
@@ -50,6 +50,7 @@ public class BackgroundLayoutPanel extends AbstractLayoutPanel {
     @Override
     protected void drawImage(Graphics graphics) {
         for(int b = 0; b < backgrounds.length; b++) {
+            if (backgrounds[b] == null) continue;
             graphics.drawImage(backgrounds[b].getTileset().getIndexedColorImage(), 0, b*BG_TILES_HEIGHT*PIXEL_HEIGHT, null);
         }
     }

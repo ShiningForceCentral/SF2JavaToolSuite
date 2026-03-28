@@ -5,6 +5,9 @@
  */
 package com.sfc.sf2.map;
 
+import java.awt.Point;
+import java.awt.Rectangle;
+
 /**
  *
  * @author wiz
@@ -29,6 +32,38 @@ public class MapArea {
     private int layer2AutoscrollY;
     private int layerType;
     private String defaultMusic;
+
+    public MapArea(int layer1StartX, int layer1StartY, int layer1EndX, int layer1EndY, int foregroundLayer2StartX, int foregroundLayer2StartY, int backgroundLayer2StartX, int backgroundLayer2StartY, int layer1ParallaxX, int layer1ParallaxY, int layer2ParallaxX, int layer2ParallaxY, int layer1AutoscrollX, int layer1AutoscrollY, int layer2AutoscrollX, int layer2AutoscrollY, int layerType, String defaultMusic) {
+        this.layer1StartX = layer1StartX;
+        this.layer1StartY = layer1StartY;
+        this.layer1EndX = layer1EndX;
+        this.layer1EndY = layer1EndY;
+        this.foregroundLayer2StartX = foregroundLayer2StartX;
+        this.foregroundLayer2StartY = foregroundLayer2StartY;
+        this.backgroundLayer2StartX = backgroundLayer2StartX;
+        this.backgroundLayer2StartY = backgroundLayer2StartY;
+        this.layer1ParallaxX = layer1ParallaxX;
+        this.layer1ParallaxY = layer1ParallaxY;
+        this.layer2ParallaxX = layer2ParallaxX;
+        this.layer2ParallaxY = layer2ParallaxY;
+        this.layer1AutoscrollX = layer1AutoscrollX;
+        this.layer1AutoscrollY = layer1AutoscrollY;
+        this.layer2AutoscrollX = layer2AutoscrollX;
+        this.layer2AutoscrollY = layer2AutoscrollY;
+        this.layerType = layerType;
+        this.defaultMusic = defaultMusic;
+    }
+    
+    public Rectangle getLayer1() {
+        return new Rectangle(layer1StartX, layer1StartY, layer1EndX-layer1StartX, layer1EndY-layer1StartY);
+    }
+    
+    public void setLayer1(Rectangle rect) {
+        layer1StartX = rect.x;
+        layer1StartY = rect.y;
+        layer1EndX = rect.x+rect.width;
+        layer1EndY = rect.y+rect.height;
+    }
 
     public int getLayer1StartX() {
         return layer1StartX;
@@ -61,6 +96,27 @@ public class MapArea {
     public void setLayer1EndY(int layer1EndY) {
         this.layer1EndY = layer1EndY;
     }
+    
+    public int getWidth() {
+        return layer1EndX-layer1StartX+1;
+    }
+    
+    public int getHeight() {
+        return layer1EndY-layer1StartY+1;
+    }
+    
+    public boolean hasForegroundLayer2() {
+        return foregroundLayer2StartX != 0 || foregroundLayer2StartY != 0;
+    }
+    
+    public Point getForegroundLayer2() {
+        return new Point(foregroundLayer2StartX, foregroundLayer2StartY);
+    }
+    
+    public void setForegroundLayer2(Point point) {
+        foregroundLayer2StartX = point.x;
+        foregroundLayer2StartY = point.y;
+    }
 
     public int getForegroundLayer2StartX() {
         return foregroundLayer2StartX;
@@ -76,6 +132,19 @@ public class MapArea {
 
     public void setForegroundLayer2StartY(int foregroundLayer2StartY) {
         this.foregroundLayer2StartY = foregroundLayer2StartY;
+    }
+    
+    public boolean hasBackgroundLayer2() {
+        return backgroundLayer2StartX != 0 || backgroundLayer2StartY != 0;
+    }
+    
+    public Point getBackgroundLayer2() {
+        return new Point(backgroundLayer2StartX, backgroundLayer2StartY);
+    }
+    
+    public void setBackgroundLayer2(Point point) {
+        backgroundLayer2StartX = point.x;
+        backgroundLayer2StartY = point.y;
     }
 
     public int getBackgroundLayer2StartX() {
@@ -93,6 +162,19 @@ public class MapArea {
     public void setBackgroundLayer2StartY(int backgroundLayer2StartY) {
         this.backgroundLayer2StartY = backgroundLayer2StartY;
     }
+    
+    public boolean doesLayer1Parallax() {
+        return layer1ParallaxX != 0 || layer1ParallaxY != 0;
+    }
+    
+    public Point getLayer1Parallax() {
+        return new Point(layer1ParallaxX, layer1ParallaxY);
+    }
+    
+    public void setLayer1Parallax(Point point) {
+        layer1ParallaxX = point.x;
+        layer1ParallaxY = point.y;
+    }
 
     public int getLayer1ParallaxX() {
         return layer1ParallaxX;
@@ -108,6 +190,19 @@ public class MapArea {
 
     public void setLayer1ParallaxY(int layer1ParallaxY) {
         this.layer1ParallaxY = layer1ParallaxY;
+    }
+    
+    public boolean doesLayer2Parallax() {
+        return layer2ParallaxX != 0 || layer2ParallaxY != 0;
+    }
+    
+    public Point getLayer2Parallax() {
+        return new Point(layer2ParallaxX, layer2ParallaxY);
+    }
+    
+    public void setLayer2Parallax(Point point) {
+        layer2ParallaxX = point.x;
+        layer2ParallaxY = point.y;
     }
 
     public int getLayer2ParallaxX() {
@@ -125,6 +220,19 @@ public class MapArea {
     public void setLayer2ParallaxY(int layer2ParallaxY) {
         this.layer2ParallaxY = layer2ParallaxY;
     }
+    
+    public boolean doesLayer1AutoScroll() {
+        return layer1AutoscrollX != 0 || layer1AutoscrollY != 0;
+    }
+    
+    public Point getLayer1AutoScroll() {
+        return new Point(layer1AutoscrollX, layer1AutoscrollY);
+    }
+    
+    public void setLayer1AutoScroll(Point point) {
+        layer1AutoscrollX = point.x;
+        layer1AutoscrollY = point.y;
+    }
 
     public int getLayer1AutoscrollX() {
         return layer1AutoscrollX;
@@ -140,6 +248,19 @@ public class MapArea {
 
     public void setLayer1AutoscrollY(int layer1AutoscrollY) {
         this.layer1AutoscrollY = layer1AutoscrollY;
+    }
+    
+    public boolean doesLayer2AutoScroll() {
+        return layer2AutoscrollX != 0 || layer2AutoscrollY != 0;
+    }
+    
+    public Point getLayer2AutoScroll() {
+        return new Point(layer2AutoscrollX, layer2AutoscrollY);
+    }
+    
+    public void setLayer2AutoScroll(Point point) {
+        layer2AutoscrollX = point.x;
+        layer2AutoscrollY = point.y;
     }
 
     public int getLayer2AutoscrollX() {
@@ -173,6 +294,13 @@ public class MapArea {
     public void setDefaultMusic(String defaultMusic) {
         this.defaultMusic = defaultMusic;
     }
- 
     
+    public static MapArea createEmpty() {
+        return new MapArea(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "NONE");
+    }
+
+    @Override
+    public MapArea clone() {
+        return new MapArea(layer1StartX, layer1StartY, layer1EndX, layer1EndY, foregroundLayer2StartX, foregroundLayer2StartY, backgroundLayer2StartX, backgroundLayer2StartY, layer1ParallaxX, layer1ParallaxY, layer2ParallaxX, layer2ParallaxY, layer1AutoscrollX, layer1AutoscrollY, layer2AutoscrollX, layer2AutoscrollY, layerType, defaultMusic);
+    }
 }

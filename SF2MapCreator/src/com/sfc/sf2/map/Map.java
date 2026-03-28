@@ -6,8 +6,8 @@
 package com.sfc.sf2.map;
 
 import com.sfc.sf2.graphics.Tile;
+import com.sfc.sf2.graphics.Tileset;
 import com.sfc.sf2.map.block.MapBlock;
-import com.sfc.sf2.map.block.Tileset;
 import com.sfc.sf2.map.layout.MapLayout;
 import com.sfc.sf2.palette.Palette;
 

@@ -17,7 +17,17 @@ public class SpellAnimationFrame {
     private short y;
     private byte w;
     private byte h;
-    private byte unknown;
+    private boolean foreground;
+
+    public SpellAnimationFrame(short frameIndex, short tileIndex, short x, short y, byte w, byte h, boolean foreground) {
+        this.frameIndex = frameIndex;
+        this.tileIndex = tileIndex;
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
+        this.foreground = foreground;
+    }
     
     public short getFrameIndex() {
         return frameIndex;
@@ -67,11 +77,20 @@ public class SpellAnimationFrame {
         this.h = h;
     }
 
-    public byte getForeground() {
-        return unknown;
+    public boolean getForeground() {
+        return foreground;
     }
 
-    public void setForeground(byte foreground) {
-        this.unknown = foreground;
+    public void setForeground(boolean foreground) {
+        this.foreground = foreground;
+    }
+    
+    public static SpellAnimationFrame createEmpty() {
+        return new SpellAnimationFrame((short)0, (short)0, (short)0, (short)0, (byte)1, (byte)1, true);
+    }
+
+    @Override
+    public SpellAnimationFrame clone() {
+        return new SpellAnimationFrame(frameIndex, tileIndex, x, y, w, h, foreground);
     }
 }

@@ -7,7 +7,7 @@ package com.sfc.sf2.palette.gui.controls;
 
 import com.sfc.sf2.palette.CRAMColor;
 import com.sfc.sf2.palette.PaletteDecoder;
-import com.sfc.sf2.palette.gui.ColorPane;
+import com.sfc.sf2.palette.gui.PalettePane;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
@@ -47,49 +47,60 @@ import javax.swing.UIManager;
  */
 public class CRAMColorEditor extends javax.swing.JPanel {
 
-    ColorPane colorPane;
+    PalettePane palettePane;
+    int thisIndex;
     CRAMColor color;
     int redIndex, greenIndex, blueIndex;
+    boolean settingNewColor = false;
     
     public CRAMColorEditor() {
         initComponents();
-        setColor(CRAMColor.BLACK);
+        setColor(CRAMColor.BLACK, -1);
     }
     
     public CRAMColorEditor(CRAMColor initialColor) {
         initComponents();
-        setColor(initialColor);
+        setColor(initialColor, -1);
+        setSliderEnabled(true);
     }
   
-    public void setColorPane(ColorPane cp) {
-        colorPane = cp;
-        setColor(colorPane == null ? CRAMColor.BLACK : colorPane.getCurrentColor());
+    public void setColorPane(PalettePane palettePane) {
+        this.palettePane = palettePane;
+    }
+
+    public int getThisIndex() {
+        return thisIndex;
     }
     
     public CRAMColor getColor() {
         return color;
     }
     
-    public void setColor(CRAMColor color) {
+    public void setColor(CRAMColor color, int thisIndex) {
+        settingNewColor = true;
+        this.thisIndex = thisIndex;
         redIndex = PaletteDecoder.brightnessToCramIndex(color.CRAMColor().getRed());
         greenIndex = PaletteDecoder.brightnessToCramIndex(color.CRAMColor().getGreen());
         blueIndex = PaletteDecoder.brightnessToCramIndex(color.CRAMColor().getBlue());
+        updateColor(false);
+        settingNewColor = false;
+        setSliderEnabled(thisIndex >= 0);
+    }
+    
+    private void updateColor(boolean triggerCallback) {
         sliderR.setValue(redIndex);
         sliderG.setValue(greenIndex);
         sliderB.setValue(blueIndex);
-        updateColor();
-    }
-    
-    private void updateColor() {
         int r = PaletteDecoder.cramIndexToBrightness(redIndex);
         int g = PaletteDecoder.cramIndexToBrightness(greenIndex);
         int b = PaletteDecoder.cramIndexToBrightness(blueIndex);
         color = CRAMColor.fromPremadeCramColor(r, g, b, 255);
         jPanelColor.setBackground(color.CRAMColor());
-        if (colorPane != null)
-            colorPane.updateColor(color);
         displayRGBColor();
         jPanelColor.revalidate();
+        if (triggerCallback && palettePane != null) {
+            palettePane.updateColor(thisIndex, color);
+        }
     }
 
     public void displayRGBColor() {
@@ -97,6 +108,12 @@ public class CRAMColorEditor extends javax.swing.JPanel {
         int g = PaletteDecoder.cramIndexToBrightness(greenIndex);
         int b = PaletteDecoder.cramIndexToBrightness(blueIndex);
         jLabelRGB.setText(String.format("#%02X%02X%02X", r, g, b));
+    }
+    
+    private void setSliderEnabled(boolean enabled) {
+        sliderR.setEnabled(enabled);
+        sliderG.setEnabled(enabled);
+        sliderB.setEnabled(enabled);
     }
 
     /**
@@ -115,7 +132,6 @@ public class CRAMColorEditor extends javax.swing.JPanel {
 
         sliderR.setMajorTickSpacing(2);
         sliderR.setMaximum(14);
-        sliderR.setMinorTickSpacing(2);
         sliderR.setPaintLabels(true);
         sliderR.setPaintTicks(true);
         sliderR.setSnapToTicks(true);
@@ -128,7 +144,6 @@ public class CRAMColorEditor extends javax.swing.JPanel {
 
         sliderG.setMajorTickSpacing(2);
         sliderG.setMaximum(14);
-        sliderG.setMinorTickSpacing(2);
         sliderG.setPaintLabels(true);
         sliderG.setPaintTicks(true);
         sliderG.setSnapToTicks(true);
@@ -141,7 +156,6 @@ public class CRAMColorEditor extends javax.swing.JPanel {
 
         sliderB.setMajorTickSpacing(2);
         sliderB.setMaximum(14);
-        sliderB.setMinorTickSpacing(2);
         sliderB.setPaintLabels(true);
         sliderB.setPaintTicks(true);
         sliderB.setSnapToTicks(true);
@@ -220,11 +234,14 @@ public class CRAMColorEditor extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void sliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sliderStateChanged
+        if (settingNewColor) return;
+        if (sliderR.getValue() == redIndex && sliderG.getValue() == greenIndex && sliderB.getValue() == blueIndex) return;
         JSlider slider = (JSlider)evt.getSource();
+        if (slider.getValue() % 2 == 1) return;//Ignore odd values
         if (slider == sliderR) redIndex = sliderR.getValue();
         if (slider == sliderG) greenIndex = sliderG.getValue();
         if (slider == sliderB) blueIndex = sliderB.getValue();
-        updateColor();
+        updateColor(true);
     }//GEN-LAST:event_sliderStateChanged
 
     private void infoButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_infoButton1ActionPerformed
@@ -390,7 +407,7 @@ class ColorChooserDialog extends JDialog {
     }
 
     public void reset() {
-        chooserPane.setColor(initialColor);
+        chooserPane.setColor(initialColor, -1);
     }
 
     @SuppressWarnings("serial") // JDK-implementation class

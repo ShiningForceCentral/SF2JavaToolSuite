@@ -5,7 +5,6 @@
  */
 package com.sfc.sf2.core.settings;
 
-import java.awt.Color;
 import java.util.HashMap;
 
 /**
@@ -15,7 +14,7 @@ import java.util.HashMap;
 public class GlobalSettings implements AbstractSettings {
     
     private boolean darkTheme;
-    private Color transparentBGColor;
+    private int logLevel;
     
     public boolean getIsDarkTheme() {
         return darkTheme;
@@ -25,18 +24,18 @@ public class GlobalSettings implements AbstractSettings {
         this.darkTheme = darkTheme;
     }
     
-    public Color getTransparentBGColor() {
-        return transparentBGColor;
+    public int getLogLevel() {
+        return logLevel;
     }
     
-    public void setTransparentBGColor(Color transparentBGColor) {
-        this.transparentBGColor = transparentBGColor;
+    public void setLogLevel(int logLevel) {
+        this.logLevel = logLevel;
     }
 
     @Override
     public void initialiseNewUser() {
         darkTheme = false;
-        transparentBGColor = new Color(200, 0, 200);
+        logLevel = 1;
     }
     
     @Override
@@ -44,15 +43,14 @@ public class GlobalSettings implements AbstractSettings {
         if (data.containsKey("darkTheme")) {
             darkTheme = Boolean.parseBoolean(data.get("darkTheme"));
         }
-        if (data.containsKey("transparentBGColor")) {
-            String[] colorSplit = data.get("transparentBGColor").split(",");
-            transparentBGColor = new Color(Integer.parseInt(colorSplit[0].trim()), Integer.parseInt(colorSplit[1].trim()), Integer.parseInt(colorSplit[2].trim()));
+        if (data.containsKey("logLevel")) {
+            logLevel = Integer.parseInt(data.get("logLevel"));
         }
     }
 
     @Override
     public void encodeSettings(HashMap<String, String> data) {
         data.put("darkTheme", Boolean.toString(darkTheme));
-        data.put("transparentBGColor", String.format("%d, %d, %d", transparentBGColor.getRed(), transparentBGColor.getGreen(), transparentBGColor.getBlue()));
+        data.put("logLevel", Integer.toString(logLevel));
     }
 }

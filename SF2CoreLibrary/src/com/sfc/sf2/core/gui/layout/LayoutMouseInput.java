@@ -18,4 +18,9 @@ public class LayoutMouseInput extends BaseMouseCoordsComponent {
         super(panel, gridX, gridY);
         setupListeners(mouseButtonListener, null);
     }
+        
+    public LayoutMouseInput(AbstractLayoutPanel panel, GridMousePressedListener mouseButtonListener, GridMouseMoveListener mouseMoveListener, int gridX, int gridY) {
+        super(panel, gridX, gridY);
+        setupListeners(mouseButtonListener, mouseMoveListener);
+    }
 }

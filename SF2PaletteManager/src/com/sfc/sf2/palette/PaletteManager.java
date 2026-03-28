@@ -22,10 +22,7 @@ import java.util.Arrays;
  *
  * @author wiz
  */
-public class PaletteManager extends AbstractManager {    
-    private final PaletteDisassemblyProcessor paletteDisassemblyProcessor = new PaletteDisassemblyProcessor();
-    private final PaletteRawImageProcessor paletteImageProcessor = new PaletteRawImageProcessor();
-    private final BinaryDisassemblyProcessor binaryDisassemblyProcessor = new BinaryDisassemblyProcessor();
+public  class PaletteManager extends AbstractManager {
     
     private Palette palette;
 
@@ -45,7 +42,7 @@ public class PaletteManager extends AbstractManager {
     public Palette importDisassembly(Path filePath, boolean firstColorTransparent) throws IOException, DisassemblyException {
         Console.logger().finest("ENTERING importDisassembly");
         PalettePackage pckg = new PalettePackage(PathHelpers.filenameFromPath(filePath), firstColorTransparent);
-        palette = paletteDisassemblyProcessor.importDisassembly(filePath, pckg);
+        palette = new PaletteDisassemblyProcessor().importDisassembly(filePath, pckg);
         Console.logger().info("Palette successfully imported from : " + filePath);
         Console.logger().finest("EXITING importDisassembly");
         return palette;
@@ -59,7 +56,7 @@ public class PaletteManager extends AbstractManager {
                 dataSets[i] = dataSets[i-1];
             } else {
                 PalettePackage pckg = new PalettePackage(Integer.toString(i), firstColorTransparent);
-                dataSets[i] = binaryDisassemblyProcessor.importDisassembly(filePaths[i], null);
+                dataSets[i] = new BinaryDisassemblyProcessor().importDisassembly(filePaths[i], null);
             }
             
             byte[] newData = Arrays.copyOfRange(dataSets[i], offsets[i], offsets[i]+lengths[i]);
@@ -69,7 +66,7 @@ public class PaletteManager extends AbstractManager {
     }
     
     public Palette importDisassemblyFromPartial(Path filePath, int offset, int length, boolean firstColorTransparent) throws IOException, DisassemblyException {
-        byte[] data = binaryDisassemblyProcessor.importDisassembly(filePath, null);
+        byte[] data = new BinaryDisassemblyProcessor().importDisassembly(filePath, null);
         byte[] paletteData = Arrays.copyOfRange(data, offset, offset+length);
         return new Palette(PathHelpers.filenameFromPath(filePath), PaletteDecoder.decodePalette(paletteData), true);
     }
@@ -78,7 +75,7 @@ public class PaletteManager extends AbstractManager {
         Console.logger().finest("ENTERING exportDisassembly");
         this.palette = palette;
         PalettePackage pckg = new PalettePackage(palette.getName(), false);
-        paletteDisassemblyProcessor.exportDisassembly(filePath, palette, pckg);
+        new PaletteDisassemblyProcessor().exportDisassembly(filePath, palette, pckg);
         Console.logger().info("Palette successfully exported to : " + filePath);
         Console.logger().finest("EXITING exportDisassembly");
     }
@@ -86,7 +83,7 @@ public class PaletteManager extends AbstractManager {
     public Palette importImage(Path filePath, boolean firstColorTransparent) throws RawImageException, DisassemblyException, IOException {
         Console.logger().finest("ENTERING importImage");
         PalettePackage pckg = new PalettePackage(PathHelpers.filenameFromPath(filePath), firstColorTransparent);
-        palette = paletteImageProcessor.importRawImage(filePath, pckg);
+        palette = new PaletteRawImageProcessor().importRawImage(filePath, pckg);
         Console.logger().info("Palette successfully imported from : " + filePath);
         Console.logger().finest("EXITING importImage");
         return palette;
@@ -96,7 +93,7 @@ public class PaletteManager extends AbstractManager {
         Console.logger().finest("ENTERING exportImage");
         palette = currentPalette;
         PalettePackage pckg = new PalettePackage(palette.getName(), firstColorTransparent);
-        paletteImageProcessor.exportRawImage(filePath, palette, pckg);
+        new PaletteRawImageProcessor().exportRawImage(filePath, palette, pckg);
         Console.logger().info("Palette successfully exported to : " + filePath);
         Console.logger().finest("EXITING exportImage");
     }

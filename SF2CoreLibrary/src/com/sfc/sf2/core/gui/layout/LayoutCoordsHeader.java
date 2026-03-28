@@ -37,7 +37,6 @@ public class LayoutCoordsHeader extends BaseMouseCoordsComponent {
     public LayoutCoordsHeader(AbstractLayoutPanel panel, int gridX, int gridY, boolean showIndex) {
         super(panel, gridX, gridY);
         this.showIndex = showIndex;
-        setupListeners(null, this::onMouseMotion);
         java.awt.EventQueue.invokeLater(() -> { findCoordsTitle(panel); });
     }
     
@@ -69,24 +68,29 @@ public class LayoutCoordsHeader extends BaseMouseCoordsComponent {
             setEnabled(false);
         } else {
             origTitle = coordsTitle.getTitle();
+            setupListeners(null, this::onMouseMotion);
         }
     }
 
     private void onMouseMotion(GridMouseMoveEvent evt) {
+        coordsTitle.setTitle(getNewTitleText(evt.x(), evt.y(), showIndex));
+        coordsContainer.repaint();
+    }
+    
+    protected String getNewTitleText(int x, int y, boolean showIndex) {
         if (showIndex) {
-            if (evt.x() < 0 || evt.y() < 0) {
-                coordsTitle.setTitle(String.format("%s : ( - )", origTitle));
+            if (x < 0 || y < 0) {
+                return String.format("%s : ( - )", origTitle);
             } else {
-                int index = evt.x()+evt.y()*itemsPerRow;
-                coordsTitle.setTitle(String.format("%s : ( %d )", origTitle, index));
+                int index = x+y*itemsPerRow;
+                return String.format("%s : ( %d )", origTitle, index);
             }
         } else {
-            if (evt.x() < 0 || evt.y() < 0) {
-                coordsTitle.setTitle(String.format("%s : (-, -)", origTitle));
+            if (x < 0 || y < 0) {
+                return String.format("%s : (-, -)", origTitle);
             } else {
-                coordsTitle.setTitle(String.format("%s : (%d, %d)", origTitle, evt.x(), evt.y()));
+                return String.format("%s : (%d, %d)", origTitle, x, y);
             }
         }
-        coordsContainer.repaint();
     }
 }

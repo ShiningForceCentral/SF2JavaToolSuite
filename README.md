@@ -26,4 +26,7 @@ This change in format allows the tools to be better maintained and improved fast
 3. Start making changes
     - Have a look at the active issues: https://github.com/ShiningForceCentral/SF2JavaToolSuite/issues. Maybe there is something here that you can improve
     - Or come and talk to the team on the Discord: https://discord.com/channels/536315672083562508/536318731844845589
+
 _NetBeans IDE is confirmed to work with this project, other IDEs might not be fully compatible_
+
+----

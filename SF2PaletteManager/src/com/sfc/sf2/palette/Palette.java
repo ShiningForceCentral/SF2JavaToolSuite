@@ -5,14 +5,16 @@
  */
 package com.sfc.sf2.palette;
 
+import com.sfc.sf2.core.INameable;
 import java.awt.Color;
 import java.awt.image.IndexColorModel;
+import java.util.Arrays;
 
 /**
  *
  * @author TiMMy
  */
-public class Palette {
+public class Palette implements INameable {
     
     private String name;
     private CRAMColor[] colors;
@@ -41,6 +43,10 @@ public class Palette {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isFirstColorTransparent() {
+        return firstColorTransparent;
     }
 
     public CRAMColor[] getColors() {
@@ -133,5 +139,19 @@ public class Palette {
         alphas[0] = firstColorTransparent ? 0 : (byte)0xFF;
         IndexColorModel icm = new IndexColorModel(4,colors.length,reds,greens,blues,alphas);
         return icm;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Palette)) return super.equals(obj);
+        Palette palette = (Palette)obj;
+        if (!Arrays.equals(this.colors, palette.colors)) return false;
+        return true;
+    }
+    
+    public Palette Clone() {
+        Palette newPalette = new Palette(colors.clone(), firstColorTransparent);
+        newPalette.rebuildIcm();
+        return newPalette;
     }
 }

@@ -5,12 +5,16 @@
  */
 package com.sfc.sf2.ground.gui;
 
+import com.sfc.sf2.core.actions.ActionManager;
+import com.sfc.sf2.core.actions.NonCombinableAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.core.settings.SettingsManager;
+import com.sfc.sf2.core.settings.ViewSettings;
 import com.sfc.sf2.ground.Ground;
 import com.sfc.sf2.ground.GroundManager;
 import com.sfc.sf2.helpers.PathHelpers;
+import com.sfc.sf2.helpers.RenderScaleHelpers;
 import java.nio.file.Path;
 import java.util.logging.Level;
 
@@ -20,10 +24,12 @@ import java.util.logging.Level;
  */
 public class GroundMainEditor extends AbstractMainEditor {
     
+    private final ViewSettings viewSettings = new ViewSettings(RenderScaleHelpers.RENDER_SCALE_2X);
     GroundManager groundManager = new GroundManager();
     
     public GroundMainEditor() {
         super();
+        SettingsManager.registerSettingsStore("view", viewSettings);
         initComponents();
         initCore(console1);
     }
@@ -32,17 +38,18 @@ public class GroundMainEditor extends AbstractMainEditor {
     protected void initEditor() {
         super.initEditor();
         
-        groundLayoutPanel.setShowGrid(jCheckBox1.isSelected());
-        groundLayoutPanel.setDisplayScale(jComboBox7.getSelectedIndex()+1);
-        colorPicker1.setColor(SettingsManager.getGlobalSettings().getTransparentBGColor());
-        groundLayoutPanel.setBGColor(colorPicker1.getBackground());
+        groundViewPanel1.setLayoutPanel(groundLayoutPanel, viewSettings);
+        groundLayoutPanel.setItemsPerRow(Ground.GROUND_TILES_PER_ROW);
     }
     
     @Override
     protected void onDataLoaded() {
         super.onDataLoaded();
-        
-        groundLayoutPanel.setGround(groundManager.getGround());
+        ActionManager.setAndExecuteAction(new NonCombinableAction<Ground>(this, "Ground Imported", this::actionGroundLoaded, groundManager.getGround(), groundLayoutPanel.getGround()));
+    }
+    
+    private void actionGroundLoaded(Ground ground) {
+        groundLayoutPanel.setGround(ground);
     }
     
     /**
@@ -59,74 +66,104 @@ public class GroundMainEditor extends AbstractMainEditor {
         jPanel15 = new javax.swing.JPanel();
         jSplitPane2 = new javax.swing.JSplitPane();
         jPanel8 = new javax.swing.JPanel();
+        jPanel28 = new javax.swing.JPanel();
+        fileButtonImportBasePalette = new com.sfc.sf2.core.gui.controls.FileButton();
         jPanel3 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel4 = new javax.swing.JPanel();
-        jButton18 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        fileButton1 = new com.sfc.sf2.core.gui.controls.FileButton();
-        fileButton2 = new com.sfc.sf2.core.gui.controls.FileButton();
+        infoButton1 = new com.sfc.sf2.core.gui.controls.InfoButton();
+        fileButtonImportPalette = new com.sfc.sf2.core.gui.controls.FileButton();
+        fileButtonImportGround = new com.sfc.sf2.core.gui.controls.FileButton();
+        jButtonImportDisassembly = new javax.swing.JButton();
         jPanel9 = new javax.swing.JPanel();
-        jButton12 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        fileButton3 = new com.sfc.sf2.core.gui.controls.FileButton();
+        infoButton2 = new com.sfc.sf2.core.gui.controls.InfoButton();
+        fileButtonImportImage = new com.sfc.sf2.core.gui.controls.FileButton();
+        jButtonImportImage = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jTabbedPane2 = new javax.swing.JTabbedPane();
         jPanel11 = new javax.swing.JPanel();
-        fileButton5 = new com.sfc.sf2.core.gui.controls.FileButton();
-        jButton3 = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        fileButton4 = new com.sfc.sf2.core.gui.controls.FileButton();
-        jButton2 = new javax.swing.JButton();
+        fileButtonExportGround = new com.sfc.sf2.core.gui.controls.FileButton();
+        jButtonExportGroundDisassembly = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
+        jLabel6 = new javax.swing.JLabel();
+        fileButtonExportPalette = new com.sfc.sf2.core.gui.controls.FileButton();
+        jButtonExportPaletteDisassembly = new javax.swing.JButton();
         jPanel14 = new javax.swing.JPanel();
-        jButton13 = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
-        fileButton6 = new com.sfc.sf2.core.gui.controls.FileButton();
-        jPanel28 = new javax.swing.JPanel();
-        fileButton7 = new com.sfc.sf2.core.gui.controls.FileButton();
+        fileButtonExportImage = new com.sfc.sf2.core.gui.controls.FileButton();
+        jButtonExportImage = new javax.swing.JButton();
+        infoButton3 = new com.sfc.sf2.core.gui.controls.InfoButton();
         jPanel10 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         groundLayoutPanel = new com.sfc.sf2.ground.gui.GroundLayoutPanel();
-        jPanel17 = new javax.swing.JPanel();
-        jLabel54 = new javax.swing.JLabel();
-        jSpinner2 = new javax.swing.JSpinner();
-        jLabel55 = new javax.swing.JLabel();
-        colorPicker1 = new com.sfc.sf2.core.gui.controls.ColorPicker();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jComboBox7 = new javax.swing.JComboBox<>();
-        jLabel7 = new javax.swing.JLabel();
+        groundViewPanel1 = new com.sfc.sf2.ground.gui.GroundViewPanel();
         console1 = new com.sfc.sf2.core.gui.controls.Console();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SF2GroundManager");
 
-        jSplitPane1.setDividerLocation(500);
+        jSplitPane1.setDividerLocation(550);
         jSplitPane1.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
         jSplitPane1.setOneTouchExpandable(true);
 
         jSplitPane2.setDividerLocation(500);
         jSplitPane2.setOneTouchExpandable(true);
 
+        jPanel28.setBorder(javax.swing.BorderFactory.createTitledBorder("Base palette :"));
+
+        fileButtonImportBasePalette.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
+        fileButtonImportBasePalette.setFilePath("..\\battlescenebasepalette.bin");
+        fileButtonImportBasePalette.setInfoMessage("<html>The game's base palette. Ground images use this palette most color channels but then override this with a 'ground palette' that sets the colors at indexes 3, 4, & 8.</html>");
+        fileButtonImportBasePalette.setLabelText("Base palette file :");
+        fileButtonImportBasePalette.setName("Import Base Palette"); // NOI18N
+
+        javax.swing.GroupLayout jPanel28Layout = new javax.swing.GroupLayout(jPanel28);
+        jPanel28.setLayout(jPanel28Layout);
+        jPanel28Layout.setHorizontalGroup(
+            jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel28Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(fileButtonImportBasePalette, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel28Layout.setVerticalGroup(
+            jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel28Layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(fileButtonImportBasePalette, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Import from :"));
         jPanel3.setPreferredSize(new java.awt.Dimension(590, 135));
 
-        jButton18.setText("Import");
-        jButton18.addActionListener(new java.awt.event.ActionListener() {
+        jLabel2.setText("Import ground graphic.");
+
+        infoButton1.setMessageText("<html>Import the ground platform that the battlesprites stand on in a battle scene.<br>The ground platform graphics can be loaded with different palettes to adjust the colors of the graphic.</html>");
+        infoButton1.setText("");
+
+        fileButtonImportPalette.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
+        fileButtonImportPalette.setFilePath(".\\groundpalette00.bin");
+        fileButtonImportPalette.setInfoMessage("<html>Loads the palette to replace colors of the base palette. The 'ground palette' that sets the colors at indexes 3, 4, & 8.</html>");
+        fileButtonImportPalette.setLabelText("Palette file :");
+        fileButtonImportPalette.setName("Import Palette"); // NOI18N
+
+        fileButtonImportGround.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
+        fileButtonImportGround.setFilePath(".\\groundtiles00.bin");
+        fileButtonImportGround.setInfoMessage("The graphic for the ground platform.");
+        fileButtonImportGround.setLabelText("Ground file :");
+        fileButtonImportGround.setName("Import Ground"); // NOI18N
+
+        jButtonImportDisassembly.setText("Import");
+        jButtonImportDisassembly.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton18ActionPerformed(evt);
+                jButtonImportDisassemblyActionPerformed(evt);
             }
         });
-
-        jLabel2.setText("Select disassembly files.");
-        jLabel2.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-
-        fileButton1.setFilePath(".\\groundpalette00.bin");
-        fileButton1.setLabelText("Palette file :");
-
-        fileButton2.setFilePath(".\\groundtiles00.bin");
-        fileButton2.setLabelText("Ground file :");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -135,42 +172,53 @@ public class GroundMainEditor extends AbstractMainEditor {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fileButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 466, Short.MAX_VALUE)
+                    .addComponent(fileButtonImportPalette, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(fileButtonImportGround, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton18))
-                    .addComponent(fileButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(infoButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButtonImportDisassembly)))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(fileButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(infoButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fileButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fileButtonImportPalette, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel2)
-                    .addComponent(jButton18))
+                .addComponent(fileButtonImportGround, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonImportDisassembly)
                 .addContainerGap())
         );
 
         jTabbedPane1.addTab("Disassembly", jPanel4);
 
-        jButton12.setText("Import");
-        jButton12.addActionListener(new java.awt.event.ActionListener() {
+        jLabel3.setText("Import ground from image.");
+
+        infoButton2.setMessageText("<html>Loads the ground platform from an image. Only takes the colors at index 3, 4, & 8.<br>Supported image formats: PNG or GIF.<br><br>Color format should be 4BPP / 16 indexed colors. Images of 8BPP / 256 indexed colors will be converted to 4 BPP / 16 (some colors may be lost).<br>When imported, icons will use the base palette colors.<br>Color index 0 is treated as transparent.</html>");
+        infoButton2.setText("");
+
+        fileButtonImportImage.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ANY_IMAGE);
+        fileButtonImportImage.setFilePath(".\\export\\groundtiles00.png");
+        fileButtonImportImage.setInfoMessage("");
+        fileButtonImportImage.setLabelText("Image file :");
+        fileButtonImportImage.setName("Import Image"); // NOI18N
+
+        jButtonImportImage.setText("Import");
+        jButtonImportImage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton12ActionPerformed(evt);
+                jButtonImportImageActionPerformed(evt);
             }
         });
-
-        jLabel3.setText("<html>Select an image File (e.g. PNG or GIF).<br>\nColor format should be 4BPP / 16 indexed colors.<br>\n(Images of 8BPP / 256 indexed colors will be converted to 4 BPP / 16).<br>\nGrounds use the <i>battlescene base palette</i> but then the <i>ground palette</i> modifies colors at indexes 3,4 and 8.</html>");
-        jLabel3.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-
-        fileButton3.setFilePath(".\\export\\groundtiles00.png");
-        fileButton3.setLabelText("Image file :");
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -179,23 +227,26 @@ public class GroundMainEditor extends AbstractMainEditor {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fileButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE)
+                    .addComponent(fileButtonImportImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonImportImage, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton12)))
+                        .addComponent(infoButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(fileButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(infoButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton12)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(fileButtonImportImage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonImportImage)
                 .addContainerGap())
         );
 
@@ -212,35 +263,39 @@ public class GroundMainEditor extends AbstractMainEditor {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1)
         );
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Export to :"));
         jPanel5.setPreferredSize(new java.awt.Dimension(32, 135));
 
-        fileButton5.setFilePath(".\\groundpalette00.bin");
-        fileButton5.setLabelText("Palette file :");
+        jLabel1.setText("Export ground disassembly.");
 
-        jButton3.setText("Export");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        fileButtonExportGround.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
+        fileButtonExportGround.setFilePath(".\\groundtiles00.bin");
+        fileButtonExportGround.setInfoMessage("");
+        fileButtonExportGround.setLabelText("Ground File :");
+        fileButtonExportGround.setName("Export Ground"); // NOI18N
+
+        jButtonExportGroundDisassembly.setText("Export");
+        jButtonExportGroundDisassembly.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jButtonExportGroundDisassemblyActionPerformed(evt);
             }
         });
 
-        jLabel6.setText("<html>Optional, export palette file.</html>");
-        jLabel6.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jLabel6.setText("(Optional) Export palette disassembly.");
 
-        jLabel1.setText("<html>Select new target files. Palette file optional.</html>");
-        jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        fileButtonExportPalette.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
+        fileButtonExportPalette.setFilePath(".\\groundpalette00.bin");
+        fileButtonExportPalette.setInfoMessage("");
+        fileButtonExportPalette.setLabelText("Palette file :");
+        fileButtonExportPalette.setName("Export Palette"); // NOI18N
 
-        fileButton4.setFilePath(".\\groundtiles00.bin");
-        fileButton4.setLabelText("Ground File :");
-
-        jButton2.setText("Export");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButtonExportPaletteDisassembly.setText("Export");
+        jButtonExportPaletteDisassembly.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButtonExportPaletteDisassemblyActionPerformed(evt);
             }
         });
 
@@ -251,50 +306,54 @@ public class GroundMainEditor extends AbstractMainEditor {
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 384, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3))
-                    .addComponent(fileButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(fileButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(fileButtonExportGround, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(fileButtonExportPalette, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel6)
+                    .addComponent(jButtonExportGroundDisassembly, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButtonExportPaletteDisassembly, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(fileButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton3)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(fileButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fileButtonExportGround, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jButtonExportGroundDisassembly)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(fileButtonExportPalette, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonExportPaletteDisassembly)
                 .addContainerGap())
         );
 
         jTabbedPane2.addTab("Disassembly", jPanel11);
 
-        jButton13.setText("Export");
-        jButton13.addActionListener(new java.awt.event.ActionListener() {
+        jLabel9.setText("Export ground as image.");
+
+        fileButtonExportImage.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ANY_IMAGE);
+        fileButtonExportImage.setFilePath(".\\export\\groundtiles00.png");
+        fileButtonExportImage.setInfoMessage("");
+        fileButtonExportImage.setLabelText("Image file :");
+        fileButtonExportImage.setName("Export Image"); // NOI18N
+
+        jButtonExportImage.setText("Export");
+        jButtonExportImage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton13ActionPerformed(evt);
+                jButtonExportImageActionPerformed(evt);
             }
         });
 
-        jLabel9.setText("<html>Select a new target PNG file.<br>Exported PNG Format : 4BPP / 16 indexed colors.<br>Transparency color at index 0. Ground-specific colors at indexes 3,4 and 8.</html>");
-        jLabel9.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-
-        fileButton6.setFilePath(".\\export\\groundtiles00.png");
-        fileButton6.setLabelText("Image file :");
+        infoButton3.setMessageText("<html>Export the ground platform as an image.<br>Will export using the currently loaded palette.</html>");
+        infoButton3.setText("");
 
         javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
         jPanel14.setLayout(jPanel14Layout);
@@ -303,22 +362,29 @@ public class GroundMainEditor extends AbstractMainEditor {
             .addGroup(jPanel14Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fileButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(fileButtonExportImage, javax.swing.GroupLayout.DEFAULT_SIZE, 466, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
-                        .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 384, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButtonExportImage))
+                    .addGroup(jPanel14Layout.createSequentialGroup()
+                        .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton13)))
+                        .addComponent(infoButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel14Layout.setVerticalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel14Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(fileButton6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(infoButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton13)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(fileButtonExportImage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonExportImage)
+                .addContainerGap())
         );
 
         jTabbedPane2.addTab("Image", jPanel14);
@@ -334,29 +400,7 @@ public class GroundMainEditor extends AbstractMainEditor {
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
-        );
-
-        jPanel28.setBorder(javax.swing.BorderFactory.createTitledBorder("Base palette :"));
-
-        fileButton7.setFilePath("..\\battlescenebasepalette.bin");
-        fileButton7.setLabelText("Base palette file :");
-
-        javax.swing.GroupLayout jPanel28Layout = new javax.swing.GroupLayout(jPanel28);
-        jPanel28.setLayout(jPanel28Layout);
-        jPanel28Layout.setHorizontalGroup(
-            jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel28Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(fileButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel28Layout.setVerticalGroup(
-            jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel28Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(fileButton7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 249, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
@@ -373,9 +417,9 @@ public class GroundMainEditor extends AbstractMainEditor {
                 .addContainerGap()
                 .addComponent(jPanel28, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE))
         );
 
         jSplitPane2.setLeftComponent(jPanel8);
@@ -386,7 +430,7 @@ public class GroundMainEditor extends AbstractMainEditor {
         groundLayoutPanel.setLayout(groundLayoutPanelLayout);
         groundLayoutPanelLayout.setHorizontalGroup(
             groundLayoutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 479, Short.MAX_VALUE)
+            .addGap(0, 579, Short.MAX_VALUE)
         );
         groundLayoutPanelLayout.setVerticalGroup(
             groundLayoutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -395,103 +439,20 @@ public class GroundMainEditor extends AbstractMainEditor {
 
         jScrollPane2.setViewportView(groundLayoutPanel);
 
-        jLabel54.setText("Tiles per row :");
-
-        jSpinner2.setModel(new javax.swing.SpinnerNumberModel(12, 1, null, 1));
-        jSpinner2.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jSpinner2StateChanged(evt);
-            }
-        });
-
-        jLabel55.setText("BG :");
-
-        colorPicker1.addColorChangedListener(new com.sfc.sf2.core.gui.controls.ColorPicker.ColorChangedListener() {
-            public void colorChanged(java.awt.event.ActionEvent evt) {
-                colorPicker1ColorChanged(evt);
-            }
-        });
-
-        javax.swing.GroupLayout colorPicker1Layout = new javax.swing.GroupLayout(colorPicker1);
-        colorPicker1.setLayout(colorPicker1Layout);
-        colorPicker1Layout.setHorizontalGroup(
-            colorPicker1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 22, Short.MAX_VALUE)
-        );
-        colorPicker1Layout.setVerticalGroup(
-            colorPicker1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 22, Short.MAX_VALUE)
-        );
-
-        jCheckBox1.setText("Show grid");
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
-            }
-        });
-
-        jComboBox7.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "x1", "x2", "x3", "x4" }));
-        jComboBox7.setSelectedIndex(1);
-        jComboBox7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox7ActionPerformed(evt);
-            }
-        });
-
-        jLabel7.setText("Scale :");
-
-        javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
-        jPanel17.setLayout(jPanel17Layout);
-        jPanel17Layout.setHorizontalGroup(
-            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel17Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel54)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel55)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(colorPicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jCheckBox1)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel17Layout.setVerticalGroup(
-            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel17Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel54)
-                    .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel55)
-                    .addComponent(colorPicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jCheckBox1)
-                    .addComponent(jComboBox7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addComponent(jScrollPane2)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 395, Short.MAX_VALUE)
+            .addComponent(groundViewPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE)
-                .addGap(0, 0, 0)
-                .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 419, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(groundViewPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
@@ -531,7 +492,7 @@ public class GroundMainEditor extends AbstractMainEditor {
         );
         jPanel13Layout.setVerticalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 667, Short.MAX_VALUE)
+            .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 750, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -545,12 +506,12 @@ public class GroundMainEditor extends AbstractMainEditor {
             .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        setSize(new java.awt.Dimension(1016, 675));
+        setSize(new java.awt.Dimension(926, 758));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Path graphicPath = PathHelpers.getBasePath().resolve(fileButton4.getFilePath());
+    private void jButtonExportGroundDisassemblyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExportGroundDisassemblyActionPerformed
+        Path graphicPath = PathHelpers.getBasePath().resolve(fileButtonExportGround.getFilePath());
         if (!PathHelpers.createPathIfRequred(graphicPath)) return;
         try {
             groundManager.exportDisassembly(graphicPath, groundLayoutPanel.getGround());
@@ -558,51 +519,49 @@ public class GroundMainEditor extends AbstractMainEditor {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Ground disasm could not be exported to : " + graphicPath);
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jButtonExportGroundDisassemblyActionPerformed
 
-    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
-        Path graphicPath = PathHelpers.getBasePath().resolve(fileButton6.getFilePath());
+    private void jButtonExportImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExportImageActionPerformed
+        Path graphicPath = PathHelpers.getBasePath().resolve(fileButtonExportImage.getFilePath());
         if (!PathHelpers.createPathIfRequred(graphicPath)) return;
         try {
-            groundManager.getGround().getTileset().setTilesPerRow((int)jSpinner2.getValue());
+            groundManager.getGround().getTileset().setTilesPerRow(Ground.GROUND_TILES_PER_ROW);
             groundManager.exportImage(graphicPath, groundLayoutPanel.getGround());
         } catch (Exception ex) {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Ground image could not be exported to : " + graphicPath);
         }
-    }//GEN-LAST:event_jButton13ActionPerformed
+    }//GEN-LAST:event_jButtonExportImageActionPerformed
 
-    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-        Path basePalettePath = PathHelpers.getBasePath().resolve(fileButton7.getFilePath());
-        Path graphicPath = PathHelpers.getBasePath().resolve(fileButton3.getFilePath());
+    private void jButtonImportImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportImageActionPerformed
+        Path basePalettePath = PathHelpers.getBasePath().resolve(fileButtonImportBasePalette.getFilePath());
+        Path graphicPath = PathHelpers.getBasePath().resolve(fileButtonImportImage.getFilePath());
         try {
             groundManager.importImage(basePalettePath, graphicPath);
-            jSpinner2.setValue(Ground.GROUND_TILES_PER_ROW);
         } catch (Exception ex) {
             groundManager.clearData();
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Ground image could not be imported from : " + graphicPath);
         }
         onDataLoaded();
-    }//GEN-LAST:event_jButton12ActionPerformed
+    }//GEN-LAST:event_jButtonImportImageActionPerformed
 
-    private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
-        Path basePalettePath = PathHelpers.getBasePath().resolve(fileButton7.getFilePath());
-        Path palettePath = PathHelpers.getBasePath().resolve(fileButton1.getFilePath());
-        Path graphicPath = PathHelpers.getBasePath().resolve(fileButton2.getFilePath());
+    private void jButtonImportDisassemblyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportDisassemblyActionPerformed
+        Path basePalettePath = PathHelpers.getBasePath().resolve(fileButtonImportBasePalette.getFilePath());
+        Path palettePath = PathHelpers.getBasePath().resolve(fileButtonImportPalette.getFilePath());
+        Path graphicPath = PathHelpers.getBasePath().resolve(fileButtonImportGround.getFilePath());
         try {
             groundManager.importDisassembly(basePalettePath, palettePath, graphicPath);
-            jSpinner2.setValue(Ground.GROUND_TILES_PER_ROW);
         } catch (Exception ex) {
             groundManager.clearData();
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Ground disasm could not be imported from : " + graphicPath);
         }
         onDataLoaded();
-    }//GEN-LAST:event_jButton18ActionPerformed
+    }//GEN-LAST:event_jButtonImportDisassemblyActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        Path palettePath = PathHelpers.getBasePath().resolve(fileButton5.getFilePath());
+    private void jButtonExportPaletteDisassemblyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExportPaletteDisassemblyActionPerformed
+        Path palettePath = PathHelpers.getBasePath().resolve(fileButtonExportPalette.getFilePath());
         if (!PathHelpers.createPathIfRequred(palettePath)) return;
         try {
             groundManager.exportPalette(palettePath, groundLayoutPanel.getGround());
@@ -610,25 +569,7 @@ public class GroundMainEditor extends AbstractMainEditor {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Ground palette disasm could not be exported to : " + palettePath);
         }
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jSpinner2StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner2StateChanged
-        groundLayoutPanel.setItemsPerRow((int)jSpinner2.getValue());
-    }//GEN-LAST:event_jSpinner2StateChanged
-
-    private void colorPicker1ColorChanged(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorPicker1ColorChanged
-        groundLayoutPanel.setBGColor(colorPicker1.getColor());
-        SettingsManager.getGlobalSettings().setTransparentBGColor(colorPicker1.getColor());
-        SettingsManager.saveGlobalSettingsFile();
-    }//GEN-LAST:event_colorPicker1ColorChanged
-
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
-        groundLayoutPanel.setShowGrid(jCheckBox1.isSelected());
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
-
-    private void jComboBox7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox7ActionPerformed
-        groundLayoutPanel.setDisplayScale(jComboBox7.getSelectedIndex()+1);
-    }//GEN-LAST:event_jComboBox7ActionPerformed
+    }//GEN-LAST:event_jButtonExportPaletteDisassemblyActionPerformed
     
     /**
      * To create a new Main Editor, copy the below code
@@ -647,30 +588,28 @@ public class GroundMainEditor extends AbstractMainEditor {
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.sfc.sf2.core.gui.controls.ColorPicker colorPicker1;
     private com.sfc.sf2.core.gui.controls.Console console1;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton1;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton2;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton3;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton4;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton5;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton6;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton7;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonExportGround;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonExportImage;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonExportPalette;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonImportBasePalette;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonImportGround;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonImportImage;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonImportPalette;
     private com.sfc.sf2.ground.gui.GroundLayoutPanel groundLayoutPanel;
-    private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton13;
-    private javax.swing.JButton jButton18;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JComboBox<String> jComboBox7;
+    private com.sfc.sf2.ground.gui.GroundViewPanel groundViewPanel1;
+    private com.sfc.sf2.core.gui.controls.InfoButton infoButton1;
+    private com.sfc.sf2.core.gui.controls.InfoButton infoButton2;
+    private com.sfc.sf2.core.gui.controls.InfoButton infoButton3;
+    private javax.swing.JButton jButtonExportGroundDisassembly;
+    private javax.swing.JButton jButtonExportImage;
+    private javax.swing.JButton jButtonExportPaletteDisassembly;
+    private javax.swing.JButton jButtonImportDisassembly;
+    private javax.swing.JButton jButtonImportImage;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel54;
-    private javax.swing.JLabel jLabel55;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
@@ -678,7 +617,6 @@ public class GroundMainEditor extends AbstractMainEditor {
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
-    private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel28;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -686,7 +624,7 @@ public class GroundMainEditor extends AbstractMainEditor {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JSpinner jSpinner2;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JSplitPane jSplitPane2;
     private javax.swing.JTabbedPane jTabbedPane1;

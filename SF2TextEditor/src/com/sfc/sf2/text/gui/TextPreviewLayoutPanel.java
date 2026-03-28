@@ -200,7 +200,7 @@ public class TextPreviewLayoutPanel extends AbstractLayoutPanel {
             String replace = parseTag(text.substring(tagStart+1, tagEnd-1));
             text = text.substring(0, tagStart) + replace + text.substring(tagEnd);
             i = tagStart+replace.length();
-            if (text.charAt(text.length()-1) == '\n') {
+            if (text.length() > 0 && text.charAt(text.length()-1) == '\n') {
                 text = text.substring(0, text.length()-1);
             }
         }

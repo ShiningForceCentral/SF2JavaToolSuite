@@ -5,14 +5,20 @@
  */
 package com.sfc.sf2.weaponsprite.gui;
 
+import com.sfc.sf2.core.actions.ActionManager;
+import com.sfc.sf2.core.actions.CustomAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.core.settings.SettingsManager;
+import com.sfc.sf2.core.settings.ViewSettings;
 import com.sfc.sf2.helpers.PathHelpers;
+import com.sfc.sf2.helpers.RenderScaleHelpers;
 import com.sfc.sf2.palette.Palette;
 import com.sfc.sf2.weaponsprite.WeaponSpriteManager;
+import com.sfc.sf2.weaponsprite.actions.WeaponSpriteActionData;
 import java.nio.file.Path;
 import java.util.logging.Level;
+import javax.swing.JComboBox;
 
 /**
  *
@@ -20,10 +26,12 @@ import java.util.logging.Level;
  */
 public class WeaponSpriteMainEditor extends AbstractMainEditor {
     
-    WeaponSpriteManager weaponspriteManager = new WeaponSpriteManager();
+    private final ViewSettings viewSettings = new ViewSettings();
+    private final WeaponSpriteManager weaponspriteManager = new WeaponSpriteManager();
     
     public WeaponSpriteMainEditor() {
         super();
+        SettingsManager.registerSettingsStore("view", viewSettings);
         initComponents();
         initCore(console1);
     }
@@ -32,28 +40,38 @@ public class WeaponSpriteMainEditor extends AbstractMainEditor {
     protected void initEditor() {
         super.initEditor();
         
-        weaponSpriteLayoutPanel.setShowGrid(jCheckBox1.isSelected());                                           
-        weaponSpriteLayoutPanel.setDisplayScale(jComboBox7.getSelectedIndex()+1);
-        colorPicker1.setColor(SettingsManager.getGlobalSettings().getTransparentBGColor());
-        weaponSpriteLayoutPanel.setBGColor(colorPicker1.getBackground());
+        viewPanel1.setLayoutPanel(weaponSpriteLayoutPanel, viewSettings);
     }
     
     @Override
     protected void onDataLoaded() {
         super.onDataLoaded();
-        
-        jComboBox1.removeAllItems();
-        Palette[] palettes = weaponspriteManager.getPalettes();
-        for (int i = 0; i < palettes.length; i++) {
-            jComboBox1.addItem(palettes[i].getName());
+        WeaponSpriteActionData newValue = new WeaponSpriteActionData(weaponspriteManager.getWeaponsprite(), weaponspriteManager.getPalettes());
+        WeaponSpriteActionData oldValue = new WeaponSpriteActionData(weaponSpriteLayoutPanel.getWeaponSprite(), weaponSpriteLayoutPanel.getPalettes());
+        ActionManager.setAndExecuteAction(new CustomAction<WeaponSpriteActionData>(this, "Weapon Sprite Imported", this::actionWeaponLoaded, newValue, oldValue));
+    }
+    
+    private void actionWeaponLoaded(WeaponSpriteActionData value) {
+        if (value == null || value.weaponSprite() == null) {
+            weaponSpriteLayoutPanel.setPalettes(null);
+            weaponSpriteLayoutPanel.setWeaponSprite(null);
+        } else {
+            JComboBox paletteComboBox = viewPanel1.getjComboBoxPalette();
+            int selectedPalette = paletteComboBox.getSelectedIndex();
+            paletteComboBox.removeAllItems();
+            Palette[] palettes = value.palettes();
+            for (int i = 0; i < palettes.length; i++) {
+                paletteComboBox.addItem(palettes[i].getName());
+            }
+            if (selectedPalette < 0 || selectedPalette >= paletteComboBox.getItemCount()) {
+                selectedPalette = 0;
+            }
+            paletteComboBox.setSelectedIndex(selectedPalette);
+
+            weaponSpriteLayoutPanel.setPalettes(value.palettes());
+            weaponSpriteLayoutPanel.setPaletteIndex(viewPanel1.getjComboBoxPalette().getSelectedIndex());
+            weaponSpriteLayoutPanel.setWeaponSprite(value.weaponSprite());
         }
-        int selectedPalette = jComboBox1.getSelectedIndex();
-        if (selectedPalette < 0 || selectedPalette >= jComboBox1.getItemCount()) {
-            selectedPalette = 0;
-            jComboBox1.setSelectedIndex(0);
-        }
-        weaponSpriteLayoutPanel.setWeaponSprite(weaponspriteManager.getWeaponsprite());
-        weaponSpriteLayoutPanel.setPalette(weaponspriteManager.getPalettes()[selectedPalette]);
     }
     
     /**
@@ -70,40 +88,35 @@ public class WeaponSpriteMainEditor extends AbstractMainEditor {
         jPanel15 = new javax.swing.JPanel();
         jSplitPane2 = new javax.swing.JSplitPane();
         jPanel8 = new javax.swing.JPanel();
+        jPanel17 = new javax.swing.JPanel();
+        fileButton1 = new com.sfc.sf2.core.gui.controls.FileButton();
         jPanel3 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel4 = new javax.swing.JPanel();
-        jButton18 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         fileButton2 = new com.sfc.sf2.core.gui.controls.FileButton();
+        jButton18 = new javax.swing.JButton();
         jPanel9 = new javax.swing.JPanel();
-        jButton12 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        infoButton1 = new com.sfc.sf2.core.gui.controls.InfoButton();
         fileButton3 = new com.sfc.sf2.core.gui.controls.FileButton();
+        jButton12 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jTabbedPane2 = new javax.swing.JTabbedPane();
         jPanel11 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         fileButton5 = new com.sfc.sf2.core.gui.controls.FileButton();
+        jButton2 = new javax.swing.JButton();
         jPanel14 = new javax.swing.JPanel();
-        jButton13 = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
+        infoButton2 = new com.sfc.sf2.core.gui.controls.InfoButton();
         fileButton4 = new com.sfc.sf2.core.gui.controls.FileButton();
-        jPanel17 = new javax.swing.JPanel();
-        fileButton1 = new com.sfc.sf2.core.gui.controls.FileButton();
+        jButton13 = new javax.swing.JButton();
         jPanel10 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         weaponSpriteLayoutPanel = new com.sfc.sf2.weaponsprite.gui.WeaponSpriteLayoutPanel();
-        jPanel12 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox7 = new javax.swing.JComboBox<>();
-        jLabel7 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        colorPicker1 = new com.sfc.sf2.core.gui.controls.ColorPicker();
-        jLabel55 = new javax.swing.JLabel();
+        viewPanel1 = new com.sfc.sf2.weaponsprite.gui.WeaponSpriteViewPanel();
         console1 = new com.sfc.sf2.core.gui.controls.Console();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -116,207 +129,11 @@ public class WeaponSpriteMainEditor extends AbstractMainEditor {
         jSplitPane2.setDividerLocation(450);
         jSplitPane2.setOneTouchExpandable(true);
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Import from :"));
-        jPanel3.setPreferredSize(new java.awt.Dimension(590, 135));
-
-        jButton18.setText("Import");
-        jButton18.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton18ActionPerformed(evt);
-            }
-        });
-
-        jLabel2.setText("Select disassembly files.");
-        jLabel2.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-
-        fileButton2.setFilePath(".\\weaponsprite00.bin");
-        fileButton2.setLabelText("Weapon file :");
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fileButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton18)))
-                .addContainerGap())
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(fileButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton18)
-                    .addComponent(jLabel2))
-                .addContainerGap())
-        );
-
-        jTabbedPane1.addTab("Disassembly", jPanel4);
-
-        jButton12.setText("Import");
-        jButton12.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton12ActionPerformed(evt);
-            }
-        });
-
-        jLabel3.setText("<html> Select an image File (e.g. PNG or GIF).<br> Color format should be 4BPP / 16 indexed colors.<br> (Images of 8BPP / 256 indexed colors will be converted to 4 BPP / 16).<br>White and black at indexes 1 and 2. WeaponSprite-specific colors at indexes 14 and 15.</html>");
-        jLabel3.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-
-        fileButton3.setFilePath(".\\export\\weaponsprite00.png");
-        fileButton3.setLabelText("Image file :");
-
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fileButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton12)))
-                .addContainerGap())
-        );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(fileButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton12))
-                .addContainerGap())
-        );
-
-        jTabbedPane1.addTab("Image", jPanel9);
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
-        );
-
-        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Export to :"));
-        jPanel5.setPreferredSize(new java.awt.Dimension(32, 135));
-
-        jButton2.setText("Export");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
-        jLabel1.setText("<html>Select new target file.</html>");
-        jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-
-        fileButton5.setFilePath(".\\weaponsprite00.bin");
-        fileButton5.setLabelText("New weapon :");
-
-        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
-        jPanel11.setLayout(jPanel11Layout);
-        jPanel11Layout.setHorizontalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel11Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fileButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel11Layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)))
-                .addContainerGap())
-        );
-        jPanel11Layout.setVerticalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel11Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(fileButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
-        );
-
-        jTabbedPane2.addTab("Disassembly", jPanel11);
-
-        jButton13.setText("Export");
-        jButton13.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton13ActionPerformed(evt);
-            }
-        });
-
-        jLabel9.setText("<html>Export data to a new image file. <br> Recommended to save as PNG or GIF.<br> Exported color format : 4BPP / 16 indexed colors.<br>Transparent color at index 0.<br>White and black at indexes 1 and 2. WeaponSprite-specific colors at indexes 14 and 15.</html>");
-        jLabel9.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-
-        fileButton4.setFilePath(".\\export\\weaponsprite00.png");
-        fileButton4.setLabelText("Image file :");
-
-        javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
-        jPanel14.setLayout(jPanel14Layout);
-        jPanel14Layout.setHorizontalGroup(
-            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel14Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fileButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
-                        .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton13)))
-                .addContainerGap())
-        );
-        jPanel14Layout.setVerticalGroup(
-            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(fileButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton13)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
-        );
-
-        jTabbedPane2.addTab("Image", jPanel14);
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTabbedPane2)
-                .addContainerGap())
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane2)
-        );
-
         jPanel17.setBorder(javax.swing.BorderFactory.createTitledBorder("Palettes"));
 
+        fileButton1.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
         fileButton1.setFilePath(".\\palettes\\entries.asm");
+        fileButton1.setInfoMessage("The entries file to load weapon palettes from.");
         fileButton1.setLabelText("Weapon palette entries :");
 
         javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
@@ -334,6 +151,230 @@ public class WeaponSpriteMainEditor extends AbstractMainEditor {
                 .addContainerGap()
                 .addComponent(fileButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
+        );
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Import from :"));
+        jPanel3.setPreferredSize(new java.awt.Dimension(590, 135));
+
+        jLabel2.setText("Import weapon sprite disassembly.");
+
+        fileButton2.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
+        fileButton2.setFilePath(".\\weaponsprite00.bin");
+        fileButton2.setInfoMessage("");
+        fileButton2.setLabelText("Weapon file :");
+
+        jButton18.setText("Import");
+        jButton18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton18ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(fileButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton18)))
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(fileButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton18)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Disassembly", jPanel4);
+
+        jLabel3.setText("Import weapon sprite from image.");
+
+        infoButton1.setMessageText("<html>Imports the weapon from an image. The color palette of the image is completely ignored in favour of the defined weapon palettes.<br>Supported image formats: PNG or GIF.<br><br>Color format should be 4BPP / 16 indexed colors. Images of 8BPP / 256 indexed colors will be converted to 4 BPP / 16 (some colors may be lost).<br>When imported, icons will use the base palette colors.<br>Color index 0 is treated as transparent.</html>");
+        infoButton1.setText("");
+
+        fileButton3.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ANY_IMAGE);
+        fileButton3.setFilePath(".\\export\\weaponsprite00.png");
+        fileButton3.setInfoMessage("");
+        fileButton3.setLabelText("Image file :");
+
+        jButton12.setText("Import");
+        jButton12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton12ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(fileButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton12))
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(infoButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(infoButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(fileButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton12)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Image", jPanel9);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jTabbedPane1)
+        );
+
+        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Export to :"));
+        jPanel5.setPreferredSize(new java.awt.Dimension(32, 135));
+
+        jLabel1.setText("Export weapon sprite disassembly.");
+
+        fileButton5.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
+        fileButton5.setFilePath(".\\weaponsprite00.bin");
+        fileButton5.setInfoMessage("");
+        fileButton5.setLabelText("New weapon :");
+
+        jButton2.setText("Export");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
+        jPanel11.setLayout(jPanel11Layout);
+        jPanel11Layout.setHorizontalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(fileButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton2)))
+                .addContainerGap())
+        );
+        jPanel11Layout.setVerticalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(fileButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton2)
+                .addContainerGap())
+        );
+
+        jTabbedPane2.addTab("Disassembly", jPanel11);
+
+        jLabel9.setText("Export weapon sprite as image.");
+
+        infoButton2.setMessageText("<html>Supported image formats: PNG or GIF.<br><br>Exported color format will be 4BPP / 16 indexed colors.<br>Color index 0 is treated as transparent.</html>");
+        infoButton2.setText("");
+
+        fileButton4.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ANY_IMAGE);
+        fileButton4.setFilePath(".\\export\\weaponsprite00.png");
+        fileButton4.setInfoMessage("");
+        fileButton4.setLabelText("Image file :");
+
+        jButton13.setText("Export");
+        jButton13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton13ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
+        jPanel14.setLayout(jPanel14Layout);
+        jPanel14Layout.setHorizontalGroup(
+            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel14Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(fileButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton13))
+                    .addGroup(jPanel14Layout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(infoButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel14Layout.setVerticalGroup(
+            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(infoButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(fileButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton13)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jTabbedPane2.addTab("Image", jPanel14);
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane2)
+                .addContainerGap())
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jTabbedPane2)
         );
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
@@ -356,9 +397,9 @@ public class WeaponSpriteMainEditor extends AbstractMainEditor {
                 .addContainerGap()
                 .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 105, Short.MAX_VALUE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jSplitPane2.setLeftComponent(jPanel8);
@@ -369,113 +410,31 @@ public class WeaponSpriteMainEditor extends AbstractMainEditor {
         weaponSpriteLayoutPanel.setLayout(weaponSpriteLayoutPanelLayout);
         weaponSpriteLayoutPanelLayout.setHorizontalGroup(
             weaponSpriteLayoutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 422, Short.MAX_VALUE)
+            .addGap(0, 570, Short.MAX_VALUE)
         );
         weaponSpriteLayoutPanelLayout.setVerticalGroup(
             weaponSpriteLayoutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 410, Short.MAX_VALUE)
+            .addGap(0, 416, Short.MAX_VALUE)
         );
 
         jScrollPane2.setViewportView(weaponSpriteLayoutPanel);
-
-        jPanel12.setBorder(javax.swing.BorderFactory.createTitledBorder("Display"));
-
-        jLabel4.setText("Palette : ");
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
-            }
-        });
-
-        jComboBox7.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "x1", "x2", "x3", "x4" }));
-        jComboBox7.setSelectedIndex(1);
-        jComboBox7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox7ActionPerformed(evt);
-            }
-        });
-
-        jLabel7.setText("Scale :");
-
-        jCheckBox1.setText("Show grid");
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
-            }
-        });
-
-        colorPicker1.addColorChangedListener(new com.sfc.sf2.core.gui.controls.ColorPicker.ColorChangedListener() {
-            public void colorChanged(java.awt.event.ActionEvent evt) {
-                colorPicker1ColorChanged(evt);
-            }
-        });
-
-        javax.swing.GroupLayout colorPicker1Layout = new javax.swing.GroupLayout(colorPicker1);
-        colorPicker1.setLayout(colorPicker1Layout);
-        colorPicker1Layout.setHorizontalGroup(
-            colorPicker1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 22, Short.MAX_VALUE)
-        );
-        colorPicker1Layout.setVerticalGroup(
-            colorPicker1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 22, Short.MAX_VALUE)
-        );
-
-        jLabel55.setText("BG :");
-
-        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
-        jPanel12.setLayout(jPanel12Layout);
-        jPanel12Layout.setHorizontalGroup(
-            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel12Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel55)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(colorPicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jCheckBox1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel12Layout.setVerticalGroup(
-            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel12Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jCheckBox1)
-                    .addComponent(jLabel7)
-                    .addComponent(jComboBox7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel55)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(colorPicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addContainerGap())
-        );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane2)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(viewPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 588, Short.MAX_VALUE))
                 .addGap(2, 2, 2))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane2)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
-                .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(viewPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
@@ -578,26 +537,6 @@ public class WeaponSpriteMainEditor extends AbstractMainEditor {
         }
         onDataLoaded();
     }//GEN-LAST:event_jButton18ActionPerformed
-
-    private void jComboBox7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox7ActionPerformed
-        weaponSpriteLayoutPanel.setDisplayScale(jComboBox7.getSelectedIndex()+1);
-    }//GEN-LAST:event_jComboBox7ActionPerformed
-
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
-        weaponSpriteLayoutPanel.setShowGrid(jCheckBox1.isSelected());
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
-
-    private void colorPicker1ColorChanged(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorPicker1ColorChanged
-        weaponSpriteLayoutPanel.setBGColor(colorPicker1.getColor());
-        SettingsManager.getGlobalSettings().setTransparentBGColor(colorPicker1.getColor());
-        SettingsManager.saveGlobalSettingsFile();
-    }//GEN-LAST:event_colorPicker1ColorChanged
-
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        if (jComboBox1.getSelectedItem() != null) {
-            weaponSpriteLayoutPanel.setPalette(weaponspriteManager.getPalettes()[jComboBox1.getSelectedIndex()]);
-        }
-    }//GEN-LAST:event_jComboBox1ActionPerformed
     
     /**
      * To create a new Main Editor, copy the below code
@@ -616,31 +555,25 @@ public class WeaponSpriteMainEditor extends AbstractMainEditor {
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.sfc.sf2.core.gui.controls.ColorPicker colorPicker1;
     private com.sfc.sf2.core.gui.controls.Console console1;
     private com.sfc.sf2.core.gui.controls.FileButton fileButton1;
     private com.sfc.sf2.core.gui.controls.FileButton fileButton2;
     private com.sfc.sf2.core.gui.controls.FileButton fileButton3;
     private com.sfc.sf2.core.gui.controls.FileButton fileButton4;
     private com.sfc.sf2.core.gui.controls.FileButton fileButton5;
+    private com.sfc.sf2.core.gui.controls.InfoButton infoButton1;
+    private com.sfc.sf2.core.gui.controls.InfoButton infoButton2;
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton2;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel55;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
@@ -655,6 +588,7 @@ public class WeaponSpriteMainEditor extends AbstractMainEditor {
     private javax.swing.JSplitPane jSplitPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
+    private com.sfc.sf2.weaponsprite.gui.WeaponSpriteViewPanel viewPanel1;
     private com.sfc.sf2.weaponsprite.gui.WeaponSpriteLayoutPanel weaponSpriteLayoutPanel;
     // End of variables declaration//GEN-END:variables
 

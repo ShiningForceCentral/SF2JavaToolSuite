@@ -6,6 +6,7 @@
 package com.sfc.sf2.map.block.io;
 
 import com.sfc.sf2.core.gui.controls.Console;
+import com.sfc.sf2.core.io.EmptyPackage;
 import com.sfc.sf2.core.io.asm.AbstractAsmProcessor;
 import com.sfc.sf2.core.io.asm.AsmException;
 import com.sfc.sf2.helpers.StringHelpers;
@@ -17,10 +18,10 @@ import java.io.IOException;
  *
  * @author TiMMy
  */
-public class MapTilesetsAsmProcessor extends AbstractAsmProcessor<MapTilesetData> {
+public class MapTilesetsAsmProcessor extends AbstractAsmProcessor<MapTilesetData, EmptyPackage> {
 
     @Override
-    protected MapTilesetData parseAsmData(BufferedReader reader) throws IOException, AsmException {
+    protected MapTilesetData parseAsmData(BufferedReader reader, EmptyPackage pckg) throws IOException, AsmException {
         String line;
         int paletteIndex = -1;
         boolean tilesetFound = false;
@@ -63,22 +64,16 @@ public class MapTilesetsAsmProcessor extends AbstractAsmProcessor<MapTilesetData
     }
 
     @Override
-    protected String getHeaderName(MapTilesetData item) {
+    protected String getHeaderName(MapTilesetData item, EmptyPackage pckg) {
         return "Map Tileset Data";
     }
 
     @Override
-    protected void packageAsmData(FileWriter writer, MapTilesetData item) throws IOException, AsmException {
-        writer.write("\t\t\tmapPalette  ");
-        writer.write(Integer.toString(item.paletteIndex()));
-        writer.write("\n");
+    protected void packageAsmData(FileWriter writer, MapTilesetData item, EmptyPackage pckg) throws IOException, AsmException {
+        writer.write(String.format("\t\t\t\tmapPalette  %2d\n", item.paletteIndex()));
         for (int i = 0; i < item.tilesetIndices().length; i++) {
-            writer.write("\t\t\tmapTileset");
-            writer.write(Integer.toString(i+1));
-            writer.write(" ");
             int index = item.tilesetIndices()[i];
-            writer.write(Integer.toString(index == -1 ? 255 : index));
-            writer.write("\n");
+            writer.write(String.format("\t\t\t\tmapTileset%d %2d\n", (i+1), (index == -1 ? 255 : index)));
         }
     }
 }

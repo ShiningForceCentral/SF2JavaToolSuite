@@ -6,7 +6,6 @@
 package com.sfc.sf2.core.io;
 
 import com.sfc.sf2.core.gui.controls.Console;
-import com.sfc.sf2.helpers.PathHelpers;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.IndexColorModel;
@@ -25,14 +24,8 @@ import javax.imageio.ImageIO;
  */
 public abstract class AbstractRawImageProcessor<TType extends Object, TPackage extends Object> {
     
-    public enum FileFormat {
-        UNKNOWN,
-        PNG,
-        GIF,
-    }
-    
     public TType importRawImage(Path filePath, TPackage pckg) throws IOException, RawImageException {
-        FileFormat fileFormat = fileExtensionToFormat(filePath);
+        FileFormat fileFormat = FileFormat.getFormat(filePath);
         Console.logger().finest("ENTERING importRawImage : " + filePath + ". Format : " + fileFormat);
         File imageFile = filePath.toFile();
         if (!imageFile.exists()) {
@@ -40,7 +33,7 @@ public abstract class AbstractRawImageProcessor<TType extends Object, TPackage e
         }
         BufferedImage image = ImageIO.read(filePath.toFile());
         ColorModel cm = image.getColorModel();
-        if(!(cm instanceof IndexColorModel)){
+        if (!(cm instanceof IndexColorModel)) {
             throw new RawImageException("ERROR Image must be in an indexed color format. Format : " + cm.getColorSpace().toString());
         }
         IndexColorModel icm = (IndexColorModel)cm;
@@ -53,55 +46,17 @@ public abstract class AbstractRawImageProcessor<TType extends Object, TPackage e
     protected abstract TType parseImageData(WritableRaster raster, IndexColorModel icm, TPackage pckg) throws RawImageException;
     
     public void exportRawImage(Path filePath, TType item, TPackage pckg) throws IOException, RawImageException {
-        FileFormat fileFormat = fileExtensionToFormat(filePath);
+        FileFormat fileFormat = FileFormat.getFormat(filePath);
         Console.logger().finest("ENTERING exportRawImage : " + filePath + ". Format : " + fileFormat);
         BufferedImage image = packageImageData(item, pckg);
         ColorModel cm = image.getColorModel();
-        if(!(cm instanceof IndexColorModel)){
+        if (!(cm instanceof IndexColorModel)) {
             throw new RawImageException("ERROR Image must be in an indexed color format. Format : " + cm.getColorSpace().toString());
         }
         File outputfile = filePath.toFile();
-        ImageIO.write(image, GetFileExtensionName(fileFormat), outputfile);
+        ImageIO.write(image, fileFormat.getName(), outputfile);
         Console.logger().finest("EXITING exportRawImage");
     }
 
     protected abstract BufferedImage packageImageData(TType item, TPackage pckg) throws RawImageException;
-    
-    /**
-     *
-     * @return a file extension with the dot. i.e. ".png" or ".gif"
-     */
-    public static String GetFileExtensionString(FileFormat fileFormat) {
-        return "."+GetFileExtensionName(fileFormat);
-    }
-    
-    /**
-     *
-     * @return a file extension without the dot. i.e. "png" or "gif"
-     * Required for exporting raw images
-     */
-    public static String GetFileExtensionName(FileFormat fileFormat) {
-        switch (fileFormat) {
-            case PNG:
-                return "png";
-            case GIF:
-                return "gif";
-            default:
-                return "unkn";
-        }
-    }
-    
-    public static FileFormat fileExtensionToFormat(Path filePath) {
-        String extension = PathHelpers.extensionFromPath(filePath);
-        switch (extension) {
-            case "png":
-            case ".png":
-                return FileFormat.PNG;
-            case "gif":
-            case ".gif":
-                return FileFormat.GIF;
-            default:
-                return FileFormat.UNKNOWN;
-        }
-    }
 }

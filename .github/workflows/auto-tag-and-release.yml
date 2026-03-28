@@ -17,47 +17,79 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Detect changed projects
+        id: detect_changes
+        shell: bash
+        run: |
+          git fetch origin ${{ github.event.before }}
+      
+          # Find changed version.properties files
+          changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep 'version.properties' || true)
+      
+          if [ -z "$changed_files" ]; then
+            echo "No version.properties files changed."
+            echo "should_run=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+      
+          # Check for release.properties
+          if [ ! -f "release.properties" ]; then
+            echo "release.properties not found!"
+            echo "should_run=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+      
+          # Read valid project names from release.properties
+          declare -A valid_projects
+          while IFS=':' read -r key value; do
+            key=$(echo "$key" | xargs)
+            value=$(echo "$value" | xargs)
+            if [[ -n "$key" && -n "$value" ]]; then
+              valid_projects["$key"]="$value"
+            fi
+          done < <(grep -vE '^\s*(#|$)' release.properties)
+      
+          # Filter changed projects based on release.properties
+          changed_projects=()
+          changed_filepaths=()
+      
+          for file in $changed_files; do
+            dir=$(dirname "$file")
+            project_name=$(basename "$dir")
+      
+            if [[ -n "${valid_projects[$project_name]}" ]]; then
+              changed_projects+=("$project_name")
+              changed_filepaths+=("$file")
+            else
+              echo "Skipping project '$project_name' — not listed in release.properties"
+            fi
+          done
+      
+          if [ ${#changed_projects[@]} -eq 0 ]; then
+            echo "No valid changed projects found in release.properties."
+            echo "should_run=false" >> $GITHUB_OUTPUT
+          else
+            echo "Valid changed projects: ${changed_projects[*]}"
+            echo "CHANGED_PROJECTS=${changed_projects[*]}" >> $GITHUB_ENV
+            echo "CHANGED_FILES=${changed_filepaths[*]}" >> $GITHUB_ENV
+            echo "should_run=true" >> $GITHUB_OUTPUT
+          fi
+
       - name: Set up JDK 17
+        if: steps.detect_changes.outputs.should_run == 'true'
         uses: actions/setup-java@v4.7.1
         with:
           distribution: temurin
           java-version: 17
 
       - name: Download and install Apache Ant 1.10.14
+        if: steps.detect_changes.outputs.should_run == 'true'
         run: |
           wget https://downloads.apache.org/ant/binaries/apache-ant-1.10.14-bin.tar.gz
           tar -xzf apache-ant-1.10.14-bin.tar.gz
           sudo mv apache-ant-1.10.14 /opt/ant
           echo "ANT_HOME=/opt/ant" >> $GITHUB_ENV
           echo "/opt/ant/bin" >> $GITHUB_PATH
-
-      - name: Detect changed projects
-        id: detect_changes
-        shell: bash
-        run: |
-          git fetch origin ${{ github.event.before }}
-
-          # Find changed version.properties files
-          changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep 'version.properties' || true)
-
-          if [ -z "$changed_files" ]; then
-            echo "No version.properties files changed."
-            echo "should_run=false" >> $GITHUB_OUTPUT
-          else
-            changed_filepaths=()
-            changed_projects=()
-            for file in $changed_files; do
-              project=$(dirname "$file")
-              changed_projects+=("$(basename "$project")")
-              changed_filepaths+=("$file")
-            done
-            echo "Changed files: ${changed_filepaths[@]}"
-            echo "Changed projects: ${changed_projects[@]}"
-
-            echo "CHANGED_PROJECTS=${changed_projects[*]}" >> $GITHUB_ENV
-            echo "CHANGED_FILES=${changed_filepaths[*]}" >> $GITHUB_ENV
-            echo "should_run=true" >> $GITHUB_OUTPUT
-          fi
           
       - name: Build projects with dependencies
         if: steps.detect_changes.outputs.should_run == 'true'
@@ -163,9 +195,12 @@ jobs:
         if: steps.detect_changes.outputs.should_run == 'true'
         id: tag_and_release
         run: |
+          echo "Cleaning up local tags..."
+          git tag -l | xargs git tag -d || true
+          git fetch --tags --force
+    
           mkdir -p artifacts
           releases=""
-
           read -a CHANGED_FILES <<< "$CHANGED_FILES"
           for file_path in "${CHANGED_FILES[@]}"; do
             if [ -f "$file_path" ]; then
@@ -189,9 +224,9 @@ jobs:
                   git tag "$tag_name"
                   git push origin "$tag_name"
                 fi
-                
-                # Extract release notes
-                release_notes=$(grep '^release-notes:' "$file_path" | cut -d':' -f2- | xargs)
+
+                # Extract release notes (first non-empty line after release-notes:)
+                release_notes=$(awk '$1 == "release-notes:" {found=1; next} found && NF {print; exit}' "$file_path" | xargs)
                 # Append to release list with release notes
                 echo "$tag_name|${jar_file}|${release_notes}" >> release_list.txt
               else
@@ -208,7 +243,8 @@ jobs:
           if [ -f release_list.txt ]; then
             while IFS='|' read -r tag jar_path release_notes; do
               echo "Creating release for $tag with artifact $jar_path"
-              full_notes="$(printf "%s\n\n_Automated release for %s_" "$release_notes" "$tag")"
+              processed_notes="$(printf "%b" "$release_notes")"
+              full_notes="$(printf "_Automated release for %s_\n\n%s" "$tag" "$processed_notes")"
               gh release create "$tag" "$jar_path" --title "$tag" --notes "$full_notes"
             done < release_list.txt
           else
@@ -254,9 +290,13 @@ jobs:
             for changed_file in $CHANGED_FILES; do
               changed_project=$(basename "$(dirname "$changed_file")")
               if [ "$changed_project" == "$project_name" ]; then
-                note=$(grep '^release-notes:' "$changed_file" | cut -d':' -f2- | xargs)
-                if [ -n "$note" ]; then
-                  release_notes_list+=("- $project_name: $note")
+                start_line=$(grep -n '^release-notes:' "$changed_file" | cut -d: -f1)
+                if [ -n "$start_line" ]; then
+                  note=$(sed -n "$((start_line+1)),$((start_line+2))p" "$changed_file" | sed '/^\s*$/d' | head -n 1 | sed 's/^[ \t]*//')
+                  if [ -n "$note" ]; then
+                    formatted_note=$(printf "%s" "$note" | sed ':a;N;$!ba;s/\n/ | /g')
+                    release_notes_list+=("- $project_name: $formatted_note")
+                  fi
                 fi
                 break
               fi
@@ -282,6 +322,7 @@ jobs:
               } > commit_msg.txt
               git commit -F commit_msg.txt
             else
+              echo "No changelog to append to commit"
               git commit -m "Update tools: auto-built JARs [${{ github.sha }}]"
             fi
       

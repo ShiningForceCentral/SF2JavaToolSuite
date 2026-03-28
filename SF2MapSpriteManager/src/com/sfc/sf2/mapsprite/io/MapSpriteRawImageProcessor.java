@@ -28,7 +28,7 @@ public class MapSpriteRawImageProcessor extends AbstractTilesetRawImageProcessor
         if (palette == null) {
             palette = new Palette(pckg.name(), Palette.fromICM(icm), true);
         }
-        Tileset[] tilesets = parseTileset(raster, Block.PIXEL_WIDTH, Block.PIXEL_HEIGHT, palette);
+        Tileset[] tilesets = parseTileset(raster, Block.TILE_WIDTH, Block.TILE_HEIGHT, palette);
         Block[] frames = new Block[tilesets.length];
         for (int i = 0; i < tilesets.length; i++) {
             int index = pckg.indices()[0]*6 + (pckg.indices()[1] == -1 ? 0 : pckg.indices()[1]*2) + (pckg.indices()[2] == -1 ? 0 : pckg.indices()[2]);

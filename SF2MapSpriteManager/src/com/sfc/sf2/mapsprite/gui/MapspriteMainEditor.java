@@ -5,15 +5,24 @@
  */
 package com.sfc.sf2.mapsprite.gui;
 
+import com.sfc.sf2.core.actions.ActionManager;
+import com.sfc.sf2.core.actions.BasicAction;
+import com.sfc.sf2.core.actions.ComboAction;
+import com.sfc.sf2.core.actions.NonCombinableAction;
+import com.sfc.sf2.core.actions.RadioButtonAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
-import com.sfc.sf2.core.io.AbstractRawImageProcessor.FileFormat;
+import com.sfc.sf2.core.io.FileFormat;
+import com.sfc.sf2.core.models.image.BufferedImageTableRenderer;
 import com.sfc.sf2.core.settings.SettingsManager;
-import com.sfc.sf2.graphics.io.TilesetDisassemblyProcessor.TilesetCompression;
+import com.sfc.sf2.core.settings.ViewSettings;
 import com.sfc.sf2.helpers.PathHelpers;
+import com.sfc.sf2.helpers.RenderScaleHelpers;
+import com.sfc.sf2.mapsprite.MapSpriteEntries;
 import com.sfc.sf2.mapsprite.MapSpriteManager;
 import com.sfc.sf2.mapsprite.MapSpriteManager.MapSpriteExportMode;
 import com.sfc.sf2.mapsprite.settings.MapSpriteSettings;
+import java.awt.image.BufferedImage;
 import java.nio.file.Path;
 import java.util.logging.Level;
 import javax.swing.JRadioButton;
@@ -24,12 +33,17 @@ import javax.swing.JRadioButton;
  */
 public class MapspriteMainEditor extends AbstractMainEditor {
     
+    private final ViewSettings viewSettings = new ViewSettings(RenderScaleHelpers.RENDER_SCALE_2X);
     private final MapSpriteSettings mapspriteSettings = new MapSpriteSettings();
     private final MapSpriteManager mapSpriteManager = new MapSpriteManager();
-    private boolean settingFileFormat = false;
+    
+    private boolean actionOptimiseMode;
+    private boolean actionExportFormat;
+    private int actionExportMode;
     
     public MapspriteMainEditor() {
         super();
+        SettingsManager.registerSettingsStore("view", viewSettings);
         SettingsManager.registerSettingsStore("mapsprite", mapspriteSettings);
         initComponents();
         initCore(console1);
@@ -39,30 +53,45 @@ public class MapspriteMainEditor extends AbstractMainEditor {
     protected void initEditor() {
         super.initEditor();
         
-        mapSpriteLayoutPanel.setDisplayScale(jComboBox1.getSelectedIndex()+1);
-        mapSpriteLayoutPanel.setShowGrid(jCheckBox1.isSelected());
-        colorPicker1.setColor(SettingsManager.getGlobalSettings().getTransparentBGColor());
-        mapSpriteLayoutPanel.setBGColor(colorPicker1.getColor());
+        viewPanel1.setLayoutPanel(mapSpriteLayoutPanel, viewSettings);
         
-        jComboBox2.removeAllItems();
+        jComboBoxExportMode.removeAllItems();
         MapSpriteExportMode mode = mapspriteSettings.getExportMode();
         MapSpriteExportMode[] exportModes = MapSpriteExportMode.values();
         for (int i = 0; i < exportModes.length; i++) {
-            jComboBox2.addItem(exportModes[i].toString());
+            jComboBoxExportMode.addItem(exportModes[i].toString());
         }
-        jComboBox2.setSelectedItem(mode.toString());
-        jRadioButton1.setSelected(mapspriteSettings.getExportFileFormat() == FileFormat.PNG);
-        jRadioButton2.setSelected(mapspriteSettings.getExportFileFormat() != FileFormat.PNG);
-        jRadioButton3.setSelected(mapspriteSettings.getExportFileFormat() == FileFormat.PNG);
-        jRadioButton4.setSelected(mapspriteSettings.getExportFileFormat() != FileFormat.PNG);
+        jComboBoxExportMode.setSelectedItem(mode.toString());
+        jRadioButtonFormatPNG.setSelected(mapspriteSettings.getExportFileFormat() == FileFormat.PNG);
+        jRadioButtonFormatGIF.setSelected(mapspriteSettings.getExportFileFormat() != FileFormat.PNG);
+        
+        actionOptimiseMode = jRadioButtonOptimisePairs.isSelected();
+        actionExportFormat = jRadioButtonFormatPNG.isSelected();
+        actionExportMode = jComboBoxExportMode.getSelectedIndex();
+        
+        tableUnreferenced.jTable.getColumnModel().getColumn(0).setMaxWidth(80);
+        tableUnreferenced.jTable.setRowHeight(50);
+        tableUnreferenced.jTable.setDefaultRenderer(BufferedImage.class, new BufferedImageTableRenderer());
     }
     
     @Override
     protected void onDataLoaded() {
         super.onDataLoaded();
-        
-        mapSpriteLayoutPanel.setMapSprites(mapSpriteManager.getMapSprites());
-        
+        ActionManager.setAndExecuteAction(new NonCombinableAction<MapSpriteEntries>(this, "Map Sprites Imported", this::actionMapSpritesLoaded, mapSpriteManager.getMapSprites(), mapSpriteLayoutPanel.getMapSprites()));
+    }
+    
+    private void actionMapSpritesLoaded(MapSpriteEntries mapSprites) {
+        if (mapSprites == null) {
+            mapSpriteLayoutPanel.setMapSprites(null);
+            mapSpriteTableModel.setTableData(null);
+            jTabbedPaneSprites.setTitleAt(0, "Map Sprites");
+            jTabbedPaneSprites.setTitleAt(1, "Unreferenced");
+        } else {
+            mapSpriteLayoutPanel.setMapSprites(mapSprites);
+            mapSpriteTableModel.setTableData(mapSprites.getUnreferencedArray());
+            jTabbedPaneSprites.setTitleAt(0, String.format("Map Sprites (%d)", mapSprites.countEntries()));
+            jTabbedPaneSprites.setTitleAt(1, String.format("Unreferenced (%d)", mapSprites.countUnreferenced()));
+        }
     }
     
     /**
@@ -74,575 +103,801 @@ public class MapspriteMainEditor extends AbstractMainEditor {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroupImport = new javax.swing.ButtonGroup();
-        buttonGroupExport = new javax.swing.ButtonGroup();
+        buttonGroupExport = new com.sfc.sf2.core.gui.controls.NameableButtonGroup();
+        buttonGroupOptimise = new com.sfc.sf2.core.gui.controls.NameableButtonGroup();
+        mapSpriteTableModel = new com.sfc.sf2.mapsprite.models.MapSpriteTableModel();
         jPanel13 = new javax.swing.JPanel();
         jSplitPane1 = new javax.swing.JSplitPane();
         jPanel15 = new javax.swing.JPanel();
         jSplitPane2 = new javax.swing.JSplitPane();
-        jPanel10 = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        mapSpriteLayoutPanel = new com.sfc.sf2.mapsprite.gui.MapSpriteLayoutPanel();
-        jPanel16 = new javax.swing.JPanel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jLabel5 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        colorPicker1 = new com.sfc.sf2.core.gui.controls.ColorPicker();
-        jLabel55 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
+        fileButtonImportEntries = new com.sfc.sf2.core.gui.controls.FileButton();
+        fileButtonImportPalette = new com.sfc.sf2.core.gui.controls.FileButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanel4 = new javax.swing.JPanel();
-        jButton18 = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        fileButton1 = new com.sfc.sf2.core.gui.controls.FileButton();
-        fileButton2 = new com.sfc.sf2.core.gui.controls.FileButton();
+        jPanel19 = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
+        infoButton8 = new com.sfc.sf2.core.gui.controls.InfoButton();
+        jButtonImportEntries = new javax.swing.JButton();
+        jPanel12 = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        directoryButtonImportMapsprites = new com.sfc.sf2.core.gui.controls.DirectoryButton();
+        jButtonImportMapsprites = new javax.swing.JButton();
+        infoButton9 = new com.sfc.sf2.core.gui.controls.InfoButton();
         jPanel9 = new javax.swing.JPanel();
-        jButton12 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        directoryButton1 = new com.sfc.sf2.core.gui.controls.DirectoryButton();
-        jPanel7 = new javax.swing.JPanel();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jRadioButton4 = new javax.swing.JRadioButton();
-        fileButton3 = new com.sfc.sf2.core.gui.controls.FileButton();
+        directoryButtonImportImages = new com.sfc.sf2.core.gui.controls.DirectoryButton();
+        jButtonImportImages = new javax.swing.JButton();
+        infoButton10 = new com.sfc.sf2.core.gui.controls.InfoButton();
+        jPanel6 = new javax.swing.JPanel();
+        jPanel18 = new javax.swing.JPanel();
+        jButtonOptimiseMapsprites = new javax.swing.JButton();
+        jRadioButtonOptimiseCharacters = new javax.swing.JRadioButton();
+        jRadioButtonOptimisePairs = new javax.swing.JRadioButton();
+        infoButton6 = new com.sfc.sf2.core.gui.controls.InfoButton();
+        infoButton7 = new com.sfc.sf2.core.gui.controls.InfoButton();
+        jLabel7 = new javax.swing.JLabel();
+        infoButton4 = new com.sfc.sf2.core.gui.controls.InfoButton();
+        jPanel20 = new javax.swing.JPanel();
+        jButtonInsertMapsprites = new javax.swing.JButton();
+        jLabel13 = new javax.swing.JLabel();
+        infoButton15 = new com.sfc.sf2.core.gui.controls.InfoButton();
+        fileButtonExportEntries = new com.sfc.sf2.core.gui.controls.FileButton();
+        jButtonExportEntries = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jTabbedPane2 = new javax.swing.JTabbedPane();
         jPanel11 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        directoryButton2 = new com.sfc.sf2.core.gui.controls.DirectoryButton();
+        directoryButtonExportMapsprites = new com.sfc.sf2.core.gui.controls.DirectoryButton();
+        jButtonExportMapsprites = new javax.swing.JButton();
+        infoButton11 = new com.sfc.sf2.core.gui.controls.InfoButton();
         jPanel14 = new javax.swing.JPanel();
-        jButton13 = new javax.swing.JButton();
+        jButtonExportImages = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
-        directoryButton3 = new com.sfc.sf2.core.gui.controls.DirectoryButton();
+        directoryButtonExportImages = new com.sfc.sf2.core.gui.controls.DirectoryButton();
         jPanel2 = new javax.swing.JPanel();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton1 = new javax.swing.JRadioButton();
+        jRadioButtonFormatGIF = new javax.swing.JRadioButton();
+        jRadioButtonFormatPNG = new javax.swing.JRadioButton();
         jLabel4 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        jComboBoxExportMode = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         infoButton1 = new com.sfc.sf2.core.gui.controls.InfoButton();
         infoButton2 = new com.sfc.sf2.core.gui.controls.InfoButton();
+        infoButton12 = new com.sfc.sf2.core.gui.controls.InfoButton();
+        jPanel10 = new javax.swing.JPanel();
+        jTabbedPaneSprites = new javax.swing.JTabbedPane();
+        jPanelMapSprites = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        mapSpriteLayoutPanel = new com.sfc.sf2.mapsprite.gui.MapSpriteLayoutPanel();
+        viewPanel1 = new com.sfc.sf2.mapsprite.gui.MapspriteViewPanel();
+        jPanelUnreferenced = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        infoButton5 = new com.sfc.sf2.core.gui.controls.InfoButton();
+        tableUnreferenced = new com.sfc.sf2.core.gui.controls.Table();
         console1 = new com.sfc.sf2.core.gui.controls.Console();
+
+        buttonGroupExport.setName("Export Button Group");
+
+        buttonGroupOptimise.setName("Optimise Button Group");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SF2MapSpriteManager");
+        setFocusable(false);
 
-        jSplitPane1.setDividerLocation(450);
+        jSplitPane1.setDividerLocation(700);
         jSplitPane1.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
         jSplitPane1.setOneTouchExpandable(true);
 
         jSplitPane2.setDividerLocation(600);
         jSplitPane2.setOneTouchExpandable(true);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Tiles"));
-
-        javax.swing.GroupLayout mapSpriteLayoutPanelLayout = new javax.swing.GroupLayout(mapSpriteLayoutPanel);
-        mapSpriteLayoutPanel.setLayout(mapSpriteLayoutPanelLayout);
-        mapSpriteLayoutPanelLayout.setHorizontalGroup(
-            mapSpriteLayoutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 429, Short.MAX_VALUE)
-        );
-        mapSpriteLayoutPanelLayout.setVerticalGroup(
-            mapSpriteLayoutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 389, Short.MAX_VALUE)
-        );
-
-        jScrollPane2.setViewportView(mapSpriteLayoutPanel);
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2)
-        );
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "x1", "x2", "x3", "x4" }));
-        jComboBox1.setSelectedIndex(1);
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
-            }
-        });
-
-        jLabel5.setText("Scale :");
-
-        jCheckBox1.setText("Show grid");
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
-            }
-        });
-
-        colorPicker1.addColorChangedListener(new com.sfc.sf2.core.gui.controls.ColorPicker.ColorChangedListener() {
-            public void colorChanged(java.awt.event.ActionEvent evt) {
-                colorPicker1ColorChanged(evt);
-            }
-        });
-
-        javax.swing.GroupLayout colorPicker1Layout = new javax.swing.GroupLayout(colorPicker1);
-        colorPicker1.setLayout(colorPicker1Layout);
-        colorPicker1Layout.setHorizontalGroup(
-            colorPicker1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 22, Short.MAX_VALUE)
-        );
-        colorPicker1Layout.setVerticalGroup(
-            colorPicker1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 22, Short.MAX_VALUE)
-        );
-
-        jLabel55.setText("BG :");
-
-        javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
-        jPanel16.setLayout(jPanel16Layout);
-        jPanel16Layout.setHorizontalGroup(
-            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel55)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(colorPicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jCheckBox1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(95, 95, 95))
-        );
-        jPanel16Layout.setVerticalGroup(
-            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel16Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5)
-                    .addComponent(jCheckBox1)
-                    .addComponent(colorPicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel55))
-                .addGap(0, 0, 0))
-        );
-
-        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
-        jPanel10.setLayout(jPanel10Layout);
-        jPanel10Layout.setHorizontalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel10Layout.setVerticalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0)
-                .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        jSplitPane2.setRightComponent(jPanel10);
-
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Import from :"));
         jPanel3.setPreferredSize(new java.awt.Dimension(590, 135));
 
-        jButton18.setText("Import");
-        jButton18.addActionListener(new java.awt.event.ActionListener() {
+        fileButtonImportEntries.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
+        fileButtonImportEntries.setFilePath(".\\entries.asm");
+        fileButtonImportEntries.setInfoMessage("Entries file for mapsprites. Loaded mapsprites will be compared to the entries file to determine which sprites are unique, which are referenced by multiple entries, and which are not referenced at all.");
+        fileButtonImportEntries.setLabelText("Mapsprite entries :");
+
+        fileButtonImportPalette.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
+        fileButtonImportPalette.setFilePath("..\\tech\\basepalette.bin");
+        fileButtonImportPalette.setInfoMessage("The default palette file for mapsprites. Imported mapsprites will be previewed in these colors.");
+        fileButtonImportPalette.setLabelText("Palette file :");
+
+        jLabel11.setText("<html>Load all mapsprite disassemblies from the entries file (field above).</html>");
+
+        infoButton8.setMessageText("<html>Uses the entries inside the mapsprites entries.asm file to load the mapsprites.</html>");
+        infoButton8.setText("");
+
+        jButtonImportEntries.setText("Import");
+        jButtonImportEntries.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton18ActionPerformed(evt);
+                jButtonImportEntriesActionPerformed(evt);
             }
         });
 
-        jLabel2.setText("<html>Select the mapsprites \"entries.asm\" file.\n<br>Typical disassembly path : \"data/graphics/mapsprites/\"</html>");
-        jLabel2.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-
-        fileButton1.setFilePath("..\\tech\\basepalette.bin");
-        fileButton1.setLabelText("Palette file :");
-
-        fileButton2.setFilePath(".\\entries.asm");
-        fileButton2.setLabelText("Mapsprite entries :");
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fileButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 484, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton18))
-                    .addComponent(fileButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        javax.swing.GroupLayout jPanel19Layout = new javax.swing.GroupLayout(jPanel19);
+        jPanel19.setLayout(jPanel19Layout);
+        jPanel19Layout.setHorizontalGroup(
+            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel19Layout.createSequentialGroup()
+                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(infoButton8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 102, Short.MAX_VALUE)
+                .addComponent(jButtonImportEntries)
                 .addContainerGap())
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        jPanel19Layout.setVerticalGroup(
+            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel19Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(fileButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fileButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton18))
-                .addContainerGap())
+                .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonImportEntries)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(infoButton8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(70, 70, 70))
         );
 
-        jTabbedPane1.addTab("Disassembly", jPanel4);
+        jTabbedPane1.addTab("Entries", jPanel19);
 
-        jButton12.setText("Import");
-        jButton12.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton12ActionPerformed(evt);
-            }
-        });
+        jLabel10.setText("<html>Select the directory with the Mapsprite disassemblies.</html>");
 
-        jLabel3.setText("<html>\nSelect a directory with \"mapspriteXXX-Y-Z.png\" files. (e.g.\".png\" or \".gif\").<br>\nColor format should be 4BPP / 16 indexed colors.<br>\n(Images of 8BPP / 256 indexed colors will be converted to 4 BPP / 16).\n</html>");
-        jLabel3.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        directoryButtonImportMapsprites.setDirectoryPath(".\\");
+            directoryButtonImportMapsprites.setInfoMessage("");
+            directoryButtonImportMapsprites.setLabelText("Mapsprites directory :");
 
-        directoryButton1.setDirectoryPath(".\\export\\");
-            directoryButton1.setLabelText("Image directory :");
-
-            buttonGroupImport.add(jRadioButton3);
-            jRadioButton3.setSelected(true);
-            jRadioButton3.setText("PNG");
-            jRadioButton3.addChangeListener(new javax.swing.event.ChangeListener() {
-                public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                    jRadioStateChanged_Png(evt);
-                }
-            });
-
-            buttonGroupImport.add(jRadioButton4);
-            jRadioButton4.setText("GIF");
-            jRadioButton4.addChangeListener(new javax.swing.event.ChangeListener() {
-                public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                    jRadioStateChanged_Gif(evt);
-                }
-            });
-
-            javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-            jPanel7.setLayout(jPanel7Layout);
-            jPanel7Layout.setHorizontalGroup(
-                jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel7Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jRadioButton3)
-                        .addComponent(jRadioButton4))
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            );
-            jPanel7Layout.setVerticalGroup(
-                jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel7Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jRadioButton3)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jRadioButton4)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            );
-
-            fileButton3.setFilePath("..\\tech\\basepalette.bin");
-            fileButton3.setLabelText("Palette file :");
-
-            javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-            jPanel9.setLayout(jPanel9Layout);
-            jPanel9Layout.setHorizontalGroup(
-                jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel9Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(directoryButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 566, Short.MAX_VALUE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                            .addComponent(jLabel3)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jButton12))
-                        .addComponent(fileButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addContainerGap())
-            );
-            jPanel9Layout.setVerticalGroup(
-                jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(fileButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(directoryButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jButton12)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap())
-            );
-
-            jTabbedPane1.addTab("Images", jPanel9);
-
-            javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-            jPanel3.setLayout(jPanel3Layout);
-            jPanel3Layout.setHorizontalGroup(
-                jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jTabbedPane1)
-                    .addContainerGap())
-            );
-            jPanel3Layout.setVerticalGroup(
-                jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jTabbedPane1)
-            );
-
-            jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Export to :"));
-            jPanel5.setPreferredSize(new java.awt.Dimension(32, 135));
-
-            jButton2.setText("Export");
-            jButton2.addActionListener(new java.awt.event.ActionListener() {
+            jButtonImportMapsprites.setText("Import");
+            jButtonImportMapsprites.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    jButton2ActionPerformed(evt);
+                    jButtonImportMapspritesActionPerformed(evt);
                 }
             });
 
-            jLabel1.setText("<html>Select a directory to create new \"mapspriteXXX-Y.bin\" files.</html>");
-            jLabel1.setToolTipText("");
-            jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+            infoButton9.setMessageText("<html>Loads all dissasembly (.bin) files inside a directory. Files are expected to be in the format \"mapspriteXXX-Y.bin\"<br>Loaded files will be compared against the mapsprite entries. Any files that are not referenced in entries will appear in the \"Unreferened\" tab.</html>");
+            infoButton9.setText("");
 
-            directoryButton2.setDirectoryPath(".\\");
-                directoryButton2.setLabelText("Directory :");
+            javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
+            jPanel12.setLayout(jPanel12Layout);
+            jPanel12Layout.setHorizontalGroup(
+                jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel12Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel12Layout.createSequentialGroup()
+                            .addGap(0, 0, Short.MAX_VALUE)
+                            .addComponent(jButtonImportMapsprites))
+                        .addComponent(directoryButtonImportMapsprites, javax.swing.GroupLayout.DEFAULT_SIZE, 554, Short.MAX_VALUE)
+                        .addGroup(jPanel12Layout.createSequentialGroup()
+                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(infoButton9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(0, 0, Short.MAX_VALUE)))
+                    .addContainerGap())
+            );
+            jPanel12Layout.setVerticalGroup(
+                jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel12Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(infoButton9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(directoryButtonImportMapsprites, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jButtonImportMapsprites)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            );
 
-                javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
-                jPanel11.setLayout(jPanel11Layout);
-                jPanel11Layout.setHorizontalGroup(
-                    jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel11Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(directoryButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 566, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 484, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton2)))
-                        .addContainerGap())
-                );
-                jPanel11Layout.setVerticalGroup(
-                    jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(directoryButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton2)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap())
-                );
+            jTabbedPane1.addTab("Disassembly", jPanel12);
 
-                jTabbedPane2.addTab("Disassembly", jPanel11);
+            jLabel3.setText("<html>Select the directory with Mapsprite images.</html>");
 
-                jButton13.setText("Export");
-                jButton13.addActionListener(new java.awt.event.ActionListener() {
+            directoryButtonImportImages.setDirectoryPath(".\\export\\");
+                directoryButtonImportImages.setInfoMessage("");
+                directoryButtonImportImages.setLabelText("Image directory :");
+
+                jButtonImportImages.setText("Import");
+                jButtonImportImages.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        jButton13ActionPerformed(evt);
+                        jButtonImportImagesActionPerformed(evt);
                     }
                 });
 
-                jLabel9.setText("<html>\nSelect a directory to create new mapsprite images.<br>\nExported color format : 4BPP / 16 indexed colors.<br>\nTransparent color at index 0.\n</html>");
-                jLabel9.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-                jLabel9.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+                infoButton10.setMessageText("<html>Loads all image files inside a directory. Files are expected to be in the format \"mapspriteXXX-Y.png\"<br>Loaded files will be compared against the mapsprite entries. Any files that are not referenced in entries will appear in the \"Unreferened\" tab.<br><br><html>Supported image formats: PNG or GIF.<br><br>Color format should be 4BPP / 16 indexed colors. Images of 8BPP / 256 indexed colors will be converted to 4 BPP / 16 (some colors may be lost).<br>Colors will be convered to CRAM format (the color format used by the SEGA Genesis).<br>Color index 0 is treated as transparent.</html>");
+                infoButton10.setText("");
 
-                directoryButton3.setDirectoryPath(".\\export\\");
-                    directoryButton3.setLabelText("Image directory :");
+                javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+                jPanel9.setLayout(jPanel9Layout);
+                jPanel9Layout.setHorizontalGroup(
+                    jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel9Layout.createSequentialGroup()
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(infoButton10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 295, Short.MAX_VALUE))
+                            .addComponent(directoryButtonImportImages, javax.swing.GroupLayout.DEFAULT_SIZE, 554, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jButtonImportImages)))
+                        .addContainerGap())
+                );
+                jPanel9Layout.setVerticalGroup(
+                    jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(infoButton10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(directoryButtonImportImages, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonImportImages)
+                        .addContainerGap())
+                );
 
-                    jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+                jTabbedPane1.addTab("Images", jPanel9);
 
-                    buttonGroupExport.add(jRadioButton2);
-                    jRadioButton2.setText("GIF");
-                    jRadioButton2.addChangeListener(new javax.swing.event.ChangeListener() {
-                        public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                            jRadioStateChanged_Gif(evt);
-                        }
-                    });
+                javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+                jPanel3.setLayout(jPanel3Layout);
+                jPanel3Layout.setHorizontalGroup(
+                    jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(fileButtonImportEntries, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(fileButtonImportPalette, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())
+                );
+                jPanel3Layout.setVerticalGroup(
+                    jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(fileButtonImportEntries, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(fileButtonImportPalette, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                );
 
-                    buttonGroupExport.add(jRadioButton1);
-                    jRadioButton1.setSelected(true);
-                    jRadioButton1.setText("PNG");
-                    jRadioButton1.addChangeListener(new javax.swing.event.ChangeListener() {
-                        public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                            jRadioStateChanged_Png(evt);
-                        }
-                    });
+                jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder("Organise Mapsprite Entries"));
 
-                    jLabel4.setText("File format :");
+                jPanel18.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
-                    jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3" }));
-                    jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+                jButtonOptimiseMapsprites.setText("Optimise");
+                jButtonOptimiseMapsprites.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        jButtonOptimiseMapspritesActionPerformed(evt);
+                    }
+                });
+
+                buttonGroupOptimise.add(jRadioButtonOptimiseCharacters);
+                jRadioButtonOptimiseCharacters.setText("Optmise per-character");
+                jRadioButtonOptimiseCharacters.addItemListener(new java.awt.event.ItemListener() {
+                    public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                        jRadioButtonOptimiseItemStateChanged(evt);
+                    }
+                });
+
+                buttonGroupOptimise.add(jRadioButtonOptimisePairs);
+                jRadioButtonOptimisePairs.setSelected(true);
+                jRadioButtonOptimisePairs.setText("Optimise pairs");
+                jRadioButtonOptimisePairs.addItemListener(new java.awt.event.ItemListener() {
+                    public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                        jRadioButtonOptimiseItemStateChanged(evt);
+                    }
+                });
+
+                infoButton6.setMessageText("<html>Optimises if a mapSprite pair is pixel-perfect identical to another pair.<br><i>e.g. if mapSprite001-0 matches mapSprite001-1.</i></html>");
+                infoButton6.setText("");
+
+                infoButton7.setMessageText("<html>Optimises only if an entire row pixel-perfect matches another row.<br><i>e.g. if mapSprite001(-0, -1, & -2) matches mapSprite002(-0, -1, & -2).</i></html>");
+                infoButton7.setText("");
+
+                jLabel7.setText("Remove duplicate mapsprites");
+
+                infoButton4.setMessageText("<html>Will search the mapsprites and replace any pixel-perfect duplicates with a reference.<br><br><i>Images with all pixels set to color 0 will be treated as \"empty\".</i></html>");
+                infoButton4.setText("");
+
+                javax.swing.GroupLayout jPanel18Layout = new javax.swing.GroupLayout(jPanel18);
+                jPanel18.setLayout(jPanel18Layout);
+                jPanel18Layout.setHorizontalGroup(
+                    jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel18Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel18Layout.createSequentialGroup()
+                                .addComponent(jButtonOptimiseMapsprites, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jRadioButtonOptimisePairs)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(infoButton6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jRadioButtonOptimiseCharacters)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(infoButton7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel18Layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(infoButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                );
+                jPanel18Layout.setVerticalGroup(
+                    jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel18Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(infoButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                                .addComponent(jRadioButtonOptimisePairs)
+                                .addComponent(infoButton6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(infoButton7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jRadioButtonOptimiseCharacters))
+                            .addComponent(jButtonOptimiseMapsprites))
+                        .addContainerGap())
+                );
+
+                jPanel20.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+
+                jButtonInsertMapsprites.setText("Insert Unreferenced");
+                jButtonInsertMapsprites.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        jButtonInsertMapspritesActionPerformed(evt);
+                    }
+                });
+
+                jLabel13.setText("Insert unreferenced mapsprites");
+
+                infoButton15.setMessageText("<html>Will insert unreferenced sprites into the next available slot(s) in the entries.<br><br><i>Does not override any defined entries (including duplicates or empty entries).</i></html>");
+                infoButton15.setText("");
+
+                javax.swing.GroupLayout jPanel20Layout = new javax.swing.GroupLayout(jPanel20);
+                jPanel20.setLayout(jPanel20Layout);
+                jPanel20Layout.setHorizontalGroup(
+                    jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel20Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButtonInsertMapsprites)
+                            .addGroup(jPanel20Layout.createSequentialGroup()
+                                .addComponent(jLabel13)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(infoButton15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                );
+                jPanel20Layout.setVerticalGroup(
+                    jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel20Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(infoButton15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonInsertMapsprites)
+                        .addContainerGap())
+                );
+
+                fileButtonExportEntries.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
+                fileButtonExportEntries.setFilePath(".\\entries.asm");
+                fileButtonExportEntries.setInfoMessage("");
+                fileButtonExportEntries.setLabelText("Mapsprite entries :");
+
+                jButtonExportEntries.setText("Export");
+                jButtonExportEntries.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        jButtonExportEntriesActionPerformed(evt);
+                    }
+                });
+
+                jLabel8.setText("<html>If mapsprites have been optimised then the entries file will need to be updated.</html>");
+                jLabel8.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+
+                javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+                jPanel6.setLayout(jPanel6Layout);
+                jPanel6Layout.setHorizontalGroup(
+                    jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(fileButtonExportEntries, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonExportEntries)))
+                        .addContainerGap())
+                );
+                jPanel6Layout.setVerticalGroup(
+                    jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(fileButtonExportEntries, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonExportEntries))
+                        .addContainerGap())
+                );
+
+                jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Export to :"));
+                jPanel5.setPreferredSize(new java.awt.Dimension(32, 135));
+
+                jLabel1.setText("Select a directory to export mapsprite disassembly files to.");
+                jLabel1.setToolTipText("");
+
+                directoryButtonExportMapsprites.setDirectoryPath(".\\");
+                    directoryButtonExportMapsprites.setInfoMessage("");
+                    directoryButtonExportMapsprites.setLabelText("Directory :");
+
+                    jButtonExportMapsprites.setText("Export");
+                    jButtonExportMapsprites.addActionListener(new java.awt.event.ActionListener() {
                         public void actionPerformed(java.awt.event.ActionEvent evt) {
-                            jComboBox2ActionPerformed(evt);
+                            jButtonExportMapspritesActionPerformed(evt);
                         }
                     });
 
-                    jLabel6.setText("Export :");
+                    infoButton11.setMessageText("<html>Disassembly files will be exported in the format \"mapspriteXXX-Y.bin\".<br>Unreferenced files will not be exported.</html>");
+                    infoButton11.setText("");
 
-                    infoButton1.setMessageText("<html>The number of sprites-per-image:<br><b>INDIVIDUAL_FILES:</b> i.e. all 6 frames (2x up, 2x left, 2x, right) of mapspriteXXX will be exported as individual files. This results in 6x images for each row, with the filename \"mapspriteXXX-Y-Z\".<br><b>FILE_PER_DIRECTION:</b> i.e. the 3 facing directions (up, left, right) of mapspriteXXX will be exported as separate images. This results in 3 images for each row, with the filename \"mapsprite-XXX-Y\".<br><b>FILE_PER_SET:</b> All 6 frames of mapspriteXXX will be exported as a single file. This results in1x image per row with the filename \"mapsprite-XXX\".</html>");
-                    infoButton1.setText("");
-
-                    infoButton2.setMessageText("Export the images as .PNG or .GIF format.");
-                    infoButton2.setText("");
-
-                    javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-                    jPanel2.setLayout(jPanel2Layout);
-                    jPanel2Layout.setHorizontalGroup(
-                        jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
+                    javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
+                    jPanel11.setLayout(jPanel11Layout);
+                    jPanel11Layout.setHorizontalGroup(
+                        jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel11Layout.createSequentialGroup()
                             .addContainerGap()
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                    .addComponent(jLabel4)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jRadioButton1)
+                            .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(directoryButtonExportMapsprites, javax.swing.GroupLayout.DEFAULT_SIZE, 554, Short.MAX_VALUE)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+                                    .addGap(0, 0, Short.MAX_VALUE)
+                                    .addComponent(jButtonExportMapsprites))
+                                .addGroup(jPanel11Layout.createSequentialGroup()
+                                    .addComponent(jLabel1)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jRadioButton2))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                    .addComponent(jLabel6)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(infoButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(infoButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(infoButton11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(0, 0, Short.MAX_VALUE)))
+                            .addContainerGap())
                     );
-                    jPanel2Layout.setVerticalGroup(
-                        jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    jPanel11Layout.setVerticalGroup(
+                        jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(infoButton11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(directoryButtonExportMapsprites, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jButtonExportMapsprites)
+                            .addContainerGap())
+                    );
+
+                    jTabbedPane2.addTab("Disassembly", jPanel11);
+
+                    jButtonExportImages.setText("Export");
+                    jButtonExportImages.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                            jButtonExportImagesActionPerformed(evt);
+                        }
+                    });
+
+                    jLabel9.setText("<html>Select a directory to create new Mapsprite images.</html>");
+                    jLabel9.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+
+                    directoryButtonExportImages.setDirectoryPath(".\\export\\");
+                        directoryButtonExportImages.setInfoMessage("");
+                        directoryButtonExportImages.setLabelText("Image directory :");
+
+                        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+
+                        buttonGroupExport.add(jRadioButtonFormatGIF);
+                        jRadioButtonFormatGIF.setText("GIF");
+                        jRadioButtonFormatGIF.addItemListener(new java.awt.event.ItemListener() {
+                            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                                jRadioFormatItemStateChanged(evt);
+                            }
+                        });
+
+                        buttonGroupExport.add(jRadioButtonFormatPNG);
+                        jRadioButtonFormatPNG.setSelected(true);
+                        jRadioButtonFormatPNG.setText("PNG");
+                        jRadioButtonFormatPNG.addItemListener(new java.awt.event.ItemListener() {
+                            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                                jRadioFormatItemStateChanged(evt);
+                            }
+                        });
+
+                        jLabel4.setText("File format :");
+
+                        jComboBoxExportMode.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3" }));
+                        jComboBoxExportMode.addActionListener(new java.awt.event.ActionListener() {
+                            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                jComboBoxExportModeActionPerformed(evt);
+                            }
+                        });
+
+                        jLabel6.setText("Export :");
+
+                        infoButton1.setMessageText("<html>The number of sprites-per-image:<br><b>- INDIVIDUAL_FILES:</b> i.e. all 6 frames (2x up, 2x left, 2x, right) of mapspriteXXX will be exported as individual files. This results in 6x images for each row, with the filename \"mapspriteXXX-Y-Z\".<br><b>- FILE_PER_DIRECTION:</b> i.e. the 3 facing directions (up, left, right) of mapspriteXXX will be exported as separate images. This results in 3 images for each row, with the filename \"mapsprite-XXX-Y\".<br><b>- FILE_PER_CHARACTER:</b> All 6 frames of mapspriteXXX will be exported as a single file. This results in 1x image per row with the filename \"mapsprite-XXX\".</html>");
+                        infoButton1.setText("");
+
+                        infoButton2.setMessageText("Export the images as .PNG or .GIF format.");
+                        infoButton2.setText("");
+
+                        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+                        jPanel2.setLayout(jPanel2Layout);
+                        jPanel2Layout.setHorizontalGroup(
+                            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addContainerGap()
                                 .addComponent(jLabel6)
-                                .addComponent(infoButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jComboBoxExportMode, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(infoButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jRadioButtonFormatPNG)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jRadioButtonFormatGIF)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(infoButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jRadioButton2)
-                                .addComponent(jRadioButton1)
-                                .addComponent(jLabel4))
-                            .addContainerGap())
-                    );
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        );
+                        jPanel2Layout.setVerticalGroup(
+                            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                                    .addComponent(jLabel6)
+                                    .addComponent(infoButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(infoButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jRadioButtonFormatGIF)
+                                    .addComponent(jRadioButtonFormatPNG)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jComboBoxExportMode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap())
+                        );
 
-                    javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
-                    jPanel14.setLayout(jPanel14Layout);
-                    jPanel14Layout.setHorizontalGroup(
-                        jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel14Layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(directoryButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 566, Short.MAX_VALUE)
-                                .addGroup(jPanel14Layout.createSequentialGroup()
-                                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jButton13)))
-                            .addContainerGap())
-                    );
-                    jPanel14Layout.setVerticalGroup(
-                        jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel14Layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(directoryButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jButton13)
-                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addContainerGap())
-                    );
+                        infoButton12.setMessageText("<html>Files will be exported in the format \"mapspriteXXX-Y.png\".<br>Unreferenced files will not be exported.<br><br>Supported image formats: PNG or GIF.<br><br>Exported color format will be 4BPP / 16 indexed colors.<br>Color index 0 is treated as transparent.</html>");
+                        infoButton12.setText("");
 
-                    jTabbedPane2.addTab("Image", jPanel14);
+                        javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
+                        jPanel14.setLayout(jPanel14Layout);
+                        jPanel14Layout.setHorizontalGroup(
+                            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel14Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(directoryButtonExportImages, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(jPanel14Layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jButtonExportImages))
+                                    .addGroup(jPanel14Layout.createSequentialGroup()
+                                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(infoButton12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addContainerGap())
+                        );
+                        jPanel14Layout.setVerticalGroup(
+                            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel14Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(infoButton12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(directoryButtonExportImages, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButtonExportImages))
+                                .addContainerGap())
+                        );
 
-                    javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-                    jPanel5.setLayout(jPanel5Layout);
-                    jPanel5Layout.setHorizontalGroup(
-                        jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addContainerGap())
-                    );
-                    jPanel5Layout.setVerticalGroup(
-                        jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jTabbedPane2)
-                    );
+                        jTabbedPane2.addTab("Image", jPanel14);
 
-                    javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-                    jPanel8.setLayout(jPanel8Layout);
-                    jPanel8Layout.setHorizontalGroup(
-                        jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
-                    );
-                    jPanel8Layout.setVerticalGroup(
-                        jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
-                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addContainerGap())
-                    );
+                        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+                        jPanel5.setLayout(jPanel5Layout);
+                        jPanel5Layout.setHorizontalGroup(
+                            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jTabbedPane2)
+                                .addContainerGap())
+                        );
+                        jPanel5Layout.setVerticalGroup(
+                            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTabbedPane2)
+                        );
 
-                    jSplitPane2.setLeftComponent(jPanel8);
+                        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+                        jPanel8.setLayout(jPanel8Layout);
+                        jPanel8Layout.setHorizontalGroup(
+                            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 588, Short.MAX_VALUE)
+                                            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 588, Short.MAX_VALUE))
+                                        .addContainerGap())))
+                        );
+                        jPanel8Layout.setVerticalGroup(
+                            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())
+                        );
 
-                    javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
-                    jPanel15.setLayout(jPanel15Layout);
-                    jPanel15Layout.setHorizontalGroup(
-                        jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jSplitPane2)
-                    );
-                    jPanel15Layout.setVerticalGroup(
-                        jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jSplitPane2)
-                    );
+                        jSplitPane2.setLeftComponent(jPanel8);
 
-                    jSplitPane1.setTopComponent(jPanel15);
-                    jSplitPane1.setBottomComponent(console1);
+                        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Tiles"));
 
-                    javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
-                    jPanel13.setLayout(jPanel13Layout);
-                    jPanel13Layout.setHorizontalGroup(
-                        jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jSplitPane1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    );
-                    jPanel13Layout.setVerticalGroup(
-                        jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 584, Short.MAX_VALUE)
-                    );
+                        javax.swing.GroupLayout mapSpriteLayoutPanelLayout = new javax.swing.GroupLayout(mapSpriteLayoutPanel);
+                        mapSpriteLayoutPanel.setLayout(mapSpriteLayoutPanelLayout);
+                        mapSpriteLayoutPanelLayout.setHorizontalGroup(
+                            mapSpriteLayoutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGap(0, 897, Short.MAX_VALUE)
+                        );
+                        mapSpriteLayoutPanelLayout.setVerticalGroup(
+                            mapSpriteLayoutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGap(0, 639, Short.MAX_VALUE)
+                        );
 
-                    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-                    getContentPane().setLayout(layout);
-                    layout.setHorizontalGroup(
-                        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    );
-                    layout.setVerticalGroup(
-                        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    );
+                        jScrollPane2.setViewportView(mapSpriteLayoutPanel);
 
-                    setSize(new java.awt.Dimension(1066, 592));
-                    setLocationRelativeTo(null);
-                }// </editor-fold>//GEN-END:initComponents
+                        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+                        jPanel1.setLayout(jPanel1Layout);
+                        jPanel1Layout.setHorizontalGroup(
+                            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 435, Short.MAX_VALUE)
+                        );
+                        jPanel1Layout.setVerticalGroup(
+                            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 563, Short.MAX_VALUE)
+                        );
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Path directoryPath = PathHelpers.getBasePath().resolve(directoryButton2.getDirectoryPath());
+                        javax.swing.GroupLayout jPanelMapSpritesLayout = new javax.swing.GroupLayout(jPanelMapSprites);
+                        jPanelMapSprites.setLayout(jPanelMapSpritesLayout);
+                        jPanelMapSpritesLayout.setHorizontalGroup(
+                            jPanelMapSpritesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(viewPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        );
+                        jPanelMapSpritesLayout.setVerticalGroup(
+                            jPanelMapSpritesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelMapSpritesLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(viewPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        );
+
+                        jTabbedPaneSprites.addTab("Map Sprites (0)", jPanelMapSprites);
+
+                        jLabel2.setText("<html>Shows the mapSprites that are not referenced in the entries.</html>");
+
+                        infoButton5.setMessageText("<html>Indicates mapsprites that will not be loaded into the game.<br><br>Mapsprites can appear here if they were removed through the 'optimise' button.<br>If using \"FILE_PER_CHARACTER\" export mode for images (i.e. 6 sprites per image) then empty sprites may appear as unreferenced (i.e. with mapsprite151.png).</html>");
+                        infoButton5.setText("");
+
+                        tableUnreferenced.setBorder(null);
+                        tableUnreferenced.setButtonsVisible(false);
+                        tableUnreferenced.setModel(mapSpriteTableModel);
+                        tableUnreferenced.setName("Table Unreferenced"); // NOI18N
+
+                        javax.swing.GroupLayout jPanelUnreferencedLayout = new javax.swing.GroupLayout(jPanelUnreferenced);
+                        jPanelUnreferenced.setLayout(jPanelUnreferencedLayout);
+                        jPanelUnreferencedLayout.setHorizontalGroup(
+                            jPanelUnreferencedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelUnreferencedLayout.createSequentialGroup()
+                                .addGroup(jPanelUnreferencedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanelUnreferencedLayout.createSequentialGroup()
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(infoButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 94, Short.MAX_VALUE))
+                                    .addComponent(tableUnreferenced, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addContainerGap())
+                        );
+                        jPanelUnreferencedLayout.setVerticalGroup(
+                            jPanelUnreferencedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelUnreferencedLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jPanelUnreferencedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                                    .addComponent(infoButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tableUnreferenced, javax.swing.GroupLayout.PREFERRED_SIZE, 615, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        );
+
+                        jTabbedPaneSprites.addTab("Unreferenced (0)", jPanelUnreferenced);
+
+                        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
+                        jPanel10.setLayout(jPanel10Layout);
+                        jPanel10Layout.setHorizontalGroup(
+                            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel10Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jTabbedPaneSprites))
+                        );
+                        jPanel10Layout.setVerticalGroup(
+                            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel10Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jTabbedPaneSprites)
+                                .addContainerGap())
+                        );
+
+                        jSplitPane2.setRightComponent(jPanel10);
+
+                        javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
+                        jPanel15.setLayout(jPanel15Layout);
+                        jPanel15Layout.setHorizontalGroup(
+                            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSplitPane2)
+                        );
+                        jPanel15Layout.setVerticalGroup(
+                            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSplitPane2)
+                        );
+
+                        jSplitPane1.setTopComponent(jPanel15);
+                        jSplitPane1.setBottomComponent(console1);
+
+                        javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
+                        jPanel13.setLayout(jPanel13Layout);
+                        jPanel13Layout.setHorizontalGroup(
+                            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSplitPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                        );
+                        jPanel13Layout.setVerticalGroup(
+                            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 880, Short.MAX_VALUE)
+                        );
+
+                        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+                        getContentPane().setLayout(layout);
+                        layout.setHorizontalGroup(
+                            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        );
+                        layout.setVerticalGroup(
+                            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        );
+
+                        setSize(new java.awt.Dimension(1072, 888));
+                        setLocationRelativeTo(null);
+                    }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonExportMapspritesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExportMapspritesActionPerformed
+        Path directoryPath = PathHelpers.getBasePath().resolve(directoryButtonExportMapsprites.getDirectoryPath());
         if (!PathHelpers.createPathIfRequred(directoryPath)) return;
         try {
             mapSpriteManager.exportAllDisassemblies(directoryPath, mapSpriteLayoutPanel.getMapSprites());
@@ -650,65 +905,44 @@ public class MapspriteMainEditor extends AbstractMainEditor {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Map Sprite disasm could not be exported to : " + directoryPath);
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jButtonExportMapspritesActionPerformed
 
-    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
-        Path directoryPath = PathHelpers.getBasePath().resolve(directoryButton3.getDirectoryPath());
+    private void jButtonExportImagesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExportImagesActionPerformed
+        Path directoryPath = PathHelpers.getBasePath().resolve(directoryButtonExportImages.getDirectoryPath());
         if (!PathHelpers.createPathIfRequred(directoryPath)) return;
         try {
-            FileFormat format = jRadioButton1.isSelected() ? FileFormat.PNG : FileFormat.GIF;
+            FileFormat format = jRadioButtonFormatPNG.isSelected() ? FileFormat.PNG : FileFormat.GIF;
             MapSpriteExportMode exportMode = mapspriteSettings.getExportMode();
             mapSpriteManager.exportAllImages(directoryPath, mapSpriteLayoutPanel.getMapSprites(), exportMode, format);
         } catch (Exception ex) {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Map Sprite images could not be exported to : " + directoryPath);
         }
-    }//GEN-LAST:event_jButton13ActionPerformed
+    }//GEN-LAST:event_jButtonExportImagesActionPerformed
 
-    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-        Path palettePath = PathHelpers.getBasePath().resolve(fileButton3.getFilePath());
-        Path directoryPath = PathHelpers.getBasePath().resolve(directoryButton1.getDirectoryPath());
+    private void jButtonImportImagesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportImagesActionPerformed
+        Path palettePath = PathHelpers.getBasePath().resolve(fileButtonImportPalette.getFilePath());
+        Path directoryPath = PathHelpers.getBasePath().resolve(directoryButtonImportImages.getDirectoryPath());
+        Path entriesPath = PathHelpers.getBasePath().resolve(fileButtonImportEntries.getFilePath());
         try {
-            FileFormat format = jRadioButton3.isSelected() ? FileFormat.PNG : FileFormat.GIF;
-            mapSpriteManager.importAllImages(palettePath, directoryPath, format);
+            FileFormat format = FileFormat.ANY_IMAGE;
+            mapSpriteManager.importAllImages(palettePath, directoryPath, entriesPath, format);
         } catch (Exception ex) {
             mapSpriteManager.clearData();
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Map Sprite images could not be imported from directory : " + directoryPath);
         }
         onDataLoaded();
-    }//GEN-LAST:event_jButton12ActionPerformed
+    }//GEN-LAST:event_jButtonImportImagesActionPerformed
 
-    private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
-        Path palettePath = PathHelpers.getBasePath().resolve(fileButton1.getFilePath());
-        Path entriesPath = PathHelpers.getBasePath().resolve(fileButton2.getFilePath());
-        try {
-            TilesetCompression compression = TilesetCompression.BASIC;
-            mapSpriteManager.importDisassemblyFromEntryFile(palettePath, entriesPath);
-        } catch (Exception ex) {
-            mapSpriteManager.clearData();
-            Console.logger().log(Level.SEVERE, null, ex);
-            Console.logger().severe("ERROR Map Sprite disasm could not be imported from entries file : " + entriesPath);
+    private void jComboBoxExportModeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxExportModeActionPerformed
+        if (!ActionManager.isActionTriggering()) {
+            int oldValue = actionExportMode;
+            ActionManager.setActionWithoutExecute(new ComboAction(jComboBoxExportMode, jComboBoxExportMode.getSelectedIndex(), oldValue));
         }
-        onDataLoaded();
-    }//GEN-LAST:event_jButton18ActionPerformed
-
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        mapSpriteLayoutPanel.setDisplayScale(jComboBox1.getSelectedIndex()+1);
-    }//GEN-LAST:event_jComboBox1ActionPerformed
-
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
-        mapSpriteLayoutPanel.setShowGrid(jCheckBox1.isSelected());
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
-
-    private void colorPicker1ColorChanged(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorPicker1ColorChanged
-        mapSpriteLayoutPanel.setBGColor(colorPicker1.getColor());
-        SettingsManager.getGlobalSettings().setTransparentBGColor(colorPicker1.getColor());
-        SettingsManager.saveGlobalSettingsFile();
-    }//GEN-LAST:event_colorPicker1ColorChanged
-
-    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
-        Object exportMode = jComboBox2.getSelectedItem();
+        actionExportMode = jComboBoxExportMode.getSelectedIndex();
+        
+        Object exportMode = jComboBoxExportMode.getSelectedItem();
         if (exportMode != null) {
             MapSpriteExportMode mode = MapSpriteExportMode.valueOf((String)exportMode);
             if (mapspriteSettings.getExportMode() != mode) {
@@ -716,35 +950,84 @@ public class MapspriteMainEditor extends AbstractMainEditor {
                 SettingsManager.saveSettingsFile();
             }
         }
-    }//GEN-LAST:event_jComboBox2ActionPerformed
+    }//GEN-LAST:event_jComboBoxExportModeActionPerformed
 
-    private void jRadioStateChanged_Png(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jRadioStateChanged_Png
-        if (settingFileFormat) return;
-        settingFileFormat = true;
-        JRadioButton radioButton = (JRadioButton)evt.getSource();
-        if (radioButton != null && radioButton.isSelected() && mapspriteSettings.getExportFileFormat() != FileFormat.PNG) {
-            FileFormat format = FileFormat.PNG;
-            jRadioButton1.setSelected(true);
-            jRadioButton3.setSelected(true);
-            mapspriteSettings.setExportFileFormat(format);
+    private void jButtonOptimiseMapspritesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOptimiseMapspritesActionPerformed
+        MapSpriteEntries oldValue = mapSpriteLayoutPanel.getMapSprites();
+        MapSpriteEntries newValue = oldValue.clone();
+        boolean changesMade = newValue.optimiseEntries(jRadioButtonOptimiseCharacters.isSelected());
+        if (changesMade) {
+            ActionManager.setAndExecuteAction(new BasicAction<MapSpriteEntries>(this, "Optimise Map Sprites", this::actionMapSpritesLoaded, newValue, oldValue));
+        }
+    }//GEN-LAST:event_jButtonOptimiseMapspritesActionPerformed
+
+    private void jButtonExportEntriesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExportEntriesActionPerformed
+        Path entriesPath = PathHelpers.getBasePath().resolve(fileButtonExportEntries.getFilePath());
+        if (!PathHelpers.createPathIfRequred(entriesPath)) return;
+        try {
+            mapSpriteManager.exportEntries(entriesPath, mapSpriteLayoutPanel.getMapSprites());
+        } catch (Exception ex) {
+            Console.logger().log(Level.SEVERE, null, ex);
+            Console.logger().severe("ERROR Map Sprite entries could not be exported to : " + entriesPath);
+        }
+    }//GEN-LAST:event_jButtonExportEntriesActionPerformed
+
+    private void jButtonImportMapspritesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportMapspritesActionPerformed
+        Path palettePath = PathHelpers.getBasePath().resolve(fileButtonImportPalette.getFilePath());
+        Path entriesPath = PathHelpers.getBasePath().resolve(fileButtonImportEntries.getFilePath());
+        Path mapSpritesPath = PathHelpers.getBasePath().resolve(directoryButtonImportMapsprites.getDirectoryPath());
+        try {
+            mapSpriteManager.importAllDisassemblies(mapSpritesPath, entriesPath, palettePath);
+        } catch (Exception ex) {
+            mapSpriteManager.clearData();
+            Console.logger().log(Level.SEVERE, null, ex);
+            Console.logger().severe("ERROR Map Sprite disasm could not be imported from directory : " + mapSpritesPath);
+        }
+        onDataLoaded();
+    }//GEN-LAST:event_jButtonImportMapspritesActionPerformed
+
+    private void jButtonImportEntriesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportEntriesActionPerformed
+        Path palettePath = PathHelpers.getBasePath().resolve(fileButtonImportPalette.getFilePath());
+        Path entriesPath = PathHelpers.getBasePath().resolve(fileButtonImportEntries.getFilePath());
+        try {
+            mapSpriteManager.importDisassemblyFromEntryFile(palettePath, entriesPath);
+        } catch (Exception ex) {
+            mapSpriteManager.clearData();
+            Console.logger().log(Level.SEVERE, null, ex);
+            Console.logger().severe("ERROR Map Sprite disasm could not be imported from entries file : " + entriesPath);
+        }
+        onDataLoaded();
+    }//GEN-LAST:event_jButtonImportEntriesActionPerformed
+
+    private void jRadioButtonOptimiseItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jRadioButtonOptimiseItemStateChanged
+        if (!ActionManager.isActionTriggering()) {
+            JRadioButton previous = actionOptimiseMode ? jRadioButtonOptimisePairs : jRadioButtonOptimiseCharacters;
+            ActionManager.setActionWithoutExecute(new RadioButtonAction(buttonGroupOptimise, (JRadioButton)evt.getSource(), previous));
+        }
+        actionOptimiseMode = jRadioButtonOptimisePairs.isSelected();
+    }//GEN-LAST:event_jRadioButtonOptimiseItemStateChanged
+
+    private void jRadioFormatItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jRadioFormatItemStateChanged
+        if (!ActionManager.isActionTriggering()) {
+            JRadioButton previous = actionExportFormat ? jRadioButtonFormatPNG : jRadioButtonFormatGIF;
+            ActionManager.setActionWithoutExecute(new RadioButtonAction(buttonGroupExport, (JRadioButton)evt.getSource(), previous));
+        }
+        actionExportFormat = jRadioButtonFormatPNG.isSelected();
+        
+        if (actionExportFormat) {
+            mapspriteSettings.setExportFileFormat(actionExportFormat ? FileFormat.PNG : FileFormat.GIF);
             SettingsManager.saveSettingsFile();
         }
-        settingFileFormat = false;
-    }//GEN-LAST:event_jRadioStateChanged_Png
+    }//GEN-LAST:event_jRadioFormatItemStateChanged
 
-    private void jRadioStateChanged_Gif(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jRadioStateChanged_Gif
-        if (settingFileFormat) return;
-        settingFileFormat = true;
-        JRadioButton radioButton = (JRadioButton)evt.getSource();
-        if (radioButton != null && radioButton.isSelected() && mapspriteSettings.getExportFileFormat() != FileFormat.GIF) {
-            FileFormat format = FileFormat.GIF;
-            jRadioButton2.setSelected(true);
-            jRadioButton4.setSelected(true);
-            mapspriteSettings.setExportFileFormat(format);
-            SettingsManager.saveSettingsFile();
+    private void jButtonInsertMapspritesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInsertMapspritesActionPerformed
+        MapSpriteEntries oldValue = mapSpriteLayoutPanel.getMapSprites();
+        MapSpriteEntries newValue = oldValue.clone();
+        boolean changesMade = newValue.insertUnreferenced();
+        if (changesMade) {
+            ActionManager.setAndExecuteAction(new BasicAction<MapSpriteEntries>(this, "Insert Unreferenced Map Sprites", this::actionMapSpritesLoaded, newValue, oldValue));
         }
-        settingFileFormat = false;
-    }//GEN-LAST:event_jRadioStateChanged_Gif
+    }//GEN-LAST:event_jButtonInsertMapspritesActionPerformed
     
     /**
      * To create a new Main Editor, copy the below code
@@ -763,57 +1046,80 @@ public class MapspriteMainEditor extends AbstractMainEditor {
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.ButtonGroup buttonGroupExport;
-    private javax.swing.ButtonGroup buttonGroupImport;
-    private com.sfc.sf2.core.gui.controls.ColorPicker colorPicker1;
+    private com.sfc.sf2.core.gui.controls.NameableButtonGroup buttonGroupExport;
+    private com.sfc.sf2.core.gui.controls.NameableButtonGroup buttonGroupOptimise;
     private com.sfc.sf2.core.gui.controls.Console console1;
-    private com.sfc.sf2.core.gui.controls.DirectoryButton directoryButton1;
-    private com.sfc.sf2.core.gui.controls.DirectoryButton directoryButton2;
-    private com.sfc.sf2.core.gui.controls.DirectoryButton directoryButton3;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton1;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton2;
-    private com.sfc.sf2.core.gui.controls.FileButton fileButton3;
+    private com.sfc.sf2.core.gui.controls.DirectoryButton directoryButtonExportImages;
+    private com.sfc.sf2.core.gui.controls.DirectoryButton directoryButtonExportMapsprites;
+    private com.sfc.sf2.core.gui.controls.DirectoryButton directoryButtonImportImages;
+    private com.sfc.sf2.core.gui.controls.DirectoryButton directoryButtonImportMapsprites;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonExportEntries;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonImportEntries;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonImportPalette;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton1;
+    private com.sfc.sf2.core.gui.controls.InfoButton infoButton10;
+    private com.sfc.sf2.core.gui.controls.InfoButton infoButton11;
+    private com.sfc.sf2.core.gui.controls.InfoButton infoButton12;
+    private com.sfc.sf2.core.gui.controls.InfoButton infoButton15;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton2;
-    private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton13;
-    private javax.swing.JButton jButton18;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private com.sfc.sf2.core.gui.controls.InfoButton infoButton4;
+    private com.sfc.sf2.core.gui.controls.InfoButton infoButton5;
+    private com.sfc.sf2.core.gui.controls.InfoButton infoButton6;
+    private com.sfc.sf2.core.gui.controls.InfoButton infoButton7;
+    private com.sfc.sf2.core.gui.controls.InfoButton infoButton8;
+    private com.sfc.sf2.core.gui.controls.InfoButton infoButton9;
+    private javax.swing.JButton jButtonExportEntries;
+    private javax.swing.JButton jButtonExportImages;
+    private javax.swing.JButton jButtonExportMapsprites;
+    private javax.swing.JButton jButtonImportEntries;
+    private javax.swing.JButton jButtonImportImages;
+    private javax.swing.JButton jButtonImportMapsprites;
+    private javax.swing.JButton jButtonInsertMapsprites;
+    private javax.swing.JButton jButtonOptimiseMapsprites;
+    private javax.swing.JComboBox<String> jComboBoxExportMode;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel55;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
-    private javax.swing.JPanel jPanel16;
+    private javax.swing.JPanel jPanel18;
+    private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel20;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
+    private javax.swing.JPanel jPanelMapSprites;
+    private javax.swing.JPanel jPanelUnreferenced;
+    private javax.swing.JRadioButton jRadioButtonFormatGIF;
+    private javax.swing.JRadioButton jRadioButtonFormatPNG;
+    private javax.swing.JRadioButton jRadioButtonOptimiseCharacters;
+    private javax.swing.JRadioButton jRadioButtonOptimisePairs;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JSplitPane jSplitPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
+    private javax.swing.JTabbedPane jTabbedPaneSprites;
     private com.sfc.sf2.mapsprite.gui.MapSpriteLayoutPanel mapSpriteLayoutPanel;
+    private com.sfc.sf2.mapsprite.models.MapSpriteTableModel mapSpriteTableModel;
+    private com.sfc.sf2.core.gui.controls.Table tableUnreferenced;
+    private com.sfc.sf2.mapsprite.gui.MapspriteViewPanel viewPanel1;
     // End of variables declaration//GEN-END:variables
 
 }

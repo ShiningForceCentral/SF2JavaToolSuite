@@ -12,7 +12,7 @@ package com.sfc.sf2.core.gui.layout;
  */
 public abstract class BaseLayoutComponent {
     
-    boolean isEnabled = true;
+    private boolean isEnabled = true;
 
     public boolean isEnabled() {
         return isEnabled;

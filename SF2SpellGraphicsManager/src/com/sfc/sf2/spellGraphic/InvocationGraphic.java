@@ -5,36 +5,41 @@
  */
 package com.sfc.sf2.spellGraphic;
 
+import com.sfc.sf2.core.INameable;
 import com.sfc.sf2.graphics.Tileset;
 import com.sfc.sf2.palette.Palette;
+import java.util.Arrays;
 
 /**
  *
  * @author TiMMy
  */
-public class InvocationGraphic {
+public class InvocationGraphic implements INameable {
 
     public static int INVOCATION_TILE_WIDTH = 16;
     public static int INVOCATION_TILE_HEIGHT = 8;
     
+    private String name;
     private Tileset[] frames;
-    private int frameWidth;
-    private int frameHeight;
-    private short unknown1;
-    private short unknown2;
-    private short unknown3;
+    private short posX;
+    private short posY;
+    private short loadMode;
     
-    public InvocationGraphic(Tileset[] frames) {
-        this.frames = frames;
-        recalcFrameDimensions();
+    public InvocationGraphic(String name, Tileset[] frames) {
+        this(name, frames, (short)0, (short)0, (short)1);
     }
-    
-    public InvocationGraphic(Tileset[] frames, short unknown1, short unknown2, short unknown3) {
+
+    public InvocationGraphic(String name, Tileset[] frames, short posX, short posY, short loadMode) {
+        this.name = name;
         this.frames = frames;
-        recalcFrameDimensions();
-        this.unknown1 = unknown1;
-        this.unknown2 = unknown2;
-        this.unknown3 = unknown3;
+        this.posX = posX;
+        this.posY = posY;
+        this.loadMode = loadMode;
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 
     public Tileset[] getFrames() {
@@ -43,15 +48,14 @@ public class InvocationGraphic {
 
     public void setFrames(Tileset[] frames) {
         this.frames = frames;
-        recalcFrameDimensions();
     }
     
-    private void recalcFrameDimensions() {
-        if (frames == null) {
-            frameWidth = frameHeight = 0;
-        } else {
-            frameWidth = INVOCATION_TILE_WIDTH;
-            frameHeight = INVOCATION_TILE_HEIGHT;
+    public void clearIndexedColorImage() {
+        if (frames == null) return;
+        for (int i = 0; i < frames.length; i++) {
+            if (frames[i] != null) {
+                frames[i].clearIndexedColorImage(true);
+            }
         }
     }
 
@@ -62,39 +66,42 @@ public class InvocationGraphic {
         return frames[0].getPalette();
     }
 
-    public int getFrameWidth() {
-        return frameWidth;
-    }
-
-    public int getFrameHeight() {
-        return frameHeight;
-    }
-
     public int getTotalHeight() {
-        return frames == null ? 0 : frameHeight*frames.length;
+        return frames == null ? 0 : INVOCATION_TILE_HEIGHT*frames.length;
     }
 
-    public short getUnknown1() {
-        return unknown1;
+    public short getPosX() {
+        return posX;
     }
 
-    public void setUnknown1(short unknown1) {
-        this.unknown1 = unknown1;
+    public void setPosX(short posX) {
+        this.posX = posX;
     }
 
-    public short getUnknown2() {
-        return unknown2;
+    public short getPosY() {
+        return posY;
     }
 
-    public void setUnknown2(short unknown2) {
-        this.unknown2 = unknown2;
+    public void setPosY(short posY) {
+        this.posY = posY;
     }
 
-    public short getUnknown3() {
-        return unknown3;
+    public short getLoadMode() {
+        return loadMode;
     }
 
-    public void setUnknown3(short unknown3) {
-        this.unknown3 = unknown3;
+    public void setLoadMode(short loadMode) {
+        this.loadMode = loadMode;
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof InvocationGraphic)) return super.equals(obj);
+        InvocationGraphic other = (InvocationGraphic)obj;
+        if (!Arrays.equals(this.frames, other.frames)) return false;
+        if (this.posX != other.posX) return false;
+        if (this.posY != other.posY) return false;
+        if (this.loadMode != other.loadMode) return false;
+        return true;
     }
 }

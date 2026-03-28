@@ -5,9 +5,12 @@
  */
 package com.sfc.sf2.core.gui.controls;
 
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.beans.BeanProperty;
 import javax.swing.Icon;
 
@@ -17,6 +20,8 @@ import javax.swing.Icon;
  */
 public class AccordionPanel extends javax.swing.JPanel {
 
+    private static int COLLAPSED_HEIGHT = 27;
+    
     private boolean expanded = true;
     Dimension collapsedSize;
     
@@ -28,9 +33,9 @@ public class AccordionPanel extends javax.swing.JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.setColor(getBackground());
-        g.fillRect(this.getWidth()-25, 0, 20, 20);
+        g.fillRect(this.getWidth()-20, 0, 20, 20);
         Icon icon = expanded ? flatTreeExpandedIcon : flatTreeCollapsedIcon;
-        icon.paintIcon(this, g, this.getWidth()-20, 10);
+        icon.paintIcon(this, g, this.getWidth()-20, 11);
     }
     
     @Override
@@ -53,9 +58,25 @@ public class AccordionPanel extends javax.swing.JPanel {
         if (size.width == 0 && size.height == 0) {
             return; //Not initialised
         } else if (collapsedSize == null) {
-            collapsedSize = new Dimension(size.width, 25);
+            collapsedSize = new Dimension(size.width, COLLAPSED_HEIGHT);
+        }
+        for (Component component : getComponents()) {
+            component.setVisible(expanded);
         }
         revalidate();
+        repaint();
+        Container parent = getParent();
+        parent.revalidate();
+        parent.repaint();
+    }
+
+    @Override
+    public int getHeight() {
+        if (expanded || collapsedSize == null) {
+            return super.getHeight();
+        } else {
+            return COLLAPSED_HEIGHT;
+        }
     }
     
     @Override
@@ -92,6 +113,24 @@ public class AccordionPanel extends javax.swing.JPanel {
         } else {
             return collapsedSize;
         }
+    }
+
+    @Override
+    public Rectangle getVisibleRect() {
+        Rectangle rect = super.getVisibleRect();
+        if (!expanded && collapsedSize != null) {
+        rect.height = collapsedSize.height;
+        }
+        return rect;
+    }
+
+    @Override
+    public Rectangle getBounds(Rectangle rv) {
+        rv = super.getBounds(rv);
+            if (!expanded && collapsedSize != null) {
+            rv.height = collapsedSize.height;
+        }
+        return rv;
     }
 
     /**
