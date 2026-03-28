@@ -5,8 +5,6 @@
  */
 package com.sfc.sf2.core.settings;
 
-import com.sfc.sf2.helpers.ColorHelpers;
-import java.awt.Color;
 import java.util.HashMap;
 
 /**
@@ -16,8 +14,7 @@ import java.util.HashMap;
 public class GlobalSettings implements AbstractSettings {
     
     private boolean darkTheme;
-    private Color transparentBGColor;
-    private Color battleSceneBGColor;
+    private int logLevel;
     
     public boolean getIsDarkTheme() {
         return darkTheme;
@@ -27,27 +24,18 @@ public class GlobalSettings implements AbstractSettings {
         this.darkTheme = darkTheme;
     }
     
-    public Color getTransparentBGColor() {
-        return transparentBGColor;
+    public int getLogLevel() {
+        return logLevel;
     }
     
-    public void setTransparentBGColor(Color transparentBGColor) {
-        this.transparentBGColor = transparentBGColor;
-    }
-
-    public Color getBattleSceneBGColor() {
-        return battleSceneBGColor;
-    }
-
-    public void setBattleSceneBGColor(Color battleSceneBGColor) {
-        this.battleSceneBGColor = battleSceneBGColor;
+    public void setLogLevel(int logLevel) {
+        this.logLevel = logLevel;
     }
 
     @Override
     public void initialiseNewUser() {
         darkTheme = false;
-        transparentBGColor = new Color(200, 0, 200);
-        battleSceneBGColor = Color.BLACK;
+        logLevel = 1;
     }
     
     @Override
@@ -55,18 +43,14 @@ public class GlobalSettings implements AbstractSettings {
         if (data.containsKey("darkTheme")) {
             darkTheme = Boolean.parseBoolean(data.get("darkTheme"));
         }
-        if (data.containsKey("transparentBGColor")) {
-            transparentBGColor = ColorHelpers.parseColorString(data.get("transparentBGColor"));
-        }
-        if (data.containsKey("battleSceneBGColor")) {
-            battleSceneBGColor = ColorHelpers.parseColorString(data.get("battleSceneBGColor"));
+        if (data.containsKey("logLevel")) {
+            logLevel = Integer.parseInt(data.get("logLevel"));
         }
     }
 
     @Override
     public void encodeSettings(HashMap<String, String> data) {
         data.put("darkTheme", Boolean.toString(darkTheme));
-        data.put("transparentBGColor", ColorHelpers.toHexString(transparentBGColor));
-        data.put("battleSceneBGColor", ColorHelpers.toHexString(battleSceneBGColor));
+        data.put("logLevel", Integer.toString(logLevel));
     }
 }

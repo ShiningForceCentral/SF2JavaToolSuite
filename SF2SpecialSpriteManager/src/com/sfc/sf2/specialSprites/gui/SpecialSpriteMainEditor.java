@@ -11,6 +11,8 @@ import com.sfc.sf2.core.actions.RadioButtonAction;
 import com.sfc.sf2.core.actions.ToggleAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
+import com.sfc.sf2.core.settings.SettingsManager;
+import com.sfc.sf2.core.settings.ViewSettings;
 import com.sfc.sf2.graphics.Tileset;
 import com.sfc.sf2.helpers.PathHelpers;
 import com.sfc.sf2.helpers.RenderScaleHelpers;
@@ -25,12 +27,14 @@ import javax.swing.JRadioButton;
  */
 public class SpecialSpriteMainEditor extends AbstractMainEditor {
     
-    private SpecialSpriteManager specialSpriteManager = new SpecialSpriteManager();
+    private final ViewSettings viewSettings = new ViewSettings(RenderScaleHelpers.RENDER_SCALE_2X);
+    private final SpecialSpriteManager specialSpriteManager = new SpecialSpriteManager();
     
     private JRadioButton actionPreviousPreset;
     
     public SpecialSpriteMainEditor() {
         super();
+        SettingsManager.registerSettingsStore("view", viewSettings);
         initComponents();
         initCore(console1);
     }
@@ -39,8 +43,7 @@ public class SpecialSpriteMainEditor extends AbstractMainEditor {
     protected void initEditor() {
         super.initEditor();
         
-        viewPanel1.setLayoutPanel(specialSpriteLayoutPanel);
-        viewPanel1.getScaleComboBox().setSelectedIndex(RenderScaleHelpers.stringToIndex("4x"));
+        viewPanel1.setLayoutPanel(specialSpriteLayoutPanel, viewSettings);
         actionPreviousPreset = jRadio4x2Palette;
     }
     

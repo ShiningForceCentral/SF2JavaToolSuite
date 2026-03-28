@@ -20,12 +20,12 @@ public class LayoutScale extends BaseLayoutComponent {
     private float renderScale;
     
     public LayoutScale() {
-        this.renderScaleIndex = RenderScaleHelpers.DEFAULT_RENDER_SCALE_INDEX;
+        this.renderScaleIndex = RenderScaleHelpers.RENDER_SCALE_1X;
         this.renderScale = 1f;
     }
     
     public LayoutScale(int layoutScale) {
-        this.renderScaleIndex = RenderScaleHelpers.DEFAULT_RENDER_SCALE_INDEX + layoutScale-1;
+        this.renderScaleIndex = RenderScaleHelpers.RENDER_SCALE_1X + layoutScale-1;
         this.renderScale = layoutScale;
     }
 
@@ -43,10 +43,10 @@ public class LayoutScale extends BaseLayoutComponent {
     }
     
     public BufferedImage resizeImage(BufferedImage image) {
-        if (renderScaleIndex == RenderScaleHelpers.DEFAULT_RENDER_SCALE_INDEX) {
+        if (renderScaleIndex == RenderScaleHelpers.RENDER_SCALE_1X) {
             //Scale = 1 so do nothing
             return image;
-        } else if (renderScaleIndex < RenderScaleHelpers.DEFAULT_RENDER_SCALE_INDEX) {
+        } else if (renderScaleIndex < RenderScaleHelpers.RENDER_SCALE_1X) {
             //Scale is a fraction
             int scaleX = (int)(image.getWidth()*renderScale);
             int scaleY = (int)(image.getHeight()*renderScale);

@@ -244,7 +244,7 @@
                                       <Group type="102" attributes="0">
                                           <Component id="jCheckBox1" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="battleSceneViewPanel1" max="32767" attributes="0"/>
+                                          <Component id="viewPanel1" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
@@ -255,13 +255,13 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jScrollPane2" pref="552" max="32767" attributes="0"/>
+                                  <Component id="jScrollPane2" pref="564" max="32767" attributes="0"/>
                                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="2" attributes="0">
-                                      <Component id="battleSceneViewPanel1" alignment="2" min="-2" max="-2" attributes="0"/>
+                                      <Component id="viewPanel1" alignment="2" min="-2" max="-2" attributes="0"/>
                                       <Component id="jCheckBox1" alignment="2" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace max="-2" attributes="0"/>
+                                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -300,7 +300,7 @@
                             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBox1ActionPerformed"/>
                           </Events>
                         </Component>
-                        <Component class="com.sfc.sf2.battlescene.gui.BattleSceneViewPanel" name="battleSceneViewPanel1">
+                        <Component class="com.sfc.sf2.core.gui.controls.ViewPanel" name="viewPanel1">
                         </Component>
                       </SubComponents>
                     </Container>

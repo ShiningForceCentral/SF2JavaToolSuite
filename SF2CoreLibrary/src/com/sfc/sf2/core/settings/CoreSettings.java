@@ -21,7 +21,6 @@ public class CoreSettings implements AbstractSettings {
     private String basePath;
     private String incbinPath;
     
-    private int logLevel;
     
     public boolean areLocalPathsValid() {
         return prioritiseLocalPath && localBasePath != null && localBasePath.length() > 0;
@@ -74,14 +73,6 @@ public class CoreSettings implements AbstractSettings {
     public void setIncbinPath(String incbinPath) {
         this.incbinPath = incbinPath;
     }
-    
-    public int getLogLevel() {
-        return logLevel;
-    }
-    
-    public void setLogLevel(int logLevel) {
-        this.logLevel = logLevel;
-    }
 
     @Override
     public void initialiseNewUser() {
@@ -94,7 +85,6 @@ public class CoreSettings implements AbstractSettings {
         } else {    //A dev build?
             localBasePath = localIncbinPath = basePath = incbinPath = null;
         }
-        logLevel = 1;
     }
     
     @Override
@@ -108,9 +98,6 @@ public class CoreSettings implements AbstractSettings {
         if (data.containsKey("incbinPath")) {
             incbinPath = data.get("incbinPath");
         }
-        if (data.containsKey("logLevel")) {
-            logLevel = Integer.parseInt(data.get("logLevel"));
-        }
     }
 
     @Override
@@ -120,6 +107,5 @@ public class CoreSettings implements AbstractSettings {
             data.put("basePath", basePath);
             data.put("incbinPath", incbinPath);
         }
-        data.put("logLevel", Integer.toString(logLevel));
     }
 }

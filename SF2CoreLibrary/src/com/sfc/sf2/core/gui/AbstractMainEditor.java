@@ -49,10 +49,10 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
         //Settings
         SettingsManager.loadGlobalSettings();
         SettingsManager.loadSettingsFile();
-        CoreSettings core = SettingsManager.getSettingsStore("core");
         if (console != null) {
-            console.setLogLevel(core.getLogLevel());
+            console.setLogLevel(SettingsManager.getGlobalSettings().getLogLevel());
         }
+        CoreSettings core = SettingsManager.getSettingsStore("core");
         if (!SettingsManager.isRunningInEditor()) {
             //Check if settings panel should be shown
             java.awt.EventQueue.invokeLater(() -> {

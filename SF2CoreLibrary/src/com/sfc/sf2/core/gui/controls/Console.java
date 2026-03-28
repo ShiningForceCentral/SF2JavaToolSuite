@@ -46,8 +46,7 @@ public class Console extends javax.swing.JPanel {
         handler = new ConsoleHandler();
         logger.addHandler(handler);
         
-        CoreSettings core = SettingsManager.getSettingsStore("core");
-        currentLevel = core.getLogLevel();
+        currentLevel = SettingsManager.getGlobalSettings().getLogLevel();
         setLogLevel(currentLevel);
     }
     
@@ -169,9 +168,8 @@ public class Console extends javax.swing.JPanel {
             currentLevel = newLevel;
             setLogLevel(currentLevel);
             
-            CoreSettings core = SettingsManager.getSettingsStore("core");
-            core.setLogLevel(currentLevel);
-            SettingsManager.saveSettingsFile();
+            SettingsManager.getGlobalSettings().setLogLevel(currentLevel);
+            SettingsManager.saveGlobalSettingsFile();
         }
     }//GEN-LAST:event_jComboBoxLogLevelItemStateChanged
 

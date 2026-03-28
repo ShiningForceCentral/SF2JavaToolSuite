@@ -12,10 +12,13 @@ import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.core.io.FileFormat;
 import com.sfc.sf2.core.settings.SettingsManager;
+import com.sfc.sf2.core.settings.ViewSettings;
 import com.sfc.sf2.helpers.PathHelpers;
+import com.sfc.sf2.helpers.RenderScaleHelpers;
 import com.sfc.sf2.vwfont.FontSymbol;
 import com.sfc.sf2.vwfont.VWFontManager;
 import com.sfc.sf2.vwfont.settings.FontSettings;
+import java.awt.Color;
 import java.nio.file.Path;
 import java.util.logging.Level;
 import javax.swing.JRadioButton;
@@ -26,6 +29,7 @@ import javax.swing.JRadioButton;
  */
 public class VWFontMainEditor extends AbstractMainEditor {
     
+    private final ViewSettings viewSettings = new ViewSettings(10, RenderScaleHelpers.RENDER_SCALE_2X, new Color(200, 200, 255));
     private final FontSettings fontSettings = new FontSettings();
     private final VWFontManager fontManager = new VWFontManager();
     
@@ -33,6 +37,7 @@ public class VWFontMainEditor extends AbstractMainEditor {
     
     public VWFontMainEditor() {
         super();
+        SettingsManager.registerSettingsStore("view", viewSettings);
         SettingsManager.registerSettingsStore("font", fontSettings);
         initComponents();
         initCore(console1);
@@ -42,7 +47,7 @@ public class VWFontMainEditor extends AbstractMainEditor {
     protected void initEditor() {
         super.initEditor();
         
-        viewPanel1.setLayoutPanel(fontSymbolLayoutPanel);
+        viewPanel1.setLayoutPanel(fontSymbolLayoutPanel, viewSettings);
         
         if (fontSettings.getExportFileFormat() == FileFormat.PNG) {
             actionPreviousFormat = jRadioButtonPNG;

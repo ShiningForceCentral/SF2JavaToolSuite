@@ -7,12 +7,13 @@ package com.sfc.sf2.weaponsprite.gui;
 
 import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.core.actions.CustomAction;
-import com.sfc.sf2.core.actions.NonCombinableAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
+import com.sfc.sf2.core.settings.SettingsManager;
+import com.sfc.sf2.core.settings.ViewSettings;
 import com.sfc.sf2.helpers.PathHelpers;
+import com.sfc.sf2.helpers.RenderScaleHelpers;
 import com.sfc.sf2.palette.Palette;
-import com.sfc.sf2.weaponsprite.WeaponSprite;
 import com.sfc.sf2.weaponsprite.WeaponSpriteManager;
 import com.sfc.sf2.weaponsprite.actions.WeaponSpriteActionData;
 import java.nio.file.Path;
@@ -25,10 +26,12 @@ import javax.swing.JComboBox;
  */
 public class WeaponSpriteMainEditor extends AbstractMainEditor {
     
-    WeaponSpriteManager weaponspriteManager = new WeaponSpriteManager();
+    private final ViewSettings viewSettings = new ViewSettings();
+    private final WeaponSpriteManager weaponspriteManager = new WeaponSpriteManager();
     
     public WeaponSpriteMainEditor() {
         super();
+        SettingsManager.registerSettingsStore("view", viewSettings);
         initComponents();
         initCore(console1);
     }
@@ -37,7 +40,7 @@ public class WeaponSpriteMainEditor extends AbstractMainEditor {
     protected void initEditor() {
         super.initEditor();
         
-        viewPanel1.setLayoutPanel(weaponSpriteLayoutPanel);
+        viewPanel1.setLayoutPanel(weaponSpriteLayoutPanel, viewSettings);
     }
     
     @Override

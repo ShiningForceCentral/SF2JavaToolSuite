@@ -15,11 +15,9 @@ import com.sfc.sf2.core.actions.SpinnerAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.core.settings.SettingsManager;
+import com.sfc.sf2.core.settings.ViewSettings;
 import com.sfc.sf2.helpers.PathHelpers;
-import com.sfc.sf2.helpers.RenderScaleHelpers;
-import com.sfc.sf2.map.block.settings.MapBlockSettings;
 import com.sfc.sf2.settings.TerrainSettings;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.nio.file.Path;
 import java.util.logging.Level;
@@ -30,6 +28,7 @@ import java.util.logging.Level;
  */
 public class BattleMapTerrainMainEditor extends AbstractMainEditor {
 
+    private final ViewSettings viewSettings = new ViewSettings();
     private final TerrainSettings terrainSettings = new TerrainSettings();
     private final BattleMapTerrainManager battlemapterrainManager = new BattleMapTerrainManager();
     
@@ -38,8 +37,8 @@ public class BattleMapTerrainMainEditor extends AbstractMainEditor {
         
     public BattleMapTerrainMainEditor() {
         super();
+        SettingsManager.registerSettingsStore("view", viewSettings);
         SettingsManager.registerSettingsStore("terrain", terrainSettings);
-        SettingsManager.registerSettingsStore("mapLayout", new MapBlockSettings(20, RenderScaleHelpers.DEFAULT_RENDER_SCALE_INDEX, new Color(200, 0, 200)));
         initComponents();
         initCore(console1);
     }
@@ -48,7 +47,7 @@ public class BattleMapTerrainMainEditor extends AbstractMainEditor {
     protected void initEditor() {
         super.initEditor();
         
-        battleMapTerrainViewPanel1.setLayoutPanel(battleMapTerrainLayoutPanel);
+        battleMapTerrainViewPanel1.setLayoutPanel(battleMapTerrainLayoutPanel, viewSettings);
         accordionPanel1.setExpanded(false);
         terrainKeyPanel1.setActionListener(this::onTerrainSelectionChanged);
         terrainKeyPanel1.setModeChangedListener(this::onTerrainModeChanged);

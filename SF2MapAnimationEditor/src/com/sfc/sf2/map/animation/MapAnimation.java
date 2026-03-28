@@ -7,6 +7,7 @@ package com.sfc.sf2.map.animation;
 
 import com.sfc.sf2.graphics.Tileset;
 import static com.sfc.sf2.helpers.MapBlockHelpers.TILESET_TILES;
+import java.util.Arrays;
 
 /**
  *
@@ -19,6 +20,7 @@ public class MapAnimation {
     private Tileset animationTileset;
     private MapAnimationFrame[] frames;
     private final Tileset[] originalTilesets;
+
     private final Tileset[] modifiedTilesets;
     private final boolean[] modified;
 
@@ -27,6 +29,7 @@ public class MapAnimation {
         this.length = length;
         this.frames = frames;
         this.originalTilesets = originalTilesets;
+
         this.modifiedTilesets = new Tileset[originalTilesets.length];
         this.modified = new boolean[originalTilesets.length];
     }
@@ -70,6 +73,17 @@ public class MapAnimation {
 
     public void setFrames(MapAnimationFrame[] frames) {
         this.frames = frames;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof MapAnimation)) return super.equals(obj);
+        MapAnimation other = (MapAnimation)obj;
+        if (this.tilesetId != other.tilesetId) return false;
+        if (this.length != other.length) return false;
+        if (!Arrays.equals(this.frames, other.frames)) return false;
+        if (!Arrays.equals(this.originalTilesets, other.originalTilesets)) return false;
+        return true;
     }
     
     public Tileset[] generateModifiedTilesets() {

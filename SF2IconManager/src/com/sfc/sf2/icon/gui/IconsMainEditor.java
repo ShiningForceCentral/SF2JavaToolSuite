@@ -11,7 +11,9 @@ import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.core.io.FileFormat;
 import com.sfc.sf2.core.settings.SettingsManager;
+import com.sfc.sf2.core.settings.ViewSettings;
 import com.sfc.sf2.helpers.PathHelpers;
+import com.sfc.sf2.helpers.RenderScaleHelpers;
 import com.sfc.sf2.icon.Icon;
 import com.sfc.sf2.icon.IconManager;
 import com.sfc.sf2.icon.IconManager.IconExportMode;
@@ -25,14 +27,17 @@ import javax.swing.JRadioButton;
  * @author wiz
  */
 public class IconsMainEditor extends AbstractMainEditor {
-    IconSettings iconSettings = new IconSettings();
-    IconManager iconManager = new IconManager();
+    
+    private final IconSettings iconSettings = new IconSettings();
+    private final ViewSettings viewSettings = new ViewSettings(10, RenderScaleHelpers.RENDER_SCALE_2X);
+    private final IconManager iconManager = new IconManager();
     
     boolean settingFileFormat = false;
     
     public IconsMainEditor() {
         super();
-        SettingsManager.registerSettingsStore("icons", iconSettings);
+        SettingsManager.registerSettingsStore("export", iconSettings);
+        SettingsManager.registerSettingsStore("view", viewSettings);
         initComponents();
         initCore(console1);
     }
@@ -41,7 +46,7 @@ public class IconsMainEditor extends AbstractMainEditor {
     protected void initEditor() {
         super.initEditor();
         
-        iconsViewPanel1.setLayoutPanel(iconsLayoutPanel);
+        viewPanel1.setLayoutPanel(iconsLayoutPanel, viewSettings);
         
         jComboBox2.removeAllItems();
         IconExportMode mode = iconSettings.getExportMode();
@@ -63,7 +68,7 @@ public class IconsMainEditor extends AbstractMainEditor {
     private void actionIconsLoaded(Icon[] icons) {
         iconsLayoutPanel.setIcons(icons);
         if (icons != null && icons.length > 0) {
-            iconsLayoutPanel.setItemsPerRow((int)iconsViewPanel1.getItemsPerRowSpinner().getValue());
+            iconsLayoutPanel.setItemsPerRow((int)viewPanel1.getItemsPerRowSpinner().getValue());
         }
     }
     
@@ -85,7 +90,7 @@ public class IconsMainEditor extends AbstractMainEditor {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         iconsLayoutPanel = new com.sfc.sf2.icon.gui.IconsLayoutPanel();
-        iconsViewPanel1 = new com.sfc.sf2.icon.gui.IconsViewPanel();
+        viewPanel1 = new com.sfc.sf2.core.gui.controls.ViewPanel();
         jPanel8 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         fileButton1 = new com.sfc.sf2.core.gui.controls.FileButton();
@@ -152,14 +157,15 @@ public class IconsMainEditor extends AbstractMainEditor {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 541, Short.MAX_VALUE)
-            .addComponent(iconsViewPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(viewPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
-                .addComponent(iconsViewPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(viewPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
@@ -575,7 +581,7 @@ public class IconsMainEditor extends AbstractMainEditor {
         try {
             IconExportMode exportMode = iconSettings.getExportMode();
             FileFormat format = jRadioButton1.isSelected() ? FileFormat.PNG : FileFormat.GIF;
-            int scale = (int)iconsViewPanel1.getItemsPerRowSpinner().getValue();
+            int scale = (int)viewPanel1.getItemsPerRowSpinner().getValue();
             iconManager.exportAllImages(graphicPath, iconsLayoutPanel.getIcons(), exportMode, scale, format);
         } catch (Exception ex) {
             Console.logger().log(Level.SEVERE, null, ex);
@@ -672,7 +678,6 @@ public class IconsMainEditor extends AbstractMainEditor {
     private com.sfc.sf2.core.gui.controls.DirectoryButton directoryButton4;
     private com.sfc.sf2.core.gui.controls.FileButton fileButton1;
     private com.sfc.sf2.icon.gui.IconsLayoutPanel iconsLayoutPanel;
-    private com.sfc.sf2.icon.gui.IconsViewPanel iconsViewPanel1;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton1;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton2;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton3;
@@ -709,6 +714,7 @@ public class IconsMainEditor extends AbstractMainEditor {
     private javax.swing.JSplitPane jSplitPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
+    private com.sfc.sf2.core.gui.controls.ViewPanel viewPanel1;
     // End of variables declaration//GEN-END:variables
 
 }

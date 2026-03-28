@@ -20,9 +20,13 @@ import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.core.gui.layout.LayoutAnimator;
 import com.sfc.sf2.core.gui.layout.LayoutAnimator.AnimationListener.AnimationFrameEvent;
+import com.sfc.sf2.core.settings.SettingsManager;
+import com.sfc.sf2.core.settings.ViewSettings;
 import com.sfc.sf2.helpers.PathHelpers;
+import com.sfc.sf2.helpers.RenderScaleHelpers;
 import com.sfc.sf2.palette.Palette;
 import com.sfc.sf2.weaponsprite.WeaponSprite;
+import java.awt.Color;
 import java.nio.file.Path;
 import java.util.logging.Level;
 import javax.swing.ListSelectionModel;
@@ -37,6 +41,7 @@ import javax.swing.table.TableColumnModel;
  */
 public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
     
+    private final ViewSettings viewSettings = new ViewSettings(0, RenderScaleHelpers.RENDER_SCALE_2X, Color.BLACK);
     BattleSpriteAnimationManager battlespriteanimationManager = new BattleSpriteAnimationManager();
         
     private int actionWeaponPalette = -1;
@@ -44,6 +49,7 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
     
     public BattleSpriteAnimationMainEditor() {
         super();
+        SettingsManager.registerSettingsStore("view", viewSettings);
         initComponents();
         initCore(console1);
     }
@@ -52,7 +58,7 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
     protected void initEditor() {
         super.initEditor();
         
-        viewPanel1.setLayoutPanel(battleSpriteAnimationLayoutPanel);
+        viewPanel1.setLayoutPanel(battleSpriteAnimationLayoutPanel, viewSettings);
         
         accordionPanelEnvironment.setExpanded(false);
         accordionPanelWeapon.setExpanded(false);

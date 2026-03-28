@@ -39,7 +39,13 @@ public class MapLayoutActionData implements IActionData<MapLayoutActionData> {
 
     @Override
     public boolean isInvalidated(MapLayoutActionData other) {
-        return layout.equals(other.layout) && blockset.equals(other.blockset);
+        if (other == null) return false;
+        if (!this.layout.equals(other.layout)) return false;
+        if (this.blockset == null) {
+            return other.blockset == null;
+        } else {
+            return this.blockset.equals(other.blockset);
+        }
     }
 
     @Override
@@ -54,6 +60,10 @@ public class MapLayoutActionData implements IActionData<MapLayoutActionData> {
 
     @Override
     public String toString() {
-        return String.format("Layout: map%d", layout.getIndex());
+        if (layout == null) {
+            return "NULL";
+        } else {
+            return String.format("Layout: map%d", layout.getIndex());
+        }
     }
 }

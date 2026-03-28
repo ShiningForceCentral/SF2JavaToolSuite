@@ -8,6 +8,7 @@ package com.sfc.sf2.spellGraphic;
 import com.sfc.sf2.core.INameable;
 import com.sfc.sf2.graphics.Tileset;
 import com.sfc.sf2.palette.Palette;
+import java.util.Arrays;
 
 /**
  *
@@ -91,5 +92,16 @@ public class InvocationGraphic implements INameable {
 
     public void setLoadMode(short loadMode) {
         this.loadMode = loadMode;
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof InvocationGraphic)) return super.equals(obj);
+        InvocationGraphic other = (InvocationGraphic)obj;
+        if (!Arrays.equals(this.frames, other.frames)) return false;
+        if (this.posX != other.posX) return false;
+        if (this.posY != other.posY) return false;
+        if (this.loadMode != other.loadMode) return false;
+        return true;
     }
 }

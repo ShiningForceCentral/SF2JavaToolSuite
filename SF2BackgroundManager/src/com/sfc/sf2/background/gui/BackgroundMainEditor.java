@@ -7,7 +7,7 @@ package com.sfc.sf2.background.gui;
 
 import com.sfc.sf2.background.Background;
 import com.sfc.sf2.background.BackgroundManager;
-import com.sfc.sf2.background.settings.BackgroundSettings;
+import com.sfc.sf2.graphics.settings.ExportSettings;
 import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.core.actions.NonCombinableAction;
 import com.sfc.sf2.core.actions.RadioButtonAction;
@@ -15,6 +15,7 @@ import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.core.io.FileFormat;
 import com.sfc.sf2.core.settings.SettingsManager;
+import com.sfc.sf2.core.settings.ViewSettings;
 import com.sfc.sf2.helpers.PathHelpers;
 import java.nio.file.Path;
 import java.util.logging.Level;
@@ -26,13 +27,15 @@ import javax.swing.JRadioButton;
  */
 public class BackgroundMainEditor extends AbstractMainEditor {
     
-    private final BackgroundSettings backgroundSettings = new BackgroundSettings();
-    BackgroundManager backgroundManager = new BackgroundManager();
+    private final ViewSettings viewSettings = new ViewSettings();
+    private final ExportSettings backgroundSettings = new ExportSettings();
+    private final BackgroundManager backgroundManager = new BackgroundManager();
     
     private JRadioButton actionPreviousFormat = null;
     
     public BackgroundMainEditor() {
         super();
+        SettingsManager.registerSettingsStore("view", viewSettings);
         SettingsManager.registerSettingsStore("background", backgroundSettings);
         initComponents();
         initCore(console1);
@@ -42,7 +45,7 @@ public class BackgroundMainEditor extends AbstractMainEditor {
     protected void initEditor() {
         super.initEditor();
         
-        backgroundsViewPanel1.setLayoutPanel(backgroundLayoutPanel);
+        backgroundsViewPanel1.setLayoutPanel(backgroundLayoutPanel, viewSettings);
         if (backgroundSettings.getExportFileFormat() == FileFormat.PNG) {
             actionPreviousFormat = jRadioButtonPNG;
             jRadioButtonPNG.setSelected(true);

@@ -29,7 +29,7 @@ public class InvocationLayoutPanel extends BattleSceneLayoutPanel {
     private InvocationGraphic invocationGraphic;
     
     private boolean battlePreviewMode = false;
-    private int previousScaleIndex = RenderScaleHelpers.DEFAULT_RENDER_SCALE_INDEX;
+    private int previousScaleIndex = RenderScaleHelpers.RENDER_SCALE_1X;
     
     public InvocationLayoutPanel() {
         super();
@@ -91,7 +91,7 @@ public class InvocationLayoutPanel extends BattleSceneLayoutPanel {
             grid.setThickGridDimensions(-1, -1);
             coordsGrid.setEnabled(false);
             previousScaleIndex = scale.getScaleIndex();
-            scale.setScaleIndex(RenderScaleHelpers.DEFAULT_RENDER_SCALE_INDEX);
+            scale.setScaleIndex(RenderScaleHelpers.RENDER_SCALE_1X);
         } else {
             background.setBgColor(Color.LIGHT_GRAY);
             background.setCheckerPattern(PIXEL_WIDTH);
@@ -109,6 +109,7 @@ public class InvocationLayoutPanel extends BattleSceneLayoutPanel {
 
     public void setInvocationGraphic(InvocationGraphic invocationGraphic) {
         this.invocationGraphic = invocationGraphic;
+        previousScaleIndex = getRenderScaleIndex();
         redraw();
     }
 }

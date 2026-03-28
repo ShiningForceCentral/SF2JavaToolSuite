@@ -11,12 +11,11 @@ import com.sfc.sf2.core.actions.SpinnerAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.core.settings.SettingsManager;
+import com.sfc.sf2.core.settings.ViewSettings;
 import com.sfc.sf2.helpers.PathHelpers;
 import com.sfc.sf2.helpers.RenderScaleHelpers;
 import com.sfc.sf2.map.layout.MapLayoutManager;
 import com.sfc.sf2.map.layout.actions.MapLayoutActionData;
-import com.sfc.sf2.map.block.settings.MapBlockSettings;
-import java.awt.Color;
 import java.nio.file.Path;
 import java.util.logging.Level;
 import javax.swing.JSpinner;
@@ -27,14 +26,16 @@ import javax.swing.JSpinner;
  */
 public class MapLayoutMainEditor extends AbstractMainEditor {
     
+    private final ViewSettings blockViewSettings = new ViewSettings(10, RenderScaleHelpers.RENDER_SCALE_1X);
+    private final ViewSettings layoutViewSettings = new ViewSettings();
     private final MapLayoutManager maplayoutManager = new MapLayoutManager();
     
     private int actionImportMapNumber;
     
     public MapLayoutMainEditor() {
         super();
-        SettingsManager.registerSettingsStore("mapBlockset", new MapBlockSettings());
-        SettingsManager.registerSettingsStore("mapLayout", new MapBlockSettings(20, RenderScaleHelpers.DEFAULT_RENDER_SCALE_INDEX, new Color(200, 0, 200)));
+        SettingsManager.registerSettingsStore("mapBlockset", blockViewSettings);
+        SettingsManager.registerSettingsStore("mapLayout", layoutViewSettings);
         initComponents();
         initCore(console1);
     }
@@ -43,8 +44,8 @@ public class MapLayoutMainEditor extends AbstractMainEditor {
     protected void initEditor() {
         super.initEditor();
         
-        blocksetViewPanel1.setLayoutPanel(mapBlocksetPanel);
-        mapLayoutViewPanel1.setLayoutPanel(mapLayoutPanel);
+        blocksetViewPanel1.setLayoutPanel(mapBlocksetPanel, blockViewSettings);
+        mapLayoutViewPanel1.setLayoutPanel(mapLayoutPanel, layoutViewSettings);
         
         accordionPanel1.setExpanded(false);
         accordionPanel2.setExpanded(false);

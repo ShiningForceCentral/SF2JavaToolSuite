@@ -16,6 +16,7 @@ import com.sfc.sf2.core.gui.layout.LayoutAnimator;
 import com.sfc.sf2.core.models.combobox.ComboBoxTableEditor;
 import com.sfc.sf2.core.models.combobox.ComboBoxTableRenderer;
 import com.sfc.sf2.core.settings.SettingsManager;
+import com.sfc.sf2.core.settings.ViewSettings;
 import com.sfc.sf2.graphics.Tileset;
 import com.sfc.sf2.helpers.PathHelpers;
 import com.sfc.sf2.helpers.RenderScaleHelpers;
@@ -35,7 +36,6 @@ import com.sfc.sf2.map.block.MapBlockset;
 import com.sfc.sf2.map.block.actions.BlockChangeActionData;
 import com.sfc.sf2.map.block.gui.EditableBlockSlotPanel;
 import com.sfc.sf2.map.layout.MapLayoutBlock;
-import com.sfc.sf2.map.block.settings.MapBlockSettings;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.nio.file.Path;
@@ -55,6 +55,11 @@ import javax.swing.event.TableModelEvent;
  */
 public class MapEditorMainEditor extends AbstractMainEditor {
     
+    private final ViewSettings blockViewSettings = new ViewSettings(10, RenderScaleHelpers.RENDER_SCALE_1X);
+    private final ViewSettings blockEditViewSettings = new ViewSettings();
+    private final ViewSettings TilesetViewSettings = new ViewSettings(20, RenderScaleHelpers.RENDER_SCALE_2X);
+    private final ViewSettings TilesetAnimViewSettings = new ViewSettings(20, RenderScaleHelpers.RENDER_SCALE_2X);
+    private final ViewSettings layoutViewSettings = new ViewSettings();
     private final MapManager mapManager = new MapManager();
     
     private JCheckBox tabRelativeCheckbox;
@@ -70,10 +75,11 @@ public class MapEditorMainEditor extends AbstractMainEditor {
     
     public MapEditorMainEditor() {
         super();
-        SettingsManager.registerSettingsStore("mapLayout", new MapBlockSettings());
-        SettingsManager.registerSettingsStore("mapBlockset", new MapBlockSettings());
-        SettingsManager.registerSettingsStore("mapTileset", new MapBlockSettings(20, RenderScaleHelpers.stringToIndex("x2"), new Color(200, 0, 200)));
-        SettingsManager.registerSettingsStore("editBlock", new MapBlockSettings(0, RenderScaleHelpers.DEFAULT_RENDER_SCALE_INDEX, new Color(200, 200, 200)));
+        SettingsManager.registerSettingsStore("mapBlockset", blockViewSettings);
+        SettingsManager.registerSettingsStore("blockEdit", blockEditViewSettings);
+        SettingsManager.registerSettingsStore("mapTileset", TilesetViewSettings);
+        SettingsManager.registerSettingsStore("mapTilesetAnim", TilesetAnimViewSettings);
+        SettingsManager.registerSettingsStore("mapLayout", layoutViewSettings);
         initComponents();
         initCore(console1);
     }
@@ -82,11 +88,11 @@ public class MapEditorMainEditor extends AbstractMainEditor {
     protected void initEditor() {
         super.initEditor();
         
-        tilesetAnimViewPanel1.setLayoutPanel(tilesetLayoutPanelAnim, tilesetLayoutPanelModified, this::animationActionPerformed);
-        tilesetViewPanel1.setLayoutPanel(tilesetsLayoutPanel);
-        blocksetViewPanel1.setLayoutPanel(mapBlocksetLayoutPanel);
-        blockEditViewPanel1.setLayoutPanel(editableBlockSlotPanel);
-        mapViewPanel.setLayoutPanel(mapLayoutPanel, this::animationActionPerformed);
+        blocksetViewPanel1.setLayoutPanel(mapBlocksetLayoutPanel, blockViewSettings);
+        blockEditViewPanel1.setLayoutPanel(editableBlockSlotPanel, blockEditViewSettings);
+        tilesetViewPanel1.setLayoutPanel(tilesetsLayoutPanel, TilesetViewSettings);
+        tilesetAnimViewPanel1.setLayoutPanel(tilesetLayoutPanelAnim, tilesetLayoutPanelModified, this::animationActionPerformed, TilesetAnimViewSettings);
+        mapViewPanel.setLayoutPanel(mapLayoutPanel, this::animationActionPerformed, layoutViewSettings);
         
         actionSelectedMapFlag = jRadioButtonPaintBlocks;
         actionTileButton = jRadioButtonApplyTile;
@@ -1388,9 +1394,9 @@ public class MapEditorMainEditor extends AbstractMainEditor {
                     .addGroup(jPanel24Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jButtonAddBlock)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                         .addComponent(jButtonCloneBlock)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                         .addComponent(jButtonRemoveBlock)
                         .addContainerGap())
                 );
@@ -1559,7 +1565,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tableAnimFrames, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
+                        .addComponent(tableAnimFrames, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1571,12 +1577,14 @@ public class MapEditorMainEditor extends AbstractMainEditor {
                 jPanel23.setLayout(jPanel23Layout);
                 jPanel23Layout.setHorizontalGroup(
                     jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel21, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
+                    .addGroup(jPanel23Layout.createSequentialGroup()
+                        .addComponent(jPanel21, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
+                        .addContainerGap())
                 );
                 jPanel23Layout.setVerticalGroup(
                     jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel23Layout.createSequentialGroup()
-                        .addComponent(jPanel21, javax.swing.GroupLayout.DEFAULT_SIZE, 769, Short.MAX_VALUE)
+                        .addComponent(jPanel21, javax.swing.GroupLayout.DEFAULT_SIZE, 603, Short.MAX_VALUE)
                         .addGap(0, 0, Short.MAX_VALUE))
                 );
 
@@ -2829,7 +2837,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
                 jPanel15Layout.setVerticalGroup(
                     jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel15Layout.createSequentialGroup()
-                        .addComponent(jSplitPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 844, Short.MAX_VALUE)
+                        .addComponent(jSplitPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 844, Short.MAX_VALUE)
                         .addContainerGap())
                 );
 
@@ -2844,7 +2852,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
                 );
                 layout.setVerticalGroup(
                     layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSplitPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1000, Short.MAX_VALUE)
+                    .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
                 );
 
                 setSize(new java.awt.Dimension(1466, 1008));

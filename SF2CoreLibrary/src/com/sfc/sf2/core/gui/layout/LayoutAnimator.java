@@ -79,6 +79,10 @@ public class LayoutAnimator extends BaseLayoutComponent implements ActionListene
         startAnimation(speed, 100000, true, finalFrameDelay, false);
     }
     
+    public void startAnimation(int speed, int frameMax, boolean loop) {
+        startAnimation(speed, frameMax, loop, finalFrameDelay, false);
+    }
+    
     public void startAnimation(int speed, int frameMax, boolean loop, int finalFrameDelay) {
         startAnimation(speed, frameMax, loop, finalFrameDelay, false);
     }

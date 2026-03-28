@@ -3,7 +3,7 @@
 * To change this template file, choose Tools | Templates
 * and open the template in the editor.
  */
-package com.sfc.sf2.background.settings;
+package com.sfc.sf2.graphics.settings;
 
 import com.sfc.sf2.core.io.FileFormat;
 import com.sfc.sf2.core.settings.AbstractSettings;
@@ -13,10 +13,10 @@ import java.util.HashMap;
  *
  * @author TiMMy
  */
-public class BackgroundSettings implements AbstractSettings {
+public class ExportSettings implements AbstractSettings {
 
     private FileFormat exportFileFormat;
-        
+    
     public FileFormat getExportFileFormat() {
         return exportFileFormat;
     }
@@ -35,9 +35,7 @@ public class BackgroundSettings implements AbstractSettings {
         if (data.containsKey("exportMode")) {
             try {
                 exportFileFormat = FileFormat.valueOf((String)data.get("exportFileFormat"));
-            } catch (Exception e) {
-                initialiseNewUser();
-            }
+            } catch (Exception e) { }
         }
     }
 

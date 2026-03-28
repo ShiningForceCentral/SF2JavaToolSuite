@@ -11,7 +11,11 @@ import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.core.actions.CustomAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
+import com.sfc.sf2.core.settings.SettingsManager;
+import com.sfc.sf2.core.settings.ViewSettings;
 import com.sfc.sf2.helpers.PathHelpers;
+import com.sfc.sf2.helpers.RenderScaleHelpers;
+import java.awt.Color;
 import java.nio.file.Path;
 import java.util.logging.Level;
 
@@ -21,10 +25,12 @@ import java.util.logging.Level;
  */
 public class BattleSceneMainEditor extends AbstractMainEditor {
     
-    BattleSceneManager battleSceneManager = new BattleSceneManager();
+    private final ViewSettings viewSettings = new ViewSettings(0, RenderScaleHelpers.RENDER_SCALE_2X, Color.BLACK);
+    private final BattleSceneManager battleSceneManager = new BattleSceneManager();
         
     public BattleSceneMainEditor() {
         super();
+        SettingsManager.registerSettingsStore("view", viewSettings);
         initComponents();
         initCore(console1);
     }
@@ -33,7 +39,9 @@ public class BattleSceneMainEditor extends AbstractMainEditor {
     protected void initEditor() {
         super.initEditor();
                            
-        battleSceneViewPanel1.setLayoutPanel(battleSceneLayoutPanel);
+        viewPanel1.setLayoutPanel(battleSceneLayoutPanel, viewSettings);
+        viewPanel1.getBackgroundColorPicker().setCheckerPattern(false);
+        
         jCheckBox1.setSelected(battleSceneLayoutPanel.shouldShowPositions());
     }
     
@@ -76,7 +84,7 @@ public class BattleSceneMainEditor extends AbstractMainEditor {
         jScrollPane2 = new javax.swing.JScrollPane();
         battleSceneLayoutPanel = new com.sfc.sf2.battlescene.gui.BattleSceneLayoutPanel();
         jCheckBox1 = new javax.swing.JCheckBox();
-        battleSceneViewPanel1 = new com.sfc.sf2.battlescene.gui.BattleSceneViewPanel();
+        viewPanel1 = new com.sfc.sf2.core.gui.controls.ViewPanel();
         console1 = new com.sfc.sf2.core.gui.controls.Console();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -209,19 +217,19 @@ public class BattleSceneMainEditor extends AbstractMainEditor {
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addComponent(jCheckBox1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(battleSceneViewPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(viewPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 564, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(battleSceneViewPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(viewPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jCheckBox1))
-                .addContainerGap())
+                .addGap(0, 0, 0))
         );
 
         jSplitPane2.setRightComponent(jPanel10);
@@ -303,7 +311,6 @@ public class BattleSceneMainEditor extends AbstractMainEditor {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.sfc.sf2.battlescene.gui.BattleSceneLayoutPanel battleSceneLayoutPanel;
-    private com.sfc.sf2.battlescene.gui.BattleSceneViewPanel battleSceneViewPanel1;
     private com.sfc.sf2.core.gui.controls.Console console1;
     private com.sfc.sf2.core.gui.controls.FileButton fileButton1;
     private com.sfc.sf2.core.gui.controls.FileButton fileButton2;
@@ -320,5 +327,6 @@ public class BattleSceneMainEditor extends AbstractMainEditor {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JSplitPane jSplitPane2;
+    private com.sfc.sf2.core.gui.controls.ViewPanel viewPanel1;
     // End of variables declaration//GEN-END:variables
 }

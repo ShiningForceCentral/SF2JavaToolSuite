@@ -11,6 +11,7 @@ import com.sfc.sf2.core.actions.RadioButtonAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.core.settings.SettingsManager;
+import com.sfc.sf2.core.settings.ViewSettings;
 import com.sfc.sf2.graphics.Tileset;
 import com.sfc.sf2.helpers.PathHelpers;
 import com.sfc.sf2.helpers.RenderScaleHelpers;
@@ -19,8 +20,6 @@ import com.sfc.sf2.map.block.MapBlocksetManager;
 import com.sfc.sf2.map.block.MapBlockset;
 import com.sfc.sf2.map.block.actions.BlockChangeActionData;
 import com.sfc.sf2.map.block.actions.MapBlocksetActionData;
-import com.sfc.sf2.map.block.settings.MapBlockSettings;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.nio.file.Path;
 import java.util.logging.Level;
@@ -32,15 +31,18 @@ import javax.swing.JRadioButton;
  */
 public class MapBlockMainEditor extends AbstractMainEditor {
     
+    private final ViewSettings blockViewSettings = new ViewSettings(10, RenderScaleHelpers.RENDER_SCALE_1X);
+    private final ViewSettings TilesetViewSettings = new ViewSettings(20, RenderScaleHelpers.RENDER_SCALE_2X);
+    private final ViewSettings blockEditViewSettings = new ViewSettings();
     private final MapBlocksetManager mapblockManager = new MapBlocksetManager();
     
     private JRadioButton actionTileButton;
     
     public MapBlockMainEditor() {
         super();
-        SettingsManager.registerSettingsStore("mapBlockset", new MapBlockSettings());
-        SettingsManager.registerSettingsStore("mapTileset", new MapBlockSettings(20, RenderScaleHelpers.stringToIndex("x3"), new Color(200, 0, 200)));
-        SettingsManager.registerSettingsStore("editBlock", new MapBlockSettings(0, RenderScaleHelpers.DEFAULT_RENDER_SCALE_INDEX, new Color(200, 200, 200)));
+        SettingsManager.registerSettingsStore("mapBlockset", blockViewSettings);
+        SettingsManager.registerSettingsStore("mapTileset", TilesetViewSettings);
+        SettingsManager.registerSettingsStore("blockEdit", blockEditViewSettings);
         initComponents();
         initCore(console1);
     }
@@ -49,9 +51,9 @@ public class MapBlockMainEditor extends AbstractMainEditor {
     protected void initEditor() {
         super.initEditor();
         
-        tilesetViewPanel1.setLayoutPanel(tilesetsLayoutPanel);
-        blocksetViewPanel1.setLayoutPanel(mapBlocksetLayoutPanel);
-        blockEditViewPanel1.setLayoutPanel(editableBlockSlotPanel);
+        blocksetViewPanel1.setLayoutPanel(mapBlocksetLayoutPanel, blockViewSettings);
+        tilesetViewPanel1.setLayoutPanel(tilesetsLayoutPanel, TilesetViewSettings);
+        blockEditViewPanel1.setLayoutPanel(editableBlockSlotPanel, blockEditViewSettings);
         accordionPanel1.setExpanded(false);
         
         editableBlockSlotPanel.setBlockEditedListener(this::onBlockEdited);

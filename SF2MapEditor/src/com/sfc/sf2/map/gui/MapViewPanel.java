@@ -9,8 +9,7 @@ import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.core.actions.BasicAction;
 import com.sfc.sf2.core.actions.ToggleAction;
 import com.sfc.sf2.core.gui.controls.AbstractViewPanel;
-import com.sfc.sf2.core.settings.SettingsManager;
-import com.sfc.sf2.map.block.settings.MapBlockSettings;
+import com.sfc.sf2.core.settings.IViewSettings;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JCheckBox;
@@ -21,7 +20,6 @@ import javax.swing.JCheckBox;
  */
 public class MapViewPanel extends AbstractViewPanel<MapLayoutPanel> {
     
-    private MapBlockSettings settings;
     private ActionListener animationToggleListener;
     
     /**
@@ -33,12 +31,10 @@ public class MapViewPanel extends AbstractViewPanel<MapLayoutPanel> {
         init(jComboBoxScale, jCheckBoxGrid, null, colorPickerBG);
     }
 
-    public void setLayoutPanel(MapLayoutPanel layoutPanel, ActionListener animationToggleListener) {
-        super.setLayoutPanel(layoutPanel);
+    public void setLayoutPanel(MapLayoutPanel layoutPanel, ActionListener animationToggleListener, IViewSettings viewPanelSettings) {
+        super.setLayoutPanel(layoutPanel, viewPanelSettings);
         this.animationToggleListener = animationToggleListener;
-        settings = SettingsManager.getSettingsStore("mapLayout");
-        colorPickerBG.setColor(settings.getBlockBGColor());
-        jComboBoxScale.setSelectedIndex(settings.getBlockScale());
+        
         layoutPanel.setShowPriority(jCheckBoxShowPriority.isSelected());
         layoutPanel.setShowExplorationFlags(jCheckBoxShowExplorationFlags.isSelected());
         layoutPanel.setShowInteractionFlags(false);
@@ -159,6 +155,7 @@ public class MapViewPanel extends AbstractViewPanel<MapLayoutPanel> {
             }
         });
 
+        jCheckBoxShowPriority.setText("Show priority");
         jCheckBoxShowPriority.setName("Priority Toggle"); // NOI18N
         jCheckBoxShowPriority.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {

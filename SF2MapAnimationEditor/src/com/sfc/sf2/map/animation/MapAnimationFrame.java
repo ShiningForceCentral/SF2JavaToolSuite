@@ -6,6 +6,7 @@
 package com.sfc.sf2.map.animation;
 
 import static com.sfc.sf2.helpers.MapBlockHelpers.TILESET_TILES;
+import java.util.Arrays;
 
 /**
  *
@@ -70,6 +71,18 @@ public class MapAnimationFrame {
 
     public void setDelay(int delay) {
         this.delay = delay;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof MapAnimationFrame)) return super.equals(obj);
+        MapAnimationFrame other = (MapAnimationFrame)obj;
+        if (this.start != other.start) return false;
+        if (this.length != other.length) return false;
+        if (this.destTileset != other.destTileset) return false;
+        if (this.destTileIndex != other.destTileIndex) return false;
+        if (this.delay != other.delay) return false;
+        return true;
     }
     
     @Override 

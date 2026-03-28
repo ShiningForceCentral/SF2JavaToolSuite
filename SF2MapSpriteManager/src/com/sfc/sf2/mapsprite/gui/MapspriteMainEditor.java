@@ -15,7 +15,9 @@ import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.core.io.FileFormat;
 import com.sfc.sf2.core.models.image.BufferedImageTableRenderer;
 import com.sfc.sf2.core.settings.SettingsManager;
+import com.sfc.sf2.core.settings.ViewSettings;
 import com.sfc.sf2.helpers.PathHelpers;
+import com.sfc.sf2.helpers.RenderScaleHelpers;
 import com.sfc.sf2.mapsprite.MapSpriteEntries;
 import com.sfc.sf2.mapsprite.MapSpriteManager;
 import com.sfc.sf2.mapsprite.MapSpriteManager.MapSpriteExportMode;
@@ -31,6 +33,7 @@ import javax.swing.JRadioButton;
  */
 public class MapspriteMainEditor extends AbstractMainEditor {
     
+    private final ViewSettings viewSettings = new ViewSettings(RenderScaleHelpers.RENDER_SCALE_2X);
     private final MapSpriteSettings mapspriteSettings = new MapSpriteSettings();
     private final MapSpriteManager mapSpriteManager = new MapSpriteManager();
     
@@ -40,6 +43,7 @@ public class MapspriteMainEditor extends AbstractMainEditor {
     
     public MapspriteMainEditor() {
         super();
+        SettingsManager.registerSettingsStore("view", viewSettings);
         SettingsManager.registerSettingsStore("mapsprite", mapspriteSettings);
         initComponents();
         initCore(console1);
@@ -49,7 +53,7 @@ public class MapspriteMainEditor extends AbstractMainEditor {
     protected void initEditor() {
         super.initEditor();
         
-        viewPanel1.setLayoutPanel(mapSpriteLayoutPanel);
+        viewPanel1.setLayoutPanel(mapSpriteLayoutPanel, viewSettings);
         
         jComboBoxExportMode.removeAllItems();
         MapSpriteExportMode mode = mapspriteSettings.getExportMode();

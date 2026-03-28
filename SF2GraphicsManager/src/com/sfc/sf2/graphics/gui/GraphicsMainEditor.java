@@ -11,6 +11,8 @@ import com.sfc.sf2.core.actions.NonCombinableAction;
 import com.sfc.sf2.core.actions.SpinnerAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
+import com.sfc.sf2.core.settings.SettingsManager;
+import com.sfc.sf2.core.settings.ViewSettings;
 import com.sfc.sf2.graphics.TilesetManager;
 import com.sfc.sf2.graphics.Tileset;
 import com.sfc.sf2.graphics.io.TilesetDisassemblyProcessor.TilesetCompression;
@@ -27,7 +29,8 @@ import jdk.jshell.spi.ExecutionControl;
  */
 public class GraphicsMainEditor extends AbstractMainEditor {
     
-    TilesetManager tilesetManager = new TilesetManager();
+    private final ViewSettings settings = new ViewSettings();
+    private final TilesetManager tilesetManager = new TilesetManager();
     
     private int actionImportCompression;
     private int actionExportCompression;
@@ -35,6 +38,7 @@ public class GraphicsMainEditor extends AbstractMainEditor {
     
     public GraphicsMainEditor() {
         super();
+        SettingsManager.registerSettingsStore("view", settings);
         initComponents();
         initCore(console1);
     }
@@ -43,7 +47,7 @@ public class GraphicsMainEditor extends AbstractMainEditor {
     protected void initEditor() {
         super.initEditor();
         
-        viewPanel1.setLayoutPanel(tilesetLayoutPanel);
+        viewPanel1.setLayoutPanel(tilesetLayoutPanel, settings);
         actionImportCompression = jComboBoxCompressionImport.getSelectedIndex();
         actionExportCompression = jComboBoxCompressionExport.getSelectedIndex();
         actionImportTileWidth = (int)jSpinnerTileWidthImport.getValue();

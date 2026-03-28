@@ -8,18 +8,14 @@ package com.sfc.sf2.map.block.gui;
 import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.core.actions.ComboAction;
 import com.sfc.sf2.core.gui.controls.AbstractViewPanel;
-import com.sfc.sf2.core.settings.SettingsManager;
 import com.sfc.sf2.graphics.Tileset;
-import com.sfc.sf2.map.block.settings.MapBlockSettings;
 
 /**
  *
  * @author TiMMy
  */
 public class TilesetViewPanel extends AbstractViewPanel<TilesetsLayoutPanel> {
-    
-    private MapBlockSettings settings;
-    
+        
     /**
      * Creates new form ViewPanel
      */
@@ -27,15 +23,6 @@ public class TilesetViewPanel extends AbstractViewPanel<TilesetsLayoutPanel> {
         super();
         initComponents();
         init(jComboBoxScale, jCheckBoxGrid, jSpinnerItemsPerRow, colorPickerBG);
-    }
-
-    @Override
-    public void setLayoutPanel(TilesetsLayoutPanel layoutPanel) {
-        super.setLayoutPanel(layoutPanel);
-        settings = SettingsManager.getSettingsStore("mapTileset");
-        jSpinnerItemsPerRow.setValue(settings.getBlocksPerRow());
-        colorPickerBG.setColor(settings.getBlockBGColor());
-        jComboBoxScale.setSelectedIndex(settings.getBlockScale());
     }
     
     public void setTilesets(Tileset[] tilesets) {
@@ -181,28 +168,14 @@ public class TilesetViewPanel extends AbstractViewPanel<TilesetsLayoutPanel> {
 
     private void jSpinnerItemsPerRowStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinnerItemsPerRowStateChanged
         super.onItemsPerRowChanged(evt);
-        if (SettingsManager.isSavingAllowed()) {
-            settings.setBlocksPerRow((int)jSpinnerItemsPerRow.getValue());
-            SettingsManager.saveSettingsFile();
-        }
     }//GEN-LAST:event_jSpinnerItemsPerRowStateChanged
 
     private void colorPickerBGColorChanged(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorPickerBGColorChanged
-        if (layoutPanel != null) {
-            layoutPanel.setBGColor(colorPickerBG.getColor());
-        }
-        if (SettingsManager.isSavingAllowed()) {
-            settings.setBlockBGColor(colorPickerBG.getColor());
-            SettingsManager.saveSettingsFile();
-        }
+        super.onBGColorChanged(evt);
     }//GEN-LAST:event_colorPickerBGColorChanged
 
     private void jComboBoxScaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxScaleActionPerformed
         super.onScaleChanged(evt);
-        if (SettingsManager.isSavingAllowed()) {
-            settings.setBlockScale(jComboBoxScale.getSelectedIndex());
-            SettingsManager.saveSettingsFile();
-        }
     }//GEN-LAST:event_jComboBoxScaleActionPerformed
 
     private void jCheckBoxGridItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBoxGridItemStateChanged

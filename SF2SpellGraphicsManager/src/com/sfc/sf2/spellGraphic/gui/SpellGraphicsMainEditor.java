@@ -11,9 +11,12 @@ import com.sfc.sf2.core.actions.SpinnerAction;
 import com.sfc.sf2.core.actions.ToggleAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
+import com.sfc.sf2.core.settings.SettingsManager;
+import com.sfc.sf2.core.settings.ViewSettings;
 import com.sfc.sf2.spellGraphic.SpellGraphicManager;
 import com.sfc.sf2.graphics.Tileset;
 import com.sfc.sf2.helpers.PathHelpers;
+import com.sfc.sf2.helpers.RenderScaleHelpers;
 import com.sfc.sf2.palette.CRAMColor;
 import com.sfc.sf2.palette.Palette;
 import com.sfc.sf2.spellGraphic.InvocationGraphic;
@@ -27,6 +30,7 @@ import java.util.logging.Level;
  */
 public class SpellGraphicsMainEditor extends AbstractMainEditor {
     
+    private final ViewSettings viewSettings = new ViewSettings(RenderScaleHelpers.RENDER_SCALE_2X);
     private final SpellGraphicManager spellGraphicManager = new SpellGraphicManager();
     private final InvocationGraphicManager invocationGraphicManager = new InvocationGraphicManager();
     
@@ -35,6 +39,7 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
      */
     public SpellGraphicsMainEditor() {
         super();
+        SettingsManager.registerSettingsStore("view", viewSettings);
         initComponents();
         initCore(console1);
     }
@@ -45,7 +50,7 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
         
         accordionPanelEnvironment.setExpanded(false);
         
-        viewPanel1.setLayoutPanel(spellLayoutPanel);
+        viewPanel1.setLayoutPanel(spellLayoutPanel, viewSettings);
         jCheckBoxPreviewScene.setSelected(invocationLayoutPanel.isBattlePreviewMode());
         
         spellLayoutPanel.setItemsPerRow((int)jSpinnerTilesPerRow.getValue());        
@@ -63,6 +68,7 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
     }
     
     private void actionSpellLoaded(Tileset spell) {
+        viewPanel1.setLayoutPanel(spellLayoutPanel, viewSettings);
         spellLayoutPanel.setTileset(spell);
         if (spell != null) {
             CRAMColor[] colors = spell.getPalette().getColors();
@@ -70,7 +76,6 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
             cRAMColor13.setCRAMColor(colors[13]);
             cRAMColor14.setCRAMColor(colors[14]);
         }
-        viewPanel1.setLayoutPanel(spellLayoutPanel);
         spellLayoutPanel.setVisible(true);
         invocationLayoutPanel.setVisible(false);
         jPanelSpellData.setVisible(true);
@@ -82,6 +87,7 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
     }
     
     private void actionInvocationLoaded(InvocationGraphic invocation) {
+        viewPanel1.setLayoutPanel(invocationLayoutPanel, viewSettings);
         invocationLayoutPanel.setInvocationGraphic(invocation);
         invocationLayoutPanel.setBg(invocationGraphicManager.getBackground());
         invocationLayoutPanel.setGround(invocationGraphicManager.getGround());
@@ -90,8 +96,8 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
             jSpinnerPosY.setValue(invocation.getPosY());
             jSpinnerLoadMode.setValue(invocation.getLoadMode());
         }
-        viewPanel1.setLayoutPanel(invocationLayoutPanel);
-        invocationLayoutPanel.setBattlePreviewMode(jCheckBoxPreviewScene.isSelected());
+        jCheckBoxPreviewScene.setSelected(false);
+        invocationLayoutPanel.setBattlePreviewMode(false);
         spellLayoutPanel.setVisible(false);
         invocationLayoutPanel.setVisible(true);
         jPanelSpellData.setVisible(false);

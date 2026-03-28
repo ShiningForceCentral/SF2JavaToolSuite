@@ -8,8 +8,7 @@ package com.sfc.sf2.battle.gui;
 import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.core.actions.ToggleAction;
 import com.sfc.sf2.core.gui.controls.AbstractViewPanel;
-import com.sfc.sf2.core.settings.SettingsManager;
-import com.sfc.sf2.map.block.settings.MapBlockSettings;
+import com.sfc.sf2.core.settings.IViewSettings;
 import javax.swing.JCheckBox;
 
 /**
@@ -17,9 +16,7 @@ import javax.swing.JCheckBox;
  * @author TiMMy
  */
 public class BattleViewPanel extends AbstractViewPanel<BattleLayoutPanel> {
-    
-    private MapBlockSettings settings;
-    
+        
     private boolean drawTerrain;
     private boolean drawSprites;
     private boolean drawRegions;
@@ -72,11 +69,8 @@ public class BattleViewPanel extends AbstractViewPanel<BattleLayoutPanel> {
     }
 
     @Override
-    public void setLayoutPanel(BattleLayoutPanel layoutPanel) {
-        super.setLayoutPanel(layoutPanel);
-        settings = SettingsManager.getSettingsStore("mapLayout");
-        colorPickerBG.setColor(settings.getBlockBGColor());
-        jComboBoxScale.setSelectedIndex(settings.getBlockScale());
+    public void setLayoutPanel(BattleLayoutPanel layoutPanel, IViewSettings viewPanelSettings) {
+        super.setLayoutPanel(layoutPanel, viewPanelSettings);
         
         layoutPanel.setShowExplorationFlags(jCheckBoxExportationFlags.isSelected());
         layoutPanel.setDrawTerrain(jCheckBoxTerrain.isSelected());
@@ -237,21 +231,11 @@ public class BattleViewPanel extends AbstractViewPanel<BattleLayoutPanel> {
     }// </editor-fold>//GEN-END:initComponents
 
     protected void colorPickerBGColorChanged(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorPickerBGColorChanged
-        if (layoutPanel != null) {
-            layoutPanel.setBGColor(colorPickerBG.getColor());
-        }
-        if (SettingsManager.isSavingAllowed()) {
-            settings.setBlockBGColor(colorPickerBG.getColor());
-            SettingsManager.saveSettingsFile();
-        }
+        super.onBGColorChanged(evt);
     }//GEN-LAST:event_colorPickerBGColorChanged
 
     protected void jComboBoxScaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxScaleActionPerformed
         super.onScaleChanged(evt);
-        if (SettingsManager.isSavingAllowed()) {
-            settings.setBlockScale(jComboBoxScale.getSelectedIndex());
-            SettingsManager.saveSettingsFile();
-        }
     }//GEN-LAST:event_jComboBoxScaleActionPerformed
 
     protected void jCheckBoxGridItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBoxGridItemStateChanged

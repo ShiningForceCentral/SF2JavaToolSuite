@@ -11,12 +11,13 @@ import com.sfc.sf2.core.actions.NonCombinableAction;
 import com.sfc.sf2.core.settings.SettingsManager;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
+import com.sfc.sf2.core.settings.ViewSettings;
 import com.sfc.sf2.helpers.PathHelpers;
+import com.sfc.sf2.helpers.RenderScaleHelpers;
 import com.sfc.sf2.portrait.Portrait;
 import com.sfc.sf2.portrait.PortraitManager;
 import com.sfc.sf2.portrait.actions.PortraitActionData;
 import com.sfc.sf2.portrait.models.PortraitDataTableModel;
-import com.sfc.sf2.portrait.settings.PortraitSettings;
 import java.awt.event.ActionEvent;
 import java.util.logging.Level;
 import java.nio.file.Path;
@@ -29,7 +30,7 @@ import javax.swing.table.TableColumnModel;
  */
 public class PortraitMainEditor extends AbstractMainEditor {
     
-    private final PortraitSettings portraitSettings = new PortraitSettings();
+    private final ViewSettings viewSettings = new ViewSettings(RenderScaleHelpers.RENDER_SCALE_4X);
     private final PortraitManager portraitManager = new PortraitManager();
     
     private PortraitDataTableModel eyeTable;
@@ -39,7 +40,7 @@ public class PortraitMainEditor extends AbstractMainEditor {
     
     public PortraitMainEditor() {
         super();
-        SettingsManager.registerSettingsStore("portrait", portraitSettings);
+        SettingsManager.registerSettingsStore("view", viewSettings);
         initComponents();
         initCore(console1);
     }
@@ -48,7 +49,7 @@ public class PortraitMainEditor extends AbstractMainEditor {
     protected void initEditor() {
         super.initEditor();
         
-        portraitViewPanel1.setLayoutPanel(portraitLayoutPanel);
+        portraitViewPanel1.setLayoutPanel(portraitLayoutPanel, viewSettings);
         
         eyeTable = (PortraitDataTableModel)tableEyes.getModel();
         mouthTable = (PortraitDataTableModel)tableMouth.getModel();

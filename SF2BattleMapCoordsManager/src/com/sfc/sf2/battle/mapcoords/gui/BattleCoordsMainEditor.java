@@ -14,10 +14,8 @@ import com.sfc.sf2.core.actions.NonCombinableAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.core.settings.SettingsManager;
+import com.sfc.sf2.core.settings.ViewSettings;
 import com.sfc.sf2.helpers.PathHelpers;
-import com.sfc.sf2.helpers.RenderScaleHelpers;
-import com.sfc.sf2.map.block.settings.MapBlockSettings;
-import java.awt.Color;
 import java.nio.file.Path;
 import java.util.logging.Level;
 import javax.swing.event.ListSelectionEvent;
@@ -30,6 +28,7 @@ import javax.swing.table.TableColumnModel;
  */
 public class BattleCoordsMainEditor extends AbstractMainEditor {
     
+    private final ViewSettings viewSettings = new ViewSettings();
     BattleMapCoordsManager battlemapcoordsManager = new BattleMapCoordsManager();
     
     BattleMapCoords[] coords;
@@ -38,7 +37,7 @@ public class BattleCoordsMainEditor extends AbstractMainEditor {
     
     public BattleCoordsMainEditor() {
         super();
-        SettingsManager.registerSettingsStore("mapLayout", new MapBlockSettings(20, RenderScaleHelpers.DEFAULT_RENDER_SCALE_INDEX, new Color(200, 0, 200)));
+        SettingsManager.registerSettingsStore("view", viewSettings);
         initComponents();
         initCore(console1);
     }
@@ -47,7 +46,7 @@ public class BattleCoordsMainEditor extends AbstractMainEditor {
     protected void initEditor() {
         super.initEditor();
         
-        battleMapViewPanel1.setLayoutPanel(battleMapCoordsLayoutPanel);
+        battleMapViewPanel1.setLayoutPanel(battleMapCoordsLayoutPanel, viewSettings);
         accordionPanel1.setExpanded(false);
         battleMapCoordsLayoutPanel.setShowBattleCoords(true);
         

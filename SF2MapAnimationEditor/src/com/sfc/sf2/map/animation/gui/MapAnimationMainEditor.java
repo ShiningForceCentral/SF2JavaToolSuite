@@ -12,6 +12,7 @@ import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.core.gui.layout.LayoutAnimator;
 import com.sfc.sf2.core.settings.SettingsManager;
+import com.sfc.sf2.core.settings.ViewSettings;
 import com.sfc.sf2.graphics.Tileset;
 import com.sfc.sf2.helpers.PathHelpers;
 import com.sfc.sf2.helpers.RenderScaleHelpers;
@@ -23,8 +24,6 @@ import java.nio.file.Path;
 import java.util.logging.Level;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.TableModelEvent;
-import com.sfc.sf2.map.block.settings.MapBlockSettings;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 
 /**
@@ -33,14 +32,16 @@ import java.awt.event.ActionEvent;
  */
 public class MapAnimationMainEditor extends AbstractMainEditor {
     
+    private final ViewSettings TilesetViewSettings = new ViewSettings(20, RenderScaleHelpers.RENDER_SCALE_2X);
+    private final ViewSettings layoutViewSettings = new ViewSettings();
     private final MapAnimationManager mapAnimationManager = new MapAnimationManager();
     
     private MapAnimationActionData currentAnimData;
     
     public MapAnimationMainEditor() {
         super();
-        SettingsManager.registerSettingsStore("mapLayout", new MapBlockSettings());
-        SettingsManager.registerSettingsStore("mapTileset", new MapBlockSettings(20, RenderScaleHelpers.stringToIndex("2x"), new Color(200, 0, 200)));
+        SettingsManager.registerSettingsStore("mapTileset", TilesetViewSettings);
+        SettingsManager.registerSettingsStore("mapLayout", layoutViewSettings);
         initComponents();
         initCore(console1);
     }
@@ -49,8 +50,8 @@ public class MapAnimationMainEditor extends AbstractMainEditor {
     protected void initEditor() {
         super.initEditor();
         
-        mapLayoutAnimViewPanel1.setLayoutPanel(mapAnimationLayoutPanel, this::animationActionPerformed);
-        tilesetAnimViewPanel1.setLayoutPanel(tilesetLayoutPanelAnim, tilesetLayoutPanelModified, this::animationActionPerformed);
+        mapLayoutAnimViewPanel1.setLayoutPanel(mapAnimationLayoutPanel, this::animationActionPerformed, layoutViewSettings);
+        tilesetAnimViewPanel1.setLayoutPanel(tilesetLayoutPanelAnim, tilesetLayoutPanelModified, this::animationActionPerformed, TilesetViewSettings);
         accordionPanel1.setExpanded(false);
         accordionPanel2.setExpanded(false);
         

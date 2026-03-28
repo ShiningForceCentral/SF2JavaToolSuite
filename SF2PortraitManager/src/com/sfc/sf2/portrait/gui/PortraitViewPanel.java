@@ -8,10 +8,8 @@ package com.sfc.sf2.portrait.gui;
 import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.core.actions.ToggleAction;
 import com.sfc.sf2.core.gui.controls.AbstractViewPanel;
-import com.sfc.sf2.core.settings.SettingsManager;
 import com.sfc.sf2.palette.Palette;
 import com.sfc.sf2.portrait.Portrait;
-import com.sfc.sf2.portrait.settings.PortraitSettings;
 import java.awt.event.ActionEvent;
 
 /**
@@ -32,13 +30,6 @@ public class PortraitViewPanel extends AbstractViewPanel<PortraitLayoutPanel> {
             Portrait portrait = layoutPanel.getPortrait();
             return portrait == null ? null : portrait.getPalette();
         }, this::onPaletteColorChange);
-    }
-
-    @Override
-    public void setLayoutPanel(PortraitLayoutPanel layoutPanel) {
-        super.setLayoutPanel(layoutPanel);
-        PortraitSettings portraitSettings = SettingsManager.getSettingsStore("portrait");
-        jComboBoxScale.setSelectedIndex(portraitSettings.getRenderScaleIndex());
     }
 
     /**
@@ -178,11 +169,6 @@ public class PortraitViewPanel extends AbstractViewPanel<PortraitLayoutPanel> {
 
     private void jComboBoxScaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxScaleActionPerformed
         super.onScaleChanged(evt);
-        if (SettingsManager.isSavingAllowed()) {
-            PortraitSettings portraitSettings = SettingsManager.getSettingsStore("portrait");
-            portraitSettings.setRenderScaleIndex((int)jComboBoxScale.getSelectedIndex());
-            SettingsManager.saveSettingsFile();
-        }
     }//GEN-LAST:event_jComboBoxScaleActionPerformed
 
     private void jCheckBoxBlinkItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBoxBlinkItemStateChanged

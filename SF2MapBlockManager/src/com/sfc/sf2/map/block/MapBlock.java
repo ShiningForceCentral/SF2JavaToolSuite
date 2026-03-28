@@ -11,6 +11,7 @@ import static com.sfc.sf2.graphics.Tile.PIXEL_WIDTH;
 import com.sfc.sf2.graphics.Tileset;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.Arrays;
 
 /**
  *
@@ -97,13 +98,13 @@ public class MapBlock {
         if (!equalsIgnoreTiles(obj)) return false;
         if (obj == null) return false;
         MapBlock block = (MapBlock)obj;
-        return this.mapTiles.equals(block.mapTiles);
+        return Arrays.equals(this.mapTiles, block.mapTiles);
     }
     
     public boolean equalsIgnoreTiles(Object obj) {
         if (!(obj instanceof MapBlock)) return super.equals(obj);
         MapBlock block = (MapBlock)obj;
-        return this.index == block.getIndex();
+        return this.index == block.index;
     }
     
     @Override 

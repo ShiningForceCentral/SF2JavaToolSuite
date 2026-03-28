@@ -6,7 +6,6 @@
 package com.sfc.sf2.battlesprite.gui;
 
 import com.sfc.sf2.battlesprite.BattleSprite;
-import com.sfc.sf2.battlesprite.settings.BattleSpriteSettings;
 import com.sfc.sf2.battlesprite.BattleSpriteManager;
 import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.core.actions.NonCombinableAction;
@@ -17,7 +16,10 @@ import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.core.io.FileFormat;
 import com.sfc.sf2.core.settings.SettingsManager;
+import com.sfc.sf2.core.settings.ViewSettings;
+import com.sfc.sf2.graphics.settings.ExportSettings;
 import com.sfc.sf2.helpers.PathHelpers;
+import com.sfc.sf2.helpers.RenderScaleHelpers;
 import java.nio.file.Path;
 import java.util.logging.Level;
 import javax.swing.JRadioButton;
@@ -27,14 +29,17 @@ import javax.swing.JRadioButton;
  * @author wiz
  */
 public class BattleSpriteMainEditor extends AbstractMainEditor {
-    private final BattleSpriteSettings battlespriteSettings = new BattleSpriteSettings();
+    
+    private final ViewSettings viewSettings = new ViewSettings(RenderScaleHelpers.RENDER_SCALE_2X);
+    private final ExportSettings exportSettings = new ExportSettings();
     private final BattleSpriteManager battleSpriteManager = new BattleSpriteManager();
     
     private boolean actionExportFormat = false;
     
     public BattleSpriteMainEditor() {
         super();
-        SettingsManager.registerSettingsStore("battlesprites", battlespriteSettings);
+        SettingsManager.registerSettingsStore("view", viewSettings);
+        SettingsManager.registerSettingsStore("export", exportSettings);
         initComponents();
         initCore(console1);
     }
@@ -43,10 +48,10 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
     protected void initEditor() {
         super.initEditor();
         
-        viewPanel1.setLayoutPanel(battleSpriteLayoutPanel);
+        viewPanel1.setLayoutPanel(battleSpriteLayoutPanel, viewSettings);
         
-        jRadioButtonFormatPNG.setSelected(battlespriteSettings.getExportFileFormat() == FileFormat.PNG);
-        jRadioButtonFormatGIF.setSelected(battlespriteSettings.getExportFileFormat() != FileFormat.PNG);
+        jRadioButtonFormatPNG.setSelected(exportSettings.getExportFileFormat() == FileFormat.PNG);
+        jRadioButtonFormatGIF.setSelected(exportSettings.getExportFileFormat() != FileFormat.PNG);
         actionExportFormat = jRadioButtonFormatPNG.isSelected();
     }
     
@@ -764,7 +769,7 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
         actionExportFormat = jRadioButtonFormatPNG.isSelected();
 
         if (actionExportFormat) {
-            battlespriteSettings.setExportFileFormat(actionExportFormat ? FileFormat.PNG : FileFormat.GIF);
+            exportSettings.setExportFileFormat(actionExportFormat ? FileFormat.PNG : FileFormat.GIF);
             SettingsManager.saveSettingsFile();
         }
     }//GEN-LAST:event_jRadioButtonFormatRadioItemStateChanged

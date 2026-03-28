@@ -7,12 +7,6 @@ package com.sfc.sf2.vwfont.gui;
 
 import com.sfc.sf2.core.gui.AbstractLayoutPanel;
 import com.sfc.sf2.core.gui.controls.AbstractViewPanel;
-import com.sfc.sf2.core.gui.controls.ColorPicker;
-import com.sfc.sf2.core.settings.SettingsManager;
-import com.sfc.sf2.vwfont.settings.FontSettings;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JSpinner;
 
 /**
  *
@@ -27,20 +21,6 @@ public class VWFontViewPanel extends AbstractViewPanel<AbstractLayoutPanel> {
         super();
         initComponents();
         init(jComboBoxScale, jCheckBoxGrid, null, colorPickerBG);
-    }
-
-    @Override
-    protected void init(JComboBox jComboBoxScale, JCheckBox jCheckBoxGrid, JSpinner jSpinnerItemsPerRow, ColorPicker colorPickerBG) {
-        super.init(jComboBoxScale, jCheckBoxGrid, jSpinnerItemsPerRow, colorPickerBG);
-    }
-
-    @Override
-    public void setLayoutPanel(AbstractLayoutPanel layoutPanel) {
-        super.setLayoutPanel(layoutPanel);
-        
-        FontSettings fontSettings = SettingsManager.getSettingsStore("font");
-        colorPickerBG.setColor(fontSettings.getTransparentBGColor());
-        layoutPanel.setBGColor(colorPickerBG.getColor());
     }
 
     /**
@@ -129,13 +109,7 @@ public class VWFontViewPanel extends AbstractViewPanel<AbstractLayoutPanel> {
     }// </editor-fold>//GEN-END:initComponents
 
     private void colorPickerBGColorChanged(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorPickerBGColorChanged
-        if (layoutPanel != null) {
-            layoutPanel.setBGColor(colorPickerBG.getColor());
-            
-            FontSettings fontSettings = SettingsManager.getSettingsStore("font");
-            fontSettings.setTransparentBGColor(colorPickerBG.getColor());
-            SettingsManager.saveSettingsFile();
-        }
+        super.onBGColorChanged(evt);
     }//GEN-LAST:event_colorPickerBGColorChanged
 
     private void jComboBoxScaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxScaleActionPerformed

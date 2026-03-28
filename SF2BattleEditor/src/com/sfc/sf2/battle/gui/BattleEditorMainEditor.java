@@ -23,12 +23,10 @@ import com.sfc.sf2.core.actions.CustomAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.core.settings.SettingsManager;
+import com.sfc.sf2.core.settings.ViewSettings;
 import com.sfc.sf2.helpers.PathHelpers;
-import com.sfc.sf2.helpers.RenderScaleHelpers;
-import com.sfc.sf2.map.block.settings.MapBlockSettings;
 import com.sfc.sf2.map.layout.MapLayout;
 import com.sfc.sf2.settings.TerrainSettings;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.nio.file.Path;
 import java.util.logging.Level;
@@ -42,6 +40,7 @@ import javax.swing.table.TableColumnModel;
  */
 public class BattleEditorMainEditor extends AbstractMainEditor {
     
+    private final ViewSettings viewSettings = new ViewSettings();
     private final TerrainSettings terrainSettings = new TerrainSettings();
     private final BattleManager battleManager = new BattleManager();
         
@@ -55,8 +54,8 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
     
     public BattleEditorMainEditor() {
         super();
+        SettingsManager.registerSettingsStore("view", viewSettings);
         SettingsManager.registerSettingsStore("terrain", terrainSettings);
-        SettingsManager.registerSettingsStore("mapLayout", new MapBlockSettings(20, RenderScaleHelpers.DEFAULT_RENDER_SCALE_INDEX, new Color(200, 0, 200)));
         initComponents();
         initCore(console1);
     }
@@ -65,7 +64,7 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
     protected void initEditor() {
         super.initEditor();
         
-        battleViewPanel1.setLayoutPanel(battleLayoutPanel);
+        battleViewPanel1.setLayoutPanel(battleLayoutPanel, viewSettings);
         accordionPanel1.setExpanded(false);
         accordionPanel2.setExpanded(false);
         

@@ -9,8 +9,7 @@ import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.core.actions.BasicAction;
 import com.sfc.sf2.core.actions.ToggleAction;
 import com.sfc.sf2.core.gui.controls.AbstractViewPanel;
-import com.sfc.sf2.core.settings.SettingsManager;
-import com.sfc.sf2.map.block.settings.MapBlockSettings;
+import com.sfc.sf2.core.settings.IViewSettings;
 import com.sfc.sf2.map.layout.gui.MapLayoutPanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,7 +21,6 @@ import javax.swing.JCheckBox;
  */
 public class MapLayoutAnimViewPanel extends AbstractViewPanel<MapLayoutPanel> {
     
-    private MapBlockSettings settings;
     private ActionListener animationToggleListener;
 
     public JCheckBox getCheckBoxPreviewAnim() {
@@ -38,12 +36,10 @@ public class MapLayoutAnimViewPanel extends AbstractViewPanel<MapLayoutPanel> {
         init(jComboBoxScale, jCheckBoxGrid, null, colorPickerBG);
     }
 
-    public void setLayoutPanel(MapLayoutPanel layoutPanel, ActionListener animationToggleListener) {
-        super.setLayoutPanel(layoutPanel);
+    public void setLayoutPanel(MapLayoutPanel layoutPanel, ActionListener animationToggleListener, IViewSettings viewPanelSettings) {
+        super.setLayoutPanel(layoutPanel, viewPanelSettings);
         this.animationToggleListener = animationToggleListener;
-        settings = SettingsManager.getSettingsStore("mapLayout");
-        colorPickerBG.setColor(settings.getBlockBGColor());
-        jComboBoxScale.setSelectedIndex(settings.getBlockScale());
+        
         layoutPanel.setShowExplorationFlags(jCheckBoxExportationFlags.isSelected());
         layoutPanel.setShowInteractionFlags(jCheckBoxInteractionFlags.isSelected());
     }
@@ -187,21 +183,11 @@ public class MapLayoutAnimViewPanel extends AbstractViewPanel<MapLayoutPanel> {
     }// </editor-fold>//GEN-END:initComponents
 
     private void colorPickerBGColorChanged(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorPickerBGColorChanged
-        if (layoutPanel != null) {
-            layoutPanel.setBGColor(colorPickerBG.getColor());
-        }
-        if (SettingsManager.isSavingAllowed()) {
-            settings.setBlockBGColor(colorPickerBG.getColor());
-            SettingsManager.saveSettingsFile();
-        }
+        super.onBGColorChanged(evt);
     }//GEN-LAST:event_colorPickerBGColorChanged
 
     private void jComboBoxScaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxScaleActionPerformed
         super.onScaleChanged(evt);
-        if (SettingsManager.isSavingAllowed()) {
-            settings.setBlockScale(jComboBoxScale.getSelectedIndex());
-            SettingsManager.saveSettingsFile();
-        }
     }//GEN-LAST:event_jComboBoxScaleActionPerformed
 
     private void jCheckBoxGridItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBoxGridItemStateChanged

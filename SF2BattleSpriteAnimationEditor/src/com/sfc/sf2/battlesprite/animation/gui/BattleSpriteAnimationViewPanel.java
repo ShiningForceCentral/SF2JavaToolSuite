@@ -7,7 +7,6 @@ package com.sfc.sf2.battlesprite.animation.gui;
 
 import com.sfc.sf2.core.gui.AbstractLayoutPanel;
 import com.sfc.sf2.core.gui.controls.AbstractViewPanel;
-import com.sfc.sf2.helpers.RenderScaleHelpers;
 
 /**
  *
@@ -22,8 +21,6 @@ public class BattleSpriteAnimationViewPanel extends AbstractViewPanel<AbstractLa
         super();
         initComponents();
         init(jComboBoxScale, null, null, null);
-        
-        jComboBoxScale.setSelectedIndex(RenderScaleHelpers.stringToIndex("2x"));
     }
 
     /**

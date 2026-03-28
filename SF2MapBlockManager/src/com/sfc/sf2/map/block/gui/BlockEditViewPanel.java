@@ -8,8 +8,6 @@ package com.sfc.sf2.map.block.gui;
 import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.core.actions.ToggleAction;
 import com.sfc.sf2.core.gui.controls.AbstractViewPanel;
-import com.sfc.sf2.core.settings.SettingsManager;
-import com.sfc.sf2.map.block.settings.MapBlockSettings;
 import javax.swing.JCheckBox;
 
 /**
@@ -17,9 +15,7 @@ import javax.swing.JCheckBox;
  * @author TiMMy
  */
 public class BlockEditViewPanel extends AbstractViewPanel<EditableBlockSlotPanel> {
-    
-    private MapBlockSettings settings;
-    
+        
     public JCheckBox getPriorityCheckBox() { return jCheckBoxPriority; }
     
     /**
@@ -30,13 +26,6 @@ public class BlockEditViewPanel extends AbstractViewPanel<EditableBlockSlotPanel
         initComponents();
         init(null, jCheckBoxGrid, null, colorPickerBG);
         
-    }
-
-    @Override
-    public void setLayoutPanel(EditableBlockSlotPanel layoutPanel) {
-        super.setLayoutPanel(layoutPanel);
-        settings = SettingsManager.getSettingsStore("editBlock");
-        colorPickerBG.setColor(settings.getBlockBGColor());
     }
 
     /**
@@ -122,13 +111,7 @@ public class BlockEditViewPanel extends AbstractViewPanel<EditableBlockSlotPanel
     }// </editor-fold>//GEN-END:initComponents
 
     private void colorPickerBGColorChanged(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorPickerBGColorChanged
-        if (layoutPanel != null) {
-            layoutPanel.setBGColor(colorPickerBG.getColor());
-        }
-        if (SettingsManager.isSavingAllowed()) {
-            settings.setBlockBGColor(colorPickerBG.getColor());
-            SettingsManager.saveSettingsFile();
-        }
+        super.onBGColorChanged(evt);
     }//GEN-LAST:event_colorPickerBGColorChanged
 
     private void jCheckBoxGridItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBoxGridItemStateChanged

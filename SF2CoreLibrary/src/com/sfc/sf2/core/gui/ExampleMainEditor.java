@@ -16,6 +16,7 @@ import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.core.models.combobox.ComboBoxTableEditor;
 import com.sfc.sf2.core.models.combobox.ComboBoxTableRenderer;
 import com.sfc.sf2.core.models.combobox.MultiComboBoxTableEditor;
+import com.sfc.sf2.core.settings.ViewSettings;
 import com.sfc.sf2.helpers.SwingControlsHelpers;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JRadioButton;
@@ -27,8 +28,11 @@ import javax.swing.table.TableColumnModel;
  */
 public final class ExampleMainEditor extends AbstractMainEditor {
     
+    private final ViewSettings testSettings = new ViewSettings();
+    
     public ExampleMainEditor() {
         super();
+        SettingsManager.registerSettingsStore("test", testSettings);
         initComponents();       //<--- This is required
         initCore(console1);     //<--- This is required
     }
@@ -37,10 +41,11 @@ public final class ExampleMainEditor extends AbstractMainEditor {
     protected void initEditor() {
         super.initEditor();
         
-        viewPanelStacked1.setLayoutPanel(testLayoutPanel1);
+        viewPanelStacked1.setLayoutPanel(testLayoutPanel1, testSettings);
+        viewPanelStacked1.getBackgroundColorPicker().addColorChangedListener(this::onViewPanelColorChange);
         
         //One-time setup
-        colorPicker1.setColor(SettingsManager.getGlobalSettings().getTransparentBGColor());
+        colorPicker1.setColor(testSettings.getBGColor());
         TableColumnModel columns = table2.jTable.getColumnModel();
         columns.getColumn(0).setMaxWidth(50);
         columns.getColumn(2).setMaxWidth(50);
@@ -619,8 +624,9 @@ public final class ExampleMainEditor extends AbstractMainEditor {
 
     private void colorPicker1ColorChanged(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorPicker1ColorChanged
         Console.logger().info("Color changed : " + colorPicker1.getColor());
-        SettingsManager.getGlobalSettings().setTransparentBGColor(colorPicker1.getColor());
-        SettingsManager.saveGlobalSettingsFile();
+        viewPanelStacked1.getBackgroundColorPicker().setColor(colorPicker1.getColor());
+        testSettings.setBGColor(colorPicker1.getColor());
+        SettingsManager.saveSettingsFile();
     }//GEN-LAST:event_colorPicker1ColorChanged
 
     private void jSpinnerTestStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinnerTestStateChanged
@@ -661,6 +667,10 @@ public final class ExampleMainEditor extends AbstractMainEditor {
         }
         jLabel7.setText(((JRadioButton)evt.getSource()).getName());
     }//GEN-LAST:event_jRadioTestItemStateChanged
+    
+    private void onViewPanelColorChange(java.awt.event.ActionEvent evt) {
+        colorPicker1.setColor(viewPanelStacked1.getBackgroundColorPicker().getColor());
+    }
     
     /**
      * To create a new Main Editor, copy the below code

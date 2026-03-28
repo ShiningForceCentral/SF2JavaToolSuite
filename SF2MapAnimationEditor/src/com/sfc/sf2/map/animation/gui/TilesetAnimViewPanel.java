@@ -9,8 +9,7 @@ import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.core.actions.BasicAction;
 import com.sfc.sf2.core.actions.ToggleAction;
 import com.sfc.sf2.core.gui.controls.AbstractViewPanel;
-import com.sfc.sf2.core.settings.SettingsManager;
-import com.sfc.sf2.map.block.settings.MapBlockSettings;
+import com.sfc.sf2.core.settings.IViewSettings;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JCheckBox;
@@ -20,9 +19,7 @@ import javax.swing.JCheckBox;
  * @author TiMMy
  */
 public class TilesetAnimViewPanel extends AbstractViewPanel<MapAnimationTilesetLayoutPanel> {
-    
-    private MapBlockSettings settings;
-    
+        
     private MapModifiedTilesetLayoutPanel secondLayoutPanel;
     private ActionListener animationToggleListener;
     
@@ -39,21 +36,17 @@ public class TilesetAnimViewPanel extends AbstractViewPanel<MapAnimationTilesetL
         init(jComboBoxScale, jCheckBoxGrid, jSpinnerItemsPerRow, colorPickerBG);
     }
 
-    public void setLayoutPanel(MapAnimationTilesetLayoutPanel layoutPanel, MapModifiedTilesetLayoutPanel modifiedTilesetLayoutPanel, ActionListener animationToggleListener) {
-        super.setLayoutPanel(layoutPanel);
+    public void setLayoutPanel(MapAnimationTilesetLayoutPanel layoutPanel, MapModifiedTilesetLayoutPanel modifiedTilesetLayoutPanel, ActionListener animationToggleListener, IViewSettings viewPanelSettings) {
+        super.setLayoutPanel(layoutPanel, viewPanelSettings);
         this.secondLayoutPanel = modifiedTilesetLayoutPanel;
         this.animationToggleListener = animationToggleListener;
         
-        settings = SettingsManager.getSettingsStore("mapTileset");
-        jSpinnerItemsPerRow.setValue(settings.getBlocksPerRow());
-        colorPickerBG.setColor(settings.getBlockBGColor());
-        jComboBoxScale.setSelectedIndex(settings.getBlockScale());
         layoutPanel.setShowAnimationFrames(jCheckBoxAnimFrames.isSelected());
         
+        secondLayoutPanel.setRenderScaleIndex(jComboBoxScale.getSelectedIndex());
         secondLayoutPanel.setShowGrid(jCheckBoxGrid.isSelected());
         secondLayoutPanel.setItemsPerRow((int)jSpinnerItemsPerRow.getValue());
         secondLayoutPanel.setBGColor(colorPickerBG.getColor());
-        secondLayoutPanel.setShowAnimationFrames(jCheckBoxAnimFrames.isSelected());
     }
 
     /**
@@ -190,23 +183,13 @@ public class TilesetAnimViewPanel extends AbstractViewPanel<MapAnimationTilesetL
 
     private void jSpinnerItemsPerRowStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinnerItemsPerRowStateChanged
         super.onItemsPerRowChanged(evt);
-        if (SettingsManager.isSavingAllowed()) {
-            settings.setBlocksPerRow((int)jSpinnerItemsPerRow.getValue());
-            SettingsManager.saveSettingsFile();
-        }
         if (secondLayoutPanel != null) {
             secondLayoutPanel.setItemsPerRow((int)jSpinnerItemsPerRow.getValue());
         }
     }//GEN-LAST:event_jSpinnerItemsPerRowStateChanged
 
     private void colorPickerBGColorChanged(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorPickerBGColorChanged
-        if (layoutPanel != null) {
-            layoutPanel.setBGColor(colorPickerBG.getColor());
-        }
-        if (SettingsManager.isSavingAllowed()) {
-            settings.setBlockBGColor(colorPickerBG.getColor());
-            SettingsManager.saveSettingsFile();
-        }
+        super.onBGColorChanged(evt);
         if (secondLayoutPanel != null) {
             secondLayoutPanel.setBGColor(colorPickerBG.getColor());
         }
@@ -214,10 +197,6 @@ public class TilesetAnimViewPanel extends AbstractViewPanel<MapAnimationTilesetL
 
     private void jComboBoxScaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxScaleActionPerformed
         super.onScaleChanged(evt);
-        if (SettingsManager.isSavingAllowed()) {
-            settings.setBlockScale(jComboBoxScale.getSelectedIndex());
-            SettingsManager.saveSettingsFile();
-        }
         if (secondLayoutPanel != null) {
             secondLayoutPanel.setRenderScaleIndex(jComboBoxScale.getSelectedIndex());
         }

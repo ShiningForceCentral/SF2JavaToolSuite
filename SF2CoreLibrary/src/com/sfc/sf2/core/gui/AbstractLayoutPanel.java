@@ -148,7 +148,7 @@ public abstract class AbstractLayoutPanel extends JPanel implements AnimationLis
     }
 
     public int getRenderScaleIndex() {
-        return BaseLayoutComponent.IsEnabled(scale) ? scale.getScaleIndex(): RenderScaleHelpers.DEFAULT_RENDER_SCALE_INDEX;
+        return BaseLayoutComponent.IsEnabled(scale) ? scale.getScaleIndex(): RenderScaleHelpers.RENDER_SCALE_1X;
     }
 
     public void setRenderScaleIndex(int renderScaleIndex) {

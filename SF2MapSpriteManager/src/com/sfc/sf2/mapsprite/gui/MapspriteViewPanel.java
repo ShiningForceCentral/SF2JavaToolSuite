@@ -8,6 +8,7 @@ package com.sfc.sf2.mapsprite.gui;
 import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.core.actions.ToggleAction;
 import com.sfc.sf2.core.gui.controls.AbstractViewPanel;
+import com.sfc.sf2.core.settings.IViewSettings;
 
 /**
  *
@@ -25,9 +26,8 @@ public class MapspriteViewPanel extends AbstractViewPanel<MapSpriteLayoutPanel> 
     }
 
     @Override
-    public void setLayoutPanel(MapSpriteLayoutPanel layoutPanel) {
-        super.setLayoutPanel(layoutPanel);
-        
+    public void setLayoutPanel(MapSpriteLayoutPanel layoutPanel, IViewSettings viewPanelSettings) {
+        super.setLayoutPanel(layoutPanel, viewPanelSettings);
         layoutPanel.setDrawReferenceLabels(jCheckBoxShowReferences.isSelected());
     }
 

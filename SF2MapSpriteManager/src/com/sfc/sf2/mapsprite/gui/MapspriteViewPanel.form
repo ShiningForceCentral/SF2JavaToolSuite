@@ -52,10 +52,8 @@
                   <Component id="jCheckBoxGrid" alignment="2" min="-2" max="-2" attributes="0"/>
                   <Component id="jComboBoxScale" alignment="2" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabelScale" alignment="2" min="-2" max="-2" attributes="0"/>
-                  <Group type="103" alignment="2" groupAlignment="2" attributes="0">
-                      <Component id="jCheckBoxShowReferences" alignment="2" min="-2" max="-2" attributes="0"/>
-                      <Component id="infoButton3" alignment="2" min="-2" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="jCheckBoxShowReferences" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Component id="infoButton3" alignment="2" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>

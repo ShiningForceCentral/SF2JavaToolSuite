@@ -6,9 +6,7 @@
 
 package com.sfc.sf2.icon.settings;
 
-import com.sfc.sf2.core.io.FileFormat;
-import com.sfc.sf2.core.settings.AbstractSettings;
-import com.sfc.sf2.helpers.RenderScaleHelpers;
+import com.sfc.sf2.graphics.settings.ExportSettings;
 import com.sfc.sf2.icon.IconManager.IconExportMode;
 import java.util.HashMap;
 
@@ -16,12 +14,9 @@ import java.util.HashMap;
  *
  * @author TiMMy
  */
-public class IconSettings implements AbstractSettings {
+public class IconSettings extends ExportSettings {
 
     private IconExportMode exportMode;
-    private FileFormat exportFileFormat;
-    private int itemsPerRow;
-    private int renderScaleIndex;
     
     public IconExportMode getExportMode() {
         return exportMode;
@@ -31,63 +26,25 @@ public class IconSettings implements AbstractSettings {
         this.exportMode = exportMode;
     }
     
-    public FileFormat getExportFileFormat() {
-        return exportFileFormat;
-    }
-    
-    public void setExportFileFormat(FileFormat exportFileFormat) {
-        this.exportFileFormat = exportFileFormat;
-    }
-
-    public int getItemsPerRow() {
-        return itemsPerRow;
-    }
-
-    public void setItemsPerRow(int itemsPerRow) {
-        this.itemsPerRow = itemsPerRow;
-    }
-
-    public int getRenderScaleIndex() {
-        return renderScaleIndex;
-    }
-
-    public void setRenderScaleIndex(int renderScaleIndex) {
-        this.renderScaleIndex = renderScaleIndex;
-    }
-    
     @Override
     public void initialiseNewUser() {
+        super.initialiseNewUser();
         exportMode = IconExportMode.INDIVIDUAL_FILES;
-        exportFileFormat = exportFileFormat.PNG;
-        itemsPerRow = 10;
-        renderScaleIndex = RenderScaleHelpers.DEFAULT_RENDER_SCALE_INDEX;
     }
 
     @Override
     public void decodeSettings(HashMap<String, String> data) {
+        super.decodeSettings(data);
         try {
             if (data.containsKey("exportMode")) {
                 exportMode = IconExportMode.valueOf(data.get("exportMode"));
             }
-            if (data.containsKey("exportFileFormat")) {
-                exportFileFormat = FileFormat.valueOf(data.get("exportFileFormat"));
-            }
-        } catch (Exception e) {
-            initialiseNewUser();
-        }
-        if (data.containsKey("itemsPerRow")) {
-            itemsPerRow = Integer.parseInt(data.get("itemsPerRow"));
-        }
-        if (data.containsKey("renderScale")) {
-            renderScaleIndex = RenderScaleHelpers.stringToIndex(data.get("renderScale"));
-        }
+        } catch (Exception e) { }
     }
 
     @Override
     public void encodeSettings(HashMap<String, String> data) {
+        super.encodeSettings(data);
         data.put("exportMode", exportMode.toString());
-        data.put("exportFileFormat", exportFileFormat.toString());
-        data.put("itemsPerRow", Integer.toString(itemsPerRow));
-        data.put("renderScale", RenderScaleHelpers.indexToString(renderScaleIndex));
     }
 }

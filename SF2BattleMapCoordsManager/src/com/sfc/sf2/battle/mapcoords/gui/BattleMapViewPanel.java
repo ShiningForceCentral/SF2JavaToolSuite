@@ -8,17 +8,14 @@ package com.sfc.sf2.battle.mapcoords.gui;
 import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.core.actions.ToggleAction;
 import com.sfc.sf2.core.gui.controls.AbstractViewPanel;
-import com.sfc.sf2.core.settings.SettingsManager;
-import com.sfc.sf2.map.block.settings.MapBlockSettings;
+import com.sfc.sf2.core.settings.IViewSettings;
 
 /**
  *
  * @author TiMMy
  */
 public class BattleMapViewPanel extends AbstractViewPanel<BattleMapCoordsLayoutPanel> {
-    
-    private MapBlockSettings settings;
-    
+        
     /**
      * Creates new form ViewPanel
      */
@@ -29,11 +26,8 @@ public class BattleMapViewPanel extends AbstractViewPanel<BattleMapCoordsLayoutP
     }
 
     @Override
-    public void setLayoutPanel(BattleMapCoordsLayoutPanel layoutPanel) {
-        super.setLayoutPanel(layoutPanel);
-        settings = SettingsManager.getSettingsStore("mapLayout");
-        colorPickerBG.setColor(settings.getBlockBGColor());
-        jComboBoxScale.setSelectedIndex(settings.getBlockScale());
+    public void setLayoutPanel(BattleMapCoordsLayoutPanel layoutPanel, IViewSettings viewPanelSettings) {
+        super.setLayoutPanel(layoutPanel, viewPanelSettings);
         
         layoutPanel.setShowExplorationFlags(jCheckBoxExportationFlags.isSelected());
     }
@@ -139,21 +133,11 @@ public class BattleMapViewPanel extends AbstractViewPanel<BattleMapCoordsLayoutP
     }// </editor-fold>//GEN-END:initComponents
 
     protected void colorPickerBGColorChanged(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorPickerBGColorChanged
-        if (layoutPanel != null) {
-            layoutPanel.setBGColor(colorPickerBG.getColor());
-        }
-        if (SettingsManager.isSavingAllowed()) {
-            settings.setBlockBGColor(colorPickerBG.getColor());
-            SettingsManager.saveSettingsFile();
-        }
+        super.onBGColorChanged(evt);
     }//GEN-LAST:event_colorPickerBGColorChanged
 
     protected void jComboBoxScaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxScaleActionPerformed
         super.onScaleChanged(evt);
-        if (SettingsManager.isSavingAllowed()) {
-            settings.setBlockScale(jComboBoxScale.getSelectedIndex());
-            SettingsManager.saveSettingsFile();
-        }
     }//GEN-LAST:event_jComboBoxScaleActionPerformed
 
     protected void jCheckBoxGridItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBoxGridItemStateChanged
