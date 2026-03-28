@@ -47,4 +47,11 @@ public class Background {
         }
         return tileset.getPalette();
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Background)) return super.equals(obj);
+        Background other = (Background)obj;
+        return this.tileset.equals(other.tileset);
+    }
 }

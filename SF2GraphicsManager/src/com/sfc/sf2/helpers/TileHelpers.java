@@ -38,6 +38,7 @@ public class TileHelpers {
             int tc = i%tilesPerBlock;
             int tr = (i/(tilesPerBlock*blockColumnCount)) % tilesPerBlock;
             newTiles[i] = tiles[bc*(blockTotalTiles*blockRowCount) + br*blockTotalTiles + tc*tilesPerBlock + tr];
+            newTiles[i].setId(i);
         }
         return newTiles;
     }
@@ -56,6 +57,7 @@ public class TileHelpers {
             int tc = i%tilesPerBlock;
             int tr = (i/(tilesPerBlock*blockColumnCount)) % tilesPerBlock;
             newTiles[bc*(blockTotalTiles*blockRowCount) + br*blockTotalTiles + tc*tilesPerBlock + tr] = tiles[i];
+            newTiles[i].setId(i);
         }
         return newTiles;
     }

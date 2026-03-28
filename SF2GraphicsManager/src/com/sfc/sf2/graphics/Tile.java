@@ -191,8 +191,7 @@ public class Tile {
         if (tile.id != this.id) {
             return false;
         }
-        if (!Arrays.equals(this.pixels, tile.pixels)) return false;
-        return true;
+        return Arrays.equals(this.pixels, tile.pixels);
     }
     
     public static Tile paletteSwap(Tile tile, Palette palette) {

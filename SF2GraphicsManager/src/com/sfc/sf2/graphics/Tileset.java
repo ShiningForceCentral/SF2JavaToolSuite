@@ -137,8 +137,7 @@ public class Tileset implements INameable {
     public boolean equals(Object obj) {
         if (!(obj instanceof Tileset)) return super.equals(obj);
         Tileset tileset = (Tileset)obj;
-        if (!Arrays.equals(this.tiles, tileset.tiles)) return false;
-        return true;
+        return Arrays.equals(this.tiles, tileset.tiles);
     }
     
     public Tileset clone() {

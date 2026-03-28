@@ -6,7 +6,6 @@
 package com.sfc.sf2.background.io;
 
 import com.sfc.sf2.background.Background;
-import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.core.io.AbstractDisassemblyProcessor;
 import com.sfc.sf2.core.io.DisassemblyException;
 import com.sfc.sf2.graphics.Tile;
