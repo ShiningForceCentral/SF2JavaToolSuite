@@ -8,6 +8,7 @@ package com.sfc.sf2.battlesprite.animation;
 import com.sfc.sf2.battlesprite.BattleSprite;
 import com.sfc.sf2.battlesprite.BattleSprite.BattleSpriteType;
 import com.sfc.sf2.core.INameable;
+import java.util.Arrays;
 
 /**
  *
@@ -93,5 +94,18 @@ public class BattleSpriteAnimation implements INameable {
     public static BattleSpriteAnimation EmptyAnimation(BattleSprite battleSprite) {
         BattleSpriteAnimationFrame[] frames = new BattleSpriteAnimationFrame[] { BattleSpriteAnimationFrame.EmptyFrame() };
         return new BattleSpriteAnimation("Empty Anim", battleSprite, frames, (byte)0, (byte)0, true);
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof BattleSpriteAnimation)) return super.equals(obj);
+        BattleSpriteAnimation other = (BattleSpriteAnimation)obj;
+        if (!this.name.equals(other.name)) return false;
+        if (!this.battleSprite.equals(other.battleSprite)) return false;
+        if (!Arrays.equals(this.frames, other.frames)) return false;
+        if (this.spellInitFrame != other.spellInitFrame) return false;
+        if (this.spellAnim != other.spellAnim) return false;
+        if (this.endSpellAnim != other.endSpellAnim) return false;
+        return true;
     }
 }
