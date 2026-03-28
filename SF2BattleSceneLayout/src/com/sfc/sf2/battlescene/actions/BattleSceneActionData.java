@@ -33,7 +33,7 @@ public class BattleSceneActionData implements IActionData<BattleSceneActionData>
 
     @Override
     public boolean isInvalidated(BattleSceneActionData other) {
-        return background.getIndex() == other.background.getIndex() && ground.getName().equals(other.ground.getName());
+        return background.equals(other.background) && ground.equals(other.ground);
     }
 
     @Override
