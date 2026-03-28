@@ -681,13 +681,19 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
     }//GEN-LAST:event_jFrameActionHistoryWindowOpened
 
     private void jButtonUndoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUndoActionPerformed
+        boolean alwaysOnTop = jFrameActionHistory.isAlwaysOnTop();
+        jFrameActionHistory.setAlwaysOnTop(true);
         ActionManager.undo();
         updateActionHistorySelection();
+        jFrameActionHistory.setAlwaysOnTop(alwaysOnTop);
     }//GEN-LAST:event_jButtonUndoActionPerformed
 
     private void jButtonRedoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRedoActionPerformed
+        boolean alwaysOnTop = jFrameActionHistory.isAlwaysOnTop();
+        jFrameActionHistory.setAlwaysOnTop(true);
         ActionManager.redo();
         updateActionHistorySelection();
+        jFrameActionHistory.setAlwaysOnTop(alwaysOnTop);
     }//GEN-LAST:event_jButtonRedoActionPerformed
 
     private void jButtonClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonClearActionPerformed
