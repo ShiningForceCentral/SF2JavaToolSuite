@@ -1322,7 +1322,7 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
                         MapLayoutBlock[] blocks = layout.getBlocks();
                         for(int j=0; j < height; j++) {
                             for (int i=0; i < width;i++){
-                                copyBlocks[i][j] = blocks[xStart+i+(yStart+j)*BLOCK_WIDTH];
+                                copyBlocks[i][j] = blocks[xStart+i+(yStart+j)*BLOCK_WIDTH].clone();
                             }
                         }
                         MapCopyBlocksActionData newValue = new MapCopyBlocksActionData(xStart, yStart, copyBlocks);

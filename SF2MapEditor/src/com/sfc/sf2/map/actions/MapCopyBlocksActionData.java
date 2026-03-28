@@ -60,6 +60,10 @@ public class MapCopyBlocksActionData implements IActionData<MapCopyBlocksActionD
 
     @Override
     public String toString() {
-        return String.format("Copy tiles x: %d, y: %d, w: %d, h: %d", x, y, copyData.length, copyData[0].length);
+        if (copyData == null) {
+            return "NULL";
+        } else {
+            return String.format("Copy tiles x: %d, y: %d, w: %d, h: %d", x, y, copyData.length, copyData[0].length);
+        }
     }
 }
