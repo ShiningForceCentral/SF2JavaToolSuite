@@ -7,6 +7,7 @@ package com.sfc.sf2.dialog.properties.actions;
 
 import com.sfc.sf2.core.actions.IActionData;
 import com.sfc.sf2.dialog.properties.DialogProperty;
+import java.util.Arrays;
 
 /**
  *
@@ -26,7 +27,7 @@ public class DialogPropertiesActionData implements IActionData<DialogPropertiesA
 
     @Override
     public boolean isInvalidated(DialogPropertiesActionData other) {
-        return this.properties.equals(other.properties);
+        return Arrays.equals(this.properties, other.properties);
     }
 
     @Override

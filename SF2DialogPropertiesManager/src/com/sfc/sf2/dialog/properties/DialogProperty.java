@@ -53,4 +53,11 @@ public class DialogProperty {
     public static DialogProperty emptyDialogPropertiesEntry() {
         return new DialogProperty("EMPTY", "EMPTY", "EMPTY");
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof DialogProperty)) return super.equals(obj);
+        DialogProperty other = (DialogProperty)obj;
+        return this.spriteName.equals(other.spriteName) && this.portraitName.equals(other.portraitName) && this.sfxName.equals(other.sfxName);
+    }
 }
