@@ -6,6 +6,7 @@
 package com.sfc.sf2.weaponsprite.gui;
 
 import com.sfc.sf2.core.actions.ActionManager;
+import com.sfc.sf2.core.actions.CustomAction;
 import com.sfc.sf2.core.actions.NonCombinableAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
@@ -13,6 +14,7 @@ import com.sfc.sf2.helpers.PathHelpers;
 import com.sfc.sf2.palette.Palette;
 import com.sfc.sf2.weaponsprite.WeaponSprite;
 import com.sfc.sf2.weaponsprite.WeaponSpriteManager;
+import com.sfc.sf2.weaponsprite.actions.WeaponSpriteActionData;
 import java.nio.file.Path;
 import java.util.logging.Level;
 import javax.swing.JComboBox;
@@ -41,26 +43,32 @@ public class WeaponSpriteMainEditor extends AbstractMainEditor {
     @Override
     protected void onDataLoaded() {
         super.onDataLoaded();
-        
-        ActionManager.setAndExecuteAction(new NonCombinableAction<WeaponSprite>(this, "Weapon Sprite Imported", this::actionWeaponLoaded, weaponspriteManager.getWeaponsprite(), weaponSpriteLayoutPanel.getWeaponSprite()));
+        WeaponSpriteActionData newValue = new WeaponSpriteActionData(weaponspriteManager.getWeaponsprite(), weaponspriteManager.getPalettes());
+        WeaponSpriteActionData oldValue = new WeaponSpriteActionData(weaponSpriteLayoutPanel.getWeaponSprite(), weaponSpriteLayoutPanel.getPalettes());
+        ActionManager.setAndExecuteAction(new CustomAction<WeaponSpriteActionData>(this, "Weapon Sprite Imported", this::actionWeaponLoaded, newValue, oldValue));
     }
     
-    private void actionWeaponLoaded(WeaponSprite weaponSprite) {
-        JComboBox paletteComboBox = viewPanel1.getjComboBoxPalette();
-        int selectedPalette = paletteComboBox.getSelectedIndex();
-        paletteComboBox.removeAllItems();
-        Palette[] palettes = weaponspriteManager.getPalettes();
-        for (int i = 0; i < palettes.length; i++) {
-            paletteComboBox.addItem(palettes[i].getName());
+    private void actionWeaponLoaded(WeaponSpriteActionData value) {
+        if (value == null || value.weaponSprite() == null) {
+            weaponSpriteLayoutPanel.setPalettes(null);
+            weaponSpriteLayoutPanel.setWeaponSprite(null);
+        } else {
+            JComboBox paletteComboBox = viewPanel1.getjComboBoxPalette();
+            int selectedPalette = paletteComboBox.getSelectedIndex();
+            paletteComboBox.removeAllItems();
+            Palette[] palettes = value.palettes();
+            for (int i = 0; i < palettes.length; i++) {
+                paletteComboBox.addItem(palettes[i].getName());
+            }
+            if (selectedPalette < 0 || selectedPalette >= paletteComboBox.getItemCount()) {
+                selectedPalette = 0;
+            }
+            paletteComboBox.setSelectedIndex(selectedPalette);
+
+            weaponSpriteLayoutPanel.setPalettes(value.palettes());
+            weaponSpriteLayoutPanel.setPaletteIndex(viewPanel1.getjComboBoxPalette().getSelectedIndex());
+            weaponSpriteLayoutPanel.setWeaponSprite(value.weaponSprite());
         }
-        if (selectedPalette < 0 || selectedPalette >= paletteComboBox.getItemCount()) {
-            selectedPalette = 0;
-        }
-        paletteComboBox.setSelectedIndex(selectedPalette);
-        
-        weaponSpriteLayoutPanel.setPalettes(weaponspriteManager.getPalettes());
-        weaponSpriteLayoutPanel.setPaletteIndex(viewPanel1.getjComboBoxPalette().getSelectedIndex());
-        weaponSpriteLayoutPanel.setWeaponSprite(weaponSprite);
     }
     
     /**
