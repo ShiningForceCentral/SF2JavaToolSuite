@@ -23,8 +23,10 @@ public class LayoutAnimator extends BaseLayoutComponent implements ActionListene
     private Timer idleTimer = null;
     private int currentFrame = 0;
     private int frameMax;
+    private int finalFrameDelay = 0;
     private boolean variableSpeed;
     private boolean loop;
+    private boolean isFinalFrameDelay = false;
     
     public LayoutAnimator(AnimationController controller) {
         super();
@@ -74,18 +76,20 @@ public class LayoutAnimator extends BaseLayoutComponent implements ActionListene
     }
     
     public void startAnimation(int speed) {
-        startAnimation(speed, 100000, true, false);
+        startAnimation(speed, 100000, true, finalFrameDelay, false);
     }
     
-    public void startAnimation(int speed, int frameMax, boolean loop) {
-        startAnimation(speed, frameMax, loop, false);
+    public void startAnimation(int speed, int frameMax, boolean loop, int finalFrameDelay) {
+        startAnimation(speed, frameMax, loop, finalFrameDelay, false);
     }
     
-    public void startAnimation(int speed, int frameMax, boolean loop, boolean variableAnimationSpeed) {
+    public void startAnimation(int speed, int frameMax, boolean loop, int finalFrameDelay, boolean variableAnimationSpeed) {
         this.loop = loop;
         this.currentFrame = 0;
         this.frameMax = frameMax;
         this.variableSpeed = variableAnimationSpeed;
+        this.finalFrameDelay = finalFrameDelay;
+        this.isFinalFrameDelay = false;
         if (!isEnabled()) {
             currentFrame = 0;
             idleTimer = new Timer(speed*1000/60, this);
@@ -112,17 +116,21 @@ public class LayoutAnimator extends BaseLayoutComponent implements ActionListene
         if (currentFrame > frameMax) {
             if (loop) {
                 currentFrame=0;
+            } else if (finalFrameDelay > 0 && !isFinalFrameDelay) {
+                isFinalFrameDelay = true;
+                currentFrame = frameMax;
             } else {
+                currentFrame = 0;
+                isFinalFrameDelay = false;
                 stopAnimation();
-                return;
             }
         }
         AnimationFrameEvent evt = new AnimationFrameEvent(currentFrame);
         for (int i = 0; i < animationListeners.size(); i++) {
             animationListeners.get(i).animationFrameUpdated(evt);
         }
-        if (animationController != null && variableSpeed) {
-            int delay = animationController.getAnimationFrameSpeed(currentFrame)*1000/60;
+        if (isAnimating() && animationController != null && variableSpeed) {
+            int delay = isFinalFrameDelay ? finalFrameDelay : animationController.getAnimationFrameSpeed(currentFrame)*1000/60;
             idleTimer.setInitialDelay(delay);
             idleTimer.setDelay(delay);
             idleTimer.restart();

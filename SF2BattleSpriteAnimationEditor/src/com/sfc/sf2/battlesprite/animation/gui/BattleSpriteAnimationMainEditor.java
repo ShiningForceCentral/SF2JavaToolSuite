@@ -878,7 +878,7 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
         if (battleSpriteAnimationLayoutPanel.hasData()) {
             int speed = battleSpriteAnimationLayoutPanel.getAnimation().getFrames()[0].getDuration();
             int frames = battleSpriteAnimationLayoutPanel.getAnimation().getFrameCount()-1;
-            battleSpriteAnimationLayoutPanel.getAnimator().startAnimation(speed, frames, false, true);
+            battleSpriteAnimationLayoutPanel.getAnimator().startAnimation(speed, frames, false, 500, true);
         }
     }//GEN-LAST:event_jButtonPlayAnimActionPerformed
 
@@ -924,7 +924,7 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
         BattleSprite battleSprite = battleSpriteAnimationLayoutPanel.getAnimation().getBattleSprite();
         if (battleSprite != null && battleSpriteAnimationLayoutPanel.hasData()) {
             if (jCheckBoxIdle.isSelected()) {
-                battleSpriteAnimationLayoutPanel.getAnimator().startAnimation(battleSprite.getAnimSpeed(), 1, true, false);
+                battleSpriteAnimationLayoutPanel.getAnimator().startAnimation(battleSprite.getAnimSpeed(), 1, true, 0, false);
             } else {
                 battleSpriteAnimationLayoutPanel.getAnimator().stopAnimation();
             }
