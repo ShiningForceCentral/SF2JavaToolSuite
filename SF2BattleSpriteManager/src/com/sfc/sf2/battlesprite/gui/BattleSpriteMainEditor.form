@@ -841,7 +841,7 @@
                             </Component>
                             <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton2">
                               <Properties>
-                                <Property name="messageText" type="java.lang.String" value="&lt;html&gt;&lt;b&gt;Status marker offset :&lt;/b&gt; Indicates where status effects will be drawn from (e.g. sleep effect).&lt;br&gt;X,Y offset from the frame top-left corner of the battlesprite.&lt;br&gt;Generally placed around the head of the battlesprite.&lt;br&gt;&lt;/html&gt;"/>
+                                <Property name="messageText" type="java.lang.String" value="&lt;html&gt;&lt;b&gt;Status marker offset :&lt;/b&gt; Indicates where the status effects will be drawn from (e.g. sleep effect).&lt;br&gt;X,Y offset from the frame top-left corner of the battlesprite.&lt;br&gt;Should generally be placed around the head of the idle battlesprite.&lt;br&gt;&lt;br&gt;&lt;b&gt;INFO :&lt;/b&gt; You can click and drag on the battle sprite to move the status marker.&lt;/html&gt;"/>
                                 <Property name="text" type="java.lang.String" value=""/>
                               </Properties>
                             </Component>

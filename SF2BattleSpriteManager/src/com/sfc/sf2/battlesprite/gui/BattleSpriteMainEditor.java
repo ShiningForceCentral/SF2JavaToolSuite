@@ -543,7 +543,7 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
         infoButton1.setMessageText("<html><b>Idle anim speed :</b> The rate that the idle anim (first 2 frames) updates.<br>60 = 1 second. Lower is faster.</html>");
         infoButton1.setText("");
 
-        infoButton2.setMessageText("<html><b>Status marker offset :</b> Indicates where status effects will be drawn from (e.g. sleep effect).<br>X,Y offset from the frame top-left corner of the battlesprite.<br>Generally placed around the head of the battlesprite.<br></html>");
+        infoButton2.setMessageText("<html><b>Status marker offset :</b> Indicates where the status effects will be drawn from (e.g. sleep effect).<br>X,Y offset from the frame top-left corner of the battlesprite.<br>Should generally be placed around the head of the idle battlesprite.<br><br><b>INFO :</b> You can click and drag on the battle sprite to move the status marker.</html>");
         infoButton2.setText("");
 
         javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);

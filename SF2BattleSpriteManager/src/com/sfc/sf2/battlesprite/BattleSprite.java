@@ -8,6 +8,7 @@ package com.sfc.sf2.battlesprite;
 import com.sfc.sf2.core.INameable;
 import com.sfc.sf2.graphics.Tileset;
 import com.sfc.sf2.palette.Palette;
+import java.awt.Point;
 import java.util.Arrays;
 
 /**
@@ -108,6 +109,15 @@ public class BattleSprite implements INameable {
 
     public void setAnimSpeed(int animSpeed) {
         this.animSpeed = animSpeed;
+    }
+
+    public Point getStatusOffsetPos() {
+        return new Point(statusOffsetX, statusOffsetY);
+    }
+
+    public void setStatusOffsetPos(Point point) {
+        this.statusOffsetX = (byte)point.x;
+        this.statusOffsetY = (byte)point.y;
     }
 
     public byte getStatusOffsetX() {
