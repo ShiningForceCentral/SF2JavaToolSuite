@@ -57,4 +57,11 @@ public class Icon implements INameable {
             tileset.clearIndexedColorImage(alsoClearTiles);
         }
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Icon)) return super.equals(obj);
+        Icon other = (Icon)obj;
+        return this.tileset.equals(other.tileset);
+    }
 }

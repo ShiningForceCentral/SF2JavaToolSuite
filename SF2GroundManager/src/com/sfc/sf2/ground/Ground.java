@@ -41,4 +41,11 @@ public class Ground implements INameable {
         }
         return tileset.getPalette();
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Ground)) return super.equals(obj);
+        Ground other = (Ground)obj;
+        return this.tileset.equals(other.tileset);
+    }
 }
