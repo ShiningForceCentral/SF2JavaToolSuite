@@ -8,6 +8,7 @@ package com.sfc.sf2.battlesprite;
 import com.sfc.sf2.core.INameable;
 import com.sfc.sf2.graphics.Tileset;
 import com.sfc.sf2.palette.Palette;
+import java.util.Arrays;
 
 /**
  *
@@ -132,5 +133,20 @@ public class BattleSprite implements INameable {
         for (int i = 0; i < frames.length; i++) {
             frames[i].clearIndexedColorImage(alsoClearTiles);
         }
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof BattleSprite)) return super.equals(obj);
+        BattleSprite other = (BattleSprite)obj;
+        if (!this.name.equals(other.name)) return false;
+        if (!this.type.equals(other.type)) return false;
+        if (!Arrays.equals(this.palettes, other.palettes)) return false;
+        if (this.currentPaletteIndex != other.currentPaletteIndex) return false;
+        if (!Arrays.equals(this.frames, other.frames)) return false;
+        if (this.animSpeed != other.animSpeed) return false;
+        if (this.statusOffsetX != other.statusOffsetX) return false;
+        if (this.statusOffsetY != other.statusOffsetY) return false;
+        return true;
     }
 }

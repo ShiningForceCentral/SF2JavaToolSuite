@@ -179,7 +179,7 @@ public class BattlespriteViewPanel extends AbstractViewPanel<BattleSpriteLayoutP
         if (!ActionManager.isActionTriggering()) {
             ActionManager.setActionWithoutExecute(new ComboAction(jComboBoxPalette, (int)jComboBoxPalette.getSelectedIndex(), layoutPanel.getBattleSprite().getCurrentPaletteIndex()));
         }
-        if (layoutPanel != null && jComboBoxPalette.getSelectedIndex() != layoutPanel.getBattleSprite().getCurrentPaletteIndex()) {
+        if (layoutPanel != null && layoutPanel.getBattleSprite() != null && jComboBoxPalette.getSelectedIndex() != layoutPanel.getBattleSprite().getCurrentPaletteIndex()) {
             layoutPanel.getBattleSprite().setCurrentPaletteIndex(jComboBoxPalette.getSelectedIndex());
             layoutPanel.redraw();
         }
