@@ -46,6 +46,13 @@ public class AIPoint {
     }
     
     @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof AIPoint)) return super.equals(obj);
+        AIPoint other = (AIPoint)obj;
+        return this.x == other.x && this.y == other.y;
+    }
+    
+    @Override
     public AIPoint clone() {
         return new AIPoint(x, y);
     }

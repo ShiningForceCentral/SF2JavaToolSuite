@@ -6,6 +6,7 @@
 package com.sfc.sf2.battle;
 
 import java.awt.Point;
+import java.util.Arrays;
 
 /**
  *
@@ -55,6 +56,13 @@ public class AIRegion {
     
     public void setPoint(int index, Point point) {
         points[index] = point;
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof AIRegion)) return super.equals(obj);
+        AIRegion other = (AIRegion)obj;
+        return this.type == other.type && Arrays.equals(this.points, other.points);
     }
     
     @Override

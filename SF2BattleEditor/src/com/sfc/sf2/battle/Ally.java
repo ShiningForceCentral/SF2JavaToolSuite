@@ -44,6 +44,13 @@ public class Ally {
     public void setY(int y) {
         this.y = y;
     }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Ally)) return super.equals(obj);
+        Ally other = (Ally)obj;
+        return this.x == other.x && this.y == other.y;
+    }
 
     @Override
     public Ally clone() {

@@ -165,6 +165,27 @@ public class Enemy {
     public void setSpawnParams(String spawnParams) {
         this.spawnParams = spawnParams;
     }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Enemy)) return super.equals(obj);
+        Enemy other = (Enemy)obj;
+        if (!this.enemyData.equals(other.enemyData)) return false;
+        if (this.x != other.x) return false;
+        if (this.y != other.y) return false;
+        if (!this.ai.equals(other.ai)) return false;
+        if (!this.item.equals(other.item)) return false;
+        if (this.itemFlags == null ? other.itemFlags != null : !this.itemFlags.equals(other.itemFlags)) return false;
+        if (!this.moveOrder.equals(other.moveOrder)) return false;
+        if (this.moveOrderTarget != other.moveOrderTarget) return false;
+        if (this.triggerRegion1 != other.triggerRegion1) return false;
+        if (this.triggerRegion2 != other.triggerRegion2) return false;
+        if (!this.backupMoveOrder.equals(other.backupMoveOrder)) return false;
+        if (this.backupMoveOrderTarget != other.backupMoveOrderTarget) return false;
+        if (this.unknown != other.unknown) return false;
+        if (!this.spawnParams.equals(other.spawnParams)) return false;
+        return true;
+    }
 
     @Override
     public Enemy clone() {
