@@ -148,6 +148,9 @@ public abstract class AbstractTableModel<T> extends javax.swing.table.AbstractTa
         actionSetValueAt(data.row(), data.column(), data.data());
         linkedTable.jTable.clearSelection();
         linkedTable.jTable.setRowSelectionInterval(data.row(), data.row());
+        if (ActionManager.isActionTriggering()) {
+            linkedTable.jTable.scrollRectToVisible(linkedTable.jTable.getCellRect(data.row(), 0, true));
+        }
     }
     
     private void actionSetValueAt(int row, int col, Object value) {

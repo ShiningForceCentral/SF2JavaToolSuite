@@ -417,13 +417,23 @@ public class Table extends javax.swing.JPanel {
     }//GEN-LAST:event_jButtonDownActionPerformed
         
     private void actionSetTableData(TableActionData data) {
+        int selMin = Integer.MAX_VALUE;
+        int selMax = Integer.MIN_VALUE;
         tableModel.setTableData(data.tableData());
         jTable.clearSelection();
         SelectionInterval[] selection = data.selection();
         for (int i = 0; i < selection.length; i++) {
             if (selection[i].start() != -1 && selection[i].end() != -1) {
                 jTable.addRowSelectionInterval(selection[i].start(), selection[i].end());
+                if (ActionManager.isActionTriggering()) {
+                    if (selection[i].start() < selMin) selMin = selection[i].start();
+                    if (selection[i].end() > selMax) selMax = selection[i].end();
+                }
             }
+        }
+        if (ActionManager.isActionTriggering()) {
+            int index = selMin + (selMax-selMin)/2;
+            jTable.scrollRectToVisible(jTable.getCellRect(index, 0, true));
         }
     }
     
