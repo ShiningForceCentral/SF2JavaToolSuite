@@ -22,13 +22,13 @@ public class MultiComboAction extends BasicAction<String[]> {
     
     @Override
     public void execute() {
-        comboBox.setSelected(newValue);
+        comboBox.setSelectedItem(newValue);
         super.execute();
     }
 
     @Override
     public void undo() {
-        comboBox.setSelected(oldValue);
+        comboBox.setSelectedItem(oldValue);
         super.undo();
     }
 
