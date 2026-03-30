@@ -54,6 +54,39 @@ public class MultiComboBox extends JComboBox<CheckItem> {
     }
 
     @Override
+    public void setSelectedItem(Object data) {
+        String[] names = null;
+        if (data instanceof String[]) {
+            names = (String[])data;
+        } else if (data instanceof String) {
+            names = ((String)data).split("\\|");
+            for (int i = 0; i < names.length; i++) {
+                if (names[i].length() > 0 && names[i].charAt(0) == ' ')
+                    names[i] = names[i].substring(1);
+            }
+        }
+        
+        if (names != null) {
+            ComboBoxModel<CheckItem> model = getModel();
+            for (int m = 0; m < model.getSize(); m++) {
+                CheckItem item = model.getElementAt(m);
+                item.setSelected(false);
+                for (int i = 0; i < names.length; i++) {
+                    if (item.item.equals(names[i])) {
+                        item.setSelected(true);
+                        model.setSelectedItem(item);
+                        break;
+                    }
+                }
+            }
+        } else {
+            super.setSelectedItem(data);
+        }
+    }
+    
+    
+
+    @Override
     public Object[] getSelectedObjects() {
         ArrayList<Object> list = new ArrayList<>();
         ComboBoxModel<CheckItem> model = getModel();
@@ -206,7 +239,7 @@ public class MultiComboBox extends JComboBox<CheckItem> {
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < model.getSize(); i++) {
                 if (model.getElementAt(i).isSelected()) {
-                    if (sb.length() > 0) sb.append(", ");
+                    if (sb.length() > 0) sb.append("|");
                     sb.append(model.getElementAt(i).toString());
                 }
             }
