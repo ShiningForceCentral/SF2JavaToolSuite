@@ -300,7 +300,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
         jSplitPane2 = new javax.swing.JSplitPane();
         jPanel9 = new javax.swing.JPanel();
         fileButtonEnums = new com.sfc.sf2.core.gui.controls.FileButton();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jTabbedPaneImportExport = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
         accordionPanel1 = new com.sfc.sf2.core.gui.controls.AccordionPanel();
         fileButtonPaletteEntries = new com.sfc.sf2.core.gui.controls.FileButton();
@@ -379,7 +379,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
         jSplitPane3 = new javax.swing.JSplitPane();
         jPanel8 = new javax.swing.JPanel();
         jSplitPane4 = new javax.swing.JSplitPane();
-        jTabbedPane6 = new javax.swing.JTabbedPane();
+        jTabbedPaneBlockset = new javax.swing.JTabbedPane();
         jPanel11 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         mapBlocksetLayoutPanel = new com.sfc.sf2.map.block.gui.MapBlocksetLayoutPanel();
@@ -403,7 +403,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
         tilesetLayoutPanelModified = new com.sfc.sf2.map.animation.gui.MapModifiedTilesetLayoutPanel();
         tilesetAnimViewPanel1 = new com.sfc.sf2.map.animation.gui.TilesetAnimViewPanel();
         jPanel48 = new javax.swing.JPanel();
-        jTabbedPane5 = new javax.swing.JTabbedPane();
+        jTabbedPaneEditor = new javax.swing.JTabbedPane();
         jPanel41 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -444,7 +444,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
         infoButton19 = new com.sfc.sf2.core.gui.controls.InfoButton();
         infoButton20 = new com.sfc.sf2.core.gui.controls.InfoButton();
         jPanel20 = new javax.swing.JPanel();
-        jTabbedPane2 = new javax.swing.JTabbedPane();
+        jTabbedPaneMapEditModes = new javax.swing.JTabbedPane();
         jPanel4 = new javax.swing.JPanel();
         jPanel14 = new javax.swing.JPanel();
         jPanel16 = new javax.swing.JPanel();
@@ -495,12 +495,12 @@ public class MapEditorMainEditor extends AbstractMainEditor {
         jSeparator1 = new javax.swing.JSeparator();
         tableAreas = new com.sfc.sf2.core.gui.controls.Table();
         jPanel22 = new javax.swing.JPanel();
-        jTabbedPane3 = new javax.swing.JTabbedPane();
+        jTabbedPaneCopyFlags = new javax.swing.JTabbedPane();
         tableFlagCopies = new com.sfc.sf2.core.gui.controls.Table();
         tableStepCopies = new com.sfc.sf2.core.gui.controls.Table();
         tableRoofCopies = new com.sfc.sf2.core.gui.controls.Table();
         tableWarps = new com.sfc.sf2.core.gui.controls.Table();
-        jTabbedPane4 = new javax.swing.JTabbedPane();
+        jTabbedPaneItems = new javax.swing.JTabbedPane();
         tableChestItems = new com.sfc.sf2.core.gui.controls.Table();
         tableOtherItems = new com.sfc.sf2.core.gui.controls.Table();
         console1 = new com.sfc.sf2.core.gui.controls.Console();
@@ -526,7 +526,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
         fileButtonEnums.setLabelText("Sf2enums :");
         fileButtonEnums.setName("Import Enums"); // NOI18N
 
-        jTabbedPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        jTabbedPaneImportExport.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         jPanel3.setPreferredSize(new java.awt.Dimension(590, 135));
 
@@ -692,7 +692,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Entries", jPanel3);
+        jTabbedPaneImportExport.addTab("Entries", jPanel3);
 
         accordionPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Map files"));
 
@@ -945,7 +945,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
                         .addContainerGap())
                 );
 
-                jTabbedPane1.addTab("Map folder", jPanel18);
+                jTabbedPaneImportExport.addTab("Map folder", jPanel18);
 
                 jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Import :"));
 
@@ -1157,7 +1157,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
                         .addContainerGap(141, Short.MAX_VALUE))
                 );
 
-                jTabbedPane1.addTab("Raw files", jPanel19);
+                jTabbedPaneImportExport.addTab("Raw files", jPanel19);
 
                 jPanel34.setBorder(javax.swing.BorderFactory.createTitledBorder("Blockset image export"));
 
@@ -1311,7 +1311,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
                         .addContainerGap(403, Short.MAX_VALUE))
                 );
 
-                jTabbedPane1.addTab("Misc.", jPanel40);
+                jTabbedPaneImportExport.addTab("Misc.", jPanel40);
 
                 javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
                 jPanel9.setLayout(jPanel9Layout);
@@ -1320,7 +1320,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)
+                            .addComponent(jTabbedPaneImportExport, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)
                             .addComponent(fileButtonEnums, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                         .addContainerGap())
                 );
@@ -1330,7 +1330,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
                         .addContainerGap()
                         .addComponent(fileButtonEnums, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTabbedPane1)
+                        .addComponent(jTabbedPaneImportExport)
                         .addContainerGap())
                 );
 
@@ -1344,7 +1344,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
                 jSplitPane4.setOneTouchExpandable(true);
                 jSplitPane4.setPreferredSize(new java.awt.Dimension(725, 500));
 
-                jTabbedPane6.setMinimumSize(new java.awt.Dimension(200, 200));
+                jTabbedPaneBlockset.setMinimumSize(new java.awt.Dimension(200, 200));
 
                 jScrollPane3.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
                 jScrollPane3.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -1394,9 +1394,9 @@ public class MapEditorMainEditor extends AbstractMainEditor {
                     .addGroup(jPanel24Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jButtonAddBlock)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                         .addComponent(jButtonCloneBlock)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                         .addComponent(jButtonRemoveBlock)
                         .addContainerGap())
                 );
@@ -1434,7 +1434,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
                         .addContainerGap())
                 );
 
-                jTabbedPane6.addTab("Blockset", jPanel11);
+                jTabbedPaneBlockset.addTab("Blockset", jPanel11);
 
                 jPanel23.setPreferredSize(new java.awt.Dimension(356, 500));
 
@@ -1552,7 +1552,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
                         .addContainerGap()
                         .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane11, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
+                            .addComponent(jScrollPane11, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE)
                             .addComponent(tableAnimFrames, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jScrollPane10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(tilesetAnimViewPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -1565,7 +1565,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tableAnimFrames, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                        .addComponent(tableAnimFrames, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1578,23 +1578,23 @@ public class MapEditorMainEditor extends AbstractMainEditor {
                 jPanel23Layout.setHorizontalGroup(
                     jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel23Layout.createSequentialGroup()
-                        .addComponent(jPanel21, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
+                        .addComponent(jPanel21, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
                         .addContainerGap())
                 );
                 jPanel23Layout.setVerticalGroup(
                     jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel23Layout.createSequentialGroup()
-                        .addComponent(jPanel21, javax.swing.GroupLayout.DEFAULT_SIZE, 603, Short.MAX_VALUE)
+                        .addComponent(jPanel21, javax.swing.GroupLayout.DEFAULT_SIZE, 728, Short.MAX_VALUE)
                         .addGap(0, 0, Short.MAX_VALUE))
                 );
 
-                jTabbedPane6.addTab("Animation", jPanel23);
+                jTabbedPaneBlockset.addTab("Animation", jPanel23);
 
-                jSplitPane4.setLeftComponent(jTabbedPane6);
+                jSplitPane4.setLeftComponent(jTabbedPaneBlockset);
 
-                jTabbedPane5.addChangeListener(new javax.swing.event.ChangeListener() {
+                jTabbedPaneEditor.addChangeListener(new javax.swing.event.ChangeListener() {
                     public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                        jTabbedPane5StateChanged(evt);
+                        jTabbedPaneEditorStateChanged(evt);
                     }
                 });
 
@@ -1813,7 +1813,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
 
                 jPanel1.getAccessibleContext().setAccessibleName("");
 
-                jTabbedPane5.addTab("Map Editor", jPanel41);
+                jTabbedPaneEditor.addTab("Map Editor", jPanel41);
 
                 jPanel43.setMinimumSize(new java.awt.Dimension(340, 200));
                 jPanel43.setName(""); // NOI18N
@@ -2118,7 +2118,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
                         .addContainerGap())
                 );
 
-                jTabbedPane5.addTab("Block Editor", jPanel42);
+                jTabbedPaneEditor.addTab("Block Editor", jPanel42);
 
                 javax.swing.GroupLayout jPanel48Layout = new javax.swing.GroupLayout(jPanel48);
                 jPanel48.setLayout(jPanel48Layout);
@@ -2126,14 +2126,14 @@ public class MapEditorMainEditor extends AbstractMainEditor {
                     jPanel48Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel48Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jTabbedPane5)
+                        .addComponent(jTabbedPaneEditor)
                         .addContainerGap())
                 );
                 jPanel48Layout.setVerticalGroup(
                     jPanel48Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel48Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jTabbedPane5)
+                        .addComponent(jTabbedPaneEditor)
                         .addContainerGap())
                 );
 
@@ -2152,10 +2152,10 @@ public class MapEditorMainEditor extends AbstractMainEditor {
 
                 jSplitPane3.setTopComponent(jPanel8);
 
-                jTabbedPane2.setMinimumSize(new java.awt.Dimension(390, 185));
-                jTabbedPane2.addChangeListener(new javax.swing.event.ChangeListener() {
+                jTabbedPaneMapEditModes.setMinimumSize(new java.awt.Dimension(390, 185));
+                jTabbedPaneMapEditModes.addChangeListener(new javax.swing.event.ChangeListener() {
                     public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                        jTabbedPane2StateChanged(evt);
+                        jTabbedPaneMapEditModesStateChanged(evt);
                     }
                 });
 
@@ -2714,7 +2714,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 );
 
-                jTabbedPane2.addTab("Map Edit", jPanel4);
+                jTabbedPaneMapEditModes.addTab("Map Edit", jPanel4);
 
                 tableAreas.setBorder(null);
                 tableAreas.setInfoMessage("<html><b>Areas:</b> Indicates areas for bounding the camera (forcing it to stay within the region), defining upper (roof) layers, and for foreground/background effects.<br>- L1 X/Y/X'/Y': Defines a rectangle representing the area. The game camera is bound to this space.<br>- L2 F X/Y: Defines the foreground (upper) layer for the area. Used to define roofs, treetops, etc.<br>- L2 B X/Y: Defines the backgroun layer. TODO: What is it used for.<br>- L1/L2 P X/Y: Defines the parallax effect of the layer 1 or 2. Parallax causes layers to scroll at different speeds as the player character moves.<br>- L1/2 S X/Y: Defines the autoscroll speed for layers 1 & 2. Autoscroll will cause the layer to constantly scroll.<br>- Music: The music to start playing when the player character enters the area.<br><br><b>When Area row is selected:</b>Left-click to drag the closest corner or point of the area (look for the circular blue handle).</html>");
@@ -2724,11 +2724,11 @@ public class MapEditorMainEditor extends AbstractMainEditor {
                 tableAreas.setSpinnerNumberEditor(true);
                 tableAreas.setMinimumSize(new java.awt.Dimension(150, 150));
                 tableAreas.setPreferredSize(new java.awt.Dimension(260, 150));
-                jTabbedPane2.addTab("Areas", tableAreas);
+                jTabbedPaneMapEditModes.addTab("Areas", tableAreas);
 
-                jTabbedPane3.addChangeListener(new javax.swing.event.ChangeListener() {
+                jTabbedPaneCopyFlags.addChangeListener(new javax.swing.event.ChangeListener() {
                     public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                        jTabbedPane3StateChanged(evt);
+                        jTabbedPaneCopyFlagsStateChanged(evt);
                     }
                 });
 
@@ -2739,7 +2739,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
                 tableFlagCopies.setSingleClickText(true);
                 tableFlagCopies.setSpinnerNumberEditor(true);
                 tableFlagCopies.setMinimumSize(null);
-                jTabbedPane3.addTab("Flag Copies", tableFlagCopies);
+                jTabbedPaneCopyFlags.addTab("Flag Copies", tableFlagCopies);
 
                 tableStepCopies.setBorder(null);
                 tableStepCopies.setInfoMessage("<html><b>Step copies event:</b> If the player character steps on this map block, then copies map blocks in one section of the map to another section.<br>- Trigger X/Y: The trigger position for the step copy.<br>- Source X/Y/X'/Y': Defines a rectangle to copy blocks FROM.<br>- Dest. X/Y: The top-left of the section to copy blocks TO. Uses the width and height from Source.<br>- Comment: Optional comment that is saved to the .asm file.<br><br>NOTE: Step copy triggers before the character enters the Trigger X/Y block. If the Destination X/Y is the same block as the Trigger X/Y, this can then trigger another flag/event from the copied source (e.g. see door Hide flags in most town maps).<br><br><b>When Flag Copy row is selected:</b>TODO.</html>");
@@ -2748,7 +2748,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
                 tableStepCopies.setSingleClickText(true);
                 tableStepCopies.setSpinnerNumberEditor(true);
                 tableStepCopies.setMinimumSize(null);
-                jTabbedPane3.addTab("Step Copies", tableStepCopies);
+                jTabbedPaneCopyFlags.addTab("Step Copies", tableStepCopies);
 
                 tableRoofCopies.setBorder(null);
                 tableRoofCopies.setInfoMessage("<html><b>Roof copy event:</b> If the player character enters the trigger block, then copies map blocks in one section of the upper layer to another section of the upper layer.<br>- Trigger X/Y: The trigger position for the step copy.<br>- Source X/Y/X'/Y': Defines a rectangle to copy blocks FROM. Set Source X/Y both to 255 to automatically detect the source position from the destination, in relation to the 1st area defined.<br>- Dest. X/Y: The top-left of the section to copy blocks TO. Uses the width and height from the Source.<br>- Comment: Optional comment that is saved to the .asm file.<br><br>NOTE: Use Show flags to reverse the previous Roof Copy (i.e. to make the roof appear again).<br><br><b>When Flag Copy row is selected:</b>TODO.</html>");
@@ -2757,20 +2757,20 @@ public class MapEditorMainEditor extends AbstractMainEditor {
                 tableRoofCopies.setSingleClickText(true);
                 tableRoofCopies.setSpinnerNumberEditor(true);
                 tableRoofCopies.setMinimumSize(null);
-                jTabbedPane3.addTab("Roof Copies", tableRoofCopies);
+                jTabbedPaneCopyFlags.addTab("Roof Copies", tableRoofCopies);
 
                 javax.swing.GroupLayout jPanel22Layout = new javax.swing.GroupLayout(jPanel22);
                 jPanel22.setLayout(jPanel22Layout);
                 jPanel22Layout.setHorizontalGroup(
                     jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTabbedPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1108, Short.MAX_VALUE)
+                    .addComponent(jTabbedPaneCopyFlags, javax.swing.GroupLayout.DEFAULT_SIZE, 1108, Short.MAX_VALUE)
                 );
                 jPanel22Layout.setVerticalGroup(
                     jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTabbedPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
+                    .addComponent(jTabbedPaneCopyFlags, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
                 );
 
-                jTabbedPane2.addTab("Block Copies", jPanel22);
+                jTabbedPaneMapEditModes.addTab("Block Copies", jPanel22);
 
                 tableWarps.setBorder(null);
                 tableWarps.setInfoMessage("<html><b>Warp event:</b> Teleports the player to a new position or a new map.<br>- Trigger X/Y: The trigger point for the warp.<br>- Scroll Dir: The direction that the camera scrolls when warping (used for overworld maps).<br> - Dest. Map: The map to warp to. Set to \"CURRENT\" to warp to a different position on the current map.<br>- Dest X/Y: The destination position to warp to (on this map or another.<br>- Facing: The direction to face at the warp destination.<br>- Comment: Optional comment that is saved to the .asm file.<br><br><b>When a warp row is selected:</b> Left click and drag will set the set the Trigger or Destination X/Y position of the selected item event, whichever is closer to the cursor.</html>");
@@ -2779,11 +2779,11 @@ public class MapEditorMainEditor extends AbstractMainEditor {
                 tableWarps.setSingleClickText(true);
                 tableWarps.setSpinnerNumberEditor(true);
                 tableWarps.setMinimumSize(new java.awt.Dimension(260, 150));
-                jTabbedPane2.addTab("Warps", tableWarps);
+                jTabbedPaneMapEditModes.addTab("Warps", tableWarps);
 
-                jTabbedPane4.addChangeListener(new javax.swing.event.ChangeListener() {
+                jTabbedPaneItems.addChangeListener(new javax.swing.event.ChangeListener() {
                     public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                        jTabbedPane4StateChanged(evt);
+                        jTabbedPaneItemsStateChanged(evt);
                     }
                 });
 
@@ -2794,7 +2794,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
                 tableChestItems.setSingleClickText(true);
                 tableChestItems.setSpinnerNumberEditor(true);
                 tableChestItems.setMinimumSize(null);
-                jTabbedPane4.addTab("Chest Items", tableChestItems);
+                jTabbedPaneItems.addTab("Chest Items", tableChestItems);
 
                 tableOtherItems.setBorder(null);
                 tableOtherItems.setInfoMessage("<html><b>Item event:</b> Allows player to aquire items.<br>- X/Y: The position of the item event.<br>- Flag: The flag that is written when the item event is triggered (when the item is aquired).<br> - Flag Info: A helpful description of what the flag value refers to.<br>- Item: The item that is acquired by the event. Set to \"NOTHING\" for no item.<br>- Comment: Optional comment that is saved to the .asm file.<br><br><b>When an item row is selected:</b> Left click will set the new X/Y position of the selected item event.</html>");
@@ -2803,9 +2803,9 @@ public class MapEditorMainEditor extends AbstractMainEditor {
                 tableOtherItems.setSingleClickText(true);
                 tableOtherItems.setSpinnerNumberEditor(true);
                 tableOtherItems.setMinimumSize(null);
-                jTabbedPane4.addTab("Other Items", tableOtherItems);
+                jTabbedPaneItems.addTab("Other Items", tableOtherItems);
 
-                jTabbedPane2.addTab("Items", jTabbedPane4);
+                jTabbedPaneMapEditModes.addTab("Items", jTabbedPaneItems);
 
                 javax.swing.GroupLayout jPanel20Layout = new javax.swing.GroupLayout(jPanel20);
                 jPanel20.setLayout(jPanel20Layout);
@@ -2813,14 +2813,14 @@ public class MapEditorMainEditor extends AbstractMainEditor {
                     jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel20Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jTabbedPaneMapEditModes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())
                 );
                 jPanel20Layout.setVerticalGroup(
                     jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel20Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
+                        .addComponent(jTabbedPaneMapEditModes, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 );
 
@@ -2837,7 +2837,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
                 jPanel15Layout.setVerticalGroup(
                     jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel15Layout.createSequentialGroup()
-                        .addComponent(jSplitPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 844, Short.MAX_VALUE)
+                        .addComponent(jSplitPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 844, Short.MAX_VALUE)
                         .addContainerGap())
                 );
 
@@ -2852,7 +2852,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
                 );
                 layout.setVerticalGroup(
                     layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
+                    .addComponent(jSplitPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1000, Short.MAX_VALUE)
                 );
 
                 setSize(new java.awt.Dimension(1466, 1008));
@@ -3024,13 +3024,13 @@ public class MapEditorMainEditor extends AbstractMainEditor {
         }
     }//GEN-LAST:event_jRadioButtonFlipTileActionPerformed
 
-    private void jTabbedPane2StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane2StateChanged
+    private void jTabbedPaneMapEditModesStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPaneMapEditModesStateChanged
         onTabRelativeCheckboxSet(null, null, MapLayoutPanel.DRAW_MODE_NONE);
         jPanelAreasDisplay.setVisible(false);
         jPanelFlagCopiesDisplay.setVisible(false);
         jPanelStepCopiesDisplay.setVisible(false);
         jPanelRoofCopiesDisplay.setVisible(false);
-        int index = jTabbedPane2.getSelectedIndex();
+        int index = jTabbedPaneMapEditModes.getSelectedIndex();
         mapLayoutPanel.setIsOnActionsTab(index == 0);
         switch (index) {
             case 0:     //Actions & Anims
@@ -3045,17 +3045,17 @@ public class MapEditorMainEditor extends AbstractMainEditor {
             jPanelAreasDisplay.setVisible(true);
             break;
             case 2:     //Block Copies panels
-            jTabbedPane3StateChanged(new ChangeEvent(jTabbedPane3));
+            jTabbedPaneCopyFlagsStateChanged(new ChangeEvent(jTabbedPaneCopyFlags));
             break;
             case 3:     //Warps panel
             onTabRelativeCheckboxSet(mapViewPanel.getjCheckBoxShowWarps(), tableWarps.jTable, MapLayoutPanel.DRAW_MODE_WARPS);
             break;
             case 4:     //Items panel
-            jTabbedPane4StateChanged(new ChangeEvent(jTabbedPane4));
+            jTabbedPaneItemsStateChanged(new ChangeEvent(jTabbedPaneItems));
             break;
         }
         mapLayoutPanel.redraw();
-    }//GEN-LAST:event_jTabbedPane2StateChanged
+    }//GEN-LAST:event_jTabbedPaneMapEditModesStateChanged
 
     private void jSpinnerTilesetLengthStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinnerTilesetLengthStateChanged
         if (!ActionManager.isActionTriggering()) {
@@ -3089,11 +3089,11 @@ public class MapEditorMainEditor extends AbstractMainEditor {
         }
     }//GEN-LAST:event_jSpinnerTilesetIdStateChanged
 
-    private void jTabbedPane4StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane4StateChanged
-        int index = jTabbedPane2.getSelectedIndex();
+    private void jTabbedPaneItemsStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPaneItemsStateChanged
+        int index = jTabbedPaneMapEditModes.getSelectedIndex();
         if (index != 4) return; //Is not on Block copies panel
         onTabRelativeCheckboxSet(null, null, MapLayoutPanel.DRAW_MODE_NONE);
-        index = jTabbedPane4.getSelectedIndex();
+        index = jTabbedPaneItems.getSelectedIndex();
         switch (index) {
             default:
             return;
@@ -3105,17 +3105,17 @@ public class MapEditorMainEditor extends AbstractMainEditor {
             break;
         }
         mapLayoutPanel.redraw();
-    }//GEN-LAST:event_jTabbedPane4StateChanged
+    }//GEN-LAST:event_jTabbedPaneItemsStateChanged
 
-    private void jTabbedPane3StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane3StateChanged
-        int index = jTabbedPane2.getSelectedIndex();
+    private void jTabbedPaneCopyFlagsStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPaneCopyFlagsStateChanged
+        int index = jTabbedPaneMapEditModes.getSelectedIndex();
         if (index != 2) return; //Is not on Block copies panel
         onTabRelativeCheckboxSet(null, null, MapLayoutPanel.DRAW_MODE_NONE);
         jPanelAreasDisplay.setVisible(false);
         jPanelFlagCopiesDisplay.setVisible(false);
         jPanelStepCopiesDisplay.setVisible(false);
         jPanelRoofCopiesDisplay.setVisible(false);
-        index = jTabbedPane3.getSelectedIndex();
+        index = jTabbedPaneCopyFlags.getSelectedIndex();
         switch (index) {
             default:
             return;
@@ -3133,7 +3133,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
             break;
         }
         mapLayoutPanel.redraw();
-    }//GEN-LAST:event_jTabbedPane3StateChanged
+    }//GEN-LAST:event_jTabbedPaneCopyFlagsStateChanged
 
     private void jCheckBox14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox14ActionPerformed
         mapLayoutPanel.setShowRoofCopyResult(jCheckBox14.isSelected());
@@ -3155,15 +3155,15 @@ public class MapEditorMainEditor extends AbstractMainEditor {
         mapLayoutPanel.setShowAreasOverlay(jCheckBoxShowUpperLayer.isSelected());
     }//GEN-LAST:event_jCheckBoxShowUpperLayerActionPerformed
 
-    private void jTabbedPane5StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane5StateChanged
-        int index = jTabbedPane5.getSelectedIndex();
+    private void jTabbedPaneEditorStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPaneEditorStateChanged
+        int index = jTabbedPaneEditor.getSelectedIndex();
         if (index == 1) {   //Is on Block Editor
-            jTabbedPane2.setSelectedIndex(0);
+            jTabbedPaneMapEditModes.setSelectedIndex(0);
         } else if (mapLayoutPanel.getMapLayout() != null) { //Map editor
             mapLayoutPanel.getMapLayout().clearIndexedColorImage(true);
             mapLayoutPanel.redraw();
         }
-    }//GEN-LAST:event_jTabbedPane5StateChanged
+    }//GEN-LAST:event_jTabbedPaneEditorStateChanged
 
     private void jCheckBox26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox26ActionPerformed
         mapLayoutPanel.setSimulateParallax(jCheckBox26.isSelected());
@@ -3329,9 +3329,14 @@ public class MapEditorMainEditor extends AbstractMainEditor {
     }
 
     private void onBlockEdited(ActionEvent e) {
-        mapBlocksetLayoutPanel.getBlockset().clearIndexedColorImage(false);
-        mapBlocksetLayoutPanel.redraw();
-        blockSlotPanelLeft.redraw();
+        if (jTabbedPaneBlockset.getSelectedIndex() == 0) {
+            mapBlocksetLayoutPanel.getBlockset().clearIndexedColorImage(false);
+            mapBlocksetLayoutPanel.redraw();
+            blockSlotPanelLeft.redraw();
+        }
+        if (jTabbedPaneEditor.getSelectedIndex() == 0) {
+            mapLayoutPanel.redraw();
+        }
     }
     
     private void actionMapIdStateChanged(int mapID) {
@@ -3749,12 +3754,12 @@ public class MapEditorMainEditor extends AbstractMainEditor {
     private javax.swing.JSplitPane jSplitPane2;
     private javax.swing.JSplitPane jSplitPane3;
     private javax.swing.JSplitPane jSplitPane4;
-    private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTabbedPane jTabbedPane2;
-    private javax.swing.JTabbedPane jTabbedPane3;
-    private javax.swing.JTabbedPane jTabbedPane4;
-    private javax.swing.JTabbedPane jTabbedPane5;
-    private javax.swing.JTabbedPane jTabbedPane6;
+    private javax.swing.JTabbedPane jTabbedPaneBlockset;
+    private javax.swing.JTabbedPane jTabbedPaneCopyFlags;
+    private javax.swing.JTabbedPane jTabbedPaneEditor;
+    private javax.swing.JTabbedPane jTabbedPaneImportExport;
+    private javax.swing.JTabbedPane jTabbedPaneItems;
+    private javax.swing.JTabbedPane jTabbedPaneMapEditModes;
     private com.sfc.sf2.map.animation.models.MapAnimationFrameTableModel mapAnimationFrameTableModel;
     private com.sfc.sf2.map.models.MapAreaTableModel mapAreaTableModel;
     private com.sfc.sf2.map.block.gui.MapBlocksetLayoutPanel mapBlocksetLayoutPanel;
