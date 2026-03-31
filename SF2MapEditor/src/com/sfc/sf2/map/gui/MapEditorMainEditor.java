@@ -3200,7 +3200,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
         }
         MapBlock block = blockset.getBlocks()[index];
         BlockChangeActionData data = new BlockChangeActionData(block, index);
-        ActionManager.setAndExecuteAction(new CustomAction<BlockChangeActionData>(this, "Remove Block", this::actionRemoveBlock, data, this::actionAddBlock, data));
+        ActionManager.setAndExecuteAction(new CustomAction<BlockChangeActionData>(this, "Remove Block", this::actionRemoveBlock, data, this::actionInsertBlock, data));
     }//GEN-LAST:event_jButtonRemoveBlockActionPerformed
 
     private void jButtonCloneBlockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCloneBlockActionPerformed
@@ -3310,15 +3310,24 @@ public class MapEditorMainEditor extends AbstractMainEditor {
         }
     }//GEN-LAST:event_jRadioButtonSetPriorityItemStateChanged
     
-    private void actionAddBlock(BlockChangeActionData data) {   
+    private void actionAddBlock(BlockChangeActionData data) {
+        //Clone and add the block
+        actionAddBlock(data.index(), data.block(), true);
+    }
+    
+    private void actionInsertBlock(BlockChangeActionData data) {
+        //Insert without cloning
+        actionAddBlock(data.index(), data.block(), false);
+    }
+    
+    private void actionAddBlock(int index, MapBlock block, boolean clone) {//Insert without cloning
         MapBlockset blockset = mapBlocksetLayoutPanel.getBlockset();                                        
-        blockset.insertBlock(data.index(), data.block());
-        mapBlocksetLayoutPanel.setLeftSelectedIndex(data.index());
-        if (data.index() == blockset.getBlocks().length-1) { //Scroll to bottom
+        blockset.insertBlock(index, block, clone);
+        mapBlocksetLayoutPanel.setLeftSelectedIndex(index);
+        if (index == blockset.getBlocks().length-1) { //Scroll to bottom
             mapBlocksetLayoutPanel.centerOnMapPoint(Integer.MAX_VALUE, Integer.MAX_VALUE);
         } else {
-            //TODO focus on seleted
-            //mapBlocksetLayoutPanel.centerOnMapPoint(Integer.MAX_VALUE, Integer.MAX_VALUE);
+            mapBlocksetLayoutPanel.scrollToIndex(index, blockset.getBlocks().length);
         }
     }
     
