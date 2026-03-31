@@ -3025,6 +3025,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
     }//GEN-LAST:event_jRadioButtonFlipTileActionPerformed
 
     private void jTabbedPaneMapEditModesStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPaneMapEditModesStateChanged
+        ActionManager.setExternalActionTriggering(true);
         onTabRelativeCheckboxSet(null, null, MapLayoutPanel.DRAW_MODE_NONE);
         jPanelAreasDisplay.setVisible(false);
         jPanelFlagCopiesDisplay.setVisible(false);
@@ -3055,6 +3056,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
             break;
         }
         mapLayoutPanel.redraw();
+        ActionManager.setExternalActionTriggering(false);
     }//GEN-LAST:event_jTabbedPaneMapEditModesStateChanged
 
     private void jSpinnerTilesetLengthStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinnerTilesetLengthStateChanged
@@ -3092,6 +3094,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
     private void jTabbedPaneItemsStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPaneItemsStateChanged
         int index = jTabbedPaneMapEditModes.getSelectedIndex();
         if (index != 4) return; //Is not on Block copies panel
+        ActionManager.setExternalActionTriggering(true);
         onTabRelativeCheckboxSet(null, null, MapLayoutPanel.DRAW_MODE_NONE);
         index = jTabbedPaneItems.getSelectedIndex();
         switch (index) {
@@ -3105,11 +3108,13 @@ public class MapEditorMainEditor extends AbstractMainEditor {
             break;
         }
         mapLayoutPanel.redraw();
+        ActionManager.setExternalActionTriggering(false);
     }//GEN-LAST:event_jTabbedPaneItemsStateChanged
 
     private void jTabbedPaneCopyFlagsStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPaneCopyFlagsStateChanged
         int index = jTabbedPaneMapEditModes.getSelectedIndex();
         if (index != 2) return; //Is not on Block copies panel
+        ActionManager.setExternalActionTriggering(true);
         onTabRelativeCheckboxSet(null, null, MapLayoutPanel.DRAW_MODE_NONE);
         jPanelAreasDisplay.setVisible(false);
         jPanelFlagCopiesDisplay.setVisible(false);
@@ -3133,6 +3138,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
             break;
         }
         mapLayoutPanel.redraw();
+        ActionManager.setExternalActionTriggering(false);
     }//GEN-LAST:event_jTabbedPaneCopyFlagsStateChanged
 
     private void jCheckBox14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox14ActionPerformed
@@ -3156,6 +3162,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
     }//GEN-LAST:event_jCheckBoxShowUpperLayerActionPerformed
 
     private void jTabbedPaneEditorStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPaneEditorStateChanged
+        ActionManager.setExternalActionTriggering(true);
         int index = jTabbedPaneEditor.getSelectedIndex();
         if (index == 1) {   //Is on Block Editor
             jTabbedPaneMapEditModes.setSelectedIndex(0);
@@ -3163,6 +3170,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
             mapLayoutPanel.getMapLayout().clearIndexedColorImage(true);
             mapLayoutPanel.redraw();
         }
+        ActionManager.setExternalActionTriggering(false);
     }//GEN-LAST:event_jTabbedPaneEditorStateChanged
 
     private void jCheckBox26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox26ActionPerformed
