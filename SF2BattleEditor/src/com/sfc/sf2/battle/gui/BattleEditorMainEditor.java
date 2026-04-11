@@ -22,6 +22,7 @@ import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.core.actions.CustomAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
+import com.sfc.sf2.core.models.combobox.MultiComboBoxTableEditor;
 import com.sfc.sf2.core.settings.SettingsManager;
 import com.sfc.sf2.core.settings.ViewSettings;
 import com.sfc.sf2.helpers.PathHelpers;
@@ -87,6 +88,7 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
         columns = tableEnemies.jTable.getColumnModel();
         columns.getColumn(0).setMaxWidth(30);
         columns.getColumn(1).setMinWidth(70);
+        columns.getColumn(6).setCellEditor(new MultiComboBoxTableEditor());
         columns = tableAIRegions.jTable.getColumnModel();
         columns.getColumn(0).setMaxWidth(30);
         columns = tableAIPoints.jTable.getColumnModel();

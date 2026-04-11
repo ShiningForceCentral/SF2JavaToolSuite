@@ -544,7 +544,7 @@
                                                   <Component id="fileButtonExportPortrait" pref="340" max="32767" attributes="0"/>
                                                   <Group type="102" alignment="1" attributes="0">
                                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                                      <Component id="jButtonExportportrait" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="jButtonExportPortrait" min="-2" max="-2" attributes="0"/>
                                                   </Group>
                                                   <Group type="102" alignment="0" attributes="0">
                                                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
@@ -563,7 +563,7 @@
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="fileButtonExportPortrait" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jButtonExportportrait" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jButtonExportPortrait" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
@@ -586,12 +586,12 @@
                                         <Property name="name" type="java.lang.String" value="Export Portrait" noResource="true"/>
                                       </Properties>
                                     </Component>
-                                    <Component class="javax.swing.JButton" name="jButtonExportportrait">
+                                    <Component class="javax.swing.JButton" name="jButtonExportPortrait">
                                       <Properties>
                                         <Property name="text" type="java.lang.String" value="Export"/>
                                       </Properties>
                                       <Events>
-                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonExportportraitActionPerformed"/>
+                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonExportPortraitActionPerformed"/>
                                       </Events>
                                     </Component>
                                   </SubComponents>

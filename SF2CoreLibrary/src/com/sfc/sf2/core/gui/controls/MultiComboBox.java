@@ -73,9 +73,16 @@ public class MultiComboBox extends JComboBox<CheckItem> {
     }
     
     public void clearSelection() {
+        clearSelection(true);
+    }
+    
+    private void clearSelection(boolean setOnModel) {
         ComboBoxModel<CheckItem> model = getModel();
         for (int i = 0; i < model.getSize(); i++) {
             model.getElementAt(i).setSelected(false);
+        }
+        if (setOnModel) {
+            model.setSelectedItem(null);
         }
     }
     
@@ -97,28 +104,53 @@ public class MultiComboBox extends JComboBox<CheckItem> {
             }
         }
     }
+
+    @Override
+    public void setSelectedItem(Object data) {
+        if (data instanceof String[]) {
+            setSelected((String[])data);
+        } else if (data instanceof String) {
+            String[] names = ((String)data).split("\\|");
+            for (int i = 0; i < names.length; i++) {
+                if (names[i].length() > 0 && names[i].charAt(0) == ' ')
+                    names[i] = names[i].substring(1);
+            }
+            setSelected(names);
+        } else {
+            super.setSelectedItem(data);
+        }
+    }
     
     public void setSelected(String[] items) {
         ComboBoxModel<CheckItem> model = getModel();
-        clearSelection();
+        clearSelection(false);
+        Object selected = null;
         for (int i = 0; i < items.length; i++) {
             for (int e = 0; e < model.getSize(); e++) {
                 CheckItem element = model.getElementAt(e);
                 if (items[i].equals(element.toString())) {
                     element.setSelected(true);
-                    model.setSelectedItem(element);
+                    if (selected == null) selected = element;
                     break;
                 }
             }
         }
+        if (selected != null)
+            model.setSelectedItem(selected);
     }
     
     public void setSelected(Object[] items) {
+        if (items == null || items.length == 0) return;
         ComboBoxModel<CheckItem> model = getModel();
-        clearSelection();
-        for (int i = 0; i < items.length; i++) {
-            model.setSelectedItem(items[i]);
+        clearSelection(false);
+        CheckItem[] ci = (CheckItem[])items;
+        if (ci != null) {
+            for (int i = 0; i < ci.length; i++) {
+                ci[i].setSelected(true);
+            }
         }
+        
+        model.setSelectedItem(items[0]);
     }
 
     @Override
@@ -206,7 +238,7 @@ public class MultiComboBox extends JComboBox<CheckItem> {
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < model.getSize(); i++) {
                 if (model.getElementAt(i).isSelected()) {
-                    if (sb.length() > 0) sb.append(", ");
+                    if (sb.length() > 0) sb.append("|");
                     sb.append(model.getElementAt(i).toString());
                 }
             }
