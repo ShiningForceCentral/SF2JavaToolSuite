@@ -20,12 +20,14 @@ public class RadioButtonAction extends BasicAction<JRadioButton> {
     
     @Override
     public void execute() {
+        if (!newValue.isEnabled()) return;
         newValue.requestFocus();
         newValue.setSelected(true);
     }
 
     @Override
     public void undo() {
+        if (!newValue.isEnabled()) return;
         if (oldValue == null) {
             newValue.requestFocus();
             newValue.setSelected(false);

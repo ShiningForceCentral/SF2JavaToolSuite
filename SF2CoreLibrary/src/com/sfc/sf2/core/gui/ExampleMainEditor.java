@@ -212,7 +212,7 @@ public final class ExampleMainEditor extends AbstractMainEditor {
             }
         });
 
-        multiComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "fwefwrg ", "rgththsr", "ghjkyjjrtn", "5tehgxdh", "ws" }));
+        multiComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "fwefwrg", "rgththsr", "ghjkyjjrtn", "5tehgxdh", "ws" }));
         multiComboBox1.setName("Action Test Multicombo"); // NOI18N
         multiComboBox1.setPreferredSize(new java.awt.Dimension(76, 26));
         multiComboBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -647,8 +647,8 @@ public final class ExampleMainEditor extends AbstractMainEditor {
 
     private void multiComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_multiComboBox1ActionPerformed
         if (!ActionManager.isActionTriggering()) {
-            String[] oldValue = jLabel3.getText().split(", ");
-            ActionManager.setActionWithoutExecute(new MultiComboAction(multiComboBox1, multiComboBox1.getObjectsString().split(", "), oldValue));
+            String[] oldValue = jLabel3.getText().split("\\|");
+            ActionManager.setActionWithoutExecute(new MultiComboAction(multiComboBox1, multiComboBox1.getObjectsString().split("\\|"), oldValue));
         }
         jLabel3.setText(multiComboBox1.getObjectsString());
     }//GEN-LAST:event_multiComboBox1ActionPerformed

@@ -144,4 +144,8 @@ public class Portrait implements INameable {
         if (!Arrays.deepEquals(this.mouthTiles, other.mouthTiles)) return false;
         return true;
     }
+    
+    public static int[] getEmptyRow() {
+        return new int[] { 0, 0, 6, 6 };
+    }
 }
