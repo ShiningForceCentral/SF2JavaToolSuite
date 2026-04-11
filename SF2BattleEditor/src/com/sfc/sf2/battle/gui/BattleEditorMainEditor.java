@@ -8,6 +8,7 @@ package com.sfc.sf2.battle.gui;
 import com.sfc.sf2.battle.AIPoint;
 import com.sfc.sf2.battle.AIRegion;
 import com.sfc.sf2.battle.Ally;
+import com.sfc.sf2.battle.BattleEnums;
 import com.sfc.sf2.battle.BattleManager;
 import com.sfc.sf2.battle.BattleSpriteset;
 import com.sfc.sf2.battle.Enemy;
@@ -98,6 +99,15 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
         
         jTabbedPane2StateChanged(null);
         jTabbedPane3StateChanged(null);
+        
+        try {
+            Path sf2enumsPath = PathHelpers.getBasePath().resolve(fileButtonBattleEnums.getFilePath());
+            battleManager.ImportBattleEnums(sf2enumsPath);
+            updateBattleName();
+        } catch (Exception ex) {
+            Console.logger().log(Level.WARNING, null, ex);
+            Console.logger().warning("Could not load SF2Enums");
+        }
     }
     
     @Override
@@ -155,6 +165,21 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
 
             actionSharedTerrainInfo = value.sharedTerrainInfo();
             terrainKeyPanel1.setSharedTerrainInfo(actionSharedTerrainInfo);
+            
+            String terrainExportPath = fileButtonExportTerrain.getFilePath();
+            if (terrainExportPath.contains("entries\\battle")) {
+                int battleNumIndex = terrainExportPath.indexOf("entries\\battle")+14;
+                int lastSlash = terrainExportPath.lastIndexOf('\\');
+                terrainExportPath = String.format("%s%02d%s", terrainExportPath.substring(0, battleNumIndex), value.battle().getIndex(), terrainExportPath.substring(lastSlash));
+                fileButtonExportTerrain.setFilePath(terrainExportPath);
+            }
+            String spritesetExportPath = fileButtonExportSpriteset.getFilePath();
+            if (spritesetExportPath.contains("spritesets\\spriteset")) {
+                int battleNumIndex = spritesetExportPath.indexOf("spritesets\\spriteset")+20;
+                int lastSlash = spritesetExportPath.lastIndexOf('.');
+                spritesetExportPath = String.format("%s%02d%s", spritesetExportPath.substring(0, battleNumIndex), value.battle().getIndex(), spritesetExportPath.substring(lastSlash));
+                fileButtonExportSpriteset.setFilePath(spritesetExportPath);
+            }
         }
     }
     
@@ -199,6 +224,7 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
         jSpinnerBattleIndex = new javax.swing.JSpinner();
         jButtonImportBattle = new javax.swing.JButton();
         infoButton7 = new com.sfc.sf2.core.gui.controls.InfoButton();
+        jLabelBattleName = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jTabbedPane4 = new javax.swing.JTabbedPane();
         jPanel13 = new javax.swing.JPanel();
@@ -421,6 +447,11 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
 
         jSpinnerBattleIndex.setModel(new javax.swing.SpinnerNumberModel(1, 0, 255, 1));
         jSpinnerBattleIndex.setName("Battle Index Spinner"); // NOI18N
+        jSpinnerBattleIndex.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jSpinnerBattleIndexStateChanged(evt);
+            }
+        });
 
         jButtonImportBattle.setText("Import");
         jButtonImportBattle.addActionListener(new java.awt.event.ActionListener() {
@@ -431,6 +462,10 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
 
         infoButton7.setText("");
 
+        jLabelBattleName.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        jLabelBattleName.setForeground(new java.awt.Color(153, 153, 153));
+        jLabelBattleName.setText("Battle name");
+
         javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
         jPanel16.setLayout(jPanel16Layout);
         jPanel16Layout.setHorizontalGroup(
@@ -440,16 +475,18 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButtonImportBattle))
+                    .addGroup(jPanel16Layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(infoButton7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel16Layout.createSequentialGroup()
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSpinnerBattleIndex, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonImportBattle))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(infoButton7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(jLabelBattleName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel16Layout.setVerticalGroup(
@@ -460,11 +497,12 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
                     .addComponent(infoButton7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonImportBattle)
-                    .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                        .addComponent(jSpinnerBattleIndex, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel10)))
+                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jSpinnerBattleIndex, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabelBattleName, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonImportBattle)
                 .addContainerGap())
         );
 
@@ -687,7 +725,7 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 624, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 624, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -1029,7 +1067,7 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
+            .addComponent(jSplitPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1000, Short.MAX_VALUE)
         );
 
         setSize(new java.awt.Dimension(1516, 1008));
@@ -1172,6 +1210,10 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
                 break;
         }
     }//GEN-LAST:event_jTabbedPane2StateChanged
+
+    private void jSpinnerBattleIndexStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinnerBattleIndexStateChanged
+        updateBattleName();
+    }//GEN-LAST:event_jSpinnerBattleIndexStateChanged
     
     private void onMapIndexChange(ActionEvent evt) {
         Path paletteEntriesPath = PathHelpers.getBasePath().resolve(fileButtonPaletteEntries.getFilePath());
@@ -1311,6 +1353,24 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
         battleLayoutPanel.setTerrainDrawMode(drawMode);
     }
     
+    private void updateBattleName() {
+        String text = null;
+        BattleEnums battleEnums = battleManager.getBattleEnums();
+        if (battleEnums == null) {
+            text = "Could not load battle names";
+        } else {
+            int index = (int)jSpinnerBattleIndex.getValue();
+            Object[] battleNames = battleEnums.getBattles().keySet().toArray();
+            if (index >= 0 && index < battleNames.length) {
+                text = (String)battleNames[index];
+            } else {
+                text = "Unknown battle";
+            }
+        }
+        
+        jLabelBattleName.setText(text);
+    }
+    
     /**
      * To create a new Main Editor, copy the below code
      * Don't forget to change the new main class (below)
@@ -1369,6 +1429,7 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabelBattleName;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
