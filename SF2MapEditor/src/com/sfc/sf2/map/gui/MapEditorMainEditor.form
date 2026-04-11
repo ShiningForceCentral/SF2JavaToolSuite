@@ -122,7 +122,7 @@
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="jTabbedPane1" pref="313" max="32767" attributes="0"/>
+                                  <Component id="jTabbedPaneImportExport" pref="313" max="32767" attributes="0"/>
                                   <Component id="fileButtonEnums" pref="0" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
@@ -135,7 +135,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="fileButtonEnums" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jTabbedPane1" max="32767" attributes="0"/>
+                              <Component id="jTabbedPaneImportExport" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -153,7 +153,7 @@
                         <Property name="name" type="java.lang.String" value="Import Enums" noResource="true"/>
                       </Properties>
                     </Component>
-                    <Container class="javax.swing.JTabbedPane" name="jTabbedPane1">
+                    <Container class="javax.swing.JTabbedPane" name="jTabbedPaneImportExport">
                       <Properties>
                         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
@@ -1450,7 +1450,7 @@
 
                           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout"/>
                           <SubComponents>
-                            <Container class="javax.swing.JTabbedPane" name="jTabbedPane6">
+                            <Container class="javax.swing.JTabbedPane" name="jTabbedPaneBlockset">
                               <Properties>
                                 <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                                   <Dimension value="[200, 200]"/>
@@ -1623,7 +1623,7 @@
                                     <DimensionLayout dim="1">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" alignment="0" attributes="0">
-                                              <Component id="jPanel21" pref="686" max="32767" attributes="0"/>
+                                              <Component id="jPanel21" pref="749" max="32767" attributes="0"/>
                                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
@@ -1660,7 +1660,7 @@
                                                   <EmptySpace max="-2" attributes="0"/>
                                                   <Component id="jScrollPane10" min="-2" pref="130" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="tableAnimFrames" pref="233" max="32767" attributes="0"/>
+                                                  <Component id="tableAnimFrames" pref="296" max="32767" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
                                                   <Component id="jScrollPane11" min="-2" pref="130" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
@@ -1877,7 +1877,7 @@
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jTabbedPane5" max="32767" attributes="0"/>
+                                          <Component id="jTabbedPaneEditor" max="32767" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
@@ -1886,16 +1886,16 @@
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jTabbedPane5" max="32767" attributes="0"/>
+                                          <Component id="jTabbedPaneEditor" max="32767" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                 </DimensionLayout>
                               </Layout>
                               <SubComponents>
-                                <Container class="javax.swing.JTabbedPane" name="jTabbedPane5">
+                                <Container class="javax.swing.JTabbedPane" name="jTabbedPaneEditor">
                                   <Events>
-                                    <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jTabbedPane5StateChanged"/>
+                                    <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jTabbedPaneEditorStateChanged"/>
                                   </Events>
 
                                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
@@ -2735,7 +2735,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jTabbedPane2" max="32767" attributes="0"/>
+                                  <Component id="jTabbedPaneMapEditModes" max="32767" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -2744,21 +2744,21 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jTabbedPane2" pref="201" max="32767" attributes="0"/>
+                                  <Component id="jTabbedPaneMapEditModes" pref="201" max="32767" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
                       </Layout>
                       <SubComponents>
-                        <Container class="javax.swing.JTabbedPane" name="jTabbedPane2">
+                        <Container class="javax.swing.JTabbedPane" name="jTabbedPaneMapEditModes">
                           <Properties>
                             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                               <Dimension value="[390, 185]"/>
                             </Property>
                           </Properties>
                           <Events>
-                            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jTabbedPane2StateChanged"/>
+                            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jTabbedPaneMapEditModesStateChanged"/>
                           </Events>
 
                           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
@@ -3631,19 +3631,19 @@
                               <Layout>
                                 <DimensionLayout dim="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jTabbedPane3" alignment="0" pref="1108" max="32767" attributes="0"/>
+                                      <Component id="jTabbedPaneCopyFlags" alignment="0" pref="1108" max="32767" attributes="0"/>
                                   </Group>
                                 </DimensionLayout>
                                 <DimensionLayout dim="1">
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jTabbedPane3" alignment="0" pref="166" max="32767" attributes="0"/>
+                                      <Component id="jTabbedPaneCopyFlags" alignment="0" pref="166" max="32767" attributes="0"/>
                                   </Group>
                                 </DimensionLayout>
                               </Layout>
                               <SubComponents>
-                                <Container class="javax.swing.JTabbedPane" name="jTabbedPane3">
+                                <Container class="javax.swing.JTabbedPane" name="jTabbedPaneCopyFlags">
                                   <Events>
-                                    <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jTabbedPane3StateChanged"/>
+                                    <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jTabbedPaneCopyFlagsStateChanged"/>
                                   </Events>
 
                                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
@@ -3748,9 +3748,9 @@
                                 </Constraint>
                               </Constraints>
                             </Component>
-                            <Container class="javax.swing.JTabbedPane" name="jTabbedPane4">
+                            <Container class="javax.swing.JTabbedPane" name="jTabbedPaneItems">
                               <Events>
-                                <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jTabbedPane4StateChanged"/>
+                                <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jTabbedPaneItemsStateChanged"/>
                               </Events>
                               <Constraints>
                                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">

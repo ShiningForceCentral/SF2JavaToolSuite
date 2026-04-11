@@ -19,6 +19,5 @@ public class EnemyPropertiesTable extends Table {
         super();
         jTable.setDefaultEditor(String.class, new ComboBoxTableEditor());
         jTable.setDefaultRenderer(String.class, new ComboBoxTableRenderer());
-        //jTable.getColumnModel().getColumn(6).setCellEditor(new MultiComboBoxTableEditor());
     }
 }

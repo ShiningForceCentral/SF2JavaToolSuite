@@ -53,6 +53,6 @@ public class TableCellActionData implements IActionData<TableCellActionData> {
 
     @Override
     public String toString() {
-        return String.format("[%s(%d)]: %s", tableModel.getColumnName(column), row, data.toString());
+        return String.format("[%s(%d)]: %s", tableModel.getColumnName(column), row, data == null ? "NULL" : data.toString());
     }
 }

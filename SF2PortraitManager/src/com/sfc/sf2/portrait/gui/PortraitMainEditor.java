@@ -22,6 +22,7 @@ import java.awt.event.ActionEvent;
 import java.util.logging.Level;
 import java.nio.file.Path;
 import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.TableModelEvent;
 import javax.swing.table.TableColumnModel;
 
 /**
@@ -53,6 +54,8 @@ public class PortraitMainEditor extends AbstractMainEditor {
         
         eyeTable = (PortraitDataTableModel)tableEyes.getModel();
         mouthTable = (PortraitDataTableModel)tableMouth.getModel();
+        tableEyes.addTableModelListener(this::eyesListDataChanged);
+        tableMouth.addTableModelListener(this::mouthListDataChanged);
         tableEyes.addListSelectionListener(this::eyesListSelectionChanged);
         tableMouth.addListSelectionListener(this::mouthListSelectionChanged);
         portraitLayoutPanel.setEyesChangedListener(this::eyesListValueChanged);
@@ -121,7 +124,7 @@ public class PortraitMainEditor extends AbstractMainEditor {
         jPanel11 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         fileButtonExportPortrait = new com.sfc.sf2.core.gui.controls.FileButton();
-        jButtonExportportrait = new javax.swing.JButton();
+        jButtonExportPortrait = new javax.swing.JButton();
         jPanel14 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         fileButtonExportImage = new com.sfc.sf2.core.gui.controls.FileButton();
@@ -363,10 +366,10 @@ public class PortraitMainEditor extends AbstractMainEditor {
         fileButtonExportPortrait.setLabelText("Portrait file :");
         fileButtonExportPortrait.setName("Export Portrait"); // NOI18N
 
-        jButtonExportportrait.setText("Export");
-        jButtonExportportrait.addActionListener(new java.awt.event.ActionListener() {
+        jButtonExportPortrait.setText("Export");
+        jButtonExportPortrait.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonExportportraitActionPerformed(evt);
+                jButtonExportPortraitActionPerformed(evt);
             }
         });
 
@@ -380,7 +383,7 @@ public class PortraitMainEditor extends AbstractMainEditor {
                     .addComponent(fileButtonExportPortrait, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButtonExportportrait))
+                        .addComponent(jButtonExportPortrait))
                     .addGroup(jPanel11Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -394,7 +397,7 @@ public class PortraitMainEditor extends AbstractMainEditor {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(fileButtonExportPortrait, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonExportportrait)
+                .addComponent(jButtonExportPortrait)
                 .addContainerGap())
         );
 
@@ -526,7 +529,7 @@ public class PortraitMainEditor extends AbstractMainEditor {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonExportportraitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExportportraitActionPerformed
+    private void jButtonExportPortraitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExportPortraitActionPerformed
         Path portraitPath = PathHelpers.getBasePath().resolve(fileButtonExportPortrait.getFilePath());
         if (!PathHelpers.createPathIfRequred(portraitPath)) return;
         try {
@@ -535,7 +538,7 @@ public class PortraitMainEditor extends AbstractMainEditor {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Portrait disasm could not be exported to : " + portraitPath);
         }
-    }//GEN-LAST:event_jButtonExportportraitActionPerformed
+    }//GEN-LAST:event_jButtonExportPortraitActionPerformed
 
     private void jButtonExportImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExportImageActionPerformed
         Path imagePath = PathHelpers.getBasePath().resolve(fileButtonExportImage.getFilePath());
@@ -574,6 +577,22 @@ public class PortraitMainEditor extends AbstractMainEditor {
         }
         onDataLoaded();
     }//GEN-LAST:event_jButtonImportPortraitActionPerformed
+    
+    private void eyesListDataChanged(TableModelEvent e) {
+        if (e.getType() != TableModelEvent.DELETE && e.getType() != TableModelEvent.INSERT) return;
+        Portrait portrait = portraitLayoutPanel.getPortrait();
+        if (portrait == null) return;
+        portrait.setEyeTiles(portraitDataModelEyes.getTableData(int[][].class));
+        portraitLayoutPanel.redraw();
+    }
+
+    private void mouthListDataChanged(TableModelEvent e) {
+        if (e.getType() != TableModelEvent.DELETE && e.getType() != TableModelEvent.INSERT) return;
+        Portrait portrait = portraitLayoutPanel.getPortrait();
+        if (portrait == null) return;
+        portrait.setMouthTiles(portraitDataModelMouth.getTableData(int[][].class));
+        portraitLayoutPanel.redraw();
+    }
     
     private void eyesListSelectionChanged(ListSelectionEvent evt) {
         if (evt.getValueIsAdjusting() && selectedEyesRow == tableEyes.jTable.getSelectedRow()) return;
@@ -670,7 +689,7 @@ public class PortraitMainEditor extends AbstractMainEditor {
     private com.sfc.sf2.core.gui.controls.FileButton fileButtonImportMeta;
     private com.sfc.sf2.core.gui.controls.FileButton fileButtonImportPortrait;
     private javax.swing.JButton jButtonExportImage;
-    private javax.swing.JButton jButtonExportportrait;
+    private javax.swing.JButton jButtonExportPortrait;
     private javax.swing.JButton jButtonImportImage;
     private javax.swing.JButton jButtonImportPortrait;
     private javax.swing.JLabel jLabel1;

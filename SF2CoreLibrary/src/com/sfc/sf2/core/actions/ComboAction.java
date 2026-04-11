@@ -22,12 +22,14 @@ public class ComboAction extends BasicAction<Integer> {
     
     @Override
     public void execute() {
+        if (!comboBox.isEnabled()) return;
         comboBox.requestFocus();
         comboBox.setSelectedIndex(newValue);
     }
 
     @Override
     public void undo() {
+        if (!comboBox.isEnabled()) return;
         comboBox.requestFocus();
         comboBox.setSelectedIndex(oldValue);
     }

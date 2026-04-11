@@ -458,13 +458,14 @@ public class BattleCoordsMainEditor extends AbstractMainEditor {
     
     private void onTableFrameDataChanged(TableModelEvent e) {
         int row = tableCoords.jTable.getSelectedRow();
-        if (e.getType() == TableModelEvent.DELETE) {
-            if (selectedCoords >= coords.length) {
+        if (e.getType() == TableModelEvent.DELETE || e.getType() == TableModelEvent.INSERT) {
+            coords = battleMapCoordsTableModel.getTableData(BattleMapCoords[].class);
+            if (selectedCoords < 0) {
+                selectedCoords = 0;
+            } else if (selectedCoords >= coords.length) {
                 selectedCoords = coords.length-1;
             }
-            if (selectedCoords >= 0) {
-                loadMap(selectedCoords);
-            }
+            loadMap(selectedCoords);
         } else if ((row != -1 && row == selectedCoords)) {
             if (e.getColumn() == 1) {
                 loadMap(row);
@@ -478,7 +479,6 @@ public class BattleCoordsMainEditor extends AbstractMainEditor {
         if (ActionManager.isActionTriggering()) return;
         int row = tableCoords.jTable.getSelectedRow();
         if (row == -1) {
-            coords = battleMapCoordsTableModel.getTableData(BattleMapCoords[].class);
             actionMapLoaded(null);
         } else if (!e.getValueIsAdjusting()) {
             loadMap(row);
