@@ -39,7 +39,7 @@ public class BattleSpriteAnimationDisassemblyProcessor extends AbstractDisassemb
             byte idleWeaponY = BinaryHelpers.getByte(data, 7);
             frames[0] = new BattleSpriteAnimationFrame((byte)0, (byte)0, (byte)0, (byte)0, idleWeaponFrame, idleWeaponFlipX, idleWeaponFlipY, idleWeaponBehind, idleWeaponX, idleWeaponY);
         } else {
-            frames[0] = BattleSpriteAnimationFrame.EmptyFrame();
+            frames[0] = BattleSpriteAnimationFrame.EmptyFrame(true);
         }
 
         for (byte i=1; i < frames.length; i++) {

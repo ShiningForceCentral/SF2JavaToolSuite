@@ -177,7 +177,11 @@ public class BattleSpriteAnimationFrame {
         return new BattleSpriteAnimationFrame(battleSpriteIndex, duration, x, y, weaponFrame, weaponFlipH, weaponFlipV, weaponBehind, weaponX, weaponY);
     }
         
-    public static BattleSpriteAnimationFrame EmptyFrame() {
-        return new BattleSpriteAnimationFrame((byte)0, (byte)0, (byte)0, (byte)0);
+    public static BattleSpriteAnimationFrame EmptyFrame(boolean isEnemy) {
+        if (isEnemy) {
+            return new BattleSpriteAnimationFrame((byte)0, (byte)0, (byte)0, (byte)0);
+        } else {
+            return new BattleSpriteAnimationFrame((byte)0, (byte)0, (byte)0, (byte)0, (byte)0, false, false, true, (byte)0, (byte)0);
+        }
     }
 }

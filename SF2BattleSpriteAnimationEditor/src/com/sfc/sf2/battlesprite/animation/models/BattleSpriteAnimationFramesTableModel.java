@@ -48,7 +48,9 @@ public class BattleSpriteAnimationFramesTableModel extends AbstractTableModel<Ba
 
     @Override
     protected BattleSpriteAnimationFrame createBlankItem(int row) {
-        return new BattleSpriteAnimationFrame((byte)0, (byte)20, (byte)0, (byte)0);
+        BattleSpriteAnimationFrame frame = getRow(0);
+        boolean isEnemy = frame == null ? true : frame.getType() == BattleSprite.BattleSpriteType.ENEMY;
+        return BattleSpriteAnimationFrame.EmptyFrame(isEnemy);
     }
 
     @Override
