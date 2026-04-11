@@ -53,12 +53,12 @@ public class BattleSpriteAnimationFrame {
         this.duration = duration;
         this.x = x;
         this.y = y;
-        this.weaponFrame = -1;
+        this.weaponFrame = 0;
         this.weaponFlipH = false;
         this.weaponFlipV = false;
         this.weaponBehind = false;
-        this.weaponX = -1;
-        this.weaponY = -1;
+        this.weaponX = 0;
+        this.weaponY = 0;
         type = BattleSpriteType.ENEMY;
     }
     
