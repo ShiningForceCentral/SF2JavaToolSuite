@@ -181,6 +181,7 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
                 fileButtonExportSpriteset.setFilePath(spritesetExportPath);
             }
         }
+        battleViewPanel1.checkForTooManyMapsprites();
     }
     
     /**
@@ -1251,6 +1252,7 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
         if (e.getType() == TableModelEvent.DELETE || e.getType() == TableModelEvent.INSERT) {
             battleLayoutPanel.getBattle().getSpriteset().setAllies(allyPropertiesTableModel.getTableData(Ally[].class));
         }
+        battleViewPanel1.checkForTooManyMapsprites();
     }
 
     private void onTableAlliesSelectionChanged(ListSelectionEvent e) {
@@ -1270,6 +1272,7 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
         if (e.getType() == TableModelEvent.DELETE || e.getType() == TableModelEvent.INSERT) {
             battleLayoutPanel.getBattle().getSpriteset().setEnemies(enemyPropertiesTableModel.getTableData(Enemy[].class));
         }
+        battleViewPanel1.checkForTooManyMapsprites();
     }
 
     private void onTableEnemiesSelectionChanged(ListSelectionEvent e) {

@@ -42,6 +42,8 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jCheckBoxPoints" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
+              <Component id="infoButtonTooManySprites" min="-2" pref="38" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
               <Component id="jLabelBG" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="colorPickerBG" min="-2" max="-2" attributes="0"/>
@@ -72,6 +74,7 @@
                       <Component id="jCheckBoxRegions" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jCheckBoxPoints" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <Component id="infoButtonTooManySprites" alignment="2" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -182,6 +185,15 @@
       <Events>
         <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jCheckBoxPointsItemStateChanged"/>
       </Events>
+    </Component>
+    <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButtonTooManySprites">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection component="flatOptionPaneWarningIcon1" type="bean"/>
+        </Property>
+        <Property name="messageText" type="java.lang.String" value="&lt;html&gt;&lt;b&gt;Warning:&lt;/b&gt; Possibly too many mapsprites in battle.&lt;br&gt;Battles (and maps) only support a limited number of entities on the map at once, this limit is 32. Going over this limit may cause instability during the battle.&lt;br&gt;&lt;br&gt;How to determine if you have too many mapsprites:&lt;br&gt;- Each Ally placeholder entry will count as 1 mapsprite (assuming there are enough allies in the party to enter the battle).&lt;br&gt;- Each regular-sized Enemy entry will count as 1 mapsprite.&lt;br&gt;- Large Enemy entries (e.g. Zeon or Taros) will count as 4 mapsprites."/>
+        <Property name="text" type="java.lang.String" value=""/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>
