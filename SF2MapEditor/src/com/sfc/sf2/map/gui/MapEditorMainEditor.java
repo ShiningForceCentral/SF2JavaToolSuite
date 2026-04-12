@@ -57,8 +57,8 @@ public class MapEditorMainEditor extends AbstractMainEditor {
     
     private final ViewSettings blockViewSettings = new ViewSettings(10, RenderScaleHelpers.RENDER_SCALE_1X);
     private final ViewSettings blockEditViewSettings = new ViewSettings();
-    private final ViewSettings TilesetViewSettings = new ViewSettings(20, RenderScaleHelpers.RENDER_SCALE_2X);
-    private final ViewSettings TilesetAnimViewSettings = new ViewSettings(20, RenderScaleHelpers.RENDER_SCALE_2X);
+    private final ViewSettings TilesetViewSettings = new ViewSettings(16, RenderScaleHelpers.RENDER_SCALE_2X);
+    private final ViewSettings TilesetAnimViewSettings = new ViewSettings(16, RenderScaleHelpers.RENDER_SCALE_2X);
     private final ViewSettings layoutViewSettings = new ViewSettings();
     private final MapManager mapManager = new MapManager();
     
