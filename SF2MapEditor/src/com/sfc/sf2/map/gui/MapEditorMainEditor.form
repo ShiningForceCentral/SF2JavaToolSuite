@@ -1730,6 +1730,11 @@
                                                               <Component id="jSpinnerTilesetLength" min="-2" max="-2" attributes="0"/>
                                                           </Group>
                                                       </Group>
+                                                      <EmptySpace max="-2" attributes="0"/>
+                                                      <Group type="103" groupAlignment="0" attributes="0">
+                                                          <Component id="infoButton25" min="-2" max="-2" attributes="0"/>
+                                                          <Component id="infoButton26" min="-2" max="-2" attributes="0"/>
+                                                      </Group>
                                                       <EmptySpace max="32767" attributes="0"/>
                                                       <Component id="infoButtonSharedAnimation" min="-2" pref="38" max="-2" attributes="0"/>
                                                       <EmptySpace max="-2" attributes="0"/>
@@ -1745,11 +1750,15 @@
                                                               <Group type="103" groupAlignment="3" attributes="0">
                                                                   <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
                                                                   <Component id="jSpinnerTilesetId" alignment="3" min="-2" max="-2" attributes="0"/>
+                                                                  <Component id="infoButton25" alignment="3" min="-2" max="-2" attributes="0"/>
                                                               </Group>
                                                               <EmptySpace max="-2" attributes="0"/>
-                                                              <Group type="103" groupAlignment="3" attributes="0">
-                                                                  <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                                  <Component id="jSpinnerTilesetLength" alignment="3" min="-2" max="-2" attributes="0"/>
+                                                              <Group type="103" groupAlignment="1" attributes="0">
+                                                                  <Group type="103" groupAlignment="3" attributes="0">
+                                                                      <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
+                                                                      <Component id="jSpinnerTilesetLength" alignment="3" min="-2" max="-2" attributes="0"/>
+                                                                  </Group>
+                                                                  <Component id="infoButton26" min="-2" max="-2" attributes="0"/>
                                                               </Group>
                                                           </Group>
                                                           <Group type="102" alignment="0" attributes="0">
@@ -1803,6 +1812,18 @@
                                                 <Property name="text" type="java.lang.String" value=""/>
                                               </Properties>
                                             </Component>
+                                            <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton25">
+                                              <Properties>
+                                                <Property name="messageText" type="java.lang.String" value="&lt;html&gt;The id of the tileset to load for map animations."/>
+                                                <Property name="text" type="java.lang.String" value=""/>
+                                              </Properties>
+                                            </Component>
+                                            <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton26">
+                                              <Properties>
+                                                <Property name="messageText" type="java.lang.String" value="&lt;html&gt;The number of tiles in the map animation tileset.&lt;br&gt;&lt;br&gt;&lt;br&gt;NOTE:&lt;/b&gt; It seems that animation tilesets larger than 96 tiles may cause maps not to load.&lt;/html&gt;"/>
+                                                <Property name="text" type="java.lang.String" value=""/>
+                                              </Properties>
+                                            </Component>
                                           </SubComponents>
                                         </Container>
                                         <Container class="javax.swing.JScrollPane" name="jScrollPane10">
@@ -1849,6 +1870,7 @@
                                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                                               <Border info="null"/>
                                             </Property>
+                                            <Property name="infoMessage" type="java.lang.String" value="&lt;html&gt;- &lt;b&gt;Start:&lt;/b&gt; The tile index of the &lt;i&gt;animation tileset&lt;/i&gt; to start this frame.&lt;br&gt;- &lt;b&gt;Length:&lt;/b&gt; The number of tiles for the animation frame.&lt;br&gt;- &lt;b&gt;Dest Tile:&lt;/b&gt; The index of the map&apos;s tilesets to use as the &lt;i&gt;destination tileset&lt;/i&gt;.&lt;br&gt;- &lt;b&gt;Dest Index:&lt;/b&gt; The tile index of the &lt;i&gt;destination tileset&lt;/i&gt; to start replacing tiles.&lt;br&gt;- &lt;b&gt;Delay:&lt;/b&gt; The delay before moving to the next animation frame, essentially the animation speed (smaller numbers = faster).&lt;/html&gt;"/>
                                             <Property name="model" type="com.sfc.sf2.core.models.AbstractTableModel" editor="org.netbeans.modules.form.ComponentChooserEditor">
                                               <ComponentRef name="mapAnimationFrameTableModel"/>
                                             </Property>
@@ -2364,7 +2386,7 @@
 
                                               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                                               <SubComponents>
-                                                <Container class="com.sfc.sf2.map.block.gui.TilesetsLayoutPanel" name="tilesetsLayoutPanel">
+                                                <Container class="com.sfc.sf2.map.block.gui.MapTilesetsLayoutPanel" name="tilesetsLayoutPanel">
                                                   <Properties>
                                                     <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                                                       <Dimension value="null"/>
@@ -2386,7 +2408,7 @@
                                                 </Container>
                                               </SubComponents>
                                             </Container>
-                                            <Component class="com.sfc.sf2.map.block.gui.TilesetViewPanel" name="tilesetViewPanel1">
+                                            <Component class="com.sfc.sf2.map.block.gui.MapTilesetViewPanel" name="tilesetViewPanel1">
                                             </Component>
                                           </SubComponents>
                                         </Container>

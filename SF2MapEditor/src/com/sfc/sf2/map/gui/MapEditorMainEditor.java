@@ -410,6 +410,8 @@ public class MapEditorMainEditor extends AbstractMainEditor {
         jLabel9 = new javax.swing.JLabel();
         jSpinnerTilesetLength = new javax.swing.JSpinner();
         infoButtonSharedAnimation = new com.sfc.sf2.core.gui.controls.InfoButton();
+        infoButton25 = new com.sfc.sf2.core.gui.controls.InfoButton();
+        infoButton26 = new com.sfc.sf2.core.gui.controls.InfoButton();
         jScrollPane10 = new javax.swing.JScrollPane();
         tilesetLayoutPanelAnim = new com.sfc.sf2.map.animation.gui.MapAnimationTilesetLayoutPanel();
         tableAnimFrames = new com.sfc.sf2.core.gui.controls.Table();
@@ -438,8 +440,8 @@ public class MapEditorMainEditor extends AbstractMainEditor {
         jPanel42 = new javax.swing.JPanel();
         jPanel43 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        tilesetsLayoutPanel = new com.sfc.sf2.map.block.gui.TilesetsLayoutPanel();
-        tilesetViewPanel1 = new com.sfc.sf2.map.block.gui.TilesetViewPanel();
+        tilesetsLayoutPanel = new com.sfc.sf2.map.block.gui.MapTilesetsLayoutPanel();
+        tilesetViewPanel1 = new com.sfc.sf2.map.block.gui.MapTilesetViewPanel();
         jPanel45 = new javax.swing.JPanel();
         jPanel46 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
@@ -1502,6 +1504,12 @@ public class MapEditorMainEditor extends AbstractMainEditor {
                 infoButtonSharedAnimation.setIcon(flatOptionPaneWarningIcon1);
                 infoButtonSharedAnimation.setText("");
 
+                infoButton25.setMessageText("<html>The id of the tileset to load for map animations.");
+                infoButton25.setText("");
+
+                infoButton26.setMessageText("<html>The number of tiles in the map animation tileset.<br><br><br>NOTE:</b> It seems that animation tilesets larger than 96 tiles may cause maps not to load.</html>");
+                infoButton26.setText("");
+
                 javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
                 jPanel2.setLayout(jPanel2Layout);
                 jPanel2Layout.setHorizontalGroup(
@@ -1517,6 +1525,10 @@ public class MapEditorMainEditor extends AbstractMainEditor {
                                 .addComponent(jLabel9)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jSpinnerTilesetLength, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(infoButton25, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(infoButton26, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(infoButtonSharedAnimation, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
@@ -1529,11 +1541,14 @@ public class MapEditorMainEditor extends AbstractMainEditor {
                                 .addContainerGap()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel8)
-                                    .addComponent(jSpinnerTilesetId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jSpinnerTilesetId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(infoButton25, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel9)
-                                    .addComponent(jSpinnerTilesetLength, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel9)
+                                        .addComponent(jSpinnerTilesetLength, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(infoButton26, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(22, 22, 22)
                                 .addComponent(infoButtonSharedAnimation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -1560,6 +1575,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
                 jScrollPane10.setViewportView(tilesetLayoutPanelAnim);
 
                 tableAnimFrames.setBorder(null);
+                tableAnimFrames.setInfoMessage("<html>- <b>Start:</b> The tile index of the <i>animation tileset</i> to start this frame.<br>- <b>Length:</b> The number of tiles for the animation frame.<br>- <b>Dest Tile:</b> The index of the map's tilesets to use as the <i>destination tileset</i>.<br>- <b>Dest Index:</b> The tile index of the <i>destination tileset</i> to start replacing tiles.<br>- <b>Delay:</b> The delay before moving to the next animation frame, essentially the animation speed (smaller numbers = faster).</html>");
                 tableAnimFrames.setModel(mapAnimationFrameTableModel);
                 tableAnimFrames.setSpinnerNumberEditor(true);
                 tableAnimFrames.setMinimumSize(new java.awt.Dimension(260, 150));
@@ -2876,7 +2892,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
                 jPanel15Layout.setVerticalGroup(
                     jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel15Layout.createSequentialGroup()
-                        .addComponent(jSplitPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 844, Short.MAX_VALUE)
+                        .addComponent(jSplitPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 844, Short.MAX_VALUE)
                         .addContainerGap())
                 );
 
@@ -2891,7 +2907,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
                 );
                 layout.setVerticalGroup(
                     layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSplitPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1000, Short.MAX_VALUE)
+                    .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
                 );
 
                 setSize(new java.awt.Dimension(1466, 1008));
@@ -3718,6 +3734,8 @@ public class MapEditorMainEditor extends AbstractMainEditor {
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton22;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton23;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton24;
+    private com.sfc.sf2.core.gui.controls.InfoButton infoButton25;
+    private com.sfc.sf2.core.gui.controls.InfoButton infoButton26;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton3;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton4;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton5;
@@ -3869,7 +3887,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
     private com.sfc.sf2.map.animation.gui.TilesetAnimViewPanel tilesetAnimViewPanel1;
     private com.sfc.sf2.map.animation.gui.MapAnimationTilesetLayoutPanel tilesetLayoutPanelAnim;
     private com.sfc.sf2.map.animation.gui.MapModifiedTilesetLayoutPanel tilesetLayoutPanelModified;
-    private com.sfc.sf2.map.block.gui.TilesetViewPanel tilesetViewPanel1;
-    private com.sfc.sf2.map.block.gui.TilesetsLayoutPanel tilesetsLayoutPanel;
+    private com.sfc.sf2.map.block.gui.MapTilesetViewPanel tilesetViewPanel1;
+    private com.sfc.sf2.map.block.gui.MapTilesetsLayoutPanel tilesetsLayoutPanel;
     // End of variables declaration//GEN-END:variables
 }

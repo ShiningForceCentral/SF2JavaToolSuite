@@ -26,7 +26,7 @@ import java.awt.event.MouseEvent;
  *
  * @author TiMMy
  */
-public class TilesetsLayoutPanel extends AbstractLayoutPanel {
+public class MapTilesetsLayoutPanel extends AbstractLayoutPanel {
     
     private static final int DEFAULT_TILES_PER_ROW = 20;
     public static int selectedTileIndexLeft = -1;
@@ -39,7 +39,7 @@ public class TilesetsLayoutPanel extends AbstractLayoutPanel {
     private TileSlotPanel leftSlotTilePanel;
     private TileSlotPanel rightSlotTilePanel;
     
-    public TilesetsLayoutPanel() {
+    public MapTilesetsLayoutPanel() {
         super();
         background = new LayoutBackground(Color.LIGHT_GRAY, PIXEL_WIDTH/2);
         scale = new LayoutScale(2);

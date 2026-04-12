@@ -14,12 +14,12 @@ import com.sfc.sf2.graphics.Tileset;
  *
  * @author TiMMy
  */
-public class TilesetViewPanel extends AbstractViewPanel<TilesetsLayoutPanel> {
+public class MapTilesetViewPanel extends AbstractViewPanel<MapTilesetsLayoutPanel> {
         
     /**
      * Creates new form ViewPanel
      */
-    public TilesetViewPanel() {
+    public MapTilesetViewPanel() {
         super();
         initComponents();
         init(jComboBoxScale, jCheckBoxGrid, jSpinnerItemsPerRow, colorPickerBG);
