@@ -5,6 +5,7 @@
  */
 package com.sfc.sf2.map.animation.gui;
 
+import com.sfc.sf2.core.gui.layout.LayoutCoordsGridDisplay;
 import static com.sfc.sf2.graphics.Tile.PIXEL_HEIGHT;
 import static com.sfc.sf2.graphics.Tile.PIXEL_WIDTH;
 import com.sfc.sf2.graphics.gui.TilesetLayoutPanel;
@@ -28,6 +29,7 @@ public class MapAnimationTilesetLayoutPanel extends TilesetLayoutPanel  {
 
     public MapAnimationTilesetLayoutPanel() {
         super();
+        coordsGrid = new LayoutCoordsGridDisplay(PIXEL_WIDTH, PIXEL_HEIGHT, true, 0, PIXEL_WIDTH, 0);
         useFrameDestinationStart = false;
     }
 
