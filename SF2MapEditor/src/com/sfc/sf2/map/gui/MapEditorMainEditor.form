@@ -1796,7 +1796,7 @@
                                             <Component class="javax.swing.JSpinner" name="jSpinnerTilesetLength">
                                               <Properties>
                                                 <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-                                                  <SpinnerModel initial="0" maximum="128" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
+                                                  <SpinnerModel initial="0" maximum="104" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
                                                 </Property>
                                                 <Property name="name" type="java.lang.String" value="TilesetLengthSpinner" noResource="true"/>
                                               </Properties>
@@ -1820,7 +1820,7 @@
                                             </Component>
                                             <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton26">
                                               <Properties>
-                                                <Property name="messageText" type="java.lang.String" value="&lt;html&gt;The number of tiles in the map animation tileset.&lt;br&gt;&lt;br&gt;&lt;br&gt;NOTE:&lt;/b&gt; It seems that animation tilesets larger than 96 tiles may cause maps not to load.&lt;/html&gt;"/>
+                                                <Property name="messageText" type="java.lang.String" value="&lt;html&gt;The number of tiles in the map animation tileset.&lt;br&gt;&lt;br&gt;&lt;br&gt;NOTE:&lt;/b&gt; It seems that Tileset Length values larger than 104 tiles may cause maps not to load or to become unstable.&lt;/html&gt;"/>
                                                 <Property name="text" type="java.lang.String" value=""/>
                                               </Properties>
                                             </Component>

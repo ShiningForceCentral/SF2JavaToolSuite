@@ -1493,7 +1493,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
 
                 jLabel9.setText("Tileset length :");
 
-                jSpinnerTilesetLength.setModel(new javax.swing.SpinnerNumberModel(0, 0, 128, 1));
+                jSpinnerTilesetLength.setModel(new javax.swing.SpinnerNumberModel(0, 0, 104, 1));
                 jSpinnerTilesetLength.setName("TilesetLengthSpinner"); // NOI18N
                 jSpinnerTilesetLength.addChangeListener(new javax.swing.event.ChangeListener() {
                     public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -1507,7 +1507,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
                 infoButton25.setMessageText("<html>The id of the tileset to load for map animations.");
                 infoButton25.setText("");
 
-                infoButton26.setMessageText("<html>The number of tiles in the map animation tileset.<br><br><br>NOTE:</b> It seems that animation tilesets larger than 96 tiles may cause maps not to load.</html>");
+                infoButton26.setMessageText("<html>The number of tiles in the map animation tileset.<br><br><br>NOTE:</b> It seems that Tileset Length values larger than 104 tiles may cause maps not to load or to become unstable.</html>");
                 infoButton26.setText("");
 
                 javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -2892,7 +2892,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
                 jPanel15Layout.setVerticalGroup(
                     jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel15Layout.createSequentialGroup()
-                        .addComponent(jSplitPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 844, Short.MAX_VALUE)
+                        .addComponent(jSplitPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 844, Short.MAX_VALUE)
                         .addContainerGap())
                 );
 
@@ -2907,7 +2907,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
                 );
                 layout.setVerticalGroup(
                     layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
+                    .addComponent(jSplitPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1000, Short.MAX_VALUE)
                 );
 
                 setSize(new java.awt.Dimension(1466, 1008));
