@@ -282,6 +282,8 @@ public class MapEditorMainEditor extends AbstractMainEditor {
             mapWarpTableModel.setTableData(null);
             mapChestItemTableModel.setTableData(null);
             mapOtherItemTableModel.setTableData(null);
+            
+            infoButtonSharedAnimation.setVisible(false);
         }
     }
     
