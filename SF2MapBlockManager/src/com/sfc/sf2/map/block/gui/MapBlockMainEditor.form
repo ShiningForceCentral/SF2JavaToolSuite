@@ -1052,7 +1052,7 @@
 
                                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                                   <SubComponents>
-                                    <Container class="com.sfc.sf2.map.block.gui.TilesetsLayoutPanel" name="tilesetsLayoutPanel">
+                                    <Container class="com.sfc.sf2.map.block.gui.MapTilesetsLayoutPanel" name="tilesetsLayoutPanel">
 
                                       <Layout>
                                         <DimensionLayout dim="0">
@@ -1069,7 +1069,7 @@
                                     </Container>
                                   </SubComponents>
                                 </Container>
-                                <Component class="com.sfc.sf2.map.block.gui.TilesetViewPanel" name="tilesetViewPanel1">
+                                <Component class="com.sfc.sf2.map.block.gui.MapTilesetViewPanel" name="tilesetViewPanel1">
                                 </Component>
                               </SubComponents>
                             </Container>

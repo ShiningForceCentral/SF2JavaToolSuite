@@ -170,8 +170,8 @@ public class MapBlockMainEditor extends AbstractMainEditor {
         jPanel6 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        tilesetsLayoutPanel = new com.sfc.sf2.map.block.gui.TilesetsLayoutPanel();
-        tilesetViewPanel1 = new com.sfc.sf2.map.block.gui.TilesetViewPanel();
+        tilesetsLayoutPanel = new com.sfc.sf2.map.block.gui.MapTilesetsLayoutPanel();
+        tilesetViewPanel1 = new com.sfc.sf2.map.block.gui.MapTilesetViewPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel22 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -1328,7 +1328,7 @@ public class MapBlockMainEditor extends AbstractMainEditor {
     private com.sfc.sf2.map.block.gui.MapBlocksetLayoutPanel mapBlocksetLayoutPanel;
     private com.sfc.sf2.map.block.gui.TileSlotPanel tileSlotPanelLeft;
     private com.sfc.sf2.map.block.gui.TileSlotPanel tileSlotPanelRight;
-    private com.sfc.sf2.map.block.gui.TilesetViewPanel tilesetViewPanel1;
-    private com.sfc.sf2.map.block.gui.TilesetsLayoutPanel tilesetsLayoutPanel;
+    private com.sfc.sf2.map.block.gui.MapTilesetViewPanel tilesetViewPanel1;
+    private com.sfc.sf2.map.block.gui.MapTilesetsLayoutPanel tilesetsLayoutPanel;
     // End of variables declaration//GEN-END:variables
 }

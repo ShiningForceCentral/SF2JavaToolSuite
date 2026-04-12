@@ -6,7 +6,6 @@
 package com.sfc.sf2.map.animation;
 
 import static com.sfc.sf2.helpers.MapBlockHelpers.TILESET_TILES;
-import java.util.Arrays;
 
 /**
  *
