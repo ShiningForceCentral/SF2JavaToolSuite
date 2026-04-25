@@ -6,12 +6,15 @@
 package com.sfc.sf2.palette.gui.controls;
 
 import com.sfc.sf2.core.actions.ActionManager;
-import com.sfc.sf2.core.actions.BasicAction;
+import com.sfc.sf2.core.actions.CustomAction;
 import com.sfc.sf2.palette.CRAMColor;
-import com.sfc.sf2.palette.Palette;
+import com.sfc.sf2.palette.actions.PaletteColorSwapActionData;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.EventListener;
+import com.sfc.sf2.palette.IPaletteGraphic;
+import com.sfc.sf2.palette.Palette;
+import com.sfc.sf2.palette.actions.PaletteChangeActionData;
 
 /**
  *
@@ -19,12 +22,12 @@ import java.util.EventListener;
  */
 public class PaletteButton extends javax.swing.JButton {
 
-    private Palette palette;
-    private CRAMColor[] originalColors;
+    private Palette originalPalette;
+    private byte[] originalPixels;
     
     private int[] limitColorIndices;
     
-    private PaletteListener paletteListener;
+    private PaletteGraphicsListener getPaletteListener;
     private ActionListener colorChangeListener;
     
     /**
@@ -34,19 +37,20 @@ public class PaletteButton extends javax.swing.JButton {
         initComponents();
         
         palettePane.setColorEditor(cRAMColorEditor);
-        palettePane.setRecordActions(false);
-        palettePane.setColorChangeListener(this::onColorChanged);
+        palettePane.setColorChangeListener(this::onColorChanged, this::onColorsSwapped);
         paletteEditor.setLocationRelativeTo(this);
+        
+        ActionManager.setupInputMaps(palettePane);
     }
     
-    public void setupPaletteButton(PaletteListener paletteListener, ActionListener colorChangeListener) {
+    public void setupPaletteButton(PaletteGraphicsListener paletteListener, ActionListener colorChangeListener) {
         setupPaletteButton(paletteListener, colorChangeListener, null);
     }
     
-    public void setupPaletteButton(PaletteListener paletteListener, ActionListener colorChangeListener, int[] limitColorIndices) {
-        this.limitColorIndices = limitColorIndices;
-        this.paletteListener = paletteListener;
+    public void setupPaletteButton(PaletteGraphicsListener paletteListener, ActionListener colorChangeListener, int[] limitColorIndices) {
+        this.getPaletteListener = paletteListener;
         this.colorChangeListener = colorChangeListener;
+        this.limitColorIndices = limitColorIndices;
     }
 
     /**
@@ -66,9 +70,7 @@ public class PaletteButton extends javax.swing.JButton {
 
         paletteEditor.setTitle("Palette Editor");
         paletteEditor.setBounds(new java.awt.Rectangle(0, 0, 532, 320));
-        paletteEditor.setMaximumSize(new java.awt.Dimension(520, 295));
         paletteEditor.setMinimumSize(new java.awt.Dimension(520, 295));
-        paletteEditor.setPreferredSize(new java.awt.Dimension(520, 295));
         paletteEditor.setResizable(false);
         paletteEditor.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -149,54 +151,103 @@ public class PaletteButton extends javax.swing.JButton {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfirmActionPerformed
-        ActionManager.setActionWithoutExecute(new BasicAction<CRAMColor[]>(palette, "Palette Change", this::actionPaletteChanged, palette.getColors(), originalColors));
-        palette = null;
+        IPaletteGraphic graphics = getPaletteListener.getPaletteGraphics();
+        PaletteChangeActionData oldValue = new PaletteChangeActionData(originalPalette, originalPixels);
+        PaletteChangeActionData newValue = new PaletteChangeActionData(palettePane.getPalette(), graphics.getPixels());
+        ActionManager.setActionWithoutExecute(new CustomAction<PaletteChangeActionData>(this, "Palette Change", this::actionPaletteChanged, newValue, oldValue));
+        originalPalette = null;
+        originalPixels = null;
+        ActionManager.clearActionsFromOwner(palettePane);  //Clear all palette editing actions
         paletteEditor.dispose();
     }//GEN-LAST:event_jButtonConfirmActionPerformed
 
-    private void actionPaletteChanged(CRAMColor[] colors) {
-        Palette palette = paletteListener.getPalette();
-        palette.setColors(colors, palette.isFirstColorTransparent());
+    private void actionPaletteChanged(PaletteChangeActionData value) {
+        IPaletteGraphic graphics = getPaletteListener.getPaletteGraphics();
+        if (graphics != null) {
+            graphics.setPalette(value.palette());
+            if (value.pixelData() != null) {
+                graphics.setPixels(value.pixelData());
+            }
+        }
         if (colorChangeListener != null) {
-            colorChangeListener.actionPerformed(new ActionEvent(palette, -1, "Reset"));
+            colorChangeListener.actionPerformed(new ActionEvent(value, -1, "PaletteChange"));
         }
     }
     
     private void jButtonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelActionPerformed
         jButtonResetActionPerformed(evt);
-        palette = null;
+        originalPalette = null;
+        originalPixels = null;
         paletteEditor.dispose();
     }//GEN-LAST:event_jButtonCancelActionPerformed
 
     private void showPaletteEditor(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showPaletteEditor
-        palette = paletteListener.getPalette();
-        palettePane.setPalette(palette, limitColorIndices);
-        if (palette == null) {
-            originalColors = null;
+        originalPixels = null;
+        originalPalette = null;
+        
+        IPaletteGraphic graphics = getPaletteListener.getPaletteGraphics();
+        if (graphics != null) {
+            originalPalette = graphics.getPalette();
+            originalPixels = graphics.getPixels();
+        }
+        
+        palettePane.setPixelData(originalPixels);        
+        palettePane.setPalette(originalPalette, limitColorIndices);
+        if (originalPalette == null) {
             paletteEditor.setTitle("Palette Editor");
         } else {
-            originalColors = palette.getColors().clone();
-            paletteEditor.setTitle("Palette Editor: " + palette.getName());
+            paletteEditor.setTitle("Palette Editor: " + originalPalette.getName());
         }
         paletteEditor.setVisible(true);
     }//GEN-LAST:event_showPaletteEditor
 
     private void paletteEditorWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_paletteEditorWindowClosing
         jButtonCancelActionPerformed(null);
+        ActionManager.clearActionsFromOwner(palettePane);  //Clear all palette editing actions
     }//GEN-LAST:event_paletteEditorWindowClosing
 
     private void jButtonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonResetActionPerformed
-        if (palette == null) return;
-        palette.setColors(originalColors, palette.isFirstColorTransparent());
-        if (palette != null && colorChangeListener != null) {
-            colorChangeListener.actionPerformed(new ActionEvent(palette, -1, "Reset"));
-            palettePane.refreshColorPanes();
+        IPaletteGraphic graphics = getPaletteListener.getPaletteGraphics();
+        int selected = palettePane.getCurrentSelected();
+        ActionManager.setExternalActionTriggering(true);
+        
+        PaletteChangeActionData oldValue = new PaletteChangeActionData(palettePane.getPalette(), graphics.getPixels());
+        PaletteChangeActionData newValue = new PaletteChangeActionData(originalPalette, originalPixels);
+        ActionManager.setActionWithoutExecute(new CustomAction<PaletteChangeActionData>(palettePane, "Reset", this::actionPaletteChanged, newValue, oldValue));
+        
+        graphics.setPalette(originalPalette);
+        if (originalPixels != null) {
+            graphics.setPixels(originalPixels);
+        }
+        
+        palettePane.setPalette(originalPalette);
+        palettePane.setColorPaneSelected(selected);
+        ActionManager.setExternalActionTriggering(false);
+        
+        if (colorChangeListener != null) {
+            colorChangeListener.actionPerformed(new ActionEvent(this, -1, "Reset"));
         }
     }//GEN-LAST:event_jButtonResetActionPerformed
 
     private void onColorChanged(ActionEvent e) {
+        IPaletteGraphic graphics = getPaletteListener.getPaletteGraphics();
+        if (graphics != null) {
+            Palette palette = palettePane.getPalette();
+            graphics.setPalette(palette);
+            palette.rebuildIcm();
+        }
         if (colorChangeListener != null) {
             colorChangeListener.actionPerformed(e);
+        }
+    }
+    
+    private void onColorsSwapped(PaletteColorSwapActionData colorSwapData) {
+        boolean swapPixels = colorSwapData.pixelData() != null;
+        if (getPaletteListener == null || !swapPixels) return;
+        
+        IPaletteGraphic graphics = getPaletteListener.getPaletteGraphics();
+        if (graphics != null) {
+            graphics.setPixels(colorSwapData.pixelData());
         }
     }
 
@@ -210,7 +261,11 @@ public class PaletteButton extends javax.swing.JButton {
     private com.sfc.sf2.palette.gui.PalettePane palettePane;
     // End of variables declaration//GEN-END:variables
 
-    public interface PaletteListener extends EventListener {
-        public Palette getPalette();
+    public interface PaletteGraphicsListener extends EventListener {
+        public IPaletteGraphic getPaletteGraphics();
+    }
+    
+    public interface ColorsSwappedListener extends EventListener {
+        public void colorsSwapped(PaletteColorSwapActionData value);
     }
 }

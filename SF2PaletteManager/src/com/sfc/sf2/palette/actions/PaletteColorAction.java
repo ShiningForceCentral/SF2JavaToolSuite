@@ -14,12 +14,12 @@ import com.sfc.sf2.palette.gui.PalettePane;
  *
  * @author TiMMy
  */
-public class PaletteAction extends BasicAction<CRAMColor> {
+public class PaletteColorAction extends BasicAction<CRAMColor> {
 
     private PalettePane palettePane;
     private int index;
     
-    public PaletteAction(PalettePane palettePane, int index, CRAMColor newValue, CRAMColor oldValue) {
+    public PaletteColorAction(PalettePane palettePane, int index, CRAMColor newValue, CRAMColor oldValue) {
         super(palettePane, "Palette Color", null, newValue, oldValue);
         this.palettePane = palettePane;
         this.index = index;
@@ -38,7 +38,7 @@ public class PaletteAction extends BasicAction<CRAMColor> {
     @Override
     public boolean canBeCombined(IAction other) {
         if (!super.canBeCombined(other)) return false;
-        PaletteAction otherP = (PaletteAction)other;
+        PaletteColorAction otherP = (PaletteColorAction)other;
         return this.index == otherP.index;
     }
 }

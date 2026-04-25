@@ -3,7 +3,7 @@
 * To change this template file, choose Tools | Templates
 * and open the template in the editor.
  */
-package com.sfc.sf2.helpers;
+package com.sfc.sf2.palette.helpers;
 
 import com.sfc.sf2.palette.CRAMColor;
 import com.sfc.sf2.palette.Palette;
@@ -32,7 +32,7 @@ public class PaletteHelpers {
     }
     
     /**
-     *
+     * Extracts colors from a palette into a smaller palette
      * @param palette The base palette to extract from
      * @param extractIndices The indices to extract colors from the palette
      * @return A new palette of same length as extractIndices
@@ -43,5 +43,30 @@ public class PaletteHelpers {
             newPalette[i] = palette.getColors()[extractIndices[i]];
         }
         return new Palette(newPalette, firstColorTransparent);
+    }
+    
+    /**
+     * Returns a ne palette with colors swapped
+     * @param palette The base palette to extract from
+     * @param from From index
+     * @param to To index
+     * @return A new palette of same length as extractIndices
+     */
+    public static Palette swapColors(Palette palette, int from, int to) {
+        return new Palette(palette.getName(), swapColors(palette.getColors(), from, to), palette.isFirstColorTransparent(), false);
+    }
+    
+    /**
+     * Returns a ne palette with colors swapped
+     * @param palette The base palette to extract from
+     * @param from From index
+     * @param to To index
+     * @return A new palette of same length as extractIndices
+     */
+    public static CRAMColor[] swapColors(CRAMColor[] colors, int from, int to) {
+        CRAMColor[] newColors = colors.clone();
+        newColors[from] = colors[to];
+        newColors[to] = colors[from];
+        return newColors;
     }
 }
