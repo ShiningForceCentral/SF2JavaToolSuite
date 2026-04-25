@@ -41,8 +41,8 @@ public class Portrait implements INameable {
         this.index = index;
         this.name = name;
         this.tileset = tileset;
-        this.eyeTiles = eyeTiles;
-        this.mouthTiles = mouthTiles;
+        setEyeTiles(eyeTiles);
+        setMouthTiles(mouthTiles);
     }
 
     public int getIndex() {
@@ -75,6 +75,8 @@ public class Portrait implements INameable {
     }
 
     public void setEyeTiles(int[][] eyeTiles) {
+        if (eyeTiles == null)
+            eyeTiles = new int[0][0];
         this.eyeTiles = eyeTiles;
     }
 
@@ -83,6 +85,8 @@ public class Portrait implements INameable {
     }
 
     public void setMouthTiles(int[][] mouthTiles) {
+        if (mouthTiles == null)
+            mouthTiles = new int[0][0];
         this.mouthTiles = mouthTiles;
     }
     
