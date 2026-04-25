@@ -55,7 +55,7 @@ public class ActionManager {
                 if (pointer < 0) {
                     pointer += ACTION_HISTORY_LIMIT;
                 }
-                if (history[pointer].canBeCombined(action)) {
+                if (history[pointer] != null && history[pointer].canBeCombined(action)) {
                     //Actions can be combined so combine but don't adjust the action stack
                     history[pointer].combine(action);
                     if (history[pointer].isInvalidated()) {
