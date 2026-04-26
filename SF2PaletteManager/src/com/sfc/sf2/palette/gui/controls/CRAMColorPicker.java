@@ -3,11 +3,11 @@
 * To change this template file, choose Tools | Templates
 * and open the template in the editor.
  */
-package com.sfc.sf2.palette;
+package com.sfc.sf2.palette.gui.controls;
 
 import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.core.actions.BasicAction;
-import com.sfc.sf2.palette.gui.controls.CRAMColorEditor;
+import com.sfc.sf2.palette.CRAMColor;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.beans.BeanProperty;
