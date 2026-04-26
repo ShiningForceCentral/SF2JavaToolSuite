@@ -7,13 +7,14 @@ package com.sfc.sf2.ground;
 
 import com.sfc.sf2.core.INameable;
 import com.sfc.sf2.graphics.Tileset;
+import com.sfc.sf2.palette.IPaletteGraphic;
 import com.sfc.sf2.palette.Palette;
 
 /**
  *
  * @author wiz
  */
-public class Ground implements INameable {
+public class Ground implements INameable, IPaletteGraphic {
     public static final int GROUND_TILES_PER_ROW = 12;
     
     private Tileset tileset;
@@ -35,11 +36,30 @@ public class Ground implements INameable {
         this.tileset = tileset;
     }
     
+    @Override
     public Palette getPalette() {
         if (tileset == null) {
             return null;
         }
         return tileset.getPalette();
+    }
+
+    @Override
+    public void setPalette(Palette palette) {
+        if (tileset == null) return;
+        tileset.setPalette(palette);
+    }
+
+    @Override
+    public byte[] getPixels() {
+        if (tileset == null) return null;
+        return tileset.getPixels();
+    }
+
+    @Override
+    public void setPixels(byte[] pixels) {
+        if (tileset == null) return;
+        tileset.setPixels(pixels);
     }
 
     @Override
