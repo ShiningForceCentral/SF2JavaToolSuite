@@ -180,6 +180,7 @@ public class MapSpriteEntries {
             addEntry(nextFreeIndex, sprite);
             inserted.put(origIndex, nextFreeIndex);
             unreferenced.remove(i);
+            sprite.clearIndexedColorImage(true);
             i--;
         }
         
