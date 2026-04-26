@@ -9,7 +9,6 @@ import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.core.actions.BasicAction;
 import com.sfc.sf2.core.actions.CustomAction;
 import com.sfc.sf2.palette.gui.controls.CRAMColorEditor;
-import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.palette.CRAMColor;
 import com.sfc.sf2.palette.Palette;
 import com.sfc.sf2.palette.actions.PaletteColorSwapActionData;

@@ -7,7 +7,6 @@ package com.sfc.sf2.palette.gui.controls;
 
 import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.core.actions.CustomAction;
-import com.sfc.sf2.palette.CRAMColor;
 import com.sfc.sf2.palette.actions.PaletteColorSwapActionData;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -242,12 +241,15 @@ public class PaletteButton extends javax.swing.JButton {
     }
     
     private void onColorsSwapped(PaletteColorSwapActionData colorSwapData) {
-        boolean swapPixels = colorSwapData.pixelData() != null;
-        if (getPaletteListener == null || !swapPixels) return;
+        if (getPaletteListener == null) return;
         
-        IPaletteGraphic graphics = getPaletteListener.getPaletteGraphics();
-        if (graphics != null) {
-            graphics.setPixels(colorSwapData.pixelData());
+        if (colorSwapData.swapPixels()) {
+            IPaletteGraphic graphics = getPaletteListener.getPaletteGraphics();
+            if (graphics != null) {
+                graphics.setPixels(colorSwapData.pixelData());
+            }
+        } else {
+            palettePane.setPixelData(originalPixels);
         }
     }
 

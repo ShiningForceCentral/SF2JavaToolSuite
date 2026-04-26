@@ -33,6 +33,10 @@ public class PaletteColorSwapActionData implements IActionData<PaletteColorSwapA
     public byte[] pixelData() {
         return pixelData;
     }
+    
+    public boolean swapPixels() {
+        return pixelData != null;
+    }
 
     public int fromIndex() {
         return fromIndex;
@@ -42,6 +46,7 @@ public class PaletteColorSwapActionData implements IActionData<PaletteColorSwapA
         return toIndex;
     }
     
+    
     @Override
     public boolean isInvalidated(PaletteColorSwapActionData other) {
         return this.fromIndex == other.fromIndex && this.toIndex == other.toIndex && this.palette.equals(other.palette) && Arrays.equals(this.pixelData, other.pixelData);
@@ -49,7 +54,7 @@ public class PaletteColorSwapActionData implements IActionData<PaletteColorSwapA
 
     @Override
     public boolean canBeCombined(PaletteColorSwapActionData other) {
-        return other.fromIndex == this.toIndex;
+        return other.fromIndex == this.toIndex && this.swapPixels() == other.swapPixels();
     }
 
     @Override
@@ -59,6 +64,6 @@ public class PaletteColorSwapActionData implements IActionData<PaletteColorSwapA
 
     @Override
     public String toString() {
-        return String.format("From %d to %d. Swap Pixels = %b", fromIndex, toIndex, pixelData != null);
+        return String.format("From %d to %d. Swap Pixels = %b", fromIndex, toIndex, swapPixels());
     }
 }
