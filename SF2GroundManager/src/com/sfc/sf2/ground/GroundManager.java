@@ -13,10 +13,10 @@ import com.sfc.sf2.graphics.Tileset;
 import com.sfc.sf2.graphics.TilesetManager;
 import com.sfc.sf2.ground.io.GroundDisassemblyProcessor;
 import com.sfc.sf2.ground.io.GroundPackage;
-import com.sfc.sf2.helpers.PaletteHelpers;
 import com.sfc.sf2.helpers.PathHelpers;
 import com.sfc.sf2.palette.Palette;
 import com.sfc.sf2.palette.PaletteManager;
+import com.sfc.sf2.palette.helpers.PaletteHelpers;
 import java.io.IOException;
 import java.nio.file.Path;
 
