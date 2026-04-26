@@ -6,11 +6,16 @@
 package com.sfc.sf2.palette.gui;
 
 import com.sfc.sf2.core.actions.ActionManager;
+import com.sfc.sf2.core.actions.BasicAction;
+import com.sfc.sf2.core.actions.CustomAction;
 import com.sfc.sf2.palette.gui.controls.CRAMColorEditor;
-import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.palette.CRAMColor;
 import com.sfc.sf2.palette.Palette;
-import com.sfc.sf2.palette.actions.PaletteAction;
+import com.sfc.sf2.palette.actions.PaletteColorSwapActionData;
+import com.sfc.sf2.palette.actions.PaletteColorAction;
+import com.sfc.sf2.palette.gui.controls.PaletteButton.ColorsSwappedListener;
+import com.sfc.sf2.palette.helpers.PaletteGraphicsHelpers;
+import com.sfc.sf2.palette.helpers.PaletteHelpers;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -25,11 +30,13 @@ public class PalettePane extends JPanel {
         
     private CRAMColorEditor colorEditor;
     private Palette palette;
+    private byte[] pixelData;
     private ColorPane[] colorPanes;
     
-    private boolean recordActions = true;
+    private ColorPane currentSelected;
     
     private ActionListener colorChangeListener;
+    private ColorsSwappedListener colorsReorderedListener;
     
     public PalettePane() {
         setLayout(new GridBagLayout());
@@ -46,46 +53,62 @@ public class PalettePane extends JPanel {
         setColorPaneSelected(-1);
     }
 
-    public void setColorChangeListener(ActionListener colorChangeListener) {
+    public void setColorChangeListener(ActionListener colorChangeListener, ColorsSwappedListener colorsReorderedListener) {
         this.colorChangeListener = colorChangeListener;
-    }
-    
-    public void setRecordActions(boolean recordActions) {
-        this.recordActions = recordActions;
+        this.colorsReorderedListener = colorsReorderedListener;
     }
     
     public void setColorEditor(CRAMColorEditor colorEditor) {
         this.colorEditor = colorEditor;
         colorEditor.setColorPane(this);
     }
+
+    public int getCurrentSelected() {
+        return currentSelected == null ? -1 : currentSelected.getIndex();
+    }
+    
+    public void clearSelection() {
+        if (currentSelected == null) return;
+        currentSelected.deselect();
+        currentSelected = null;
+    }
   
     public void setColorPaneSelected(int index) {
         if (colorEditor == null) return;
+        if (ActionManager.isActionTriggering()) {
+            actionColorPaneSelected(index);
+        } else {
+            ActionManager.setAndExecuteAction(new BasicAction<Integer>(this, "Index Selected", this::actionColorPaneSelected, index, currentSelected == null ? -1 : currentSelected.getIndex()));
+        }
+    }
+    
+    private void actionColorPaneSelected(int index) {
+        clearSelection();
         if (index == -1 || palette == null) {
             colorEditor.setColor(CRAMColor.BLACK, -1);
-            ColorPane.clearSelection();
         } else {
+            colorPanes[index].select();
+            currentSelected = colorPanes[index];
             colorEditor.setColor(palette.getColors()[index], index);
         }
     }
   
     public void updateColor(int index, CRAMColor color) {
         if (palette == null || index < 0) return;
-        if (!recordActions || ActionManager.isActionTriggering()) {
-            actionUpdateColor(index, color);
-        } else {
-            ActionManager.setAndExecuteAction(new PaletteAction(this, index, color, colorPanes[index].getCurrentColor()));
+        if (!ActionManager.isActionTriggering()) {
+            ActionManager.setActionWithoutExecute(new PaletteColorAction(this, index, color, colorPanes[index].getCurrentColor()));
         }
+        actionUpdateColor(index, color);
     }
     
     private void actionUpdateColor(int index, CRAMColor color) {
         palette.getColors()[index] = color;
         colorEditor.setColor(color, index);
         colorPanes[index].updateColor(color);
-        colorPanes[index].setSelected();
+        colorPanes[index].select();
         refreshColorPanes();
         if (colorChangeListener != null) {
-            colorChangeListener.actionPerformed(new ActionEvent(palette, index, "ColorChange"));
+            colorChangeListener.actionPerformed(new ActionEvent(this, index, "ColorChange"));
         }
     }
     
@@ -97,60 +120,77 @@ public class PalettePane extends JPanel {
         if (selected == -1) return;
         colorEditor.setColor(palette.getColors()[selected], selected);
     }
+    
+    public void swapColors(int from, int to, boolean swapPixels) {
+        if (palette == null || from < 0 || to < 0) return;
+        
+        Palette swappedPalette = PaletteHelpers.swapColors(palette, from, to);
+        byte[] newPixelData = null;
+        if (swapPixels && pixelData != null) {
+            newPixelData = PaletteGraphicsHelpers.swapColorIndices(this.pixelData, (byte)from, (byte)to);
+        }
+        
+        if (ActionManager.isActionTriggering()) {
+            actionSwapColors(new PaletteColorSwapActionData(swappedPalette, newPixelData, from, to));
+        } else {
+            PaletteColorSwapActionData oldValue = new PaletteColorSwapActionData(palette, pixelData, to, from);
+            PaletteColorSwapActionData newValue = new PaletteColorSwapActionData(swappedPalette, newPixelData, from, to);
+            ActionManager.setAndExecuteAction(new CustomAction<PaletteColorSwapActionData>(this, "Color Index Swap", this::actionSwapColors, newValue, oldValue));
+        }
+    }
 
+    private void actionSwapColors(PaletteColorSwapActionData value) {
+        palette = value.palette();
+        pixelData = value.pixelData();
+        refreshColorPanes();
+        setColorPaneSelected(value.toIndex());
+        if (colorsReorderedListener != null) {
+            colorsReorderedListener.colorsSwapped(value);
+        }
+        if (colorChangeListener != null) {
+            colorChangeListener.actionPerformed(new ActionEvent(this, value.toIndex(), "PaletteIndexSwap"));
+        }
+    }
+   
     public Palette getPalette() {
         return palette;
     }
     
     public void setPalette(Palette palette) {
-        this.palette = palette;
         if (palette == null) {
+            this.palette = null;
             for (int i = 0; i < colorPanes.length; i++) {
                 colorPanes[i].updateColor(CRAMColor.BLACK);
                 colorPanes[i].setVisible(true);
             }
         } else {
-            CRAMColor[] colors = palette.getColors();
+            CRAMColor[] colors = new CRAMColor[palette.getColors().length];
             for (int i = 0; i < colorPanes.length; i++) {
                 if (i < colors.length) {
+                    colors[i] = palette.getColors()[i];
                     colorPanes[i].updateColor(colors[i]);
                     colorPanes[i].setVisible(true);
                 } else {
                     colorPanes[i].setVisible(false);
                 }
             }
+            this.palette = new Palette(palette.getName(), colors, palette.isFirstColorTransparent(), false);
+            this.palette.setName(palette.getName());
         }
         setColorPaneSelected(-1);
     }
     
     public void setPalette(Palette palette, int[] limitColorIndices) {
-        if (limitColorIndices == null) {
-            setPalette(palette);
-            return;
-        }
-        this.palette = palette;
-        CRAMColor[] colors = palette.getColors();
-        for (int i = 0; i < colorPanes.length; i++) {
-            if (i < colors.length) {
-                colorPanes[i].updateColor(colors[i]);
-            }
-            colorPanes[i].setVisible(false);
-        }
+        setPalette(palette);
+        if (limitColorIndices == null) return;
+        
         for (int i = 0; i < limitColorIndices.length; i++) {
             colorPanes[limitColorIndices[i]].setVisible(true);
         }
         setColorPaneSelected(-1);
     }
-   
-   public Palette getUpdatedPalette() {
-       if (palette == null) {
-           Console.logger().warning("Palette not loaded.");
-           return null;
-       }
-       CRAMColor[] colors = new CRAMColor[palette.getColors().length];
-       for(int i=0; i < colorPanes.length; i++) {
-           colors[i] = colorPanes[i].getCurrentColor();
-       }
-       return new Palette("New Palette", colors, true);
-   }
+
+    public void setPixelData(byte[] pixelData) {
+        this.pixelData = pixelData;
+    }
 }

@@ -16,7 +16,6 @@ import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.helpers.PathHelpers;
 import java.net.URI;
 import javax.swing.UIManager;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -33,6 +32,7 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
             initEditor();
             SettingsManager.setSavingAllowed(true); //Slight hack to prevent controls affecting settings on initialisation
         });
+        ActionManager.setupInputMaps(jPanel13);
     }
     
     protected void initCore(Console console) {
@@ -121,14 +121,7 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         buttonGroupTheme = new com.sfc.sf2.core.gui.controls.NameableButtonGroup();
-        jFrameActionHistory = new javax.swing.JFrame();
-        jPanelActions = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jButtonUndo = new javax.swing.JButton();
-        jButtonRedo = new javax.swing.JButton();
-        jButtonClear = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTableHistory = new javax.swing.JTable();
+        jFrameActionHistory = new com.sfc.sf2.core.gui.windows.ActionHistory();
         jFrameHelp = new javax.swing.JFrame();
         jPanelHelp = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -265,132 +258,6 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
 
         buttonGroupTheme.setName("Theme Button Group");
 
-        jFrameActionHistory.setTitle("Action History");
-        jFrameActionHistory.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jFrameActionHistory.setLocationByPlatform(true);
-        jFrameActionHistory.setMinimumSize(new java.awt.Dimension(500, 200));
-        jFrameActionHistory.setName("Frame Settings"); // NOI18N
-        jFrameActionHistory.setResizable(false);
-        jFrameActionHistory.setSize(new java.awt.Dimension(500, 250));
-        jFrameActionHistory.setType(java.awt.Window.Type.POPUP);
-        jFrameActionHistory.addWindowFocusListener(new java.awt.event.WindowFocusListener() {
-            public void windowGainedFocus(java.awt.event.WindowEvent evt) {
-                jFrameActionHistoryWindowGainedFocus(evt);
-            }
-            public void windowLostFocus(java.awt.event.WindowEvent evt) {
-            }
-        });
-        jFrameActionHistory.addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
-                jFrameActionHistoryWindowClosing(evt);
-            }
-            public void windowOpened(java.awt.event.WindowEvent evt) {
-                jFrameActionHistoryWindowOpened(evt);
-            }
-        });
-
-        jPanelActions.setMinimumSize(new java.awt.Dimension(400, 200));
-
-        jLabel1.setText("<html>A debugging window to see the action history (the undo/redo history).</html>");
-        jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-
-        jButtonUndo.setText("Undo");
-        jButtonUndo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonUndoActionPerformed(evt);
-            }
-        });
-
-        jButtonRedo.setText("Redo");
-        jButtonRedo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonRedoActionPerformed(evt);
-            }
-        });
-
-        jButtonClear.setText("Clear");
-        jButtonClear.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonClearActionPerformed(evt);
-            }
-        });
-
-        jTableHistory.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Index", "Owner", "Command", "New Data", "Old Data"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jTableHistory.setEnabled(false);
-        jTableHistory.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jScrollPane1.setViewportView(jTableHistory);
-
-        javax.swing.GroupLayout jPanelActionsLayout = new javax.swing.GroupLayout(jPanelActions);
-        jPanelActions.setLayout(jPanelActionsLayout);
-        jPanelActionsLayout.setHorizontalGroup(
-            jPanelActionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-            .addGroup(jPanelActionsLayout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(515, Short.MAX_VALUE))
-            .addGroup(jPanelActionsLayout.createSequentialGroup()
-                .addComponent(jButtonUndo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonRedo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButtonClear))
-        );
-        jPanelActionsLayout.setVerticalGroup(
-            jPanelActionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelActionsLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelActionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonUndo)
-                    .addComponent(jButtonRedo)
-                    .addComponent(jButtonClear))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 327, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout jFrameActionHistoryLayout = new javax.swing.GroupLayout(jFrameActionHistory.getContentPane());
-        jFrameActionHistory.getContentPane().setLayout(jFrameActionHistoryLayout);
-        jFrameActionHistoryLayout.setHorizontalGroup(
-            jFrameActionHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jFrameActionHistoryLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanelActions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jFrameActionHistoryLayout.setVerticalGroup(
-            jFrameActionHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jFrameActionHistoryLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanelActions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
         jFrameHelp.setTitle("Help");
         jFrameHelp.setAlwaysOnTop(true);
         jFrameHelp.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -474,7 +341,7 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
                 .addComponent(jButtonGitHubIssues)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonVersionHistory, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jFrameHelpLayout = new javax.swing.GroupLayout(jFrameHelp.getContentPane());
@@ -669,59 +536,19 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
         directoryButtonIncbinPath.setEnabled(!(jCheckBoxPrioritise.isSelected() && core.areLocalPathsValid()));
     }//GEN-LAST:event_jCheckBoxPrioritiseActionPerformed
 
-    private void jFrameActionHistoryWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_jFrameActionHistoryWindowClosing
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jFrameActionHistoryWindowClosing
-
     static String[] HISTORY_COLUMN_NAMES = new String[] { "Owner", "Action", "New Data", "Previous Data" };
-    private void jFrameActionHistoryWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_jFrameActionHistoryWindowOpened
-        jFrameActionHistory.setLocationRelativeTo(this);
-        jFrameActionHistory.setSize(jFrameActionHistory.getPreferredSize());
-        //Data set on jFrameActionHistoryWindowGainedFocus
-    }//GEN-LAST:event_jFrameActionHistoryWindowOpened
-
     private void jButtonUndoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUndoActionPerformed
-        boolean alwaysOnTop = jFrameActionHistory.isAlwaysOnTop();
-        jFrameActionHistory.setAlwaysOnTop(true);
         ActionManager.undo();
-        updateActionHistorySelection();
-        jFrameActionHistory.setAlwaysOnTop(alwaysOnTop);
     }//GEN-LAST:event_jButtonUndoActionPerformed
 
     private void jButtonRedoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRedoActionPerformed
-        boolean alwaysOnTop = jFrameActionHistory.isAlwaysOnTop();
-        jFrameActionHistory.setAlwaysOnTop(true);
         ActionManager.redo();
-        updateActionHistorySelection();
-        jFrameActionHistory.setAlwaysOnTop(alwaysOnTop);
     }//GEN-LAST:event_jButtonRedoActionPerformed
-
-    private void jButtonClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonClearActionPerformed
-        ActionManager.clearActionhistory();
-        jTableHistory.clearSelection();
-        Object[][] tableData = ActionManager.getHistoryTableData();
-        jTableHistory.setModel(new DefaultTableModel(tableData, HISTORY_COLUMN_NAMES));
-    }//GEN-LAST:event_jButtonClearActionPerformed
 
     private void jMenuItemActionHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemActionHistoryActionPerformed
         jFrameActionHistory.setVisible(true);
     }//GEN-LAST:event_jMenuItemActionHistoryActionPerformed
 
-    private void jFrameActionHistoryWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_jFrameActionHistoryWindowGainedFocus
-        Object[][] tableData = ActionManager.getHistoryTableData();
-        jTableHistory.setModel(new DefaultTableModel(tableData, HISTORY_COLUMN_NAMES));
-        updateActionHistorySelection();
-    }//GEN-LAST:event_jFrameActionHistoryWindowGainedFocus
-     
-    private void updateActionHistorySelection() {
-        if (!jFrameActionHistory.isActive()) return;
-        int index = ActionManager.getCurrentHistoryIndex()-1;
-        if (index == -1 || index >= jTableHistory.getRowCount()) {
-            jTableHistory.clearSelection();
-        } else {
-            jTableHistory.setRowSelectionInterval(index, index);
-        }
-    }
     private void jMenuItemHelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemHelpActionPerformed
         jFrameHelp.setLocationRelativeTo(this);
         jFrameHelp.setVisible(true);
@@ -768,17 +595,13 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
     private com.sfc.sf2.core.gui.controls.DirectoryButton directoryButtonBasePath;
     private com.sfc.sf2.core.gui.controls.DirectoryButton directoryButtonIncbinPath;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton3;
-    private javax.swing.JButton jButtonClear;
     private javax.swing.JButton jButtonDiscord;
     private javax.swing.JButton jButtonGitHubIssues;
-    private javax.swing.JButton jButtonRedo;
-    private javax.swing.JButton jButtonUndo;
     private javax.swing.JButton jButtonVersionHistory;
     private javax.swing.JCheckBox jCheckBoxPrioritise;
-    private javax.swing.JFrame jFrameActionHistory;
+    private com.sfc.sf2.core.gui.windows.ActionHistory jFrameActionHistory;
     private javax.swing.JFrame jFrameHelp;
     private javax.swing.JFrame jFrameSettings;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JMenuBar jMenuBar1;
@@ -795,14 +618,11 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel15;
-    private javax.swing.JPanel jPanelActions;
     private javax.swing.JPanel jPanelHelp;
     private javax.swing.JPanel jPanelSettings;
     private javax.swing.JRadioButton jRadioThemeDark;
     private javax.swing.JRadioButton jRadioThemeLight;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSplitPane jSplitPane1;
-    private javax.swing.JTable jTableHistory;
     // End of variables declaration//GEN-END:variables
 }

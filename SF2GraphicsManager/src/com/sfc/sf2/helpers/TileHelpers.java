@@ -7,6 +7,7 @@
 package com.sfc.sf2.helpers;
 
 import com.sfc.sf2.graphics.Tile;
+import com.sfc.sf2.graphics.Tileset;
 
 /**
  *
@@ -17,7 +18,6 @@ public class TileHelpers {
     /**
      *
      * For tiles imported from disassembly
-     * @return
      */
     public static Tile[] reorderTilesSequentially(Tile[] tiles, int blockColumnCount, int blockRowCount, int tilesPerBlock) {
         /* Disassembly tiles are stored in 4x4 chunks (top-bottom, left-right)
@@ -46,7 +46,6 @@ public class TileHelpers {
     /**
      *
      * For tiles being exported back to disassembly
-     * @return
      */
     public static Tile[] reorderTilesForDisasssembly(Tile[] tiles, int blockColumnCount, int blockRowCount, int tilesPerBlock) {
         int blockTotalTiles = tilesPerBlock*tilesPerBlock;
