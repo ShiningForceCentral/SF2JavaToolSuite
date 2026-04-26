@@ -69,7 +69,8 @@ public class PaletteButton extends javax.swing.JButton {
 
         paletteEditor.setTitle("Palette Editor");
         paletteEditor.setBounds(new java.awt.Rectangle(0, 0, 532, 320));
-        paletteEditor.setMinimumSize(new java.awt.Dimension(520, 295));
+        paletteEditor.setMinimumSize(new java.awt.Dimension(560, 300));
+        paletteEditor.setPreferredSize(new java.awt.Dimension(560, 300));
         paletteEditor.setResizable(false);
         paletteEditor.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -105,28 +106,29 @@ public class PaletteButton extends javax.swing.JButton {
             .addGroup(paletteEditorLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(paletteEditorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(palettePane, javax.swing.GroupLayout.DEFAULT_SIZE, 554, Short.MAX_VALUE)
                     .addComponent(jSeparator)
                     .addGroup(paletteEditorLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(paletteEditorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(paletteEditorLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                        .addGroup(paletteEditorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paletteEditorLayout.createSequentialGroup()
+                                .addComponent(cRAMColorEditor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paletteEditorLayout.createSequentialGroup()
                                 .addComponent(jButtonCancel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButtonReset)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonConfirm))
-                            .addGroup(paletteEditorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(cRAMColorEditor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(palettePane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGap(20, 20, 20)))
+                                .addComponent(jButtonConfirm)
+                                .addGap(20, 20, 20)))))
                 .addContainerGap())
         );
         paletteEditorLayout.setVerticalGroup(
             paletteEditorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(paletteEditorLayout.createSequentialGroup()
-                .addGap(13, 13, 13)
+                .addGap(7, 7, 7)
                 .addComponent(palettePane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cRAMColorEditor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -210,13 +212,15 @@ public class PaletteButton extends javax.swing.JButton {
         int selected = palettePane.getCurrentSelected();
         ActionManager.setExternalActionTriggering(true);
         
-        PaletteChangeActionData oldValue = new PaletteChangeActionData(palettePane.getPalette(), graphics.getPixels());
+        PaletteChangeActionData oldValue = new PaletteChangeActionData(palettePane.getPalette(), graphics == null ? null : graphics.getPixels());
         PaletteChangeActionData newValue = new PaletteChangeActionData(originalPalette, originalPixels);
         ActionManager.setActionWithoutExecute(new CustomAction<PaletteChangeActionData>(palettePane, "Reset", this::actionPaletteChanged, newValue, oldValue));
         
-        graphics.setPalette(originalPalette);
-        if (originalPixels != null) {
-            graphics.setPixels(originalPixels);
+        if (graphics != null) {
+            graphics.setPalette(originalPalette);
+            if (originalPixels != null) {
+                graphics.setPixels(originalPixels);
+            }
         }
         
         palettePane.setPalette(originalPalette);
