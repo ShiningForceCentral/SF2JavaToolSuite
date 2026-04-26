@@ -48,7 +48,11 @@ public class MapSpriteLayoutPanel extends AbstractLayoutPanel {
     @Override
     protected Dimension getImageDimensions() {
         if (mapsprites.getMapSpritesArray().length == 1) {
-            return new Dimension(mapsprites.getMapSpritesArray()[0].getSpritesWidth()*PIXEL_WIDTH, mapsprites.getMapSpritesArray()[0].getSpritesHeight()*PIXEL_HEIGHT);
+            if (mapsprites.getMapSpritesArray()[0] == null) {
+                return new Dimension();
+            } else {
+                return new Dimension(mapsprites.getMapSpritesArray()[0].getSpritesWidth()*PIXEL_WIDTH, mapsprites.getMapSpritesArray()[0].getSpritesHeight()*PIXEL_HEIGHT);
+            }
         } else {
             int w = 6*PIXEL_WIDTH;    //6 sprites per mapsprite (2x up, 2x left, 2x down)
             int h = mapsprites.getEntriesArray().length/3*PIXEL_HEIGHT;

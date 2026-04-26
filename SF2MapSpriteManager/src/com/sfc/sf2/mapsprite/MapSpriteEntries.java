@@ -107,18 +107,20 @@ public class MapSpriteEntries {
     }
     
     public void addEntry(int index, MapSprite mapSprite) {
-        if (mapSprite.getCombinedIndex() < 0) {
+        int combinedIndex = mapSprite == null ? -1 : mapSprite.getCombinedIndex();
+        if (combinedIndex < 0) {
             int nextFreeIndex = 0;
             while (mapSprites.containsKey(nextFreeIndex)) {
                 nextFreeIndex++;
             }
-            mapSprite.setCombinedIndex(nextFreeIndex);
+            if (mapSprite != null)
+                mapSprite.setCombinedIndex(nextFreeIndex);
         }
-        boolean duplicate = mapSprites.containsKey(mapSprite.getCombinedIndex());
+        boolean duplicate = mapSprites.containsKey(combinedIndex);
         if (!duplicate) {
-            mapSprites.put(mapSprite.getCombinedIndex(), mapSprite);
+            mapSprites.put(combinedIndex, mapSprite);
         }
-        addEntry(index, mapSprite.getCombinedIndex());
+        addEntry(index, combinedIndex);
     }
     
     public void addEntry(int index, int reference) {
