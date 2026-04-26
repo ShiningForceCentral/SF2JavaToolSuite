@@ -28,8 +28,7 @@ public class BattlespriteViewPanel extends AbstractViewPanel<BattleSpriteLayoutP
         init(jComboBoxScale, jCheckBoxGrid, null, colorPickerBG);
         
         paletteButtonRecolor.setupPaletteButton(() -> {
-            BattleSprite battleSprite = layoutPanel.getBattleSprite();
-            return battleSprite == null ? null : battleSprite.getCurrentPalette();
+            return layoutPanel.getBattleSprite();
         }, this::onPaletteColorChange);
     }
     
@@ -186,11 +185,8 @@ public class BattlespriteViewPanel extends AbstractViewPanel<BattleSpriteLayoutP
     }//GEN-LAST:event_jComboBoxPaletteActionPerformed
     
     private void onPaletteColorChange(ActionEvent e) {
-        Palette palette = (Palette)e.getSource();
-        if (palette == null) return;
         BattleSprite battleSprite = layoutPanel.getBattleSprite();
         if (battleSprite == null) return;
-        palette.rebuildIcm();
         battleSprite.clearIndexedColorImage(true);
         layoutPanel.redraw();
     }

@@ -10,8 +10,21 @@ package com.sfc.sf2.palette;
  * @author TiMMy
  */
 public interface IPaletteGraphic {
-    public Palette getPalette();
+
+    /**
+     * Gets the palette associated with the graphic
+     */
+    public Palette getPalette(); 
+   /**
+     * Sets a new palette to the graphic
+     */
     public void setPalette(Palette palette);
+    /**
+     * Gets the raw pixel data for the graphic
+     */
     public byte[] getPixels();
+    /**
+     * Sets new pixel data to the graphic
+     */
     public void setPixels(byte[] pixels);
 }
