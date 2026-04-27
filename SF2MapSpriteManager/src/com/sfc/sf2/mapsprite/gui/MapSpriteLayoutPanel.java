@@ -56,6 +56,8 @@ public class MapSpriteLayoutPanel extends AbstractLayoutPanel {
         } else {
             int w = 6*PIXEL_WIDTH;    //6 sprites per mapsprite (2x up, 2x left, 2x down)
             int h = mapsprites.getEntriesArray().length/3*PIXEL_HEIGHT;
+            if (mapsprites.getEntriesArray().length%3 != 0)
+                h += PIXEL_HEIGHT;
             return new Dimension(w, h);
         }
     }
