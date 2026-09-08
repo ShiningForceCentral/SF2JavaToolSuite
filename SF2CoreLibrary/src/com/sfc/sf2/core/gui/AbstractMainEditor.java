@@ -15,6 +15,7 @@ import com.sfc.sf2.core.settings.SettingsManager;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.helpers.PathHelpers;
 import java.net.URI;
+import java.nio.file.Path;
 import javax.swing.UIManager;
 
 /**
@@ -76,7 +77,14 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
     public static void programSetup() {
         //Hack to determine if project is running from editor (IDE) or is a build. (property 'user.dir' is blank if in editor)
         String dir = System.getProperty("user.dir");
-        SettingsManager.setRunningInEditor(dir == null || dir.length() == 0);
+        boolean inEditor = dir == null || dir.length() == 0;
+        if (!inEditor) {
+            if (Path.of(dir).getParent().resolve("SF2CoreLibrary").toFile().exists()) {
+                //Detected that app is running from project IDE
+                inEditor = false;
+            }
+        }
+        SettingsManager.setRunningInEditor(inEditor);
         SettingsManager.loadGlobalSettings();
         
         //Set look and feel
