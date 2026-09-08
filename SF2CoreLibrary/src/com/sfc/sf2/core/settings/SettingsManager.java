@@ -55,14 +55,14 @@ public class SettingsManager {
     
     private static Path getGlobalSettingsFilePath() {
         if (globalSettingsPath == null) {
-            globalSettingsPath = Path.of(System.getenv("APPDATA")).resolve("SF2").resolve("global.settings");
+            globalSettingsPath = OS_Info.getUserDataPath().resolve("global.settings");
         }
         return globalSettingsPath;
     }
     
     private static Path getSettingsFilePath() {
         if (settingsFilePath == null) {
-            settingsFilePath = Path.of(System.getenv("APPDATA")).resolve("SF2");
+            settingsFilePath = OS_Info.getUserDataPath();
             String projectName = Manifest.getProjectName();
             settingsFilePath = settingsFilePath.resolve(projectName + ".settings");
         }

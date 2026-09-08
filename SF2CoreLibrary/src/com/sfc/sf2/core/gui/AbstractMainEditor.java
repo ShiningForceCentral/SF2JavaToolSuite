@@ -58,6 +58,7 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
             java.awt.EventQueue.invokeLater(() -> {
                 if (!core.arePathsValid()) {
                     Console.logger().info("Could not automatically detect app path : " + PathHelpers.getApplicationpath().toString());
+                    jFrameSettings.setLocationRelativeTo(this);
                     jFrameSettings.setVisible(true);
                 }
             });
@@ -158,7 +159,6 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
         jFrameSettings.setName("Frame Settings"); // NOI18N
         jFrameSettings.setResizable(false);
         jFrameSettings.setSize(new java.awt.Dimension(500, 250));
-        jFrameSettings.setType(java.awt.Window.Type.POPUP);
         jFrameSettings.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 jFrameSettingsWindowClosing(evt);
@@ -198,7 +198,7 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
         buttonGroupTheme.add(jRadioThemeDark);
         jRadioThemeDark.setText("Dark");
 
-        jLabel6.setText("<html>Theme <i>(Requires restart)</i>  :</html>");
+        jLabel6.setText("<html>Theme <i>(Requires app restart)</i>  :</html>");
 
         javax.swing.GroupLayout jPanelSettingsLayout = new javax.swing.GroupLayout(jPanelSettings);
         jPanelSettings.setLayout(jPanelSettingsLayout);
@@ -207,24 +207,23 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
             .addGroup(jPanelSettingsLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(directoryButtonBasePath, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(directoryButtonIncbinPath, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jSeparator1)
                     .addGroup(jPanelSettingsLayout.createSequentialGroup()
                         .addGroup(jPanelSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(directoryButtonBasePath, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(directoryButtonIncbinPath, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jSeparator1)
                             .addGroup(jPanelSettingsLayout.createSequentialGroup()
                                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jRadioThemeLight)
                                 .addGap(18, 18, 18)
-                                .addComponent(jRadioThemeDark)
-                                .addGap(0, 157, Short.MAX_VALUE)))
-                        .addContainerGap())
-                    .addGroup(jPanelSettingsLayout.createSequentialGroup()
-                        .addComponent(jCheckBoxPrioritise)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(infoButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addComponent(jRadioThemeDark))
+                            .addGroup(jPanelSettingsLayout.createSequentialGroup()
+                                .addComponent(jCheckBoxPrioritise)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(infoButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 84, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanelSettingsLayout.setVerticalGroup(
             jPanelSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -244,7 +243,7 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
                     .addComponent(jRadioThemeDark)
                     .addComponent(jRadioThemeLight)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jFrameSettingsLayout = new javax.swing.GroupLayout(jFrameSettings.getContentPane());
@@ -260,7 +259,7 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
             jFrameSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jFrameSettingsLayout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(jPanelSettings, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE))
+                .addComponent(jPanelSettings, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         buttonGroupTheme.setName("Theme Button Group");
@@ -419,7 +418,6 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
         jLabel2.setMinimumSize(new java.awt.Dimension(100, 25));
         jLabel2.setPreferredSize(new java.awt.Dimension(100, 25));
 
-        jButtonDiscord.setIcon(new javax.swing.ImageIcon("D:\\TiMMy\\Dev\\ShiningForce2\\SF2JavaToolsSuite\\SF2CoreLibrary\\res\\Core\\Icons\\Logo_Discord.png")); // NOI18N
         jButtonDiscord.setText("SF2 Hacking Discord");
         jButtonDiscord.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -427,7 +425,6 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
             }
         });
 
-        jButtonGitHubIssues.setIcon(new javax.swing.ImageIcon("D:\\TiMMy\\Dev\\ShiningForce2\\SF2JavaToolsSuite\\SF2CoreLibrary\\res\\Core\\Icons\\Logo_Github.png")); // NOI18N
         jButtonGitHubIssues.setText("Report an issue");
         jButtonGitHubIssues.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -631,6 +628,7 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemExitActionPerformed
 
     private void jMenuItemSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSettingsActionPerformed
+        jFrameSettings.setLocationRelativeTo(this);
         jFrameSettings.setVisible(true);
     }//GEN-LAST:event_jMenuItemSettingsActionPerformed
 

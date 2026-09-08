@@ -17,9 +17,6 @@
         <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[500, 250]"/>
         </Property>
-        <Property name="type" type="java.awt.Window$Type" editor="org.netbeans.modules.form.editors.EnumEditor">
-          <Value id="POPUP"/>
-        </Property>
       </Properties>
       <Events>
         <EventHandler event="windowClosing" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="jFrameSettingsWindowClosing"/>
@@ -40,7 +37,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                  <Component id="jPanelSettings" pref="207" max="32767" attributes="0"/>
+                  <Component id="jPanelSettings" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -62,29 +59,28 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="directoryButtonBasePath" alignment="0" max="32767" attributes="0"/>
+                          <Component id="directoryButtonIncbinPath" max="32767" attributes="0"/>
+                          <Component id="jSeparator1" alignment="0" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="directoryButtonBasePath" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="directoryButtonIncbinPath" max="32767" attributes="0"/>
-                                  <Component id="jSeparator1" alignment="0" max="32767" attributes="0"/>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Component id="jRadioThemeLight" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Component id="jRadioThemeDark" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="0" pref="157" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jCheckBoxPrioritise" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="infoButton3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jCheckBoxPrioritise" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="infoButton3" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="84" max="32767" attributes="0"/>
                           </Group>
                       </Group>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -108,7 +104,7 @@
                           <Component id="jRadioThemeLight" alignment="2" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel6" alignment="2" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="47" max="32767" attributes="0"/>
+                      <EmptySpace pref="39" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -171,7 +167,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel6">
               <Properties>
-                <Property name="text" type="java.lang.String" value="&lt;html&gt;Theme &lt;i&gt;(Requires restart)&lt;/i&gt;  :&lt;/html&gt;"/>
+                <Property name="text" type="java.lang.String" value="&lt;html&gt;Theme &lt;i&gt;(Requires app restart)&lt;/i&gt;  :&lt;/html&gt;"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JSeparator" name="jSeparator1">
@@ -444,9 +440,6 @@
             </Component>
             <Component class="javax.swing.JButton" name="jButtonDiscord">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="D:\TiMMy\Dev\ShiningForce2\SF2JavaToolsSuite\SF2CoreLibrary\res\Core\Icons\Logo_Discord.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="SF2 Hacking Discord"/>
               </Properties>
               <Events>
@@ -455,9 +448,6 @@
             </Component>
             <Component class="javax.swing.JButton" name="jButtonGitHubIssues">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="D:\TiMMy\Dev\ShiningForce2\SF2JavaToolsSuite\SF2CoreLibrary\res\Core\Icons\Logo_Github.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Report an issue"/>
               </Properties>
               <Events>
