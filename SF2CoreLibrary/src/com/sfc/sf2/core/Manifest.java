@@ -58,7 +58,7 @@ public class Manifest {
         //Should only be used for running in IDE
         //Probably in editor
         String path = System.getProperty("user.dir");
-        String projectName = path.substring(path.lastIndexOf('\\')+1);
+        String projectName = path.substring(path.lastIndexOf(File.separatorChar)+1);
         if (projectName == null) {
             Console.logger().severe("ERROR Fallback project name not found. Settings will not load correctly.");
             return "SF2UnknownProject";
@@ -70,7 +70,7 @@ public class Manifest {
     
     private static String loadVersionFromProjectFolder() {
         //Should only be used for running in IDE
-        File manifest = new File(System.getProperty("user.dir") + "\\version.properties");
+        File manifest = new File(System.getProperty("user.dir") + File.separator + "version.properties");
         if (manifest.exists()) {
             try {
                 //Probably running in editor
