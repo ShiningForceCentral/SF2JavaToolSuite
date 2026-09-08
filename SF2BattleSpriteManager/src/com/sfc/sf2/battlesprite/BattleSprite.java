@@ -6,7 +6,9 @@
 package com.sfc.sf2.battlesprite;
 
 import com.sfc.sf2.core.INameable;
+import com.sfc.sf2.graphics.Tile;
 import com.sfc.sf2.graphics.Tileset;
+import com.sfc.sf2.palette.IPaletteGraphic;
 import com.sfc.sf2.palette.Palette;
 import java.awt.Point;
 import java.util.Arrays;
@@ -15,7 +17,7 @@ import java.util.Arrays;
  *
  * @author wiz
  */
-public class BattleSprite implements INameable {
+public class BattleSprite implements INameable, IPaletteGraphic {
     public static final int BATTLE_SPRITE_TILE_HEIGHT = 12;
     
     public enum BattleSpriteType {
@@ -85,7 +87,7 @@ public class BattleSprite implements INameable {
     }
 
     public Palette getCurrentPalette() {
-        if (currentPaletteIndex < 0 || currentPaletteIndex >= palettes.length) return null;
+        if (palettes == null || currentPaletteIndex < 0 || currentPaletteIndex >= palettes.length) return null;
         return palettes[currentPaletteIndex];
     }
 
@@ -101,6 +103,46 @@ public class BattleSprite implements INameable {
             frames[i].setPalette(palettes[currentPalette]);
             frames[i].clearIndexedColorImage(true);
         }
+    }
+
+    @Override
+    public Palette getPalette() {
+        return getCurrentPalette();
+    }
+
+    @Override
+    public void setPalette(Palette palette) {
+        if (palettes == null || currentPaletteIndex < 0 || currentPaletteIndex >= palettes.length) return;
+        palettes[currentPaletteIndex] = palette;
+        setCurrentPaletteIndex(currentPaletteIndex);    //Force refresh frames
+    }
+
+    @Override
+    public byte[] getPixels() {
+        if (frames == null || frames.length == 0) return null;
+        int pixelsPerFrame = getTilesPerRow()*BATTLE_SPRITE_TILE_HEIGHT*Tile.PIXEL_COUNT;
+        byte[] pixels = new byte[frames.length*pixelsPerFrame];
+        for (int i = 0; i < frames.length; i++) {
+            byte[] framePixels = frames[i].getPixels();
+            System.arraycopy(framePixels, 0, pixels, i*pixelsPerFrame, pixelsPerFrame);
+        }
+        return pixels;
+    }
+
+    @Override
+    public void setPixels(byte[] pixels) {
+        if (frames == null || frames.length == 0) return;
+        int pixelsPerFrame = getTilesPerRow()*BATTLE_SPRITE_TILE_HEIGHT*Tile.PIXEL_COUNT;
+        if (pixels.length != frames.length*pixelsPerFrame) {
+            throw new IllegalStateException(String.format("ERROR: BattleSprite %s frames count changed from %d to %d when editing palette.", name, frames.length, pixels.length/pixelsPerFrame));
+        }
+        
+        for (int i = 0; i < frames.length; i++) {
+            byte[] framePixels = new byte[pixelsPerFrame];
+            System.arraycopy(pixels, i*pixelsPerFrame, framePixels, 0, pixelsPerFrame);
+            frames[i].setPixels(framePixels);
+        }
+        clearIndexedColorImage(false);
     }
 
     public int getAnimSpeed() {

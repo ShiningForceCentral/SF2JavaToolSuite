@@ -154,8 +154,11 @@ public class MapBlocksetRawImageProcessor extends AbstractRawImageProcessor<MapB
                 for (int t = 0; t < tiles.length; t++) {
                     int tX = (t%Block.TILE_WIDTH)*Tile.PIXEL_WIDTH;
                     int tY = (t/Block.TILE_WIDTH)*Tile.PIXEL_HEIGHT;
-                    int[] pixels = tiles[t].getTile(tilesets).getRenderPixels(tiles[t].getTileFlags());
-                    raster.setPixels(bX+tX, bY+tY, Tile.PIXEL_WIDTH, Tile.PIXEL_HEIGHT, pixels);
+                    Tile tile = tiles[t].getTile(tilesets);
+                    if (tile != null) {
+                        int[] pixels = tile.getRenderPixels(tiles[t].getTileFlags());
+                        raster.setPixels(bX+tX, bY+tY, Tile.PIXEL_WIDTH, Tile.PIXEL_HEIGHT, pixels);
+                    }
                 }
             }
         }

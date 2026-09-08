@@ -645,7 +645,7 @@
                                 </Component>
                                 <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton15">
                                   <Properties>
-                                    <Property name="messageText" type="java.lang.String" value="&lt;html&gt;Will insert unreferenced sprites into the next available slot(s) in the entries.&lt;br&gt;&lt;br&gt;&lt;i&gt;Does not override any defined entries (including duplicates or empty entries).&lt;/i&gt;&lt;/html&gt;"/>
+                                    <Property name="messageText" type="java.lang.String" value="&lt;html&gt;If any unreferenced Mapsprites are loaded (see top-right tab) this button will insert these Mapsprites into the next available slot in entries.asm.&lt;br&gt;&lt;br&gt;&lt;i&gt;Does not override any defined entries (including duplicates or empty entries).&lt;br&gt;May rename the Mapsprite to align with the entries data.&lt;/i&gt;&lt;/html&gt;"/>
                                     <Property name="text" type="java.lang.String" value=""/>
                                   </Properties>
                                 </Component>

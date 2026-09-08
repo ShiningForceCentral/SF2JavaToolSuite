@@ -458,7 +458,7 @@ public class MapspriteMainEditor extends AbstractMainEditor {
 
                 jLabel13.setText("Insert unreferenced mapsprites");
 
-                infoButton15.setMessageText("<html>Will insert unreferenced sprites into the next available slot(s) in the entries.<br><br><i>Does not override any defined entries (including duplicates or empty entries).</i></html>");
+                infoButton15.setMessageText("<html>If any unreferenced Mapsprites are loaded (see top-right tab) this button will insert these Mapsprites into the next available slot in entries.asm.<br><br><i>Does not override any defined entries (including duplicates or empty entries).<br>May rename the Mapsprite to align with the entries data.</i></html>");
                 infoButton15.setText("");
 
                 javax.swing.GroupLayout jPanel20Layout = new javax.swing.GroupLayout(jPanel20);

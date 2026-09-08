@@ -6,8 +6,15 @@
 package com.sfc.sf2.core.actions;
 
 import com.sfc.sf2.core.gui.controls.Console;
+import com.sfc.sf2.core.gui.windows.ActionHistory;
 import com.sfc.sf2.core.settings.SettingsManager;
+import java.awt.event.ActionEvent;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.util.Stack;
+import javax.swing.AbstractAction;
+import javax.swing.JComponent;
+import javax.swing.KeyStroke;
 
 /**
  *
@@ -48,6 +55,7 @@ public class ActionManager {
     public static void setActionWithoutExecute(IAction action) {
         if (action == null) return;
         long time = System.currentTimeMillis();
+        boolean addToHistory = true;
         if (time - lastActionTime < 20000) {
             //Check if action can be combined
             if (getCurrentHistoryIndex() > 0) {
@@ -63,14 +71,17 @@ public class ActionManager {
                         shiftPointerBack();
                     }
                     lastActionTime = time;
-                    return;
+                    addToHistory = false;
                 }
             }
         }
-        lastActionTime = time;
-        history[stackPointer] = action;
-        shiftPointerForward(true);
-        clearInvalidRedos();
+        if (addToHistory) {
+            lastActionTime = time;
+            history[stackPointer] = action;
+            shiftPointerForward(true);
+            clearInvalidRedos();
+        }
+        ActionHistory.refreshActionHistory();
     }
     
     public static void undo() {
@@ -84,6 +95,7 @@ public class ActionManager {
         history[stackPointer].undo();
         Console.logger().finest(String.format("Undo (%d/%d) performed on : %s", getCurrentHistoryIndex(), ACTION_HISTORY_LIMIT, actionToString(history[stackPointer])));
         setActionTriggering(false);
+        ActionHistory.refreshActionHistory();
     }
     
     public static void redo() {
@@ -97,6 +109,7 @@ public class ActionManager {
         history[pointer].execute();
         Console.logger().finest(String.format("Redo (%d/%d) performed on : %s", getCurrentHistoryIndex(), ACTION_HISTORY_LIMIT, actionToString(history[pointer])));
         setActionTriggering(false);
+        ActionHistory.refreshActionHistory();
     }
     
     private static void shiftPointerBack() {
@@ -141,6 +154,35 @@ public class ActionManager {
                 break;
             }
         }
+        ActionHistory.refreshActionHistory();
+    }
+    
+    public static void clearActionsFromOwner(Object owner) {
+        int i = stackStart;
+        while (i != stackPointer) {
+            if (history[i] != null && history[i].getOwner().equals(owner)) {
+                //Shift all back
+                int ii = i;
+                while (ii != stackPointer) {
+                    ii++;
+                    if (ii >= history.length)
+                        ii -= history.length;
+                    
+                    if (ii == 0) {
+                        history[ii-1] = history[ii];
+                    } else {
+                        history[ii-1] = history[ii];
+                    }
+                }
+                stackPointer--;
+                i--;
+            }
+                
+            i++;
+            if (i >= history.length)
+                i -= history.length;
+        }
+        ActionHistory.refreshActionHistory();
     }
     
     public static void clearActionhistory() {
@@ -153,6 +195,7 @@ public class ActionManager {
             history[i] = null;
         }
         setActionTriggering(false);
+        ActionHistory.refreshActionHistory();
     }
     
     /**
@@ -201,5 +244,27 @@ public class ActionManager {
     private static String actionToString(IAction action) {
         Object[] data = formatTableData(action.toTableData());
         return String.format("%s (%s): New Data = %s, Old Data = %s", data[0], data[1], data[2], data[3]);
+    }
+    
+    
+    private static AbstractAction undo = new AbstractAction() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            undo();
+        }
+    };
+    private static AbstractAction redo = new AbstractAction() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            redo();
+        }
+    };
+    public static void setupInputMaps(JComponent component) {
+        component.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_Z, InputEvent.CTRL_DOWN_MASK), "undo");
+        component.getActionMap().put("undo", undo);
+        component.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_Y, InputEvent.CTRL_DOWN_MASK), "redo");
+        component.getActionMap().put("redo", redo);
+        component.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_Z, InputEvent.CTRL_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK), "altRedo");
+        component.getActionMap().put("altRedo", redo);
     }
 }

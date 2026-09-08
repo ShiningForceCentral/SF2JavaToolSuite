@@ -8,6 +8,7 @@ package com.sfc.sf2.graphics;
 import com.sfc.sf2.core.INameable;
 import static com.sfc.sf2.graphics.Tile.PIXEL_HEIGHT;
 import static com.sfc.sf2.graphics.Tile.PIXEL_WIDTH;
+import com.sfc.sf2.palette.IPaletteGraphic;
 import com.sfc.sf2.palette.Palette;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -18,7 +19,7 @@ import java.util.Arrays;
  *
  * @author TiMMy
  */
-public class Tileset implements INameable {
+public class Tileset implements INameable, IPaletteGraphic {
     
     private String name;
     protected Tile[] tiles;
@@ -73,6 +74,7 @@ public class Tileset implements INameable {
         return new Dimension(w*PIXEL_WIDTH, h*PIXEL_HEIGHT);
     }
 
+    @Override
     public Palette getPalette() {
         if (tiles == null || tiles.length == 0) {
             return null;
@@ -80,12 +82,41 @@ public class Tileset implements INameable {
         return tiles[0].getPalette();
     }
 
+    @Override
     public void setPalette(Palette palette) {
         if (tiles == null || tiles.length == 0) {
             return;
         }
         for (int i = 0; i < tiles.length; i++) {
             tiles[i].setPalette(palette);
+        }
+        clearIndexedColorImage(true);
+    }
+        
+    @Override
+    public byte[] getPixels() {
+        if (tiles == null || tiles.length == 0) return null;
+        byte[] pixels = new byte[tiles.length*Tile.PIXEL_COUNT];
+        for (int i = 0; i < tiles.length; i++) {
+            byte[] tilePixels = tiles[i].getPixels();
+            System.arraycopy(tilePixels, 0, pixels, i*Tile.PIXEL_COUNT, Tile.PIXEL_COUNT);
+        }
+        return pixels;
+    }
+
+    @Override
+    public void setPixels(byte[] pixels) {
+        if (pixels.length != tiles.length*Tile.PIXEL_COUNT) {
+            tiles = new Tile[pixels.length/Tile.PIXEL_COUNT];
+            for (int i = 0; i < tiles.length; i++) {
+                tiles[i] = new Tile(i, null, getPalette());
+            }
+        }
+        
+        for (int i = 0; i < tiles.length; i++) {
+            byte[] tilePixels = new byte[Tile.PIXEL_COUNT];
+            System.arraycopy(pixels, i*Tile.PIXEL_COUNT, tilePixels, 0, Tile.PIXEL_COUNT);
+            tiles[i].setPixels(tilePixels);
         }
         clearIndexedColorImage(true);
     }

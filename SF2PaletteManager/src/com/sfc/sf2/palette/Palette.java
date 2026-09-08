@@ -36,6 +36,11 @@ public class Palette implements INameable {
         setName(name);
         setColors(colors, firstColorTransparent);
     }
+    
+    public Palette(String name, CRAMColor[] colors, boolean firstColorTransparent, boolean forceFirstColorUnique) {
+        setName(name);
+        setColors(colors, firstColorTransparent, forceFirstColorUnique);
+    }
 
     public String getName() {
         return name;
@@ -54,10 +59,19 @@ public class Palette implements INameable {
     }
 
     public void setColors(CRAMColor[] palette, boolean firstColorTransparent) {
+        setColors(palette, firstColorTransparent, true);
+    }
+
+    public void setColors(CRAMColor[] palette, boolean firstColorTransparent, boolean forceFirstColorUnique) {
         this.colors = palette;
         this.firstColorTransparent = firstColorTransparent;
         if (firstColorTransparent) {
-            ensureUniqueTransparencyColor();
+            if (forceFirstColorUnique) {
+                ensureUniqueTransparencyColor();
+            } else {
+                int rgb = colors[0].CRAMColor().getRGB() & 0xFFFFFF;
+                colors[0] = CRAMColor.fromPremadeCramColor(new Color(rgb));
+            }
         }
         rebuildIcm();
     }

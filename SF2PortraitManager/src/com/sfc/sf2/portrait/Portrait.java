@@ -10,6 +10,7 @@ import com.sfc.sf2.graphics.Tile;
 import static com.sfc.sf2.graphics.Tile.PIXEL_HEIGHT;
 import static com.sfc.sf2.graphics.Tile.PIXEL_WIDTH;
 import com.sfc.sf2.graphics.Tileset;
+import com.sfc.sf2.palette.IPaletteGraphic;
 import com.sfc.sf2.palette.Palette;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -19,7 +20,7 @@ import java.util.Arrays;
  *
  * @author wiz
  */
-public class Portrait implements INameable {
+public class Portrait implements INameable, IPaletteGraphic {
     
     public static final int PORTRAIT_TILES_FULL_WIDTH = 8;
     public static final int PORTRAIT_TILES_WIDTH = 6;
@@ -41,8 +42,8 @@ public class Portrait implements INameable {
         this.index = index;
         this.name = name;
         this.tileset = tileset;
-        this.eyeTiles = eyeTiles;
-        this.mouthTiles = mouthTiles;
+        setEyeTiles(eyeTiles);
+        setMouthTiles(mouthTiles);
     }
 
     public int getIndex() {
@@ -75,6 +76,8 @@ public class Portrait implements INameable {
     }
 
     public void setEyeTiles(int[][] eyeTiles) {
+        if (eyeTiles == null)
+            eyeTiles = new int[0][0];
         this.eyeTiles = eyeTiles;
     }
 
@@ -83,14 +86,39 @@ public class Portrait implements INameable {
     }
 
     public void setMouthTiles(int[][] mouthTiles) {
+        if (mouthTiles == null)
+            mouthTiles = new int[0][0];
         this.mouthTiles = mouthTiles;
     }
     
+    @Override
     public Palette getPalette() {
         if (tileset == null) {
             return null;
         }
         return tileset.getPalette();
+    }
+
+    @Override
+    public void setPalette(Palette palette) {
+        if (tileset != null) {
+            tileset.setPalette(palette);
+        }
+    }
+
+    @Override
+    public byte[] getPixels() {
+        if (tileset == null) {
+            return null;
+        } else {
+            return tileset.getPixels();
+        }
+    }
+
+    @Override
+    public void setPixels(byte[] pixels) {
+        if (tileset == null) return;
+        tileset.setPixels(pixels);
     }
     
     public BufferedImage getIndexedColorImage(boolean showfullImage, boolean blinking, boolean speaking) {

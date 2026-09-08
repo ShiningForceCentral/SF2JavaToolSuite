@@ -8,7 +8,6 @@ package com.sfc.sf2.portrait.gui;
 import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.core.actions.ToggleAction;
 import com.sfc.sf2.core.gui.controls.AbstractViewPanel;
-import com.sfc.sf2.palette.Palette;
 import com.sfc.sf2.portrait.Portrait;
 import java.awt.event.ActionEvent;
 
@@ -27,8 +26,7 @@ public class PortraitViewPanel extends AbstractViewPanel<PortraitLayoutPanel> {
         init(jComboBoxScale, jCheckBoxGrid, null, colorPickerBG);
         
         paletteButtonRecolor.setupPaletteButton(() -> {
-            Portrait portrait = layoutPanel.getPortrait();
-            return portrait == null ? null : portrait.getPalette();
+            return layoutPanel.getPortrait();
         }, this::onPaletteColorChange);
     }
 
@@ -190,11 +188,8 @@ public class PortraitViewPanel extends AbstractViewPanel<PortraitLayoutPanel> {
     }//GEN-LAST:event_jCheckBoxGridItemStateChanged
     
     private void onPaletteColorChange(ActionEvent e) {
-        Palette palette = (Palette)e.getSource();
-        if (palette == null) return;
         Portrait portrait = layoutPanel.getPortrait();
         if (portrait == null) return;
-        palette.rebuildIcm();
         portrait.getTileset().clearIndexedColorImage(true);
         layoutPanel.redraw();
     }
