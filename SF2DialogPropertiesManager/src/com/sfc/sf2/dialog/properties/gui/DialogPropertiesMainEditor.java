@@ -33,8 +33,8 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
         //Handle if standard dialog properties exists or not
         File file = PathHelpers.getBasePath().resolve(fileButtonImportDialog.getFilePath()).toFile();
         if (!file.exists()) {
-            fileButtonImportDialog.setFilePath(".\\spritedialogproperties.asm");
-            fileButtonExportDialog.setFilePath(".\\spritedialogproperties.asm");
+            fileButtonImportDialog.setFilePath("./spritedialogproperties.asm");
+            fileButtonExportDialog.setFilePath("./spritedialogproperties.asm");
         }
     }
     
@@ -173,7 +173,7 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
         infoButton2.setText("");
 
         fileButtonImportDialog.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonImportDialog.setFilePath(".\\spritedialogproperties-standard.asm");
+        fileButtonImportDialog.setFilePath("./spritedialogproperties-standard.asm");
         fileButtonImportDialog.setInfoMessage("");
         fileButtonImportDialog.setLabelText("Dialog properties :");
         fileButtonImportDialog.setName("Import General Dialog"); // NOI18N
@@ -223,7 +223,7 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
         jLabel1.setText("Export dialog properties disassembly.");
 
         fileButtonExportDialog.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonExportDialog.setFilePath(".\\spritedialogproperties-standard.asm");
+        fileButtonExportDialog.setFilePath("./spritedialogproperties-standard.asm");
         fileButtonExportDialog.setInfoMessage("");
         fileButtonExportDialog.setLabelText("Dialog properties :");
         fileButtonExportDialog.setName("Export General Dialog"); // NOI18N
@@ -294,7 +294,7 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
         jLabel4.setText("Import ally dialog properties disassembly.");
 
         fileButtonImportAllies.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonImportAllies.setFilePath(".\\stats\\allies\\allydialogproperties-standard.asm");
+        fileButtonImportAllies.setFilePath("./stats/allies/allydialogproperties-standard.asm");
         fileButtonImportAllies.setInfoMessage("");
         fileButtonImportAllies.setLabelText("Dialog properties :");
         fileButtonImportAllies.setName("Import Allies Dialog"); // NOI18N
@@ -346,7 +346,7 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
         jLabel3.setText("Export allies dialog properties disassembly.");
 
         fileButtonExportAllies.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonExportAllies.setFilePath(".\\stats\\allies\\allydialogproperties-standard.asm");
+        fileButtonExportAllies.setFilePath("./stats/allies/allydialogproperties-standard.asm");
         fileButtonExportAllies.setInfoMessage("");
         fileButtonExportAllies.setLabelText("Dialog properties :");
         fileButtonExportAllies.setName("Export Allies Dialog"); // NOI18N
@@ -412,37 +412,37 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
         accordionPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Import data :"));
 
         fileButtonImportBasePalette.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButtonImportBasePalette.setFilePath(".\\graphics\\tech\\basepalette.bin");
+        fileButtonImportBasePalette.setFilePath("./graphics/tech/basepalette.bin");
         fileButtonImportBasePalette.setInfoMessage("The game's base palette. Used to show the mapsprites.");
         fileButtonImportBasePalette.setLabelText("Base palette :");
         fileButtonImportBasePalette.setName("Import Base Palette"); // NOI18N
 
         fileButtonImportMapsprites.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonImportMapsprites.setFilePath(".\\graphics\\mapsprites\\entries.asm");
+        fileButtonImportMapsprites.setFilePath("./graphics/mapsprites/entries.asm");
         fileButtonImportMapsprites.setInfoMessage("The entries file to load mapsprite previews.");
         fileButtonImportMapsprites.setLabelText("Mapsprite entries :");
         fileButtonImportMapsprites.setName("Import Mapsprite Entries"); // NOI18N
 
         fileButtonImportPortraits.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonImportPortraits.setFilePath(".\\graphics\\portraits\\entries.asm");
+        fileButtonImportPortraits.setFilePath("./graphics/portraits/entries.asm");
         fileButtonImportPortraits.setInfoMessage("The entries file to show preview of portraits.");
         fileButtonImportPortraits.setLabelText("Portrait entries :");
         fileButtonImportPortraits.setName("Import Portrait Entries"); // NOI18N
 
         fileButtonImportEnums.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonImportEnums.setFilePath("..\\sf2enums.asm");
+        fileButtonImportEnums.setFilePath("../sf2enums.asm");
         fileButtonImportEnums.setInfoMessage("Loads data from SF2Enums, including: SFX file names.");
         fileButtonImportEnums.setLabelText("SF2Enums :");
         fileButtonImportEnums.setName("Import Enums"); // NOI18N
 
         fileButtonImportSpecialSprites.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonImportSpecialSprites.setFilePath(".\\graphics\\specialsprites\\entries.asm");
+        fileButtonImportSpecialSprites.setFilePath("./graphics/specialsprites/entries.asm");
         fileButtonImportSpecialSprites.setInfoMessage("The special sprites entries to show preview of special sprites (ie. boss sprites).");
         fileButtonImportSpecialSprites.setLabelText("Special sprite entries :");
         fileButtonImportSpecialSprites.setName("Import Special Sprite Entries"); // NOI18N
 
         fileButtonImportSpecialSpritePointers.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonImportSpecialSpritePointers.setFilePath(".\\graphics\\specialsprites\\pointers.asm");
+        fileButtonImportSpecialSpritePointers.setFilePath("./graphics/specialsprites/pointers.asm");
         fileButtonImportSpecialSpritePointers.setInfoMessage("Also required to load special sprites.");
         fileButtonImportSpecialSpritePointers.setLabelText("Special sprite pointers :");
         fileButtonImportSpecialSpritePointers.setName("Import Special Sprite Pointers"); // NOI18N

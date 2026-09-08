@@ -197,12 +197,12 @@ public class MapspriteMainEditor extends AbstractMainEditor {
         jPanel3.setPreferredSize(new java.awt.Dimension(590, 135));
 
         fileButtonImportEntries.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonImportEntries.setFilePath(".\\entries.asm");
+        fileButtonImportEntries.setFilePath("./entries.asm");
         fileButtonImportEntries.setInfoMessage("Entries file for mapsprites. Loaded mapsprites will be compared to the entries file to determine which sprites are unique, which are referenced by multiple entries, and which are not referenced at all.");
         fileButtonImportEntries.setLabelText("Mapsprite entries :");
 
         fileButtonImportPalette.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButtonImportPalette.setFilePath("..\\tech\\basepalette.bin");
+        fileButtonImportPalette.setFilePath("../tech/basepalette.bin");
         fileButtonImportPalette.setInfoMessage("The default palette file for mapsprites. Imported mapsprites will be previewed in these colors.");
         fileButtonImportPalette.setLabelText("Palette file :");
 
@@ -245,7 +245,7 @@ public class MapspriteMainEditor extends AbstractMainEditor {
 
         jLabel10.setText("<html>Select the directory with the Mapsprite disassemblies.</html>");
 
-        directoryButtonImportMapsprites.setDirectoryPath(".\\");
+        directoryButtonImportMapsprites.setDirectoryPath("./");
             directoryButtonImportMapsprites.setInfoMessage("");
             directoryButtonImportMapsprites.setLabelText("Mapsprites directory :");
 
@@ -295,7 +295,7 @@ public class MapspriteMainEditor extends AbstractMainEditor {
 
             jLabel3.setText("<html>Select the directory with Mapsprite images.</html>");
 
-            directoryButtonImportImages.setDirectoryPath(".\\export\\");
+            directoryButtonImportImages.setDirectoryPath("./export/");
                 directoryButtonImportImages.setInfoMessage("");
                 directoryButtonImportImages.setLabelText("Image directory :");
 
@@ -488,7 +488,7 @@ public class MapspriteMainEditor extends AbstractMainEditor {
                 );
 
                 fileButtonExportEntries.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-                fileButtonExportEntries.setFilePath(".\\entries.asm");
+                fileButtonExportEntries.setFilePath("./entries.asm");
                 fileButtonExportEntries.setInfoMessage("");
                 fileButtonExportEntries.setLabelText("Mapsprite entries :");
 
@@ -540,7 +540,7 @@ public class MapspriteMainEditor extends AbstractMainEditor {
                 jLabel1.setText("Select a directory to export mapsprite disassembly files to.");
                 jLabel1.setToolTipText("");
 
-                directoryButtonExportMapsprites.setDirectoryPath(".\\");
+                directoryButtonExportMapsprites.setDirectoryPath("./");
                     directoryButtonExportMapsprites.setInfoMessage("");
                     directoryButtonExportMapsprites.setLabelText("Directory :");
 
@@ -598,7 +598,7 @@ public class MapspriteMainEditor extends AbstractMainEditor {
                     jLabel9.setText("<html>Select a directory to create new Mapsprite images.</html>");
                     jLabel9.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
 
-                    directoryButtonExportImages.setDirectoryPath(".\\export\\");
+                    directoryButtonExportImages.setDirectoryPath("./export/");
                         directoryButtonExportImages.setInfoMessage("");
                         directoryButtonExportImages.setLabelText("Image directory :");
 

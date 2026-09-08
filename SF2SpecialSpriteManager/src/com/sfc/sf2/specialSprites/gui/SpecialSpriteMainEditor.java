@@ -251,7 +251,7 @@ public class SpecialSpriteMainEditor extends AbstractMainEditor {
         });
 
         fileButtonImportSpecialSprite.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButtonImportSpecialSprite.setFilePath(".\\zeon.bin");
+        fileButtonImportSpecialSprite.setFilePath("./zeon.bin");
         fileButtonImportSpecialSprite.setInfoMessage("");
         fileButtonImportSpecialSprite.setLabelText("Special sprite :");
         fileButtonImportSpecialSprite.setName("Import Special Sprite"); // NOI18N
@@ -317,7 +317,7 @@ public class SpecialSpriteMainEditor extends AbstractMainEditor {
         jLabel3.setText("Import special sprite from image.");
 
         fileButtonImportImage.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ANY_IMAGE);
-        fileButtonImportImage.setFilePath(".\\export\\newSpecialSprite.png");
+        fileButtonImportImage.setFilePath("./export/newSpecialSprite.png");
         fileButtonImportImage.setInfoMessage("");
         fileButtonImportImage.setLabelText("Image file :");
         fileButtonImportImage.setName("Import Image"); // NOI18N
@@ -403,7 +403,7 @@ public class SpecialSpriteMainEditor extends AbstractMainEditor {
         });
 
         fileButtonExpotSpecialSprite.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButtonExpotSpecialSprite.setFilePath(".\\newSpecialSprite.bin");
+        fileButtonExpotSpecialSprite.setFilePath("./newSpecialSprite.bin");
         fileButtonExpotSpecialSprite.setInfoMessage("");
         fileButtonExpotSpecialSprite.setLabelText("Special sprite :");
         fileButtonExpotSpecialSprite.setName("Export Special Sprite"); // NOI18N
@@ -456,7 +456,7 @@ public class SpecialSpriteMainEditor extends AbstractMainEditor {
 
         jLabel9.setText("Export special sprite as image.");
 
-        fileButtonExportImage.setFilePath(".\\export\\newSpecialSprite.png");
+        fileButtonExportImage.setFilePath("./export/newSpecialSprite.png");
         fileButtonExportImage.setLabelText("Image file :");
         fileButtonExportImage.setName("Export Image"); // NOI18N
 
@@ -686,7 +686,7 @@ public class SpecialSpriteMainEditor extends AbstractMainEditor {
                 jSpinnerBlockW.setValue(4);
                 jSpinnerBlockH.setValue(2);
                 jSpinnerTilesBlock.setValue(3);
-                fileButtonImportPalette.setFilePath(".\\evilspirit.bin");
+                fileButtonImportPalette.setFilePath("./evilspirit.bin");
                 break;
             case "6x3":
                 jSpinnerBlockW.setValue(6);

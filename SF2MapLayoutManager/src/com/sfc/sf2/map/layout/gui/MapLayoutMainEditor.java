@@ -221,24 +221,24 @@ public class MapLayoutMainEditor extends AbstractMainEditor {
         accordionPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Palette, tilesets, & map data"));
 
         fileButtonImportPaletteEntries.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonImportPaletteEntries.setFilePath("..\\graphics\\maps\\mappalettes\\entries.asm");
+        fileButtonImportPaletteEntries.setFilePath("../graphics/maps/mappalettes/entries.asm");
         fileButtonImportPaletteEntries.setInfoMessage("");
         fileButtonImportPaletteEntries.setLabelText("Palette entries :");
         fileButtonImportPaletteEntries.setName("Import Palette Entries"); // NOI18N
 
         fileButtonImportTilesetsEntries.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonImportTilesetsEntries.setFilePath("..\\graphics\\maps\\maptilesets\\entries.asm");
+        fileButtonImportTilesetsEntries.setFilePath("../graphics/maps/maptilesets/entries.asm");
         fileButtonImportTilesetsEntries.setInfoMessage("");
         fileButtonImportTilesetsEntries.setLabelText("Tilesets entries :");
         fileButtonImportTilesetsEntries.setName("Import Tileset Entries"); // NOI18N
 
         fileButtonImportMapEntries.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonImportMapEntries.setFilePath(".\\entries.asm");
+        fileButtonImportMapEntries.setFilePath("./entries.asm");
         fileButtonImportMapEntries.setInfoMessage("");
         fileButtonImportMapEntries.setLabelText("Map entries :");
         fileButtonImportMapEntries.setName("Import Map Entries"); // NOI18N
 
-        directoryButtonImportMapsDir.setDirectoryPath(".\\entries\\");
+        directoryButtonImportMapsDir.setDirectoryPath("./entries/");
             directoryButtonImportMapsDir.setInfoMessage("");
             directoryButtonImportMapsDir.setLabelText("Maps dir :");
             directoryButtonImportMapsDir.setName("Import Maps Directory"); // NOI18N
@@ -436,13 +436,13 @@ public class MapLayoutMainEditor extends AbstractMainEditor {
             accordionPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Palette, tilesets, & map data"));
 
             fileButtonImportPaletteEntries1.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-            fileButtonImportPaletteEntries1.setFilePath("..\\graphics\\maps\\mappalettes\\entries.asm");
+            fileButtonImportPaletteEntries1.setFilePath("../graphics/maps/mappalettes/entries.asm");
             fileButtonImportPaletteEntries1.setInfoMessage("");
             fileButtonImportPaletteEntries1.setLabelText("Palette entries :");
             fileButtonImportPaletteEntries1.setName("Import Palette Entries"); // NOI18N
 
             fileButtonImportTilesetsEntries1.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-            fileButtonImportTilesetsEntries1.setFilePath("..\\graphics\\maps\\maptilesets\\entries.asm");
+            fileButtonImportTilesetsEntries1.setFilePath("../graphics/maps/maptilesets/entries.asm");
             fileButtonImportTilesetsEntries1.setInfoMessage("");
             fileButtonImportTilesetsEntries1.setLabelText("Tilesets entries :");
             fileButtonImportTilesetsEntries1.setName("Import Tilesets Entries"); // NOI18N
@@ -499,7 +499,7 @@ public class MapLayoutMainEditor extends AbstractMainEditor {
 
             jPanel24.setBorder(javax.swing.BorderFactory.createTitledBorder("Import :"));
 
-            directoryButtonImportMapDir.setDirectoryPath(".\\entries\\map03\\");
+            directoryButtonImportMapDir.setDirectoryPath("./entries/map03/");
                 directoryButtonImportMapDir.setInfoMessage("");
                 directoryButtonImportMapDir.setLabelText("Map dir :");
                 directoryButtonImportMapDir.setName("Import Map"); // NOI18N
@@ -548,7 +548,7 @@ public class MapLayoutMainEditor extends AbstractMainEditor {
 
                 jPanel27.setBorder(javax.swing.BorderFactory.createTitledBorder("Export :"));
 
-                directoryButtonExportMapDir.setDirectoryPath(".\\entries\\map03\\");
+                directoryButtonExportMapDir.setDirectoryPath("./entries/map03/");
                     directoryButtonExportMapDir.setLabelText("Map dir :");
                     directoryButtonExportMapDir.setName("Export Map Directory"); // NOI18N
 
@@ -618,49 +618,49 @@ public class MapLayoutMainEditor extends AbstractMainEditor {
                     jPanel3.setPreferredSize(new java.awt.Dimension(590, 135));
 
                     fileButtonImportPalette.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-                    fileButtonImportPalette.setFilePath("..\\graphics\\maps\\mappalettes\\mappalette00.bin");
+                    fileButtonImportPalette.setFilePath("../graphics/maps/mappalettes/mappalette00.bin");
                     fileButtonImportPalette.setInfoMessage("");
                     fileButtonImportPalette.setLabelText("Palette :");
                     fileButtonImportPalette.setName("Import Palette"); // NOI18N
 
                     fileButtonImportTileset1.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-                    fileButtonImportTileset1.setFilePath("..\\graphics\\maps\\maptilesets\\maptileset000.bin");
+                    fileButtonImportTileset1.setFilePath("../graphics/maps/maptilesets/maptileset000.bin");
                     fileButtonImportTileset1.setInfoMessage("");
                     fileButtonImportTileset1.setLabelText("Tileset 1 :");
                     fileButtonImportTileset1.setName("Import Tileset 1"); // NOI18N
 
                     fileButtonImportTileset2.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-                    fileButtonImportTileset2.setFilePath("..\\graphics\\maps\\maptilesets\\maptileset037.bin");
+                    fileButtonImportTileset2.setFilePath("../graphics/maps/maptilesets/maptileset037.bin");
                     fileButtonImportTileset2.setInfoMessage("");
                     fileButtonImportTileset2.setLabelText("Tileset 2 :");
                     fileButtonImportTileset2.setName("Import Tileset 2"); // NOI18N
 
                     fileButtonImportTileset3.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-                    fileButtonImportTileset3.setFilePath("..\\graphics\\maps\\maptilesets\\maptileset043.bin");
+                    fileButtonImportTileset3.setFilePath("../graphics/maps/maptilesets/maptileset043.bin");
                     fileButtonImportTileset3.setInfoMessage("");
                     fileButtonImportTileset3.setLabelText("Tileset 3 :");
                     fileButtonImportTileset3.setName("Import Tileset 3"); // NOI18N
 
                     fileButtonImportTileset4.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-                    fileButtonImportTileset4.setFilePath("..\\graphics\\maps\\maptilesets\\maptileset053.bin");
+                    fileButtonImportTileset4.setFilePath("../graphics/maps/maptilesets/maptileset053.bin");
                     fileButtonImportTileset4.setInfoMessage("");
                     fileButtonImportTileset4.setLabelText("Tileset 4 :");
                     fileButtonImportTileset4.setName("Import Tileset 4"); // NOI18N
 
                     fileButtonImportTileset5.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-                    fileButtonImportTileset5.setFilePath("..\\graphics\\maps\\maptilesets\\maptileset066.bin");
+                    fileButtonImportTileset5.setFilePath("../graphics/maps/maptilesets/maptileset066.bin");
                     fileButtonImportTileset5.setInfoMessage("");
                     fileButtonImportTileset5.setLabelText("Tileset 5 :");
                     fileButtonImportTileset5.setName("Import Tileset 5"); // NOI18N
 
                     fileButtonImportBlockFile.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-                    fileButtonImportBlockFile.setFilePath(".\\entries\\map03\\0-blocks.bin");
+                    fileButtonImportBlockFile.setFilePath("./entries/map03/0-blocks.bin");
                     fileButtonImportBlockFile.setInfoMessage("");
                     fileButtonImportBlockFile.setLabelText("Blocks file :");
                     fileButtonImportBlockFile.setName("Import Blocks File"); // NOI18N
 
                     fileButtonImportLayoutFile.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-                    fileButtonImportLayoutFile.setFilePath(".\\entries\\map03\\1-layout.bin");
+                    fileButtonImportLayoutFile.setFilePath("./entries/map03/1-layout.bin");
                     fileButtonImportLayoutFile.setInfoMessage("");
                     fileButtonImportLayoutFile.setLabelText("Layout file :");
                     fileButtonImportLayoutFile.setToolTipText("");

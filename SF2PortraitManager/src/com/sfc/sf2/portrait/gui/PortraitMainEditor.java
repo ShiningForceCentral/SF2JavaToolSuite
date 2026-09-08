@@ -245,7 +245,7 @@ public class PortraitMainEditor extends AbstractMainEditor {
         jLabel2.setText("Import portrait disassembly.");
 
         fileButtonImportPortrait.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButtonImportPortrait.setFilePath(".\\portrait00.bin");
+        fileButtonImportPortrait.setFilePath("./portrait00.bin");
         fileButtonImportPortrait.setInfoMessage("");
         fileButtonImportPortrait.setLabelText("Portrait file :");
         fileButtonImportPortrait.setName("Import Portrait"); // NOI18N
@@ -292,7 +292,7 @@ public class PortraitMainEditor extends AbstractMainEditor {
         jLabel3.setText("Import portrait from image and meta.");
 
         fileButtonImportImage.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ANY_IMAGE);
-        fileButtonImportImage.setFilePath(".\\export\\portrait00.png");
+        fileButtonImportImage.setFilePath("./export/portrait00.png");
         fileButtonImportImage.setInfoMessage("<html>Supported image formats: PNG or GIF.<br><br>Color format should be 4BPP / 16 indexed colors. Images of 8BPP / 256 indexed colors will be converted to 4 BPP / 16 (some colors may be lost).<br>When imported, icons will use the base palette colors.<br>Color index 0 is treated as transparent.</html>");
         fileButtonImportImage.setLabelText("Image file :");
         fileButtonImportImage.setName("Import Image"); // NOI18N
@@ -361,7 +361,7 @@ public class PortraitMainEditor extends AbstractMainEditor {
         jLabel1.setText("Export portrait disassembly.");
 
         fileButtonExportPortrait.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButtonExportPortrait.setFilePath(".\\portrait00.bin");
+        fileButtonExportPortrait.setFilePath("./portrait00.bin");
         fileButtonExportPortrait.setInfoMessage("");
         fileButtonExportPortrait.setLabelText("Portrait file :");
         fileButtonExportPortrait.setName("Export Portrait"); // NOI18N
@@ -406,7 +406,7 @@ public class PortraitMainEditor extends AbstractMainEditor {
         jLabel9.setText("Export portrait as image.");
 
         fileButtonExportImage.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ANY_IMAGE);
-        fileButtonExportImage.setFilePath(".\\export\\portrait00.png");
+        fileButtonExportImage.setFilePath("./export/portrait00.png");
         fileButtonExportImage.setInfoMessage("<html>Supported image formats: PNG or GIF.<br><br>Exported color format will be 4BPP / 16 indexed colors.<br>Color index 0 is treated as transparent.</html>");
         fileButtonExportImage.setLabelText("Image file :");
         fileButtonExportImage.setName("Export Image"); // NOI18N

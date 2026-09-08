@@ -153,26 +153,26 @@ public class BattleCoordsMainEditor extends AbstractMainEditor {
             }
         });
 
-        fileButtonImportBattleCoords.setFilePath(".\\global\\battlemapcoords.asm");
+        fileButtonImportBattleCoords.setFilePath("./global/battlemapcoords.asm");
         fileButtonImportBattleCoords.setLabelText("Battle map coords :");
         fileButtonImportBattleCoords.setName("Import Battle Coords"); // NOI18N
 
         accordionPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Entries"));
 
         fileButtonPaletteEntries.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonPaletteEntries.setFilePath("..\\graphics\\maps\\mappalettes\\entries.asm");
+        fileButtonPaletteEntries.setFilePath("../graphics/maps/mappalettes/entries.asm");
         fileButtonPaletteEntries.setInfoMessage("");
         fileButtonPaletteEntries.setLabelText("Palette entries :");
         fileButtonPaletteEntries.setName("Import Palette Entries"); // NOI18N
 
         fileButtonTilesetsEntries.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonTilesetsEntries.setFilePath("..\\graphics\\maps\\maptilesets\\entries.asm");
+        fileButtonTilesetsEntries.setFilePath("../graphics/maps/maptilesets/entries.asm");
         fileButtonTilesetsEntries.setInfoMessage("");
         fileButtonTilesetsEntries.setLabelText("Tilesets entries :");
         fileButtonTilesetsEntries.setName("Import Tilesets Entries"); // NOI18N
 
         fileButtonMapEntries.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonMapEntries.setFilePath("..\\maps\\entries.asm");
+        fileButtonMapEntries.setFilePath("../maps/entries.asm");
         fileButtonMapEntries.setInfoMessage("");
         fileButtonMapEntries.setLabelText("Map entries :");
         fileButtonMapEntries.setName("Import Map Entries"); // NOI18N
@@ -244,7 +244,7 @@ public class BattleCoordsMainEditor extends AbstractMainEditor {
         });
 
         fileButtonExportBattleCoords.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonExportBattleCoords.setFilePath(".\\global\\battlemapcoords.asm");
+        fileButtonExportBattleCoords.setFilePath("./global/battlemapcoords.asm");
         fileButtonExportBattleCoords.setInfoMessage("");
         fileButtonExportBattleCoords.setLabelText("Battle map coords :");
         fileButtonExportBattleCoords.setName("Export Map Coords"); // NOI18N

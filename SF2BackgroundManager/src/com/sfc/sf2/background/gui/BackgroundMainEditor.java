@@ -133,7 +133,7 @@ public class BackgroundMainEditor extends AbstractMainEditor {
         infoButton1.setMessageText("<html>Loads all Background disassembly files with the name pattern \"backgroundXX.bin\".</html>");
         infoButton1.setText("");
 
-        directoryButtonImportBackgrounds.setDirectoryPath(".\\");
+        directoryButtonImportBackgrounds.setDirectoryPath("./");
             directoryButtonImportBackgrounds.setInfoMessage("");
             directoryButtonImportBackgrounds.setLabelText("BGs directory :");
             directoryButtonImportBackgrounds.setName("Import Backgrounds"); // NOI18N
@@ -184,7 +184,7 @@ public class BackgroundMainEditor extends AbstractMainEditor {
             infoButton3.setMessageText("<html>Loads all Background disassembly files with the name pattern \"backgroundXX.bin\".<br>Supported image formats: PNG or GIF. Automatically detects images of supported formats with the naming pattern \"backgroundXX.png\".<br><br>Color format should be 4BPP / 16 indexed colors. Images of 8BPP / 256 indexed colors will be converted to 4 BPP / 16 (some colors may be lost).<br>Colors will be convered to CRAM format (the color format used by the SEGA Genesis).<br>Color index 0 is treated as transparent.</html>");
             infoButton3.setText("");
 
-            directoryButtonImportImages.setDirectoryPath(".\\export\\");
+            directoryButtonImportImages.setDirectoryPath("./export/");
                 directoryButtonImportImages.setInfoMessage("");
                 directoryButtonImportImages.setLabelText("Images directory :");
                 directoryButtonImportImages.setName("Import Images"); // NOI18N
@@ -252,7 +252,7 @@ public class BackgroundMainEditor extends AbstractMainEditor {
                 infoButton4.setMessageText("<html>Exports Backgrounds as individual disassembly files. File name pattern is \"backgroundXX.bin\".</html>");
                 infoButton4.setText("");
 
-                directoryButtonExportBackgrounds.setDirectoryPath(".\\");
+                directoryButtonExportBackgrounds.setDirectoryPath("./");
                     directoryButtonExportBackgrounds.setInfoMessage("");
                     directoryButtonExportBackgrounds.setLabelText("BGs directory :");
                     directoryButtonExportBackgrounds.setName("Export Backgrounds"); // NOI18N
@@ -303,7 +303,7 @@ public class BackgroundMainEditor extends AbstractMainEditor {
                     infoButton5.setMessageText("<html>Saves all Backgrounds as individual images with the name pattern \"backgroundXX.png\".<br>Supported image formats: PNG or GIF.<br><br>Exported color format will be 4BPP / 16 indexed colors.</html>");
                     infoButton5.setText("");
 
-                    directoryButtonExportImages.setDirectoryPath(".\\export\\");
+                    directoryButtonExportImages.setDirectoryPath("./export/");
                         directoryButtonExportImages.setInfoMessage("");
                         directoryButtonExportImages.setLabelText("Images directory :");
                         directoryButtonExportImages.setName("Export Images"); // NOI18N

@@ -169,7 +169,7 @@ public final class ExampleMainEditor extends AbstractMainEditor {
         infoButton1.setMessageText("<html>This is a test message. See how the info buttons can teach you.<br>You can set the <b>\"messageText\"</b> field to make a message popup by default, or you can listen to the <b>ActionPerformed</b> event.<br><br><i>If the text has any newlines then html tags don't seem to work.</i><br><br>The bad news is that <a href=\"https://github.com/ShiningForceCentral\">hyperlinks do not work!</a></html>");
         infoButton1.setText("");
 
-        fileButton1.setFilePath(".\\newFolder\\file.txt");
+        fileButton1.setFilePath("./newFolder/file.txt");
         fileButton1.setInfoMessage("<html>This also has a help button.</html>");
         fileButton1.setLabelText("Test file button :");
         fileButton1.setName("Test File Button"); // NOI18N

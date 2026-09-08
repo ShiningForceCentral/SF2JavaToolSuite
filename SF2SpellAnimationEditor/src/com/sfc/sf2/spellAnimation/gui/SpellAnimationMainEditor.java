@@ -119,39 +119,39 @@ public class SpellAnimationMainEditor extends AbstractMainEditor {
         jLabel22.setText("Spells :");
 
         fileButton1.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButton1.setFilePath("..\\..\\..\\..\\code\\gameflow\\battle\\battlescenes\\animation\\bolt.asm");
+        fileButton1.setFilePath("../../../../code/gameflow/battle/battlescenes/animation/bolt.asm");
         fileButton1.setInfoMessage("");
         fileButton1.setLabelText("Spell anim :");
 
         fileButton2.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButton2.setFilePath(".\\spellgraphics04.bin");
+        fileButton2.setFilePath("./spellgraphics04.bin");
         fileButton2.setInfoMessage("");
         fileButton2.setLabelText("Spell graphic :");
 
         fileButton3.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButton3.setFilePath("..\\battlescenebasepalette.bin");
+        fileButton3.setFilePath("../battlescenebasepalette.bin");
         fileButton3.setInfoMessage("");
         fileButton3.setLabelText("Spell base palette :");
 
         accordionPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Scene"));
 
         fileButton5.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButton5.setFilePath("..\\backgrounds\\background09.bin");
+        fileButton5.setFilePath("../backgrounds/background09.bin");
         fileButton5.setInfoMessage("");
         fileButton5.setLabelText("Background :");
 
         fileButton6.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButton6.setFilePath("..\\grounds\\groundtiles09.bin");
+        fileButton6.setFilePath("../grounds/groundtiles09.bin");
         fileButton6.setInfoMessage("");
         fileButton6.setLabelText("Ground :");
 
         fileButton7.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButton7.setFilePath("..\\battlescenebasepalette.bin");
+        fileButton7.setFilePath("../battlescenebasepalette.bin");
         fileButton7.setInfoMessage("");
         fileButton7.setLabelText("Ground base palette :");
 
         fileButton8.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButton8.setFilePath("..\\grounds\\groundpalette09.bin");
+        fileButton8.setFilePath("../grounds/groundpalette09.bin");
         fileButton8.setInfoMessage("");
         fileButton8.setLabelText("Ground palette :");
 
@@ -246,7 +246,7 @@ public class SpellAnimationMainEditor extends AbstractMainEditor {
         });
 
         fileButton4.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButton4.setFilePath(".\\animations\\boltanimdata.asm");
+        fileButton4.setFilePath("./animations/boltanimdata.asm");
         fileButton4.setInfoMessage("");
         fileButton4.setLabelText("Spell Anim :");
 

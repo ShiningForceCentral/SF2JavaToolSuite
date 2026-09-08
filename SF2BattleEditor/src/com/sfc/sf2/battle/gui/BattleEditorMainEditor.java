@@ -292,43 +292,43 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
         accordionPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Map & terrain"));
 
         fileButtonPaletteEntries.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonPaletteEntries.setFilePath("..\\graphics\\maps\\mappalettes\\entries.asm");
+        fileButtonPaletteEntries.setFilePath("../graphics/maps/mappalettes/entries.asm");
         fileButtonPaletteEntries.setInfoMessage("Entries file for map palettes.");
         fileButtonPaletteEntries.setLabelText("Palette entries :");
         fileButtonPaletteEntries.setName("Import Palette Entries"); // NOI18N
 
         fileButtonTilesetEntries.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonTilesetEntries.setFilePath("..\\graphics\\maps\\maptilesets\\entries.asm");
+        fileButtonTilesetEntries.setFilePath("../graphics/maps/maptilesets/entries.asm");
         fileButtonTilesetEntries.setInfoMessage("Entries file for map tilesets.");
         fileButtonTilesetEntries.setLabelText("Tileset entries :");
         fileButtonTilesetEntries.setName("Import Tileset Entries"); // NOI18N
 
         fileButtonMapEntries.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonMapEntries.setFilePath("..\\maps\\entries.asm");
+        fileButtonMapEntries.setFilePath("../maps/entries.asm");
         fileButtonMapEntries.setInfoMessage("<html>Map entries file. Lists all maps defined to be used in the game.<br>If a map is not loading then it might not have been added to the entries.</html>");
         fileButtonMapEntries.setLabelText("Map entries :");
         fileButtonMapEntries.setName("Import Map Entries"); // NOI18N
 
         fileButtonTerrainEntries.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonTerrainEntries.setFilePath(".\\terrainentries.asm");
+        fileButtonTerrainEntries.setFilePath("./terrainentries.asm");
         fileButtonTerrainEntries.setInfoMessage("Entries for battle terrain data.");
         fileButtonTerrainEntries.setLabelText("Terrain entries :");
         fileButtonTerrainEntries.setName("Import Terrain Entries"); // NOI18N
 
         fileButtonImportCoords.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonImportCoords.setFilePath(".\\global\\battlemapcoords.asm");
+        fileButtonImportCoords.setFilePath("./global/battlemapcoords.asm");
         fileButtonImportCoords.setInfoMessage("Assembly file that defines the map and boundries for all battles.");
         fileButtonImportCoords.setLabelText("Battle map coords :");
         fileButtonImportCoords.setName("Import Battle Coords"); // NOI18N
 
         fileButtonSpritesetEntries.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonSpritesetEntries.setFilePath(".\\spritesets\\entries.asm");
+        fileButtonSpritesetEntries.setFilePath("./spritesets/entries.asm");
         fileButtonSpritesetEntries.setInfoMessage("<html>The entries file for battle data.<br>Battle \"Spritesets\" include ally positions, enemy info, AI Regions, and AI points.</html>");
         fileButtonSpritesetEntries.setLabelText("Spriteset entries :");
         fileButtonSpritesetEntries.setName("Import Spriteset Entries"); // NOI18N
 
         fileButtonImportLandEffects.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonImportLandEffects.setFilePath(".\\global\\landeffectsettingsandmovecosts.asm");
+        fileButtonImportLandEffects.setFilePath("./global/landeffectsettingsandmovecosts.asm");
         fileButtonImportLandEffects.setInfoMessage("Assembly file that defines the land effects (block move cost and defense bonus) for each battle.");
         fileButtonImportLandEffects.setLabelText("Land effects :");
         fileButtonImportLandEffects.setName("Import Land Effects"); // NOI18N
@@ -372,37 +372,37 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
         accordionPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Map sprites :"));
 
         fileButtonImportBasePalette.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButtonImportBasePalette.setFilePath("..\\graphics\\tech\\basepalette.bin");
+        fileButtonImportBasePalette.setFilePath("../graphics/tech/basepalette.bin");
         fileButtonImportBasePalette.setInfoMessage("The base palette to use for map sprites.");
         fileButtonImportBasePalette.setLabelText("Base palette :");
         fileButtonImportBasePalette.setName("Import Base Palette"); // NOI18N
 
         fileButtonMapspriteEntries.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonMapspriteEntries.setFilePath("..\\graphics\\mapsprites\\entries.asm");
+        fileButtonMapspriteEntries.setFilePath("../graphics/mapsprites/entries.asm");
         fileButtonMapspriteEntries.setInfoMessage("The entries file for map sprites.");
         fileButtonMapspriteEntries.setLabelText("Mapsprite entries :");
         fileButtonMapspriteEntries.setName("Import Mapsprite Entries"); // NOI18N
 
         fileButtonBattleEnums.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonBattleEnums.setFilePath("..\\..\\sf2enums.asm");
+        fileButtonBattleEnums.setFilePath("../../sf2enums.asm");
         fileButtonBattleEnums.setInfoMessage("Loads data from SF2Enums (such as enemy and item names).");
         fileButtonBattleEnums.setLabelText("Battle enums :");
         fileButtonBattleEnums.setName("Import Battle Enums"); // NOI18N
 
         fileButtonEnemyMapsprites.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonEnemyMapsprites.setFilePath("..\\stats\\enemies\\enemymapsprites.asm");
+        fileButtonEnemyMapsprites.setFilePath("../stats/enemies/enemymapsprites.asm");
         fileButtonEnemyMapsprites.setInfoMessage("The file that determine which Mapsprite is used by which defined enemy.");
         fileButtonEnemyMapsprites.setLabelText("Enemy mapsprites :");
         fileButtonEnemyMapsprites.setName("Import Enemy Mapsprites"); // NOI18N
 
         fileButtonSpecialSpriteEntries.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonSpecialSpriteEntries.setFilePath("..\\graphics\\specialsprites\\entries.asm");
+        fileButtonSpecialSpriteEntries.setFilePath("../graphics/specialsprites/entries.asm");
         fileButtonSpecialSpriteEntries.setInfoMessage("<html>Defines the special sprites (larger sprites). Certain enemies (e.g. bosses) use special sprites.</html>");
         fileButtonSpecialSpriteEntries.setLabelText("Special Sprites entries :");
         fileButtonSpecialSpriteEntries.setName("Import Special Sprite Entries"); // NOI18N
 
         fileButtonSpecialSpritePointers.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonSpecialSpritePointers.setFilePath("..\\graphics\\specialsprites\\pointers.asm");
+        fileButtonSpecialSpritePointers.setFilePath("../graphics/specialsprites/pointers.asm");
         fileButtonSpecialSpritePointers.setInfoMessage("Pointers file used to load Special Sprites.");
         fileButtonSpecialSpritePointers.setLabelText("Special sprites pointers :");
         fileButtonSpecialSpritePointers.setName("Import Special Sprite Pointers"); // NOI18N
@@ -539,12 +539,12 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
         infoButton9.setMessageText("Exports the battle terrain data and spriteset data (ally, enemy, AI region & AI point).");
         infoButton9.setText("");
 
-        fileButtonExportTerrain.setFilePath(".\\entries\\battle01\\terrain.bin");
+        fileButtonExportTerrain.setFilePath("./entries/battle01/terrain.bin");
         fileButtonExportTerrain.setInfoMessage("");
         fileButtonExportTerrain.setLabelText("Battle terrain :");
         fileButtonExportTerrain.setName("Export Battle Terrain"); // NOI18N
 
-        fileButtonExportSpriteset.setFilePath(".\\spritesets\\spriteset01.asm");
+        fileButtonExportSpriteset.setFilePath("./spritesets/spriteset01.asm");
         fileButtonExportSpriteset.setInfoMessage("");
         fileButtonExportSpriteset.setLabelText("Battle spriteset :");
         fileButtonExportSpriteset.setName("Export battle Spriteset"); // NOI18N
@@ -599,7 +599,7 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
         infoButton8.setText("");
 
         fileButtonExportCoords.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ANY_ASSEMBLY);
-        fileButtonExportCoords.setFilePath(".\\global\\battlemapcoords.asm");
+        fileButtonExportCoords.setFilePath("./global/battlemapcoords.asm");
         fileButtonExportCoords.setInfoMessage("");
         fileButtonExportCoords.setLabelText("Battle map coords :");
         fileButtonExportCoords.setName("Export Map Coords"); // NOI18N
@@ -651,7 +651,7 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
         infoButton10.setText("");
 
         fileButtonExportLandEffect.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonExportLandEffect.setFilePath(".\\global\\landeffectsettingsandmovecosts.asm");
+        fileButtonExportLandEffect.setFilePath("./global/landeffectsettingsandmovecosts.asm");
         fileButtonExportLandEffect.setInfoMessage("");
         fileButtonExportLandEffect.setLabelText("Land effect :");
         fileButtonExportLandEffect.setName("Export Land Effects"); // NOI18N

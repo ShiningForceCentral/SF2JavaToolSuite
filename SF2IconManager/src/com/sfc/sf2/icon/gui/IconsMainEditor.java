@@ -186,7 +186,7 @@ public class IconsMainEditor extends AbstractMainEditor {
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Import from :"));
         jPanel3.setPreferredSize(new java.awt.Dimension(590, 135));
 
-        fileButton1.setFilePath("..\\tech\\basepalette.bin");
+        fileButton1.setFilePath("../tech/basepalette.bin");
         fileButton1.setInfoMessage("The game base palette. Defines the colors used to preview the icons.");
         fileButton1.setLabelText("Palette file :");
 
@@ -195,7 +195,7 @@ public class IconsMainEditor extends AbstractMainEditor {
         infoButton4.setMessageText("<html>Files will be in the format \"iconXXX.bin\".<br>By default these are:<br>- /icons/item/<br>- /icons/other/<br>- /icons/spell/</html>");
         infoButton4.setText("");
 
-        directoryButton1.setDirectoryPath(".\\item\\");
+        directoryButton1.setDirectoryPath("./item/");
             directoryButton1.setInfoMessage("");
             directoryButton1.setLabelText("Icons directory :");
 
@@ -245,7 +245,7 @@ public class IconsMainEditor extends AbstractMainEditor {
             infoButton5.setMessageText("<html>Files will be in the format \"iconXXX.png\".<br><br>Supported image formats: PNG or GIF.<br><br>Color format should be 4BPP / 16 indexed colors. Images of 8BPP / 256 indexed colors will be converted to 4 BPP / 16 (some colors may be lost).<br>When imported, icons will use the base palette colors.<br>Color index 0 is treated as transparent.</html>");
             infoButton5.setText("");
 
-            directoryButton2.setDirectoryPath(".\\export\\item\\");
+            directoryButton2.setDirectoryPath("./export/item/");
                 directoryButton2.setInfoMessage("");
                 directoryButton2.setLabelText("Images directory :");
 
@@ -319,7 +319,7 @@ public class IconsMainEditor extends AbstractMainEditor {
                 infoButton3.setMessageText("<html>Icons will be exported to individual files. Files will be in the format \"iconXXX.bin\".</html>");
                 infoButton3.setText("");
 
-                directoryButton3.setDirectoryPath(".\\item\\");
+                directoryButton3.setDirectoryPath("./item/");
                     directoryButton3.setInfoMessage("");
                     directoryButton3.setLabelText("Icons directory :");
 
@@ -369,7 +369,7 @@ public class IconsMainEditor extends AbstractMainEditor {
                     infoButton6.setMessageText("<html>Icons will be exported as a single file or individual files (see \"Export\" below). Files will be in the format \"iconXXX.png\".<br>Supported image formats: PNG or GIF.<br><br>Exported color format will be 4BPP / 16 indexed colors.<br>Color index 0 is treated as transparent.</html>");
                     infoButton6.setText("");
 
-                    directoryButton4.setDirectoryPath(".\\export\\item\\");
+                    directoryButton4.setDirectoryPath("./export/item/");
                         directoryButton4.setInfoMessage("");
                         directoryButton4.setLabelText("Images directory :");
 

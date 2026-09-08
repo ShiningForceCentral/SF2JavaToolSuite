@@ -213,7 +213,7 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
         accordionPanelEnvironment.setBorder(javax.swing.BorderFactory.createTitledBorder("Battle scene"));
 
         fileButtonBackground.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButtonBackground.setFilePath("..\\backgrounds\\background09.bin");
+        fileButtonBackground.setFilePath("../backgrounds/background09.bin");
         fileButtonBackground.setInfoMessage("Loads a Background, for the animation preview.");
         fileButtonBackground.setLabelText("Background :");
         fileButtonBackground.setName("Import Background"); // NOI18N
@@ -221,19 +221,19 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
         jLabel23.setText("Ground :");
 
         fileButtonGroundBasePalette.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButtonGroundBasePalette.setFilePath("..\\battlescenebasepalette.bin");
+        fileButtonGroundBasePalette.setFilePath("../battlescenebasepalette.bin");
         fileButtonGroundBasePalette.setInfoMessage("The battle base palette to use for the Ground platform preview.");
         fileButtonGroundBasePalette.setLabelText("Ground base palette :");
         fileButtonGroundBasePalette.setName("Import Ground Base Palette"); // NOI18N
 
         fileButtonGroundPalette.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButtonGroundPalette.setFilePath("..\\grounds\\groundpalette09.bin");
+        fileButtonGroundPalette.setFilePath("../grounds/groundpalette09.bin");
         fileButtonGroundPalette.setInfoMessage("The palette to use for the Ground platform preview.");
         fileButtonGroundPalette.setLabelText("Gound palette :");
         fileButtonGroundPalette.setName("Import Ground Palette"); // NOI18N
 
         fileButtonGround.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButtonGround.setFilePath("..\\grounds\\groundtiles09.bin");
+        fileButtonGround.setFilePath("../grounds/groundtiles09.bin");
         fileButtonGround.setInfoMessage("Loads a Ground platform, for the animation preview.");
         fileButtonGround.setLabelText("Ground :");
         fileButtonGround.setName("Import Ground"); // NOI18N
@@ -285,13 +285,13 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
         accordionPanelWeapon.setBorder(javax.swing.BorderFactory.createTitledBorder("Weapon"));
 
         fileButtonWeaponPalettes.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonWeaponPalettes.setFilePath("..\\weapons\\palettes\\entries.asm");
+        fileButtonWeaponPalettes.setFilePath("../weapons/palettes/entries.asm");
         fileButtonWeaponPalettes.setInfoMessage("The entries file for weapon palettes.");
         fileButtonWeaponPalettes.setLabelText("Weapon palettes :");
         fileButtonWeaponPalettes.setName("Import Weapon Palettes"); // NOI18N
 
         fileButtonWeapon.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButtonWeapon.setFilePath("..\\weapons\\weaponsprite04.bin");
+        fileButtonWeapon.setFilePath("../weapons/weaponsprite04.bin");
         fileButtonWeapon.setInfoMessage("<html>Loads a placeholder weapon for the animation preview.<br>The weapon can be hidden with the checbox on the right of the animation window.</html>");
         fileButtonWeapon.setLabelText("Weapon :");
         fileButtonWeapon.setName("Import Weapon"); // NOI18N
@@ -331,13 +331,13 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
 
         jLabel2.setText("Import animation disassembly.");
 
-        fileButtonBattleSprite.setFilePath(".\\allies\\allybattlesprite00.bin");
+        fileButtonBattleSprite.setFilePath("./allies/allybattlesprite00.bin");
         fileButtonBattleSprite.setInfoMessage("<html>Loads a battlesprite to animate. In general, each battesprite is matched to specific animation files (see the info button for \"Battle Sprite Animation\").</html>");
         fileButtonBattleSprite.setLabelText("Battle sprite :");
         fileButtonBattleSprite.setName("Import Battle Sprite"); // NOI18N
 
         fileButtonAnimation.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButtonAnimation.setFilePath(".\\allies\\animations\\allyanimation000.bin");
+        fileButtonAnimation.setFilePath("./allies/animations/allyanimation000.bin");
         fileButtonAnimation.setInfoMessage("<html>Loads the animation data. By default, ally animations 0-39 are <i>attack</> animations, 40-79 are <i>dodge</> animations, 80+ for <i>special</> animations.<br>See <b>SF2Enums</b> \"; enum AllyBattleAnimations\".<br><br>By default, enemy animations 0-59 are <i>attack</> animations, 60-117 are <i>dodge</> animations, 118+ for <i>special</> animations.<br>See <b>SF2Enums</b> \"; enum EnemyBattleAnimations\".</html>");
         fileButtonAnimation.setLabelText("Battle sprite animation :");
         fileButtonAnimation.setName("Import Animation"); // NOI18N
@@ -395,7 +395,7 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
         infoButton4.setText("");
 
         fileButtonExportAnimation.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButtonExportAnimation.setFilePath(".\\allies\\animations\\newallyanimation000.bin");
+        fileButtonExportAnimation.setFilePath("./allies/animations/newallyanimation000.bin");
         fileButtonExportAnimation.setInfoMessage("");
         fileButtonExportAnimation.setLabelText("Animation :");
         fileButtonExportAnimation.setName("Export Animation"); // NOI18N
