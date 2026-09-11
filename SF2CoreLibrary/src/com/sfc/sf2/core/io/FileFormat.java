@@ -131,12 +131,12 @@ public enum FileFormat {
             if (!f.getName().startsWith(prefix)) {
                 return false;
             }
-            FileFormat format = FileFormat.getFormat(f);
+            FileFormat fileFormat = FileFormat.getFormat(f);
             switch (this.format) {
                 case ANY_IMAGE:
-                    return format == PNG || format == GIF;
+                    return fileFormat == PNG || fileFormat == GIF;
                 default:
-                    return this.format == format;
+                    return this.format == fileFormat;
             }
         }
     }

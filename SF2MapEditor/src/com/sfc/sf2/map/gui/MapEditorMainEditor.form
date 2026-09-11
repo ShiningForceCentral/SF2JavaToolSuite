@@ -122,7 +122,7 @@
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="jTabbedPane1" pref="313" max="32767" attributes="0"/>
+                                  <Component id="jTabbedPaneImportExport" pref="313" max="32767" attributes="0"/>
                                   <Component id="fileButtonEnums" pref="0" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
@@ -135,7 +135,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="fileButtonEnums" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jTabbedPane1" max="32767" attributes="0"/>
+                              <Component id="jTabbedPaneImportExport" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -147,13 +147,13 @@
                         <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                           <Value id="ASM"/>
                         </Property>
-                        <Property name="filePath" type="java.lang.String" value="..\u005c..\u005csf2enums.asm" containsInvalidXMLChars="true"/>
+                        <Property name="filePath" type="java.lang.String" value="../../sf2enums.asm" containsInvalidXMLChars="true"/>
                         <Property name="infoMessage" type="java.lang.String" value=""/>
                         <Property name="labelText" type="java.lang.String" value="Sf2enums :"/>
                         <Property name="name" type="java.lang.String" value="Import Enums" noResource="true"/>
                       </Properties>
                     </Component>
-                    <Container class="javax.swing.JTabbedPane" name="jTabbedPane1">
+                    <Container class="javax.swing.JTabbedPane" name="jTabbedPaneImportExport">
                       <Properties>
                         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
@@ -199,7 +199,7 @@
                                       <Component id="accordionPanel1" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="jPanel6" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace pref="441" max="32767" attributes="0"/>
+                                      <EmptySpace pref="374" max="32767" attributes="0"/>
                                       <Component id="jPanel7" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                   </Group>
@@ -250,7 +250,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="ASM"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value="..\u005cgraphics\u005cmaps\u005cmappalettes\u005centries.asm" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="../graphics/maps/mappalettes/entries.asm" containsInvalidXMLChars="true"/>
                                     <Property name="infoMessage" type="java.lang.String" value="The entries file for all map palettes."/>
                                     <Property name="labelText" type="java.lang.String" value="Palette entries :"/>
                                     <Property name="name" type="java.lang.String" value="Import Palette Entries" noResource="true"/>
@@ -261,7 +261,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="ASM"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value="..\u005cgraphics\u005cmaps\u005cmaptilesets\u005centries.asm" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="../graphics/maps/maptilesets/entries.asm" containsInvalidXMLChars="true"/>
                                     <Property name="infoMessage" type="java.lang.String" value="The entries file for all map tilesets."/>
                                     <Property name="labelText" type="java.lang.String" value="Tileset entries :"/>
                                     <Property name="name" type="java.lang.String" value="Import Tileset Entries" noResource="true"/>
@@ -272,7 +272,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="ASM"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value=".\u005centries.asm" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="./entries.asm" containsInvalidXMLChars="true"/>
                                     <Property name="infoMessage" type="java.lang.String" value="The entries files for all maps."/>
                                     <Property name="labelText" type="java.lang.String" value="Map entries :"/>
                                     <Property name="name" type="java.lang.String" value="Import Map Entries" noResource="true"/>
@@ -295,14 +295,21 @@
                                       <Group type="102" attributes="0">
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Group type="102" alignment="1" attributes="0">
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                                  <Component id="jButtonImportMap" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                              <Group type="102" attributes="0">
+                                                  <Component id="jLabel18" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                              </Group>
+                                              <Group type="102" alignment="0" attributes="0">
                                                   <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
                                                   <Component id="jSpinnerImportMapIndex" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace max="32767" attributes="0"/>
-                                                  <Component id="jButtonImportMap" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="jLabelMapNameImport" max="32767" attributes="0"/>
                                               </Group>
-                                              <Component id="jLabel18" alignment="0" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace max="-2" attributes="0"/>
                                       </Group>
@@ -316,8 +323,10 @@
                                           <Group type="103" groupAlignment="3" attributes="0">
                                               <Component id="jSpinnerImportMapIndex" alignment="3" min="-2" max="-2" attributes="0"/>
                                               <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                                              <Component id="jButtonImportMap" alignment="3" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jLabelMapNameImport" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
                                           </Group>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="jButtonImportMap" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
@@ -353,6 +362,17 @@
                                     <Property name="text" type="java.lang.String" value="Import map from entries."/>
                                   </Properties>
                                 </Component>
+                                <Component class="javax.swing.JLabel" name="jLabelMapNameImport">
+                                  <Properties>
+                                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                      <Font name="Segoe UI" size="12" style="2"/>
+                                    </Property>
+                                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                                      <Color blue="99" green="99" red="99" type="rgb"/>
+                                    </Property>
+                                    <Property name="text" type="java.lang.String" value="No map"/>
+                                  </Properties>
+                                </Component>
                               </SubComponents>
                             </Container>
                             <Container class="javax.swing.JPanel" name="jPanel7">
@@ -375,7 +395,11 @@
                                                   <Component id="jLabel16" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
                                                   <Component id="jSpinnerExportMapIndex" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace max="32767" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="jLabelMapNameExport" pref="164" max="32767" attributes="0"/>
+                                              </Group>
+                                              <Group type="102" alignment="1" attributes="0">
+                                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                                   <Component id="jButtonExportMap" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
@@ -392,8 +416,10 @@
                                           <Group type="103" groupAlignment="3" attributes="0">
                                               <Component id="jSpinnerExportMapIndex" alignment="3" min="-2" max="-2" attributes="0"/>
                                               <Component id="jLabel16" alignment="3" min="-2" max="-2" attributes="0"/>
-                                              <Component id="jButtonExportMap" alignment="3" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jLabelMapNameExport" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
                                           </Group>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="jButtonExportMap" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
@@ -420,10 +446,24 @@
                                     </Property>
                                     <Property name="name" type="java.lang.String" value="Export Map Number Spinner" noResource="true"/>
                                   </Properties>
+                                  <Events>
+                                    <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jSpinnerExportMapIndexStateChanged"/>
+                                  </Events>
                                 </Component>
                                 <Component class="javax.swing.JLabel" name="jLabel16">
                                   <Properties>
                                     <Property name="text" type="java.lang.String" value="Map :"/>
+                                  </Properties>
+                                </Component>
+                                <Component class="javax.swing.JLabel" name="jLabelMapNameExport">
+                                  <Properties>
+                                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                      <Font name="Segoe UI" size="12" style="2"/>
+                                    </Property>
+                                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                                      <Color blue="99" green="99" red="99" type="rgb"/>
+                                    </Property>
+                                    <Property name="text" type="java.lang.String" value="No map"/>
                                   </Properties>
                                 </Component>
                               </SubComponents>
@@ -662,7 +702,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="ASM"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value="..\u005cgraphics\u005cmaps\u005cmappalettes\u005centries.asm" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="../graphics/maps/mappalettes/entries.asm" containsInvalidXMLChars="true"/>
                                     <Property name="infoMessage" type="java.lang.String" value="The entries file for all map palettes."/>
                                     <Property name="labelText" type="java.lang.String" value="Palette entries :"/>
                                     <Property name="name" type="java.lang.String" value="Import Palette Entries" noResource="true"/>
@@ -673,7 +713,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="ASM"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value="..\u005cgraphics\u005cmaps\u005cmaptilesets\u005centries.asm" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="../graphics/maps/maptilesets/entries.asm" containsInvalidXMLChars="true"/>
                                     <Property name="infoMessage" type="java.lang.String" value="The entries file for all map tilesets."/>
                                     <Property name="labelText" type="java.lang.String" value="Tileset entries :"/>
                                     <Property name="name" type="java.lang.String" value="Import Tileset Entries" noResource="true"/>
@@ -743,7 +783,7 @@
                                 </Component>
                                 <Component class="com.sfc.sf2.core.gui.controls.DirectoryButton" name="directoryButtonImportMapDir">
                                   <Properties>
-                                    <Property name="directoryPath" type="java.lang.String" value=".\u005centries\u005cmap03\u005c" containsInvalidXMLChars="true"/>
+                                    <Property name="directoryPath" type="java.lang.String" value="./entries/map03/" containsInvalidXMLChars="true"/>
                                     <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="Map dir :"/>
                                     <Property name="name" type="java.lang.String" value="Import Map Directory" noResource="true"/>
@@ -803,7 +843,7 @@
                               <SubComponents>
                                 <Component class="com.sfc.sf2.core.gui.controls.DirectoryButton" name="directoryButtonExportMapDir">
                                   <Properties>
-                                    <Property name="directoryPath" type="java.lang.String" value=".\u005centries\u005cmap03\u005c" containsInvalidXMLChars="true"/>
+                                    <Property name="directoryPath" type="java.lang.String" value="./entries/map03/" containsInvalidXMLChars="true"/>
                                     <Property name="labelText" type="java.lang.String" value="Map dir :"/>
                                     <Property name="name" type="java.lang.String" value="Export Map Directory" noResource="true"/>
                                   </Properties>
@@ -954,7 +994,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="BIN"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value="..\u005cgraphics\u005cmaps\u005cmappalettes\u005cmappalette00.bin" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="../graphics/maps/mappalettes/mappalette00.bin" containsInvalidXMLChars="true"/>
                                     <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="Tileset Palette :"/>
                                     <Property name="name" type="java.lang.String" value="Import Tileset Palette" noResource="true"/>
@@ -965,7 +1005,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="BIN"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value="..\u005cgraphics\u005cmaps\u005cmaptilesets\u005cmaptileset000.bin" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="../graphics/maps/maptilesets/maptileset000.bin" containsInvalidXMLChars="true"/>
                                     <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="Tileset 1 :"/>
                                     <Property name="name" type="java.lang.String" value="Import Tileset 1" noResource="true"/>
@@ -976,7 +1016,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="BIN"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value="..\u005cgraphics\u005cmaps\u005cmaptilesets\u005cmaptileset037.bin" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="../graphics/maps/maptilesets/maptileset037.bin" containsInvalidXMLChars="true"/>
                                     <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="Tileset 2 :"/>
                                     <Property name="name" type="java.lang.String" value="Import Tileset 2" noResource="true"/>
@@ -987,7 +1027,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="BIN"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value="..\u005cgraphics\u005cmaps\u005cmaptilesets\u005cmaptileset043.bin" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="../graphics/maps/maptilesets/maptileset043.bin" containsInvalidXMLChars="true"/>
                                     <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="Tileset 3 :"/>
                                     <Property name="name" type="java.lang.String" value="Import Tileset 3" noResource="true"/>
@@ -998,7 +1038,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="BIN"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value="..\u005cgraphics\u005cmaps\u005cmaptilesets\u005cmaptileset053.bin" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="../graphics/maps/maptilesets/maptileset053.bin" containsInvalidXMLChars="true"/>
                                     <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="Tileset 4 :"/>
                                     <Property name="name" type="java.lang.String" value="Import Tileset 4" noResource="true"/>
@@ -1009,7 +1049,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="BIN"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value="..\u005cgraphics\u005cmaps\u005cmaptilesets\u005cmaptileset066.bin" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="../graphics/maps/maptilesets/maptileset066.bin" containsInvalidXMLChars="true"/>
                                     <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="Tileset 5 :"/>
                                     <Property name="name" type="java.lang.String" value="Import Tileset 5" noResource="true"/>
@@ -1020,7 +1060,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="BIN"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value=".\u005centries\u005cmap03\u005c0-blocks.bin" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="./entries/map03/0-blocks.bin" containsInvalidXMLChars="true"/>
                                     <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="Blocks file :"/>
                                     <Property name="name" type="java.lang.String" value="Import Blocks" noResource="true"/>
@@ -1031,7 +1071,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="BIN"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value=".\u005centries\u005cmap03\u005c1-layout.bin" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="./entries/map03/1-layout.bin" containsInvalidXMLChars="true"/>
                                     <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="Layout file :"/>
                                     <Property name="toolTipText" type="java.lang.String" value=""/>
@@ -1057,7 +1097,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="ASM"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value=".\u005centries\u005cmap03\u005c9-animations.asm" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="./entries/map03/9-animations.asm" containsInvalidXMLChars="true"/>
                                     <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="Animation file :"/>
                                     <Property name="toolTipText" type="java.lang.String" value=""/>
@@ -1069,7 +1109,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="ASM"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value="..\u005cgraphics\u005cmaps\u005cmaptilesets\u005centries.asm" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="../graphics/maps/maptilesets/entries.asm" containsInvalidXMLChars="true"/>
                                     <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="Tilesets entries :"/>
                                     <Property name="name" type="java.lang.String" value="Import Tilesets Entries" noResource="true"/>
@@ -1080,7 +1120,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="ASM"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value=".\u005centries\u005cmap03\u005c2-areas.asm" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="./entries/map03/2-areas.asm" containsInvalidXMLChars="true"/>
                                     <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="Areas :"/>
                                     <Property name="name" type="java.lang.String" value="Import Areas" noResource="true"/>
@@ -1091,7 +1131,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="ASM"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value=".\u005centries\u005cmap03\u005c3-flag-events.asm" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="./entries/map03/3-flag-events.asm" containsInvalidXMLChars="true"/>
                                     <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="Flag events :"/>
                                     <Property name="name" type="java.lang.String" value="Import Flag Events" noResource="true"/>
@@ -1102,7 +1142,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="ASM"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value=".\u005centries\u005cmap03\u005c4-step-events.asm" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="./entries/map03/4-step-events.asm" containsInvalidXMLChars="true"/>
                                     <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="Step events :"/>
                                     <Property name="name" type="java.lang.String" value="Import Skip Events" noResource="true"/>
@@ -1113,7 +1153,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="ASM"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value=".\u005centries\u005cmap03\u005c5-roof-events.asm" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="./entries/map03/5-roof-events.asm" containsInvalidXMLChars="true"/>
                                     <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="Roof events :"/>
                                     <Property name="name" type="java.lang.String" value="Import Roof Events" noResource="true"/>
@@ -1124,7 +1164,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="ASM"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value=".\u005centries\u005cmap03\u005c6-warp-events.asm" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="./entries/map03/6-warp-events.asm" containsInvalidXMLChars="true"/>
                                     <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="Warps :"/>
                                     <Property name="name" type="java.lang.String" value="Import Warps" noResource="true"/>
@@ -1135,7 +1175,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="ASM"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value=".\u005centries\u005cmap03\u005c7-chest-items.asm" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="./entries/map03/7-chest-items.asm" containsInvalidXMLChars="true"/>
                                     <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="Chest items :"/>
                                     <Property name="name" type="java.lang.String" value="Import Chest Items" noResource="true"/>
@@ -1146,7 +1186,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="ASM"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value=".\u005centries\u005cmap03\u005c8-other-items.asm" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="./entries/map03/8-other-items.asm" containsInvalidXMLChars="true"/>
                                     <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="Other items :"/>
                                     <Property name="name" type="java.lang.String" value="Import Other Items" noResource="true"/>
@@ -1262,7 +1302,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="ANY_IMAGE"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value=".\u005cexport\u005cblockset.png" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="./export/blockset.png" containsInvalidXMLChars="true"/>
                                     <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="Blockset image :"/>
                                     <Property name="name" type="java.lang.String" value="Export Blockset Image" noResource="true"/>
@@ -1273,7 +1313,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="TXT"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value=".\u005cexport\u005cblockset_hptiles.txt" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="./export/blockset_hptiles.txt" containsInvalidXMLChars="true"/>
                                     <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="Blockset priority tiles :"/>
                                     <Property name="name" type="java.lang.String" value="Export Blockset Priorities" noResource="true"/>
@@ -1361,7 +1401,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="ANY_IMAGE"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value=".\u005cexport\u005clayout.png" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="./export/layout.png" containsInvalidXMLChars="true"/>
                                     <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="Layout image :"/>
                                     <Property name="name" type="java.lang.String" value="Export Layout Image" noResource="true"/>
@@ -1372,7 +1412,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="TXT"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value=".\u005cexport\u005clayout_flags.txt" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="./export/layout_flags.txt" containsInvalidXMLChars="true"/>
                                     <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="Layout flags :"/>
                                     <Property name="name" type="java.lang.String" value="Export Layout Flags" noResource="true"/>
@@ -1383,7 +1423,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="TXT"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value=".\u005cexport\u005clayout_hptiles.txt" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="./export/layout_hptiles.txt" containsInvalidXMLChars="true"/>
                                     <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="Layout priority tiles :"/>
                                     <Property name="name" type="java.lang.String" value="Export Layout Priorities" noResource="true"/>
@@ -1429,7 +1469,7 @@
                       <Layout>
                         <DimensionLayout dim="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jSplitPane4" pref="1120" max="32767" attributes="0"/>
+                              <Component id="jSplitPane4" pref="592" max="32767" attributes="0"/>
                           </Group>
                         </DimensionLayout>
                         <DimensionLayout dim="1">
@@ -1450,7 +1490,7 @@
 
                           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout"/>
                           <SubComponents>
-                            <Container class="javax.swing.JTabbedPane" name="jTabbedPane6">
+                            <Container class="javax.swing.JTabbedPane" name="jTabbedPaneBlockset">
                               <Properties>
                                 <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                                   <Dimension value="[200, 200]"/>
@@ -1623,7 +1663,7 @@
                                     <DimensionLayout dim="1">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" alignment="0" attributes="0">
-                                              <Component id="jPanel21" pref="686" max="32767" attributes="0"/>
+                                              <Component id="jPanel21" pref="770" max="32767" attributes="0"/>
                                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
@@ -1660,7 +1700,7 @@
                                                   <EmptySpace max="-2" attributes="0"/>
                                                   <Component id="jScrollPane10" min="-2" pref="130" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="tableAnimFrames" pref="233" max="32767" attributes="0"/>
+                                                  <Component id="tableAnimFrames" pref="317" max="32767" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
                                                   <Component id="jScrollPane11" min="-2" pref="130" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
@@ -1690,6 +1730,11 @@
                                                               <Component id="jSpinnerTilesetLength" min="-2" max="-2" attributes="0"/>
                                                           </Group>
                                                       </Group>
+                                                      <EmptySpace max="-2" attributes="0"/>
+                                                      <Group type="103" groupAlignment="0" attributes="0">
+                                                          <Component id="infoButton25" min="-2" max="-2" attributes="0"/>
+                                                          <Component id="infoButton26" min="-2" max="-2" attributes="0"/>
+                                                      </Group>
                                                       <EmptySpace max="32767" attributes="0"/>
                                                       <Component id="infoButtonSharedAnimation" min="-2" pref="38" max="-2" attributes="0"/>
                                                       <EmptySpace max="-2" attributes="0"/>
@@ -1705,11 +1750,15 @@
                                                               <Group type="103" groupAlignment="3" attributes="0">
                                                                   <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
                                                                   <Component id="jSpinnerTilesetId" alignment="3" min="-2" max="-2" attributes="0"/>
+                                                                  <Component id="infoButton25" alignment="3" min="-2" max="-2" attributes="0"/>
                                                               </Group>
                                                               <EmptySpace max="-2" attributes="0"/>
-                                                              <Group type="103" groupAlignment="3" attributes="0">
-                                                                  <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                                  <Component id="jSpinnerTilesetLength" alignment="3" min="-2" max="-2" attributes="0"/>
+                                                              <Group type="103" groupAlignment="1" attributes="0">
+                                                                  <Group type="103" groupAlignment="3" attributes="0">
+                                                                      <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
+                                                                      <Component id="jSpinnerTilesetLength" alignment="3" min="-2" max="-2" attributes="0"/>
+                                                                  </Group>
+                                                                  <Component id="infoButton26" min="-2" max="-2" attributes="0"/>
                                                               </Group>
                                                           </Group>
                                                           <Group type="102" alignment="0" attributes="0">
@@ -1747,7 +1796,7 @@
                                             <Component class="javax.swing.JSpinner" name="jSpinnerTilesetLength">
                                               <Properties>
                                                 <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-                                                  <SpinnerModel initial="0" maximum="128" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
+                                                  <SpinnerModel initial="0" maximum="104" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
                                                 </Property>
                                                 <Property name="name" type="java.lang.String" value="TilesetLengthSpinner" noResource="true"/>
                                               </Properties>
@@ -1760,6 +1809,18 @@
                                                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                                                   <Connection component="flatOptionPaneWarningIcon1" type="bean"/>
                                                 </Property>
+                                                <Property name="text" type="java.lang.String" value=""/>
+                                              </Properties>
+                                            </Component>
+                                            <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton25">
+                                              <Properties>
+                                                <Property name="messageText" type="java.lang.String" value="&lt;html&gt;The id of the tileset to load for map animations."/>
+                                                <Property name="text" type="java.lang.String" value=""/>
+                                              </Properties>
+                                            </Component>
+                                            <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton26">
+                                              <Properties>
+                                                <Property name="messageText" type="java.lang.String" value="&lt;html&gt;The number of tiles in the map animation tileset.&lt;br&gt;&lt;br&gt;&lt;br&gt;NOTE:&lt;/b&gt; It seems that Tileset Length values larger than 104 tiles may cause maps not to load or to become unstable.&lt;/html&gt;"/>
                                                 <Property name="text" type="java.lang.String" value=""/>
                                               </Properties>
                                             </Component>
@@ -1809,6 +1870,7 @@
                                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                                               <Border info="null"/>
                                             </Property>
+                                            <Property name="infoMessage" type="java.lang.String" value="&lt;html&gt;- &lt;b&gt;Start:&lt;/b&gt; The tile index of the &lt;i&gt;animation tileset&lt;/i&gt; to start this frame.&lt;br&gt;- &lt;b&gt;Length:&lt;/b&gt; The number of tiles for the animation frame.&lt;br&gt;- &lt;b&gt;Dest Tile:&lt;/b&gt; The index of the map&apos;s tilesets to use as the &lt;i&gt;destination tileset&lt;/i&gt;.&lt;br&gt;- &lt;b&gt;Dest Index:&lt;/b&gt; The tile index of the &lt;i&gt;destination tileset&lt;/i&gt; to start replacing tiles.&lt;br&gt;- &lt;b&gt;Delay:&lt;/b&gt; The delay before moving to the next animation frame, essentially the animation speed (smaller numbers = faster).&lt;/html&gt;"/>
                                             <Property name="model" type="com.sfc.sf2.core.models.AbstractTableModel" editor="org.netbeans.modules.form.ComponentChooserEditor">
                                               <ComponentRef name="mapAnimationFrameTableModel"/>
                                             </Property>
@@ -1877,7 +1939,7 @@
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jTabbedPane5" max="32767" attributes="0"/>
+                                          <Component id="jTabbedPaneEditor" pref="375" max="32767" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
@@ -1886,16 +1948,16 @@
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jTabbedPane5" max="32767" attributes="0"/>
+                                          <Component id="jTabbedPaneEditor" max="32767" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                 </DimensionLayout>
                               </Layout>
                               <SubComponents>
-                                <Container class="javax.swing.JTabbedPane" name="jTabbedPane5">
+                                <Container class="javax.swing.JTabbedPane" name="jTabbedPaneEditor">
                                   <Events>
-                                    <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jTabbedPane5StateChanged"/>
+                                    <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jTabbedPaneEditorStateChanged"/>
                                   </Events>
 
                                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
@@ -1957,7 +2019,7 @@
                                           <Layout>
                                             <DimensionLayout dim="0">
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="jScrollPane2" alignment="0" pref="554" max="32767" attributes="0"/>
+                                                  <Component id="jScrollPane2" alignment="0" pref="184" max="32767" attributes="0"/>
                                               </Group>
                                             </DimensionLayout>
                                             <DimensionLayout dim="1">
@@ -2324,7 +2386,7 @@
 
                                               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                                               <SubComponents>
-                                                <Container class="com.sfc.sf2.map.block.gui.TilesetsLayoutPanel" name="tilesetsLayoutPanel">
+                                                <Container class="com.sfc.sf2.map.block.gui.MapTilesetsLayoutPanel" name="tilesetsLayoutPanel">
                                                   <Properties>
                                                     <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                                                       <Dimension value="null"/>
@@ -2346,7 +2408,7 @@
                                                 </Container>
                                               </SubComponents>
                                             </Container>
-                                            <Component class="com.sfc.sf2.map.block.gui.TilesetViewPanel" name="tilesetViewPanel1">
+                                            <Component class="com.sfc.sf2.map.block.gui.MapTilesetViewPanel" name="tilesetViewPanel1">
                                             </Component>
                                           </SubComponents>
                                         </Container>
@@ -2735,7 +2797,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jTabbedPane2" max="32767" attributes="0"/>
+                                  <Component id="jTabbedPaneMapEditModes" pref="553" max="32767" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -2744,21 +2806,21 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jTabbedPane2" pref="201" max="32767" attributes="0"/>
+                                  <Component id="jTabbedPaneMapEditModes" pref="201" max="32767" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
                       </Layout>
                       <SubComponents>
-                        <Container class="javax.swing.JTabbedPane" name="jTabbedPane2">
+                        <Container class="javax.swing.JTabbedPane" name="jTabbedPaneMapEditModes">
                           <Properties>
                             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                               <Dimension value="[390, 185]"/>
                             </Property>
                           </Properties>
                           <Events>
-                            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jTabbedPane2StateChanged"/>
+                            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jTabbedPaneMapEditModesStateChanged"/>
                           </Events>
 
                           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
@@ -3631,19 +3693,19 @@
                               <Layout>
                                 <DimensionLayout dim="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jTabbedPane3" alignment="0" pref="1108" max="32767" attributes="0"/>
+                                      <Component id="jTabbedPaneCopyFlags" alignment="0" pref="553" max="32767" attributes="0"/>
                                   </Group>
                                 </DimensionLayout>
                                 <DimensionLayout dim="1">
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jTabbedPane3" alignment="0" pref="166" max="32767" attributes="0"/>
+                                      <Component id="jTabbedPaneCopyFlags" alignment="0" pref="166" max="32767" attributes="0"/>
                                   </Group>
                                 </DimensionLayout>
                               </Layout>
                               <SubComponents>
-                                <Container class="javax.swing.JTabbedPane" name="jTabbedPane3">
+                                <Container class="javax.swing.JTabbedPane" name="jTabbedPaneCopyFlags">
                                   <Events>
-                                    <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jTabbedPane3StateChanged"/>
+                                    <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jTabbedPaneCopyFlagsStateChanged"/>
                                   </Events>
 
                                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
@@ -3748,9 +3810,9 @@
                                 </Constraint>
                               </Constraints>
                             </Component>
-                            <Container class="javax.swing.JTabbedPane" name="jTabbedPane4">
+                            <Container class="javax.swing.JTabbedPane" name="jTabbedPaneItems">
                               <Events>
-                                <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jTabbedPane4StateChanged"/>
+                                <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jTabbedPaneItemsStateChanged"/>
                               </Events>
                               <Constraints>
                                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">

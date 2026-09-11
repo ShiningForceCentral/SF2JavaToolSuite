@@ -27,12 +27,14 @@ public class ToggleAction extends BasicAction<Boolean> {
     
     @Override
     public void execute() {
+        if (!toggle.isEnabled()) return;
         toggle.setSelected(newValue);
         super.execute();
     }
 
     @Override
     public void undo() {
+        if (!toggle.isEnabled()) return;
         toggle.setSelected(oldValue);
         super.undo();
     }

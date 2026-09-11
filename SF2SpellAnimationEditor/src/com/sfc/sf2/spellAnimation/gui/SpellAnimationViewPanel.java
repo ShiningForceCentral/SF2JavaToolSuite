@@ -154,7 +154,7 @@ public class SpellAnimationViewPanel extends AbstractViewPanel<SpellAnimationLay
             if (layoutPanel.hasData()) {
                 int speed = 1;//spellAnimationLayoutPanel.getSpellAnimation().getSpellSubAnimations()[0].getDuration();
                 int frames = layoutPanel.getSpellAnimation().getSpellSubAnimations().length-1;
-                layoutPanel.getAnimator().startAnimation(speed, frames, true, false);
+                layoutPanel.getAnimator().startAnimation(speed, frames, true);
             }
         } else {
             layoutPanel.getAnimator().stopAnimation();

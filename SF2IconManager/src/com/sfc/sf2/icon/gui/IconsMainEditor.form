@@ -236,7 +236,7 @@
                           <SubComponents>
                             <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButton1">
                               <Properties>
-                                <Property name="filePath" type="java.lang.String" value="..\u005ctech\u005cbasepalette.bin" containsInvalidXMLChars="true"/>
+                                <Property name="filePath" type="java.lang.String" value="../tech/basepalette.bin" containsInvalidXMLChars="true"/>
                                 <Property name="infoMessage" type="java.lang.String" value="The game base palette. Defines the colors used to preview the icons."/>
                                 <Property name="labelText" type="java.lang.String" value="Palette file :"/>
                               </Properties>
@@ -307,7 +307,7 @@
                                     </Component>
                                     <Component class="com.sfc.sf2.core.gui.controls.DirectoryButton" name="directoryButton1">
                                       <Properties>
-                                        <Property name="directoryPath" type="java.lang.String" value=".\u005citem\u005c" containsInvalidXMLChars="true"/>
+                                        <Property name="directoryPath" type="java.lang.String" value="./item/" containsInvalidXMLChars="true"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Icons directory :"/>
                                       </Properties>
@@ -384,7 +384,7 @@
                                     </Component>
                                     <Component class="com.sfc.sf2.core.gui.controls.DirectoryButton" name="directoryButton2">
                                       <Properties>
-                                        <Property name="directoryPath" type="java.lang.String" value=".\u005cexport\u005citem\u005c" containsInvalidXMLChars="true"/>
+                                        <Property name="directoryPath" type="java.lang.String" value="./export/item/" containsInvalidXMLChars="true"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Images directory :"/>
                                       </Properties>
@@ -498,7 +498,7 @@
                                     </Component>
                                     <Component class="com.sfc.sf2.core.gui.controls.DirectoryButton" name="directoryButton3">
                                       <Properties>
-                                        <Property name="directoryPath" type="java.lang.String" value=".\u005citem\u005c" containsInvalidXMLChars="true"/>
+                                        <Property name="directoryPath" type="java.lang.String" value="./item/" containsInvalidXMLChars="true"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Icons directory :"/>
                                       </Properties>
@@ -580,7 +580,7 @@
                                     </Component>
                                     <Component class="com.sfc.sf2.core.gui.controls.DirectoryButton" name="directoryButton4">
                                       <Properties>
-                                        <Property name="directoryPath" type="java.lang.String" value=".\u005cexport\u005citem\u005c" containsInvalidXMLChars="true"/>
+                                        <Property name="directoryPath" type="java.lang.String" value="./export/item/" containsInvalidXMLChars="true"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Images directory :"/>
                                       </Properties>

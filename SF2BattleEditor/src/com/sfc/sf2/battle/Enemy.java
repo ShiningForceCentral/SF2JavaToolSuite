@@ -170,20 +170,20 @@ public class Enemy {
     public boolean equals(Object obj) {
         if (!(obj instanceof Enemy)) return super.equals(obj);
         Enemy other = (Enemy)obj;
-        if (!this.enemyData.equals(other.enemyData)) return false;
+        if (this.enemyData == null ? other.enemyData != null : !this.enemyData.equals(other.enemyData)) return false;
         if (this.x != other.x) return false;
         if (this.y != other.y) return false;
-        if (!this.ai.equals(other.ai)) return false;
-        if (!this.item.equals(other.item)) return false;
+        if (this.ai == null ? other.ai != null : !this.ai.equals(other.ai)) return false;
+        if (this.item == null ? other.item != null : !this.item.equals(other.item)) return false;
         if (this.itemFlags == null ? other.itemFlags != null : !this.itemFlags.equals(other.itemFlags)) return false;
-        if (!this.moveOrder.equals(other.moveOrder)) return false;
+        if (this.moveOrder == null ? other.moveOrder != null : !this.moveOrder.equals(other.moveOrder)) return false;
         if (this.moveOrderTarget != other.moveOrderTarget) return false;
         if (this.triggerRegion1 != other.triggerRegion1) return false;
         if (this.triggerRegion2 != other.triggerRegion2) return false;
-        if (!this.backupMoveOrder.equals(other.backupMoveOrder)) return false;
+        if (this.backupMoveOrder == null ? other.backupMoveOrder != null : !this.backupMoveOrder.equals(other.backupMoveOrder)) return false;
         if (this.backupMoveOrderTarget != other.backupMoveOrderTarget) return false;
         if (this.unknown != other.unknown) return false;
-        if (!this.spawnParams.equals(other.spawnParams)) return false;
+        if (this.spawnParams == null ? other.spawnParams != null : !this.spawnParams.equals(other.spawnParams)) return false;
         return true;
     }
 
@@ -192,7 +192,13 @@ public class Enemy {
         return new Enemy(enemyData, x, y, ai, item, itemFlags, moveOrder, moveOrderTarget, triggerRegion1, triggerRegion2, backupMoveOrder, backupMoveOrderTarget, unknown, spawnParams);
     }
     
-    public static Enemy emptyEnemy() {
-        return new Enemy(null, 0, 0, null, null, null, null, -1, 15, 15, null, -1, 0, null);
+    public static Enemy emptyEnemy(EnemyData[] enemyData, EnemyEnums enemyEnums) {
+        String ai = (String)enemyEnums.getCommandSets().keySet().toArray()[0];
+        Object[] itemsArray = enemyEnums.getItems().keySet().toArray();
+        String item = (String)itemsArray[itemsArray.length-1];  //NOTHING
+        Object[] ordersArray = enemyEnums.getOrders().keySet().toArray();
+        String order = (String)ordersArray[ordersArray.length-1];  //NONE
+        String spawn = (String)enemyEnums.getSpawnParams().keySet().toArray()[0];
+        return new Enemy(enemyData[0], 2, 2, ai, item, null, order, 0, 15, 15, order, 0, 0, spawn);
     }
 }

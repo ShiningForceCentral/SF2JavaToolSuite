@@ -60,6 +60,11 @@ public class BasicAction<T extends Object> implements IAction<BasicAction> {
     }
 
     @Override
+    public Object getOwner() {
+        return owner;
+    }
+
+    @Override
     public boolean isInvalidated() {
         if (newValue instanceof Object[]) {
             return Arrays.equals((Object[])newValue, (Object[])oldValue);

@@ -6,7 +6,6 @@
 package com.sfc.sf2.portrait.io;
 
 import com.sfc.sf2.core.io.AbstractMetadataProcessor;
-import com.sfc.sf2.core.io.DisassemblyException;
 import com.sfc.sf2.core.io.MetadataException;
 import com.sfc.sf2.portrait.Portrait;
 import java.io.BufferedReader;

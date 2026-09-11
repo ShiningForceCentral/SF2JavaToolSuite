@@ -29,12 +29,12 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel13" alignment="0" pref="1199" max="32767" attributes="0"/>
+          <Component id="jPanel13" alignment="0" pref="1215" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel13" alignment="0" pref="672" max="32767" attributes="0"/>
+          <Component id="jPanel13" alignment="0" pref="643" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -205,7 +205,7 @@
                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                   <Value id="ASM"/>
                                 </Property>
-                                <Property name="filePath" type="java.lang.String" value="..\u005c..\u005c..\u005c..\u005ccode\u005cgameflow\u005cbattle\u005cbattlescenes\u005canimation\u005cbolt.asm" containsInvalidXMLChars="true"/>
+                                <Property name="filePath" type="java.lang.String" value="../../../../code/gameflow/battle/battlescenes/animation/bolt.asm" containsInvalidXMLChars="true"/>
                                 <Property name="infoMessage" type="java.lang.String" value=""/>
                                 <Property name="labelText" type="java.lang.String" value="Spell anim :"/>
                               </Properties>
@@ -215,7 +215,7 @@
                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                   <Value id="BIN"/>
                                 </Property>
-                                <Property name="filePath" type="java.lang.String" value=".\u005cspellgraphics04.bin" containsInvalidXMLChars="true"/>
+                                <Property name="filePath" type="java.lang.String" value="./spellgraphics04.bin" containsInvalidXMLChars="true"/>
                                 <Property name="infoMessage" type="java.lang.String" value=""/>
                                 <Property name="labelText" type="java.lang.String" value="Spell graphic :"/>
                               </Properties>
@@ -225,7 +225,7 @@
                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                   <Value id="BIN"/>
                                 </Property>
-                                <Property name="filePath" type="java.lang.String" value="..\u005cbattlescenebasepalette.bin" containsInvalidXMLChars="true"/>
+                                <Property name="filePath" type="java.lang.String" value="../battlescenebasepalette.bin" containsInvalidXMLChars="true"/>
                                 <Property name="infoMessage" type="java.lang.String" value=""/>
                                 <Property name="labelText" type="java.lang.String" value="Spell base palette :"/>
                               </Properties>
@@ -276,7 +276,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="BIN"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value="..\u005cbackgrounds\u005cbackground09.bin" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="../backgrounds/background09.bin" containsInvalidXMLChars="true"/>
                                     <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="Background :"/>
                                   </Properties>
@@ -286,7 +286,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="BIN"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value="..\u005cgrounds\u005cgroundtiles09.bin" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="../grounds/groundtiles09.bin" containsInvalidXMLChars="true"/>
                                     <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="Ground :"/>
                                   </Properties>
@@ -296,7 +296,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="BIN"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value="..\u005cbattlescenebasepalette.bin" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="../battlescenebasepalette.bin" containsInvalidXMLChars="true"/>
                                     <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="Ground base palette :"/>
                                   </Properties>
@@ -306,7 +306,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="BIN"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value="..\u005cgrounds\u005cgroundpalette09.bin" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="../grounds/groundpalette09.bin" containsInvalidXMLChars="true"/>
                                     <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="Ground palette :"/>
                                   </Properties>
@@ -366,7 +366,7 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
                                           <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jLabel1" alignment="3" max="32767" attributes="0"/>
+                                          <Component id="jLabel1" alignment="3" pref="36" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -392,7 +392,7 @@
                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                   <Value id="ASM"/>
                                 </Property>
-                                <Property name="filePath" type="java.lang.String" value=".\u005canimations\u005cboltanimdata.asm" containsInvalidXMLChars="true"/>
+                                <Property name="filePath" type="java.lang.String" value="./animations/boltanimdata.asm" containsInvalidXMLChars="true"/>
                                 <Property name="infoMessage" type="java.lang.String" value=""/>
                                 <Property name="labelText" type="java.lang.String" value="Spell Anim :"/>
                               </Properties>

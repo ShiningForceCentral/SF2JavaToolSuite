@@ -423,7 +423,7 @@
                                         <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                           <Value id="BIN"/>
                                         </Property>
-                                        <Property name="filePath" type="java.lang.String" value=".\u005czeon.bin" containsInvalidXMLChars="true"/>
+                                        <Property name="filePath" type="java.lang.String" value="./zeon.bin" containsInvalidXMLChars="true"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Special sprite :"/>
                                         <Property name="name" type="java.lang.String" value="Import Special Sprite" noResource="true"/>
@@ -496,7 +496,7 @@
                                         <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                           <Value id="ANY_IMAGE"/>
                                         </Property>
-                                        <Property name="filePath" type="java.lang.String" value=".\u005cexport\u005cnewSpecialSprite.png" containsInvalidXMLChars="true"/>
+                                        <Property name="filePath" type="java.lang.String" value="./export/newSpecialSprite.png" containsInvalidXMLChars="true"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Image file :"/>
                                         <Property name="name" type="java.lang.String" value="Import Image" noResource="true"/>
@@ -633,7 +633,7 @@
                                         <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                           <Value id="BIN"/>
                                         </Property>
-                                        <Property name="filePath" type="java.lang.String" value=".\u005cnewSpecialSprite.bin" containsInvalidXMLChars="true"/>
+                                        <Property name="filePath" type="java.lang.String" value="./newSpecialSprite.bin" containsInvalidXMLChars="true"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Special sprite :"/>
                                         <Property name="name" type="java.lang.String" value="Export Special Sprite" noResource="true"/>
@@ -711,7 +711,7 @@
                                     </Component>
                                     <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButtonExportImage">
                                       <Properties>
-                                        <Property name="filePath" type="java.lang.String" value=".\u005cexport\u005cnewSpecialSprite.png" containsInvalidXMLChars="true"/>
+                                        <Property name="filePath" type="java.lang.String" value="./export/newSpecialSprite.png" containsInvalidXMLChars="true"/>
                                         <Property name="labelText" type="java.lang.String" value="Image file :"/>
                                         <Property name="name" type="java.lang.String" value="Export Image" noResource="true"/>
                                       </Properties>

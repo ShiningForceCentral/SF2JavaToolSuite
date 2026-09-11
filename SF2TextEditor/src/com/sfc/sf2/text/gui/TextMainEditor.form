@@ -209,7 +209,7 @@
                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                   <Value id="BIN"/>
                                 </Property>
-                                <Property name="filePath" type="java.lang.String" value="..\u005c..\u005cgraphics\u005ctech\u005cbasepalette.bin" containsInvalidXMLChars="true"/>
+                                <Property name="filePath" type="java.lang.String" value="../../graphics/tech/basepalette.bin" containsInvalidXMLChars="true"/>
                                 <Property name="infoMessage" type="java.lang.String" value="The game&apos;s base palette."/>
                                 <Property name="labelText" type="java.lang.String" value="Base palette :"/>
                                 <Property name="name" type="java.lang.String" value="Import Base Palette" noResource="true"/>
@@ -220,7 +220,7 @@
                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                   <Value id="BIN"/>
                                 </Property>
-                                <Property name="filePath" type="java.lang.String" value="..\u005c..\u005cgraphics\u005ctech\u005cbasetiles.bin" containsInvalidXMLChars="true"/>
+                                <Property name="filePath" type="java.lang.String" value="../../graphics/tech/basetiles.bin" containsInvalidXMLChars="true"/>
                                 <Property name="infoMessage" type="java.lang.String" value="The tileset that contains the dialog box frame."/>
                                 <Property name="labelText" type="java.lang.String" value="Base tiles :"/>
                                 <Property name="name" type="java.lang.String" value="Import Base Tiles" noResource="true"/>
@@ -231,7 +231,7 @@
                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                   <Value id="BIN"/>
                                 </Property>
-                                <Property name="filePath" type="java.lang.String" value="..\u005c..\u005cgraphics\u005ctech\u005cfonts\u005cvariablewidthfont.bin" containsInvalidXMLChars="true"/>
+                                <Property name="filePath" type="java.lang.String" value="../../graphics/tech/fonts/variablewidthfont.bin" containsInvalidXMLChars="true"/>
                                 <Property name="infoMessage" type="java.lang.String" value="&lt;html&gt;Loads in the games &lt;i&gt;variable width font&lt;/i&gt; for rendering in the preview&lt;/html&gt;"/>
                                 <Property name="labelText" type="java.lang.String" value="VW font :"/>
                                 <Property name="name" type="java.lang.String" value="Import VW Font" noResource="true"/>
@@ -242,7 +242,7 @@
                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                   <Value id="ASM"/>
                                 </Property>
-                                <Property name="filePath" type="java.lang.String" value="..\u005c..\u005c..\u005ccode\u005ccommon\u005cscripting\u005ctext\u005ctextfunctions.asm" containsInvalidXMLChars="true"/>
+                                <Property name="filePath" type="java.lang.String" value="../../../code/common/scripting/text/textfunctions.asm" containsInvalidXMLChars="true"/>
                                 <Property name="infoMessage" type="java.lang.String" value="&lt;html&gt;Loads in &lt;i&gt;table_666E&lt;/i&gt; from &lt;i&gt;textfunctions.asm&lt;/i&gt;, so that ASCII characters (raw text) can be converted into VWFont symbols.&lt;/html&gt;"/>
                                 <Property name="labelText" type="java.lang.String" value="ASCII table :"/>
                                 <Property name="name" type="java.lang.String" value="Import ASCII Table" noResource="true"/>
@@ -253,7 +253,7 @@
                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                   <Value id="ASM"/>
                                 </Property>
-                                <Property name="filePath" type="java.lang.String" value="..\u005c..\u005cstats\u005callies\u005callynames.asm" containsInvalidXMLChars="true"/>
+                                <Property name="filePath" type="java.lang.String" value="../../stats/allies/allynames.asm" containsInvalidXMLChars="true"/>
                                 <Property name="infoMessage" type="java.lang.String" value="&lt;html&gt;Imports the namelist for allies to replace the {LEADER} and {NAME;x} tag in the preview.&lt;br&gt;Load &lt;i&gt;allynames.asm&lt;/i&gt; or &lt;i&gt;allynames-capitalized.asm&lt;/i&gt;&lt;/html&gt;"/>
                                 <Property name="labelText" type="java.lang.String" value="Ally names :"/>
                                 <Property name="name" type="java.lang.String" value="Import Ally Names" noResource="true"/>
@@ -264,7 +264,7 @@
                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                   <Value id="TXT"/>
                                 </Property>
-                                <Property name="filePath" type="java.lang.String" value=".\u005cascii-replace.txt" containsInvalidXMLChars="true"/>
+                                <Property name="filePath" type="java.lang.String" value="./ascii-replace.txt" containsInvalidXMLChars="true"/>
                                 <Property name="infoMessage" type="java.lang.String" value="&lt;html&gt;The &lt;i&gt;ascii replace&lt;/i&gt; provides some support for non-ascii characters.&lt;br&gt;Refer to the file.&lt;/html&gt;"/>
                                 <Property name="labelText" type="java.lang.String" value="ASCII replace :"/>
                                 <Property name="name" type="java.lang.String" value="Import ASCII Replace" noResource="true"/>
@@ -338,7 +338,7 @@
                                 </Component>
                                 <Component class="com.sfc.sf2.core.gui.controls.DirectoryButton" name="directoryButtonImportBanks">
                                   <Properties>
-                                    <Property name="directoryPath" type="java.lang.String" value=".\u005c" containsInvalidXMLChars="true"/>
+                                    <Property name="directoryPath" type="java.lang.String" value="./" containsInvalidXMLChars="true"/>
                                     <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="Base path :"/>
                                     <Property name="name" type="java.lang.String" value="Import Textbanks" noResource="true"/>
@@ -419,7 +419,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="TXT"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value=".\u005cexport\u005cgamescript.txt" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="./export/gamescript.txt" containsInvalidXMLChars="true"/>
                                     <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="Txt game script :"/>
                                     <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -503,7 +503,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="ASM"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value="..\u005cmap\u005ccs_intro1.asm" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="../map/cs_intro1.asm" containsInvalidXMLChars="true"/>
                                     <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="ASM file :"/>
                                     <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -624,7 +624,7 @@
                                 </Component>
                                 <Component class="com.sfc.sf2.core.gui.controls.DirectoryButton" name="directoryButtonExportBanks">
                                   <Properties>
-                                    <Property name="directoryPath" type="java.lang.String" value=".\u005c" containsInvalidXMLChars="true"/>
+                                    <Property name="directoryPath" type="java.lang.String" value="./" containsInvalidXMLChars="true"/>
                                     <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="Base path :"/>
                                     <Property name="name" type="java.lang.String" value="Export Textbanks" noResource="true"/>
@@ -702,7 +702,7 @@
                                 </Component>
                                 <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButtonExportText">
                                   <Properties>
-                                    <Property name="filePath" type="java.lang.String" value=".\u005cexport\u005cgamescript.txt" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="./export/gamescript.txt" containsInvalidXMLChars="true"/>
                                     <Property name="labelText" type="java.lang.String" value="Txt game script :"/>
                                     <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                                       <Dimension value="[32859, 25]"/>
@@ -895,7 +895,7 @@
                           <SubComponents>
                             <Component class="javax.swing.JButton" name="jButtonDown1">
                               <Properties>
-                                <Property name="text" type="java.lang.String" value="\u005c/" containsInvalidXMLChars="true"/>
+                                <Property name="text" type="java.lang.String" value="//" containsInvalidXMLChars="true"/>
                                 <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
                                   <Insets value="[2, 2, 2, 2]"/>
                                 </Property>
@@ -909,7 +909,7 @@
                             </Component>
                             <Component class="javax.swing.JButton" name="jButtonUp">
                               <Properties>
-                                <Property name="text" type="java.lang.String" value="/\u005c" containsInvalidXMLChars="true"/>
+                                <Property name="text" type="java.lang.String" value="//" containsInvalidXMLChars="true"/>
                                 <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
                                   <Insets value="[2, 2, 2, 2]"/>
                                 </Property>

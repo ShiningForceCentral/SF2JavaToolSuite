@@ -5,8 +5,6 @@
  */
 package com.sfc.sf2.battle.mapcoords;
 
-import com.sfc.sf2.map.layout.MapLayout;
-
 /**
  *
  * @author wiz

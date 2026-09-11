@@ -22,12 +22,14 @@ public class SpinnerAction extends BasicAction<Object> {
     
     @Override
     public void execute() {
+        if (!spinner.isEnabled()) return;
         spinner.requestFocus();
         spinner.setValue(newValue);
     }
 
     @Override
     public void undo() {
+        if (!spinner.isEnabled()) return;
         spinner.requestFocus();
         spinner.setValue(oldValue);
     }

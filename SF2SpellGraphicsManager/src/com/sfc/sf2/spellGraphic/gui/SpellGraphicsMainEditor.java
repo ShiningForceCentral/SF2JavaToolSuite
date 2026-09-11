@@ -190,9 +190,9 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
         infoButton1 = new com.sfc.sf2.core.gui.controls.InfoButton();
         jLabel4 = new javax.swing.JLabel();
         jSpinnerTilesPerRow = new javax.swing.JSpinner();
-        cRAMColor09 = new com.sfc.sf2.palette.CRAMColorPicker();
-        cRAMColor13 = new com.sfc.sf2.palette.CRAMColorPicker();
-        cRAMColor14 = new com.sfc.sf2.palette.CRAMColorPicker();
+        cRAMColor09 = new com.sfc.sf2.palette.gui.controls.CRAMColorPicker();
+        cRAMColor13 = new com.sfc.sf2.palette.gui.controls.CRAMColorPicker();
+        cRAMColor14 = new com.sfc.sf2.palette.gui.controls.CRAMColorPicker();
         jPanel6 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
@@ -239,7 +239,7 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
         jPanel28.setBorder(javax.swing.BorderFactory.createTitledBorder("Base palette :"));
 
         fileButtonImportPalette.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButtonImportPalette.setFilePath("..\\..\\tech\\basepalette.bin");
+        fileButtonImportPalette.setFilePath("../../tech/basepalette.bin");
         fileButtonImportPalette.setInfoMessage("<html>The base color palette to load. Spell graphics collectively use this palette and then each individually replace colors 9, 13, & 14 with their own color..</html>");
         fileButtonImportPalette.setLabelText("Palette file :");
         fileButtonImportPalette.setName("Import Palette"); // NOI18N
@@ -271,7 +271,7 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
         jLabel2.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
 
         fileButtonImportSpell.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButtonImportSpell.setFilePath(".\\spellgraphics00.bin");
+        fileButtonImportSpell.setFilePath("./spellgraphics00.bin");
         fileButtonImportSpell.setInfoMessage("");
         fileButtonImportSpell.setLabelText("Spell file :");
         fileButtonImportSpell.setName("Import Spell"); // NOI18N
@@ -320,7 +320,7 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
         infoButton5.setText("");
 
         fileButtonImportSpellImage.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ANY_IMAGE);
-        fileButtonImportSpellImage.setFilePath(".\\export\\spellgraphics00.png");
+        fileButtonImportSpellImage.setFilePath("./export/spellgraphics00.png");
         fileButtonImportSpellImage.setInfoMessage("");
         fileButtonImportSpellImage.setLabelText("Image files :");
         fileButtonImportSpellImage.setName("Import Spell Image"); // NOI18N
@@ -387,7 +387,7 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
         jLabel1.setMinimumSize(new java.awt.Dimension(70, 70));
 
         fileButtonExportSpell.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButtonExportSpell.setFilePath(".\\spellgraphics00.bin");
+        fileButtonExportSpell.setFilePath("./spellgraphics00.bin");
         fileButtonExportSpell.setInfoMessage("");
         fileButtonExportSpell.setLabelText("Spell file :");
         fileButtonExportSpell.setName("Export Spell"); // NOI18N
@@ -433,7 +433,7 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
         jLabel9.setMinimumSize(new java.awt.Dimension(70, 70));
 
         fileButtonExportSpellImage.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ANY_IMAGE);
-        fileButtonExportSpellImage.setFilePath(".\\export\\spellgraphics00.png");
+        fileButtonExportSpellImage.setFilePath("./export/spellgraphics00.png");
         fileButtonExportSpellImage.setInfoMessage("");
         fileButtonExportSpellImage.setName("Export Spell Image"); // NOI18N
 
@@ -528,7 +528,7 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
         infoButton4.setText("");
 
         fileButtonImportInvocation.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButtonImportInvocation.setFilePath(".\\invocations\\apollo.bin");
+        fileButtonImportInvocation.setFilePath("./invocations/apollo.bin");
         fileButtonImportInvocation.setInfoMessage("");
         fileButtonImportInvocation.setLabelText("Invocation file :");
         fileButtonImportInvocation.setName("ImportInvocation"); // NOI18N
@@ -581,7 +581,7 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
         infoButton6.setText("");
 
         fileButtonImportInvocationImage.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ALL_BATTLE_SPRITES_FORMAT);
-        fileButtonImportInvocationImage.setFilePath(".\\invocations\\export\\newInvocation");
+        fileButtonImportInvocationImage.setFilePath("./invocations/export/newInvocation");
         fileButtonImportInvocationImage.setInfoMessage("");
         fileButtonImportInvocationImage.setLabelText("Invoation images :");
         fileButtonImportInvocationImage.setName("Import Invocation Image"); // NOI18N
@@ -655,7 +655,7 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
         jLabel26.setMinimumSize(new java.awt.Dimension(70, 70));
 
         fileButtonExportInvocation.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButtonExportInvocation.setFilePath(".\\invocations\\newInvocation.bin");
+        fileButtonExportInvocation.setFilePath("./invocations/newInvocation.bin");
         fileButtonExportInvocation.setInfoMessage("");
         fileButtonExportInvocation.setLabelText("Invocation file :");
         fileButtonExportInvocation.setName("Export Invocation"); // NOI18N
@@ -697,7 +697,7 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
         infoButton8.setText("");
 
         fileButtonExportInvocationImage.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ALL_BATTLE_SPRITES_FORMAT);
-        fileButtonExportInvocationImage.setFilePath(".\\invocations\\export\\newInvocation");
+        fileButtonExportInvocationImage.setFilePath("./invocations/export/newInvocation");
         fileButtonExportInvocationImage.setInfoMessage("");
         fileButtonExportInvocationImage.setLabelText("Image files :");
         fileButtonExportInvocationImage.setName("Export Invocation Image"); // NOI18N
@@ -757,7 +757,7 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
         accordionPanelEnvironment.setBorder(javax.swing.BorderFactory.createTitledBorder("Battle scene"));
 
         fileButtonImportBackground.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButtonImportBackground.setFilePath("..\\backgrounds\\background09.bin");
+        fileButtonImportBackground.setFilePath("../backgrounds/background09.bin");
         fileButtonImportBackground.setInfoMessage("Loads a Background, for the animation preview.");
         fileButtonImportBackground.setLabelText("Background :");
         fileButtonImportBackground.setName("Import Background"); // NOI18N
@@ -765,19 +765,19 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
         jLabel23.setText("Ground :");
 
         fileButtonImportGroundBasePalette.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButtonImportGroundBasePalette.setFilePath("..\\battlescenebasepalette.bin");
+        fileButtonImportGroundBasePalette.setFilePath("../battlescenebasepalette.bin");
         fileButtonImportGroundBasePalette.setInfoMessage("The battle base palette to use for the Ground platform preview.");
         fileButtonImportGroundBasePalette.setLabelText("Ground base palette :");
         fileButtonImportGroundBasePalette.setName("Import Ground Base Palette"); // NOI18N
 
         fileButtonImportGroundPalette.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButtonImportGroundPalette.setFilePath("..\\grounds\\groundpalette09.bin");
+        fileButtonImportGroundPalette.setFilePath("../grounds/groundpalette09.bin");
         fileButtonImportGroundPalette.setInfoMessage("The palette to use for the Ground platform preview.");
         fileButtonImportGroundPalette.setLabelText("Gound palette :");
         fileButtonImportGroundPalette.setName("Import Ground Palette"); // NOI18N
 
         fileButtonImportGround.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButtonImportGround.setFilePath("..\\grounds\\groundtiles09.bin");
+        fileButtonImportGround.setFilePath("../grounds/groundtiles09.bin");
         fileButtonImportGround.setInfoMessage("Loads a Ground platform, for the animation preview.");
         fileButtonImportGround.setLabelText("Ground :");
         fileButtonImportGround.setName("Import Ground"); // NOI18N
@@ -925,7 +925,7 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
         cRAMColor09.setDialogTitle("Spell Color 9");
         cRAMColor09.setName("Spell Color 9"); // NOI18N
         cRAMColor09.setPreferredSize(new java.awt.Dimension(30, 30));
-        cRAMColor09.addColorChangedListener(new com.sfc.sf2.palette.CRAMColorPicker.ColorChangedListener() {
+        cRAMColor09.addColorChangedListener(new com.sfc.sf2.palette.gui.controls.CRAMColorPicker.ColorChangedListener() {
             public void colorChanged(java.awt.event.ActionEvent evt) {
                 cRAMColor09ColorChanged(evt);
             }
@@ -945,7 +945,7 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
         cRAMColor13.setDialogTitle("Spell Color 13");
         cRAMColor13.setName("Spell Color 13"); // NOI18N
         cRAMColor13.setPreferredSize(new java.awt.Dimension(30, 30));
-        cRAMColor13.addColorChangedListener(new com.sfc.sf2.palette.CRAMColorPicker.ColorChangedListener() {
+        cRAMColor13.addColorChangedListener(new com.sfc.sf2.palette.gui.controls.CRAMColorPicker.ColorChangedListener() {
             public void colorChanged(java.awt.event.ActionEvent evt) {
                 cRAMColor13ColorChanged(evt);
             }
@@ -965,7 +965,7 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
         cRAMColor14.setDialogTitle("Spell Color 14");
         cRAMColor14.setName("Spell Color 14"); // NOI18N
         cRAMColor14.setPreferredSize(new java.awt.Dimension(30, 30));
-        cRAMColor14.addColorChangedListener(new com.sfc.sf2.palette.CRAMColorPicker.ColorChangedListener() {
+        cRAMColor14.addColorChangedListener(new com.sfc.sf2.palette.gui.controls.CRAMColorPicker.ColorChangedListener() {
             public void colorChanged(java.awt.event.ActionEvent evt) {
                 cRAMColor14ColorChanged(evt);
             }
@@ -1539,9 +1539,9 @@ public class SpellGraphicsMainEditor extends AbstractMainEditor {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.sfc.sf2.core.gui.controls.AccordionPanel accordionPanelEnvironment;
-    private com.sfc.sf2.palette.CRAMColorPicker cRAMColor09;
-    private com.sfc.sf2.palette.CRAMColorPicker cRAMColor13;
-    private com.sfc.sf2.palette.CRAMColorPicker cRAMColor14;
+    private com.sfc.sf2.palette.gui.controls.CRAMColorPicker cRAMColor09;
+    private com.sfc.sf2.palette.gui.controls.CRAMColorPicker cRAMColor13;
+    private com.sfc.sf2.palette.gui.controls.CRAMColorPicker cRAMColor14;
     private com.sfc.sf2.core.gui.controls.Console console1;
     private com.sfc.sf2.core.gui.controls.FileButton fileButtonExportInvocation;
     private com.sfc.sf2.core.gui.controls.FileButton fileButtonExportInvocationImage;

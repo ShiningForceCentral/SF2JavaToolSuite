@@ -153,26 +153,26 @@ public class BattleCoordsMainEditor extends AbstractMainEditor {
             }
         });
 
-        fileButtonImportBattleCoords.setFilePath(".\\global\\battlemapcoords.asm");
+        fileButtonImportBattleCoords.setFilePath("./global/battlemapcoords.asm");
         fileButtonImportBattleCoords.setLabelText("Battle map coords :");
         fileButtonImportBattleCoords.setName("Import Battle Coords"); // NOI18N
 
         accordionPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Entries"));
 
         fileButtonPaletteEntries.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonPaletteEntries.setFilePath("..\\graphics\\maps\\mappalettes\\entries.asm");
+        fileButtonPaletteEntries.setFilePath("../graphics/maps/mappalettes/entries.asm");
         fileButtonPaletteEntries.setInfoMessage("");
         fileButtonPaletteEntries.setLabelText("Palette entries :");
         fileButtonPaletteEntries.setName("Import Palette Entries"); // NOI18N
 
         fileButtonTilesetsEntries.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonTilesetsEntries.setFilePath("..\\graphics\\maps\\maptilesets\\entries.asm");
+        fileButtonTilesetsEntries.setFilePath("../graphics/maps/maptilesets/entries.asm");
         fileButtonTilesetsEntries.setInfoMessage("");
         fileButtonTilesetsEntries.setLabelText("Tilesets entries :");
         fileButtonTilesetsEntries.setName("Import Tilesets Entries"); // NOI18N
 
         fileButtonMapEntries.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonMapEntries.setFilePath("..\\maps\\entries.asm");
+        fileButtonMapEntries.setFilePath("../maps/entries.asm");
         fileButtonMapEntries.setInfoMessage("");
         fileButtonMapEntries.setLabelText("Map entries :");
         fileButtonMapEntries.setName("Import Map Entries"); // NOI18N
@@ -244,7 +244,7 @@ public class BattleCoordsMainEditor extends AbstractMainEditor {
         });
 
         fileButtonExportBattleCoords.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonExportBattleCoords.setFilePath(".\\global\\battlemapcoords.asm");
+        fileButtonExportBattleCoords.setFilePath("./global/battlemapcoords.asm");
         fileButtonExportBattleCoords.setInfoMessage("");
         fileButtonExportBattleCoords.setLabelText("Battle map coords :");
         fileButtonExportBattleCoords.setName("Export Map Coords"); // NOI18N
@@ -458,13 +458,14 @@ public class BattleCoordsMainEditor extends AbstractMainEditor {
     
     private void onTableFrameDataChanged(TableModelEvent e) {
         int row = tableCoords.jTable.getSelectedRow();
-        if (e.getType() == TableModelEvent.DELETE) {
-            if (selectedCoords >= coords.length) {
+        if (e.getType() == TableModelEvent.DELETE || e.getType() == TableModelEvent.INSERT) {
+            coords = battleMapCoordsTableModel.getTableData(BattleMapCoords[].class);
+            if (selectedCoords < 0) {
+                selectedCoords = 0;
+            } else if (selectedCoords >= coords.length) {
                 selectedCoords = coords.length-1;
             }
-            if (selectedCoords >= 0) {
-                loadMap(selectedCoords);
-            }
+            loadMap(selectedCoords);
         } else if ((row != -1 && row == selectedCoords)) {
             if (e.getColumn() == 1) {
                 loadMap(row);
@@ -478,7 +479,6 @@ public class BattleCoordsMainEditor extends AbstractMainEditor {
         if (ActionManager.isActionTriggering()) return;
         int row = tableCoords.jTable.getSelectedRow();
         if (row == -1) {
-            coords = battleMapCoordsTableModel.getTableData(BattleMapCoords[].class);
             actionMapLoaded(null);
         } else if (!e.getValueIsAdjusting()) {
             loadMap(row);

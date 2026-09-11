@@ -5,6 +5,7 @@
  */
 package com.sfc.sf2.battle;
 
+import com.sfc.sf2.battle.io.BattleEnumsAsmProcessor;
 import com.sfc.sf2.battle.io.BattleSpritesetAsmProcessor;
 import com.sfc.sf2.battle.io.BattleSpritesetEntriesAsmProcessor;
 import com.sfc.sf2.battle.io.BattleSpritesetPackage;
@@ -49,6 +50,7 @@ public class BattleManager extends AbstractManager {
     private LandEffectMovementType[] landEffects;
     private EnemyData[] enemyData;
     private EnemyEnums enemyEnums;
+    private BattleEnums battleEnums;
 
     @Override
     public void clearData() {
@@ -61,6 +63,7 @@ public class BattleManager extends AbstractManager {
         landEffects = null;
         enemyData = null;
         enemyEnums = null;
+        battleEnums = null;
     }
         
     public Battle importDisassembly(Path paletteEntriesPath, Path tilesetEntriesPath, Path mapEntriesPath, Path terrainEntriesPath, Path battleMapCoordsPath, Path spritesetEntriesPath, int battleIndex) throws IOException, AsmException, DisassemblyException {
@@ -86,6 +89,13 @@ public class BattleManager extends AbstractManager {
         landEffectEnums = battleMapTerrainManager.getLandEffectEnums();
         Console.logger().finest("EXITING importLandEffects");
         return landEffects;
+    }
+    
+    public void ImportBattleEnums(Path sf2enumsPath) throws IOException, AsmException {
+        if (battleEnums == null) {
+            battleEnums = new BattleEnumsAsmProcessor().importAsmData(sf2enumsPath, null);
+            Console.logger().info("Battle enums successfully loaded from : " + sf2enumsPath);
+        }
     }
     
     public void exportDisassembly(Path terrainPath, Path spritesetPath, Battle battle) throws IOException, AsmException, DisassemblyException {
@@ -208,5 +218,9 @@ public class BattleManager extends AbstractManager {
 
     public EnemyEnums getEnemyEnums() {
         return enemyEnums;
+    }
+    
+    public BattleEnums getBattleEnums() {
+        return battleEnums;
     }
 }

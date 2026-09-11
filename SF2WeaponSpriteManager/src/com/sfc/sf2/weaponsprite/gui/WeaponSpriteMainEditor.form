@@ -162,7 +162,7 @@
                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                   <Value id="ASM"/>
                                 </Property>
-                                <Property name="filePath" type="java.lang.String" value=".\u005cpalettes\u005centries.asm" containsInvalidXMLChars="true"/>
+                                <Property name="filePath" type="java.lang.String" value="./palettes/entries.asm" containsInvalidXMLChars="true"/>
                                 <Property name="infoMessage" type="java.lang.String" value="The entries file to load weapon palettes from."/>
                                 <Property name="labelText" type="java.lang.String" value="Weapon palette entries :"/>
                               </Properties>
@@ -256,7 +256,7 @@
                                         <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                           <Value id="BIN"/>
                                         </Property>
-                                        <Property name="filePath" type="java.lang.String" value=".\u005cweaponsprite00.bin" containsInvalidXMLChars="true"/>
+                                        <Property name="filePath" type="java.lang.String" value="./weaponsprite00.bin" containsInvalidXMLChars="true"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Weapon file :"/>
                                       </Properties>
@@ -336,7 +336,7 @@
                                         <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                           <Value id="ANY_IMAGE"/>
                                         </Property>
-                                        <Property name="filePath" type="java.lang.String" value=".\u005cexport\u005cweaponsprite00.png" containsInvalidXMLChars="true"/>
+                                        <Property name="filePath" type="java.lang.String" value="./export/weaponsprite00.png" containsInvalidXMLChars="true"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Image file :"/>
                                       </Properties>
@@ -442,7 +442,7 @@
                                         <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                           <Value id="BIN"/>
                                         </Property>
-                                        <Property name="filePath" type="java.lang.String" value=".\u005cweaponsprite00.bin" containsInvalidXMLChars="true"/>
+                                        <Property name="filePath" type="java.lang.String" value="./weaponsprite00.bin" containsInvalidXMLChars="true"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="New weapon :"/>
                                       </Properties>
@@ -522,7 +522,7 @@
                                         <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                           <Value id="ANY_IMAGE"/>
                                         </Property>
-                                        <Property name="filePath" type="java.lang.String" value=".\u005cexport\u005cweaponsprite00.png" containsInvalidXMLChars="true"/>
+                                        <Property name="filePath" type="java.lang.String" value="./export/weaponsprite00.png" containsInvalidXMLChars="true"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Image file :"/>
                                       </Properties>

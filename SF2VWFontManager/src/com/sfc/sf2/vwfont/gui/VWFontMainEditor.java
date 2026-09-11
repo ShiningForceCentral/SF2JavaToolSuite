@@ -134,7 +134,7 @@ public class VWFontMainEditor extends AbstractMainEditor {
         infoButton3.setText("");
 
         fileButtonImportSymbols.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButtonImportSymbols.setFilePath(".\\variablewidthfont.bin");
+        fileButtonImportSymbols.setFilePath("./variablewidthfont.bin");
         fileButtonImportSymbols.setInfoMessage("");
         fileButtonImportSymbols.setLabelText("BIN File :");
         fileButtonImportSymbols.setName("Import Font Symbols"); // NOI18N
@@ -185,7 +185,7 @@ public class VWFontMainEditor extends AbstractMainEditor {
         infoButton4.setMessageText("<html>Symbol images should be in format \"symbolXX.png\". Supports image formats: PNG or GIF.<br>Will automatically load an image if it is in a supported format.<br><br>Color format should be indexed colors (ideally 4BPP / 16).<br>- Color 0 is transparent.<br>- Color 1 (black) is 'filled' with font symbol.<br>- Color 2 (grey) is the width of the font symbol. The image should include a single Color 2 pixel on the top row of the image.</html>");
         infoButton4.setText("");
 
-        directoryButtonImportImages.setDirectoryPath(".\\export\\");
+        directoryButtonImportImages.setDirectoryPath("./export/");
             directoryButtonImportImages.setInfoMessage("");
             directoryButtonImportImages.setLabelText("Symbols drectory :");
             directoryButtonImportImages.setName("Import Images"); // NOI18N
@@ -256,7 +256,7 @@ public class VWFontMainEditor extends AbstractMainEditor {
             infoButton5.setText("");
 
             fileButtonExportSymbols.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-            fileButtonExportSymbols.setFilePath(".\\variablewidthfont.bin");
+            fileButtonExportSymbols.setFilePath("./variablewidthfont.bin");
             fileButtonExportSymbols.setInfoMessage("");
             fileButtonExportSymbols.setLabelText("BIN file :");
             fileButtonExportSymbols.setName("Export Font Symbols"); // NOI18N
@@ -307,7 +307,7 @@ public class VWFontMainEditor extends AbstractMainEditor {
             infoButton6.setMessageText("<html>VW font symbols will be exported to individual images, in format \"symbolXX.png\". Supported image formats: PNG or GIF.<br><brFormat will be 4BPP / 16 indexed color.<br>- Color 0 is transparent.<br>- Color 1 (black) is 'filled' with font symbol.<br>- Color 2 (grey) is the width of the font symbol. Each image will be given a single Color 2 pixel on the top row of the image.<br>- All other colors are unused.</html>");
             infoButton6.setText("");
 
-            directoryButtonExportImages.setDirectoryPath(".\\export\\");
+            directoryButtonExportImages.setDirectoryPath("./export/");
                 directoryButtonExportImages.setInfoMessage("");
                 directoryButtonExportImages.setLabelText("Image directory :");
                 directoryButtonExportImages.setName("Export Images"); // NOI18N

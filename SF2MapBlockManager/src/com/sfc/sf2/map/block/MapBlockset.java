@@ -109,11 +109,14 @@ public class MapBlockset implements INameable {
         }
     }
     
-    public void insertBlock(int index, MapBlock block) {
+    public void insertBlock(int index, MapBlock block, boolean cloneBlock) {
         if (index < 0 || index > blocks.length) return;
         MapBlock[] newBlocks = new MapBlock[blocks.length+1];
         System.arraycopy(blocks, 0, newBlocks, 0, index);
-        newBlocks[index] = block.clone();
+        newBlocks[index] = block;
+        if (cloneBlock) {
+            newBlocks[index] = block.clone();
+        }
         newBlocks[index].setIndex(index);
         for (int i = index+1; i < newBlocks.length; i++) {
             newBlocks[i] = blocks[i-1];

@@ -49,13 +49,11 @@
               <Group type="103" groupAlignment="2" attributes="0">
                   <Component id="jComboBoxScale" alignment="2" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabelScale" alignment="2" min="-2" max="-2" attributes="0"/>
-                  <Group type="103" alignment="2" groupAlignment="2" attributes="0">
-                      <Component id="jLabel8" alignment="2" min="-2" max="-2" attributes="0"/>
-                      <Component id="jComboBoxAnim" alignment="2" min="-2" max="-2" attributes="0"/>
-                      <Component id="jSpinnerAnimFrame" alignment="2" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabel9" alignment="2" min="-2" max="-2" attributes="0"/>
-                      <Component id="jCheckBoxAnimate" alignment="2" min="-2" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="jLabel8" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Component id="jComboBoxAnim" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Component id="jSpinnerAnimFrame" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel9" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Component id="jCheckBoxAnimate" alignment="2" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>

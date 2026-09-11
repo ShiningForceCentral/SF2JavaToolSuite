@@ -154,6 +154,15 @@ public abstract class BaseMouseCoordsComponent extends BaseLayoutComponent imple
         ActionManager.preventActionsCombining();
     }
     
+    
+    /**
+     * @param x The grid x coords of them mouse input
+     * @param y The grid y coords of them mouse input
+     * @param mouseButton The button that is down. BUTTON1 = left, BUTTON2 = middle (wheel), BUTTON3 = right
+     * @param dragging If the grid coords have changed while the button is held down
+     * @param pressed If the button is held down
+     * @param released On the frame that the button was released
+     */
     public record GridMousePressedEvent(int x, int y, int mouseButton, boolean dragging, boolean pressed, boolean released) { }
     public interface GridMousePressedListener extends EventListener {
         public void mousePressed(GridMousePressedEvent evt);

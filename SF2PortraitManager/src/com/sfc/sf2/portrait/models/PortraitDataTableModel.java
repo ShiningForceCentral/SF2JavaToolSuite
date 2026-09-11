@@ -6,6 +6,7 @@
 package com.sfc.sf2.portrait.models;
 
 import com.sfc.sf2.core.models.AbstractTableModel;
+import com.sfc.sf2.portrait.Portrait;
 
 /**
  *
@@ -14,7 +15,7 @@ import com.sfc.sf2.core.models.AbstractTableModel;
 public class PortraitDataTableModel extends AbstractTableModel<int[]> {
 
     public PortraitDataTableModel() {
-        super(new String[] { "Row", "X", "Y", "X'", "Y'" }, 12);
+        super(new String[] { "Row", "X", "Y", "X'", "Y'" }, 16); 
     }
 
     @Override
@@ -24,7 +25,7 @@ public class PortraitDataTableModel extends AbstractTableModel<int[]> {
 
     @Override
     protected int[] createBlankItem(int row) {
-        return new int[getColumnCount()];
+        return Portrait.getEmptyRow();
     }
 
     @Override

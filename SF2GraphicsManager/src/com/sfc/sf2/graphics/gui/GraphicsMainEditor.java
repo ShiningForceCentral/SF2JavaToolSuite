@@ -207,13 +207,13 @@ public class GraphicsMainEditor extends AbstractMainEditor {
         });
 
         fileButtonImportPalette.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButtonImportPalette.setFilePath(".\\tech\\segalogopalette.bin");
+        fileButtonImportPalette.setFilePath("./tech/segalogopalette.bin");
         fileButtonImportPalette.setInfoMessage("");
         fileButtonImportPalette.setLabelText("Palette file :");
         fileButtonImportPalette.setName("Import Palette"); // NOI18N
 
         fileButtonImportGraphics.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButtonImportGraphics.setFilePath(".\\tech\\segalogotiles.bin");
+        fileButtonImportGraphics.setFilePath("./tech/segalogotiles.bin");
         fileButtonImportGraphics.setInfoMessage("");
         fileButtonImportGraphics.setLabelText("Graphics file :");
         fileButtonImportGraphics.setName("Import Graphics"); // NOI18N
@@ -335,7 +335,7 @@ public class GraphicsMainEditor extends AbstractMainEditor {
         jLabel3.setText("<html>Import an image file.</html>");
 
         fileButtonImportImage.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ANY_IMAGE);
-        fileButtonImportImage.setFilePath(".\\export\\segalogotiles.png");
+        fileButtonImportImage.setFilePath("./export/segalogotiles.png");
         fileButtonImportImage.setInfoMessage("");
         fileButtonImportImage.setLabelText("Image File :");
         fileButtonImportImage.setName("Import Image"); // NOI18N
@@ -716,7 +716,7 @@ public class GraphicsMainEditor extends AbstractMainEditor {
         jLabel1.setText("<html>Export the graphic to a new or existing file.</html>");
 
         fileButtonExportGraphics.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButtonExportGraphics.setFilePath(".\\tech\\newsegalogo.bin");
+        fileButtonExportGraphics.setFilePath("./tech/newsegalogo.bin");
         fileButtonExportGraphics.setInfoMessage("");
         fileButtonExportGraphics.setLabelText("Graphics file :");
         fileButtonExportGraphics.setName("Export Graphic"); // NOI18N
@@ -805,7 +805,7 @@ public class GraphicsMainEditor extends AbstractMainEditor {
         jLabel9.setText("<html>Export the graphic as image.</html>");
 
         fileButtonExportImage.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ANY_IMAGE);
-        fileButtonExportImage.setFilePath(".\\export\\segalogotiles.png");
+        fileButtonExportImage.setFilePath("./export/segalogotiles.png");
         fileButtonExportImage.setInfoMessage("");
         fileButtonExportImage.setLabelText("Image file :");
         fileButtonExportImage.setName("Export Image"); // NOI18N

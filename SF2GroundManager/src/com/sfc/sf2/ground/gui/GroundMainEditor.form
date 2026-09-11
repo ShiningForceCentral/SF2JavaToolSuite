@@ -152,7 +152,7 @@
                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                   <Value id="BIN"/>
                                 </Property>
-                                <Property name="filePath" type="java.lang.String" value="..\u005cbattlescenebasepalette.bin" containsInvalidXMLChars="true"/>
+                                <Property name="filePath" type="java.lang.String" value="../battlescenebasepalette.bin" containsInvalidXMLChars="true"/>
                                 <Property name="infoMessage" type="java.lang.String" value="&lt;html&gt;The game&apos;s base palette. Ground images use this palette most color channels but then override this with a &apos;ground palette&apos; that sets the colors at indexes 3, 4, &amp; 8.&lt;/html&gt;"/>
                                 <Property name="labelText" type="java.lang.String" value="Base palette file :"/>
                                 <Property name="name" type="java.lang.String" value="Import Base Palette" noResource="true"/>
@@ -261,7 +261,7 @@
                                         <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                           <Value id="BIN"/>
                                         </Property>
-                                        <Property name="filePath" type="java.lang.String" value=".\u005cgroundpalette00.bin" containsInvalidXMLChars="true"/>
+                                        <Property name="filePath" type="java.lang.String" value="./groundpalette00.bin" containsInvalidXMLChars="true"/>
                                         <Property name="infoMessage" type="java.lang.String" value="&lt;html&gt;Loads the palette to replace colors of the base palette. The &apos;ground palette&apos; that sets the colors at indexes 3, 4, &amp; 8.&lt;/html&gt;"/>
                                         <Property name="labelText" type="java.lang.String" value="Palette file :"/>
                                         <Property name="name" type="java.lang.String" value="Import Palette" noResource="true"/>
@@ -272,7 +272,7 @@
                                         <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                           <Value id="BIN"/>
                                         </Property>
-                                        <Property name="filePath" type="java.lang.String" value=".\u005cgroundtiles00.bin" containsInvalidXMLChars="true"/>
+                                        <Property name="filePath" type="java.lang.String" value="./groundtiles00.bin" containsInvalidXMLChars="true"/>
                                         <Property name="infoMessage" type="java.lang.String" value="The graphic for the ground platform."/>
                                         <Property name="labelText" type="java.lang.String" value="Ground file :"/>
                                         <Property name="name" type="java.lang.String" value="Import Ground" noResource="true"/>
@@ -350,7 +350,7 @@
                                         <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                           <Value id="ANY_IMAGE"/>
                                         </Property>
-                                        <Property name="filePath" type="java.lang.String" value=".\u005cexport\u005cgroundtiles00.png" containsInvalidXMLChars="true"/>
+                                        <Property name="filePath" type="java.lang.String" value="./export/groundtiles00.png" containsInvalidXMLChars="true"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Image file :"/>
                                         <Property name="name" type="java.lang.String" value="Import Image" noResource="true"/>
@@ -463,7 +463,7 @@
                                         <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                           <Value id="BIN"/>
                                         </Property>
-                                        <Property name="filePath" type="java.lang.String" value=".\u005cgroundtiles00.bin" containsInvalidXMLChars="true"/>
+                                        <Property name="filePath" type="java.lang.String" value="./groundtiles00.bin" containsInvalidXMLChars="true"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Ground File :"/>
                                         <Property name="name" type="java.lang.String" value="Export Ground" noResource="true"/>
@@ -489,7 +489,7 @@
                                         <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                           <Value id="BIN"/>
                                         </Property>
-                                        <Property name="filePath" type="java.lang.String" value=".\u005cgroundpalette00.bin" containsInvalidXMLChars="true"/>
+                                        <Property name="filePath" type="java.lang.String" value="./groundpalette00.bin" containsInvalidXMLChars="true"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Palette file :"/>
                                         <Property name="name" type="java.lang.String" value="Export Palette" noResource="true"/>
@@ -564,7 +564,7 @@
                                         <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                           <Value id="ANY_IMAGE"/>
                                         </Property>
-                                        <Property name="filePath" type="java.lang.String" value=".\u005cexport\u005cgroundtiles00.png" containsInvalidXMLChars="true"/>
+                                        <Property name="filePath" type="java.lang.String" value="./export/groundtiles00.png" containsInvalidXMLChars="true"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Image file :"/>
                                         <Property name="name" type="java.lang.String" value="Export Image" noResource="true"/>

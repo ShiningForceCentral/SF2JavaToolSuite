@@ -55,4 +55,7 @@ public class StringHelpers {
             return Integer.parseInt(string);
         }
     }
+    public static String normalisePathSeparators(String path) {
+        return path.replace("\\\\", "/").replace('\\', '/');
+    }
 }

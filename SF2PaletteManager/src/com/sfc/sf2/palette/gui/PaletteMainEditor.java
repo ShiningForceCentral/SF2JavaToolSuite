@@ -94,7 +94,7 @@ public class PaletteMainEditor extends AbstractMainEditor {
         infoButton1.setText("");
 
         fileButtonImportPalette.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButtonImportPalette.setFilePath(".\\tech\\basepalette.bin");
+        fileButtonImportPalette.setFilePath("./tech/basepalette.bin");
         fileButtonImportPalette.setInfoMessage("");
         fileButtonImportPalette.setLabelText("Bin file :");
         fileButtonImportPalette.setName("Import Palette"); // NOI18N
@@ -146,7 +146,7 @@ public class PaletteMainEditor extends AbstractMainEditor {
         infoButton2.setText("");
 
         fileButton2.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ANY_IMAGE);
-        fileButton2.setFilePath(".\\export\\palette.png");
+        fileButton2.setFilePath("./export/palette.png");
         fileButton2.setInfoMessage("");
         fileButton2.setLabelText("Image file :");
         fileButton2.setName("Import Image"); // NOI18N
@@ -233,7 +233,7 @@ public class PaletteMainEditor extends AbstractMainEditor {
         jLabel1.setText("Export palette disassembly.");
 
         fileButtonExportPalette.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButtonExportPalette.setFilePath(".\\tech\\basepalette.bin");
+        fileButtonExportPalette.setFilePath("./tech/basepalette.bin");
         fileButtonExportPalette.setInfoMessage("");
         fileButtonExportPalette.setLabelText("Bin file :");
         fileButtonExportPalette.setName("Export Palette"); // NOI18N
@@ -278,7 +278,7 @@ public class PaletteMainEditor extends AbstractMainEditor {
         jLabel7.setText("<html>Export palette to image.</html>");
 
         fileButtonExportImage.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ANY_IMAGE);
-        fileButtonExportImage.setFilePath(".\\export\\palette.png");
+        fileButtonExportImage.setFilePath("./export/palette.png");
         fileButtonExportImage.setInfoMessage("");
         fileButtonExportImage.setLabelText("Image file :");
         fileButtonExportImage.setName("Export Image"); // NOI18N
@@ -376,7 +376,7 @@ public class PaletteMainEditor extends AbstractMainEditor {
         Path palettePath = PathHelpers.getBasePath().resolve(fileButtonExportPalette.getFilePath());
         if (!PathHelpers.createPathIfRequred(palettePath)) return;
         try {
-            paletteManager.exportDisassembly(palettePath, palettePane1.getUpdatedPalette());
+            paletteManager.exportDisassembly(palettePath, palettePane1.getPalette());
         } catch (Exception ex) {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Palette disasm could not be exported to : " + palettePath);
@@ -411,7 +411,7 @@ public class PaletteMainEditor extends AbstractMainEditor {
         Path palettePath = PathHelpers.getBasePath().resolve(fileButtonExportImage.getFilePath());
         if (!PathHelpers.createPathIfRequred(palettePath)) return;
         try {
-            paletteManager.exportImage(palettePath,palettePane1.getUpdatedPalette(),true);
+            paletteManager.exportImage(palettePath,palettePane1.getPalette(),true);
         } catch (Exception ex) {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Palette image could not be exported to : " + palettePath);

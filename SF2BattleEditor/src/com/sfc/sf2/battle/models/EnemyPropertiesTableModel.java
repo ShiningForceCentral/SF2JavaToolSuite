@@ -67,7 +67,7 @@ public class EnemyPropertiesTableModel extends AbstractTableModel<Enemy> {
 
     @Override
     protected Enemy createBlankItem(int row) {
-        return Enemy.emptyEnemy();
+        return Enemy.emptyEnemy(enemyData, enemyEnums);
     }
 
     @Override
@@ -79,7 +79,7 @@ public class EnemyPropertiesTableModel extends AbstractTableModel<Enemy> {
     protected Object getValue(Enemy item, int row, int col) {
         switch (col) {
             case 0: return row;
-            case 1: return item.getEnemyData().getName();
+            case 1: return item.getEnemyData() == null ? "UNKNOWN" : item.getEnemyData().getName();
             case 2: return item.getX();
             case 3: return item.getY();
             case 4: return item.getAi();

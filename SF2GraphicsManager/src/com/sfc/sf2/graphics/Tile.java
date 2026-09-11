@@ -6,6 +6,7 @@
 package com.sfc.sf2.graphics;
 
 import com.sfc.sf2.palette.Palette;
+import com.sfc.sf2.palette.IPaletteGraphic;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.awt.image.IndexColorModel;
@@ -15,7 +16,7 @@ import java.util.Arrays;
  *
  * @author wiz
  */
-public class Tile {
+public class Tile implements IPaletteGraphic {
     
     public static final int PIXEL_WIDTH = 8;
     public static final int PIXEL_HEIGHT = 8;
@@ -32,10 +33,6 @@ public class Tile {
         this.pixels = pixels;
         this.palette = palette;
     }
-        
-    public byte[] getPixels() {
-        return pixels;
-    }
     
     public int getId() {
         return id;
@@ -44,11 +41,23 @@ public class Tile {
     public void setId(int id) {
         this.id = id;
     }
+        
+    @Override
+    public byte[] getPixels() {
+        return pixels;
+    }
+
+    @Override
+    public void setPixels(byte[] pixels) {
+        this.pixels = pixels;
+    }
     
+    @Override
     public Palette getPalette() {
         return palette;
     }
 
+    @Override
     public void setPalette(Palette palette) {
         this.palette = palette;
         clearIndexedColorImage();

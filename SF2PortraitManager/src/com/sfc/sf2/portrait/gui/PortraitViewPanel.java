@@ -8,7 +8,6 @@ package com.sfc.sf2.portrait.gui;
 import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.core.actions.ToggleAction;
 import com.sfc.sf2.core.gui.controls.AbstractViewPanel;
-import com.sfc.sf2.palette.Palette;
 import com.sfc.sf2.portrait.Portrait;
 import java.awt.event.ActionEvent;
 
@@ -27,8 +26,7 @@ public class PortraitViewPanel extends AbstractViewPanel<PortraitLayoutPanel> {
         init(jComboBoxScale, jCheckBoxGrid, null, colorPickerBG);
         
         paletteButtonRecolor.setupPaletteButton(() -> {
-            Portrait portrait = layoutPanel.getPortrait();
-            return portrait == null ? null : portrait.getPalette();
+            return layoutPanel.getPortrait();
         }, this::onPaletteColorChange);
     }
 
@@ -49,6 +47,8 @@ public class PortraitViewPanel extends AbstractViewPanel<PortraitLayoutPanel> {
         infoButton1 = new com.sfc.sf2.core.gui.controls.InfoButton();
         paletteButtonRecolor = new com.sfc.sf2.palette.gui.controls.PaletteButton();
         jLabelRecolor = new javax.swing.JLabel();
+        jCheckBoxShowPoints = new javax.swing.JCheckBox();
+        infoButton2 = new com.sfc.sf2.core.gui.controls.InfoButton();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder("View"));
 
@@ -113,6 +113,17 @@ public class PortraitViewPanel extends AbstractViewPanel<PortraitLayoutPanel> {
 
         jLabelRecolor.setText("Recolor :");
 
+        jCheckBoxShowPoints.setText("Show all eye/mouth points");
+        jCheckBoxShowPoints.setName("Talk Toggle"); // NOI18N
+        jCheckBoxShowPoints.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCheckBoxShowPointsItemStateChanged(evt);
+            }
+        });
+
+        infoButton2.setMessageText("Shows all tiles that have an eye/mouth data point on them.");
+        infoButton2.setText("");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -139,7 +150,12 @@ public class PortraitViewPanel extends AbstractViewPanel<PortraitLayoutPanel> {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jCheckBoxBlink)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCheckBoxTalk)))
+                        .addComponent(jCheckBoxTalk))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(infoButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jCheckBoxShowPoints)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -159,6 +175,10 @@ public class PortraitViewPanel extends AbstractViewPanel<PortraitLayoutPanel> {
                     .addComponent(infoButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jCheckBoxBlink)
                     .addComponent(jCheckBoxTalk))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jCheckBoxShowPoints)
+                    .addComponent(infoButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -188,13 +208,17 @@ public class PortraitViewPanel extends AbstractViewPanel<PortraitLayoutPanel> {
     private void jCheckBoxGridItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBoxGridItemStateChanged
         super.onGridChanged(evt);
     }//GEN-LAST:event_jCheckBoxGridItemStateChanged
+
+    private void jCheckBoxShowPointsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBoxShowPointsItemStateChanged
+        if (!ActionManager.isActionTriggering()) {
+            ActionManager.setActionWithoutExecute(new ToggleAction(jCheckBoxShowPoints, jCheckBoxShowPoints.isSelected()));
+        }
+        layoutPanel.setShowAllPoints(jCheckBoxShowPoints.isSelected());
+    }//GEN-LAST:event_jCheckBoxShowPointsItemStateChanged
     
     private void onPaletteColorChange(ActionEvent e) {
-        Palette palette = (Palette)e.getSource();
-        if (palette == null) return;
         Portrait portrait = layoutPanel.getPortrait();
         if (portrait == null) return;
-        palette.rebuildIcm();
         portrait.getTileset().clearIndexedColorImage(true);
         layoutPanel.redraw();
     }
@@ -202,8 +226,10 @@ public class PortraitViewPanel extends AbstractViewPanel<PortraitLayoutPanel> {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.sfc.sf2.core.gui.controls.ColorPicker colorPickerBG;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton1;
+    private com.sfc.sf2.core.gui.controls.InfoButton infoButton2;
     private javax.swing.JCheckBox jCheckBoxBlink;
     private javax.swing.JCheckBox jCheckBoxGrid;
+    private javax.swing.JCheckBox jCheckBoxShowPoints;
     private javax.swing.JCheckBox jCheckBoxTalk;
     private javax.swing.JComboBox<String> jComboBoxScale;
     private javax.swing.JLabel jLabelBG;

@@ -116,7 +116,7 @@ public class GroundMainEditor extends AbstractMainEditor {
         jPanel28.setBorder(javax.swing.BorderFactory.createTitledBorder("Base palette :"));
 
         fileButtonImportBasePalette.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButtonImportBasePalette.setFilePath("..\\battlescenebasepalette.bin");
+        fileButtonImportBasePalette.setFilePath("../battlescenebasepalette.bin");
         fileButtonImportBasePalette.setInfoMessage("<html>The game's base palette. Ground images use this palette most color channels but then override this with a 'ground palette' that sets the colors at indexes 3, 4, & 8.</html>");
         fileButtonImportBasePalette.setLabelText("Base palette file :");
         fileButtonImportBasePalette.setName("Import Base Palette"); // NOI18N
@@ -147,13 +147,13 @@ public class GroundMainEditor extends AbstractMainEditor {
         infoButton1.setText("");
 
         fileButtonImportPalette.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButtonImportPalette.setFilePath(".\\groundpalette00.bin");
+        fileButtonImportPalette.setFilePath("./groundpalette00.bin");
         fileButtonImportPalette.setInfoMessage("<html>Loads the palette to replace colors of the base palette. The 'ground palette' that sets the colors at indexes 3, 4, & 8.</html>");
         fileButtonImportPalette.setLabelText("Palette file :");
         fileButtonImportPalette.setName("Import Palette"); // NOI18N
 
         fileButtonImportGround.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButtonImportGround.setFilePath(".\\groundtiles00.bin");
+        fileButtonImportGround.setFilePath("./groundtiles00.bin");
         fileButtonImportGround.setInfoMessage("The graphic for the ground platform.");
         fileButtonImportGround.setLabelText("Ground file :");
         fileButtonImportGround.setName("Import Ground"); // NOI18N
@@ -208,7 +208,7 @@ public class GroundMainEditor extends AbstractMainEditor {
         infoButton2.setText("");
 
         fileButtonImportImage.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ANY_IMAGE);
-        fileButtonImportImage.setFilePath(".\\export\\groundtiles00.png");
+        fileButtonImportImage.setFilePath("./export/groundtiles00.png");
         fileButtonImportImage.setInfoMessage("");
         fileButtonImportImage.setLabelText("Image file :");
         fileButtonImportImage.setName("Import Image"); // NOI18N
@@ -272,7 +272,7 @@ public class GroundMainEditor extends AbstractMainEditor {
         jLabel1.setText("Export ground disassembly.");
 
         fileButtonExportGround.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButtonExportGround.setFilePath(".\\groundtiles00.bin");
+        fileButtonExportGround.setFilePath("./groundtiles00.bin");
         fileButtonExportGround.setInfoMessage("");
         fileButtonExportGround.setLabelText("Ground File :");
         fileButtonExportGround.setName("Export Ground"); // NOI18N
@@ -287,7 +287,7 @@ public class GroundMainEditor extends AbstractMainEditor {
         jLabel6.setText("(Optional) Export palette disassembly.");
 
         fileButtonExportPalette.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButtonExportPalette.setFilePath(".\\groundpalette00.bin");
+        fileButtonExportPalette.setFilePath("./groundpalette00.bin");
         fileButtonExportPalette.setInfoMessage("");
         fileButtonExportPalette.setLabelText("Palette file :");
         fileButtonExportPalette.setName("Export Palette"); // NOI18N
@@ -340,7 +340,7 @@ public class GroundMainEditor extends AbstractMainEditor {
         jLabel9.setText("Export ground as image.");
 
         fileButtonExportImage.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ANY_IMAGE);
-        fileButtonExportImage.setFilePath(".\\export\\groundtiles00.png");
+        fileButtonExportImage.setFilePath("./export/groundtiles00.png");
         fileButtonExportImage.setInfoMessage("");
         fileButtonExportImage.setLabelText("Image file :");
         fileButtonExportImage.setName("Export Image"); // NOI18N

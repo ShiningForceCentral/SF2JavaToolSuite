@@ -6,6 +6,7 @@
 package com.sfc.sf2.helpers;
 
 import com.sfc.sf2.core.io.FileFormat;
+import com.sfc.sf2.core.settings.OS_Info;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -17,7 +18,7 @@ import java.nio.file.Path;
 public class FileHelpers {
 
     public static File getTempFile(String prefix) throws IOException {
-        return File.createTempFile(prefix, Long.toString(System.currentTimeMillis()), Path.of(System.getenv("APPDATA")).resolve("SF2").toFile());
+        return File.createTempFile(prefix, Long.toString(System.currentTimeMillis()), OS_Info.getUserDataPath().toFile());
     }
     
     public static File[] findAllFilesInDirectory(Path folder, String filePrefix, FileFormat fileFormat) {

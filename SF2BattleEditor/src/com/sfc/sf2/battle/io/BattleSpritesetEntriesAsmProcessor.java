@@ -31,7 +31,9 @@ public class BattleSpritesetEntriesAsmProcessor extends AbstractAsmProcessor<Ent
             if (line.startsWith("dc.l")) {
                 entries.addEntry(line.substring(5));
             } else if (line.startsWith("include")) {
-                entries.addPath(entries.getEntry(pathsCount), Path.of(line.substring(8).replace("\"", "")));
+                String path = line.substring(8).replace("\"", "");
+                path = StringHelpers.normalisePathSeparators(path);
+                entries.addPath(entries.getEntry(pathsCount), Path.of(path));
                 pathsCount++;
             }
         }

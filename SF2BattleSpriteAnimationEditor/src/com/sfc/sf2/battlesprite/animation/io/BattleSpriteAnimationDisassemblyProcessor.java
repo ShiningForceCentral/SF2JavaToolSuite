@@ -39,7 +39,7 @@ public class BattleSpriteAnimationDisassemblyProcessor extends AbstractDisassemb
             byte idleWeaponY = BinaryHelpers.getByte(data, 7);
             frames[0] = new BattleSpriteAnimationFrame((byte)0, (byte)0, (byte)0, (byte)0, idleWeaponFrame, idleWeaponFlipX, idleWeaponFlipY, idleWeaponBehind, idleWeaponX, idleWeaponY);
         } else {
-            frames[0] = BattleSpriteAnimationFrame.EmptyFrame();
+            frames[0] = BattleSpriteAnimationFrame.EmptyFrame(true);
         }
 
         for (byte i=1; i < frames.length; i++) {
@@ -63,6 +63,18 @@ public class BattleSpriteAnimationDisassemblyProcessor extends AbstractDisassemb
                 frames[i] = new BattleSpriteAnimationFrame(battleSpriteIndex, duration, x, y);
             }
         }
+        
+        if (!isAlly) {
+            //Enemies animate idle differently
+            BattleSpriteAnimationFrame[] newFrames = new BattleSpriteAnimationFrame[frames.length+1];
+            newFrames[0] = frames[0];
+            newFrames[1] = new BattleSpriteAnimationFrame((byte)1, (byte)0, (byte)0, (byte)0);
+            for (int i = 1; i < frames.length; i++) {
+                newFrames[i+1] = frames[i];
+            }
+            frames = newFrames;
+        }
+        
         return new BattleSpriteAnimation(pckg.name(), pckg.battleSprite(), frames, initFrame, spellAnim, endSpellAnim);
     }
 
@@ -70,10 +82,21 @@ public class BattleSpriteAnimationDisassemblyProcessor extends AbstractDisassemb
     protected byte[] packageDisassemblyData(BattleSpriteAnimation item, BattleSpriteAnimationPackage pckg) throws DisassemblyException {
         
         boolean isAlly = pckg.battleSprite().getType() == BattleSprite.BattleSpriteType.ALLY;
+        BattleSpriteAnimationFrame[] frames = item.getFrames();
+        if (!isAlly) {
+            //Enemies animate idle differently
+            BattleSpriteAnimationFrame[] newFrames = new BattleSpriteAnimationFrame[frames.length-1];
+            newFrames[0] = frames[0];
+            for (int i = 2; i < frames.length; i++) {
+                newFrames[i-1] = frames[i];
+            }
+            frames = newFrames;
+        }
+        
         int offset = isAlly ? 8 : 4;
+        byte frameCount = (byte)frames.length;
         BattleSpriteAnimationFrame frame;
         byte weaponData;
-        byte frameCount = item.getFrameCount();
         byte[] animationFileBytes = new byte[(frameCount)*offset];
 
         animationFileBytes[0] = (byte)(frameCount-1); //Remove 1 because first frame is part of this 'core' data 
@@ -81,7 +104,7 @@ public class BattleSpriteAnimationDisassemblyProcessor extends AbstractDisassemb
         animationFileBytes[2] = item.getSpellAnim();
         animationFileBytes[3] = (byte)(item.getEndSpellAnim() ? 1 : 0);
         if (isAlly) {
-            frame = item.getFrames()[0];
+            frame = frames[0];
             weaponData = (byte)(frame.getWeaponFrame() + (frame.getWeaponFlipH() ? 0x10 : 0) + (frame.getWeaponFlipV() ? 0x20 : 0));
             animationFileBytes[4] = weaponData;
             animationFileBytes[5] = (byte)(frame.getWeaponBehind() ? 1 : 2);
@@ -90,9 +113,9 @@ public class BattleSpriteAnimationDisassemblyProcessor extends AbstractDisassemb
         }
 
         for (byte i=1; i < frameCount; i++) {
-            frame = item.getFrames()[i];
+            frame = frames[i];
             byte battleSpriteIndex = frame.getBattleSpriteIndex();
-            if (i >= 2 && battleSpriteIndex == item.getFrames()[i-1].getBattleSpriteIndex()) {
+            if (i >= 2 && battleSpriteIndex == frames[i-1].getBattleSpriteIndex()) {
                 battleSpriteIndex = 0xF;    //Disasm stores value 0xF to mean "same as previous frame" (ignore frames 0-1 because frame 0 is core data)
             }
             animationFileBytes[i*offset+0] = battleSpriteIndex;

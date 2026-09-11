@@ -26,10 +26,14 @@ import java.awt.event.ActionListener;
  */
 public class PortraitLayoutPanel extends AbstractLayoutPanel {
     
+    private static Color ACTIVE_UNSELECTED_COLOR = new Color(0f, 0f, 0.4f, 0.5f);
+    private static Color INACTIVE_UNSELECTED_COLOR = new Color(0.2f, 0.2f, 0.2f, 0.5f);
+    
     private Portrait portrait;
     
     private boolean blinking = false;
     private boolean speaking = false;
+    private boolean showAllPoints = false;
     
     private int selectedEyeTile = -1;
     private int selectedMouthTile = -1;
@@ -65,14 +69,32 @@ public class PortraitLayoutPanel extends AbstractLayoutPanel {
     protected void drawImage(Graphics graphics) {
         portrait.clearIndexedColorImage();
         graphics.drawImage(portrait.getIndexedColorImage(true, blinking, speaking), 0, 0, null);
+        drawRects(portrait.getEyeTiles(), selectedEyeTile, graphics);
+        drawRects(portrait.getMouthTiles(), selectedMouthTile, graphics);
+        
         graphics.setColor(Color.YELLOW);
         if (selectedEyeTile >= 0 && selectedEyeTile < portrait.getEyeTiles().length) {
-            int[] item = portrait.getEyeTiles()[selectedEyeTile];
-            graphics.drawRect(item[0]*PIXEL_WIDTH, item[1]*PIXEL_HEIGHT, PIXEL_WIDTH, PIXEL_HEIGHT);
-            graphics.drawRect(item[2]*PIXEL_WIDTH, item[3]*PIXEL_HEIGHT, PIXEL_WIDTH, PIXEL_HEIGHT);
+            drawRect(portrait.getEyeTiles()[selectedEyeTile], false, graphics);
         }
         if (selectedMouthTile >= 0 && selectedMouthTile < portrait.getMouthTiles().length) {
-            int[] item = portrait.getMouthTiles()[selectedMouthTile];
+            drawRect(portrait.getMouthTiles()[selectedMouthTile], false, graphics);
+        }
+    }
+    
+    protected void drawRects(int[][] data, int selected, Graphics graphics) {
+        if (showAllPoints) {
+            graphics.setColor(selected == -1 ? INACTIVE_UNSELECTED_COLOR : ACTIVE_UNSELECTED_COLOR);
+            for (int i = 0; i < data.length; i++) {
+                drawRect(data[i], true, graphics);
+            }
+        }
+    }
+    
+    protected void drawRect(int[] item, boolean filled, Graphics graphics) {
+        if (filled) {
+            graphics.fillRect(item[0]*PIXEL_WIDTH, item[1]*PIXEL_HEIGHT, PIXEL_WIDTH, PIXEL_HEIGHT);
+            graphics.fillRect(item[2]*PIXEL_WIDTH, item[3]*PIXEL_HEIGHT, PIXEL_WIDTH, PIXEL_HEIGHT);
+        } else {
             graphics.drawRect(item[0]*PIXEL_WIDTH, item[1]*PIXEL_HEIGHT, PIXEL_WIDTH, PIXEL_HEIGHT);
             graphics.drawRect(item[2]*PIXEL_WIDTH, item[3]*PIXEL_HEIGHT, PIXEL_WIDTH, PIXEL_HEIGHT);
         }
@@ -125,6 +147,17 @@ public class PortraitLayoutPanel extends AbstractLayoutPanel {
     public void setSpeaking(boolean speaking) {
         if (this.speaking != speaking) {
             this.speaking = speaking;
+            redraw();
+        }
+    }
+
+    public boolean getShowAllPoints() {
+        return showAllPoints;
+    }
+
+    public void setShowAllPoints(boolean showAllPoints) {
+        if (this.showAllPoints != showAllPoints) {
+            this.showAllPoints = showAllPoints;
             redraw();
         }
     }

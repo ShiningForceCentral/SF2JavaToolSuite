@@ -8,7 +8,6 @@ package com.sfc.sf2.ground.gui;
 import com.sfc.sf2.core.gui.controls.AbstractViewPanel;
 import com.sfc.sf2.ground.Ground;
 import com.sfc.sf2.ground.GroundManager;
-import com.sfc.sf2.palette.Palette;
 import java.awt.event.ActionEvent;
 
 /**
@@ -26,8 +25,7 @@ public class GroundViewPanel extends AbstractViewPanel<GroundLayoutPanel> {
         init(jComboBoxScale, jCheckBoxGrid, null, colorPickerBG);
         
         paletteButtonRecolor.setupPaletteButton(() -> {
-            Ground ground = layoutPanel.getGround();
-            return ground == null ? null : ground.getPalette();
+            return layoutPanel.getGround();
         }, this::onPaletteColorChange, GroundManager.PALETTE_INSERT_TO);
     }
 
@@ -145,11 +143,8 @@ public class GroundViewPanel extends AbstractViewPanel<GroundLayoutPanel> {
     }//GEN-LAST:event_jCheckBoxGridItemStateChanged
     
     private void onPaletteColorChange(ActionEvent e) {
-        Palette palette = (Palette)e.getSource();
-        if (palette == null) return;
         Ground ground = layoutPanel.getGround();
         if (ground == null) return;
-        palette.rebuildIcm();
         ground.getTileset().clearIndexedColorImage(true);
         layoutPanel.redraw();
     }

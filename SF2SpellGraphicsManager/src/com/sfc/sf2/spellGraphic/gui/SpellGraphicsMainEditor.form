@@ -192,7 +192,7 @@
                                         <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                           <Value id="BIN"/>
                                         </Property>
-                                        <Property name="filePath" type="java.lang.String" value="..\u005c..\u005ctech\u005cbasepalette.bin" containsInvalidXMLChars="true"/>
+                                        <Property name="filePath" type="java.lang.String" value="../../tech/basepalette.bin" containsInvalidXMLChars="true"/>
                                         <Property name="infoMessage" type="java.lang.String" value="&lt;html&gt;The base color palette to load. Spell graphics collectively use this palette and then each individually replace colors 9, 13, &amp; 14 with their own color..&lt;/html&gt;"/>
                                         <Property name="labelText" type="java.lang.String" value="Palette file :"/>
                                         <Property name="name" type="java.lang.String" value="Import Palette" noResource="true"/>
@@ -295,7 +295,7 @@
                                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                                   <Value id="BIN"/>
                                                 </Property>
-                                                <Property name="filePath" type="java.lang.String" value=".\u005cspellgraphics00.bin" containsInvalidXMLChars="true"/>
+                                                <Property name="filePath" type="java.lang.String" value="./spellgraphics00.bin" containsInvalidXMLChars="true"/>
                                                 <Property name="infoMessage" type="java.lang.String" value=""/>
                                                 <Property name="labelText" type="java.lang.String" value="Spell file :"/>
                                                 <Property name="name" type="java.lang.String" value="Import Spell" noResource="true"/>
@@ -377,7 +377,7 @@
                                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                                   <Value id="ANY_IMAGE"/>
                                                 </Property>
-                                                <Property name="filePath" type="java.lang.String" value=".\u005cexport\u005cspellgraphics00.png" containsInvalidXMLChars="true"/>
+                                                <Property name="filePath" type="java.lang.String" value="./export/spellgraphics00.png" containsInvalidXMLChars="true"/>
                                                 <Property name="infoMessage" type="java.lang.String" value=""/>
                                                 <Property name="labelText" type="java.lang.String" value="Image files :"/>
                                                 <Property name="name" type="java.lang.String" value="Import Spell Image" noResource="true"/>
@@ -489,7 +489,7 @@
                                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                                   <Value id="BIN"/>
                                                 </Property>
-                                                <Property name="filePath" type="java.lang.String" value=".\u005cspellgraphics00.bin" containsInvalidXMLChars="true"/>
+                                                <Property name="filePath" type="java.lang.String" value="./spellgraphics00.bin" containsInvalidXMLChars="true"/>
                                                 <Property name="infoMessage" type="java.lang.String" value=""/>
                                                 <Property name="labelText" type="java.lang.String" value="Spell file :"/>
                                                 <Property name="name" type="java.lang.String" value="Export Spell" noResource="true"/>
@@ -567,7 +567,7 @@
                                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                                   <Value id="ANY_IMAGE"/>
                                                 </Property>
-                                                <Property name="filePath" type="java.lang.String" value=".\u005cexport\u005cspellgraphics00.png" containsInvalidXMLChars="true"/>
+                                                <Property name="filePath" type="java.lang.String" value="./export/spellgraphics00.png" containsInvalidXMLChars="true"/>
                                                 <Property name="infoMessage" type="java.lang.String" value=""/>
                                                 <Property name="name" type="java.lang.String" value="Export Spell Image" noResource="true"/>
                                               </Properties>
@@ -734,7 +734,7 @@
                                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                                   <Value id="BIN"/>
                                                 </Property>
-                                                <Property name="filePath" type="java.lang.String" value=".\u005cinvocations\u005capollo.bin" containsInvalidXMLChars="true"/>
+                                                <Property name="filePath" type="java.lang.String" value="./invocations/apollo.bin" containsInvalidXMLChars="true"/>
                                                 <Property name="infoMessage" type="java.lang.String" value=""/>
                                                 <Property name="labelText" type="java.lang.String" value="Invocation file :"/>
                                                 <Property name="name" type="java.lang.String" value="ImportInvocation" noResource="true"/>
@@ -816,7 +816,7 @@
                                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                                   <Value id="ALL_BATTLE_SPRITES_FORMAT"/>
                                                 </Property>
-                                                <Property name="filePath" type="java.lang.String" value=".\u005cinvocations\u005cexport\u005cnewInvocation" containsInvalidXMLChars="true"/>
+                                                <Property name="filePath" type="java.lang.String" value="./invocations/export/newInvocation" containsInvalidXMLChars="true"/>
                                                 <Property name="infoMessage" type="java.lang.String" value=""/>
                                                 <Property name="labelText" type="java.lang.String" value="Invoation images :"/>
                                                 <Property name="name" type="java.lang.String" value="Import Invocation Image" noResource="true"/>
@@ -933,7 +933,7 @@
                                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                                   <Value id="BIN"/>
                                                 </Property>
-                                                <Property name="filePath" type="java.lang.String" value=".\u005cinvocations\u005cnewInvocation.bin" containsInvalidXMLChars="true"/>
+                                                <Property name="filePath" type="java.lang.String" value="./invocations/newInvocation.bin" containsInvalidXMLChars="true"/>
                                                 <Property name="infoMessage" type="java.lang.String" value=""/>
                                                 <Property name="labelText" type="java.lang.String" value="Invocation file :"/>
                                                 <Property name="name" type="java.lang.String" value="Export Invocation" noResource="true"/>
@@ -1009,7 +1009,7 @@
                                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                                   <Value id="ALL_BATTLE_SPRITES_FORMAT"/>
                                                 </Property>
-                                                <Property name="filePath" type="java.lang.String" value=".\u005cinvocations\u005cexport\u005cnewInvocation" containsInvalidXMLChars="true"/>
+                                                <Property name="filePath" type="java.lang.String" value="./invocations/export/newInvocation" containsInvalidXMLChars="true"/>
                                                 <Property name="infoMessage" type="java.lang.String" value=""/>
                                                 <Property name="labelText" type="java.lang.String" value="Image files :"/>
                                                 <Property name="name" type="java.lang.String" value="Export Invocation Image" noResource="true"/>
@@ -1081,7 +1081,7 @@
                                         <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                           <Value id="BIN"/>
                                         </Property>
-                                        <Property name="filePath" type="java.lang.String" value="..\u005cbackgrounds\u005cbackground09.bin" containsInvalidXMLChars="true"/>
+                                        <Property name="filePath" type="java.lang.String" value="../backgrounds/background09.bin" containsInvalidXMLChars="true"/>
                                         <Property name="infoMessage" type="java.lang.String" value="Loads a Background, for the animation preview."/>
                                         <Property name="labelText" type="java.lang.String" value="Background :"/>
                                         <Property name="name" type="java.lang.String" value="Import Background" noResource="true"/>
@@ -1097,7 +1097,7 @@
                                         <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                           <Value id="BIN"/>
                                         </Property>
-                                        <Property name="filePath" type="java.lang.String" value="..\u005cbattlescenebasepalette.bin" containsInvalidXMLChars="true"/>
+                                        <Property name="filePath" type="java.lang.String" value="../battlescenebasepalette.bin" containsInvalidXMLChars="true"/>
                                         <Property name="infoMessage" type="java.lang.String" value="The battle base palette to use for the Ground platform preview."/>
                                         <Property name="labelText" type="java.lang.String" value="Ground base palette :"/>
                                         <Property name="name" type="java.lang.String" value="Import Ground Base Palette" noResource="true"/>
@@ -1108,7 +1108,7 @@
                                         <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                           <Value id="BIN"/>
                                         </Property>
-                                        <Property name="filePath" type="java.lang.String" value="..\u005cgrounds\u005cgroundpalette09.bin" containsInvalidXMLChars="true"/>
+                                        <Property name="filePath" type="java.lang.String" value="../grounds/groundpalette09.bin" containsInvalidXMLChars="true"/>
                                         <Property name="infoMessage" type="java.lang.String" value="The palette to use for the Ground platform preview."/>
                                         <Property name="labelText" type="java.lang.String" value="Gound palette :"/>
                                         <Property name="name" type="java.lang.String" value="Import Ground Palette" noResource="true"/>
@@ -1119,7 +1119,7 @@
                                         <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                           <Value id="BIN"/>
                                         </Property>
-                                        <Property name="filePath" type="java.lang.String" value="..\u005cgrounds\u005cgroundtiles09.bin" containsInvalidXMLChars="true"/>
+                                        <Property name="filePath" type="java.lang.String" value="../grounds/groundtiles09.bin" containsInvalidXMLChars="true"/>
                                         <Property name="infoMessage" type="java.lang.String" value="Loads a Ground platform, for the animation preview."/>
                                         <Property name="labelText" type="java.lang.String" value="Ground :"/>
                                         <Property name="name" type="java.lang.String" value="Import Ground" noResource="true"/>
@@ -1422,13 +1422,13 @@
                                                 <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jSpinnerTilesPerRowStateChanged"/>
                                               </Events>
                                             </Component>
-                                            <Container class="com.sfc.sf2.palette.CRAMColorPicker" name="cRAMColor09">
+                                            <Container class="com.sfc.sf2.palette.gui.controls.CRAMColorPicker" name="cRAMColor09">
                                               <Properties>
                                                 <Property name="dialogTitle" type="java.lang.String" value="Spell Color 9"/>
                                                 <Property name="name" type="java.lang.String" value="Spell Color 9" noResource="true"/>
                                               </Properties>
                                               <Events>
-                                                <EventHandler event="colorChanged" listener="com.sfc.sf2.palette.CRAMColorPicker$ColorChangedListener" parameters="java.awt.event.ActionEvent" handler="cRAMColor09ColorChanged"/>
+                                                <EventHandler event="colorChanged" listener="com.sfc.sf2.palette.gui.controls.CRAMColorPicker$ColorChangedListener" parameters="java.awt.event.ActionEvent" handler="cRAMColor09ColorChanged"/>
                                               </Events>
 
                                               <Layout>
@@ -1444,13 +1444,13 @@
                                                 </DimensionLayout>
                                               </Layout>
                                             </Container>
-                                            <Container class="com.sfc.sf2.palette.CRAMColorPicker" name="cRAMColor13">
+                                            <Container class="com.sfc.sf2.palette.gui.controls.CRAMColorPicker" name="cRAMColor13">
                                               <Properties>
                                                 <Property name="dialogTitle" type="java.lang.String" value="Spell Color 13"/>
                                                 <Property name="name" type="java.lang.String" value="Spell Color 13" noResource="true"/>
                                               </Properties>
                                               <Events>
-                                                <EventHandler event="colorChanged" listener="com.sfc.sf2.palette.CRAMColorPicker$ColorChangedListener" parameters="java.awt.event.ActionEvent" handler="cRAMColor13ColorChanged"/>
+                                                <EventHandler event="colorChanged" listener="com.sfc.sf2.palette.gui.controls.CRAMColorPicker$ColorChangedListener" parameters="java.awt.event.ActionEvent" handler="cRAMColor13ColorChanged"/>
                                               </Events>
 
                                               <Layout>
@@ -1466,13 +1466,13 @@
                                                 </DimensionLayout>
                                               </Layout>
                                             </Container>
-                                            <Container class="com.sfc.sf2.palette.CRAMColorPicker" name="cRAMColor14">
+                                            <Container class="com.sfc.sf2.palette.gui.controls.CRAMColorPicker" name="cRAMColor14">
                                               <Properties>
                                                 <Property name="dialogTitle" type="java.lang.String" value="Spell Color 14"/>
                                                 <Property name="name" type="java.lang.String" value="Spell Color 14" noResource="true"/>
                                               </Properties>
                                               <Events>
-                                                <EventHandler event="colorChanged" listener="com.sfc.sf2.palette.CRAMColorPicker$ColorChangedListener" parameters="java.awt.event.ActionEvent" handler="cRAMColor14ColorChanged"/>
+                                                <EventHandler event="colorChanged" listener="com.sfc.sf2.palette.gui.controls.CRAMColorPicker$ColorChangedListener" parameters="java.awt.event.ActionEvent" handler="cRAMColor14ColorChanged"/>
                                               </Events>
 
                                               <Layout>

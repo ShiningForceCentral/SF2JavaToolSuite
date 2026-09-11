@@ -17,9 +17,6 @@
         <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[500, 250]"/>
         </Property>
-        <Property name="type" type="java.awt.Window$Type" editor="org.netbeans.modules.form.editors.EnumEditor">
-          <Value id="POPUP"/>
-        </Property>
       </Properties>
       <Events>
         <EventHandler event="windowClosing" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="jFrameSettingsWindowClosing"/>
@@ -40,7 +37,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                  <Component id="jPanelSettings" pref="207" max="32767" attributes="0"/>
+                  <Component id="jPanelSettings" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -62,29 +59,28 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="directoryButtonBasePath" alignment="0" max="32767" attributes="0"/>
+                          <Component id="directoryButtonIncbinPath" max="32767" attributes="0"/>
+                          <Component id="jSeparator1" alignment="0" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="directoryButtonBasePath" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="directoryButtonIncbinPath" max="32767" attributes="0"/>
-                                  <Component id="jSeparator1" alignment="0" max="32767" attributes="0"/>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Component id="jRadioThemeLight" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Component id="jRadioThemeDark" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="0" pref="157" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jCheckBoxPrioritise" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="infoButton3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jCheckBoxPrioritise" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="infoButton3" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="84" max="32767" attributes="0"/>
                           </Group>
                       </Group>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -108,7 +104,7 @@
                           <Component id="jRadioThemeLight" alignment="2" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel6" alignment="2" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="47" max="32767" attributes="0"/>
+                      <EmptySpace pref="39" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -133,6 +129,7 @@
               <Properties>
                 <Property name="infoMessage" type="java.lang.String" value="&lt;html&gt;Base folder is where the .jar file is expected to be run from.&lt;br&gt;&lt;b&gt;Most users do not need to edit this path.&lt;/b&gt;&lt;/html&gt;"/>
                 <Property name="labelText" type="java.lang.String" value="Base folder :"/>
+                <Property name="useRelativeDirectory" type="boolean" value="false"/>
                 <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[150, 25]"/>
                 </Property>
@@ -145,6 +142,7 @@
               <Properties>
                 <Property name="infoMessage" type="java.lang.String" value="&lt;html&gt;Incbin is the root folder for the disassemby (usually SF2DISASM\u005cdisasm\u005c)&lt;br&gt;&lt;b&gt;Most users do not need to edit this path.&lt;/b&gt;&lt;/html&gt;" containsInvalidXMLChars="true"/>
                 <Property name="labelText" type="java.lang.String" value="incbin folder :"/>
+                <Property name="useRelativeDirectory" type="boolean" value="false"/>
                 <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[150, 25]"/>
                 </Property>
@@ -171,7 +169,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel6">
               <Properties>
-                <Property name="text" type="java.lang.String" value="&lt;html&gt;Theme &lt;i&gt;(Requires restart)&lt;/i&gt;  :&lt;/html&gt;"/>
+                <Property name="text" type="java.lang.String" value="&lt;html&gt;Theme &lt;i&gt;(Requires app restart)&lt;/i&gt;  :&lt;/html&gt;"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JSeparator" name="jSeparator1">
@@ -185,152 +183,8 @@
         <Property name="name" type="java.lang.String" value="Theme Button Group"/>
       </Properties>
     </Component>
-    <Container class="javax.swing.JFrame" name="jFrameActionHistory">
-      <Properties>
-        <Property name="title" type="java.lang.String" value="Action History"/>
-        <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-          <Color id="Default Cursor"/>
-        </Property>
-        <Property name="locationByPlatform" type="boolean" value="true"/>
-        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[500, 200]"/>
-        </Property>
-        <Property name="name" type="java.lang.String" value="Frame Settings" noResource="true"/>
-        <Property name="resizable" type="boolean" value="false"/>
-        <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[500, 250]"/>
-        </Property>
-        <Property name="type" type="java.awt.Window$Type" editor="org.netbeans.modules.form.editors.EnumEditor">
-          <Value id="POPUP"/>
-        </Property>
-      </Properties>
-      <Events>
-        <EventHandler event="windowGainedFocus" listener="java.awt.event.WindowFocusListener" parameters="java.awt.event.WindowEvent" handler="jFrameActionHistoryWindowGainedFocus"/>
-        <EventHandler event="windowClosing" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="jFrameActionHistoryWindowClosing"/>
-        <EventHandler event="windowOpened" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="jFrameActionHistoryWindowOpened"/>
-      </Events>
-
-      <Layout>
-        <DimensionLayout dim="0">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jPanelActions" max="32767" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-              </Group>
-          </Group>
-        </DimensionLayout>
-        <DimensionLayout dim="1">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jPanelActions" max="32767" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-              </Group>
-          </Group>
-        </DimensionLayout>
-      </Layout>
-      <SubComponents>
-        <Container class="javax.swing.JPanel" name="jPanelActions">
-          <Properties>
-            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[400, 200]"/>
-            </Property>
-          </Properties>
-
-          <Layout>
-            <DimensionLayout dim="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane1" pref="0" max="32767" attributes="0"/>
-                  <Group type="102" attributes="0">
-                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="515" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <Component id="jButtonUndo" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jButtonRedo" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jButtonClear" min="-2" max="-2" attributes="0"/>
-                  </Group>
-              </Group>
-            </DimensionLayout>
-            <DimensionLayout dim="1">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabel1" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jButtonUndo" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jButtonRedo" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jButtonClear" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" pref="327" max="32767" attributes="0"/>
-                  </Group>
-              </Group>
-            </DimensionLayout>
-          </Layout>
-          <SubComponents>
-            <Component class="javax.swing.JLabel" name="jLabel1">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="&lt;html&gt;A debugging window to see the action history (the undo/redo history).&lt;/html&gt;"/>
-                <Property name="verticalAlignment" type="int" value="1"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JButton" name="jButtonUndo">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Undo"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonUndoActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JButton" name="jButtonRedo">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Redo"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonRedoActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JButton" name="jButtonClear">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Clear"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonClearActionPerformed"/>
-              </Events>
-            </Component>
-            <Container class="javax.swing.JScrollPane" name="jScrollPane1">
-              <AuxValues>
-                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-              </AuxValues>
-
-              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-              <SubComponents>
-                <Component class="javax.swing.JTable" name="jTableHistory">
-                  <Properties>
-                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="5" rowCount="4">
-                        <Column editable="false" title="Index" type="java.lang.Integer"/>
-                        <Column editable="false" title="Owner" type="java.lang.Object"/>
-                        <Column editable="false" title="Command" type="java.lang.Object"/>
-                        <Column editable="false" title="New Data" type="java.lang.Object"/>
-                        <Column editable="false" title="Old Data" type="java.lang.Object"/>
-                      </Table>
-                    </Property>
-                    <Property name="enabled" type="boolean" value="false"/>
-                    <Property name="selectionMode" type="int" value="0"/>
-                  </Properties>
-                </Component>
-              </SubComponents>
-            </Container>
-          </SubComponents>
-        </Container>
-      </SubComponents>
-    </Container>
+    <Component class="com.sfc.sf2.core.gui.windows.ActionHistory" name="jFrameActionHistory">
+    </Component>
     <Container class="javax.swing.JFrame" name="jFrameHelp">
       <Properties>
         <Property name="title" type="java.lang.String" value="Help"/>
@@ -418,7 +272,7 @@
                       <Component id="jButtonGitHubIssues" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jButtonVersionHistory" min="-2" pref="25" max="-2" attributes="0"/>
-                      <EmptySpace pref="16" max="32767" attributes="0"/>
+                      <EmptySpace pref="46" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -445,7 +299,7 @@
             <Component class="javax.swing.JButton" name="jButtonDiscord">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="D:\TiMMy\Dev\ShiningForce2\SF2JavaToolsSuite\SF2CoreLibrary\res\Core\Icons\Logo_Discord.png"/>
+                  <Image iconType="3" name="/Core/Icons/Logo_Discord.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="SF2 Hacking Discord"/>
               </Properties>
@@ -456,7 +310,7 @@
             <Component class="javax.swing.JButton" name="jButtonGitHubIssues">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="D:\TiMMy\Dev\ShiningForce2\SF2JavaToolsSuite\SF2CoreLibrary\res\Core\Icons\Logo_Github.png"/>
+                  <Image iconType="3" name="/Core/Icons/Logo_Github.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Report an issue"/>
               </Properties>

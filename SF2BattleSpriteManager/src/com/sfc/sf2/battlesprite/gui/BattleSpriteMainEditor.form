@@ -222,7 +222,7 @@
                                         <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                           <Value id="BIN"/>
                                         </Property>
-                                        <Property name="filePath" type="java.lang.String" value=".\u005callies\u005callybattlesprite01.bin" containsInvalidXMLChars="true"/>
+                                        <Property name="filePath" type="java.lang.String" value="./allies/allybattlesprite01.bin" containsInvalidXMLChars="true"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="File :"/>
                                         <Property name="name" type="java.lang.String" value="Import Battlesprites" noResource="true"/>
@@ -312,7 +312,7 @@
                                         <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                           <Value id="ALL_BATTLE_SPRITES_FORMAT"/>
                                         </Property>
-                                        <Property name="filePath" type="java.lang.String" value=".\u005callies\u005cexport\u005callybattlesprite01" containsInvalidXMLChars="true"/>
+                                        <Property name="filePath" type="java.lang.String" value="./allies/export/allybattlesprite01" containsInvalidXMLChars="true"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Image prefix :"/>
                                         <Property name="name" type="java.lang.String" value="Import Images" noResource="true"/>
@@ -431,7 +431,7 @@
                                         <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                           <Value id="BIN"/>
                                         </Property>
-                                        <Property name="filePath" type="java.lang.String" value=".\u005callies\u005callybattlesprite01.bin" containsInvalidXMLChars="true"/>
+                                        <Property name="filePath" type="java.lang.String" value="./allies/allybattlesprite01.bin" containsInvalidXMLChars="true"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="File :"/>
                                         <Property name="name" type="java.lang.String" value="Export Battlesprites" noResource="true"/>
@@ -517,7 +517,7 @@
                                         <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                           <Value id="ALL_BATTLE_SPRITES_FORMAT"/>
                                         </Property>
-                                        <Property name="filePath" type="java.lang.String" value=".\u005callies\u005cexport\u005callybattlesprite01" containsInvalidXMLChars="true"/>
+                                        <Property name="filePath" type="java.lang.String" value="./allies/export/allybattlesprite01" containsInvalidXMLChars="true"/>
                                         <Property name="infoMessage" type="java.lang.String" value="&lt;html&gt;Exports the Battlesprite as:&lt;br&gt;- Multiple image files (one per frame) with naming pattern &quot;battlespriteXX-frame-Y.png).&lt;br&gt;- 1 or more Palette data files (one for each Palette used by the Battlesprite) with naming pattern &quot;battlespriteXX-palette-Y.bin).&lt;br&gt;- A metadata file with naming pattern &quot;battlespriteXX.meta&quot;.&lt;br&gt;&lt;br&gt;&lt;html&gt;Examples of valid search patterns:&lt;br&gt;- .\u005callies\u005cexport\u005callybattlesprite01&lt;br&gt;- .\u005callies\u005cexport\u005callybattlesprite01-frame&lt;br&gt;- .\u005callies\u005cexport\u005callybattlesprite01-frame-0&lt;br&gt;- .\u005callies\u005cexport\u005callybattlesprite01-frame-3.png&lt;br&gt;- .\u005callies\u005cexport\u005callybattlesprite01.meta&lt;br&gt;- .\u005callies\u005cexport\u005callybattlesprite01-palette&lt;br&gt;- .\u005callies\u005cexport\u005callybattlesprite01-palette-0.bin&lt;br&gt;&lt;br&gt;Supported image formats: PNG or GIF.&lt;br&gt;&lt;br&gt;Exported color format will be 4BPP / 16 indexed colors.&lt;br&gt;Color index 0 is treated as transparent.&lt;/html&gt;" containsInvalidXMLChars="true"/>
                                         <Property name="labelText" type="java.lang.String" value="Path prefix :"/>
                                         <Property name="name" type="java.lang.String" value="Export Images" noResource="true"/>

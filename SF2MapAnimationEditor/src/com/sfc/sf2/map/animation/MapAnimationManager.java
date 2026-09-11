@@ -57,7 +57,6 @@ public class MapAnimationManager extends AbstractManager {
         } else {
             animation = new MapAnimation(-1, 0, new MapAnimationFrame[0], layout.getTilesets());
             animation.setAnimationTileset(null);
-            getMapLayout().setTilesets(animation.getOriginalTilesets());
             Console.logger().warning("WARNING Map has no animation.");
         }
         //checkForSharedAnimations(terrainEntries, 0);
@@ -114,7 +113,7 @@ public class MapAnimationManager extends AbstractManager {
         EntriesAsmData tilesetData = new EntriesAsmProcessor().importAsmData(tilesetEntriesPath, null);
         if (tilesetId < 0 || tilesetId >= tilesetData.entriesCount()) {
             animation.setAnimationTileset(null);
-            Console.logger().warning("WARNING Map index out of range : " + tilesetId);
+            Console.logger().warning("WARNING Tileset index out of range : " + tilesetId);
             return null;
         }
         Path tilesetPath = PathHelpers.getIncbinPath().resolve(tilesetData.getPathForEntry(tilesetId));

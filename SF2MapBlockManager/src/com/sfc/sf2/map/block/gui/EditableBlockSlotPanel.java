@@ -7,7 +7,6 @@ package com.sfc.sf2.map.block.gui;
 
 import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.core.actions.CumulativeAction;
-import com.sfc.sf2.core.actions.CustomAction;
 import com.sfc.sf2.core.gui.layout.BaseMouseCoordsComponent.GridMousePressedEvent;
 import com.sfc.sf2.core.gui.layout.LayoutGrid;
 import com.sfc.sf2.core.gui.layout.LayoutMouseInput;
@@ -48,6 +47,7 @@ public class EditableBlockSlotPanel extends BlockSlotPanel {
     private TileSlotPanel rightTileSlotPanel;
     
     private BlockSlotEditMode currentMode = BlockSlotEditMode.MODE_PAINT_TILE;
+    private TileFlags actionSetFlags;
     private boolean actionSetFlagOn;
     private boolean showPriorityFlag;
     
@@ -129,54 +129,56 @@ public class EditableBlockSlotPanel extends BlockSlotPanel {
             if (newTile != null && tile.getTileIndex() != newTile.getTileIndex()) {
                 BlockTileActionData newValue = new BlockTileActionData(block, newTile.clone(), index);
                 BlockTileActionData oldValue = new BlockTileActionData(block, tile, index);
-                ActionManager.setAndExecuteAction(new CumulativeAction<BlockTileActionData>(this, "Set Block Tile", this::ActionChangeTile, newValue, oldValue));
+                ActionManager.setAndExecuteAction(new CumulativeAction<BlockTileActionData>(this, "Set Block Tile", this::actionChangeTile, newValue, oldValue));
             }
         } else {
             if (tile == null) return;
-            TileFlags newFlag = null;
-            boolean flagOn = false;
-            if (currentMode == BlockSlotEditMode.MODE_TOGGLE_FLIP) {
-                if (evt.mouseButton() == MouseEvent.BUTTON1) {
-                    newFlag = new TileFlags(TileFlags.TILE_FLAG_HFLIP);
-                    flagOn = !tile.getTileFlags().isHFlip();
-                } else if (evt.mouseButton() == MouseEvent.BUTTON2) {
-                    newFlag = new TileFlags(TileFlags.TILE_FLAG_BOTHFLIP);
-                    flagOn = false;
-                } else if (evt.mouseButton() == MouseEvent.BUTTON3) {
-                    newFlag = new TileFlags(TileFlags.TILE_FLAG_VFLIP);
-                    flagOn = !tile.getTileFlags().isVFlip();
-                }
-            } else if (currentMode == BlockSlotEditMode.MODE_TOGGLE_PRIORITY) {
-                if (evt.mouseButton() == MouseEvent.BUTTON1) {
-                    newFlag = new TileFlags(TileFlags.TILE_FLAG_PRIORITY);
-                    flagOn = true;
-                } else if (evt.mouseButton() == MouseEvent.BUTTON3) {
-                    newFlag = new TileFlags(TileFlags.TILE_FLAG_PRIORITY);
-                    flagOn = false;
+            if (!evt.dragging()) {
+                actionSetFlags = null;
+                if (currentMode == BlockSlotEditMode.MODE_TOGGLE_FLIP) {
+                    if (evt.mouseButton() == MouseEvent.BUTTON1) {
+                        actionSetFlags = new TileFlags(TileFlags.TILE_FLAG_HFLIP);
+                        actionSetFlagOn = !tile.getTileFlags().isHFlip();
+                    } else if (evt.mouseButton() == MouseEvent.BUTTON2) {
+                        actionSetFlags = new TileFlags(TileFlags.TILE_FLAG_BOTHFLIP);
+                        actionSetFlagOn = false;
+                    } else if (evt.mouseButton() == MouseEvent.BUTTON3) {
+                        actionSetFlags = new TileFlags(TileFlags.TILE_FLAG_VFLIP);
+                        actionSetFlagOn = !tile.getTileFlags().isVFlip();
+                    }
+                } else if (currentMode == BlockSlotEditMode.MODE_TOGGLE_PRIORITY) {
+                    if (evt.mouseButton() == MouseEvent.BUTTON1) {
+                        actionSetFlags = new TileFlags(TileFlags.TILE_FLAG_PRIORITY);
+                        actionSetFlagOn = true;
+                    } else if (evt.mouseButton() == MouseEvent.BUTTON3) {
+                        actionSetFlags = new TileFlags(TileFlags.TILE_FLAG_PRIORITY);
+                        actionSetFlagOn = false;
+                    }
                 }
             }
             
-            if (newFlag != null) {
-                if (evt.pressed() && (!newFlag.equals(TileFlags.TILE_FLAG_BOTHFLIP) || !newFlag.equals(TileFlags.TILE_FLAG_PRIORITY))) {
-                    actionSetFlagOn = (tile.getTileFlags().value() | newFlag.value()) == 0;
+            if (actionSetFlags != null) {
+                boolean flagOn = false;
+                if (evt.pressed() && (!actionSetFlags.equals(TileFlags.TILE_FLAG_BOTHFLIP) || !actionSetFlags.equals(TileFlags.TILE_FLAG_PRIORITY))) {
+                    flagOn = (tile.getTileFlags().value() & actionSetFlags.value()) != 0;
                 }
                 if (actionSetFlagOn != flagOn) {
-                    TileFlagsActionData newValue = new TileFlagsActionData(block, newFlag, flagOn, index);
-                    TileFlagsActionData oldValue = new TileFlagsActionData(block, newFlag, actionSetFlagOn, index);
-                    ActionManager.setAndExecuteAction(new CumulativeAction<TileFlagsActionData>(this, "Set Tile Flags", this::ActionSetMultipleTileFlags, newValue, oldValue));
+                    TileFlagsActionData newValue = new TileFlagsActionData(block, actionSetFlags, actionSetFlagOn, index);
+                    TileFlagsActionData oldValue = new TileFlagsActionData(block, actionSetFlags, !actionSetFlagOn, index);
+                    ActionManager.setAndExecuteAction(new CumulativeAction<TileFlagsActionData>(this, "Set Tile Flags", this::actionSetMultipleTileFlags, newValue, oldValue));
                 }
             }
         }
     }
     
-    private void ActionChangeTile(List<BlockTileActionData> values) {
+    private void actionChangeTile(List<BlockTileActionData> values) {
         for (BlockTileActionData value : values) {
             value.block().getMapTiles()[value.tileIndex()] = value.tile();
         }
         onBlockEdited();
     }
     
-    private void ActionSetMultipleTileFlags(List<TileFlagsActionData> values) {
+    private void actionSetMultipleTileFlags(List<TileFlagsActionData> values) {
         for (TileFlagsActionData value : values) {
             TileFlags flag = value.block().getMapTiles()[value.tileIndex()].getTileFlags();
             flag.setFlag(value.flag().value(), value.flagOn());

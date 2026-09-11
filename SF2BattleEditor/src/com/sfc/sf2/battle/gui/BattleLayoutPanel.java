@@ -132,19 +132,26 @@ public class BattleLayoutPanel extends BattleMapTerrainLayoutPanel {
             Enemy enemy = enemies[i];
             int targetX = (battleX+enemy.getX())*PIXEL_WIDTH;
             int targetY = (battleY+enemy.getY())*PIXEL_HEIGHT;
-            int id = enemy.getEnemyData().getID();
-            Tileset sprite = enemy.getEnemyData().getMapSprite();
+            int id;
+            Tileset sprite;
+            if (enemy.getEnemyData() == null) {
+                id = -1;
+                sprite = null;
+            } else {
+                id = enemy.getEnemyData().getID();
+                sprite = enemy.getEnemyData().getMapSprite();
+            }
             if (sprite == null) {
                 //Draw number to represent sprite
-                targetX += 8 + ((enemy.getEnemyData().getID() + 1 < 10) ? 0 : -4);
+                targetX += 8 + ((i + 1 < 10) ? 0 : -4);
                 targetY += 3;
                 g2.setColor(Color.BLACK);
-                g2.drawString(String.valueOf(id), targetX-1, targetY+16-1);
-                g2.drawString(String.valueOf(id), targetX-1, targetY+16+1);
-                g2.drawString(String.valueOf(id), targetX+1, targetY+16-1);
-                g2.drawString(String.valueOf(id), targetX+1, targetY+16+1);
+                g2.drawString(String.valueOf(i), targetX-1, targetY+16-1);
+                g2.drawString(String.valueOf(i), targetX-1, targetY+16+1);
+                g2.drawString(String.valueOf(i), targetX+1, targetY+16-1);
+                g2.drawString(String.valueOf(i), targetX+1, targetY+16+1);
                 g2.setColor(Color.RED);
-                g2.drawString(String.valueOf(id), targetX, targetY+16);
+                g2.drawString(String.valueOf(i), targetX, targetY+16);
             } else if (enemy.getEnemyData().isIsSpecialSprite()) {
                 //Draw special sprite
                 g2.drawImage(sprite.getIndexedColorImage().getSubimage(0, 0, PIXEL_WIDTH*2, PIXEL_HEIGHT*2), targetX-PIXEL_WIDTH/2, targetY-PIXEL_HEIGHT, null);
@@ -161,6 +168,7 @@ public class BattleLayoutPanel extends BattleMapTerrainLayoutPanel {
     }
 
     private void drawAiTarget(Graphics2D g2, int mapOffsetX, int mapOffsetY, int enemyX, int enemyY, String order, int target) {
+        if (order == null) return;
         int targetX = -1, targetY = -1;
         switch (order) {
             case "FOLLOW_TARGET":     //Follow target (ally)
@@ -266,7 +274,7 @@ public class BattleLayoutPanel extends BattleMapTerrainLayoutPanel {
                 g2.drawRect((battleX+enemy.getX())*PIXEL_WIDTH, (battleY+enemy.getY())*PIXEL_HEIGHT, PIXEL_WIDTH, PIXEL_HEIGHT);
                 g2.setColor(Color.RED);
                 drawAiTarget(g2, battleX, battleY, enemy.getX(), enemy.getY(), enemy.getBackupMoveOrder(), enemy.getBackupMoveOrderTarget());
-                if (enemy.getBackupMoveOrder().equals("MOVE_TO")) {
+                if (enemy.getBackupMoveOrder() != null && enemy.getBackupMoveOrder().equals("MOVE_TO")) {
                     int target = enemy.getBackupMoveOrderTarget();
                     if (target >= 0 && target < spriteset.getAiPoints().length) {
                         drawAIPoint(g2, battleX, battleY, spriteset.getAiPoints()[target]);
@@ -274,7 +282,7 @@ public class BattleLayoutPanel extends BattleMapTerrainLayoutPanel {
                 }
                 g2.setColor(Color.GREEN);
                 drawAiTarget(g2, battleX, battleY, enemy.getX(), enemy.getY(), enemy.getMoveOrder(), enemy.getMoveOrderTarget());
-                if (enemy.getMoveOrder().equals("MOVE_TO")) {
+                if (enemy.getMoveOrder() != null && enemy.getMoveOrder().equals("MOVE_TO")) {
                     int target = enemy.getMoveOrderTarget();
                     if (target >= 0 && target < spriteset.getAiPoints().length) {
                         drawAIPoint(g2, battleX, battleY, spriteset.getAiPoints()[target]);

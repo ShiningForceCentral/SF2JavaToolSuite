@@ -42,6 +42,7 @@ public class TilesetAnimViewPanel extends AbstractViewPanel<MapAnimationTilesetL
         this.animationToggleListener = animationToggleListener;
         
         layoutPanel.setShowAnimationFrames(jCheckBoxAnimFrames.isSelected());
+        secondLayoutPanel.setShowAnimationFrames(jCheckBoxAnimFrames.isSelected());
         
         secondLayoutPanel.setRenderScaleIndex(jComboBoxScale.getSelectedIndex());
         secondLayoutPanel.setShowGrid(jCheckBoxGrid.isSelected());

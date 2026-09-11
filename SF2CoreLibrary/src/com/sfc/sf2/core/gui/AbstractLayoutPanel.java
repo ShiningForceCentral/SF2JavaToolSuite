@@ -11,6 +11,7 @@ import com.sfc.sf2.helpers.RenderScaleHelpers;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
 
@@ -93,11 +94,51 @@ public abstract class AbstractLayoutPanel extends JPanel implements AnimationLis
         }
     }
     
-    public void scrollToPosition(float percentX, float percentY) {
-        if (BaseLayoutComponent.IsEnabled(scroller)) {
-            Dimension dims = getSize();
-            scroller.scrollToPosition((int)(dims.width*percentX), (int)(dims.height*percentY));
+    public void scrollToIndex(int index, int totalItems) {
+        scrollToCoord(index%itemsPerRow, index/itemsPerRow, totalItems); 
+    }
+    
+    public void scrollToCoord(int coordX, int coordY, int totalItems) {
+        if (!BaseLayoutComponent.IsEnabled(scroller)) return;
+        int total = totalItems/itemsPerRow;
+        float percentX = (float)(coordX-2)/itemsPerRow;   //Percent - Subtract 2 to ensure focal point is not top-left corner
+        float percentY = (float)(coordY-2)/total;        
+        if (percentX < 0f) percentX = 0f;   //Clamp
+        if (percentX > 1f) percentX = 1f;
+        if (percentY < 0f) percentY = 0f;
+        if (percentY > 1f) percentY = 1f;
+        
+        //Only scroll if the item is outside of the visible window
+        Dimension panelSize = this.getParent().getSize();
+        Dimension imageSize = this.getImageDimensions();
+        float xPercent = (float)panelSize.width / imageSize.width;
+        float yPercent = (float)panelSize.height / imageSize.height;
+        float x = scroller.getScrollPercent(true);
+        float y = scroller.getScrollPercent(false);
+        float xMax = x + xPercent;
+        float yMax = y + yPercent;
+        boolean scroll = false;
+        if (percentX >= x && percentX <= xMax) {
+            percentX = x;
+        } else {
+            scroll = true;
         }
+        if (percentY >= y && percentY <= yMax) {
+            percentY = y;
+        } else {
+            scroll = true;
+        }
+        
+        if (scroll) {
+            Dimension size = getSize();
+            scroller.scrollToPosition((int)(size.width*percentX), (int)(size.height*percentY));
+        }
+    }
+    
+    public void scrollToPosition(float percentX, float percentY) {
+        if (!BaseLayoutComponent.IsEnabled(scroller)) return;
+        Dimension dims = getSize();
+        scroller.scrollToPosition((int)(dims.width*percentX), (int)(dims.height*percentY));
     }
     
     protected Dimension getImageOffset() {

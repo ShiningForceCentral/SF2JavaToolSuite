@@ -132,7 +132,7 @@ public class WeaponSpriteMainEditor extends AbstractMainEditor {
         jPanel17.setBorder(javax.swing.BorderFactory.createTitledBorder("Palettes"));
 
         fileButton1.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButton1.setFilePath(".\\palettes\\entries.asm");
+        fileButton1.setFilePath("./palettes/entries.asm");
         fileButton1.setInfoMessage("The entries file to load weapon palettes from.");
         fileButton1.setLabelText("Weapon palette entries :");
 
@@ -159,7 +159,7 @@ public class WeaponSpriteMainEditor extends AbstractMainEditor {
         jLabel2.setText("Import weapon sprite disassembly.");
 
         fileButton2.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButton2.setFilePath(".\\weaponsprite00.bin");
+        fileButton2.setFilePath("./weaponsprite00.bin");
         fileButton2.setInfoMessage("");
         fileButton2.setLabelText("Weapon file :");
 
@@ -206,7 +206,7 @@ public class WeaponSpriteMainEditor extends AbstractMainEditor {
         infoButton1.setText("");
 
         fileButton3.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ANY_IMAGE);
-        fileButton3.setFilePath(".\\export\\weaponsprite00.png");
+        fileButton3.setFilePath("./export/weaponsprite00.png");
         fileButton3.setInfoMessage("");
         fileButton3.setLabelText("Image file :");
 
@@ -271,7 +271,7 @@ public class WeaponSpriteMainEditor extends AbstractMainEditor {
         jLabel1.setText("Export weapon sprite disassembly.");
 
         fileButton5.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButton5.setFilePath(".\\weaponsprite00.bin");
+        fileButton5.setFilePath("./weaponsprite00.bin");
         fileButton5.setInfoMessage("");
         fileButton5.setLabelText("New weapon :");
 
@@ -318,7 +318,7 @@ public class WeaponSpriteMainEditor extends AbstractMainEditor {
         infoButton2.setText("");
 
         fileButton4.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ANY_IMAGE);
-        fileButton4.setFilePath(".\\export\\weaponsprite00.png");
+        fileButton4.setFilePath("./export/weaponsprite00.png");
         fileButton4.setInfoMessage("");
         fileButton4.setLabelText("Image file :");
 

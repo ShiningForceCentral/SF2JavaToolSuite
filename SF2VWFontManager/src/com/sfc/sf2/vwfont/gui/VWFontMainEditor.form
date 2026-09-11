@@ -218,7 +218,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="BIN"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value=".\u005cvariablewidthfont.bin" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="./variablewidthfont.bin" containsInvalidXMLChars="true"/>
                                     <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="BIN File :"/>
                                     <Property name="name" type="java.lang.String" value="Import Font Symbols" noResource="true"/>
@@ -296,7 +296,7 @@
                                 </Component>
                                 <Component class="com.sfc.sf2.core.gui.controls.DirectoryButton" name="directoryButtonImportImages">
                                   <Properties>
-                                    <Property name="directoryPath" type="java.lang.String" value=".\u005cexport\u005c" containsInvalidXMLChars="true"/>
+                                    <Property name="directoryPath" type="java.lang.String" value="./export/" containsInvalidXMLChars="true"/>
                                     <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="Symbols drectory :"/>
                                     <Property name="name" type="java.lang.String" value="Import Images" noResource="true"/>
@@ -414,7 +414,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="BIN"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value=".\u005cvariablewidthfont.bin" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="./variablewidthfont.bin" containsInvalidXMLChars="true"/>
                                     <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="BIN file :"/>
                                     <Property name="name" type="java.lang.String" value="Export Font Symbols" noResource="true"/>
@@ -497,7 +497,7 @@
                                 </Component>
                                 <Component class="com.sfc.sf2.core.gui.controls.DirectoryButton" name="directoryButtonExportImages">
                                   <Properties>
-                                    <Property name="directoryPath" type="java.lang.String" value=".\u005cexport\u005c" containsInvalidXMLChars="true"/>
+                                    <Property name="directoryPath" type="java.lang.String" value="./export/" containsInvalidXMLChars="true"/>
                                     <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="Image directory :"/>
                                     <Property name="name" type="java.lang.String" value="Export Images" noResource="true"/>

@@ -164,7 +164,7 @@
                                       <Component id="fileButton4" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="jButton18" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="32767" attributes="0"/>
+                                      <EmptySpace pref="7" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
@@ -188,7 +188,7 @@
                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                   <Value id="BIN"/>
                                 </Property>
-                                <Property name="filePath" type="java.lang.String" value=".\u005cbackgrounds\u005cbackground09.bin" containsInvalidXMLChars="true"/>
+                                <Property name="filePath" type="java.lang.String" value="./backgrounds/background09.bin"/>
                                 <Property name="infoMessage" type="java.lang.String" value="Loads a Background, for the animation preview."/>
                                 <Property name="labelText" type="java.lang.String" value="Background :"/>
                               </Properties>
@@ -198,7 +198,7 @@
                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                   <Value id="BIN"/>
                                 </Property>
-                                <Property name="filePath" type="java.lang.String" value=".\u005cbattlescenebasepalette.bin" containsInvalidXMLChars="true"/>
+                                <Property name="filePath" type="java.lang.String" value="./battlescenebasepalette.bin"/>
                                 <Property name="infoMessage" type="java.lang.String" value="The battle base palette to use for the Ground platform preview."/>
                                 <Property name="labelText" type="java.lang.String" value="Ground base palette :"/>
                               </Properties>
@@ -208,7 +208,7 @@
                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                   <Value id="BIN"/>
                                 </Property>
-                                <Property name="filePath" type="java.lang.String" value=".\u005cgrounds\u005cgroundpalette09.bin" containsInvalidXMLChars="true"/>
+                                <Property name="filePath" type="java.lang.String" value="./grounds/groundpalette09.bin"/>
                                 <Property name="infoMessage" type="java.lang.String" value="The palette to use for the Ground platform preview."/>
                                 <Property name="labelText" type="java.lang.String" value="Gound palette :"/>
                               </Properties>
@@ -218,7 +218,7 @@
                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                   <Value id="BIN"/>
                                 </Property>
-                                <Property name="filePath" type="java.lang.String" value=".\u005cgrounds\u005cgroundtiles09.bin" containsInvalidXMLChars="true"/>
+                                <Property name="filePath" type="java.lang.String" value="./grounds/groundtiles09.bin"/>
                                 <Property name="infoMessage" type="java.lang.String" value="Loads a Ground platform, for the animation preview."/>
                                 <Property name="labelText" type="java.lang.String" value="Ground :"/>
                               </Properties>

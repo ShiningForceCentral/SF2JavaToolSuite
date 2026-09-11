@@ -19,6 +19,7 @@ import javax.swing.table.DefaultTableCellRenderer;
  */
 public class ComboBoxTableRenderer extends DefaultTableCellRenderer {
 
+    private static final String NOT_EMPTY = " ";
     private static final Icon ICON = UIManager.getIcon("Tree.expandedIcon");
     
     public ComboBoxTableRenderer() {
@@ -27,6 +28,10 @@ public class ComboBoxTableRenderer extends DefaultTableCellRenderer {
 
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+        if (value == null || value.toString().isEmpty()) {
+            //Hack to ensure that the dropdown arrow is not on the left of the cell when data is empty
+            value = NOT_EMPTY;
+        }
         Component comp = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         if (table.isCellEditable(row, column)) {
             setIcon(ICON);

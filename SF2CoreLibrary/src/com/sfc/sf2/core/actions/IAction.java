@@ -20,6 +20,11 @@ public interface IAction<T extends IAction> {
      * Undo the action
      */
     public void undo();
+    
+    /**
+     * Get the object that owns the action
+     */
+    public Object getOwner();
 
     /**
      * @return <code>True</code> if the undo/redo data is no longer valid (e.g. if the data is identical)

@@ -159,7 +159,7 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
         infoButton3.setText("");
 
         fileButtonImportBattlesprite.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButtonImportBattlesprite.setFilePath(".\\allies\\allybattlesprite01.bin");
+        fileButtonImportBattlesprite.setFilePath("./allies/allybattlesprite01.bin");
         fileButtonImportBattlesprite.setInfoMessage("");
         fileButtonImportBattlesprite.setLabelText("File :");
         fileButtonImportBattlesprite.setName("Import Battlesprites"); // NOI18N
@@ -211,7 +211,7 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
         infoButton5.setText("");
 
         fileButtonImportImage.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ALL_BATTLE_SPRITES_FORMAT);
-        fileButtonImportImage.setFilePath(".\\allies\\export\\allybattlesprite01");
+        fileButtonImportImage.setFilePath("./allies/export/allybattlesprite01");
         fileButtonImportImage.setInfoMessage("");
         fileButtonImportImage.setLabelText("Image prefix :");
         fileButtonImportImage.setName("Import Images"); // NOI18N
@@ -290,7 +290,7 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
         jLabel1.setText("<html>Export battlesprite disassembly.</html>");
 
         fileButtonExportBattlesprite.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButtonExportBattlesprite.setFilePath(".\\allies\\allybattlesprite01.bin");
+        fileButtonExportBattlesprite.setFilePath("./allies/allybattlesprite01.bin");
         fileButtonExportBattlesprite.setInfoMessage("");
         fileButtonExportBattlesprite.setLabelText("File :");
         fileButtonExportBattlesprite.setName("Export Battlesprites"); // NOI18N
@@ -338,7 +338,7 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
         infoButton8.setText("");
 
         fileButtonExportImages.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ALL_BATTLE_SPRITES_FORMAT);
-        fileButtonExportImages.setFilePath(".\\allies\\export\\allybattlesprite01");
+        fileButtonExportImages.setFilePath("./allies/export/allybattlesprite01");
         fileButtonExportImages.setInfoMessage("<html>Exports the Battlesprite as:<br>- Multiple image files (one per frame) with naming pattern \"battlespriteXX-frame-Y.png).<br>- 1 or more Palette data files (one for each Palette used by the Battlesprite) with naming pattern \"battlespriteXX-palette-Y.bin).<br>- A metadata file with naming pattern \"battlespriteXX.meta\".<br><br><html>Examples of valid search patterns:<br>- .\\allies\\export\\allybattlesprite01<br>- .\\allies\\export\\allybattlesprite01-frame<br>- .\\allies\\export\\allybattlesprite01-frame-0<br>- .\\allies\\export\\allybattlesprite01-frame-3.png<br>- .\\allies\\export\\allybattlesprite01.meta<br>- .\\allies\\export\\allybattlesprite01-palette<br>- .\\allies\\export\\allybattlesprite01-palette-0.bin<br><br>Supported image formats: PNG or GIF.<br><br>Exported color format will be 4BPP / 16 indexed colors.<br>Color index 0 is treated as transparent.</html>");
         fileButtonExportImages.setLabelText("Path prefix :");
         fileButtonExportImages.setName("Export Images"); // NOI18N

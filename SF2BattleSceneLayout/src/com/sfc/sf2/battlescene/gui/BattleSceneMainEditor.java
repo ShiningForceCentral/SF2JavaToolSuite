@@ -110,22 +110,22 @@ public class BattleSceneMainEditor extends AbstractMainEditor {
         });
 
         fileButton1.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButton1.setFilePath(".\\backgrounds\\background09.bin");
+        fileButton1.setFilePath("./backgrounds/background09.bin");
         fileButton1.setInfoMessage("Loads a Background, for the animation preview.");
         fileButton1.setLabelText("Background :");
 
         fileButton2.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButton2.setFilePath(".\\battlescenebasepalette.bin");
+        fileButton2.setFilePath("./battlescenebasepalette.bin");
         fileButton2.setInfoMessage("The battle base palette to use for the Ground platform preview.");
         fileButton2.setLabelText("Ground base palette :");
 
         fileButton3.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButton3.setFilePath(".\\grounds\\groundpalette09.bin");
+        fileButton3.setFilePath("./grounds/groundpalette09.bin");
         fileButton3.setInfoMessage("The palette to use for the Ground platform preview.");
         fileButton3.setLabelText("Gound palette :");
 
         fileButton4.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButton4.setFilePath(".\\grounds\\groundtiles09.bin");
+        fileButton4.setFilePath("./grounds/groundtiles09.bin");
         fileButton4.setInfoMessage("Loads a Ground platform, for the animation preview.");
         fileButton4.setLabelText("Ground :");
 
@@ -163,7 +163,7 @@ public class BattleSceneMainEditor extends AbstractMainEditor {
                 .addComponent(fileButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton18)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(7, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);

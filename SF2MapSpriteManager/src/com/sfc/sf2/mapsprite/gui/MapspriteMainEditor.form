@@ -161,7 +161,7 @@
                                   <Group type="102" attributes="0">
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jTabbedPane1" alignment="1" max="32767" attributes="0"/>
+                                          <Component id="jTabbedPane1" alignment="1" pref="0" max="32767" attributes="0"/>
                                           <Component id="fileButtonImportEntries" alignment="0" max="32767" attributes="0"/>
                                           <Component id="fileButtonImportPalette" alignment="0" max="32767" attributes="0"/>
                                       </Group>
@@ -189,7 +189,7 @@
                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                   <Value id="ASM"/>
                                 </Property>
-                                <Property name="filePath" type="java.lang.String" value=".\u005centries.asm" containsInvalidXMLChars="true"/>
+                                <Property name="filePath" type="java.lang.String" value="./entries.asm"/>
                                 <Property name="infoMessage" type="java.lang.String" value="Entries file for mapsprites. Loaded mapsprites will be compared to the entries file to determine which sprites are unique, which are referenced by multiple entries, and which are not referenced at all."/>
                                 <Property name="labelText" type="java.lang.String" value="Mapsprite entries :"/>
                               </Properties>
@@ -199,7 +199,7 @@
                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                   <Value id="BIN"/>
                                 </Property>
-                                <Property name="filePath" type="java.lang.String" value="..\u005ctech\u005cbasepalette.bin" containsInvalidXMLChars="true"/>
+                                <Property name="filePath" type="java.lang.String" value="../tech/basepalette.bin"/>
                                 <Property name="infoMessage" type="java.lang.String" value="The default palette file for mapsprites. Imported mapsprites will be previewed in these colors."/>
                                 <Property name="labelText" type="java.lang.String" value="Palette file :"/>
                               </Properties>
@@ -322,7 +322,7 @@
                                     </Component>
                                     <Component class="com.sfc.sf2.core.gui.controls.DirectoryButton" name="directoryButtonImportMapsprites">
                                       <Properties>
-                                        <Property name="directoryPath" type="java.lang.String" value=".\u005c" containsInvalidXMLChars="true"/>
+                                        <Property name="directoryPath" type="java.lang.String" value="./"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Mapsprites directory :"/>
                                       </Properties>
@@ -399,7 +399,7 @@
                                     </Component>
                                     <Component class="com.sfc.sf2.core.gui.controls.DirectoryButton" name="directoryButtonImportImages">
                                       <Properties>
-                                        <Property name="directoryPath" type="java.lang.String" value=".\u005cexport\u005c" containsInvalidXMLChars="true"/>
+                                        <Property name="directoryPath" type="java.lang.String" value="./export/"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Image directory :"/>
                                       </Properties>
@@ -443,7 +443,7 @@
                                           <Component id="jPanel20" alignment="0" max="32767" attributes="0"/>
                                           <Component id="fileButtonExportEntries" max="32767" attributes="0"/>
                                           <Group type="102" alignment="0" attributes="0">
-                                              <Component id="jLabel8" max="32767" attributes="0"/>
+                                              <Component id="jLabel8" pref="0" max="32767" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="jButtonExportEntries" min="-2" max="-2" attributes="0"/>
                                           </Group>
@@ -645,7 +645,7 @@
                                 </Component>
                                 <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton15">
                                   <Properties>
-                                    <Property name="messageText" type="java.lang.String" value="&lt;html&gt;Will insert unreferenced sprites into the next available slot(s) in the entries.&lt;br&gt;&lt;br&gt;&lt;i&gt;Does not override any defined entries (including duplicates or empty entries).&lt;/i&gt;&lt;/html&gt;"/>
+                                    <Property name="messageText" type="java.lang.String" value="&lt;html&gt;If any unreferenced Mapsprites are loaded (see top-right tab) this button will insert these Mapsprites into the next available slot in entries.asm.&lt;br&gt;&lt;br&gt;&lt;i&gt;Does not override any defined entries (including duplicates or empty entries).&lt;br&gt;May rename the Mapsprite to align with the entries data.&lt;/i&gt;&lt;/html&gt;"/>
                                     <Property name="text" type="java.lang.String" value=""/>
                                   </Properties>
                                 </Component>
@@ -656,7 +656,7 @@
                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                   <Value id="ASM"/>
                                 </Property>
-                                <Property name="filePath" type="java.lang.String" value=".\u005centries.asm" containsInvalidXMLChars="true"/>
+                                <Property name="filePath" type="java.lang.String" value="./entries.asm"/>
                                 <Property name="infoMessage" type="java.lang.String" value=""/>
                                 <Property name="labelText" type="java.lang.String" value="Mapsprite entries :"/>
                               </Properties>
@@ -767,7 +767,7 @@
                                     </Component>
                                     <Component class="com.sfc.sf2.core.gui.controls.DirectoryButton" name="directoryButtonExportMapsprites">
                                       <Properties>
-                                        <Property name="directoryPath" type="java.lang.String" value=".\u005c" containsInvalidXMLChars="true"/>
+                                        <Property name="directoryPath" type="java.lang.String" value="./"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Directory :"/>
                                       </Properties>
@@ -858,7 +858,7 @@
                                     </Component>
                                     <Component class="com.sfc.sf2.core.gui.controls.DirectoryButton" name="directoryButtonExportImages">
                                       <Properties>
-                                        <Property name="directoryPath" type="java.lang.String" value=".\u005cexport\u005c" containsInvalidXMLChars="true"/>
+                                        <Property name="directoryPath" type="java.lang.String" value="./export/"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Image directory :"/>
                                       </Properties>

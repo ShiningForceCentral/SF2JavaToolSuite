@@ -166,37 +166,37 @@ public class TextMainEditor extends AbstractMainEditor {
         accordionPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Preview"));
 
         fileButtonImportBasePalette.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButtonImportBasePalette.setFilePath("..\\..\\graphics\\tech\\basepalette.bin");
+        fileButtonImportBasePalette.setFilePath("../../graphics/tech/basepalette.bin");
         fileButtonImportBasePalette.setInfoMessage("The game's base palette.");
         fileButtonImportBasePalette.setLabelText("Base palette :");
         fileButtonImportBasePalette.setName("Import Base Palette"); // NOI18N
 
         fileButtonImportBaseTiles.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButtonImportBaseTiles.setFilePath("..\\..\\graphics\\tech\\basetiles.bin");
+        fileButtonImportBaseTiles.setFilePath("../../graphics/tech/basetiles.bin");
         fileButtonImportBaseTiles.setInfoMessage("The tileset that contains the dialog box frame.");
         fileButtonImportBaseTiles.setLabelText("Base tiles :");
         fileButtonImportBaseTiles.setName("Import Base Tiles"); // NOI18N
 
         fileButtonImportVWFont.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButtonImportVWFont.setFilePath("..\\..\\graphics\\tech\\fonts\\variablewidthfont.bin");
+        fileButtonImportVWFont.setFilePath("../../graphics/tech/fonts/variablewidthfont.bin");
         fileButtonImportVWFont.setInfoMessage("<html>Loads in the games <i>variable width font</i> for rendering in the preview</html>");
         fileButtonImportVWFont.setLabelText("VW font :");
         fileButtonImportVWFont.setName("Import VW Font"); // NOI18N
 
         fileButtonImportAsciiTable.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonImportAsciiTable.setFilePath("..\\..\\..\\code\\common\\scripting\\text\\textfunctions.asm");
+        fileButtonImportAsciiTable.setFilePath("../../../code/common/scripting/text/textfunctions.asm");
         fileButtonImportAsciiTable.setInfoMessage("<html>Loads in <i>table_666E</i> from <i>textfunctions.asm</i>, so that ASCII characters (raw text) can be converted into VWFont symbols.</html>");
         fileButtonImportAsciiTable.setLabelText("ASCII table :");
         fileButtonImportAsciiTable.setName("Import ASCII Table"); // NOI18N
 
         fileButtonImportAllyNames.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonImportAllyNames.setFilePath("..\\..\\stats\\allies\\allynames.asm");
+        fileButtonImportAllyNames.setFilePath("../../stats/allies/allynames.asm");
         fileButtonImportAllyNames.setInfoMessage("<html>Imports the namelist for allies to replace the {LEADER} and {NAME;x} tag in the preview.<br>Load <i>allynames.asm</i> or <i>allynames-capitalized.asm</i></html>");
         fileButtonImportAllyNames.setLabelText("Ally names :");
         fileButtonImportAllyNames.setName("Import Ally Names"); // NOI18N
 
         fileButtonImportAsciiReplace.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.TXT);
-        fileButtonImportAsciiReplace.setFilePath(".\\ascii-replace.txt");
+        fileButtonImportAsciiReplace.setFilePath("./ascii-replace.txt");
         fileButtonImportAsciiReplace.setInfoMessage("<html>The <i>ascii replace</i> provides some support for non-ascii characters.<br>Refer to the file.</html>");
         fileButtonImportAsciiReplace.setLabelText("ASCII replace :");
         fileButtonImportAsciiReplace.setName("Import ASCII Replace"); // NOI18N
@@ -239,7 +239,7 @@ public class TextMainEditor extends AbstractMainEditor {
         infoButton3.setMessageText("<html>Select a disassembly's \"textbanks\" directory, with following files :<br>huffmantreeoffsets.bin, huffmantrees.bin, and all textbankXX.bin files<br>Base path can end with an optional filename prefix.</html>");
         infoButton3.setText("");
 
-        directoryButtonImportBanks.setDirectoryPath(".\\");
+        directoryButtonImportBanks.setDirectoryPath("./");
             directoryButtonImportBanks.setInfoMessage("");
             directoryButtonImportBanks.setLabelText("Base path :");
             directoryButtonImportBanks.setName("Import Textbanks"); // NOI18N
@@ -291,7 +291,7 @@ public class TextMainEditor extends AbstractMainEditor {
             infoButton4.setText("");
 
             fileButtonImportText.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.TXT);
-            fileButtonImportText.setFilePath(".\\export\\gamescript.txt");
+            fileButtonImportText.setFilePath("./export/gamescript.txt");
             fileButtonImportText.setInfoMessage("");
             fileButtonImportText.setLabelText("Txt game script :");
             fileButtonImportText.setMaximumSize(new java.awt.Dimension(32859, 25));
@@ -344,7 +344,7 @@ public class TextMainEditor extends AbstractMainEditor {
             infoButton5.setText("");
 
             fileButtonImportAsm.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-            fileButtonImportAsm.setFilePath("..\\map\\cs_intro1.asm");
+            fileButtonImportAsm.setFilePath("../map/cs_intro1.asm");
             fileButtonImportAsm.setInfoMessage("");
             fileButtonImportAsm.setLabelText("ASM file :");
             fileButtonImportAsm.setMaximumSize(new java.awt.Dimension(32859, 25));
@@ -419,7 +419,7 @@ public class TextMainEditor extends AbstractMainEditor {
             infoButton6.setMessageText("<html<Will create new files : huffmantreeoffsets.bin, huffmantrees.bin, all textbankXX.bin files<br>Base path can end with an optional filename prefix.</html>");
             infoButton6.setText("");
 
-            directoryButtonExportBanks.setDirectoryPath(".\\");
+            directoryButtonExportBanks.setDirectoryPath("./");
                 directoryButtonExportBanks.setInfoMessage("");
                 directoryButtonExportBanks.setLabelText("Base path :");
                 directoryButtonExportBanks.setName("Export Textbanks"); // NOI18N
@@ -470,7 +470,7 @@ public class TextMainEditor extends AbstractMainEditor {
                 infoButton7.setMessageText("<html>Exports a new text file. File will be formated as: \"id=hex=line\"<br>Where \"id\" is the decimal index of the line, \"hex\" is the hex index of the line, and \"line\" is the line of text.</html>");
                 infoButton7.setText("");
 
-                fileButtonExportText.setFilePath(".\\export\\gamescript.txt");
+                fileButtonExportText.setFilePath("./export/gamescript.txt");
                 fileButtonExportText.setLabelText("Txt game script :");
                 fileButtonExportText.setMaximumSize(new java.awt.Dimension(32859, 25));
                 fileButtonExportText.setName("Export Text File"); // NOI18N

@@ -110,6 +110,8 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
     private int previewIndex = -1;
     
     private Map map;
+    
+    private int actionDraggedFlag;
 
     public MapLayoutPanel() {
         super();
@@ -1431,15 +1433,18 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
         if (evt.released()) return;
         int index = evt.x()+evt.y()*BLOCK_WIDTH;
         MapLayoutBlock block = layout.getBlocks()[index];
+        
+        if (evt.pressed() && !evt.dragging()) {
+            actionDraggedFlag = currentPaintMode;
+            if (evt.mouseButton() == MouseEvent.BUTTON1 && actionDraggedFlag == BlockFlags.MAP_FLAG_STAIRS_RIGHT && layout.getBlocks()[index].getFlags().getExplorationFlags() == BlockFlags.MAP_FLAG_STAIRS_RIGHT) {
+                actionDraggedFlag = BlockFlags.MAP_FLAG_STAIRS_LEFT;
+            }
+        }
+        
         switch (evt.mouseButton()) {
             case MouseEvent.BUTTON1:
             {
-                int flagVal = currentPaintMode;
-                if (flagVal == BlockFlags.MAP_FLAG_STAIRS_RIGHT) {
-                    if (layout.getBlocks()[index].getFlags().getExplorationFlags() == BlockFlags.MAP_FLAG_STAIRS_RIGHT) {
-                        flagVal = BlockFlags.MAP_FLAG_STAIRS_LEFT;
-                    }
-                }
+                int flagVal = actionDraggedFlag;
                 if (!block.getFlags().isFlagOn(flagVal)) {
                     BlockFlags newFlags = block.getFlags().clone();
                     if ((flagVal & BlockFlags.MAP_FLAG_MASK_EXPLORE) != 0) {
@@ -1466,13 +1471,15 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
             }
             case MouseEvent.BUTTON3:
             {
-                int flagVal = currentPaintMode;
-                if (flagVal == BlockFlags.MAP_FLAG_STAIRS_RIGHT) {
-                    if (layout.getBlocks()[index].getFlags().getExplorationFlags() == BlockFlags.MAP_FLAG_STAIRS_LEFT) {
-                        flagVal = BlockFlags.MAP_FLAG_STAIRS_LEFT;
+                if (currentPaintMode == BlockFlags.MAP_FLAG_STAIRS_RIGHT) {
+                    if (layout.getBlocks()[index].getFlags().getExplorationFlags() == BlockFlags.MAP_FLAG_STAIRS_RIGHT) {
+                        actionDraggedFlag = BlockFlags.MAP_FLAG_STAIRS_RIGHT;
+                    } else if (layout.getBlocks()[index].getFlags().getExplorationFlags() == BlockFlags.MAP_FLAG_STAIRS_LEFT) {
+                        actionDraggedFlag = BlockFlags.MAP_FLAG_STAIRS_LEFT;
                     }
                 }
-                if (!block.getFlags().isFlagOn(flagVal)) {
+                int flagVal = actionDraggedFlag;
+                if (block.getFlags().isFlagOn(flagVal)) {
                     BlockFlags newFlags = block.getFlags().clone();
                     if ((flagVal & BlockFlags.MAP_FLAG_MASK_EXPLORE) != 0) {
                         newFlags.removeFlag(BlockFlags.MAP_FLAG_MASK_EXPLORE);

@@ -57,6 +57,11 @@ public class CustomAction<T extends IActionData> implements IAction<CustomAction
     }
 
     @Override
+    public Object getOwner() {
+        return owner;
+    }
+
+    @Override
     public boolean isInvalidated() {
         return newValue.isInvalidated(oldValue);
     }

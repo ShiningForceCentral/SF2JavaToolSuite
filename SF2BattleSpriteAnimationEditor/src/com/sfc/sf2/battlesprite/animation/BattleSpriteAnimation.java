@@ -92,7 +92,7 @@ public class BattleSpriteAnimation implements INameable {
     }
         
     public static BattleSpriteAnimation EmptyAnimation(BattleSprite battleSprite) {
-        BattleSpriteAnimationFrame[] frames = new BattleSpriteAnimationFrame[] { BattleSpriteAnimationFrame.EmptyFrame() };
+        BattleSpriteAnimationFrame[] frames = new BattleSpriteAnimationFrame[] { BattleSpriteAnimationFrame.EmptyFrame(battleSprite.getType() == BattleSpriteType.ENEMY) };
         return new BattleSpriteAnimation("Empty Anim", battleSprite, frames, (byte)0, (byte)0, true);
     }
     

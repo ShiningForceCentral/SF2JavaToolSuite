@@ -213,7 +213,7 @@
                                     </Component>
                                     <Component class="com.sfc.sf2.core.gui.controls.DirectoryButton" name="directoryButtonImportBackgrounds">
                                       <Properties>
-                                        <Property name="directoryPath" type="java.lang.String" value=".\u005c" containsInvalidXMLChars="true"/>
+                                        <Property name="directoryPath" type="java.lang.String" value="./" containsInvalidXMLChars="true"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="BGs directory :"/>
                                         <Property name="name" type="java.lang.String" value="Import Backgrounds" noResource="true"/>
@@ -291,7 +291,7 @@
                                     </Component>
                                     <Component class="com.sfc.sf2.core.gui.controls.DirectoryButton" name="directoryButtonImportImages">
                                       <Properties>
-                                        <Property name="directoryPath" type="java.lang.String" value=".\u005cexport\u005c" containsInvalidXMLChars="true"/>
+                                        <Property name="directoryPath" type="java.lang.String" value="./export/" containsInvalidXMLChars="true"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Images directory :"/>
                                         <Property name="name" type="java.lang.String" value="Import Images" noResource="true"/>
@@ -406,7 +406,7 @@
                                     </Component>
                                     <Component class="com.sfc.sf2.core.gui.controls.DirectoryButton" name="directoryButtonExportBackgrounds">
                                       <Properties>
-                                        <Property name="directoryPath" type="java.lang.String" value=".\u005c" containsInvalidXMLChars="true"/>
+                                        <Property name="directoryPath" type="java.lang.String" value="./" containsInvalidXMLChars="true"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="BGs directory :"/>
                                         <Property name="name" type="java.lang.String" value="Export Backgrounds" noResource="true"/>
@@ -489,7 +489,7 @@
                                     </Component>
                                     <Component class="com.sfc.sf2.core.gui.controls.DirectoryButton" name="directoryButtonExportImages">
                                       <Properties>
-                                        <Property name="directoryPath" type="java.lang.String" value=".\u005cexport\u005c" containsInvalidXMLChars="true"/>
+                                        <Property name="directoryPath" type="java.lang.String" value="./export/" containsInvalidXMLChars="true"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Images directory :"/>
                                         <Property name="name" type="java.lang.String" value="Export Images" noResource="true"/>

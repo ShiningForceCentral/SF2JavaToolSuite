@@ -168,29 +168,29 @@ public class BattleMapTerrainMainEditor extends AbstractMainEditor {
         accordionPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Entries data"));
 
         fileButtonTerrainEntries.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonTerrainEntries.setFilePath(".\\terrainentries.asm");
+        fileButtonTerrainEntries.setFilePath("./terrainentries.asm");
         fileButtonTerrainEntries.setInfoMessage("");
         fileButtonTerrainEntries.setLabelText("Terrain entries :");
         fileButtonTerrainEntries.setName("Import Terrain Entries"); // NOI18N
 
-        directoryButtonPaletteEntries.setDirectoryPath("..\\graphics\\maps\\mappalettes\\entries.asm");
+        directoryButtonPaletteEntries.setDirectoryPath("../graphics/maps/mappalettes/entries.asm");
         directoryButtonPaletteEntries.setInfoMessage("");
         directoryButtonPaletteEntries.setLabelText("Map palette entries :");
         directoryButtonPaletteEntries.setName("Import Palette Entries"); // NOI18N
 
-        directoryButtonTilesetEntries.setDirectoryPath("..\\graphics\\maps\\maptilesets\\entries.asm");
+        directoryButtonTilesetEntries.setDirectoryPath("../graphics/maps/maptilesets/entries.asm");
         directoryButtonTilesetEntries.setInfoMessage("");
         directoryButtonTilesetEntries.setLabelText("Map tileset entries :");
         directoryButtonTilesetEntries.setName("Import Tileset Entries"); // NOI18N
 
         fileButtonMapEntries.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonMapEntries.setFilePath("..\\maps\\entries.asm");
+        fileButtonMapEntries.setFilePath("../maps/entries.asm");
         fileButtonMapEntries.setInfoMessage("");
         fileButtonMapEntries.setLabelText("Map entries :");
         fileButtonMapEntries.setName("Import Map Entries"); // NOI18N
 
         fileButtonLandEffectEntries.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonLandEffectEntries.setFilePath("..\\..\\sf2enums.asm");
+        fileButtonLandEffectEntries.setFilePath("../../sf2enums.asm");
         fileButtonLandEffectEntries.setInfoMessage("");
         fileButtonLandEffectEntries.setLabelText("Land effect enums :");
         fileButtonLandEffectEntries.setName("Import Land Effect Entries"); // NOI18N
@@ -226,13 +226,13 @@ public class BattleMapTerrainMainEditor extends AbstractMainEditor {
         );
 
         fileButtonBattleMapCoords.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ANY_ASSEMBLY);
-        fileButtonBattleMapCoords.setFilePath(".\\global\\battlemapcoords.asm");
+        fileButtonBattleMapCoords.setFilePath("./global/battlemapcoords.asm");
         fileButtonBattleMapCoords.setInfoMessage("");
         fileButtonBattleMapCoords.setLabelText("Battlemap coords :");
         fileButtonBattleMapCoords.setName("Import Battle Coords"); // NOI18N
 
         fileButtonLandEffects.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ANY_ASSEMBLY);
-        fileButtonLandEffects.setFilePath(".\\global\\landeffectsettingsandmovecosts.asm");
+        fileButtonLandEffects.setFilePath("./global/landeffectsettingsandmovecosts.asm");
         fileButtonLandEffects.setInfoMessage("");
         fileButtonLandEffects.setLabelText("Land effects :");
         fileButtonLandEffects.setName("Import Land Effects"); // NOI18N
@@ -288,7 +288,7 @@ public class BattleMapTerrainMainEditor extends AbstractMainEditor {
         });
 
         fileButtonExportTerrain.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButtonExportTerrain.setFilePath(".\\entries\\battle01\\terrain.bin");
+        fileButtonExportTerrain.setFilePath("./entries/battle01/terrain.bin");
         fileButtonExportTerrain.setInfoMessage("");
         fileButtonExportTerrain.setLabelText("Battlemap terrain :");
         fileButtonExportTerrain.setName("Export Terrain"); // NOI18N
@@ -333,7 +333,7 @@ public class BattleMapTerrainMainEditor extends AbstractMainEditor {
         });
 
         fileButtonExportLandeffect.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonExportLandeffect.setFilePath(".\\global\\landeffectsettingsandmovecosts.asm");
+        fileButtonExportLandeffect.setFilePath("./global/landeffectsettingsandmovecosts.asm");
         fileButtonExportLandeffect.setInfoMessage("");
         fileButtonExportLandeffect.setLabelText("Land effects :");
         fileButtonExportLandeffect.setName("Export Land Effects"); // NOI18N

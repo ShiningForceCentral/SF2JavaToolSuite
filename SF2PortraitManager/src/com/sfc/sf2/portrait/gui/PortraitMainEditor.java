@@ -22,6 +22,7 @@ import java.awt.event.ActionEvent;
 import java.util.logging.Level;
 import java.nio.file.Path;
 import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.TableModelEvent;
 import javax.swing.table.TableColumnModel;
 
 /**
@@ -53,6 +54,8 @@ public class PortraitMainEditor extends AbstractMainEditor {
         
         eyeTable = (PortraitDataTableModel)tableEyes.getModel();
         mouthTable = (PortraitDataTableModel)tableMouth.getModel();
+        tableEyes.addTableModelListener(this::eyesListDataChanged);
+        tableMouth.addTableModelListener(this::mouthListDataChanged);
         tableEyes.addListSelectionListener(this::eyesListSelectionChanged);
         tableMouth.addListSelectionListener(this::mouthListSelectionChanged);
         portraitLayoutPanel.setEyesChangedListener(this::eyesListValueChanged);
@@ -121,7 +124,7 @@ public class PortraitMainEditor extends AbstractMainEditor {
         jPanel11 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         fileButtonExportPortrait = new com.sfc.sf2.core.gui.controls.FileButton();
-        jButtonExportportrait = new javax.swing.JButton();
+        jButtonExportPortrait = new javax.swing.JButton();
         jPanel14 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         fileButtonExportImage = new com.sfc.sf2.core.gui.controls.FileButton();
@@ -132,7 +135,7 @@ public class PortraitMainEditor extends AbstractMainEditor {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SF2PortraitManager");
 
-        jSplitPane1.setDividerLocation(425);
+        jSplitPane1.setDividerLocation(500);
         jSplitPane1.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
         jSplitPane1.setOneTouchExpandable(true);
 
@@ -187,11 +190,11 @@ public class PortraitMainEditor extends AbstractMainEditor {
         portraitLayoutPanel.setLayout(portraitLayoutPanelLayout);
         portraitLayoutPanelLayout.setHorizontalGroup(
             portraitLayoutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 320, Short.MAX_VALUE)
+            .addGap(0, 324, Short.MAX_VALUE)
         );
         portraitLayoutPanelLayout.setVerticalGroup(
             portraitLayoutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 291, Short.MAX_VALUE)
+            .addGap(0, 336, Short.MAX_VALUE)
         );
 
         jScrollPane2.setViewportView(portraitLayoutPanel);
@@ -206,7 +209,7 @@ public class PortraitMainEditor extends AbstractMainEditor {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
@@ -215,7 +218,7 @@ public class PortraitMainEditor extends AbstractMainEditor {
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
+                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -231,7 +234,7 @@ public class PortraitMainEditor extends AbstractMainEditor {
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(portraitViewPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 419, Short.MAX_VALUE)))
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 494, Short.MAX_VALUE)))
         );
 
         jSplitPane2.setRightComponent(jPanel10);
@@ -242,7 +245,7 @@ public class PortraitMainEditor extends AbstractMainEditor {
         jLabel2.setText("Import portrait disassembly.");
 
         fileButtonImportPortrait.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButtonImportPortrait.setFilePath(".\\portrait00.bin");
+        fileButtonImportPortrait.setFilePath("./portrait00.bin");
         fileButtonImportPortrait.setInfoMessage("");
         fileButtonImportPortrait.setLabelText("Portrait file :");
         fileButtonImportPortrait.setName("Import Portrait"); // NOI18N
@@ -289,7 +292,7 @@ public class PortraitMainEditor extends AbstractMainEditor {
         jLabel3.setText("Import portrait from image and meta.");
 
         fileButtonImportImage.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ANY_IMAGE);
-        fileButtonImportImage.setFilePath(".\\export\\portrait00.png");
+        fileButtonImportImage.setFilePath("./export/portrait00.png");
         fileButtonImportImage.setInfoMessage("<html>Supported image formats: PNG or GIF.<br><br>Color format should be 4BPP / 16 indexed colors. Images of 8BPP / 256 indexed colors will be converted to 4 BPP / 16 (some colors may be lost).<br>When imported, icons will use the base palette colors.<br>Color index 0 is treated as transparent.</html>");
         fileButtonImportImage.setLabelText("Image file :");
         fileButtonImportImage.setName("Import Image"); // NOI18N
@@ -349,7 +352,7 @@ public class PortraitMainEditor extends AbstractMainEditor {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
         );
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Export to :"));
@@ -358,15 +361,15 @@ public class PortraitMainEditor extends AbstractMainEditor {
         jLabel1.setText("Export portrait disassembly.");
 
         fileButtonExportPortrait.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButtonExportPortrait.setFilePath(".\\portrait00.bin");
+        fileButtonExportPortrait.setFilePath("./portrait00.bin");
         fileButtonExportPortrait.setInfoMessage("");
         fileButtonExportPortrait.setLabelText("Portrait file :");
         fileButtonExportPortrait.setName("Export Portrait"); // NOI18N
 
-        jButtonExportportrait.setText("Export");
-        jButtonExportportrait.addActionListener(new java.awt.event.ActionListener() {
+        jButtonExportPortrait.setText("Export");
+        jButtonExportPortrait.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonExportportraitActionPerformed(evt);
+                jButtonExportPortraitActionPerformed(evt);
             }
         });
 
@@ -380,7 +383,7 @@ public class PortraitMainEditor extends AbstractMainEditor {
                     .addComponent(fileButtonExportPortrait, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButtonExportportrait))
+                        .addComponent(jButtonExportPortrait))
                     .addGroup(jPanel11Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -394,7 +397,7 @@ public class PortraitMainEditor extends AbstractMainEditor {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(fileButtonExportPortrait, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonExportportrait)
+                .addComponent(jButtonExportPortrait)
                 .addContainerGap())
         );
 
@@ -403,7 +406,7 @@ public class PortraitMainEditor extends AbstractMainEditor {
         jLabel9.setText("Export portrait as image.");
 
         fileButtonExportImage.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ANY_IMAGE);
-        fileButtonExportImage.setFilePath(".\\export\\portrait00.png");
+        fileButtonExportImage.setFilePath("./export/portrait00.png");
         fileButtonExportImage.setInfoMessage("<html>Supported image formats: PNG or GIF.<br><br>Exported color format will be 4BPP / 16 indexed colors.<br>Color index 0 is treated as transparent.</html>");
         fileButtonExportImage.setLabelText("Image file :");
         fileButtonExportImage.setName("Export Image"); // NOI18N
@@ -465,7 +468,7 @@ public class PortraitMainEditor extends AbstractMainEditor {
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane2)
+            .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
@@ -479,7 +482,7 @@ public class PortraitMainEditor extends AbstractMainEditor {
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 114, Short.MAX_VALUE)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
         );
@@ -508,7 +511,7 @@ public class PortraitMainEditor extends AbstractMainEditor {
         );
         jPanel13Layout.setVerticalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
+            .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 644, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -522,11 +525,11 @@ public class PortraitMainEditor extends AbstractMainEditor {
             .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        setSize(new java.awt.Dimension(1096, 658));
+        setSize(new java.awt.Dimension(1096, 681));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonExportportraitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExportportraitActionPerformed
+    private void jButtonExportPortraitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExportPortraitActionPerformed
         Path portraitPath = PathHelpers.getBasePath().resolve(fileButtonExportPortrait.getFilePath());
         if (!PathHelpers.createPathIfRequred(portraitPath)) return;
         try {
@@ -535,7 +538,7 @@ public class PortraitMainEditor extends AbstractMainEditor {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Portrait disasm could not be exported to : " + portraitPath);
         }
-    }//GEN-LAST:event_jButtonExportportraitActionPerformed
+    }//GEN-LAST:event_jButtonExportPortraitActionPerformed
 
     private void jButtonExportImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExportImageActionPerformed
         Path imagePath = PathHelpers.getBasePath().resolve(fileButtonExportImage.getFilePath());
@@ -574,6 +577,22 @@ public class PortraitMainEditor extends AbstractMainEditor {
         }
         onDataLoaded();
     }//GEN-LAST:event_jButtonImportPortraitActionPerformed
+    
+    private void eyesListDataChanged(TableModelEvent e) {
+        if (e.getType() != TableModelEvent.DELETE && e.getType() != TableModelEvent.INSERT) return;
+        Portrait portrait = portraitLayoutPanel.getPortrait();
+        if (portrait == null) return;
+        portrait.setEyeTiles(portraitDataModelEyes.getTableData(int[][].class));
+        portraitLayoutPanel.redraw();
+    }
+
+    private void mouthListDataChanged(TableModelEvent e) {
+        if (e.getType() != TableModelEvent.DELETE && e.getType() != TableModelEvent.INSERT) return;
+        Portrait portrait = portraitLayoutPanel.getPortrait();
+        if (portrait == null) return;
+        portrait.setMouthTiles(portraitDataModelMouth.getTableData(int[][].class));
+        portraitLayoutPanel.redraw();
+    }
     
     private void eyesListSelectionChanged(ListSelectionEvent evt) {
         if (evt.getValueIsAdjusting() && selectedEyesRow == tableEyes.jTable.getSelectedRow()) return;
@@ -670,7 +689,7 @@ public class PortraitMainEditor extends AbstractMainEditor {
     private com.sfc.sf2.core.gui.controls.FileButton fileButtonImportMeta;
     private com.sfc.sf2.core.gui.controls.FileButton fileButtonImportPortrait;
     private javax.swing.JButton jButtonExportImage;
-    private javax.swing.JButton jButtonExportportrait;
+    private javax.swing.JButton jButtonExportPortrait;
     private javax.swing.JButton jButtonImportImage;
     private javax.swing.JButton jButtonImportPortrait;
     private javax.swing.JLabel jLabel1;

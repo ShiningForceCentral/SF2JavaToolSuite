@@ -237,7 +237,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="BIN"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value="..\u005cbackgrounds\u005cbackground09.bin" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="../backgrounds/background09.bin" containsInvalidXMLChars="true"/>
                                     <Property name="infoMessage" type="java.lang.String" value="Loads a Background, for the animation preview."/>
                                     <Property name="labelText" type="java.lang.String" value="Background :"/>
                                     <Property name="name" type="java.lang.String" value="Import Background" noResource="true"/>
@@ -253,7 +253,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="BIN"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value="..\u005cbattlescenebasepalette.bin" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="../battlescenebasepalette.bin" containsInvalidXMLChars="true"/>
                                     <Property name="infoMessage" type="java.lang.String" value="The battle base palette to use for the Ground platform preview."/>
                                     <Property name="labelText" type="java.lang.String" value="Ground base palette :"/>
                                     <Property name="name" type="java.lang.String" value="Import Ground Base Palette" noResource="true"/>
@@ -264,7 +264,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="BIN"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value="..\u005cgrounds\u005cgroundpalette09.bin" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="../grounds/groundpalette09.bin" containsInvalidXMLChars="true"/>
                                     <Property name="infoMessage" type="java.lang.String" value="The palette to use for the Ground platform preview."/>
                                     <Property name="labelText" type="java.lang.String" value="Gound palette :"/>
                                     <Property name="name" type="java.lang.String" value="Import Ground Palette" noResource="true"/>
@@ -275,7 +275,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="BIN"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value="..\u005cgrounds\u005cgroundtiles09.bin" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="../grounds/groundtiles09.bin" containsInvalidXMLChars="true"/>
                                     <Property name="infoMessage" type="java.lang.String" value="Loads a Ground platform, for the animation preview."/>
                                     <Property name="labelText" type="java.lang.String" value="Ground :"/>
                                     <Property name="name" type="java.lang.String" value="Import Ground" noResource="true"/>
@@ -337,7 +337,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="ASM"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value="..\u005cweapons\u005cpalettes\u005centries.asm" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="../weapons/palettes/entries.asm" containsInvalidXMLChars="true"/>
                                     <Property name="infoMessage" type="java.lang.String" value="The entries file for weapon palettes."/>
                                     <Property name="labelText" type="java.lang.String" value="Weapon palettes :"/>
                                     <Property name="name" type="java.lang.String" value="Import Weapon Palettes" noResource="true"/>
@@ -348,7 +348,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="BIN"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value="..\u005cweapons\u005cweaponsprite04.bin" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="../weapons/weaponsprite04.bin" containsInvalidXMLChars="true"/>
                                     <Property name="infoMessage" type="java.lang.String" value="&lt;html&gt;Loads a placeholder weapon for the animation preview.&lt;br&gt;The weapon can be hidden with the checbox on the right of the animation window.&lt;/html&gt;"/>
                                     <Property name="labelText" type="java.lang.String" value="Weapon :"/>
                                     <Property name="name" type="java.lang.String" value="Import Weapon" noResource="true"/>
@@ -371,7 +371,7 @@
                             </Component>
                             <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButtonBattleSprite">
                               <Properties>
-                                <Property name="filePath" type="java.lang.String" value=".\u005callies\u005callybattlesprite00.bin" containsInvalidXMLChars="true"/>
+                                <Property name="filePath" type="java.lang.String" value="./allies/allybattlesprite00.bin" containsInvalidXMLChars="true"/>
                                 <Property name="infoMessage" type="java.lang.String" value="&lt;html&gt;Loads a battlesprite to animate. In general, each battesprite is matched to specific animation files (see the info button for &quot;Battle Sprite Animation&quot;).&lt;/html&gt;"/>
                                 <Property name="labelText" type="java.lang.String" value="Battle sprite :"/>
                                 <Property name="name" type="java.lang.String" value="Import Battle Sprite" noResource="true"/>
@@ -382,7 +382,7 @@
                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                   <Value id="BIN"/>
                                 </Property>
-                                <Property name="filePath" type="java.lang.String" value=".\u005callies\u005canimations\u005callyanimation000.bin" containsInvalidXMLChars="true"/>
+                                <Property name="filePath" type="java.lang.String" value="./allies/animations/allyanimation000.bin" containsInvalidXMLChars="true"/>
                                 <Property name="infoMessage" type="java.lang.String" value="&lt;html&gt;Loads the animation data. By default, ally animations 0-39 are &lt;i&gt;attack&lt;/&gt; animations, 40-79 are &lt;i&gt;dodge&lt;/&gt; animations, 80+ for &lt;i&gt;special&lt;/&gt; animations.&lt;br&gt;See &lt;b&gt;SF2Enums&lt;/b&gt; &quot;; enum AllyBattleAnimations&quot;.&lt;br&gt;&lt;br&gt;By default, enemy animations 0-59 are &lt;i&gt;attack&lt;/&gt; animations, 60-117 are &lt;i&gt;dodge&lt;/&gt; animations, 118+ for &lt;i&gt;special&lt;/&gt; animations.&lt;br&gt;See &lt;b&gt;SF2Enums&lt;/b&gt; &quot;; enum EnemyBattleAnimations&quot;.&lt;/html&gt;"/>
                                 <Property name="labelText" type="java.lang.String" value="Battle sprite animation :"/>
                                 <Property name="name" type="java.lang.String" value="Import Animation" noResource="true"/>
@@ -466,7 +466,7 @@
                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                   <Value id="BIN"/>
                                 </Property>
-                                <Property name="filePath" type="java.lang.String" value=".\u005callies\u005canimations\u005cnewallyanimation000.bin" containsInvalidXMLChars="true"/>
+                                <Property name="filePath" type="java.lang.String" value="./allies/animations/newallyanimation000.bin" containsInvalidXMLChars="true"/>
                                 <Property name="infoMessage" type="java.lang.String" value=""/>
                                 <Property name="labelText" type="java.lang.String" value="Animation :"/>
                                 <Property name="name" type="java.lang.String" value="Export Animation" noResource="true"/>
@@ -498,7 +498,7 @@
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
-                                          <Component id="jPanel1" pref="579" max="32767" attributes="0"/>
+                                          <Component id="jPanel1" pref="596" max="32767" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
                                       </Group>
@@ -517,7 +517,7 @@
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="jPanel2" max="32767" attributes="0"/>
                                       </Group>
-                                      <Component id="jPanel1" pref="412" max="32767" attributes="0"/>
+                                      <Component id="jPanel1" pref="411" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jPanel6" min="-2" max="-2" attributes="0"/>
@@ -948,7 +948,7 @@
                                 <TitledBorder title="Animation frames"/>
                               </Border>
                             </Property>
-                            <Property name="infoMessage" type="java.lang.String" value="&lt;html&gt;&lt;b&gt;Frame:&lt;/b&gt; The frame number (cannot be edited).&lt;br&gt;&lt;b&gt;Battlesprite: &lt;/b&gt; The battlesprite to show during this frame.&lt;br&gt;&lt;b&gt;Duration:&lt;/b&gt; The speed of the animation. 60 = 1 second. Lower numbers animate faster.&lt;br&gt;&lt;b&gt;X/Y:&lt;/b&gt; The X and Y position offset when rendering the battle sprite.&lt;br&gt;&lt;b&gt;Weapon Index:&lt;/b&gt; The index of the weapon sprite frame to render.&lt;br&gt;&lt;b&gt;H/V Flip:&lt;/b&gt; Whether or not the weapon sprite is flipped Horizontally or Vertically.&lt;br&gt;&lt;b&gt;Behnd:&lt;/b&gt; Whether the weapon is rendered in front of or behind the batttle sprite.&lt;br&gt;&lt;b&gt;Weapon X/Y:&lt;/b&gt; The X and Y position offset when rendering the weapon.&lt;br&gt;&lt;br&gt;&lt;b&gt;Note:&lt;/b&gt; For frame 0; Battlesprite, Duration, X, and Y cannot be edited.&lt;/html&gt;"/>
+                            <Property name="infoMessage" type="java.lang.String" value="&lt;html&gt;&lt;b&gt;Frame:&lt;/b&gt; The frame number (cannot be edited).&lt;br&gt;&lt;b&gt;Battlesprite: &lt;/b&gt; The battlesprite to show during this frame.&lt;br&gt;&lt;b&gt;Duration:&lt;/b&gt; The speed of the animation. 60 = 1 second. Lower numbers animate faster.&lt;br&gt;&lt;b&gt;X/Y:&lt;/b&gt; The X and Y position offset when rendering the battle sprite.&lt;br&gt;&lt;b&gt;Weapon Index:&lt;/b&gt; The index of the weapon sprite frame to render.&lt;br&gt;&lt;b&gt;H/V Flip:&lt;/b&gt; Whether or not the weapon sprite is flipped Horizontally or Vertically.&lt;br&gt;&lt;b&gt;Behnd:&lt;/b&gt; Whether the weapon is rendered in front of or behind the batttle sprite.&lt;br&gt;&lt;b&gt;Weapon X/Y:&lt;/b&gt; The X and Y position offset when rendering the weapon.&lt;br&gt;&lt;br&gt;&lt;b&gt;Note:&lt;/b&gt;&lt;br&gt;- For Allies: Frame 0 core data (Battlesprite, Duration, X, and Y) cannot be edited because it is stored in the BattleSprite data.&lt;br&gt;- For Enemies: Weapon data cannot be edited (enemy weapons are baked into sprites). Frame 0 and 1 cannot be edited because they are stored in the BattleSprite data.&lt;/html&gt;"/>
                             <Property name="model" type="com.sfc.sf2.core.models.AbstractTableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                               <Connection component="battleSpriteAnimationFramesModel" type="bean"/>
                             </Property>

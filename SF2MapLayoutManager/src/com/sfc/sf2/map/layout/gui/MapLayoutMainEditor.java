@@ -221,655 +221,655 @@ public class MapLayoutMainEditor extends AbstractMainEditor {
         accordionPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Palette, tilesets, & map data"));
 
         fileButtonImportPaletteEntries.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonImportPaletteEntries.setFilePath("..\\graphics\\maps\\mappalettes\\entries.asm");
+        fileButtonImportPaletteEntries.setFilePath("../graphics/maps/mappalettes/entries.asm");
         fileButtonImportPaletteEntries.setInfoMessage("");
         fileButtonImportPaletteEntries.setLabelText("Palette entries :");
         fileButtonImportPaletteEntries.setName("Import Palette Entries"); // NOI18N
 
         fileButtonImportTilesetsEntries.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonImportTilesetsEntries.setFilePath("..\\graphics\\maps\\maptilesets\\entries.asm");
+        fileButtonImportTilesetsEntries.setFilePath("../graphics/maps/maptilesets/entries.asm");
         fileButtonImportTilesetsEntries.setInfoMessage("");
         fileButtonImportTilesetsEntries.setLabelText("Tilesets entries :");
         fileButtonImportTilesetsEntries.setName("Import Tileset Entries"); // NOI18N
 
         fileButtonImportMapEntries.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonImportMapEntries.setFilePath(".\\entries.asm");
+        fileButtonImportMapEntries.setFilePath("./entries.asm");
         fileButtonImportMapEntries.setInfoMessage("");
         fileButtonImportMapEntries.setLabelText("Map entries :");
         fileButtonImportMapEntries.setName("Import Map Entries"); // NOI18N
 
-        directoryButtonImportMapsDir.setDirectoryPath(".\\entries\\");
-            directoryButtonImportMapsDir.setInfoMessage("");
-            directoryButtonImportMapsDir.setLabelText("Maps dir :");
-            directoryButtonImportMapsDir.setName("Import Maps Directory"); // NOI18N
+        directoryButtonImportMapsDir.setDirectoryPath("./entries/");
+        directoryButtonImportMapsDir.setInfoMessage("");
+        directoryButtonImportMapsDir.setLabelText("Maps dir :");
+        directoryButtonImportMapsDir.setName("Import Maps Directory"); // NOI18N
 
-            javax.swing.GroupLayout accordionPanel1Layout = new javax.swing.GroupLayout(accordionPanel1);
-            accordionPanel1.setLayout(accordionPanel1Layout);
-            accordionPanel1Layout.setHorizontalGroup(
-                accordionPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(accordionPanel1Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(accordionPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(fileButtonImportPaletteEntries, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addComponent(fileButtonImportTilesetsEntries, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addComponent(fileButtonImportMapEntries, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addComponent(directoryButtonImportMapsDir, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                    .addContainerGap())
-            );
-            accordionPanel1Layout.setVerticalGroup(
-                accordionPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(accordionPanel1Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(fileButtonImportPaletteEntries, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(fileButtonImportTilesetsEntries, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(fileButtonImportMapEntries, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(directoryButtonImportMapsDir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap())
-            );
+        javax.swing.GroupLayout accordionPanel1Layout = new javax.swing.GroupLayout(accordionPanel1);
+        accordionPanel1.setLayout(accordionPanel1Layout);
+        accordionPanel1Layout.setHorizontalGroup(
+            accordionPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(accordionPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(accordionPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(fileButtonImportPaletteEntries, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(fileButtonImportTilesetsEntries, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(fileButtonImportMapEntries, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(directoryButtonImportMapsDir, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        accordionPanel1Layout.setVerticalGroup(
+            accordionPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(accordionPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(fileButtonImportPaletteEntries, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(fileButtonImportTilesetsEntries, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(fileButtonImportMapEntries, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(directoryButtonImportMapsDir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
 
-            jPanel21.setBorder(javax.swing.BorderFactory.createTitledBorder("Import :"));
+        jPanel21.setBorder(javax.swing.BorderFactory.createTitledBorder("Import :"));
 
-            jLabel9.setText("<html>Select map number to import from map entries.</html>");
-            jLabel9.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jLabel9.setText("<html>Select map number to import from map entries.</html>");
+        jLabel9.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
-            jSpinnerImportMapNumber.setModel(new javax.swing.SpinnerNumberModel(3, 0, 255, 1));
-            jSpinnerImportMapNumber.setName("Import Map Number"); // NOI18N
-            jSpinnerImportMapNumber.addChangeListener(new javax.swing.event.ChangeListener() {
-                public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                    jSpinnerImportMapNumberStateChanged(evt);
-                }
-            });
+        jSpinnerImportMapNumber.setModel(new javax.swing.SpinnerNumberModel(3, 0, 255, 1));
+        jSpinnerImportMapNumber.setName("Import Map Number"); // NOI18N
+        jSpinnerImportMapNumber.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jSpinnerImportMapNumberStateChanged(evt);
+            }
+        });
 
-            jButtonImportMap.setText("Import");
-            jButtonImportMap.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    jButtonImportMapActionPerformed(evt);
-                }
-            });
+        jButtonImportMap.setText("Import");
+        jButtonImportMap.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonImportMapActionPerformed(evt);
+            }
+        });
 
-            jLabel4.setText("Map :");
+        jLabel4.setText("Map :");
 
-            javax.swing.GroupLayout jPanel21Layout = new javax.swing.GroupLayout(jPanel21);
-            jPanel21.setLayout(jPanel21Layout);
-            jPanel21Layout.setHorizontalGroup(
-                jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel21Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel21Layout.createSequentialGroup()
-                            .addComponent(jLabel4)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jSpinnerImportMapNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButtonImportMap, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jLabel9))
-                    .addContainerGap())
-            );
-            jPanel21Layout.setVerticalGroup(
-                jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel21Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jSpinnerImportMapNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        javax.swing.GroupLayout jPanel21Layout = new javax.swing.GroupLayout(jPanel21);
+        jPanel21.setLayout(jPanel21Layout);
+        jPanel21Layout.setHorizontalGroup(
+            jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel21Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel21Layout.createSequentialGroup()
                         .addComponent(jLabel4)
-                        .addComponent(jButtonImportMap))
-                    .addGap(9, 9, 9)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap())
-            );
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSpinnerImportMapNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonImportMap, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel9))
+                .addContainerGap())
+        );
+        jPanel21Layout.setVerticalGroup(
+            jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel21Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jSpinnerImportMapNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4)
+                    .addComponent(jButtonImportMap))
+                .addGap(9, 9, 9)
+                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
 
-            jPanel26.setBorder(javax.swing.BorderFactory.createTitledBorder("Export :"));
+        jPanel26.setBorder(javax.swing.BorderFactory.createTitledBorder("Export :"));
 
-            jLabel12.setText("<html>Select map number to export to files defined in map entries.</html>");
-            jLabel12.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jLabel12.setText("<html>Select map number to export to files defined in map entries.</html>");
+        jLabel12.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
-            jSpinnerExportMapNumber.setModel(new javax.swing.SpinnerNumberModel(3, 0, 255, 1));
-            jSpinnerExportMapNumber.setName("Export map Number"); // NOI18N
-            jSpinnerExportMapNumber.addChangeListener(new javax.swing.event.ChangeListener() {
-                public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                    jSpinnerImportMapNumberStateChanged(evt);
-                }
-            });
+        jSpinnerExportMapNumber.setModel(new javax.swing.SpinnerNumberModel(3, 0, 255, 1));
+        jSpinnerExportMapNumber.setName("Export map Number"); // NOI18N
+        jSpinnerExportMapNumber.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jSpinnerImportMapNumberStateChanged(evt);
+            }
+        });
 
-            jButtonExportMap.setText("Export");
-            jButtonExportMap.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    jButtonExportMapActionPerformed(evt);
-                }
-            });
+        jButtonExportMap.setText("Export");
+        jButtonExportMap.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonExportMapActionPerformed(evt);
+            }
+        });
 
-            jLabel5.setText("Map :");
+        jLabel5.setText("Map :");
 
-            jButton32.setText("Save as new");
-            jButton32.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    jButton32ActionPerformed(evt);
-                }
-            });
+        jButton32.setText("Save as new");
+        jButton32.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton32ActionPerformed(evt);
+            }
+        });
 
-            infoButton1.setMessageText("<html>Create a new map entry and map folder and save the data to that entry.</html>");
-            infoButton1.setText("");
+        infoButton1.setMessageText("<html>Create a new map entry and map folder and save the data to that entry.</html>");
+        infoButton1.setText("");
 
-            javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-            jPanel2.setLayout(jPanel2Layout);
-            jPanel2Layout.setHorizontalGroup(
-                jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(infoButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(infoButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton32)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton32)
-                    .addContainerGap())
-            );
-            jPanel2Layout.setVerticalGroup(
-                jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton32)
-                        .addComponent(infoButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap())
-            );
+                    .addComponent(infoButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
 
-            javax.swing.GroupLayout jPanel26Layout = new javax.swing.GroupLayout(jPanel26);
-            jPanel26.setLayout(jPanel26Layout);
-            jPanel26Layout.setHorizontalGroup(
-                jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel26Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
-                        .addGroup(jPanel26Layout.createSequentialGroup()
-                            .addComponent(jLabel5)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jSpinnerExportMapNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButtonExportMap, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addContainerGap())
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            );
-            jPanel26Layout.setVerticalGroup(
-                jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel26Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jSpinnerExportMapNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        javax.swing.GroupLayout jPanel26Layout = new javax.swing.GroupLayout(jPanel26);
+        jPanel26.setLayout(jPanel26Layout);
+        jPanel26Layout.setHorizontalGroup(
+            jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel26Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
+                    .addGroup(jPanel26Layout.createSequentialGroup()
                         .addComponent(jLabel5)
-                        .addComponent(jButtonExportMap))
-                    .addGap(9, 9, 9)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE))
-            );
-
-            javax.swing.GroupLayout jPanel18Layout = new javax.swing.GroupLayout(jPanel18);
-            jPanel18.setLayout(jPanel18Layout);
-            jPanel18Layout.setHorizontalGroup(
-                jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel18Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(accordionPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addContainerGap())
-            );
-            jPanel18Layout.setVerticalGroup(
-                jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel18Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(accordionPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jPanel21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 293, Short.MAX_VALUE)
-                    .addComponent(jPanel26, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap())
-            );
-
-            jPanel21.getAccessibleContext().setAccessibleName("");
-
-            jTabbedPane1.addTab("Entries", jPanel18);
-
-            accordionPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Palette, tilesets, & map data"));
-
-            fileButtonImportPaletteEntries1.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-            fileButtonImportPaletteEntries1.setFilePath("..\\graphics\\maps\\mappalettes\\entries.asm");
-            fileButtonImportPaletteEntries1.setInfoMessage("");
-            fileButtonImportPaletteEntries1.setLabelText("Palette entries :");
-            fileButtonImportPaletteEntries1.setName("Import Palette Entries"); // NOI18N
-
-            fileButtonImportTilesetsEntries1.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-            fileButtonImportTilesetsEntries1.setFilePath("..\\graphics\\maps\\maptilesets\\entries.asm");
-            fileButtonImportTilesetsEntries1.setInfoMessage("");
-            fileButtonImportTilesetsEntries1.setLabelText("Tilesets entries :");
-            fileButtonImportTilesetsEntries1.setName("Import Tilesets Entries"); // NOI18N
-
-            fileButtonImportTilesets.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-            fileButtonImportTilesets.setFilePath("00-tilesets.asm");
-            fileButtonImportTilesets.setInfoMessage("");
-            fileButtonImportTilesets.setLabelText("Map tilesets :");
-            fileButtonImportTilesets.setName("Import Tilesets"); // NOI18N
-
-            fileButtonImportBlockset.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-            fileButtonImportBlockset.setFilePath("0-blocks.bin");
-            fileButtonImportBlockset.setInfoMessage("");
-            fileButtonImportBlockset.setLabelText("Map blockset :");
-            fileButtonImportBlockset.setToolTipText("");
-            fileButtonImportBlockset.setName("Import Blocket"); // NOI18N
-
-            fileButtonImportLayout.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-            fileButtonImportLayout.setFilePath("1-layout.bin");
-            fileButtonImportLayout.setInfoMessage("");
-            fileButtonImportLayout.setLabelText("Map layout :");
-            fileButtonImportLayout.setToolTipText("");
-            fileButtonImportLayout.setName("Import Layout"); // NOI18N
-
-            javax.swing.GroupLayout accordionPanel2Layout = new javax.swing.GroupLayout(accordionPanel2);
-            accordionPanel2.setLayout(accordionPanel2Layout);
-            accordionPanel2Layout.setHorizontalGroup(
-                accordionPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(accordionPanel2Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(accordionPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(fileButtonImportPaletteEntries1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addComponent(fileButtonImportTilesetsEntries1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addComponent(fileButtonImportTilesets, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addComponent(fileButtonImportBlockset, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addComponent(fileButtonImportLayout, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                    .addContainerGap())
-            );
-            accordionPanel2Layout.setVerticalGroup(
-                accordionPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(accordionPanel2Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(fileButtonImportPaletteEntries1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(fileButtonImportTilesetsEntries1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(fileButtonImportTilesets, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(fileButtonImportBlockset, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(fileButtonImportLayout, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap())
-            );
-
-            jPanel24.setBorder(javax.swing.BorderFactory.createTitledBorder("Import :"));
-
-            directoryButtonImportMapDir.setDirectoryPath(".\\entries\\map03\\");
-                directoryButtonImportMapDir.setInfoMessage("");
-                directoryButtonImportMapDir.setLabelText("Map dir :");
-                directoryButtonImportMapDir.setName("Import Map"); // NOI18N
-
-                jLabel11.setText("<html>Select map directory to load map from.</html>");
-                jLabel11.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-
-                jButtonImportMapFromFolder.setText("Import");
-                jButtonImportMapFromFolder.addActionListener(new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        jButtonImportMapFromFolderActionPerformed(evt);
-                    }
-                });
-
-                jLabel14.setText("<html>NOTE: May not load shared files defined in other maps (load from map entries instead).</html>");
-                jLabel14.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-
-                javax.swing.GroupLayout jPanel24Layout = new javax.swing.GroupLayout(jPanel24);
-                jPanel24.setLayout(jPanel24Layout);
-                jPanel24Layout.setHorizontalGroup(
-                    jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel24Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(directoryButtonImportMapDir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel24Layout.createSequentialGroup()
-                                .addComponent(jLabel11)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonImportMapFromFolder, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addContainerGap())
-                );
-                jPanel24Layout.setVerticalGroup(
-                    jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel24Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(directoryButtonImportMapDir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButtonImportMapFromFolder)
-                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jSpinnerExportMapNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonExportMap, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel26Layout.setVerticalGroup(
+            jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel26Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jSpinnerExportMapNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5)
+                    .addComponent(jButtonExportMap))
+                .addGap(9, 9, 9)
+                .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        javax.swing.GroupLayout jPanel18Layout = new javax.swing.GroupLayout(jPanel18);
+        jPanel18.setLayout(jPanel18Layout);
+        jPanel18Layout.setHorizontalGroup(
+            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel18Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(accordionPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel18Layout.setVerticalGroup(
+            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel18Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(accordionPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 293, Short.MAX_VALUE)
+                .addComponent(jPanel26, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        jPanel21.getAccessibleContext().setAccessibleName("");
+
+        jTabbedPane1.addTab("Entries", jPanel18);
+
+        accordionPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Palette, tilesets, & map data"));
+
+        fileButtonImportPaletteEntries1.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
+        fileButtonImportPaletteEntries1.setFilePath("../graphics/maps/mappalettes/entries.asm");
+        fileButtonImportPaletteEntries1.setInfoMessage("");
+        fileButtonImportPaletteEntries1.setLabelText("Palette entries :");
+        fileButtonImportPaletteEntries1.setName("Import Palette Entries"); // NOI18N
+
+        fileButtonImportTilesetsEntries1.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
+        fileButtonImportTilesetsEntries1.setFilePath("../graphics/maps/maptilesets/entries.asm");
+        fileButtonImportTilesetsEntries1.setInfoMessage("");
+        fileButtonImportTilesetsEntries1.setLabelText("Tilesets entries :");
+        fileButtonImportTilesetsEntries1.setName("Import Tilesets Entries"); // NOI18N
+
+        fileButtonImportTilesets.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
+        fileButtonImportTilesets.setFilePath("00-tilesets.asm");
+        fileButtonImportTilesets.setInfoMessage("");
+        fileButtonImportTilesets.setLabelText("Map tilesets :");
+        fileButtonImportTilesets.setName("Import Tilesets"); // NOI18N
+
+        fileButtonImportBlockset.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
+        fileButtonImportBlockset.setFilePath("0-blocks.bin");
+        fileButtonImportBlockset.setInfoMessage("");
+        fileButtonImportBlockset.setLabelText("Map blockset :");
+        fileButtonImportBlockset.setToolTipText("");
+        fileButtonImportBlockset.setName("Import Blocket"); // NOI18N
+
+        fileButtonImportLayout.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
+        fileButtonImportLayout.setFilePath("1-layout.bin");
+        fileButtonImportLayout.setInfoMessage("");
+        fileButtonImportLayout.setLabelText("Map layout :");
+        fileButtonImportLayout.setToolTipText("");
+        fileButtonImportLayout.setName("Import Layout"); // NOI18N
+
+        javax.swing.GroupLayout accordionPanel2Layout = new javax.swing.GroupLayout(accordionPanel2);
+        accordionPanel2.setLayout(accordionPanel2Layout);
+        accordionPanel2Layout.setHorizontalGroup(
+            accordionPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(accordionPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(accordionPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(fileButtonImportPaletteEntries1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(fileButtonImportTilesetsEntries1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(fileButtonImportTilesets, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(fileButtonImportBlockset, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(fileButtonImportLayout, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        accordionPanel2Layout.setVerticalGroup(
+            accordionPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(accordionPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(fileButtonImportPaletteEntries1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(fileButtonImportTilesetsEntries1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(fileButtonImportTilesets, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(fileButtonImportBlockset, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(fileButtonImportLayout, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        jPanel24.setBorder(javax.swing.BorderFactory.createTitledBorder("Import :"));
+
+        directoryButtonImportMapDir.setDirectoryPath("./entries/map03/");
+        directoryButtonImportMapDir.setInfoMessage("");
+        directoryButtonImportMapDir.setLabelText("Map dir :");
+        directoryButtonImportMapDir.setName("Import Map"); // NOI18N
+
+        jLabel11.setText("<html>Select map directory to load map from.</html>");
+        jLabel11.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+
+        jButtonImportMapFromFolder.setText("Import");
+        jButtonImportMapFromFolder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonImportMapFromFolderActionPerformed(evt);
+            }
+        });
+
+        jLabel14.setText("<html>NOTE: May not load shared files defined in other maps (load from map entries instead).</html>");
+        jLabel14.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+
+        javax.swing.GroupLayout jPanel24Layout = new javax.swing.GroupLayout(jPanel24);
+        jPanel24.setLayout(jPanel24Layout);
+        jPanel24Layout.setHorizontalGroup(
+            jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel24Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(directoryButtonImportMapDir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel24Layout.createSequentialGroup()
+                        .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                );
+                        .addComponent(jButtonImportMapFromFolder, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
+        );
+        jPanel24Layout.setVerticalGroup(
+            jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel24Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(directoryButtonImportMapDir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonImportMapFromFolder)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
 
-                jPanel27.setBorder(javax.swing.BorderFactory.createTitledBorder("Export :"));
+        jPanel27.setBorder(javax.swing.BorderFactory.createTitledBorder("Export :"));
 
-                directoryButtonExportMapDir.setDirectoryPath(".\\entries\\map03\\");
-                    directoryButtonExportMapDir.setLabelText("Map dir :");
-                    directoryButtonExportMapDir.setName("Export Map Directory"); // NOI18N
+        directoryButtonExportMapDir.setDirectoryPath(".\\entries\\map03\\");
+            directoryButtonExportMapDir.setLabelText("Map dir :");
+            directoryButtonExportMapDir.setName("Export Map Directory"); // NOI18N
 
-                    jLabel13.setText("<html>Select map directory to save map data to</html>");
-                    jLabel13.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+            jLabel13.setText("<html>Select map directory to save map data to</html>");
+            jLabel13.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
-                    jButtonExportMapDir.setText("Export");
-                    jButtonExportMapDir.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                            jButtonExportMapDirActionPerformed(evt);
-                        }
-                    });
+            jButtonExportMapDir.setText("Export");
+            jButtonExportMapDir.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButtonExportMapDirActionPerformed(evt);
+                }
+            });
 
-                    javax.swing.GroupLayout jPanel27Layout = new javax.swing.GroupLayout(jPanel27);
-                    jPanel27.setLayout(jPanel27Layout);
-                    jPanel27Layout.setHorizontalGroup(
-                        jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            javax.swing.GroupLayout jPanel27Layout = new javax.swing.GroupLayout(jPanel27);
+            jPanel27.setLayout(jPanel27Layout);
+            jPanel27Layout.setHorizontalGroup(
+                jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel27Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(directoryButtonExportMapDir, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addGroup(jPanel27Layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addGroup(jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(directoryButtonExportMapDir, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                .addGroup(jPanel27Layout.createSequentialGroup()
-                                    .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jButtonExportMapDir, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addContainerGap())
-                    );
-                    jPanel27Layout.setVerticalGroup(
-                        jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel27Layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(directoryButtonExportMapDir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                                .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jButtonExportMapDir))
-                            .addContainerGap())
-                    );
+                            .addComponent(jButtonExportMapDir, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addContainerGap())
+            );
+            jPanel27Layout.setVerticalGroup(
+                jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel27Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(directoryButtonExportMapDir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                        .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonExportMapDir))
+                    .addContainerGap())
+            );
 
-                    javax.swing.GroupLayout jPanel20Layout = new javax.swing.GroupLayout(jPanel20);
-                    jPanel20.setLayout(jPanel20Layout);
-                    jPanel20Layout.setHorizontalGroup(
-                        jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel20Layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(accordionPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jPanel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jPanel27, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addContainerGap())
-                    );
-                    jPanel20Layout.setVerticalGroup(
-                        jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel20Layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(accordionPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jPanel24, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 227, Short.MAX_VALUE)
-                            .addComponent(jPanel27, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addContainerGap())
-                    );
+            javax.swing.GroupLayout jPanel20Layout = new javax.swing.GroupLayout(jPanel20);
+            jPanel20.setLayout(jPanel20Layout);
+            jPanel20Layout.setHorizontalGroup(
+                jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel20Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(accordionPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel27, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addContainerGap())
+            );
+            jPanel20Layout.setVerticalGroup(
+                jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel20Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(accordionPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jPanel24, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 227, Short.MAX_VALUE)
+                    .addComponent(jPanel27, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap())
+            );
 
-                    jTabbedPane1.addTab("Map folder", jPanel20);
+            jTabbedPane1.addTab("Map folder", jPanel20);
 
-                    jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Import :"));
-                    jPanel3.setPreferredSize(new java.awt.Dimension(590, 135));
+            jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Import :"));
+            jPanel3.setPreferredSize(new java.awt.Dimension(590, 135));
 
-                    fileButtonImportPalette.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-                    fileButtonImportPalette.setFilePath("..\\graphics\\maps\\mappalettes\\mappalette00.bin");
-                    fileButtonImportPalette.setInfoMessage("");
-                    fileButtonImportPalette.setLabelText("Palette :");
-                    fileButtonImportPalette.setName("Import Palette"); // NOI18N
+            fileButtonImportPalette.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
+            fileButtonImportPalette.setFilePath("../graphics/maps/mappalettes/mappalette00.bin");
+            fileButtonImportPalette.setInfoMessage("");
+            fileButtonImportPalette.setLabelText("Palette :");
+            fileButtonImportPalette.setName("Import Palette"); // NOI18N
 
-                    fileButtonImportTileset1.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-                    fileButtonImportTileset1.setFilePath("..\\graphics\\maps\\maptilesets\\maptileset000.bin");
-                    fileButtonImportTileset1.setInfoMessage("");
-                    fileButtonImportTileset1.setLabelText("Tileset 1 :");
-                    fileButtonImportTileset1.setName("Import Tileset 1"); // NOI18N
+            fileButtonImportTileset1.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
+            fileButtonImportTileset1.setFilePath("../graphics/maps/maptilesets/maptileset000.bin");
+            fileButtonImportTileset1.setInfoMessage("");
+            fileButtonImportTileset1.setLabelText("Tileset 1 :");
+            fileButtonImportTileset1.setName("Import Tileset 1"); // NOI18N
 
-                    fileButtonImportTileset2.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-                    fileButtonImportTileset2.setFilePath("..\\graphics\\maps\\maptilesets\\maptileset037.bin");
-                    fileButtonImportTileset2.setInfoMessage("");
-                    fileButtonImportTileset2.setLabelText("Tileset 2 :");
-                    fileButtonImportTileset2.setName("Import Tileset 2"); // NOI18N
+            fileButtonImportTileset2.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
+            fileButtonImportTileset2.setFilePath("../graphics/maps/maptilesets/maptileset037.bin");
+            fileButtonImportTileset2.setInfoMessage("");
+            fileButtonImportTileset2.setLabelText("Tileset 2 :");
+            fileButtonImportTileset2.setName("Import Tileset 2"); // NOI18N
 
-                    fileButtonImportTileset3.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-                    fileButtonImportTileset3.setFilePath("..\\graphics\\maps\\maptilesets\\maptileset043.bin");
-                    fileButtonImportTileset3.setInfoMessage("");
-                    fileButtonImportTileset3.setLabelText("Tileset 3 :");
-                    fileButtonImportTileset3.setName("Import Tileset 3"); // NOI18N
+            fileButtonImportTileset3.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
+            fileButtonImportTileset3.setFilePath("../graphics/maps/maptilesets/maptileset043.bin");
+            fileButtonImportTileset3.setInfoMessage("");
+            fileButtonImportTileset3.setLabelText("Tileset 3 :");
+            fileButtonImportTileset3.setName("Import Tileset 3"); // NOI18N
 
-                    fileButtonImportTileset4.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-                    fileButtonImportTileset4.setFilePath("..\\graphics\\maps\\maptilesets\\maptileset053.bin");
-                    fileButtonImportTileset4.setInfoMessage("");
-                    fileButtonImportTileset4.setLabelText("Tileset 4 :");
-                    fileButtonImportTileset4.setName("Import Tileset 4"); // NOI18N
+            fileButtonImportTileset4.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
+            fileButtonImportTileset4.setFilePath("../graphics/maps/maptilesets/maptileset053.bin");
+            fileButtonImportTileset4.setInfoMessage("");
+            fileButtonImportTileset4.setLabelText("Tileset 4 :");
+            fileButtonImportTileset4.setName("Import Tileset 4"); // NOI18N
 
-                    fileButtonImportTileset5.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-                    fileButtonImportTileset5.setFilePath("..\\graphics\\maps\\maptilesets\\maptileset066.bin");
-                    fileButtonImportTileset5.setInfoMessage("");
-                    fileButtonImportTileset5.setLabelText("Tileset 5 :");
-                    fileButtonImportTileset5.setName("Import Tileset 5"); // NOI18N
+            fileButtonImportTileset5.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
+            fileButtonImportTileset5.setFilePath("../graphics/maps/maptilesets/maptileset066.bin");
+            fileButtonImportTileset5.setInfoMessage("");
+            fileButtonImportTileset5.setLabelText("Tileset 5 :");
+            fileButtonImportTileset5.setName("Import Tileset 5"); // NOI18N
 
-                    fileButtonImportBlockFile.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-                    fileButtonImportBlockFile.setFilePath(".\\entries\\map03\\0-blocks.bin");
-                    fileButtonImportBlockFile.setInfoMessage("");
-                    fileButtonImportBlockFile.setLabelText("Blocks file :");
-                    fileButtonImportBlockFile.setName("Import Blocks File"); // NOI18N
+            fileButtonImportBlockFile.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
+            fileButtonImportBlockFile.setFilePath("./entries/map03/0-blocks.bin");
+            fileButtonImportBlockFile.setInfoMessage("");
+            fileButtonImportBlockFile.setLabelText("Blocks file :");
+            fileButtonImportBlockFile.setName("Import Blocks File"); // NOI18N
 
-                    fileButtonImportLayoutFile.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-                    fileButtonImportLayoutFile.setFilePath(".\\entries\\map03\\1-layout.bin");
-                    fileButtonImportLayoutFile.setInfoMessage("");
-                    fileButtonImportLayoutFile.setLabelText("Layout file :");
-                    fileButtonImportLayoutFile.setToolTipText("");
-                    fileButtonImportLayoutFile.setName("Import Layout File"); // NOI18N
+            fileButtonImportLayoutFile.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
+            fileButtonImportLayoutFile.setFilePath("./entries/map03/1-layout.bin");
+            fileButtonImportLayoutFile.setInfoMessage("");
+            fileButtonImportLayoutFile.setLabelText("Layout file :");
+            fileButtonImportLayoutFile.setToolTipText("");
+            fileButtonImportLayoutFile.setName("Import Layout File"); // NOI18N
 
-                    jLabel2.setText("<html>Select individual disassembly files.</html>");
-                    jLabel2.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+            jLabel2.setText("<html>Select individual disassembly files.</html>");
+            jLabel2.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
-                    jButtonImportRawFiles.setText("Import");
-                    jButtonImportRawFiles.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                            jButtonImportRawFilesActionPerformed(evt);
-                        }
-                    });
+            jButtonImportRawFiles.setText("Import");
+            jButtonImportRawFiles.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButtonImportRawFilesActionPerformed(evt);
+                }
+            });
 
-                    javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-                    jPanel3.setLayout(jPanel3Layout);
-                    jPanel3Layout.setHorizontalGroup(
-                        jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+            jPanel3.setLayout(jPanel3Layout);
+            jPanel3Layout.setHorizontalGroup(
+                jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(fileButtonImportPalette, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addGroup(jPanel3Layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(fileButtonImportPalette, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                .addGroup(jPanel3Layout.createSequentialGroup()
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(jButtonImportRawFiles))
-                                .addComponent(fileButtonImportTileset1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                .addComponent(fileButtonImportTileset2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                .addComponent(fileButtonImportTileset3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                .addComponent(fileButtonImportTileset4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                .addComponent(fileButtonImportTileset5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                .addComponent(fileButtonImportBlockFile, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                .addComponent(fileButtonImportLayoutFile, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                            .addContainerGap())
-                    );
-                    jPanel3Layout.setVerticalGroup(
-                        jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(fileButtonImportPalette, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(fileButtonImportTileset1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(fileButtonImportTileset2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(fileButtonImportTileset3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(fileButtonImportTileset4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(fileButtonImportTileset5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(fileButtonImportBlockFile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(4, 4, 4)
-                            .addComponent(fileButtonImportLayoutFile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jButtonImportRawFiles))
-                            .addContainerGap())
-                    );
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jButtonImportRawFiles))
+                        .addComponent(fileButtonImportTileset1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(fileButtonImportTileset2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(fileButtonImportTileset3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(fileButtonImportTileset4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(fileButtonImportTileset5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(fileButtonImportBlockFile, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(fileButtonImportLayoutFile, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addContainerGap())
+            );
+            jPanel3Layout.setVerticalGroup(
+                jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(fileButtonImportPalette, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(fileButtonImportTileset1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(fileButtonImportTileset2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(fileButtonImportTileset3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(fileButtonImportTileset4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(fileButtonImportTileset5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(fileButtonImportBlockFile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(4, 4, 4)
+                    .addComponent(fileButtonImportLayoutFile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonImportRawFiles))
+                    .addContainerGap())
+            );
 
-                    javax.swing.GroupLayout jPanel19Layout = new javax.swing.GroupLayout(jPanel19);
-                    jPanel19.setLayout(jPanel19Layout);
-                    jPanel19Layout.setHorizontalGroup(
-                        jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel19Layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
-                            .addContainerGap())
-                    );
-                    jPanel19Layout.setVerticalGroup(
-                        jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel19Layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addContainerGap(328, Short.MAX_VALUE))
-                    );
+            javax.swing.GroupLayout jPanel19Layout = new javax.swing.GroupLayout(jPanel19);
+            jPanel19.setLayout(jPanel19Layout);
+            jPanel19Layout.setHorizontalGroup(
+                jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel19Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
+                    .addContainerGap())
+            );
+            jPanel19Layout.setVerticalGroup(
+                jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel19Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(278, Short.MAX_VALUE))
+            );
 
-                    jTabbedPane1.addTab("Raw files", jPanel19);
+            jTabbedPane1.addTab("Raw files", jPanel19);
 
-                    javax.swing.GroupLayout jPanel32Layout = new javax.swing.GroupLayout(jPanel32);
-                    jPanel32.setLayout(jPanel32Layout);
-                    jPanel32Layout.setHorizontalGroup(
-                        jPanel32Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
-                    );
-                    jPanel32Layout.setVerticalGroup(
-                        jPanel32Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jTabbedPane1)
-                    );
+            javax.swing.GroupLayout jPanel32Layout = new javax.swing.GroupLayout(jPanel32);
+            jPanel32.setLayout(jPanel32Layout);
+            jPanel32Layout.setHorizontalGroup(
+                jPanel32Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
+            );
+            jPanel32Layout.setVerticalGroup(
+                jPanel32Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jTabbedPane1)
+            );
 
-                    javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-                    jPanel9.setLayout(jPanel9Layout);
-                    jPanel9Layout.setHorizontalGroup(
-                        jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jPanel32, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    );
-                    jPanel9Layout.setVerticalGroup(
-                        jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jPanel32, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    );
+            javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+            jPanel9.setLayout(jPanel9Layout);
+            jPanel9Layout.setHorizontalGroup(
+                jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jPanel32, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            );
+            jPanel9Layout.setVerticalGroup(
+                jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jPanel32, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            );
 
-                    jSplitPane4.setLeftComponent(jPanel9);
+            jSplitPane4.setLeftComponent(jPanel9);
 
-                    jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Blockset"));
+            jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Blockset"));
 
-                    jScrollPane3.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-                    jScrollPane3.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+            jScrollPane3.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+            jScrollPane3.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
-                    javax.swing.GroupLayout mapBlocksetPanelLayout = new javax.swing.GroupLayout(mapBlocksetPanel);
-                    mapBlocksetPanel.setLayout(mapBlocksetPanelLayout);
-                    mapBlocksetPanelLayout.setHorizontalGroup(
-                        mapBlocksetPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 441, Short.MAX_VALUE)
-                    );
-                    mapBlocksetPanelLayout.setVerticalGroup(
-                        mapBlocksetPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 570, Short.MAX_VALUE)
-                    );
+            javax.swing.GroupLayout mapBlocksetPanelLayout = new javax.swing.GroupLayout(mapBlocksetPanel);
+            mapBlocksetPanel.setLayout(mapBlocksetPanelLayout);
+            mapBlocksetPanelLayout.setHorizontalGroup(
+                mapBlocksetPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(0, 441, Short.MAX_VALUE)
+            );
+            mapBlocksetPanelLayout.setVerticalGroup(
+                mapBlocksetPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(0, 570, Short.MAX_VALUE)
+            );
 
-                    jScrollPane3.setViewportView(mapBlocksetPanel);
+            jScrollPane3.setViewportView(mapBlocksetPanel);
 
-                    javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-                    jPanel4.setLayout(jPanel4Layout);
-                    jPanel4Layout.setHorizontalGroup(
-                        jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    );
-                    jPanel4Layout.setVerticalGroup(
-                        jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 584, Short.MAX_VALUE)
-                    );
+            javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+            jPanel4.setLayout(jPanel4Layout);
+            jPanel4Layout.setHorizontalGroup(
+                jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            );
+            jPanel4Layout.setVerticalGroup(
+                jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 584, Short.MAX_VALUE)
+            );
 
-                    javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
-                    jPanel11.setLayout(jPanel11Layout);
-                    jPanel11Layout.setHorizontalGroup(
-                        jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
+            jPanel11.setLayout(jPanel11Layout);
+            jPanel11Layout.setHorizontalGroup(
+                jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel11Layout.createSequentialGroup()
+                    .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel11Layout.createSequentialGroup()
-                            .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel11Layout.createSequentialGroup()
-                                    .addContainerGap()
-                                    .addComponent(blocksetViewPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addContainerGap())
-                    );
-                    jPanel11Layout.setVerticalGroup(
-                        jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel11Layout.createSequentialGroup()
-                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(blocksetViewPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addContainerGap())
-                    );
+                            .addContainerGap()
+                            .addComponent(blocksetViewPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addContainerGap())
+            );
+            jPanel11Layout.setVerticalGroup(
+                jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel11Layout.createSequentialGroup()
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(blocksetViewPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap())
+            );
 
-                    jSplitPane4.setRightComponent(jPanel11);
+            jSplitPane4.setRightComponent(jPanel11);
 
-                    javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-                    jPanel8.setLayout(jPanel8Layout);
-                    jPanel8Layout.setHorizontalGroup(
-                        jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jSplitPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 603, Short.MAX_VALUE)
-                    );
-                    jPanel8Layout.setVerticalGroup(
-                        jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jSplitPane4)
-                    );
+            javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+            jPanel8.setLayout(jPanel8Layout);
+            jPanel8Layout.setHorizontalGroup(
+                jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jSplitPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 603, Short.MAX_VALUE)
+            );
+            jPanel8Layout.setVerticalGroup(
+                jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jSplitPane4)
+            );
 
-                    jSplitPane2.setLeftComponent(jPanel8);
+            jSplitPane2.setLeftComponent(jPanel8);
 
-                    javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
-                    jPanel15.setLayout(jPanel15Layout);
-                    jPanel15Layout.setHorizontalGroup(
-                        jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jSplitPane2)
-                    );
-                    jPanel15Layout.setVerticalGroup(
-                        jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jSplitPane2)
-                    );
+            javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
+            jPanel15.setLayout(jPanel15Layout);
+            jPanel15Layout.setHorizontalGroup(
+                jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jSplitPane2)
+            );
+            jPanel15Layout.setVerticalGroup(
+                jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jSplitPane2)
+            );
 
-                    jSplitPane1.setTopComponent(jPanel15);
-                    jSplitPane1.setBottomComponent(console1);
+            jSplitPane1.setTopComponent(jPanel15);
+            jSplitPane1.setBottomComponent(console1);
 
-                    javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
-                    jPanel13.setLayout(jPanel13Layout);
-                    jPanel13Layout.setHorizontalGroup(
-                        jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jSplitPane1)
-                    );
-                    jPanel13Layout.setVerticalGroup(
-                        jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 850, Short.MAX_VALUE)
-                    );
+            javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
+            jPanel13.setLayout(jPanel13Layout);
+            jPanel13Layout.setHorizontalGroup(
+                jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jSplitPane1)
+            );
+            jPanel13Layout.setVerticalGroup(
+                jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 850, Short.MAX_VALUE)
+            );
 
-                    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-                    getContentPane().setLayout(layout);
-                    layout.setHorizontalGroup(
-                        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    );
-                    layout.setVerticalGroup(
-                        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    );
+            javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+            getContentPane().setLayout(layout);
+            layout.setHorizontalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            );
+            layout.setVerticalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            );
 
-                    setSize(new java.awt.Dimension(1216, 858));
-                    setLocationRelativeTo(null);
-                }// </editor-fold>//GEN-END:initComponents
+            setSize(new java.awt.Dimension(1216, 858));
+            setLocationRelativeTo(null);
+        }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonImportMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportMapActionPerformed
         Path paletteEntriesPath = PathHelpers.getBasePath().resolve(fileButtonImportPaletteEntries.getFilePath());

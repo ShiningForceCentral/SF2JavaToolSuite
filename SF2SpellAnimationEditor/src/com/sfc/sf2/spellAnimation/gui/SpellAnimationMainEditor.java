@@ -9,7 +9,9 @@ import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.core.actions.NonCombinableAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
+import com.sfc.sf2.core.settings.ViewSettings;
 import com.sfc.sf2.helpers.PathHelpers;
+import com.sfc.sf2.helpers.RenderScaleHelpers;
 import com.sfc.sf2.spellAnimation.SpellAnimation;
 import com.sfc.sf2.spellAnimation.SpellAnimationManager;
 import java.nio.file.Path;
@@ -21,7 +23,8 @@ import java.util.logging.Level;
  */
 public class SpellAnimationMainEditor extends AbstractMainEditor {
     
-    SpellAnimationManager spellAnimationManager = new SpellAnimationManager();
+    private final ViewSettings viewSettings = new ViewSettings(RenderScaleHelpers.RENDER_SCALE_2X);
+    private SpellAnimationManager spellAnimationManager = new SpellAnimationManager();
         
     /**
      * Creates new form NewApplication
@@ -36,7 +39,7 @@ public class SpellAnimationMainEditor extends AbstractMainEditor {
     protected void initEditor() {
         super.initEditor();
         
-        viewPanel1.setLayoutPanel(spellAnimationLayoutPanel);
+        viewPanel1.setLayoutPanel(spellAnimationLayoutPanel, viewSettings);
         accordionPanel1.setExpanded(false);
     }
     
@@ -272,7 +275,7 @@ public class SpellAnimationMainEditor extends AbstractMainEditor {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
-                    .addComponent(jLabel1)))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
@@ -422,11 +425,11 @@ public class SpellAnimationMainEditor extends AbstractMainEditor {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, 1199, Short.MAX_VALUE)
+            .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, 1215, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, 672, Short.MAX_VALUE)
+            .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, 643, Short.MAX_VALUE)
         );
 
         setSize(new java.awt.Dimension(1215, 680));

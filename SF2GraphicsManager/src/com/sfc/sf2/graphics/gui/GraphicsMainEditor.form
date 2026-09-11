@@ -223,7 +223,7 @@
                                         <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                           <Value id="BIN"/>
                                         </Property>
-                                        <Property name="filePath" type="java.lang.String" value=".\u005ctech\u005csegalogopalette.bin" containsInvalidXMLChars="true"/>
+                                        <Property name="filePath" type="java.lang.String" value="./tech/segalogopalette.bin" containsInvalidXMLChars="true"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Palette file :"/>
                                         <Property name="name" type="java.lang.String" value="Import Palette" noResource="true"/>
@@ -234,7 +234,7 @@
                                         <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                           <Value id="BIN"/>
                                         </Property>
-                                        <Property name="filePath" type="java.lang.String" value=".\u005ctech\u005csegalogotiles.bin" containsInvalidXMLChars="true"/>
+                                        <Property name="filePath" type="java.lang.String" value="./tech/segalogotiles.bin" containsInvalidXMLChars="true"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Graphics file :"/>
                                         <Property name="name" type="java.lang.String" value="Import Graphics" noResource="true"/>
@@ -421,7 +421,7 @@
                                         <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                           <Value id="ANY_IMAGE"/>
                                         </Property>
-                                        <Property name="filePath" type="java.lang.String" value=".\u005cexport\u005csegalogotiles.png" containsInvalidXMLChars="true"/>
+                                        <Property name="filePath" type="java.lang.String" value="./export/segalogotiles.png" containsInvalidXMLChars="true"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Image File :"/>
                                         <Property name="name" type="java.lang.String" value="Import Image" noResource="true"/>
@@ -735,7 +735,7 @@
                                     <Component class="javax.swing.JTextField" name="jTextField24">
                                       <Properties>
                                         <Property name="horizontalAlignment" type="int" value="11"/>
-                                        <Property name="text" type="java.lang.String" value=".\u005cspecialscreens\u005ctitlescreen\u005ctitlescreenpalettes.bin" containsInvalidXMLChars="true"/>
+                                        <Property name="text" type="java.lang.String" value="./specialscreens/titlescreen/titlescreenpalettes.bin" containsInvalidXMLChars="true"/>
                                       </Properties>
                                     </Component>
                                     <Component class="javax.swing.JButton" name="jButton32">
@@ -754,7 +754,7 @@
                                     <Component class="javax.swing.JTextField" name="jTextField25">
                                       <Properties>
                                         <Property name="horizontalAlignment" type="int" value="11"/>
-                                        <Property name="text" type="java.lang.String" value=".\u005ctech\u005cbasetiles.bin" containsInvalidXMLChars="true"/>
+                                        <Property name="text" type="java.lang.String" value="./tech/basetiles.bin" containsInvalidXMLChars="true"/>
                                       </Properties>
                                     </Component>
                                     <Component class="javax.swing.JButton" name="jButton33">
@@ -784,7 +784,7 @@
                                     <Component class="javax.swing.JTextField" name="jTextField27">
                                       <Properties>
                                         <Property name="horizontalAlignment" type="int" value="11"/>
-                                        <Property name="text" type="java.lang.String" value=".\u005cspecialscreens\u005ctitlescreen\u005ctitlescreenpalettes.bin" containsInvalidXMLChars="true"/>
+                                        <Property name="text" type="java.lang.String" value="./specialscreens/titlescreen/titlescreenpalettes.bin" containsInvalidXMLChars="true"/>
                                       </Properties>
                                     </Component>
                                     <Component class="javax.swing.JButton" name="jButton34">
@@ -814,7 +814,7 @@
                                     <Component class="javax.swing.JTextField" name="jTextField35">
                                       <Properties>
                                         <Property name="horizontalAlignment" type="int" value="11"/>
-                                        <Property name="text" type="java.lang.String" value=".\u005cspecialscreens\u005ctitlescreen\u005ctitlescreenpalettes.bin" containsInvalidXMLChars="true"/>
+                                        <Property name="text" type="java.lang.String" value="./specialscreens/titlescreen/titlescreenpalettes.bin" containsInvalidXMLChars="true"/>
                                       </Properties>
                                     </Component>
                                     <Component class="javax.swing.JButton" name="jButton35">
@@ -844,7 +844,7 @@
                                     <Component class="javax.swing.JTextField" name="jTextField37">
                                       <Properties>
                                         <Property name="horizontalAlignment" type="int" value="11"/>
-                                        <Property name="text" type="java.lang.String" value=".\u005cspecialscreens\u005ctitlescreen\u005ctitlescreenpalettes.bin" containsInvalidXMLChars="true"/>
+                                        <Property name="text" type="java.lang.String" value="./specialscreens/titlescreen/titlescreenpalettes.bin" containsInvalidXMLChars="true"/>
                                       </Properties>
                                     </Component>
                                     <Component class="javax.swing.JButton" name="jButton36">
@@ -885,7 +885,7 @@
                                     <Component class="javax.swing.JTextField" name="jTextField14">
                                       <Properties>
                                         <Property name="horizontalAlignment" type="int" value="11"/>
-                                        <Property name="text" type="java.lang.String" value=".\u005ctech\u005cfonts\u005ctitlescreenfont.bin" containsInvalidXMLChars="true"/>
+                                        <Property name="text" type="java.lang.String" value="./tech/fonts/titlescreenfont.bin" containsInvalidXMLChars="true"/>
                                       </Properties>
                                     </Component>
                                     <Component class="javax.swing.JLabel" name="jLabel48">
@@ -1012,7 +1012,7 @@
                                         <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                           <Value id="BIN"/>
                                         </Property>
-                                        <Property name="filePath" type="java.lang.String" value=".\u005ctech\u005cnewsegalogo.bin" containsInvalidXMLChars="true"/>
+                                        <Property name="filePath" type="java.lang.String" value="./tech/newsegalogo.bin" containsInvalidXMLChars="true"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Graphics file :"/>
                                         <Property name="name" type="java.lang.String" value="Export Graphic" noResource="true"/>
@@ -1157,7 +1157,7 @@
                                         <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                           <Value id="ANY_IMAGE"/>
                                         </Property>
-                                        <Property name="filePath" type="java.lang.String" value=".\u005cexport\u005csegalogotiles.png" containsInvalidXMLChars="true"/>
+                                        <Property name="filePath" type="java.lang.String" value="./export/segalogotiles.png" containsInvalidXMLChars="true"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Image file :"/>
                                         <Property name="name" type="java.lang.String" value="Export Image" noResource="true"/>
@@ -1272,7 +1272,7 @@
                                     <Component class="javax.swing.JTextField" name="jTextField41">
                                       <Properties>
                                         <Property name="horizontalAlignment" type="int" value="11"/>
-                                        <Property name="text" type="java.lang.String" value=".\u005cexport\u005cnewtiles.bin" containsInvalidXMLChars="true"/>
+                                        <Property name="text" type="java.lang.String" value="./export/newtiles.bin" containsInvalidXMLChars="true"/>
                                       </Properties>
                                     </Component>
                                     <Component class="javax.swing.JButton" name="jButton37">
@@ -1330,7 +1330,7 @@
                                     <Component class="javax.swing.JTextField" name="jTextField43">
                                       <Properties>
                                         <Property name="horizontalAlignment" type="int" value="11"/>
-                                        <Property name="text" type="java.lang.String" value=".\u005cexport\u005cnewlayout.bin" containsInvalidXMLChars="true"/>
+                                        <Property name="text" type="java.lang.String" value="./export/newlayout.bin" containsInvalidXMLChars="true"/>
                                       </Properties>
                                     </Component>
                                     <Component class="javax.swing.JButton" name="jButton39">
@@ -1369,7 +1369,7 @@
                                     <Component class="javax.swing.JTextField" name="jTextField44">
                                       <Properties>
                                         <Property name="horizontalAlignment" type="int" value="11"/>
-                                        <Property name="text" type="java.lang.String" value=".\u005cexport\u005cnewpalette.bin" containsInvalidXMLChars="true"/>
+                                        <Property name="text" type="java.lang.String" value="./export/newpalette.bin" containsInvalidXMLChars="true"/>
                                       </Properties>
                                     </Component>
                                     <Component class="javax.swing.JButton" name="jButton40">

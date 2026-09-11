@@ -8,6 +8,7 @@ package com.sfc.sf2.battle.gui;
 import com.sfc.sf2.battle.AIPoint;
 import com.sfc.sf2.battle.AIRegion;
 import com.sfc.sf2.battle.Ally;
+import com.sfc.sf2.battle.BattleEnums;
 import com.sfc.sf2.battle.BattleManager;
 import com.sfc.sf2.battle.BattleSpriteset;
 import com.sfc.sf2.battle.Enemy;
@@ -22,6 +23,7 @@ import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.core.actions.CustomAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
+import com.sfc.sf2.core.models.combobox.MultiComboBoxTableEditor;
 import com.sfc.sf2.core.settings.SettingsManager;
 import com.sfc.sf2.core.settings.ViewSettings;
 import com.sfc.sf2.helpers.PathHelpers;
@@ -87,6 +89,7 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
         columns = tableEnemies.jTable.getColumnModel();
         columns.getColumn(0).setMaxWidth(30);
         columns.getColumn(1).setMinWidth(70);
+        columns.getColumn(6).setCellEditor(new MultiComboBoxTableEditor());
         columns = tableAIRegions.jTable.getColumnModel();
         columns.getColumn(0).setMaxWidth(30);
         columns = tableAIPoints.jTable.getColumnModel();
@@ -96,6 +99,15 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
         
         jTabbedPane2StateChanged(null);
         jTabbedPane3StateChanged(null);
+        
+        try {
+            Path sf2enumsPath = PathHelpers.getBasePath().resolve(fileButtonBattleEnums.getFilePath());
+            battleManager.ImportBattleEnums(sf2enumsPath);
+            updateBattleName();
+        } catch (Exception ex) {
+            Console.logger().log(Level.WARNING, null, ex);
+            Console.logger().warning("Could not load SF2Enums");
+        }
     }
     
     @Override
@@ -153,7 +165,23 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
 
             actionSharedTerrainInfo = value.sharedTerrainInfo();
             terrainKeyPanel1.setSharedTerrainInfo(actionSharedTerrainInfo);
+            
+            String terrainExportPath = fileButtonExportTerrain.getFilePath();
+            if (terrainExportPath.contains("entries\\battle")) {
+                int battleNumIndex = terrainExportPath.indexOf("entries\\battle")+14;
+                int lastSlash = terrainExportPath.lastIndexOf('\\');
+                terrainExportPath = String.format("%s%02d%s", terrainExportPath.substring(0, battleNumIndex), value.battle().getIndex(), terrainExportPath.substring(lastSlash));
+                fileButtonExportTerrain.setFilePath(terrainExportPath);
+            }
+            String spritesetExportPath = fileButtonExportSpriteset.getFilePath();
+            if (spritesetExportPath.contains("spritesets\\spriteset")) {
+                int battleNumIndex = spritesetExportPath.indexOf("spritesets\\spriteset")+20;
+                int lastSlash = spritesetExportPath.lastIndexOf('.');
+                spritesetExportPath = String.format("%s%02d%s", spritesetExportPath.substring(0, battleNumIndex), value.battle().getIndex(), spritesetExportPath.substring(lastSlash));
+                fileButtonExportSpriteset.setFilePath(spritesetExportPath);
+            }
         }
+        battleViewPanel1.checkForTooManyMapsprites();
     }
     
     /**
@@ -197,6 +225,7 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
         jSpinnerBattleIndex = new javax.swing.JSpinner();
         jButtonImportBattle = new javax.swing.JButton();
         infoButton7 = new com.sfc.sf2.core.gui.controls.InfoButton();
+        jLabelBattleName = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jTabbedPane4 = new javax.swing.JTabbedPane();
         jPanel13 = new javax.swing.JPanel();
@@ -263,43 +292,43 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
         accordionPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Map & terrain"));
 
         fileButtonPaletteEntries.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonPaletteEntries.setFilePath("..\\graphics\\maps\\mappalettes\\entries.asm");
+        fileButtonPaletteEntries.setFilePath("../graphics/maps/mappalettes/entries.asm");
         fileButtonPaletteEntries.setInfoMessage("Entries file for map palettes.");
         fileButtonPaletteEntries.setLabelText("Palette entries :");
         fileButtonPaletteEntries.setName("Import Palette Entries"); // NOI18N
 
         fileButtonTilesetEntries.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonTilesetEntries.setFilePath("..\\graphics\\maps\\maptilesets\\entries.asm");
+        fileButtonTilesetEntries.setFilePath("../graphics/maps/maptilesets/entries.asm");
         fileButtonTilesetEntries.setInfoMessage("Entries file for map tilesets.");
         fileButtonTilesetEntries.setLabelText("Tileset entries :");
         fileButtonTilesetEntries.setName("Import Tileset Entries"); // NOI18N
 
         fileButtonMapEntries.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonMapEntries.setFilePath("..\\maps\\entries.asm");
+        fileButtonMapEntries.setFilePath("../maps/entries.asm");
         fileButtonMapEntries.setInfoMessage("<html>Map entries file. Lists all maps defined to be used in the game.<br>If a map is not loading then it might not have been added to the entries.</html>");
         fileButtonMapEntries.setLabelText("Map entries :");
         fileButtonMapEntries.setName("Import Map Entries"); // NOI18N
 
         fileButtonTerrainEntries.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonTerrainEntries.setFilePath(".\\terrainentries.asm");
+        fileButtonTerrainEntries.setFilePath("./terrainentries.asm");
         fileButtonTerrainEntries.setInfoMessage("Entries for battle terrain data.");
         fileButtonTerrainEntries.setLabelText("Terrain entries :");
         fileButtonTerrainEntries.setName("Import Terrain Entries"); // NOI18N
 
         fileButtonImportCoords.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonImportCoords.setFilePath(".\\global\\battlemapcoords.asm");
+        fileButtonImportCoords.setFilePath("./global/battlemapcoords.asm");
         fileButtonImportCoords.setInfoMessage("Assembly file that defines the map and boundries for all battles.");
         fileButtonImportCoords.setLabelText("Battle map coords :");
         fileButtonImportCoords.setName("Import Battle Coords"); // NOI18N
 
         fileButtonSpritesetEntries.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonSpritesetEntries.setFilePath(".\\spritesets\\entries.asm");
+        fileButtonSpritesetEntries.setFilePath("./spritesets/entries.asm");
         fileButtonSpritesetEntries.setInfoMessage("<html>The entries file for battle data.<br>Battle \"Spritesets\" include ally positions, enemy info, AI Regions, and AI points.</html>");
         fileButtonSpritesetEntries.setLabelText("Spriteset entries :");
         fileButtonSpritesetEntries.setName("Import Spriteset Entries"); // NOI18N
 
         fileButtonImportLandEffects.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonImportLandEffects.setFilePath(".\\global\\landeffectsettingsandmovecosts.asm");
+        fileButtonImportLandEffects.setFilePath("./global/landeffectsettingsandmovecosts.asm");
         fileButtonImportLandEffects.setInfoMessage("Assembly file that defines the land effects (block move cost and defense bonus) for each battle.");
         fileButtonImportLandEffects.setLabelText("Land effects :");
         fileButtonImportLandEffects.setName("Import Land Effects"); // NOI18N
@@ -343,37 +372,37 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
         accordionPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Map sprites :"));
 
         fileButtonImportBasePalette.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButtonImportBasePalette.setFilePath("..\\graphics\\tech\\basepalette.bin");
+        fileButtonImportBasePalette.setFilePath("../graphics/tech/basepalette.bin");
         fileButtonImportBasePalette.setInfoMessage("The base palette to use for map sprites.");
         fileButtonImportBasePalette.setLabelText("Base palette :");
         fileButtonImportBasePalette.setName("Import Base Palette"); // NOI18N
 
         fileButtonMapspriteEntries.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonMapspriteEntries.setFilePath("..\\graphics\\mapsprites\\entries.asm");
+        fileButtonMapspriteEntries.setFilePath("../graphics/mapsprites/entries.asm");
         fileButtonMapspriteEntries.setInfoMessage("The entries file for map sprites.");
         fileButtonMapspriteEntries.setLabelText("Mapsprite entries :");
         fileButtonMapspriteEntries.setName("Import Mapsprite Entries"); // NOI18N
 
         fileButtonBattleEnums.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonBattleEnums.setFilePath("..\\..\\sf2enums.asm");
+        fileButtonBattleEnums.setFilePath("../../sf2enums.asm");
         fileButtonBattleEnums.setInfoMessage("Loads data from SF2Enums (such as enemy and item names).");
         fileButtonBattleEnums.setLabelText("Battle enums :");
         fileButtonBattleEnums.setName("Import Battle Enums"); // NOI18N
 
         fileButtonEnemyMapsprites.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonEnemyMapsprites.setFilePath("..\\stats\\enemies\\enemymapsprites.asm");
+        fileButtonEnemyMapsprites.setFilePath("../stats/enemies/enemymapsprites.asm");
         fileButtonEnemyMapsprites.setInfoMessage("The file that determine which Mapsprite is used by which defined enemy.");
         fileButtonEnemyMapsprites.setLabelText("Enemy mapsprites :");
         fileButtonEnemyMapsprites.setName("Import Enemy Mapsprites"); // NOI18N
 
         fileButtonSpecialSpriteEntries.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonSpecialSpriteEntries.setFilePath("..\\graphics\\specialsprites\\entries.asm");
+        fileButtonSpecialSpriteEntries.setFilePath("../graphics/specialsprites/entries.asm");
         fileButtonSpecialSpriteEntries.setInfoMessage("<html>Defines the special sprites (larger sprites). Certain enemies (e.g. bosses) use special sprites.</html>");
         fileButtonSpecialSpriteEntries.setLabelText("Special Sprites entries :");
         fileButtonSpecialSpriteEntries.setName("Import Special Sprite Entries"); // NOI18N
 
         fileButtonSpecialSpritePointers.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonSpecialSpritePointers.setFilePath("..\\graphics\\specialsprites\\pointers.asm");
+        fileButtonSpecialSpritePointers.setFilePath("../graphics/specialsprites/pointers.asm");
         fileButtonSpecialSpritePointers.setInfoMessage("Pointers file used to load Special Sprites.");
         fileButtonSpecialSpritePointers.setLabelText("Special sprites pointers :");
         fileButtonSpecialSpritePointers.setName("Import Special Sprite Pointers"); // NOI18N
@@ -419,6 +448,11 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
 
         jSpinnerBattleIndex.setModel(new javax.swing.SpinnerNumberModel(1, 0, 255, 1));
         jSpinnerBattleIndex.setName("Battle Index Spinner"); // NOI18N
+        jSpinnerBattleIndex.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jSpinnerBattleIndexStateChanged(evt);
+            }
+        });
 
         jButtonImportBattle.setText("Import");
         jButtonImportBattle.addActionListener(new java.awt.event.ActionListener() {
@@ -429,6 +463,10 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
 
         infoButton7.setText("");
 
+        jLabelBattleName.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        jLabelBattleName.setForeground(new java.awt.Color(153, 153, 153));
+        jLabelBattleName.setText("Battle name");
+
         javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
         jPanel16.setLayout(jPanel16Layout);
         jPanel16Layout.setHorizontalGroup(
@@ -438,16 +476,18 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButtonImportBattle))
+                    .addGroup(jPanel16Layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(infoButton7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel16Layout.createSequentialGroup()
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSpinnerBattleIndex, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonImportBattle))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(infoButton7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(jLabelBattleName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel16Layout.setVerticalGroup(
@@ -458,11 +498,12 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
                     .addComponent(infoButton7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonImportBattle)
-                    .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                        .addComponent(jSpinnerBattleIndex, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel10)))
+                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jSpinnerBattleIndex, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabelBattleName, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonImportBattle)
                 .addContainerGap())
         );
 
@@ -498,12 +539,12 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
         infoButton9.setMessageText("Exports the battle terrain data and spriteset data (ally, enemy, AI region & AI point).");
         infoButton9.setText("");
 
-        fileButtonExportTerrain.setFilePath(".\\entries\\battle01\\terrain.bin");
+        fileButtonExportTerrain.setFilePath("./entries/battle01/terrain.bin");
         fileButtonExportTerrain.setInfoMessage("");
         fileButtonExportTerrain.setLabelText("Battle terrain :");
         fileButtonExportTerrain.setName("Export Battle Terrain"); // NOI18N
 
-        fileButtonExportSpriteset.setFilePath(".\\spritesets\\spriteset01.asm");
+        fileButtonExportSpriteset.setFilePath("./spritesets/spriteset01.asm");
         fileButtonExportSpriteset.setInfoMessage("");
         fileButtonExportSpriteset.setLabelText("Battle spriteset :");
         fileButtonExportSpriteset.setName("Export battle Spriteset"); // NOI18N
@@ -558,7 +599,7 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
         infoButton8.setText("");
 
         fileButtonExportCoords.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ANY_ASSEMBLY);
-        fileButtonExportCoords.setFilePath(".\\global\\battlemapcoords.asm");
+        fileButtonExportCoords.setFilePath("./global/battlemapcoords.asm");
         fileButtonExportCoords.setInfoMessage("");
         fileButtonExportCoords.setLabelText("Battle map coords :");
         fileButtonExportCoords.setName("Export Map Coords"); // NOI18N
@@ -610,7 +651,7 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
         infoButton10.setText("");
 
         fileButtonExportLandEffect.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonExportLandEffect.setFilePath(".\\global\\landeffectsettingsandmovecosts.asm");
+        fileButtonExportLandEffect.setFilePath("./global/landeffectsettingsandmovecosts.asm");
         fileButtonExportLandEffect.setInfoMessage("");
         fileButtonExportLandEffect.setLabelText("Land effect :");
         fileButtonExportLandEffect.setName("Export Land Effects"); // NOI18N
@@ -685,7 +726,7 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 624, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 624, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -1027,7 +1068,7 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
+            .addComponent(jSplitPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1000, Short.MAX_VALUE)
         );
 
         setSize(new java.awt.Dimension(1516, 1008));
@@ -1170,6 +1211,10 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
                 break;
         }
     }//GEN-LAST:event_jTabbedPane2StateChanged
+
+    private void jSpinnerBattleIndexStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinnerBattleIndexStateChanged
+        updateBattleName();
+    }//GEN-LAST:event_jSpinnerBattleIndexStateChanged
     
     private void onMapIndexChange(ActionEvent evt) {
         Path paletteEntriesPath = PathHelpers.getBasePath().resolve(fileButtonPaletteEntries.getFilePath());
@@ -1207,6 +1252,7 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
         if (e.getType() == TableModelEvent.DELETE || e.getType() == TableModelEvent.INSERT) {
             battleLayoutPanel.getBattle().getSpriteset().setAllies(allyPropertiesTableModel.getTableData(Ally[].class));
         }
+        battleViewPanel1.checkForTooManyMapsprites();
     }
 
     private void onTableAlliesSelectionChanged(ListSelectionEvent e) {
@@ -1226,6 +1272,7 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
         if (e.getType() == TableModelEvent.DELETE || e.getType() == TableModelEvent.INSERT) {
             battleLayoutPanel.getBattle().getSpriteset().setEnemies(enemyPropertiesTableModel.getTableData(Enemy[].class));
         }
+        battleViewPanel1.checkForTooManyMapsprites();
     }
 
     private void onTableEnemiesSelectionChanged(ListSelectionEvent e) {
@@ -1309,6 +1356,24 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
         battleLayoutPanel.setTerrainDrawMode(drawMode);
     }
     
+    private void updateBattleName() {
+        String text = null;
+        BattleEnums battleEnums = battleManager.getBattleEnums();
+        if (battleEnums == null) {
+            text = "Could not load battle names";
+        } else {
+            int index = (int)jSpinnerBattleIndex.getValue();
+            Object[] battleNames = battleEnums.getBattles().keySet().toArray();
+            if (index >= 0 && index < battleNames.length) {
+                text = (String)battleNames[index];
+            } else {
+                text = "Unknown battle";
+            }
+        }
+        
+        jLabelBattleName.setText(text);
+    }
+    
     /**
      * To create a new Main Editor, copy the below code
      * Don't forget to change the new main class (below)
@@ -1367,6 +1432,7 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabelBattleName;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;

@@ -64,8 +64,9 @@ public class MapEntriesAsmProcessor extends AbstractAsmProcessor<MapEntryData[],
                 int includeIndex = line.indexOf("include")+7;
                 if (includeIndex <= 7) includeIndex = line.indexOf("incbin")+6;
                 String pathID = line.substring(0, colonIndex).trim();
-                String Path = line.substring(includeIndex).trim().replace("\"", "");
-                mapPaths.put(pathID, Path);
+                String path = line.substring(includeIndex).trim().replace("\"", "");
+                path = StringHelpers.normalisePathSeparators(path);
+                mapPaths.put(pathID, path);
                 if (colonIndex < 7) {
                     //First identifier before map components
                     currentMapId = StringHelpers.getNumberFromString(line.substring(3, numIndex));

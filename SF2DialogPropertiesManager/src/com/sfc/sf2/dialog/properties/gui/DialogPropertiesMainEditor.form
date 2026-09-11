@@ -308,7 +308,7 @@
                                         <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                           <Value id="ASM"/>
                                         </Property>
-                                        <Property name="filePath" type="java.lang.String" value=".\u005cspritedialogproperties-standard.asm" containsInvalidXMLChars="true"/>
+                                        <Property name="filePath" type="java.lang.String" value="./spritedialogproperties-standard.asm" containsInvalidXMLChars="true"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Dialog properties :"/>
                                         <Property name="name" type="java.lang.String" value="Import General Dialog" noResource="true"/>
@@ -385,7 +385,7 @@
                                         <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                           <Value id="ASM"/>
                                         </Property>
-                                        <Property name="filePath" type="java.lang.String" value=".\u005cspritedialogproperties-standard.asm" containsInvalidXMLChars="true"/>
+                                        <Property name="filePath" type="java.lang.String" value="./spritedialogproperties-standard.asm" containsInvalidXMLChars="true"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Dialog properties :"/>
                                         <Property name="name" type="java.lang.String" value="Export General Dialog" noResource="true"/>
@@ -497,7 +497,7 @@
                                         <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                           <Value id="ASM"/>
                                         </Property>
-                                        <Property name="filePath" type="java.lang.String" value=".\u005cstats\u005callies\u005callydialogproperties-standard.asm" containsInvalidXMLChars="true"/>
+                                        <Property name="filePath" type="java.lang.String" value="./stats/allies/allydialogproperties-standard.asm" containsInvalidXMLChars="true"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Dialog properties :"/>
                                         <Property name="name" type="java.lang.String" value="Import Allies Dialog" noResource="true"/>
@@ -576,7 +576,7 @@
                                         <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                           <Value id="ASM"/>
                                         </Property>
-                                        <Property name="filePath" type="java.lang.String" value=".\u005cstats\u005callies\u005callydialogproperties-standard.asm" containsInvalidXMLChars="true"/>
+                                        <Property name="filePath" type="java.lang.String" value="./stats/allies/allydialogproperties-standard.asm" containsInvalidXMLChars="true"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Dialog properties :"/>
                                         <Property name="name" type="java.lang.String" value="Export Allies Dialog" noResource="true"/>
@@ -648,7 +648,7 @@
                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                   <Value id="BIN"/>
                                 </Property>
-                                <Property name="filePath" type="java.lang.String" value=".\u005cgraphics\u005ctech\u005cbasepalette.bin" containsInvalidXMLChars="true"/>
+                                <Property name="filePath" type="java.lang.String" value="./graphics/tech/basepalette.bin" containsInvalidXMLChars="true"/>
                                 <Property name="infoMessage" type="java.lang.String" value="The game&apos;s base palette. Used to show the mapsprites."/>
                                 <Property name="labelText" type="java.lang.String" value="Base palette :"/>
                                 <Property name="name" type="java.lang.String" value="Import Base Palette" noResource="true"/>
@@ -659,7 +659,7 @@
                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                   <Value id="ASM"/>
                                 </Property>
-                                <Property name="filePath" type="java.lang.String" value=".\u005cgraphics\u005cmapsprites\u005centries.asm" containsInvalidXMLChars="true"/>
+                                <Property name="filePath" type="java.lang.String" value="./graphics/mapsprites/entries.asm" containsInvalidXMLChars="true"/>
                                 <Property name="infoMessage" type="java.lang.String" value="The entries file to load mapsprite previews."/>
                                 <Property name="labelText" type="java.lang.String" value="Mapsprite entries :"/>
                                 <Property name="name" type="java.lang.String" value="Import Mapsprite Entries" noResource="true"/>
@@ -670,7 +670,7 @@
                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                   <Value id="ASM"/>
                                 </Property>
-                                <Property name="filePath" type="java.lang.String" value=".\u005cgraphics\u005cportraits\u005centries.asm" containsInvalidXMLChars="true"/>
+                                <Property name="filePath" type="java.lang.String" value="./graphics/portraits/entries.asm" containsInvalidXMLChars="true"/>
                                 <Property name="infoMessage" type="java.lang.String" value="The entries file to show preview of portraits."/>
                                 <Property name="labelText" type="java.lang.String" value="Portrait entries :"/>
                                 <Property name="name" type="java.lang.String" value="Import Portrait Entries" noResource="true"/>
@@ -681,7 +681,7 @@
                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                   <Value id="ASM"/>
                                 </Property>
-                                <Property name="filePath" type="java.lang.String" value="..\u005csf2enums.asm" containsInvalidXMLChars="true"/>
+                                <Property name="filePath" type="java.lang.String" value="../sf2enums.asm" containsInvalidXMLChars="true"/>
                                 <Property name="infoMessage" type="java.lang.String" value="Loads data from SF2Enums, including: SFX file names."/>
                                 <Property name="labelText" type="java.lang.String" value="SF2Enums :"/>
                                 <Property name="name" type="java.lang.String" value="Import Enums" noResource="true"/>
@@ -692,7 +692,7 @@
                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                   <Value id="ASM"/>
                                 </Property>
-                                <Property name="filePath" type="java.lang.String" value=".\u005cgraphics\u005cspecialsprites\u005centries.asm" containsInvalidXMLChars="true"/>
+                                <Property name="filePath" type="java.lang.String" value="./graphics/specialsprites/entries.asm" containsInvalidXMLChars="true"/>
                                 <Property name="infoMessage" type="java.lang.String" value="The special sprites entries to show preview of special sprites (ie. boss sprites)."/>
                                 <Property name="labelText" type="java.lang.String" value="Special sprite entries :"/>
                                 <Property name="name" type="java.lang.String" value="Import Special Sprite Entries" noResource="true"/>
@@ -703,7 +703,7 @@
                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                   <Value id="ASM"/>
                                 </Property>
-                                <Property name="filePath" type="java.lang.String" value=".\u005cgraphics\u005cspecialsprites\u005cpointers.asm" containsInvalidXMLChars="true"/>
+                                <Property name="filePath" type="java.lang.String" value="./graphics/specialsprites/pointers.asm" containsInvalidXMLChars="true"/>
                                 <Property name="infoMessage" type="java.lang.String" value="Also required to load special sprites."/>
                                 <Property name="labelText" type="java.lang.String" value="Special sprite pointers :"/>
                                 <Property name="name" type="java.lang.String" value="Import Special Sprite Pointers" noResource="true"/>

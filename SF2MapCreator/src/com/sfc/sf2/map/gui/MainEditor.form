@@ -176,7 +176,7 @@
                             <Component class="javax.swing.JTextField" name="jTextField24">
                               <Properties>
                                 <Property name="horizontalAlignment" type="int" value="11"/>
-                                <Property name="text" type="java.lang.String" value=".\u005centries\u005cmap03\u005c" containsInvalidXMLChars="true"/>
+                                <Property name="text" type="java.lang.String" value="./entries/map03/" containsInvalidXMLChars="true"/>
                               </Properties>
                             </Component>
                             <Component class="javax.swing.JButton" name="jButton31">

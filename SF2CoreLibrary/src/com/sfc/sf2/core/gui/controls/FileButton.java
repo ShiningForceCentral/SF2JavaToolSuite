@@ -21,6 +21,8 @@ import javax.swing.JFileChooser;
  */
 public class FileButton extends javax.swing.JPanel {
         
+    private boolean convertToRelativeDirectory = true;
+    
     /**
      * Creates new form FileButton
      */
@@ -70,6 +72,15 @@ public class FileButton extends javax.swing.JPanel {
     @BeanProperty(preferred = true, visualUpdate = false, description = "Which file types will be seen.")
     public void setFileFormatFilter(FileFormat format) {
         jFileChooserFiles.setFileFilter(format.getFilehooserFilter());
+    }
+    
+    public boolean getUseRelativeDirectory() {
+        return convertToRelativeDirectory;
+    }
+    
+    @BeanProperty(preferred = true, visualUpdate = true, description = "If the selected path is within the base folder, the path will be trimmed to be a relative path")
+    public void setUseRelativeDirectory(boolean relative) {
+        convertToRelativeDirectory = relative;
     }
 
     /**
@@ -147,16 +158,26 @@ public class FileButton extends javax.swing.JPanel {
     }//GEN-LAST:event_jTextFieldPathActionPerformed
 
     private void openFileChooser() {
-        Path filePath = PathHelpers.makeAbsolute(Path.of(jTextFieldPath.getText()));
+        String path = jTextFieldPath.getText();
+        if (path.startsWith("./")) {
+            path = path.substring(2);
+        }
+        Path filePath = PathHelpers.makeAbsolute(Path.of(path));
         File directory = PathHelpers.getNearestValidParent(filePath);
         File file = filePath.toFile();
         jFileChooserFiles.setCurrentDirectory(directory);
         jFileChooserFiles.setSelectedFile(file);
         int returnVal = jFileChooserFiles.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-            String path = jFileChooserFiles.getSelectedFile().toString();
-            path = path.replace(PathHelpers.getBasePath().toString(), ".");
-            ActionManager.setAndExecuteAction(new BasicAction<String>(this, "File Change", this::setPath, path, jTextFieldPath.getText()));
+            String newPath;
+            if (convertToRelativeDirectory) {
+                newPath = PathHelpers.getBasePath().relativize(jFileChooserFiles.getSelectedFile().toPath()).toString();
+                if (!newPath.startsWith("."))
+                    newPath = "./" + newPath;
+            } else {
+                newPath = jFileChooserFiles.getSelectedFile().toString();
+            }
+            ActionManager.setAndExecuteAction(new BasicAction<String>(this, "File Change", this::setPath, newPath, jTextFieldPath.getText()));
         }
     }
 

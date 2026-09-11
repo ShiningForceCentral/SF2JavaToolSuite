@@ -241,7 +241,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="ASM"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value="..\u005cgraphics\u005cmaps\u005cmappalettes\u005centries.asm" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="../graphics/maps/mappalettes/entries.asm"/>
                                     <Property name="infoMessage" type="java.lang.String" value="Entries file for map palettes."/>
                                     <Property name="labelText" type="java.lang.String" value="Palette entries :"/>
                                     <Property name="name" type="java.lang.String" value="Import Palette Entries" noResource="true"/>
@@ -252,7 +252,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="ASM"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value="..\u005cgraphics\u005cmaps\u005cmaptilesets\u005centries.asm" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="../graphics/maps/maptilesets/entries.asm"/>
                                     <Property name="infoMessage" type="java.lang.String" value="Entries file for map tilesets."/>
                                     <Property name="labelText" type="java.lang.String" value="Tileset entries :"/>
                                     <Property name="name" type="java.lang.String" value="Import Tileset Entries" noResource="true"/>
@@ -263,7 +263,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="ASM"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value="..\u005cmaps\u005centries.asm" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="../maps/entries.asm"/>
                                     <Property name="infoMessage" type="java.lang.String" value="&lt;html&gt;Map entries file. Lists all maps defined to be used in the game.&lt;br&gt;If a map is not loading then it might not have been added to the entries.&lt;/html&gt;"/>
                                     <Property name="labelText" type="java.lang.String" value="Map entries :"/>
                                     <Property name="name" type="java.lang.String" value="Import Map Entries" noResource="true"/>
@@ -274,7 +274,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="ASM"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value=".\u005cterrainentries.asm" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="./terrainentries.asm"/>
                                     <Property name="infoMessage" type="java.lang.String" value="Entries for battle terrain data."/>
                                     <Property name="labelText" type="java.lang.String" value="Terrain entries :"/>
                                     <Property name="name" type="java.lang.String" value="Import Terrain Entries" noResource="true"/>
@@ -285,7 +285,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="ASM"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value=".\u005cglobal\u005cbattlemapcoords.asm" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="./global/battlemapcoords.asm"/>
                                     <Property name="infoMessage" type="java.lang.String" value="Assembly file that defines the map and boundries for all battles."/>
                                     <Property name="labelText" type="java.lang.String" value="Battle map coords :"/>
                                     <Property name="name" type="java.lang.String" value="Import Battle Coords" noResource="true"/>
@@ -296,7 +296,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="ASM"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value=".\u005cspritesets\u005centries.asm" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="./spritesets/entries.asm"/>
                                     <Property name="infoMessage" type="java.lang.String" value="&lt;html&gt;The entries file for battle data.&lt;br&gt;Battle &quot;Spritesets&quot; include ally positions, enemy info, AI Regions, and AI points.&lt;/html&gt;"/>
                                     <Property name="labelText" type="java.lang.String" value="Spriteset entries :"/>
                                     <Property name="name" type="java.lang.String" value="Import Spriteset Entries" noResource="true"/>
@@ -307,7 +307,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="ASM"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value=".\u005cglobal\u005clandeffectsettingsandmovecosts.asm" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="./global/landeffectsettingsandmovecosts.asm"/>
                                     <Property name="infoMessage" type="java.lang.String" value="Assembly file that defines the land effects (block move cost and defense bonus) for each battle."/>
                                     <Property name="labelText" type="java.lang.String" value="Land effects :"/>
                                     <Property name="name" type="java.lang.String" value="Import Land Effects" noResource="true"/>
@@ -367,7 +367,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="BIN"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value="..\u005cgraphics\u005ctech\u005cbasepalette.bin" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="../graphics/tech/basepalette.bin"/>
                                     <Property name="infoMessage" type="java.lang.String" value="The base palette to use for map sprites."/>
                                     <Property name="labelText" type="java.lang.String" value="Base palette :"/>
                                     <Property name="name" type="java.lang.String" value="Import Base Palette" noResource="true"/>
@@ -378,7 +378,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="ASM"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value="..\u005cgraphics\u005cmapsprites\u005centries.asm" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="../graphics/mapsprites/entries.asm"/>
                                     <Property name="infoMessage" type="java.lang.String" value="The entries file for map sprites."/>
                                     <Property name="labelText" type="java.lang.String" value="Mapsprite entries :"/>
                                     <Property name="name" type="java.lang.String" value="Import Mapsprite Entries" noResource="true"/>
@@ -389,7 +389,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="ASM"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value="..\u005c..\u005csf2enums.asm" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="../../sf2enums.asm"/>
                                     <Property name="infoMessage" type="java.lang.String" value="Loads data from SF2Enums (such as enemy and item names)."/>
                                     <Property name="labelText" type="java.lang.String" value="Battle enums :"/>
                                     <Property name="name" type="java.lang.String" value="Import Battle Enums" noResource="true"/>
@@ -400,7 +400,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="ASM"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value="..\u005cstats\u005cenemies\u005cenemymapsprites.asm" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="../stats/enemies/enemymapsprites.asm"/>
                                     <Property name="infoMessage" type="java.lang.String" value="The file that determine which Mapsprite is used by which defined enemy."/>
                                     <Property name="labelText" type="java.lang.String" value="Enemy mapsprites :"/>
                                     <Property name="name" type="java.lang.String" value="Import Enemy Mapsprites" noResource="true"/>
@@ -411,7 +411,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="ASM"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value="..\u005cgraphics\u005cspecialsprites\u005centries.asm" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="../graphics/specialsprites/entries.asm"/>
                                     <Property name="infoMessage" type="java.lang.String" value="&lt;html&gt;Defines the special sprites (larger sprites). Certain enemies (e.g. bosses) use special sprites.&lt;/html&gt;"/>
                                     <Property name="labelText" type="java.lang.String" value="Special Sprites entries :"/>
                                     <Property name="name" type="java.lang.String" value="Import Special Sprite Entries" noResource="true"/>
@@ -422,7 +422,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="ASM"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value="..\u005cgraphics\u005cspecialsprites\u005cpointers.asm" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="../graphics/specialsprites/pointers.asm"/>
                                     <Property name="infoMessage" type="java.lang.String" value="Pointers file used to load Special Sprites."/>
                                     <Property name="labelText" type="java.lang.String" value="Special sprites pointers :"/>
                                     <Property name="name" type="java.lang.String" value="Import Special Sprite Pointers" noResource="true"/>
@@ -447,17 +447,20 @@
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Group type="102" alignment="1" attributes="0">
                                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                                  <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="jSpinnerBattleIndex" min="-2" pref="50" max="-2" attributes="0"/>
-                                                  <EmptySpace max="-2" attributes="0"/>
                                                   <Component id="jButtonImportBattle" min="-2" max="-2" attributes="0"/>
                                               </Group>
-                                              <Group type="102" alignment="1" attributes="0">
+                                              <Group type="102" attributes="0">
                                                   <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
                                                   <Component id="infoButton7" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                              </Group>
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="jSpinnerBattleIndex" min="-2" pref="50" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="jLabelBattleName" max="32767" attributes="0"/>
                                               </Group>
                                           </Group>
                                           <EmptySpace max="-2" attributes="0"/>
@@ -473,13 +476,13 @@
                                               <Component id="jLabel2" min="-2" pref="26" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="jButtonImportBattle" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              <Group type="103" alignment="0" groupAlignment="2" attributes="0">
-                                                  <Component id="jSpinnerBattleIndex" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jLabel10" alignment="2" min="-2" max="-2" attributes="0"/>
-                                              </Group>
+                                          <Group type="103" groupAlignment="2" attributes="0">
+                                              <Component id="jSpinnerBattleIndex" alignment="2" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jLabel10" alignment="2" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jLabelBattleName" alignment="2" min="-2" pref="26" max="-2" attributes="0"/>
                                           </Group>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="jButtonImportBattle" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
@@ -503,6 +506,9 @@
                                     </Property>
                                     <Property name="name" type="java.lang.String" value="Battle Index Spinner" noResource="true"/>
                                   </Properties>
+                                  <Events>
+                                    <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jSpinnerBattleIndexStateChanged"/>
+                                  </Events>
                                 </Component>
                                 <Component class="javax.swing.JButton" name="jButtonImportBattle">
                                   <Properties>
@@ -515,6 +521,17 @@
                                 <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton7">
                                   <Properties>
                                     <Property name="text" type="java.lang.String" value=""/>
+                                  </Properties>
+                                </Component>
+                                <Component class="javax.swing.JLabel" name="jLabelBattleName">
+                                  <Properties>
+                                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                      <Font name="Segoe UI" size="12" style="2"/>
+                                    </Property>
+                                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                                      <Color blue="99" green="99" red="99" type="rgb"/>
+                                    </Property>
+                                    <Property name="text" type="java.lang.String" value="Battle name"/>
                                   </Properties>
                                 </Component>
                               </SubComponents>
@@ -619,7 +636,7 @@
                                     </Component>
                                     <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButtonExportTerrain">
                                       <Properties>
-                                        <Property name="filePath" type="java.lang.String" value=".\u005centries\u005cbattle01\u005cterrain.bin" containsInvalidXMLChars="true"/>
+                                        <Property name="filePath" type="java.lang.String" value="./entries/battle01/terrain.bin"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Battle terrain :"/>
                                         <Property name="name" type="java.lang.String" value="Export Battle Terrain" noResource="true"/>
@@ -627,7 +644,7 @@
                                     </Component>
                                     <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButtonExportSpriteset">
                                       <Properties>
-                                        <Property name="filePath" type="java.lang.String" value=".\u005cspritesets\u005cspriteset01.asm" containsInvalidXMLChars="true"/>
+                                        <Property name="filePath" type="java.lang.String" value="./spritesets/spriteset01.asm"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Battle spriteset :"/>
                                         <Property name="name" type="java.lang.String" value="Export battle Spriteset" noResource="true"/>
@@ -708,7 +725,7 @@
                                         <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                           <Value id="ANY_ASSEMBLY"/>
                                         </Property>
-                                        <Property name="filePath" type="java.lang.String" value=".\u005cglobal\u005cbattlemapcoords.asm" containsInvalidXMLChars="true"/>
+                                        <Property name="filePath" type="java.lang.String" value="./global/battlemapcoords.asm"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Battle map coords :"/>
                                         <Property name="name" type="java.lang.String" value="Export Map Coords" noResource="true"/>
@@ -789,7 +806,7 @@
                                         <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                           <Value id="ASM"/>
                                         </Property>
-                                        <Property name="filePath" type="java.lang.String" value=".\u005cglobal\u005clandeffectsettingsandmovecosts.asm" containsInvalidXMLChars="true"/>
+                                        <Property name="filePath" type="java.lang.String" value="./global/landeffectsettingsandmovecosts.asm"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Land effect :"/>
                                         <Property name="name" type="java.lang.String" value="Export Land Effects" noResource="true"/>

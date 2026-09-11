@@ -22,12 +22,14 @@ public class SliderAction extends BasicAction<Integer> {
     
     @Override
     public void execute() {
+        if (!slider.isEnabled()) return;
         slider.requestFocus();
         slider.setValue(newValue);
     }
 
     @Override
     public void undo() {
+        if (!slider.isEnabled()) return;
         slider.requestFocus();
         slider.setValue(oldValue);
     }

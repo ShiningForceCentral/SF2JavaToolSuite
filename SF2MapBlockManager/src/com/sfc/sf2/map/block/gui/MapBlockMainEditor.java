@@ -170,8 +170,8 @@ public class MapBlockMainEditor extends AbstractMainEditor {
         jPanel6 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        tilesetsLayoutPanel = new com.sfc.sf2.map.block.gui.TilesetsLayoutPanel();
-        tilesetViewPanel1 = new com.sfc.sf2.map.block.gui.TilesetViewPanel();
+        tilesetsLayoutPanel = new com.sfc.sf2.map.block.gui.MapTilesetsLayoutPanel();
+        tilesetViewPanel1 = new com.sfc.sf2.map.block.gui.MapTilesetViewPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel22 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -221,7 +221,7 @@ public class MapBlockMainEditor extends AbstractMainEditor {
             }
         });
 
-        directoryButtonImportMap.setDirectoryPath(".\\entries\\map03\\");
+        directoryButtonImportMap.setDirectoryPath("./entries/map03/");
             directoryButtonImportMap.setInfoMessage("");
             directoryButtonImportMap.setLabelText("Map dir :");
             directoryButtonImportMap.setName("Import Map"); // NOI18N
@@ -255,13 +255,13 @@ public class MapBlockMainEditor extends AbstractMainEditor {
             accordionPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Palette, tilesets, & map data"));
 
             fileButtonPaletteEntries.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-            fileButtonPaletteEntries.setFilePath("..\\graphics\\maps\\mappalettes\\entries.asm");
+            fileButtonPaletteEntries.setFilePath("../graphics/maps/mappalettes/entries.asm");
             fileButtonPaletteEntries.setInfoMessage("");
             fileButtonPaletteEntries.setLabelText("Palette entries :");
             fileButtonPaletteEntries.setName("Import Palette Entries"); // NOI18N
 
             fileButtonTilesetEntries.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-            fileButtonTilesetEntries.setFilePath("..\\graphics\\maps\\maptilesets\\entries.asm");
+            fileButtonTilesetEntries.setFilePath("../graphics/maps/maptilesets/entries.asm");
             fileButtonTilesetEntries.setInfoMessage("");
             fileButtonTilesetEntries.setLabelText("Tilesets entries :");
             fileButtonTilesetEntries.setName("Import Tileset Entries"); // NOI18N
@@ -343,43 +343,43 @@ public class MapBlockMainEditor extends AbstractMainEditor {
             });
 
             fileButtonPalette.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-            fileButtonPalette.setFilePath("..\\graphics\\maps\\mappalettes\\mappalette00.bin");
+            fileButtonPalette.setFilePath("../graphics/maps/mappalettes/mappalette00.bin");
             fileButtonPalette.setInfoMessage("");
             fileButtonPalette.setLabelText("Palette :");
             fileButtonPalette.setName("Import Palette"); // NOI18N
 
             fileButtonTileset1.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-            fileButtonTileset1.setFilePath("..\\graphics\\maps\\maptilesets\\maptileset000.bin");
+            fileButtonTileset1.setFilePath("../graphics/maps/maptilesets/maptileset000.bin");
             fileButtonTileset1.setInfoMessage("");
             fileButtonTileset1.setLabelText("Tileset 1 :");
             fileButtonTileset1.setName("Import Tileset 1"); // NOI18N
 
             fileButtonTileset2.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-            fileButtonTileset2.setFilePath("..\\graphics\\maps\\maptilesets\\maptileset037.bin");
+            fileButtonTileset2.setFilePath("../graphics/maps/maptilesets/maptileset037.bin");
             fileButtonTileset2.setInfoMessage("");
             fileButtonTileset2.setLabelText("Tileset 2 :");
             fileButtonTileset2.setName("Import Tileset 2"); // NOI18N
 
             fileButtonTileset3.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-            fileButtonTileset3.setFilePath("..\\graphics\\maps\\maptilesets\\maptileset043.bin");
+            fileButtonTileset3.setFilePath("../graphics/maps/maptilesets/maptileset043.bin");
             fileButtonTileset3.setInfoMessage("");
             fileButtonTileset3.setLabelText("Tileset 3 :");
             fileButtonTileset3.setName("Import Tileset 3"); // NOI18N
 
             fileButtonTileset4.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-            fileButtonTileset4.setFilePath("..\\graphics\\maps\\maptilesets\\maptileset053.bin");
+            fileButtonTileset4.setFilePath("../graphics/maps/maptilesets/maptileset053.bin");
             fileButtonTileset4.setInfoMessage("");
             fileButtonTileset4.setLabelText("Tileset 4 :");
             fileButtonTileset4.setName("Import Tileset 4"); // NOI18N
 
             fileButtonTileset5.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-            fileButtonTileset5.setFilePath("..\\graphics\\maps\\maptilesets\\maptileset066.bin");
+            fileButtonTileset5.setFilePath("../graphics/maps/maptilesets/maptileset066.bin");
             fileButtonTileset5.setInfoMessage("");
             fileButtonTileset5.setLabelText("Tileset 5 :");
             fileButtonTileset5.setName("Import Tileset 5"); // NOI18N
 
             fileButtonBlocks.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-            fileButtonBlocks.setFilePath(".\\entries\\map03\\0-blocks.bin");
+            fileButtonBlocks.setFilePath("./entries/map03/0-blocks.bin");
             fileButtonBlocks.setInfoMessage("");
             fileButtonBlocks.setLabelText("Blocks file :");
             fileButtonBlocks.setName("Import Blocks"); // NOI18N
@@ -527,13 +527,13 @@ public class MapBlockMainEditor extends AbstractMainEditor {
             });
 
             fileButtonExportBlocksetImage.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ANY_IMAGE);
-            fileButtonExportBlocksetImage.setFilePath(".\\blockset.png");
+            fileButtonExportBlocksetImage.setFilePath("./blockset.png");
             fileButtonExportBlocksetImage.setInfoMessage("<html>Exports an image of all of the blocks in the blockset (just like the 'blockset panel'.<br>Can be used with the Sf2MapCreator.</html>");
             fileButtonExportBlocksetImage.setLabelText("Image file :");
             fileButtonExportBlocksetImage.setName("Export Blockset Image"); // NOI18N
 
             fileButtonExportBlocksetPriorities.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.TXT);
-            fileButtonExportBlocksetPriorities.setFilePath(".\\blocksethptiles.txt");
+            fileButtonExportBlocksetPriorities.setFilePath("./blocksethptiles.txt");
             fileButtonExportBlocksetPriorities.setInfoMessage("<html>Exports a file containing the priority flags for the blockset.</html>");
             fileButtonExportBlocksetPriorities.setLabelText("Block HP tiles :");
             fileButtonExportBlocksetPriorities.setName("Export Blockset Priorities"); // NOI18N
@@ -569,7 +569,7 @@ public class MapBlockMainEditor extends AbstractMainEditor {
 
             jTabbedPane2.addTab("Image", jPanel28);
 
-            directoryButtonExportMap.setDirectoryPath(".\\entries\\map03\\");
+            directoryButtonExportMap.setDirectoryPath("./entries/map03/");
                 directoryButtonExportMap.setInfoMessage("");
                 directoryButtonExportMap.setLabelText("Map dir :");
                 directoryButtonExportMap.setName("Export Map"); // NOI18N
@@ -1133,7 +1133,7 @@ public class MapBlockMainEditor extends AbstractMainEditor {
         }
         MapBlock block = blockset.getBlocks()[index];
         BlockChangeActionData data = new BlockChangeActionData(block, index);
-        ActionManager.setAndExecuteAction(new CustomAction<BlockChangeActionData>(this, "Remove Block", this::actionRemoveBlock, data, this::actionAddBlock, data));
+        ActionManager.setAndExecuteAction(new CustomAction<BlockChangeActionData>(this, "Remove Block", this::actionRemoveBlock, data, this::actionInsertBlock, data));
     }//GEN-LAST:event_jButtonRemoveBlockActionPerformed
     
     private void jButtonExportBlocksetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExportBlocksetActionPerformed
@@ -1205,15 +1205,24 @@ public class MapBlockMainEditor extends AbstractMainEditor {
         }
     }//GEN-LAST:event_jRadioButtonSetPriorityItemStateChanged
 
-    private void actionAddBlock(BlockChangeActionData data) {   
+    private void actionAddBlock(BlockChangeActionData data) {
+        //Clone and add the block
+        actionAddBlock(data.index(), data.block(), true);
+    }
+    
+    private void actionInsertBlock(BlockChangeActionData data) {
+        //Insert without cloning
+        actionAddBlock(data.index(), data.block(), false);
+    }
+    
+    private void actionAddBlock(int index, MapBlock block, boolean clone) {//Insert without cloning
         MapBlockset blockset = mapBlocksetLayoutPanel.getBlockset();                                        
-        blockset.insertBlock(data.index(), data.block());
-        mapBlocksetLayoutPanel.setLeftSelectedIndex(data.index());
-        if (data.index() == blockset.getBlocks().length-1) { //Scroll to bottom
+        blockset.insertBlock(index, block, clone);
+        mapBlocksetLayoutPanel.setLeftSelectedIndex(index);
+        if (index == blockset.getBlocks().length-1) { //Scroll to bottom
             mapBlocksetLayoutPanel.centerOnMapPoint(Integer.MAX_VALUE, Integer.MAX_VALUE);
         } else {
-            //TODO focus on seleted
-            //mapBlocksetLayoutPanel.centerOnMapPoint(Integer.MAX_VALUE, Integer.MAX_VALUE);
+            mapBlocksetLayoutPanel.scrollToIndex(index, blockset.getBlocks().length);
         }
     }
     
@@ -1319,7 +1328,7 @@ public class MapBlockMainEditor extends AbstractMainEditor {
     private com.sfc.sf2.map.block.gui.MapBlocksetLayoutPanel mapBlocksetLayoutPanel;
     private com.sfc.sf2.map.block.gui.TileSlotPanel tileSlotPanelLeft;
     private com.sfc.sf2.map.block.gui.TileSlotPanel tileSlotPanelRight;
-    private com.sfc.sf2.map.block.gui.TilesetViewPanel tilesetViewPanel1;
-    private com.sfc.sf2.map.block.gui.TilesetsLayoutPanel tilesetsLayoutPanel;
+    private com.sfc.sf2.map.block.gui.MapTilesetViewPanel tilesetViewPanel1;
+    private com.sfc.sf2.map.block.gui.MapTilesetsLayoutPanel tilesetsLayoutPanel;
     // End of variables declaration//GEN-END:variables
 }

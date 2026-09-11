@@ -169,7 +169,7 @@ public final class ExampleMainEditor extends AbstractMainEditor {
         infoButton1.setMessageText("<html>This is a test message. See how the info buttons can teach you.<br>You can set the <b>\"messageText\"</b> field to make a message popup by default, or you can listen to the <b>ActionPerformed</b> event.<br><br><i>If the text has any newlines then html tags don't seem to work.</i><br><br>The bad news is that <a href=\"https://github.com/ShiningForceCentral\">hyperlinks do not work!</a></html>");
         infoButton1.setText("");
 
-        fileButton1.setFilePath(".\\newFolder\\file.txt");
+        fileButton1.setFilePath("./newFolder/file.txt");
         fileButton1.setInfoMessage("<html>This also has a help button.</html>");
         fileButton1.setLabelText("Test file button :");
         fileButton1.setName("Test File Button"); // NOI18N
@@ -212,7 +212,7 @@ public final class ExampleMainEditor extends AbstractMainEditor {
             }
         });
 
-        multiComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "fwefwrg ", "rgththsr", "ghjkyjjrtn", "5tehgxdh", "ws" }));
+        multiComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "fwefwrg", "rgththsr", "ghjkyjjrtn", "5tehgxdh", "ws" }));
         multiComboBox1.setName("Action Test Multicombo"); // NOI18N
         multiComboBox1.setPreferredSize(new java.awt.Dimension(76, 26));
         multiComboBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -647,8 +647,8 @@ public final class ExampleMainEditor extends AbstractMainEditor {
 
     private void multiComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_multiComboBox1ActionPerformed
         if (!ActionManager.isActionTriggering()) {
-            String[] oldValue = jLabel3.getText().split(", ");
-            ActionManager.setActionWithoutExecute(new MultiComboAction(multiComboBox1, multiComboBox1.getObjectsString().split(", "), oldValue));
+            String[] oldValue = jLabel3.getText().split("\\|");
+            ActionManager.setActionWithoutExecute(new MultiComboAction(multiComboBox1, multiComboBox1.getObjectsString().split("\\|"), oldValue));
         }
         jLabel3.setText(multiComboBox1.getObjectsString());
     }//GEN-LAST:event_multiComboBox1ActionPerformed
