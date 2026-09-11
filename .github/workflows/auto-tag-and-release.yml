@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4.2.2
 
       - name: Detect changed projects
         id: detect_changes
@@ -85,7 +85,7 @@ jobs:
       - name: Download and install Apache Ant 1.10.14
         if: steps.detect_changes.outputs.should_run == 'true'
         run: |
-          wget https://downloads.apache.org/ant/binaries/apache-ant-1.10.14-bin.tar.gz
+          wget https://archive.apache.org/dist/ant/binaries/apache-ant-1.10.14-bin.tar.gz
           tar -xzf apache-ant-1.10.14-bin.tar.gz
           sudo mv apache-ant-1.10.14 /opt/ant
           echo "ANT_HOME=/opt/ant" >> $GITHUB_ENV
@@ -186,7 +186,7 @@ jobs:
           done
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.6.1
         with:
           name: jars
           path: built-jars/*.jar
@@ -331,4 +331,3 @@ jobs:
             echo "No changes to commit. ($skipped_count project(s) skipped)"
           fi
 
-    
