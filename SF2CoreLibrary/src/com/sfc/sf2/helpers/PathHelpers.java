@@ -23,7 +23,11 @@ public class PathHelpers {
     private static final CoreSettings coreSettings = SettingsManager.getSettingsStore("core");
     
     public static Path getApplicationpath() {
-        return Path.of(System.getProperty("user.dir"));
+        try {
+            return new File(coreSettings.getAppClass().getProtectionDomain().getCodeSource().getLocation().toURI().getPath()).toPath().getParent();
+        } catch (Exception e) {
+            return Path.of(System.getProperty("user.dir"));
+        }
     }
     
     public static Path getBasePath() {

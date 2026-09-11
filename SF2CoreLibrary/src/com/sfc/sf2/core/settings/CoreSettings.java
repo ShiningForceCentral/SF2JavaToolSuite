@@ -6,6 +6,7 @@
 package com.sfc.sf2.core.settings;
 
 import com.sfc.sf2.helpers.PathHelpers;
+import java.io.File;
 import java.util.HashMap;
 
 /**
@@ -14,6 +15,8 @@ import java.util.HashMap;
  */
 public class CoreSettings implements AbstractSettings {
 
+    private static Class appClass;
+    
     private boolean prioritiseLocalPath;
     private String localBasePath;
     private String localIncbinPath;
@@ -21,6 +24,14 @@ public class CoreSettings implements AbstractSettings {
     private String basePath;
     private String incbinPath;
     
+    
+    public static void setAppClass(Class appClass) {
+        CoreSettings.appClass = appClass;
+    }
+    
+    public Class getAppClass() {
+        return appClass;
+    }
     
     public boolean areLocalPathsValid() {
         return prioritiseLocalPath && localBasePath != null && localBasePath.length() > 0;
@@ -78,7 +89,8 @@ public class CoreSettings implements AbstractSettings {
     public void initialiseNewUser() {
         prioritiseLocalPath = true;
         String appPath = PathHelpers.getApplicationpath().toString();
-        int incbinIndex = appPath.indexOf("\\disasm\\data");
+        String baseIdentifier = File.separator+"disasm"+File.separator+"data";
+        int incbinIndex = appPath.indexOf(baseIdentifier);
         if (incbinIndex >= 0) {    //In SF2DISASM
             localIncbinPath = incbinPath = appPath.substring(0, incbinIndex+8);
             localBasePath = basePath = appPath;

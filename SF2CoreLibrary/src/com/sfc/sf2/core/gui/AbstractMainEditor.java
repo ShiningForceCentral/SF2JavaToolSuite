@@ -28,6 +28,7 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
      * Creates new form New Application
      */
     public AbstractMainEditor() {
+        CoreSettings.setAppClass(this.getClass());
         initComponents();
         java.awt.EventQueue.invokeLater(() -> {
             initEditor();
