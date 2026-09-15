@@ -621,7 +621,7 @@ public class BattleMapTerrainMainEditor extends AbstractMainEditor {
         Path landEffectPath = PathHelpers.getBasePath().resolve(fileButtonExportLandeffect.getFilePath());
         if (!PathHelpers.createPathIfRequred(landEffectPath)) return;
         try {
-            battlemapterrainManager.exportLandEffects(landEffectPath, landEffectTableModel.getTableData(LandEffectMovementType[].class));
+            battlemapterrainManager.exportLandEffects(landEffectPath, landEffectTableModel.getTableData(LandEffectMovementType[].class), battlemapterrainManager.getLandEffectEnums());
         } catch (Exception ex) {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Land effect disasm could not be exported to : " + landEffectPath);

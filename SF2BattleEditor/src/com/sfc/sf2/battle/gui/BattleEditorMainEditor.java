@@ -48,6 +48,7 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
         
     private String actionSharedTerrainInfo;
     private LandEffectEnums actionLandEffectEnums;
+    private BattleMapCoords[] actionAllCoords;
         
     private boolean getDrawTerrain() { return battleViewPanel1.getDrawTerrain(); }
     private boolean getDrawSprites() { return battleViewPanel1.getDrawSprites(); }
@@ -113,8 +114,8 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
     @Override
     protected void onDataLoaded() {
         super.onDataLoaded();
-        BattleActionData newValue = new BattleActionData(battleManager.getBattle(), battleManager.getSharedTerrainInfo(), battleManager.getLandEffectEnums(), battleManager.getLandEffects(), battleManager.getEnemyData(), battleManager.getEnemyEnums());
-        BattleActionData oldValue = new BattleActionData(battleLayoutPanel.getBattle(), actionSharedTerrainInfo, actionLandEffectEnums, landEffectTableModel.getTableData(LandEffectMovementType[].class), enemyPropertiesTableModel.getEnemyData(), enemyPropertiesTableModel.getEnemyEnums());
+        BattleActionData newValue = new BattleActionData(battleManager.getBattle(), battleManager.getSharedTerrainInfo(), battleManager.getLandEffectEnums(), battleManager.getLandEffects(), battleManager.getAllCoords(), battleManager.getEnemyData(), battleManager.getEnemyEnums());
+        BattleActionData oldValue = new BattleActionData(battleLayoutPanel.getBattle(), actionSharedTerrainInfo, actionLandEffectEnums, landEffectTableModel.getTableData(LandEffectMovementType[].class), actionAllCoords, enemyPropertiesTableModel.getEnemyData(), enemyPropertiesTableModel.getEnemyEnums());
         ActionManager.setAndExecuteAction(new CustomAction<BattleActionData>(this, "Battle Imported", this::actionBattleLoaded, newValue, oldValue));
     }
     
@@ -125,9 +126,10 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
             battleLayoutPanel.setBattleCoords(null);
             battleLayoutPanel.setMapLayout(null);
 
-            actionLandEffectEnums = value.landEffectEnums();
+            actionLandEffectEnums = null;
             landEffectTableModel.setTableData(null);
             mapCoordsPanel1.setup(null, null, null);
+            actionAllCoords = null;
 
             allyPropertiesTableModel.setTableData(null);
             enemyPropertiesTableModel.setTableData(null);
@@ -145,6 +147,7 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
             actionLandEffectEnums = value.landEffectEnums();
             landEffectTable.setLandEffectData(actionLandEffectEnums);
             landEffectTableModel.setTableData(value.landEffects());
+            actionAllCoords = value.allCoords();
 
             BattleMapCoords coords = value.battle().getBattleCoords();
             mapCoordsPanel1.setup(coords, battleLayoutPanel, this::onMapIndexChange);
@@ -1186,7 +1189,7 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
         Path landEffectPath = PathHelpers.getBasePath().resolve(fileButtonExportLandEffect.getFilePath());
         if (!PathHelpers.createPathIfRequred(landEffectPath)) return;
         try {
-            battleManager.exportLandEffects(landEffectPath, landEffectTableModel.getTableData(LandEffectMovementType[].class));
+            battleManager.exportLandEffects(landEffectPath, landEffectTableModel.getTableData(LandEffectMovementType[].class), actionLandEffectEnums);
         } catch (Exception ex) {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Battle coords disasm could not be exported to : " + landEffectPath);
