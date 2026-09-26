@@ -11,9 +11,10 @@ on:
       - '**/version.properties'
 
 jobs:
-  build-tag-release:
+  build:
     runs-on: ubuntu-latest
-
+    outputs:
+      should_run: ${{ steps.detect_changes.outputs.should_run }}
     steps:
       - uses: actions/checkout@v4.2.2
 
@@ -185,14 +186,33 @@ jobs:
             fi
           done
 
+      - name: Persist changed files list
+        if: steps.detect_changes.outputs.should_run == 'true'
+        run: |
+          echo "$CHANGED_FILES" > changed-files.txt
+
       - name: Upload artifacts
+        if: steps.detect_changes.outputs.should_run == 'true'
         uses: actions/upload-artifact@v4.6.1
         with:
           name: jars
-          path: built-jars/*.jar
+          path: |
+            built-jars/*.jar
+            changed-files.txt
+            release.properties
 
+  tag-and-release:
+    needs: build
+    if: needs.build.outputs.should_run == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4.2.2
+      - uses: actions/download-artifact@v4
+        with:
+          name: jars
       - name: Tag
-        if: steps.detect_changes.outputs.should_run == 'true'
         id: tag_and_release
         run: |
           echo "Cleaning up local tags..."
@@ -201,6 +221,7 @@ jobs:
     
           mkdir -p artifacts
           releases=""
+          CHANGED_FILES=$(cat changed-files.txt 2>/dev/null || true)
           read -a CHANGED_FILES <<< "$CHANGED_FILES"
           for file_path in "${CHANGED_FILES[@]}"; do
             if [ -f "$file_path" ]; then
@@ -238,7 +259,6 @@ jobs:
           done
 
       - name: Create GitHub Releases
-        if: steps.detect_changes.outputs.should_run == 'true'
         run: |
           if [ -f release_list.txt ]; then
             while IFS='|' read -r tag jar_path release_notes; do
@@ -254,9 +274,18 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 
+  push-disasm:
+    needs: build
+    if: needs.build.outputs.should_run == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4.2.2
+      - uses: actions/download-artifact@v4
+        with:
+          name: jars
       - name: Push to DISASM
-        if: steps.detect_changes.outputs.should_run == 'true'
         run: |
+          CHANGED_FILES=$(cat changed-files.txt 2>/dev/null || true)
           echo "Cloning destination repo..."
           git clone --depth=1 --branch feature/tools_updates https://x-access-token:${{ secrets.SF2DISASM_PUSH_TOKEN }}@github.com/ShiningForceCentral/SF2DISASM.git target-repo
     
