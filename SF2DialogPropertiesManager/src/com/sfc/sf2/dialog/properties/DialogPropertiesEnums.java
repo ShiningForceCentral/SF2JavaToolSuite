@@ -50,11 +50,10 @@ public class DialogPropertiesEnums extends AbstractEnums {
     }
     
     public BufferedImage getMapSpriteFor(String name) {
-        int index = -1;
-        if (mapSprites.containsKey(name)) { 
-            index = mapSprites.get(name);
-            index = index*3+2;  //Get the "down" facing mapsprite
-        }
+        if (mapSpriteImages == null) return null;
+        Integer enumIndex = lookupEnumIndex(name, mapSprites);
+        if (enumIndex == null) return null;
+        int index = enumIndex * 3 + 2;  //Get the "down" facing mapsprite
         if (mapSpriteImages.containsKey(index)) {
             MapSprite mapSprite = mapSpriteImages.get(index);
             Tileset frame = null;
@@ -76,13 +75,33 @@ public class DialogPropertiesEnums extends AbstractEnums {
     }
     
     public BufferedImage getPortraitFor(String name) {
-        int index = -1;
-        if (portraits.containsKey(name)) index = portraits.get(name);
-        if (portraitImages.containsKey(index)) {
-            Portrait portrait = portraitImages.get(index);
-            if (portrait != null) {
-                return portrait.getIndexedColorImage(false, false, false);
+        if (portraitImages == null) return null;
+        Integer index = lookupEnumIndex(name, portraits);
+        if (index == null) return null;
+        try {
+            if (portraitImages.containsKey(index)) {
+                Portrait portrait = portraitImages.get(index);
+                if (portrait != null) {
+                    return portrait.getIndexedColorImage(false, false, false);
+                }
             }
+        } catch (Exception ex) {
+            return null;
+        }
+        return null;
+    }
+
+    /**
+     * Enum maps are keyed without the prefix (BOWIE) while ASM files often store
+     * the full token (PORTRAIT_BOWIE / MAPSPRITE_BOWIE).
+     */
+    private Integer lookupEnumIndex(String name, LinkedHashMap<String, Integer> enums) {
+        if (name == null || enums == null) return null;
+        if (enums.containsKey(name)) return enums.get(name);
+        int underscore = name.indexOf('_');
+        if (underscore >= 0) {
+            String suffix = name.substring(underscore + 1);
+            if (enums.containsKey(suffix)) return enums.get(suffix);
         }
         return null;
     }
