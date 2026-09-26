@@ -151,6 +151,9 @@ public class Portrait implements INameable, IPaletteGraphic {
                             }
                         }
                     }
+                    if (tileID < 0 || tileID >= tiles.length) {
+                        continue;
+                    }
                     graphics.drawImage(tiles[tileID].getIndexedColorImage(), i*PIXEL_WIDTH, j*PIXEL_HEIGHT, null);
                 }
             }

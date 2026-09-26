@@ -38,6 +38,7 @@ public class PortraitMainEditor extends AbstractMainEditor {
     private PortraitDataTableModel mouthTable;
     private int selectedEyesRow;
     private int selectedMouthsRow;
+    private final javax.swing.JCheckBox jCheckBoxKeepMetadata = new javax.swing.JCheckBox("Don't reload eyes/mouth", true);
     
     public PortraitMainEditor() {
         super();
@@ -64,6 +65,12 @@ public class PortraitMainEditor extends AbstractMainEditor {
         columns.getColumn(0).setMaxWidth(40);
         columns = tableMouth.jTable.getColumnModel();
         columns.getColumn(0).setMaxWidth(40);
+        jCheckBoxKeepMetadata.setToolTipText("When importing a PNG/GIF, keep the currently loaded eye and mouth tables instead of replacing them from a .meta file.");
+        try {
+            jButtonImportImage.getParent().add(jCheckBoxKeepMetadata);
+        } catch (Exception ignored) {
+            jButtonImportImage.setToolTipText(jCheckBoxKeepMetadata.getToolTipText() + " (checkbox could not be added to this layout)");
+        }
     }
     
     @Override
@@ -556,8 +563,20 @@ public class PortraitMainEditor extends AbstractMainEditor {
     private void jButtonImportImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportImageActionPerformed
         Path imagePath = PathHelpers.getBasePath().resolve(fileButtonImportImage.getFilePath());
         Path metaPath = PathHelpers.replaceExtension(imagePath, fileButtonImportMeta.getFilePath());
+        Portrait existing = portraitLayoutPanel.getPortrait();
+        int[][] keepEyes = null;
+        int[][] keepMouth = null;
+        if (jCheckBoxKeepMetadata.isSelected() && existing != null) {
+            keepEyes = existing.getEyeTiles();
+            keepMouth = existing.getMouthTiles();
+        }
         try {
             portraitManager.importImage(imagePath, metaPath);
+            Portrait imported = portraitManager.getPortrait();
+            if (imported != null && keepEyes != null) {
+                imported.setEyeTiles(keepEyes);
+                imported.setMouthTiles(keepMouth);
+            }
         } catch (Exception ex) {
             portraitManager.clearData();
             Console.logger().log(Level.SEVERE, null, ex);
