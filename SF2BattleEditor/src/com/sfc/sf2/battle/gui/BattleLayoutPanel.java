@@ -205,7 +205,33 @@ public class BattleLayoutPanel extends BattleMapTerrainLayoutPanel {
         g2.setStroke(new BasicStroke(3));
         AIRegion[] regions = battle.getSpriteset().getAiRegions();
         for (int i=0; i < regions.length; i++) {
+            drawAIRegionTiles(g2, battleX, battleY, regions[i]);
             drawAIRegion(g2, battleX, battleY, regions[i], false, Color.WHITE);
+        }
+    }
+
+    /**
+     * Fill every battle tile whose center is inside the AI region so detection
+     * coverage is visible per-tile, not just as a translucent triangle.
+     */
+    private void drawAIRegionTiles(Graphics2D g2, int battleX, int battleY, AIRegion region) {
+        int type = region.getType();
+        if (type < 3) return;
+        Point[] pts = region.getPoints();
+        int count = Math.min(type, pts.length);
+        Polygon poly = new Polygon();
+        for (int i = 0; i < count; i++) {
+            poly.addPoint(pts[i].x, pts[i].y);
+        }
+        java.awt.Rectangle bounds = poly.getBounds();
+        Color fill = type == 3 ? new Color(100, 100, 255, 80) : new Color(255, 100, 255, 70);
+        g2.setColor(fill);
+        for (int y = bounds.y; y <= bounds.y + bounds.height; y++) {
+            for (int x = bounds.x; x <= bounds.x + bounds.width; x++) {
+                if (poly.contains(x + 0.5d, y + 0.5d)) {
+                    g2.fillRect((battleX + x) * PIXEL_WIDTH, (battleY + y) * PIXEL_HEIGHT, PIXEL_WIDTH, PIXEL_HEIGHT);
+                }
+            }
         }
     }
     
