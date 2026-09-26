@@ -25,7 +25,15 @@ public class MapAnimationFrameTableModel extends AbstractTableModel<MapAnimation
 
     @Override
     protected MapAnimationFrame createBlankItem(int row) {
-        return MapAnimationFrame.EmptyMapAnimationFrame();
+        MapAnimationFrame blank = MapAnimationFrame.EmptyMapAnimationFrame();
+        int prev = row > 0 ? row - 1 : getRowCount() - 1;
+        MapAnimationFrame source = getRow(prev);
+        if (source != null) {
+            blank.setDestTileset(source.getDestTileset());
+            blank.setDestTileIndex(source.getDestTileIndex());
+            blank.setDelay(source.getDelay());
+        }
+        return blank;
     }
 
     @Override

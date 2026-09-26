@@ -68,7 +68,7 @@ public class MapAnimationAsmProcessor extends AbstractAsmProcessor<MapAnimation,
         writer.write(String.format("\t\t\t\tmapAnimation %2d, %2d\n", item.getTilesetId(), item.getLength()));
         MapAnimationFrame[] frames = item.getFrames();
         for (int i = 0; i < frames.length; i++) {
-            writer.write(String.format("\t\t\t\t\tmapAnimEntry %2d, %2d, $%3X, %2d\n", frames[i].getStart(), frames[i].getLength(), frames[i].getDestValue(), frames[i].getDelay()));
+            writer.write(String.format("\t\t\t\t\tmapAnimEntry %2d, %2d, $%03X, %2d\n", frames[i].getStart(), frames[i].getLength(), frames[i].getDestValue(), frames[i].getDelay()));
         }
         writer.write("\t\t\t\tendWord\n");
     }
