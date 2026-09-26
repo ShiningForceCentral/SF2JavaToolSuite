@@ -105,11 +105,40 @@ public class MapCopyEvent {
     }
     
     public int getWidth() {
-        return sourceStartX == 0xFF ? sourceEndX : sourceEndX-sourceStartX+1;
+        return isAutoSource() ? sourceEndX : sourceEndX-sourceStartX+1;
     }
     
     public int getHeight() {
-        return sourceStartY == 0xFF ? sourceEndY : sourceEndY-sourceStartY+1;
+        return isAutoSource() ? sourceEndY : sourceEndY-sourceStartY+1;
+    }
+
+    public boolean isAutoSource() {
+        return sourceStartX == 0xFF && sourceStartY == 0xFF;
+    }
+
+    /**
+     * Layer-1 origin of the copy. For auto (255,255) roofs this is dest minus
+     * the main area's layer-2 offset, plus the area's layer-1 origin.
+     */
+    public Point getDisplaySourceStart(MapArea area) {
+        if (isAutoSource() && area != null) {
+            return new Point(
+                    destStartX - area.getForegroundLayer2StartX() + area.getLayer1StartX(),
+                    destStartY - area.getForegroundLayer2StartY() + area.getLayer1StartY());
+        }
+        return new Point(sourceStartX, sourceStartY);
+    }
+
+    public void setAutoSourceSize(int width, int height) {
+        sourceStartX = 0xFF;
+        sourceStartY = 0xFF;
+        sourceEndX = Math.max(1, width);
+        sourceEndY = Math.max(1, height);
+    }
+
+    public boolean isRectOutOfBounds(int x, int y, int width, int height, int mapWidth, int mapHeight) {
+        return x < 0 || y < 0 || width <= 0 || height <= 0
+                || x + width > mapWidth || y + height > mapHeight;
     }
 
     public Point getDest() {

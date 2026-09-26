@@ -23,6 +23,7 @@ import com.sfc.sf2.map.layout.MapLayoutManager;
 import com.sfc.sf2.map.layout.io.MapEntryData;
 import com.sfc.sf2.palette.Palette;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 
 /**
@@ -81,6 +82,7 @@ public class MapManager extends AbstractManager {
         MapAnimation animation = mapAnimationManager.importDisassembly(animationPath, tilesetsEntriesPath, layout);
         sharedAnimInfo = mapAnimationManager.getSharedAnimationInfo();
         importDisassembly(name, blockset, layout, animation, areasPath, flagsPath, stepsPath, roofsPath, warpsPath, chestItemsPath, otherItemsPath);
+        loadMapEntities(areasPath);
         Console.logger().info("Map successfully imported from data for : " + blocksPath.getParent());
         Console.logger().finest("EXITING importDisassemblyFromData");
         return map;
@@ -131,9 +133,27 @@ public class MapManager extends AbstractManager {
         if (mapEntry.getChestItemsPath() != null) chestItemsPath = PathHelpers.getIncbinPath().resolve(mapEntry.getChestItemsPath());
         if (mapEntry.getOtherItemsPath() != null) otherItemsPath = PathHelpers.getIncbinPath().resolve(mapEntry.getOtherItemsPath());
         importDisassembly(name, blockset, layout, animation, areasPath, flagsPath, stepsPath, roofsPath, warpsPath, chestItemsPath, otherItemsPath);
+        loadMapEntities(areasPath);
         Console.logger().info("Map successfully imported from entries for : " + mapId);
         Console.logger().finest("EXITING importDisassemblyFromEntries");
         return map;
+    }
+
+    private void loadMapEntities(Path areasPath) {
+        if (map == null || areasPath == null) {
+            return;
+        }
+        Path entitiesPath = areasPath.getParent().resolve("mapsetups").resolve("s1_entities.asm");
+        if (!Files.exists(entitiesPath)) {
+            return;
+        }
+        try {
+            MapEntity[] entities = new MapEntitiesAsmProcessor().importAsmData(entitiesPath, null);
+            map.setEntities(entities);
+            Console.logger().info("Map entities imported from : " + entitiesPath);
+        } catch (Exception ex) {
+            Console.logger().warning("Map entities could not be imported from : " + entitiesPath + " : " + ex);
+        }
     }
     
     public void ImportMapEnums(Path sf2enumsPath) throws IOException, AsmException {

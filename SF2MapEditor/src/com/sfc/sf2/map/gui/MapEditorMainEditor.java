@@ -101,6 +101,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
         accordionPanel2.setExpanded(false);
         
         infoButtonSharedAnimation.setVisible(false);
+        setMinimumSize(new java.awt.Dimension(1100, 720));
         
         //Map editing
         mapLayoutPanel.setShowInteractionFlags(false);
@@ -223,6 +224,7 @@ public class MapEditorMainEditor extends AbstractMainEditor {
             Tileset[] tilesets = map.getLayout().getTilesets();
             mapBlocksetLayoutPanel.setBlockset(mapBlockset);
             mapBlocksetLayoutPanel.setTilesets(tilesets);
+            mapBlocksetLayoutPanel.setUsedBlocks(computeUsedBlocks(map));
             mapBlocksetLayoutPanel.setLeftSelectedIndex(-1);
             tilesetsLayoutPanel.setTilesets(tilesets);
             tilesetViewPanel1.setTilesets(tilesets);
@@ -3509,26 +3511,34 @@ public class MapEditorMainEditor extends AbstractMainEditor {
     }
     
     private void onAnimationFramesDataChanged(TableModelEvent e) {
+        MapAnimation animation = tilesetLayoutPanelModified.getMapAnimation();
+        if (animation == null) {
+            return;
+        }
+        MapAnimationFrame[] frames = mapAnimationFrameTableModel.getTableData(MapAnimationFrame[].class);
+        animation.setFrames(frames);
+        if (mapLayoutPanel.getMap() != null) {
+            mapLayoutPanel.getMap().setAnimation(animation);
+        }
         if (e.getType() == TableModelEvent.INSERT || e.getType() == TableModelEvent.DELETE) {
-            //Number of animation frames changed
-            MapAnimationFrame[] frames = mapAnimationFrameTableModel.getTableData(MapAnimationFrame[].class);
-            tilesetLayoutPanelModified.getMapAnimation().setFrames(frames);
             if (tilesetLayoutPanelModified.getAnimator().isAnimating()) {
                 tilesetLayoutPanelModified.setPreviewAnim(tilesetLayoutPanelModified.getAnimator().isAnimating());
             }
         } else if (e.getColumn() == 3) {
             //Editing destination tileset
-            MapAnimation animation = tilesetLayoutPanelModified.getMapAnimation();
             animation.generateModifiedTilesets();
             tilesetLayoutPanelModified.setMapAnimation(animation);
-            tilesetLayoutPanelModified.setSelectedTileset(animation.getFrames()[e.getFirstRow()].getDestTileset());
+            if (e.getFirstRow() >= 0 && e.getFirstRow() < animation.getFrames().length) {
+                tilesetLayoutPanelModified.setSelectedTileset(animation.getFrames()[e.getFirstRow()].getDestTileset());
+            }
         } else if (e.getColumn() == 4) {
             //Editing destination index
-            MapAnimation animation = tilesetLayoutPanelModified.getMapAnimation();
             int frame = e.getFirstRow();
-            animation.generateModifiedTileset(frame);
-            tilesetLayoutPanelModified.setMapAnimation(animation);
-            tilesetLayoutPanelModified.setSelectedTileset(animation.getFrames()[frame].getDestTileset());
+            if (frame >= 0 && frame < animation.getFrames().length) {
+                animation.generateModifiedTileset(frame);
+                tilesetLayoutPanelModified.setMapAnimation(animation);
+                tilesetLayoutPanelModified.setSelectedTileset(animation.getFrames()[frame].getDestTileset());
+            }
         } else if (e.getColumn() < 3) {
             //Editing the start or length of the frame (affects both panels)
             tilesetLayoutPanelAnim.redraw();
@@ -3536,6 +3546,26 @@ public class MapEditorMainEditor extends AbstractMainEditor {
         tilesetLayoutPanelModified.redraw();
     }
     
+    private boolean[] computeUsedBlocks(Map map) {
+        if (map == null || map.getLayout() == null || map.getBlockset() == null || map.getBlockset().getBlocks() == null) {
+            return null;
+        }
+        int count = map.getBlockset().getBlocks().length;
+        boolean[] used = new boolean[Math.max(count, 1)];
+        com.sfc.sf2.map.layout.MapLayoutBlock[] layoutBlocks = map.getLayout().getBlocks();
+        if (layoutBlocks == null) {
+            return used;
+        }
+        for (com.sfc.sf2.map.layout.MapLayoutBlock layoutBlock : layoutBlocks) {
+            if (layoutBlock == null || layoutBlock.getMapBlock() == null) continue;
+            int index = layoutBlock.getMapBlock().getIndex();
+            if (index >= 0 && index < used.length) {
+                used[index] = true;
+            }
+        }
+        return used;
+    }
+
     private void onAnimationUpdated(LayoutAnimator.AnimationListener.AnimationFrameEvent e) {
         mapLayoutPanel.getMapLayout().clearIndexedColorImage(true);
         mapLayoutPanel.redraw();

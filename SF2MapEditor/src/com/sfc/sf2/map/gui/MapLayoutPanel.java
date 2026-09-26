@@ -19,6 +19,7 @@ import com.sfc.sf2.helpers.MapBlockHelpers;
 import com.sfc.sf2.map.Map;
 import com.sfc.sf2.map.MapArea;
 import com.sfc.sf2.map.MapCopyEvent;
+import com.sfc.sf2.map.MapEntity;
 import com.sfc.sf2.map.MapFlagCopyEvent;
 import com.sfc.sf2.map.MapItem;
 import com.sfc.sf2.map.MapWarpEvent;
@@ -41,6 +42,7 @@ import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -61,6 +63,7 @@ import javax.swing.ImageIcon;
 public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
     private static final Color COLOR_SELECTED = Color.YELLOW;
     private static final Color COLOR_SELECTED_SECONDARY = new Color(0xFFFFFF88);
+    private static final Color COLOR_INVALID = Color.RED;
     
     public static final int MAP_FLAG_EDIT_BLOCK = 0;
         
@@ -96,6 +99,7 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
     private boolean showFlagCopyResult;
     private boolean showStepCopyResult;
     private boolean showRoofCopyResult;
+    private boolean showEntities = true;
     private boolean simulateParallax;
     
     private MapBlock selectedBlock;
@@ -197,6 +201,9 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
         if (shouldDraw(DRAW_MODE_VEHICLES)) {
             drawMapVehicleFlags(g2);
         }
+        if (showEntities) {
+            drawMapEntities(g2);
+        }
         drawSelected(g2);
         buildPreviewImage();
     }
@@ -252,10 +259,10 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
                 MapCopyEvent copy = selectedTabsDrawMode == DRAW_MODE_FLAG_COPIES ? map.getFlagCopies()[selectedItemIndex] : selectedTabsDrawMode == DRAW_MODE_STEP_COPIES ? map.getStepCopies()[selectedItemIndex] : map.getRoofCopies()[selectedItemIndex];
                 atEdge = true;
                 int sx = copy.getSourceStartX(), sy = copy.getSourceStartY();
-                if (sx == 0xFF && sy == 0xFF) {
-                    MapArea mainArea = map.getAreas()[0];
-                    sx = copy.getDestStartX()-mainArea.getForegroundLayer2StartX();
-                    sy = copy.getDestStartY()-mainArea.getForegroundLayer2StartY();
+                if (copy.isAutoSource()) {
+                    Point inferred = copy.getDisplaySourceStart(getMainArea());
+                    sx = inferred.x;
+                    sy = inferred.y;
                 }
                 switch (closestSelectedPointIndex) {        
                     case 0:
@@ -424,10 +431,13 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
     
     private void drawMapArea(Graphics2D g2, MapArea area, boolean selected) {
         g2.setStroke(new BasicStroke(3));
-        g2.setColor(selected ? COLOR_SELECTED : Color.WHITE);
         int width = area.getWidth();
         int heigth = area.getHeight();
-        g2.drawRect(area.getLayer1StartX()*PIXEL_WIDTH+3, area.getLayer1StartY()*PIXEL_HEIGHT+3, width*PIXEL_WIDTH-6, heigth*PIXEL_HEIGHT-6);
+        boolean invalid = width <= 0 || heigth <= 0
+                || area.getLayer1StartX() < 0 || area.getLayer1StartY() < 0
+                || area.getLayer1EndX() >= BLOCK_WIDTH || area.getLayer1EndY() >= BLOCK_HEIGHT;
+        g2.setColor(invalid ? COLOR_INVALID : (selected ? COLOR_SELECTED : Color.WHITE));
+        g2.drawRect(area.getLayer1StartX()*PIXEL_WIDTH+3, area.getLayer1StartY()*PIXEL_HEIGHT+3, Math.max(0, width*PIXEL_WIDTH-6), Math.max(0, heigth*PIXEL_HEIGHT-6));
         g2.setColor(selected ? COLOR_SELECTED_SECONDARY : Color.LIGHT_GRAY);
         if (area.getForegroundLayer2StartX() != 0 || area.getForegroundLayer2StartY() != 0) {
             g2.drawRect((area.getLayer1StartX()+area.getForegroundLayer2StartX())*PIXEL_WIDTH+3, (area.getLayer1StartY()+area.getForegroundLayer2StartY())*PIXEL_HEIGHT+3, width*PIXEL_WIDTH-6, heigth*PIXEL_HEIGHT-6);
@@ -600,23 +610,33 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
         }
     }
     
+    private MapArea getMainArea() {
+        if (map == null || map.getAreas() == null || map.getAreas().length == 0) return null;
+        return map.getAreas()[0];
+    }
+
+    private void drawEventRect(Graphics2D g2, int x, int y, int width, int height, Color color, boolean invalid) {
+        if (width <= 0 || height <= 0) return;
+        g2.setColor(invalid ? COLOR_INVALID : color);
+        g2.drawRect(x*PIXEL_WIDTH+3, y*PIXEL_HEIGHT+3, width*PIXEL_WIDTH-6, height*PIXEL_HEIGHT-6);
+    }
+
     private void drawMapRoofCopy(Graphics2D g2, MapCopyEvent roofCopy, boolean selected) {
         g2.setStroke(new BasicStroke(3));
         int width = roofCopy.getWidth();
-        int heigth = roofCopy.getHeight();
-        int sourceX = roofCopy.getSourceStartX();
-        int sourceY = roofCopy.getSourceStartY();
-        if (sourceX == 0xFF && sourceY == 0xFF) {
-            MapArea area = map.getAreas()[0];
-            sourceX = roofCopy.getDestStartX() - (area.getForegroundLayer2StartX()-area.getLayer1StartX());
-            sourceY = roofCopy.getDestStartY() - (area.getForegroundLayer2StartY()-area.getLayer1StartY());
-        }
-        g2.setColor(selected ? COLOR_SELECTED_SECONDARY : Color.CYAN);
-        g2.drawRect(sourceX*PIXEL_WIDTH+3, sourceY*PIXEL_HEIGHT+3, width*PIXEL_WIDTH-6, heigth*PIXEL_HEIGHT-6);
-        g2.setColor(selected ? COLOR_SELECTED : Color.WHITE);
+        int height = roofCopy.getHeight();
+        MapArea area = getMainArea();
+        Point source = roofCopy.getDisplaySourceStart(area);
+        int sourceX = source.x;
+        int sourceY = source.y;
+        boolean sourceInvalid = roofCopy.isRectOutOfBounds(sourceX, sourceY, width, height, BLOCK_WIDTH, BLOCK_HEIGHT);
+        boolean destInvalid = roofCopy.isRectOutOfBounds(roofCopy.getDestStartX(), roofCopy.getDestStartY(), width, height, BLOCK_WIDTH, BLOCK_HEIGHT);
+        boolean triggerInvalid = roofCopy.getTriggerX() < 0 || roofCopy.getTriggerY() < 0
+                || roofCopy.getTriggerX() >= BLOCK_WIDTH || roofCopy.getTriggerY() >= BLOCK_HEIGHT;
+        drawEventRect(g2, sourceX, sourceY, width, height, selected ? COLOR_SELECTED_SECONDARY : Color.CYAN, sourceInvalid);
+        g2.setColor(triggerInvalid ? COLOR_INVALID : (selected ? COLOR_SELECTED : Color.WHITE));
         g2.drawRect(roofCopy.getTriggerX()*PIXEL_WIDTH, roofCopy.getTriggerY()*PIXEL_HEIGHT, PIXEL_WIDTH, PIXEL_HEIGHT);
-        g2.setColor(selected ? COLOR_SELECTED_SECONDARY : Color.LIGHT_GRAY);
-        g2.drawRect(roofCopy.getDestStartX()*PIXEL_WIDTH + 3, roofCopy.getDestStartY()*PIXEL_HEIGHT+3, width*PIXEL_WIDTH-6, heigth*PIXEL_HEIGHT-6);
+        drawEventRect(g2, roofCopy.getDestStartX(), roofCopy.getDestStartY(), width, height, selected ? COLOR_SELECTED_SECONDARY : Color.LIGHT_GRAY, destInvalid);
         if (selected) {
             g2.setColor(Color.WHITE);
             GraphicsHelpers.drawArrowLine(g2, roofCopy.getTriggerX()*PIXEL_WIDTH+12, roofCopy.getTriggerY()*PIXEL_HEIGHT+12, roofCopy.getDestStartX()*PIXEL_WIDTH+12, roofCopy.getDestStartY()*PIXEL_HEIGHT+12);
@@ -630,14 +650,15 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
         int sourceY = roofCopy.getSourceStartY();
         int destX = roofCopy.getDestStartX();
         int destY = roofCopy.getDestStartY();
-        if (sourceX == 0xFF && sourceY == 0xFF) {
-            MapArea area = map.getAreas()[0];
+        MapArea mainArea = getMainArea();
+        if (roofCopy.isAutoSource()) {
+            // Auto roofs copy layer-2 dest tiles onto the inferred layer-1 house.
+            Point inferred = roofCopy.getDisplaySourceStart(mainArea);
             sourceX = destX;
             sourceY = destY;
-            destX = roofCopy.getDestStartX() - (area.getForegroundLayer2StartX()-area.getLayer1StartX());
-            destY = roofCopy.getDestStartY() - (area.getForegroundLayer2StartY()-area.getLayer1StartY());
-        } else {
-            MapArea mainArea = map.getAreas()[0];
+            destX = inferred.x;
+            destY = inferred.y;
+        } else if (mainArea != null) {
             int areaL2StartX = mainArea.getLayer1StartX()+mainArea.getForegroundLayer2StartX();
             int areaL2StartY = mainArea.getLayer1StartY()+mainArea.getForegroundLayer2StartY();
             int areaL2EndX = areaL2StartX+(mainArea.getLayer1EndX()-mainArea.getLayer1StartX());
@@ -739,6 +760,32 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
         }
     }
         
+    private void drawMapEntities(Graphics2D g2) {
+        if (map == null || map.getEntities() == null) return;
+        g2.setStroke(new BasicStroke(2));
+        Font font = g2.getFont().deriveFont(Font.BOLD, 10f);
+        g2.setFont(font);
+        for (MapEntity entity : map.getEntities()) {
+            if (entity == null || entity.isOffMapPlaceholder()) continue;
+            int px = entity.getX() * PIXEL_WIDTH;
+            int py = entity.getY() * PIXEL_HEIGHT;
+            g2.setColor(entity.isWalking() ? new Color(80, 180, 255, 180) : new Color(255, 200, 40, 180));
+            g2.fillOval(px + 4, py + 4, PIXEL_WIDTH - 8, PIXEL_HEIGHT - 8);
+            g2.setColor(Color.BLACK);
+            g2.drawOval(px + 4, py + 4, PIXEL_WIDTH - 8, PIXEL_HEIGHT - 8);
+            String label = entity.getDisplayName();
+            if (label != null && label.length() > 0) {
+                g2.setColor(Color.WHITE);
+                g2.drawString(label, px + 2, py - 2);
+            }
+        }
+    }
+
+    public void setShowEntities(boolean showEntities) {
+        this.showEntities = showEntities;
+        redraw();
+    }
+
     private void drawMapVehicleFlags(Graphics2D g2) {
         MapLayoutBlock[] blocks = layout.getBlocks();
         for (int y=0; y < BLOCK_HEIGHT; y++) {
@@ -1089,11 +1136,12 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
                     MapPointActionData newValue = new MapPointActionData(copy, selectedItemIndex, copyType+"-Dest", point);
                     MapPointActionData oldValue = new MapPointActionData(copy, selectedItemIndex, copyType+"-Dest", copy.getDest());
                     ActionManager.setAndExecuteAction(new CustomAction<MapPointActionData>(copy, "Set "+copyType+" Destination", this::actionSetCopyFlagDestPos, newValue, oldValue));
-                } else if (copy.getSourceStartX() == 0xFF && copy.getSourceStartY() == 0xFF) {
+                } else if (copy.isAutoSource()) {
                     //Main rect when infering source from roof (dest) position
-                    MapArea mainArea = map.getAreas()[0];
-                    int startX = copy.getDestStartX()-mainArea.getForegroundLayer2StartX();
-                    int startY = copy.getDestStartY()-mainArea.getForegroundLayer2StartY();
+                    MapArea mainArea = getMainArea();
+                    Point inferred = copy.getDisplaySourceStart(mainArea);
+                    int startX = inferred.x;
+                    int startY = inferred.y;
                     int sx = closestSelectedPointIndex == 1 || closestSelectedPointIndex == 3 ? x : startX;
                     int sy = closestSelectedPointIndex == 1 || closestSelectedPointIndex == 2 ? y : startY;
                     int ex = closestSelectedPointIndex == 2 || closestSelectedPointIndex == 4 ? x+1 : startX+copy.getWidth();
@@ -1221,8 +1269,13 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
     
     private void actionSetFlagSourceAndDest(ActionMapCopySourceEvent value) {
         MapCopyEvent flag = value.copyEvent();
-        flag.setSource(value.source());
-        flag.setDest(value.dest());
+        if (flag.isAutoSource()) {
+            flag.setDest(value.dest());
+            flag.setAutoSourceSize(value.source().width, value.source().height);
+        } else {
+            flag.setSource(value.source());
+            flag.setDest(value.dest());
+        }
         String copyType = value.event().substring(0, value.event().indexOf('-'));
         triggerActionEventListener(value.itemIndex(), copyType);
     }
@@ -1578,14 +1631,12 @@ public class MapLayoutPanel extends com.sfc.sf2.map.layout.gui.MapLayoutPanel {
         Point mouse = new Point(x+1, y+1);
         Point[] points = new Point[6];
         points[0] = new Point(copy.getTriggerX(), copy.getTriggerY());
-        if (copy.getSourceStartX() == 0xFF && copy.getSourceStartY() == 0xFF) {
-            MapArea mainArea = map.getAreas()[0];
-            int offsetX = mainArea.getForegroundLayer2StartX();
-            int offsetY = mainArea.getForegroundLayer2StartY();
-            points[1] = new Point(copy.getDestStartX()-offsetX, copy.getDestStartY()-offsetY);
-            points[2] = new Point(copy.getDestEndX()-offsetX+1, copy.getDestStartY()-offsetY);
-            points[3] = new Point(copy.getDestStartX()-offsetX, copy.getDestEndY()-offsetY+1);
-            points[4] = new Point(copy.getDestEndX()-offsetX+1, copy.getDestEndY()-offsetY+1);
+        if (copy.isAutoSource()) {
+            Point inferred = copy.getDisplaySourceStart(getMainArea());
+            points[1] = new Point(inferred.x, inferred.y);
+            points[2] = new Point(inferred.x+copy.getWidth(), inferred.y);
+            points[3] = new Point(inferred.x, inferred.y+copy.getHeight());
+            points[4] = new Point(inferred.x+copy.getWidth(), inferred.y+copy.getHeight());
             points[5] = new Point(Integer.MIN_VALUE, Integer.MIN_VALUE);
         } else {
             points[1] = new Point(copy.getSourceStartX(), copy.getSourceStartY());

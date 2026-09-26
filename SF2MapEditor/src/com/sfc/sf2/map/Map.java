@@ -29,6 +29,7 @@ public class Map implements INameable {
     private MapItem[] chestItems;
     private MapItem[] otherItems;
     private MapAnimation animation;
+    private MapEntity[] entities;
 
     public Map(String name, MapBlockset blockset, MapLayout layout, MapArea[] areas, MapFlagCopyEvent[] flagCopies, MapCopyEvent[] stepCopies, MapCopyEvent[] roofCopies, MapWarpEvent[] warps, MapItem[] chestItems, MapItem[] otherItems, MapAnimation animation) {
         this.name = name;
@@ -126,6 +127,14 @@ public class Map implements INameable {
 
     public void setAnimation(MapAnimation animation) {
         this.animation = animation;
+    }
+
+    public MapEntity[] getEntities() {
+        return entities;
+    }
+
+    public void setEntities(MapEntity[] entities) {
+        this.entities = entities;
     }
 
     public void setActionFlag(int x, int y, BlockFlags value) {
