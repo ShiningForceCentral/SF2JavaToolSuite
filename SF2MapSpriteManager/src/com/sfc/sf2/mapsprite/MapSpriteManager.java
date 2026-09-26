@@ -276,9 +276,9 @@ public class MapSpriteManager extends AbstractManager {
                 filePath = basePath.resolve(String.format("mapsprite%03d-%d.bin", index, facing));
                 MapSprite mapSprite = mapSprites.getMapSprite(i);
                 if (mapSprite == null) {
-                    //Data was a 2 byte placeholder (e.g. like Mapsprite237_0)
-                    new MapSpriteDisassemblyProcessor().exportDisassembly(filePath, null, null);
-                    break;
+                    // Gap in the sequence (or a 2-byte placeholder). Skip so later
+                    // sprites still export instead of aborting the whole run.
+                    continue;
                 } else {
                     frames[0] = mapSprite.getFrame(true);
                     frames[1] = mapSprite.getFrame(false);
