@@ -23,7 +23,14 @@ public abstract class AbstractEnums {
             return toEnumString(number, enumData);
         }
         catch (NumberFormatException ex) {
-            //Not a number
+            //Not a number. ASM often stores PORTRAIT_BOWIE while maps are keyed as BOWIE.
+            int underscore = data.indexOf('_');
+            if (underscore >= 0) {
+                String suffix = data.substring(underscore + 1);
+                if (enumData.containsKey(suffix)) {
+                    return suffix;
+                }
+            }
             return data;
         }
     }
