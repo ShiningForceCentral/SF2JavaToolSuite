@@ -231,4 +231,24 @@ public class Tile implements IPaletteGraphic {
     public static Tile EmptyTile(Palette palette) {
         return new Tile(-1, new byte[PIXEL_COUNT], palette);
     }
+
+    public static Tile hFlip(Tile tile) {
+        byte[] flipped = new byte[PIXEL_COUNT];
+        for (int j = 0; j < PIXEL_HEIGHT; j++) {
+            for (int i = 0; i < PIXEL_WIDTH; i++) {
+                flipped[i + j * PIXEL_WIDTH] = tile.pixels[(PIXEL_WIDTH - 1 - i) + j * PIXEL_WIDTH];
+            }
+        }
+        return new Tile(tile.id, flipped, tile.palette);
+    }
+
+    public static Tile vFlip(Tile tile) {
+        byte[] flipped = new byte[PIXEL_COUNT];
+        for (int j = 0; j < PIXEL_HEIGHT; j++) {
+            for (int i = 0; i < PIXEL_WIDTH; i++) {
+                flipped[i + j * PIXEL_WIDTH] = tile.pixels[i + (PIXEL_HEIGHT - 1 - j) * PIXEL_WIDTH];
+            }
+        }
+        return new Tile(tile.id, flipped, tile.palette);
+    }
 }
