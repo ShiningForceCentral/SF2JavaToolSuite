@@ -43,6 +43,8 @@ public class MapBlocksetLayoutPanel extends AbstractLayoutPanel {
     private MapBlockset blockset;
     private Tileset[] tilesets;
     private boolean showPriority = false;
+    private boolean[] usedBlocks;
+    private boolean showUnusedBlocks = true;
 
     public MapBlocksetLayoutPanel() {
         super();
@@ -72,6 +74,23 @@ public class MapBlocksetLayoutPanel extends AbstractLayoutPanel {
         graphics.drawImage(blockset.getIndexedColorImage(tilesets), 0, 0, null);
         if (showPriority) {
             MapBlockHelpers.drawTilePriorities(graphics, blockset.getBlocks(), tilesets, blocksPerRow);
+        }
+        if (showUnusedBlocks && usedBlocks != null) {
+            Graphics2D g2 = (Graphics2D) graphics;
+            g2.setColor(new Color(255, 0, 0, 90));
+            MapBlock[] blocks = blockset.getBlocks();
+            for (int i = 0; i < blocks.length; i++) {
+                int index = blocks[i] == null ? i : blocks[i].getIndex();
+                boolean used = index >= 0 && index < usedBlocks.length && usedBlocks[index];
+                if (!used) {
+                    int baseX = (i % blocksPerRow) * PIXEL_WIDTH;
+                    int baseY = (i / blocksPerRow) * PIXEL_HEIGHT;
+                    g2.fillRect(baseX, baseY, PIXEL_WIDTH, PIXEL_HEIGHT);
+                    g2.setColor(Color.RED);
+                    g2.drawLine(baseX + 2, baseY + 2, baseX + PIXEL_WIDTH - 2, baseY + PIXEL_HEIGHT - 2);
+                    g2.setColor(new Color(255, 0, 0, 90));
+                }
+            }
         }
         if (selectedBlockIndexLeft >= 0) {
             Graphics2D g2 = (Graphics2D)graphics;
@@ -111,6 +130,16 @@ public class MapBlocksetLayoutPanel extends AbstractLayoutPanel {
     
     public boolean getShowPriority() {
         return showPriority;
+    }
+
+    public void setUsedBlocks(boolean[] usedBlocks) {
+        this.usedBlocks = usedBlocks;
+        this.redraw();
+    }
+
+    public void setShowUnusedBlocks(boolean showUnusedBlocks) {
+        this.showUnusedBlocks = showUnusedBlocks;
+        this.redraw();
     }
 
     public void setShowPriority(boolean showPriority) {
