@@ -91,6 +91,7 @@ public class MapAnimationFrame {
     }
     
     public static MapAnimationFrame EmptyMapAnimationFrame() {
-        return new MapAnimationFrame(0, 32, 768, 20);
+        // dest $100 = map tileset 0 (VRAM tilesets 0-1 are UI, map tilesets start at $100)
+        return new MapAnimationFrame(0, 32, 2 * TILESET_TILES, 20);
     }
 }
