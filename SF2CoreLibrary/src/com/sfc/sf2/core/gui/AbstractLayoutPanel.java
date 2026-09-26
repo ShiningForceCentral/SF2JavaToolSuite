@@ -66,7 +66,7 @@ public abstract class AbstractLayoutPanel extends JPanel implements AnimationLis
                 redraw = false;
             }
             g.drawImage(currentImage, offset.width, offset.height, this);
-            if (BaseLayoutComponent.IsEnabled(coordsGrid)) { coordsGrid.paintCoordsImage(g, getRenderScale()); }
+            if (BaseLayoutComponent.IsEnabled(coordsGrid)) { coordsGrid.paintCoordsImage(g, getRenderScale(), getVisibleRect()); }
         }
     }
     

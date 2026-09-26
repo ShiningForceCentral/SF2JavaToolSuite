@@ -9,6 +9,8 @@ import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.core.actions.TableAction;
 import com.sfc.sf2.core.actions.TableActionData;
 import com.sfc.sf2.core.models.AbstractTableModel;
+import com.sfc.sf2.core.models.CompactBooleanTableEditor;
+import com.sfc.sf2.core.models.CompactBooleanTableRenderer;
 import com.sfc.sf2.core.models.SelectionInterval;
 import com.sfc.sf2.core.models.spinner.SpinnerTableEditor;
 import com.sfc.sf2.core.models.spinner.SpinnerTableRenderer;
@@ -41,6 +43,8 @@ public class Table extends javax.swing.JPanel {
             tableModel.setLinkedTable(this);
         }
         jPanelInfo.setVisible(infoButton.getMessageText() != null && infoButton.getMessageText().length() > 0);
+        jTable.setDefaultEditor(Boolean.class, new CompactBooleanTableEditor());
+        jTable.setDefaultRenderer(Boolean.class, new CompactBooleanTableRenderer());
     }
     
     public AbstractTableModel getModel() {
