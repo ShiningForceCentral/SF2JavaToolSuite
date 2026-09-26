@@ -15,7 +15,7 @@ import com.sfc.sf2.spellAnimation.SpellAnimationFrame;
 public class SpellAnimationFramesTableModel extends AbstractTableModel<SpellAnimationFrame> {
 
     public SpellAnimationFramesTableModel() {
-        super(new String[] { "Index", "Tile Index", "X", "Y", "Tiles Width", "Tiles Height", "Foreground" }, 255);
+        super(new String[] { "Index", "Tile Index", "X", "Y", "Tiles Width", "Tiles Height", "Foreground", "HFlip" }, 255);
     }
 
     @Override
@@ -24,7 +24,8 @@ public class SpellAnimationFramesTableModel extends AbstractTableModel<SpellAnim
             case 0: return Integer.class;
             case 4:
             case 5: return Byte.class;
-            case 6: return Boolean.class;
+            case 6:
+            case 7: return Boolean.class;
             default: return Short.class;
         }
     }
@@ -54,6 +55,7 @@ public class SpellAnimationFramesTableModel extends AbstractTableModel<SpellAnim
             case 4: return item.getW();
             case 5: return item.getH();
             case 6: return item.getForeground();
+            case 7: return item.getHFlip();
         }
         return 0;
     }
@@ -67,6 +69,7 @@ public class SpellAnimationFramesTableModel extends AbstractTableModel<SpellAnim
             case 4: item.setW((byte)value); break;
             case 5: item.setH((byte)value); break;
             case 6: item.setForeground((boolean)value); break;
+            case 7: item.setHFlip((boolean)value); break;
         }
         return item;
     }
@@ -81,7 +84,8 @@ public class SpellAnimationFramesTableModel extends AbstractTableModel<SpellAnim
         switch (col) {
             case 4:
             case 5: return Byte.MAX_VALUE;
-            case 6: return 1;
+            case 6:
+            case 7: return 1;
         }
         return Short.MAX_VALUE;
     }
