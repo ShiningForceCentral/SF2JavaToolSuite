@@ -1,4 +1,4 @@
-package com.sfc.sf2.core.models;
+package com.sfc.sf2.core.models.checkbox;
 
 import java.awt.Component;
 import java.awt.Rectangle;

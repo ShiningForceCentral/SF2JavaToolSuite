@@ -11,6 +11,7 @@ import com.sfc.sf2.helpers.RenderScaleHelpers;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
@@ -182,6 +183,21 @@ public abstract class AbstractLayoutPanel extends JPanel implements AnimationLis
     public void redraw() {
         this.redraw = true;
         repaint();
+    }
+
+    /**
+     * Repaint the visible viewport only so pinned coord bars can move with
+     * scrolling. Does not rebuild the cached map image.
+     */
+    public void repaintPinnedOverlays() {
+        if (!BaseLayoutComponent.IsEnabled(coordsGrid)) {
+            return;
+        }
+        Rectangle vis = getVisibleRect();
+        if (vis.width <= 0 || vis.height <= 0) {
+            return;
+        }
+        repaint(vis.x, vis.y, vis.width, vis.height);
     }
 
     public float getRenderScale() {
