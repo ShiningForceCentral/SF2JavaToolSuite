@@ -85,7 +85,7 @@ public class TextManager extends AbstractManager {
         decoder.parseTrees(trees);
         //Load banks
         File[] files = FileHelpers.findAllFilesInDirectory(basePath, TEXTBANK_FILEPREFIX, FileFormat.BIN);
-        Console.logger().info(files.length + " Textbanks found.");
+        Console.logger().info(files.length + " Text banks found.");
         ArrayList<String> textList = new ArrayList<>();
         int failedToLoad = 0;
         for (File file : files) {
@@ -97,7 +97,7 @@ public class TextManager extends AbstractManager {
                 textList.addAll(Arrays.asList(text));
             } catch (Exception e) {
                 failedToLoad++;
-                Console.logger().warning("Textbank could not be imported : " + bankPath + " : " + e);
+                Console.logger().warning("Text bank could not be imported : " + bankPath + " : " + e);
             }
         }
         gamescript = new String[textList.size()];
