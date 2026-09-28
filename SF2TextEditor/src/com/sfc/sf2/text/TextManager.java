@@ -97,7 +97,7 @@ public class TextManager extends AbstractManager {
                 textList.addAll(Arrays.asList(text));
             } catch (Exception e) {
                 failedToLoad++;
-                Console.logger().warning("Background could not be imported : " + bankPath + " : " + e);
+                Console.logger().warning("Text bank could not be imported : " + bankPath + " : " + e);
             }
         }
         gamescript = new String[textList.size()];
