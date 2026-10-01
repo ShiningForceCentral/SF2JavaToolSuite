@@ -18,8 +18,10 @@ import com.sfc.sf2.palette.gui.controls.PaletteButton;
 import com.sfc.sf2.palette.gui.controls.PaletteButton.ColorsSwappedListener;
 import com.sfc.sf2.palette.helpers.PaletteGraphicsHelpers;
 import com.sfc.sf2.palette.helpers.PaletteHelpers;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 /**
  *
@@ -30,7 +32,7 @@ public class PalettePane extends javax.swing.JPanel {
     private CRAMColorEditor colorEditor;
     private Palette palette;
     private byte[] pixelData;
-    private ColorPane[] colorPanes;
+    private ArrayList<ColorPane> colorPanes;
     
     private ColorPane currentSelected;
     
@@ -39,13 +41,7 @@ public class PalettePane extends javax.swing.JPanel {
     
     public PalettePane() {
         initComponents();
-        colorPanes = new ColorPane[] {
-            colorPane1, colorPane2, colorPane3, colorPane4, colorPane5, colorPane6, colorPane7, colorPane8,
-            colorPane9, colorPane10, colorPane11, colorPane12, colorPane13, colorPane14, colorPane15, colorPane16,
-        };
-        for (int i = 0; i < colorPanes.length; i++) {
-            colorPanes[i].SetupColorPane(this, i, CRAMColor.BLACK);
-        }
+        colorPane.SetupColorPane(this, 0, CRAMColor.BLACK);
         if (!SettingsManager.isRunningInEditor())
             infoButton1.setVisible(false);
     }
@@ -84,8 +80,8 @@ public class PalettePane extends javax.swing.JPanel {
         if (index == -1 || palette == null) {
             colorEditor.setColor(CRAMColor.BLACK, -1);
         } else {
-            colorPanes[index].select();
-            currentSelected = colorPanes[index];
+            colorPanes.get(index).select();
+            currentSelected = colorPanes.get(index);
             colorEditor.setColor(palette.getColors()[index], index);
         }
     }
@@ -93,7 +89,7 @@ public class PalettePane extends javax.swing.JPanel {
     public void updateColor(int index, CRAMColor color) {
         if (palette == null || index < 0) return;
         if (!ActionManager.isActionTriggering()) {
-            ActionManager.setActionWithoutExecute(new PaletteColorAction(this, index, color, colorPanes[index].getCurrentColor()));
+            ActionManager.setActionWithoutExecute(new PaletteColorAction(this, index, color, colorPanes.get(index).getCurrentColor()));
         }
         actionUpdateColor(index, color);
     }
@@ -101,8 +97,8 @@ public class PalettePane extends javax.swing.JPanel {
     private void actionUpdateColor(int index, CRAMColor color) {
         palette.getColors()[index] = color;
         colorEditor.setColor(color, index);
-        colorPanes[index].updateColor(color);
-        colorPanes[index].select();
+        colorPanes.get(index).updateColor(color);
+        colorPanes.get(index).select();
         refreshColorPanes();
         if (colorChangeListener != null) {
             colorChangeListener.actionPerformed(new ActionEvent(this, index, "ColorChange"));
@@ -110,8 +106,8 @@ public class PalettePane extends javax.swing.JPanel {
     }
     
     public void refreshColorPanes() {
-        for (int i = 0; i < colorPanes.length; i++) {
-            colorPanes[i].updateColor(palette.getColors()[i]);
+        for (int i = 0; i < colorPanes.size(); i++) {
+            colorPanes.get(i).updateColor(palette.getColors()[i]);
         }
         int selected = colorEditor.getThisIndex();
         if (selected == -1) return;
@@ -154,21 +150,22 @@ public class PalettePane extends javax.swing.JPanel {
     }
     
     public void setPalette(Palette palette) {
+        setUpColorPanes(palette);
         if (palette == null) {
             this.palette = null;
-            for (int i = 0; i < colorPanes.length; i++) {
-                colorPanes[i].updateColor(CRAMColor.BLACK);
-                colorPanes[i].setVisible(true);
+            for (int i = 0; i < colorPanes.size(); i++) {
+                colorPanes.get(i).updateColor(CRAMColor.BLACK);
+                colorPanes.get(i).setVisible(i < 16);
             }
         } else {
             CRAMColor[] colors = new CRAMColor[palette.getColors().length];
-            for (int i = 0; i < colorPanes.length; i++) {
+            for (int i = 0; i < colorPanes.size(); i++) {
                 if (i < colors.length) {
                     colors[i] = palette.getColors()[i];
-                    colorPanes[i].updateColor(colors[i]);
-                    colorPanes[i].setVisible(true);
+                    colorPanes.get(i).updateColor(colors[i]);
+                    colorPanes.get(i).setVisible(true);
                 } else {
-                    colorPanes[i].setVisible(false);
+                    colorPanes.get(i).setVisible(false);
                 }
             }
             this.palette = new Palette(palette.getName(), colors, palette.isFirstColorTransparent(), false);
@@ -178,16 +175,52 @@ public class PalettePane extends javax.swing.JPanel {
     }
     
     public void setPalette(Palette palette, int[] limitColorIndices) {
+        setUpColorPanes(palette);
         setPalette(palette);
         if (limitColorIndices == null) return;
         
-        for (int i = 0; i < colorPanes.length; i++) {
-            colorPanes[i].setVisible(false);
+        for (int i = 0; i < colorPanes.size(); i++) {
+            colorPanes.get(i).setVisible(false);
         }
         for (int i = 0; i < limitColorIndices.length; i++) {
-            colorPanes[limitColorIndices[i]].setVisible(true);
+            colorPanes.get(limitColorIndices[i]).setVisible(true);
         }
         setColorPaneSelected(-1);
+    }
+    
+    private void setUpColorPanes(Palette palette) {
+        int count = palette == null ? 16 : palette.getColorsCount();
+        if (colorPanes == null)
+            colorPanes = new ArrayList(count);
+        if (colorPanes.size() < count) {
+            for (int i = colorPanes.size(); i < count; i++) {
+                if (i == 0) {
+                    colorPanes.add(colorPane);
+                } else {
+                    ColorPane newPane = new ColorPane();
+                    colorPane.getParent().add(newPane);
+                    newPane.SetupColorPane(this, i, CRAMColor.BLACK);
+                    colorPanes.add(newPane);
+                }
+            }
+        }
+        this.revalidate();
+    }
+
+    @Override
+    public Dimension getMinimumSize() {
+        int x = 500;
+        int columns = this.getWidth()/30;
+        int rows;
+        if (colorPanes == null || columns == 0) {
+            rows = 1;
+        } else {
+            rows = colorPanes.size()/columns;
+            if (colorPanes.size()%columns != 0)
+                rows++;
+        }
+        int y = 10+40*rows;
+        return new Dimension(x, y);
     }
 
     public void setPixelData(byte[] pixelData) {
@@ -202,200 +235,30 @@ public class PalettePane extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        colorPane1 = new com.sfc.sf2.palette.gui.ColorPane();
-        colorPane2 = new com.sfc.sf2.palette.gui.ColorPane();
-        colorPane3 = new com.sfc.sf2.palette.gui.ColorPane();
-        colorPane4 = new com.sfc.sf2.palette.gui.ColorPane();
-        colorPane5 = new com.sfc.sf2.palette.gui.ColorPane();
-        colorPane6 = new com.sfc.sf2.palette.gui.ColorPane();
-        colorPane7 = new com.sfc.sf2.palette.gui.ColorPane();
-        colorPane8 = new com.sfc.sf2.palette.gui.ColorPane();
-        colorPane9 = new com.sfc.sf2.palette.gui.ColorPane();
-        colorPane10 = new com.sfc.sf2.palette.gui.ColorPane();
-        colorPane11 = new com.sfc.sf2.palette.gui.ColorPane();
-        colorPane12 = new com.sfc.sf2.palette.gui.ColorPane();
-        colorPane13 = new com.sfc.sf2.palette.gui.ColorPane();
-        colorPane14 = new com.sfc.sf2.palette.gui.ColorPane();
-        colorPane15 = new com.sfc.sf2.palette.gui.ColorPane();
-        colorPane16 = new com.sfc.sf2.palette.gui.ColorPane();
+        jPanelColors = new javax.swing.JPanel();
+        colorPane = new com.sfc.sf2.palette.gui.ColorPane();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 10), new java.awt.Dimension(10, 10), new java.awt.Dimension(10, 32767));
         infoButton1 = new com.sfc.sf2.core.gui.controls.InfoButton();
+        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 10), new java.awt.Dimension(10, 10), new java.awt.Dimension(10, 32767));
 
-        javax.swing.GroupLayout colorPane1Layout = new javax.swing.GroupLayout(colorPane1);
-        colorPane1.setLayout(colorPane1Layout);
-        colorPane1Layout.setHorizontalGroup(
-            colorPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 28, Short.MAX_VALUE)
-        );
-        colorPane1Layout.setVerticalGroup(
-            colorPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 28, Short.MAX_VALUE)
-        );
+        setMinimumSize(new java.awt.Dimension(420, 40));
 
-        javax.swing.GroupLayout colorPane2Layout = new javax.swing.GroupLayout(colorPane2);
-        colorPane2.setLayout(colorPane2Layout);
-        colorPane2Layout.setHorizontalGroup(
-            colorPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        jPanelColors.setMinimumSize(new java.awt.Dimension(200, 40));
+        jPanelColors.setPreferredSize(new java.awt.Dimension(420, 0));
+        jPanelColors.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 0, 5));
+
+        javax.swing.GroupLayout colorPaneLayout = new javax.swing.GroupLayout(colorPane);
+        colorPane.setLayout(colorPaneLayout);
+        colorPaneLayout.setHorizontalGroup(
+            colorPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 28, Short.MAX_VALUE)
         );
-        colorPane2Layout.setVerticalGroup(
-            colorPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        colorPaneLayout.setVerticalGroup(
+            colorPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 28, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout colorPane3Layout = new javax.swing.GroupLayout(colorPane3);
-        colorPane3.setLayout(colorPane3Layout);
-        colorPane3Layout.setHorizontalGroup(
-            colorPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 28, Short.MAX_VALUE)
-        );
-        colorPane3Layout.setVerticalGroup(
-            colorPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 28, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout colorPane4Layout = new javax.swing.GroupLayout(colorPane4);
-        colorPane4.setLayout(colorPane4Layout);
-        colorPane4Layout.setHorizontalGroup(
-            colorPane4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 28, Short.MAX_VALUE)
-        );
-        colorPane4Layout.setVerticalGroup(
-            colorPane4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 28, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout colorPane5Layout = new javax.swing.GroupLayout(colorPane5);
-        colorPane5.setLayout(colorPane5Layout);
-        colorPane5Layout.setHorizontalGroup(
-            colorPane5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 28, Short.MAX_VALUE)
-        );
-        colorPane5Layout.setVerticalGroup(
-            colorPane5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 28, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout colorPane6Layout = new javax.swing.GroupLayout(colorPane6);
-        colorPane6.setLayout(colorPane6Layout);
-        colorPane6Layout.setHorizontalGroup(
-            colorPane6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 28, Short.MAX_VALUE)
-        );
-        colorPane6Layout.setVerticalGroup(
-            colorPane6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 28, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout colorPane7Layout = new javax.swing.GroupLayout(colorPane7);
-        colorPane7.setLayout(colorPane7Layout);
-        colorPane7Layout.setHorizontalGroup(
-            colorPane7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 28, Short.MAX_VALUE)
-        );
-        colorPane7Layout.setVerticalGroup(
-            colorPane7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 28, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout colorPane8Layout = new javax.swing.GroupLayout(colorPane8);
-        colorPane8.setLayout(colorPane8Layout);
-        colorPane8Layout.setHorizontalGroup(
-            colorPane8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 28, Short.MAX_VALUE)
-        );
-        colorPane8Layout.setVerticalGroup(
-            colorPane8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 28, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout colorPane9Layout = new javax.swing.GroupLayout(colorPane9);
-        colorPane9.setLayout(colorPane9Layout);
-        colorPane9Layout.setHorizontalGroup(
-            colorPane9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 28, Short.MAX_VALUE)
-        );
-        colorPane9Layout.setVerticalGroup(
-            colorPane9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 28, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout colorPane10Layout = new javax.swing.GroupLayout(colorPane10);
-        colorPane10.setLayout(colorPane10Layout);
-        colorPane10Layout.setHorizontalGroup(
-            colorPane10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 28, Short.MAX_VALUE)
-        );
-        colorPane10Layout.setVerticalGroup(
-            colorPane10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 28, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout colorPane11Layout = new javax.swing.GroupLayout(colorPane11);
-        colorPane11.setLayout(colorPane11Layout);
-        colorPane11Layout.setHorizontalGroup(
-            colorPane11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 28, Short.MAX_VALUE)
-        );
-        colorPane11Layout.setVerticalGroup(
-            colorPane11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 28, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout colorPane12Layout = new javax.swing.GroupLayout(colorPane12);
-        colorPane12.setLayout(colorPane12Layout);
-        colorPane12Layout.setHorizontalGroup(
-            colorPane12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 28, Short.MAX_VALUE)
-        );
-        colorPane12Layout.setVerticalGroup(
-            colorPane12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 28, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout colorPane13Layout = new javax.swing.GroupLayout(colorPane13);
-        colorPane13.setLayout(colorPane13Layout);
-        colorPane13Layout.setHorizontalGroup(
-            colorPane13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 28, Short.MAX_VALUE)
-        );
-        colorPane13Layout.setVerticalGroup(
-            colorPane13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 28, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout colorPane14Layout = new javax.swing.GroupLayout(colorPane14);
-        colorPane14.setLayout(colorPane14Layout);
-        colorPane14Layout.setHorizontalGroup(
-            colorPane14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 28, Short.MAX_VALUE)
-        );
-        colorPane14Layout.setVerticalGroup(
-            colorPane14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 28, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout colorPane15Layout = new javax.swing.GroupLayout(colorPane15);
-        colorPane15.setLayout(colorPane15Layout);
-        colorPane15Layout.setHorizontalGroup(
-            colorPane15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 28, Short.MAX_VALUE)
-        );
-        colorPane15Layout.setVerticalGroup(
-            colorPane15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 28, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout colorPane16Layout = new javax.swing.GroupLayout(colorPane16);
-        colorPane16.setLayout(colorPane16Layout);
-        colorPane16Layout.setHorizontalGroup(
-            colorPane16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 28, Short.MAX_VALUE)
-        );
-        colorPane16Layout.setVerticalGroup(
-            colorPane16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 28, Short.MAX_VALUE)
-        );
+        jPanelColors.add(colorPane);
 
         infoButton1.setMessageText("<html>Select the palette color to edit it.<br><br><b>Advanced Controls:</b><br>- <i>Left-Drag:</i> Rearrange ONLY the palette color indices. This will cause the image colors to visually change (since the image pixels are assigned a color index).<br>- <i>Right-Drag:</i> Rearrange the palette color indices AND image pixels. This ensures that the image does not visually change, but its underlying pixel data will be modified to match the color index changes.</html>");
         infoButton1.setText("");
@@ -405,90 +268,33 @@ public class PalettePane extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(17, Short.MAX_VALUE)
-                .addComponent(colorPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(colorPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(colorPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(colorPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(colorPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(colorPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(colorPane7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(colorPane8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(colorPane9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(colorPane10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(colorPane11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(colorPane12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(colorPane13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(colorPane14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(colorPane15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(colorPane16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
+                .addComponent(jPanelColors, javax.swing.GroupLayout.DEFAULT_SIZE, 565, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(infoButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addGap(0, 0, 0)
+                .addComponent(filler2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanelColors, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(filler1, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(10, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(colorPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(colorPane15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(colorPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(colorPane16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(colorPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(colorPane7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(colorPane8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(colorPane9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(colorPane10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(colorPane11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(colorPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(colorPane12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(colorPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(colorPane13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(colorPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(colorPane14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(infoButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addGap(7, 7, 7)
+                .addComponent(infoButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(filler2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.sfc.sf2.palette.gui.ColorPane colorPane1;
-    private com.sfc.sf2.palette.gui.ColorPane colorPane10;
-    private com.sfc.sf2.palette.gui.ColorPane colorPane11;
-    private com.sfc.sf2.palette.gui.ColorPane colorPane12;
-    private com.sfc.sf2.palette.gui.ColorPane colorPane13;
-    private com.sfc.sf2.palette.gui.ColorPane colorPane14;
-    private com.sfc.sf2.palette.gui.ColorPane colorPane15;
-    private com.sfc.sf2.palette.gui.ColorPane colorPane16;
-    private com.sfc.sf2.palette.gui.ColorPane colorPane2;
-    private com.sfc.sf2.palette.gui.ColorPane colorPane3;
-    private com.sfc.sf2.palette.gui.ColorPane colorPane4;
-    private com.sfc.sf2.palette.gui.ColorPane colorPane5;
-    private com.sfc.sf2.palette.gui.ColorPane colorPane6;
-    private com.sfc.sf2.palette.gui.ColorPane colorPane7;
-    private com.sfc.sf2.palette.gui.ColorPane colorPane8;
-    private com.sfc.sf2.palette.gui.ColorPane colorPane9;
+    private com.sfc.sf2.palette.gui.ColorPane colorPane;
+    private com.sfc.sf2.palette.gui.ColorPane colorPane22;
     private javax.swing.Box.Filler filler1;
+    private javax.swing.Box.Filler filler2;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton1;
+    private javax.swing.JPanel jPanelColors;
     // End of variables declaration//GEN-END:variables
 }
