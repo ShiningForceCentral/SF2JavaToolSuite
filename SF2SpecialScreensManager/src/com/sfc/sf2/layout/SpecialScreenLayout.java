@@ -120,7 +120,6 @@ public class SpecialScreenLayout implements INameable {
             int height = layout.length/tilesPerRow;
             if (layout.length%tilesPerRow != 0)
                 height++;
-            Palette palette = currentPalette >= palettes.length ? palettes[0] : palettes[currentPalette];
             indexedColorImage = new BufferedImage(width*PIXEL_WIDTH, height*PIXEL_HEIGHT, BufferedImage.TYPE_INT_ARGB);
             Graphics graphics = indexedColorImage.getGraphics();
             for(int j=0;j<height;j++){
@@ -131,7 +130,7 @@ public class SpecialScreenLayout implements INameable {
                     }
                     Tile tile = layout[layoutIndex].getTile(tilesets);
                     if (tile != null)
-                        tile.setPalette(palette);
+                        tile.setPalette(palettes[layout[layoutIndex].getPaletteIndex()]);
                         graphics.drawImage(tile.getIndexedColorImage(layout[layoutIndex].getTileFlags()), i*PIXEL_WIDTH, j*PIXEL_HEIGHT, null);   
                 }
             }
