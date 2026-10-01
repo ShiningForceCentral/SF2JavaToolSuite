@@ -47,7 +47,27 @@ public  class PaletteManager extends AbstractManager {
         Console.logger().finest("EXITING importDisassembly");
         return palette;
     }
+       
+    /**
+     * Imports multiple palettes from a single file
+     */
+    public Palette[] importDisassembliesPacked(Path filePath, int length, boolean firstColorTransparent) throws IOException, DisassemblyException {
+        Console.logger().finest("ENTERING importDisassembliesPacked");
+        byte[] data = new BinaryDisassemblyProcessor().importDisassembly(filePath, null);
+        Palette[] palettes = new Palette[data.length/length];
+        for (int i = 0; i < palettes.length; i++) {
+            byte[] paletteData = Arrays.copyOfRange(data, i*length, i*length+length);
+            palettes[i] = new Palette(PathHelpers.filenameFromPath(filePath), PaletteDecoder.decodePalette(paletteData), true);
+        }
+        palette = palettes[0];
+        Console.logger().info("Packed palettes successfully imported from : " + filePath);
+        Console.logger().finest("EXITING importDisassembliesPacked");
+        return palettes;
+    }
     
+    /**
+     * Imports multiple palettes from multiple files
+     */
     public Palette[] importDisassemblyFromPartials(Path[] filePaths, int[] offsets, int[] lengths, boolean firstColorTransparent) throws IOException, DisassemblyException {
         byte[][] dataSets = new byte[filePaths.length][];
         Palette[] palettes = new Palette[filePaths.length];
@@ -65,6 +85,9 @@ public  class PaletteManager extends AbstractManager {
         return palettes;
     }
     
+    /**
+     * Imports a palette from part of a file
+     */
     public Palette importDisassemblyFromPartial(Path filePath, int offset, int length, boolean firstColorTransparent) throws IOException, DisassemblyException {
         byte[] data = new BinaryDisassemblyProcessor().importDisassembly(filePath, null);
         byte[] paletteData = Arrays.copyOfRange(data, offset, offset+length);

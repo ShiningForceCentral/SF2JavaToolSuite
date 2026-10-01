@@ -20,7 +20,7 @@ import java.util.Arrays;
  */
 public class MapBlockset implements INameable {
     
-    private String name;
+    private final String name;
     protected MapBlock[] blocks;
     protected int blocksPerRow;
     

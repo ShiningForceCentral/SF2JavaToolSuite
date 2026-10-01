@@ -11,7 +11,7 @@
     </Component>
   </NonVisualComponents>
   <Properties>
-    <Property name="title" type="java.lang.String" value="SF2GraphicsManager"/>
+    <Property name="title" type="java.lang.String" value="SF2SpecialScreensManager"/>
     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="[1000, 750]"/>
     </Property>
@@ -93,7 +93,7 @@
               <SubComponents>
                 <Container class="javax.swing.JSplitPane" name="jSplitPane2">
                   <Properties>
-                    <Property name="dividerLocation" type="int" value="550"/>
+                    <Property name="dividerLocation" type="int" value="450"/>
                     <Property name="oneTouchExpandable" type="boolean" value="true"/>
                   </Properties>
 
@@ -109,16 +109,16 @@
                       <Layout>
                         <DimensionLayout dim="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jPanel3" pref="550" max="32767" attributes="0"/>
-                              <Component id="jPanel5" alignment="0" pref="550" max="32767" attributes="0"/>
+                              <Component id="jPanel3" pref="450" max="32767" attributes="0"/>
+                              <Component id="jPanel5" alignment="0" pref="450" max="32767" attributes="0"/>
                           </Group>
                         </DimensionLayout>
                         <DimensionLayout dim="1">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
-                                  <Component id="jPanel3" min="-2" pref="361" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="jPanel5" min="-2" pref="195" max="-2" attributes="0"/>
+                                  <Component id="jPanel3" min="-2" pref="267" max="-2" attributes="0"/>
+                                  <EmptySpace pref="43" max="32767" attributes="0"/>
+                                  <Component id="jPanel5" min="-2" pref="284" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -145,7 +145,7 @@
                             </DimensionLayout>
                             <DimensionLayout dim="1">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jTabbedPane1" alignment="0" pref="338" max="32767" attributes="0"/>
+                                  <Component id="jTabbedPane1" alignment="0" pref="244" max="32767" attributes="0"/>
                               </Group>
                             </DimensionLayout>
                           </Layout>
@@ -154,11 +154,11 @@
 
                               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
                               <SubComponents>
-                                <Container class="javax.swing.JPanel" name="jPanel4">
+                                <Container class="javax.swing.JPanel" name="jPanel18">
                                   <Constraints>
                                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                                      <JTabbedPaneConstraints tabName="Disassembly">
-                                        <Property name="tabTitle" type="java.lang.String" value="Disassembly"/>
+                                      <JTabbedPaneConstraints tabName="Layout Disassembly">
+                                        <Property name="tabTitle" type="java.lang.String" value="Layout Disassembly"/>
                                       </JTabbedPaneConstraints>
                                     </Constraint>
                                   </Constraints>
@@ -169,19 +169,14 @@
                                           <Group type="102" attributes="0">
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="fileButtonImportPalette" pref="528" max="32767" attributes="0"/>
-                                                  <Component id="fileButtonImportGraphics" alignment="0" pref="0" max="32767" attributes="0"/>
-                                                  <Group type="102" attributes="0">
-                                                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                                                      <EmptySpace max="-2" attributes="0"/>
-                                                      <Component id="infoButton4" min="-2" max="-2" attributes="0"/>
-                                                      <EmptySpace min="0" pref="314" max="32767" attributes="0"/>
+                                                  <Group type="102" alignment="1" attributes="0">
+                                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                                      <Component id="jButtonLayoutImport" min="-2" max="-2" attributes="0"/>
                                                   </Group>
-                                                  <Group type="102" alignment="0" attributes="0">
-                                                      <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-                                                      <EmptySpace max="32767" attributes="0"/>
-                                                      <Component id="jButtonImportDisassembly" min="-2" max="-2" attributes="0"/>
-                                                  </Group>
+                                                  <Component id="fileButtonImportTileset" alignment="0" max="32767" attributes="0"/>
+                                                  <Component id="accordionPanel1" alignment="0" max="32767" attributes="0"/>
+                                                  <Component id="fileButtonImportPalette" alignment="0" max="32767" attributes="0"/>
+                                                  <Component id="fileButtonImportLayout" alignment="0" max="32767" attributes="0"/>
                                               </Group>
                                               <EmptySpace max="-2" attributes="0"/>
                                           </Group>
@@ -191,71 +186,45 @@
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" alignment="1" attributes="0">
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="2" attributes="0">
-                                                  <Component id="infoButton4" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jLabel2" alignment="2" min="-2" pref="26" max="-2" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="accordionPanel1" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                               <Component id="fileButtonImportPalette" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="fileButtonImportGraphics" min="-2" max="-2" attributes="0"/>
+                                              <Component id="fileButtonImportTileset" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="jButtonImportDisassembly" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-                                              </Group>
+                                              <Component id="fileButtonImportLayout" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="jButtonLayoutImport" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                     </DimensionLayout>
                                   </Layout>
                                   <SubComponents>
-                                    <Component class="javax.swing.JButton" name="jButtonImportDisassembly">
+                                    <Component class="javax.swing.JButton" name="jButtonLayoutImport">
                                       <Properties>
                                         <Property name="text" type="java.lang.String" value="Import"/>
                                       </Properties>
                                       <Events>
-                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonImportDisassemblyActionPerformed"/>
+                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonLayoutImportActionPerformed"/>
                                       </Events>
                                     </Component>
-                                    <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButtonImportPalette">
+                                    <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButtonImportTileset">
                                       <Properties>
                                         <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                           <Value id="BIN"/>
                                         </Property>
-                                        <Property name="filePath" type="java.lang.String" value="./tech/segalogopalette.bin"/>
+                                        <Property name="filePath" type="java.lang.String" value="./titlescreen/titlescreentiles.bin"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
-                                        <Property name="labelText" type="java.lang.String" value="Palette file :"/>
+                                        <Property name="labelText" type="java.lang.String" value="Tileset file :"/>
                                         <Property name="name" type="java.lang.String" value="Import Palette" noResource="true"/>
                                       </Properties>
                                     </Component>
-                                    <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButtonImportGraphics">
-                                      <Properties>
-                                        <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
-                                          <Value id="BIN"/>
-                                        </Property>
-                                        <Property name="filePath" type="java.lang.String" value="./tech/segalogotiles.bin"/>
-                                        <Property name="infoMessage" type="java.lang.String" value=""/>
-                                        <Property name="labelText" type="java.lang.String" value="Graphics file :"/>
-                                        <Property name="name" type="java.lang.String" value="Import Graphics" noResource="true"/>
-                                      </Properties>
-                                    </Component>
-                                    <Component class="javax.swing.JLabel" name="jLabel2">
-                                      <Properties>
-                                        <Property name="text" type="java.lang.String" value="&lt;html&gt;Import a graphics disassembly file.&lt;/html&gt;"/>
-                                      </Properties>
-                                    </Component>
-                                    <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton4">
-                                      <Properties>
-                                        <Property name="messageText" type="java.lang.String" value="&lt;html&gt;&gt;Graphics use 16 indexed colors (colors determined by the palette).&lt;br&gt;Graphics files may be compressed (see &quot;Compression&quot; below).&lt;/html&gt;"/>
-                                        <Property name="text" type="java.lang.String" value=""/>
-                                      </Properties>
-                                    </Component>
-                                    <Container class="javax.swing.JPanel" name="jPanel2">
+                                    <Container class="com.sfc.sf2.core.gui.controls.AccordionPanel" name="accordionPanel1">
                                       <Properties>
                                         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                                           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                                            <TitledBorder/>
+                                            <TitledBorder title="Base Tileset"/>
                                           </Border>
                                         </Property>
                                       </Properties>
@@ -265,18 +234,8 @@
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Group type="102" alignment="0" attributes="0">
                                                   <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="jLabel31" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="fileButtonImportBaseTileset" pref="406" max="32767" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="jComboBoxCompressionImport" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="infoButton2" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                                  <Component id="jLabel29" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="jSpinnerTileWidthImport" min="-2" pref="61" max="-2" attributes="0"/>
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="infoButton1" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace max="32767" attributes="0"/>
                                               </Group>
                                           </Group>
                                         </DimensionLayout>
@@ -284,74 +243,48 @@
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Group type="102" alignment="0" attributes="0">
                                                   <EmptySpace max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="2" attributes="0">
-                                                      <Component id="jLabel29" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="jComboBoxCompressionImport" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="jLabel31" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="jSpinnerTileWidthImport" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="infoButton1" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="infoButton2" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                  </Group>
-                                                  <EmptySpace max="32767" attributes="0"/>
+                                                  <Component id="fileButtonImportBaseTileset" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
                                         </DimensionLayout>
                                       </Layout>
                                       <SubComponents>
-                                        <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton1">
+                                        <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButtonImportBaseTileset">
                                           <Properties>
-                                            <Property name="messageText" type="java.lang.String" value="&lt;html&gt;How many tiles wide the image is. Can be adjusted after the image is loaded. &lt;/html&gt;"/>
-                                            <Property name="text" type="java.lang.String" value=""/>
-                                          </Properties>
-                                        </Component>
-                                        <Component class="javax.swing.JSpinner" name="jSpinnerTileWidthImport">
-                                          <Properties>
-                                            <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-                                              <SpinnerModel initial="16" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
+                                            <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                              <Value id="BIN"/>
                                             </Property>
-                                            <Property name="name" type="java.lang.String" value="Import Tile Width" noResource="true"/>
-                                          </Properties>
-                                          <Events>
-                                            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jSpinnerTileWidthImportStateChanged"/>
-                                          </Events>
-                                        </Component>
-                                        <Component class="javax.swing.JLabel" name="jLabel29">
-                                          <Properties>
-                                            <Property name="text" type="java.lang.String" value="Tile width :"/>
-                                          </Properties>
-                                        </Component>
-                                        <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton2">
-                                          <Properties>
-                                            <Property name="messageText" type="java.lang.String" value="&lt;html&gt;The compression used for the graphic.&lt;br&gt;&lt;b&gt;- None:&lt;/b&gt; Uncompressed graphics. Usually for small images (e.g. icons).&lt;br&gt;&lt;b&gt;- Basic:&lt;/b&gt; Simple compression. Used in map sprites and tilesets.&lt;br&gt;&lt;b&gt;- Stack:&lt;/b&gt; Complex compression. Used for all larger images (e.g. portraits, spell/invocations, and all battle graphics).&lt;/html&gt;"/>
-                                            <Property name="text" type="java.lang.String" value=""/>
-                                          </Properties>
-                                        </Component>
-                                        <Component class="javax.swing.JComboBox" name="jComboBoxCompressionImport">
-                                          <Properties>
-                                            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                                              <StringArray count="3">
-                                                <StringItem index="0" value="None"/>
-                                                <StringItem index="1" value="Basic"/>
-                                                <StringItem index="2" value="Stack"/>
-                                              </StringArray>
-                                            </Property>
-                                            <Property name="selectedIndex" type="int" value="2"/>
-                                            <Property name="name" type="java.lang.String" value="Import Compression" noResource="true"/>
-                                          </Properties>
-                                          <Events>
-                                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBoxCompressionImportActionPerformed"/>
-                                          </Events>
-                                          <AuxValues>
-                                            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-                                          </AuxValues>
-                                        </Component>
-                                        <Component class="javax.swing.JLabel" name="jLabel31">
-                                          <Properties>
-                                            <Property name="text" type="java.lang.String" value="Compression :"/>
+                                            <Property name="filePath" type="java.lang.String" value="../tech/basetiles.bin"/>
+                                            <Property name="infoMessage" type="java.lang.String" value=""/>
+                                            <Property name="labelText" type="java.lang.String" value="Base tileset :"/>
+                                            <Property name="name" type="java.lang.String" value="Import Palette" noResource="true"/>
                                           </Properties>
                                         </Component>
                                       </SubComponents>
                                     </Container>
+                                    <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButtonImportPalette">
+                                      <Properties>
+                                        <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                          <Value id="BIN"/>
+                                        </Property>
+                                        <Property name="filePath" type="java.lang.String" value="./titlescreen/titlescreenpalettes.bin"/>
+                                        <Property name="infoMessage" type="java.lang.String" value=""/>
+                                        <Property name="labelText" type="java.lang.String" value="Palette file :"/>
+                                        <Property name="name" type="java.lang.String" value="Import Palette" noResource="true"/>
+                                      </Properties>
+                                    </Component>
+                                    <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButtonImportLayout">
+                                      <Properties>
+                                        <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                          <Value id="BIN"/>
+                                        </Property>
+                                        <Property name="filePath" type="java.lang.String" value="./titlescreen/titlescreenlayoutA.bin"/>
+                                        <Property name="infoMessage" type="java.lang.String" value=""/>
+                                        <Property name="labelText" type="java.lang.String" value="Layout file :"/>
+                                        <Property name="name" type="java.lang.String" value="Import Palette" noResource="true"/>
+                                      </Properties>
+                                    </Component>
                                   </SubComponents>
                                 </Container>
                                 <Container class="javax.swing.JPanel" name="jPanel9">
@@ -379,7 +312,7 @@
                                                       <Component id="infoButton5" min="-2" max="-2" attributes="0"/>
                                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                                   </Group>
-                                                  <Component id="fileButtonImportImage" pref="528" max="32767" attributes="0"/>
+                                                  <Component id="fileButtonImportImage" pref="428" max="32767" attributes="0"/>
                                               </Group>
                                               <EmptySpace max="-2" attributes="0"/>
                                           </Group>
@@ -421,9 +354,9 @@
                                         <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                           <Value id="ANY_IMAGE"/>
                                         </Property>
-                                        <Property name="filePath" type="java.lang.String" value="./export/segalogotiles.png"/>
+                                        <Property name="filePath" type="java.lang.String" value="./export/specialscreen.png"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
-                                        <Property name="labelText" type="java.lang.String" value="Image File :"/>
+                                        <Property name="labelText" type="java.lang.String" value="Image file :"/>
                                         <Property name="name" type="java.lang.String" value="Import Image" noResource="true"/>
                                       </Properties>
                                     </Component>
@@ -462,7 +395,7 @@
                             </DimensionLayout>
                             <DimensionLayout dim="1">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jTabbedPane2" alignment="0" pref="172" max="32767" attributes="0"/>
+                                  <Component id="jTabbedPane2" alignment="0" max="32767" attributes="0"/>
                               </Group>
                             </DimensionLayout>
                           </Layout>
@@ -471,11 +404,11 @@
 
                               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
                               <SubComponents>
-                                <Container class="javax.swing.JPanel" name="jPanel11">
+                                <Container class="javax.swing.JPanel" name="jPanel19">
                                   <Constraints>
                                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                                      <JTabbedPaneConstraints tabName="Disassembly">
-                                        <Property name="tabTitle" type="java.lang.String" value="Disassembly"/>
+                                      <JTabbedPaneConstraints tabName="Layout Disassembly">
+                                        <Property name="tabTitle" type="java.lang.String" value="Layout Disassembly"/>
                                       </JTabbedPaneConstraints>
                                     </Constraint>
                                   </Constraints>
@@ -484,136 +417,122 @@
                                     <DimensionLayout dim="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" attributes="0">
-                                              <EmptySpace max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Group type="102" alignment="0" attributes="0">
-                                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                                      <Component id="jPanel6" min="-2" max="-2" attributes="0"/>
-                                                      <EmptySpace max="-2" attributes="0"/>
-                                                      <Component id="jButtonExportDisassembly" min="-2" max="-2" attributes="0"/>
+                                                  <Group type="102" alignment="1" attributes="0">
+                                                      <EmptySpace max="32767" attributes="0"/>
+                                                      <Group type="103" groupAlignment="0" attributes="0">
+                                                          <Component id="jButtonLayoutExportPalette" alignment="1" min="-2" max="-2" attributes="0"/>
+                                                          <Component id="jButtonLayoutExportTileset" alignment="1" min="-2" max="-2" attributes="0"/>
+                                                          <Component id="jButtonLayoutExportLayout" alignment="1" min="-2" max="-2" attributes="0"/>
+                                                      </Group>
                                                   </Group>
-                                                  <Component id="fileButtonExportGraphics" alignment="1" pref="522" max="32767" attributes="0"/>
-                                                  <Group type="102" alignment="0" attributes="0">
-                                                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                                  <Group type="102" attributes="0">
+                                                      <EmptySpace max="-2" attributes="0"/>
+                                                      <Group type="103" groupAlignment="0" attributes="0">
+                                                          <Component id="fileButtonExportTileset" alignment="0" pref="422" max="32767" attributes="0"/>
+                                                          <Component id="fileButtonExportPalette" alignment="0" max="32767" attributes="0"/>
+                                                          <Component id="fileButtonExportLayout" alignment="0" max="32767" attributes="0"/>
+                                                      </Group>
                                                   </Group>
                                               </Group>
                                               <EmptySpace max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                              <Component id="jButtonLayoutExportAll" min="-2" pref="109" max="-2" attributes="0"/>
+                                              <EmptySpace max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
                                     </DimensionLayout>
                                     <DimensionLayout dim="1">
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" attributes="0">
+                                          <Group type="102" alignment="1" attributes="0">
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jLabel1" min="-2" pref="26" max="-2" attributes="0"/>
+                                              <Component id="fileButtonExportPalette" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="fileButtonExportGraphics" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jButtonLayoutExportPalette" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                              <Component id="fileButtonExportTileset" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="jButtonExportDisassembly" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jPanel6" min="-2" max="-2" attributes="0"/>
-                                              </Group>
+                                              <Component id="jButtonLayoutExportTileset" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                              <Component id="fileButtonExportLayout" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="jButtonLayoutExportLayout" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="jButtonLayoutExportAll" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                     </DimensionLayout>
                                   </Layout>
                                   <SubComponents>
-                                    <Component class="javax.swing.JButton" name="jButtonExportDisassembly">
-                                      <Properties>
-                                        <Property name="text" type="java.lang.String" value="Export"/>
-                                      </Properties>
-                                      <Events>
-                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonExportDisassemblyActionPerformed"/>
-                                      </Events>
-                                    </Component>
-                                    <Component class="javax.swing.JLabel" name="jLabel1">
-                                      <Properties>
-                                        <Property name="text" type="java.lang.String" value="&lt;html&gt;Export the graphic to a new or existing file.&lt;/html&gt;"/>
-                                      </Properties>
-                                    </Component>
-                                    <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButtonExportGraphics">
+                                    <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButtonExportTileset">
                                       <Properties>
                                         <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                           <Value id="BIN"/>
                                         </Property>
-                                        <Property name="filePath" type="java.lang.String" value="./tech/newsegalogo.bin"/>
+                                        <Property name="filePath" type="java.lang.String" value="./titlescreen/titlescreentiles.bin"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
-                                        <Property name="labelText" type="java.lang.String" value="Graphics file :"/>
-                                        <Property name="name" type="java.lang.String" value="Export Graphic" noResource="true"/>
+                                        <Property name="labelText" type="java.lang.String" value="Tileset file :"/>
+                                        <Property name="name" type="java.lang.String" value="Import Palette" noResource="true"/>
                                       </Properties>
                                     </Component>
-                                    <Container class="javax.swing.JPanel" name="jPanel6">
+                                    <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButtonExportPalette">
                                       <Properties>
-                                        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                                          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                                            <TitledBorder/>
-                                          </Border>
+                                        <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                          <Value id="BIN"/>
                                         </Property>
+                                        <Property name="filePath" type="java.lang.String" value="./titlescreen/titlescreenpalettes.bin"/>
+                                        <Property name="infoMessage" type="java.lang.String" value=""/>
+                                        <Property name="labelText" type="java.lang.String" value="Palette file :"/>
+                                        <Property name="name" type="java.lang.String" value="Import Palette" noResource="true"/>
                                       </Properties>
-
-                                      <Layout>
-                                        <DimensionLayout dim="0">
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="jLabel34" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="jComboBoxCompressionExport" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="infoButton3" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace max="32767" attributes="0"/>
-                                              </Group>
-                                          </Group>
-                                        </DimensionLayout>
-                                        <DimensionLayout dim="1">
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="2" attributes="0">
-                                                      <Component id="jLabel34" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="jComboBoxCompressionExport" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="infoButton3" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                  </Group>
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                              </Group>
-                                          </Group>
-                                        </DimensionLayout>
-                                      </Layout>
-                                      <SubComponents>
-                                        <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton3">
-                                          <Properties>
-                                            <Property name="messageText" type="java.lang.String" value="&lt;html&gt;The compression used for the graphic.&lt;br&gt;&lt;b&gt;- None:&lt;/b&gt; Uncompressed graphics. Usually for small images (e.g. icons).&lt;br&gt;&lt;b&gt;- Basic:&lt;/b&gt; Simple compression. Used in map sprites and tilesets.&lt;br&gt;&lt;b&gt;- Stack:&lt;/b&gt; Complex compression. Used for all larger images (e.g. portraits, spell/invocations, and all battle graphics).&lt;/html&gt;"/>
-                                            <Property name="text" type="java.lang.String" value=""/>
-                                          </Properties>
-                                        </Component>
-                                        <Component class="javax.swing.JComboBox" name="jComboBoxCompressionExport">
-                                          <Properties>
-                                            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                                              <StringArray count="3">
-                                                <StringItem index="0" value="None"/>
-                                                <StringItem index="1" value="Basic"/>
-                                                <StringItem index="2" value="Stack"/>
-                                              </StringArray>
-                                            </Property>
-                                            <Property name="selectedIndex" type="int" value="2"/>
-                                            <Property name="name" type="java.lang.String" value="Export Compression" noResource="true"/>
-                                          </Properties>
-                                          <Events>
-                                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBoxCompressionExportActionPerformed"/>
-                                          </Events>
-                                          <AuxValues>
-                                            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-                                          </AuxValues>
-                                        </Component>
-                                        <Component class="javax.swing.JLabel" name="jLabel34">
-                                          <Properties>
-                                            <Property name="text" type="java.lang.String" value="Compression :"/>
-                                          </Properties>
-                                        </Component>
-                                      </SubComponents>
-                                    </Container>
+                                    </Component>
+                                    <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButtonExportLayout">
+                                      <Properties>
+                                        <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                          <Value id="BIN"/>
+                                        </Property>
+                                        <Property name="filePath" type="java.lang.String" value="./titlescreen/titlescreenlayoutA.bin"/>
+                                        <Property name="infoMessage" type="java.lang.String" value=""/>
+                                        <Property name="labelText" type="java.lang.String" value="Layout file :"/>
+                                        <Property name="name" type="java.lang.String" value="Import Palette" noResource="true"/>
+                                      </Properties>
+                                    </Component>
+                                    <Component class="javax.swing.JButton" name="jButtonLayoutExportPalette">
+                                      <Properties>
+                                        <Property name="text" type="java.lang.String" value="Export Palette"/>
+                                      </Properties>
+                                      <Events>
+                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonLayoutExportPaletteActionPerformed"/>
+                                      </Events>
+                                    </Component>
+                                    <Component class="javax.swing.JButton" name="jButtonLayoutExportTileset">
+                                      <Properties>
+                                        <Property name="text" type="java.lang.String" value="Export Tilest"/>
+                                      </Properties>
+                                      <Events>
+                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonLayoutExportTilesetActionPerformed"/>
+                                      </Events>
+                                    </Component>
+                                    <Component class="javax.swing.JButton" name="jButtonLayoutExportLayout">
+                                      <Properties>
+                                        <Property name="text" type="java.lang.String" value="Export Layout"/>
+                                      </Properties>
+                                      <Events>
+                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonLayoutExportLayoutActionPerformed"/>
+                                      </Events>
+                                    </Component>
+                                    <Component class="javax.swing.JButton" name="jButtonLayoutExportAll">
+                                      <Properties>
+                                        <Property name="text" type="java.lang.String" value="Export All"/>
+                                        <Property name="toolTipText" type="java.lang.String" value=""/>
+                                      </Properties>
+                                      <Events>
+                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonLayoutExportAllActionPerformed"/>
+                                      </Events>
+                                    </Component>
                                   </SubComponents>
                                 </Container>
                                 <Container class="javax.swing.JPanel" name="jPanel14">
@@ -632,10 +551,10 @@
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
                                                   <Group type="102" alignment="1" attributes="0">
-                                                      <EmptySpace min="0" pref="446" max="32767" attributes="0"/>
+                                                      <EmptySpace min="0" pref="350" max="32767" attributes="0"/>
                                                       <Component id="jButtonExportImage" min="-2" max="-2" attributes="0"/>
                                                   </Group>
-                                                  <Component id="fileButtonExportImage" pref="522" max="32767" attributes="0"/>
+                                                  <Component id="fileButtonExportImage" pref="422" max="32767" attributes="0"/>
                                                   <Group type="102" attributes="0">
                                                       <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                                                       <EmptySpace max="-2" attributes="0"/>
@@ -683,7 +602,7 @@
                                         <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                           <Value id="ANY_IMAGE"/>
                                         </Property>
-                                        <Property name="filePath" type="java.lang.String" value="./export/segalogotiles.png"/>
+                                        <Property name="filePath" type="java.lang.String" value="./export/specialscreen.png"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Image file :"/>
                                         <Property name="name" type="java.lang.String" value="Export Image" noResource="true"/>
@@ -759,7 +678,7 @@
 
                               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                               <SubComponents>
-                                <Container class="com.sfc.sf2.graphics.gui.TilesetLayoutPanel" name="tilesetLayoutPanel">
+                                <Container class="com.sfc.sf2.layout.gui.LayoutTilesetLayoutPanel" name="tilesetLayoutPanel">
 
                                   <Layout>
                                     <DimensionLayout dim="0">

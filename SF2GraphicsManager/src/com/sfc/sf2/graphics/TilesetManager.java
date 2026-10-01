@@ -82,26 +82,6 @@ public class TilesetManager extends AbstractManager {
         Console.logger().info("Tileset successfully exported to : " + filePath);
         Console.logger().finest("EXITING exportImage");
     }
-       
-    /*public void importDisassemblyWithLayout(Path baseTilesetFilePath,Path palette1FilePath, int palette1Offset, Path palette2FilePath, int palette2Offset, Path palette3FilePath, int palette3Offset, Path palette4FilePath, int palette4Offset,
-            Path tileset1FilePath, int tileset1Offset, Path tileset2FilePath, int tileset2Offset, Path layoutFilePath, TilesetCompression compression, int tilesPerRow)
-            throws IOException, DisassemblyException {
-        Console.logger().finest("ENTERING importDisassemblyWithLayout");
-        Path[] palettePaths = new Path[] { palette1FilePath, palette2FilePath, palette3FilePath, palette4FilePath };
-        int[] offsets = new int[] { palette1Offset, palette2Offset, palette3Offset, palette4Offset };
-        int[] lengths = new int[] { 32, 32, 32, 32 };
-        Palette[] palettes = paletteManager.importDisassemblyFromPartials(palettePaths, offsets, lengths, true);
-        tileset = tilesetDisassemblyProcessor.importDisassemblyWithLayout(baseTilesetFilePath, palettes, tileset1FilePath, tileset1Offset, tileset2FilePath, tileset2Offset, compression, tilesPerRow, layoutFilePath);
-        Console.logger().finest("EXITING importDisassemblyWithLayout");
-    }
-    
-    public void exportTilesAndLayout(Path palettePath, Path tilesPath, Tileset tileset, Path layoutPath, int graphicsOffset, TilesetCompression compression, int palette)
-            throws IOException, DisassemblyException {
-        Console.logger().finest("ENTERING exportTilesAndLayout");
-        paletteManager.exportDisassembly(palettePath, tileset.getPalette());
-        tilesetDisassemblyProcessor.exportTilesAndLayout(tileset, tilesPath, layoutPath, graphicsOffset, compression, tileset.getPalette());
-        Console.logger().finest("EXITING exportTilesAndLayout");
-    }*/
 
     public Tileset getTileset() {
         return tileset;

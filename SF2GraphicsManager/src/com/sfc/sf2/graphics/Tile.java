@@ -59,8 +59,10 @@ public class Tile implements IPaletteGraphic {
 
     @Override
     public void setPalette(Palette palette) {
-        this.palette = palette;
-        clearIndexedColorImage();
+        if (palette != this.palette) {
+            this.palette = palette;
+            clearIndexedColorImage();
+        }
     }
 
     public IndexColorModel getIcm() {
