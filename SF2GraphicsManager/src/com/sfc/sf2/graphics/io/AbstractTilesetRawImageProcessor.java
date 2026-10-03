@@ -121,12 +121,16 @@ public abstract class AbstractTilesetRawImageProcessor<TType extends Object, TPa
      * @param itemTileWidth How many {@code Tiles} high is the {@link Tileset}
      */
     protected BufferedImage setupImage(int itemsCount, int itemsPerRow, int itemTileWidth, int itemTileHeight, IndexColorModel icm) {
+        return setupImage(itemsCount, itemsPerRow, itemTileWidth, itemTileHeight, icm, BufferedImage.TYPE_BYTE_BINARY);
+    }
+    
+    protected BufferedImage setupImage(int itemsCount, int itemsPerRow, int itemTileWidth, int itemTileHeight, IndexColorModel icm, int imageType) {
         int imageWidth = itemsPerRow*itemTileWidth;
         int imageHeight = (itemsCount/itemsPerRow)*itemTileHeight;
         if (itemsCount % itemsPerRow != 0) {
             imageHeight += itemTileHeight;
         }
-        return new BufferedImage(imageWidth*PIXEL_WIDTH, imageHeight*PIXEL_HEIGHT, BufferedImage.TYPE_BYTE_BINARY, icm);
+        return new BufferedImage(imageWidth*PIXEL_WIDTH, imageHeight*PIXEL_HEIGHT, imageType, icm);
     }
     
     /**

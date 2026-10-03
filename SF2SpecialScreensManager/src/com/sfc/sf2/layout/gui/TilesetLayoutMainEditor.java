@@ -14,10 +14,8 @@ import com.sfc.sf2.core.settings.ViewSettings;
 import com.sfc.sf2.layout.SpecialScreenLayoutManager;
 import com.sfc.sf2.helpers.PathHelpers;
 import com.sfc.sf2.layout.SpecialScreenLayout;
-import java.io.File;
 import java.nio.file.Path;
 import java.util.logging.Level;
-import javax.swing.JFileChooser;
 
 /**
  *
@@ -209,6 +207,7 @@ public class TilesetLayoutMainEditor extends AbstractMainEditor {
         jTabbedPane1.addTab("Layout Disassembly", jPanel18);
 
         jButtonImportImage.setText("Import");
+        jButtonImportImage.setEnabled(false);
         jButtonImportImage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonImportImageActionPerformed(evt);
@@ -293,6 +292,7 @@ public class TilesetLayoutMainEditor extends AbstractMainEditor {
         fileButtonExportLayout.setName("Import Palette"); // NOI18N
 
         jButtonLayoutExportPalette.setText("Export Palette");
+        jButtonLayoutExportPalette.setEnabled(false);
         jButtonLayoutExportPalette.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonLayoutExportPaletteActionPerformed(evt);
@@ -300,6 +300,7 @@ public class TilesetLayoutMainEditor extends AbstractMainEditor {
         });
 
         jButtonLayoutExportTileset.setText("Export Tilest");
+        jButtonLayoutExportTileset.setEnabled(false);
         jButtonLayoutExportTileset.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonLayoutExportTilesetActionPerformed(evt);
@@ -307,6 +308,7 @@ public class TilesetLayoutMainEditor extends AbstractMainEditor {
         });
 
         jButtonLayoutExportLayout.setText("Export Layout");
+        jButtonLayoutExportLayout.setEnabled(false);
         jButtonLayoutExportLayout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonLayoutExportLayoutActionPerformed(evt);
@@ -315,6 +317,7 @@ public class TilesetLayoutMainEditor extends AbstractMainEditor {
 
         jButtonLayoutExportAll.setText("Export All");
         jButtonLayoutExportAll.setToolTipText("");
+        jButtonLayoutExportAll.setEnabled(false);
         jButtonLayoutExportAll.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonLayoutExportAllActionPerformed(evt);
@@ -326,19 +329,17 @@ public class TilesetLayoutMainEditor extends AbstractMainEditor {
         jPanel19Layout.setHorizontalGroup(
             jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel19Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel19Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButtonLayoutExportPalette, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jButtonLayoutExportTileset, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jButtonLayoutExportLayout, javax.swing.GroupLayout.Alignment.TRAILING)))
-                    .addGroup(jPanel19Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(fileButtonExportTileset, javax.swing.GroupLayout.DEFAULT_SIZE, 422, Short.MAX_VALUE)
-                            .addComponent(fileButtonExportPalette, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(fileButtonExportLayout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addComponent(fileButtonExportTileset, javax.swing.GroupLayout.DEFAULT_SIZE, 422, Short.MAX_VALUE)
+                    .addComponent(fileButtonExportPalette, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(fileButtonExportLayout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel19Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -418,6 +419,8 @@ public class TilesetLayoutMainEditor extends AbstractMainEditor {
         );
 
         jTabbedPane2.addTab("Image", jPanel14);
+
+        jTabbedPane2.setSelectedIndex(1);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -551,9 +554,10 @@ public class TilesetLayoutMainEditor extends AbstractMainEditor {
     }//GEN-LAST:event_jButtonExportImageActionPerformed
 
     private void jButtonImportImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportImageActionPerformed
+        Path baseTilesetPath = PathHelpers.getBasePath().resolve(fileButtonImportBaseTileset.getFilePath());
         Path graphicPath = PathHelpers.getBasePath().resolve(fileButtonImportImage.getFilePath());
         try {
-            SpecialScreenLayoutManager.importImage(graphicPath, true);
+            SpecialScreenLayoutManager.importImage(baseTilesetPath, graphicPath, true);
         } catch (Exception ex) {
             SpecialScreenLayoutManager.clearData();
             Console.logger().log(Level.SEVERE, null, ex);
@@ -591,7 +595,7 @@ public class TilesetLayoutMainEditor extends AbstractMainEditor {
     private void jButtonLayoutExportTilesetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLayoutExportTilesetActionPerformed
         Path tilesetPath = PathHelpers.getBasePath().resolve(fileButtonExportTileset.getFilePath());
         try {
-            SpecialScreenLayoutManager.exportPalette(tilesetLayoutPanel.getLayoutTileset(), tilesetPath);
+            SpecialScreenLayoutManager.exportTileset(tilesetLayoutPanel.getLayoutTileset(), tilesetPath);
         } catch (Exception ex) {
             SpecialScreenLayoutManager.clearData();
             Console.logger().log(Level.SEVERE, null, ex);
@@ -602,7 +606,7 @@ public class TilesetLayoutMainEditor extends AbstractMainEditor {
     private void jButtonLayoutExportLayoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLayoutExportLayoutActionPerformed
         Path layoutPath = PathHelpers.getBasePath().resolve(fileButtonExportLayout.getFilePath());
         try {
-            SpecialScreenLayoutManager.exportPalette(tilesetLayoutPanel.getLayoutTileset(), layoutPath);
+            SpecialScreenLayoutManager.exportLayout(tilesetLayoutPanel.getLayoutTileset(), layoutPath);
         } catch (Exception ex) {
             SpecialScreenLayoutManager.clearData();
             Console.logger().log(Level.SEVERE, null, ex);

@@ -40,7 +40,7 @@ public class SpecialScreenLayoutManager extends AbstractManager {
         }
     }
        
-    public void importDisassembly(Path baseTilesetFilePath, Path paletteFilePath, Path tilesetFilePath, Path layoutFilePath)
+    public SpecialScreenLayout importDisassembly(Path baseTilesetFilePath, Path paletteFilePath, Path tilesetFilePath, Path layoutFilePath)
             throws IOException, DisassemblyException {
         Console.logger().finest("ENTERING importDisassemblyWithLayout");
         //Palette
@@ -56,6 +56,7 @@ public class SpecialScreenLayoutManager extends AbstractManager {
         layout = new TilesetLayoutDisassemblyProcessor().importDisassembly(layoutFilePath, pckg);
         Console.logger().info("Special Screen Layout successfully imported from : " + layoutFilePath);
         Console.logger().finest("EXITING importDisassemblyWithLayout");
+        return layout;
     }
     
     public void exportPalette(SpecialScreenLayout layout, Path palettePath) throws IOException, DisassemblyException {
@@ -84,23 +85,24 @@ public class SpecialScreenLayoutManager extends AbstractManager {
         Console.logger().finest("EXITING exportLayout");
     }
     
-    public Tileset importImage(Path filePath, boolean firstColorTransparent) throws IOException, RawImageException {
-        return null;
-        /*Console.logger().finest("ENTERING importImage");
-        PalettePackage pckg = new PalettePackage(PathHelpers.filenameFromPath(filePath), firstColorTransparent);
-        tileset = new TilesetRawImageProcessor().importRawImage(filePath, pckg);
-        Console.logger().info("Layout successfully imported from : " + filePath);
-        new PaletteManager().setPalette(tileset.getPalette());
+    public SpecialScreenLayout importImage(Path baseTilesetFilePath, Path filePath, boolean firstColorTransparent) throws IOException, RawImageException, DisassemblyException {
+        Console.logger().finest("ENTERING importImage");
+        Tileset[] baseTilesets = new Tileset[1];
+        TilesetPackage baseTilesPckg = new TilesetPackage(PathHelpers.filenameFromPath(baseTilesetFilePath), TilesetCompression.STACK, null, 16);
+        baseTilesets[0] = new TilesetDisassemblyProcessor().importDisassembly(baseTilesetFilePath, baseTilesPckg);
+        SpecialScreenLayoutPackage pckg = new SpecialScreenLayoutPackage(PathHelpers.filenameFromPath(filePath), null, baseTilesets, 32);
+        layout = new LayoutTilesetRawImageProcessor().importRawImage(filePath, pckg);
+        Console.logger().info("Layout image successfully imported from : " + filePath);
         Console.logger().finest("EXITING importImage");
-        return tileset;*/
+        return layout;
     }
     
     public void exportImage(Path filePath, SpecialScreenLayout layout) throws IOException, RawImageException {
         Console.logger().finest("ENTERING exportImage");
         this.layout = layout;
-        PalettePackage pckg = new PalettePackage(PathHelpers.filenameFromPath(filePath), true);
+        SpecialScreenLayoutPackage pckg = new SpecialScreenLayoutPackage(PathHelpers.filenameFromPath(filePath), layout.getPalettes(), layout.getTilesets(), layout.getTilesPerRow());
         new LayoutTilesetRawImageProcessor().exportRawImage(filePath, layout, pckg);
-        Console.logger().info("Layout successfully exported to : " + filePath);
+        Console.logger().info("Layout image successfully exported to : " + filePath);
         Console.logger().finest("EXITING exportImage");
     }
 

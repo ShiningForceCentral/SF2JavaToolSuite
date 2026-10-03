@@ -339,6 +339,7 @@
                                     <Component class="javax.swing.JButton" name="jButtonImportImage">
                                       <Properties>
                                         <Property name="text" type="java.lang.String" value="Import"/>
+                                        <Property name="enabled" type="boolean" value="false"/>
                                       </Properties>
                                       <Events>
                                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonImportImageActionPerformed"/>
@@ -401,6 +402,9 @@
                           </Layout>
                           <SubComponents>
                             <Container class="javax.swing.JTabbedPane" name="jTabbedPane2">
+                              <Properties>
+                                <Property name="selectedIndex" type="int" value="1"/>
+                              </Properties>
 
                               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
                               <SubComponents>
@@ -417,23 +421,19 @@
                                     <DimensionLayout dim="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" attributes="0">
+                                              <EmptySpace max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
                                                   <Group type="102" alignment="1" attributes="0">
-                                                      <EmptySpace max="32767" attributes="0"/>
+                                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                                       <Group type="103" groupAlignment="0" attributes="0">
                                                           <Component id="jButtonLayoutExportPalette" alignment="1" min="-2" max="-2" attributes="0"/>
                                                           <Component id="jButtonLayoutExportTileset" alignment="1" min="-2" max="-2" attributes="0"/>
                                                           <Component id="jButtonLayoutExportLayout" alignment="1" min="-2" max="-2" attributes="0"/>
                                                       </Group>
                                                   </Group>
-                                                  <Group type="102" attributes="0">
-                                                      <EmptySpace max="-2" attributes="0"/>
-                                                      <Group type="103" groupAlignment="0" attributes="0">
-                                                          <Component id="fileButtonExportTileset" alignment="0" pref="422" max="32767" attributes="0"/>
-                                                          <Component id="fileButtonExportPalette" alignment="0" max="32767" attributes="0"/>
-                                                          <Component id="fileButtonExportLayout" alignment="0" max="32767" attributes="0"/>
-                                                      </Group>
-                                                  </Group>
+                                                  <Component id="fileButtonExportTileset" alignment="0" pref="422" max="32767" attributes="0"/>
+                                                  <Component id="fileButtonExportPalette" alignment="0" max="32767" attributes="0"/>
+                                                  <Component id="fileButtonExportLayout" alignment="0" max="32767" attributes="0"/>
                                               </Group>
                                               <EmptySpace max="-2" attributes="0"/>
                                           </Group>
@@ -503,6 +503,7 @@
                                     <Component class="javax.swing.JButton" name="jButtonLayoutExportPalette">
                                       <Properties>
                                         <Property name="text" type="java.lang.String" value="Export Palette"/>
+                                        <Property name="enabled" type="boolean" value="false"/>
                                       </Properties>
                                       <Events>
                                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonLayoutExportPaletteActionPerformed"/>
@@ -511,6 +512,7 @@
                                     <Component class="javax.swing.JButton" name="jButtonLayoutExportTileset">
                                       <Properties>
                                         <Property name="text" type="java.lang.String" value="Export Tilest"/>
+                                        <Property name="enabled" type="boolean" value="false"/>
                                       </Properties>
                                       <Events>
                                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonLayoutExportTilesetActionPerformed"/>
@@ -519,6 +521,7 @@
                                     <Component class="javax.swing.JButton" name="jButtonLayoutExportLayout">
                                       <Properties>
                                         <Property name="text" type="java.lang.String" value="Export Layout"/>
+                                        <Property name="enabled" type="boolean" value="false"/>
                                       </Properties>
                                       <Events>
                                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonLayoutExportLayoutActionPerformed"/>
@@ -528,6 +531,7 @@
                                       <Properties>
                                         <Property name="text" type="java.lang.String" value="Export All"/>
                                         <Property name="toolTipText" type="java.lang.String" value=""/>
+                                        <Property name="enabled" type="boolean" value="false"/>
                                       </Properties>
                                       <Events>
                                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonLayoutExportAllActionPerformed"/>
