@@ -7,7 +7,9 @@
 package com.sfc.sf2.helpers;
 
 import com.sfc.sf2.graphics.Tile;
-import com.sfc.sf2.graphics.Tileset;
+import static com.sfc.sf2.graphics.Tile.PIXEL_HEIGHT;
+import static com.sfc.sf2.graphics.Tile.PIXEL_WIDTH;
+import com.sfc.sf2.graphics.TileFlags;
 
 /**
  *
@@ -60,5 +62,52 @@ public class TileHelpers {
             newTiles[id].setId(i);
         }
         return newTiles;
+    }
+    
+    public static Tile flipTile(Tile t, byte tileFlag, boolean cloneTile) {
+        if (tileFlag == TileFlags.TILE_FLAG_NONE) {
+            return t;
+        }
+        byte[] pixels = flipTile(t.getPixels(), tileFlag);
+        if (cloneTile) {
+            return new Tile(t.getId(), pixels, t.getPalette());
+        } else {
+            t.setPixels(pixels);
+            return t;
+        }
+    }
+    
+    public static byte[] flipTile(byte[] pixels, byte tileFlag) {
+        if (tileFlag == TileFlags.TILE_FLAG_NONE) {
+            return pixels;
+        }
+        byte[] newPixels = new byte[pixels.length];
+        switch (tileFlag) {
+            case TileFlags.TILE_FLAG_BOTHFLIP:
+                for (int j=0; j < PIXEL_HEIGHT; j++) {
+                    for (int i=0; i < PIXEL_WIDTH; i++) {
+                        int index = (PIXEL_WIDTH-1-i) + (PIXEL_HEIGHT-1-j)*PIXEL_WIDTH;
+                        newPixels[i+j*PIXEL_WIDTH] = pixels[index];
+                    }
+                }
+                break;
+            case TileFlags.TILE_FLAG_HFLIP:
+                for (int j=0; j < PIXEL_HEIGHT; j++) {
+                    for (int i=0; i < PIXEL_WIDTH; i++) {
+                        int index = (PIXEL_WIDTH-1-i) + j*PIXEL_WIDTH;
+                        newPixels[i+j*PIXEL_WIDTH] = pixels[index];
+                    }
+                }
+                break;
+            case TileFlags.TILE_FLAG_VFLIP:
+                for (int j=0; j < PIXEL_HEIGHT; j++) {
+                    for (int i=0; i < PIXEL_WIDTH; i++) {
+                        int index = i + (PIXEL_HEIGHT-1-j)*PIXEL_WIDTH;
+                        newPixels[i+j*PIXEL_WIDTH] = pixels[index];
+                    }
+                }
+                break;
+        }
+        return newPixels;
     }
 }
