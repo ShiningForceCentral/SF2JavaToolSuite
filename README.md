@@ -1,14 +1,14 @@
-[![License: CC BY-NC 4.0](https://shields.io)](https://creativecommons.org/licenses/by-nc/4.0/)
+[![License](https://img.shields.io/badge/License-CC_BY--NC_4.0-green)](https://github.com/ShiningForceCentral/SF2JavaToolSuite/edit/main/README.md#license)
 
 # SF2JavaToolSuite
 Consolidated project for all of the Java tools
 
 ## License
-This work is licensed under the [CC BY-NC 4.0 license](https://creativecommons.org/licenses/by-nc/4.0/)
+This work is licensed under the [CC BY-NC 4.0 license](https://creativecommons.org/licenses/by-nc/4.0/)   <img src="http://i.creativecommons.org/l/by-nc/4.0/88x31.png">
 
 If you are distributing, adapting, or using these softwares or any code within this work, in any context, please attribute in both:
-- Somewhere visible in any derrived software (e.g. an info or credits screen)
-- Somewhere visible in your documentation (e.g. the license or attribution section of your GitHub page).
+1. Somewhere visible in any derrived software (e.g. an info or credits screen)
+2. Somewhere visible in your documentation (e.g. the license or attribution section of your GitHub page).
 
 This work cannot be used for any commercial or for-profit purposes.
 
