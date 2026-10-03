@@ -10,6 +10,8 @@ If you are distributing, adapting, or using these softwares or any code within t
 1. Somewhere visible in any derrived software (e.g. an info or credits screen)
 2. Somewhere visible in your documentation (e.g. the license or attribution section of your GitHub page).
 
+> e.g. "This project includes the _PortraitManager_ from the [SF2 Java Tool Suite](https://github.com/ShiningForceCentral/SF2JavaToolSuite) which is licensed under CC BY-NC 4.0.
+
 This work cannot be used for any commercial or for-profit purposes.
 
 ## What is the SF2JavaToolSuite
