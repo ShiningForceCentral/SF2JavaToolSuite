@@ -23,6 +23,7 @@ import com.sfc.sf2.text.compression.TextEncoder;
 import com.sfc.sf2.text.io.AsciiReplaceProcessor;
 import com.sfc.sf2.text.io.asm.AsciiTableAsmProcessor;
 import com.sfc.sf2.text.io.AsmManager;
+import com.sfc.sf2.text.io.TextPackage;
 import com.sfc.sf2.text.io.TextProcessor;
 import com.sfc.sf2.text.io.asm.AllyNamesAsmProcessor;
 import com.sfc.sf2.vwfont.FontSymbol;
@@ -147,17 +148,18 @@ public class TextManager extends AbstractManager {
     
     public String[] importTxt(Path filePath) throws IOException, TextFileException {
         Console.logger().finest("ENTERING importTxt");
-        gamescript = new TextProcessor().importTextData(filePath);
+        gamescript = new TextProcessor().importTextData(filePath, null);
         asciiReplace(gamescript);
         Console.logger().info(gamescript.length + " lines of text successfully imported from : " + filePath);
         Console.logger().finest("EXITING importTxt");
         return gamescript;
     }
     
-    public void exportTxt(Path filePath, String[] text) throws IOException, TextFileException {
+    public void exportTxt(Path filePath, String[] text, TextProcessor.TextID idType, boolean writeHeader) throws IOException, TextFileException {
         Console.logger().finest("ENTERING exportTxt");
         gamescript = text;
-        new TextProcessor().exportTextData(filePath, text);
+        TextPackage pckg = new TextPackage(idType, writeHeader);
+        new TextProcessor().exportTextData(filePath, text, pckg);
         Console.logger().info(gamescript.length + " lines of text successfully exported to : " + filePath);
         Console.logger().finest("EXITING exportTxt");
     }
