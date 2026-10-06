@@ -13,6 +13,7 @@ import com.sfc.sf2.battle.BattleSpriteset;
 import com.sfc.sf2.battle.Enemy;
 import com.sfc.sf2.battle.actions.SpritesetPosActionData;
 import com.sfc.sf2.battle.actions.SpritesetRegionActionData;
+import com.sfc.sf2.battle.helpers.RegionHelpers;
 import com.sfc.sf2.battle.mapterrain.gui.BattleMapTerrainLayoutPanel;
 import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.core.actions.CustomAction;
@@ -28,7 +29,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
-import java.awt.Polygon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -55,8 +55,7 @@ public class BattleLayoutPanel extends BattleMapTerrainLayoutPanel {
         AiPoint,
     }
     
-    public static Color REGION_TRAINGLE_1 = new Color(100, 100, 255, 75);
-    public static Color REGION_TRAINGLE_2 = new Color(255, 100, 255, 75);
+    public static Color REGION_TRAINGLE = new Color(150, 150, 255, 150);
     
     private Battle battle;
     
@@ -211,38 +210,45 @@ public class BattleLayoutPanel extends BattleMapTerrainLayoutPanel {
     
     private void drawAIRegion(Graphics2D g2, int battleX, int battleY, AIRegion region, boolean fillArea, Color borderColor) {
         Point[] points = region.getPoints();
+        Point p = new Point();
         if (fillArea) {
-            switch (region.getType()) {
-                case 3: //3-points
-                    g2.setColor(REGION_TRAINGLE_1);
-                    drawRegionArea(g2, battleX, battleY, points[0], points[1], points[2]);
-                break;
-                case 4: //4-points
-                    g2.setColor(REGION_TRAINGLE_1);
-                    drawRegionArea(g2, battleX, battleY, points[0], points[1], points[3]);
-                    g2.setColor(REGION_TRAINGLE_2);
-                    drawRegionArea(g2, battleX, battleY, points[1], points[2], points[3]);
-                break;
+            //Determine bounds to step through
+            int minX = 999, maxX = -999, minY = 999, maxY = -999;
+            for (int i = 0; i < points.length; i++) {
+                if (points[i].x < minX) minX = points[i].x;
+                if (points[i].x > maxX) maxX = points[i].x;
+                if (points[i].y < minY) minY = points[i].y;
+                if (points[i].y > maxY) maxY = points[i].y;
+            }
+            
+            g2.setColor(REGION_TRAINGLE);
+            for (int y = minY; y <= maxY; y++) {
+                for (int x = minX; x <= maxX; x++) {
+                    p.setLocation(x, y);
+                    if (RegionHelpers.isPointInRegion(p, region)) {
+                        g2.fillRect((battleX+x)*PIXEL_WIDTH, (battleY+y)*PIXEL_HEIGHT, PIXEL_WIDTH, PIXEL_HEIGHT);
+                    }
+                }
             }
         }
         g2.setColor(borderColor);
-        drawRegionBounds(g2, battleX, battleY, region);
+        drawRegionBounds(g2, battleX, battleY, region, fillArea);
     }
     
-    private void drawRegionArea(Graphics2D g2, int battleX, int battleY, Point p1, Point p2, Point p3) {
-        Polygon p = new Polygon();
-        p.addPoint((battleX+p1.x)*PIXEL_WIDTH+12, (battleY+p1.y)*PIXEL_HEIGHT+12);
-        p.addPoint((battleX+p2.x)*PIXEL_WIDTH+12, (battleY+p2.y)*PIXEL_HEIGHT+12);
-        p.addPoint((battleX+p3.x)*PIXEL_WIDTH+12, (battleY+p3.y)*PIXEL_HEIGHT+12);
-        g2.fillPolygon(p);
-    }
-    
-    private void drawRegionBounds(Graphics2D g2, int battleX, int battleY, AIRegion region) {
+    private void drawRegionBounds(Graphics2D g2, int battleX, int battleY, AIRegion region, boolean isSelected) {
         Point[] points = region.getPoints();
         int pointsCount = region.getType();
         for (int i = 0; i < pointsCount; i++) {
             Point s = points[i];
             Point e = points[(i+1)%pointsCount];
+            g2.drawLine((s.x+battleX)*PIXEL_WIDTH+12, (s.y+battleY)*PIXEL_HEIGHT+12, (e.x+battleX)*PIXEL_WIDTH+12, (e.y+battleY)*PIXEL_HEIGHT+12);
+        }
+        if (isSelected && region.getType() == 4) {
+            Color c = g2.getColor();
+            c = new Color(c.getRed(), c.getGreen(), c.getBlue(), 75);
+            g2.setColor(c);
+            Point s = points[1];
+            Point e = points[3];
             g2.drawLine((s.x+battleX)*PIXEL_WIDTH+12, (s.y+battleY)*PIXEL_HEIGHT+12, (e.x+battleX)*PIXEL_WIDTH+12, (e.y+battleY)*PIXEL_HEIGHT+12);
         }
     }

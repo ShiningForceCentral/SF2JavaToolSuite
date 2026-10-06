@@ -237,7 +237,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="BIN"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value="../backgrounds/background09.bin" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="../backgrounds/background09.bin"/>
                                     <Property name="infoMessage" type="java.lang.String" value="Loads a Background, for the animation preview."/>
                                     <Property name="labelText" type="java.lang.String" value="Background :"/>
                                     <Property name="name" type="java.lang.String" value="Import Background" noResource="true"/>
@@ -253,7 +253,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="BIN"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value="../battlescenebasepalette.bin" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="../battlescenebasepalette.bin"/>
                                     <Property name="infoMessage" type="java.lang.String" value="The battle base palette to use for the Ground platform preview."/>
                                     <Property name="labelText" type="java.lang.String" value="Ground base palette :"/>
                                     <Property name="name" type="java.lang.String" value="Import Ground Base Palette" noResource="true"/>
@@ -264,7 +264,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="BIN"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value="../grounds/groundpalette09.bin" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="../grounds/groundpalette09.bin"/>
                                     <Property name="infoMessage" type="java.lang.String" value="The palette to use for the Ground platform preview."/>
                                     <Property name="labelText" type="java.lang.String" value="Gound palette :"/>
                                     <Property name="name" type="java.lang.String" value="Import Ground Palette" noResource="true"/>
@@ -275,7 +275,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="BIN"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value="../grounds/groundtiles09.bin" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="../grounds/groundtiles09.bin"/>
                                     <Property name="infoMessage" type="java.lang.String" value="Loads a Ground platform, for the animation preview."/>
                                     <Property name="labelText" type="java.lang.String" value="Ground :"/>
                                     <Property name="name" type="java.lang.String" value="Import Ground" noResource="true"/>
@@ -337,7 +337,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="ASM"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value="../weapons/palettes/entries.asm" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="../weapons/palettes/entries.asm"/>
                                     <Property name="infoMessage" type="java.lang.String" value="The entries file for weapon palettes."/>
                                     <Property name="labelText" type="java.lang.String" value="Weapon palettes :"/>
                                     <Property name="name" type="java.lang.String" value="Import Weapon Palettes" noResource="true"/>
@@ -348,7 +348,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="BIN"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value="../weapons/weaponsprite04.bin" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="../weapons/weaponsprite04.bin"/>
                                     <Property name="infoMessage" type="java.lang.String" value="&lt;html&gt;Loads a placeholder weapon for the animation preview.&lt;br&gt;The weapon can be hidden with the checbox on the right of the animation window.&lt;/html&gt;"/>
                                     <Property name="labelText" type="java.lang.String" value="Weapon :"/>
                                     <Property name="name" type="java.lang.String" value="Import Weapon" noResource="true"/>
@@ -371,7 +371,7 @@
                             </Component>
                             <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButtonBattleSprite">
                               <Properties>
-                                <Property name="filePath" type="java.lang.String" value="./allies/allybattlesprite00.bin" containsInvalidXMLChars="true"/>
+                                <Property name="filePath" type="java.lang.String" value="./allies/allybattlesprite00.bin"/>
                                 <Property name="infoMessage" type="java.lang.String" value="&lt;html&gt;Loads a battlesprite to animate. In general, each battesprite is matched to specific animation files (see the info button for &quot;Battle Sprite Animation&quot;).&lt;/html&gt;"/>
                                 <Property name="labelText" type="java.lang.String" value="Battle sprite :"/>
                                 <Property name="name" type="java.lang.String" value="Import Battle Sprite" noResource="true"/>
@@ -382,7 +382,7 @@
                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                   <Value id="BIN"/>
                                 </Property>
-                                <Property name="filePath" type="java.lang.String" value="./allies/animations/allyanimation000.bin" containsInvalidXMLChars="true"/>
+                                <Property name="filePath" type="java.lang.String" value="./allies/animations/allyanimation000.bin"/>
                                 <Property name="infoMessage" type="java.lang.String" value="&lt;html&gt;Loads the animation data. By default, ally animations 0-39 are &lt;i&gt;attack&lt;/&gt; animations, 40-79 are &lt;i&gt;dodge&lt;/&gt; animations, 80+ for &lt;i&gt;special&lt;/&gt; animations.&lt;br&gt;See &lt;b&gt;SF2Enums&lt;/b&gt; &quot;; enum AllyBattleAnimations&quot;.&lt;br&gt;&lt;br&gt;By default, enemy animations 0-59 are &lt;i&gt;attack&lt;/&gt; animations, 60-117 are &lt;i&gt;dodge&lt;/&gt; animations, 118+ for &lt;i&gt;special&lt;/&gt; animations.&lt;br&gt;See &lt;b&gt;SF2Enums&lt;/b&gt; &quot;; enum EnemyBattleAnimations&quot;.&lt;/html&gt;"/>
                                 <Property name="labelText" type="java.lang.String" value="Battle sprite animation :"/>
                                 <Property name="name" type="java.lang.String" value="Import Animation" noResource="true"/>
@@ -466,7 +466,7 @@
                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                   <Value id="BIN"/>
                                 </Property>
-                                <Property name="filePath" type="java.lang.String" value="./allies/animations/newallyanimation000.bin" containsInvalidXMLChars="true"/>
+                                <Property name="filePath" type="java.lang.String" value="./allies/animations/newallyanimation000.bin"/>
                                 <Property name="infoMessage" type="java.lang.String" value=""/>
                                 <Property name="labelText" type="java.lang.String" value="Animation :"/>
                                 <Property name="name" type="java.lang.String" value="Export Animation" noResource="true"/>

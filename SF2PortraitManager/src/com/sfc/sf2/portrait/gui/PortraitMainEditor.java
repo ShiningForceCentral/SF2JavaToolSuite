@@ -8,6 +8,7 @@ package com.sfc.sf2.portrait.gui;
 import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.core.actions.CustomAction;
 import com.sfc.sf2.core.actions.NonCombinableAction;
+import com.sfc.sf2.core.actions.ToggleAction;
 import com.sfc.sf2.core.settings.SettingsManager;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
@@ -119,6 +120,8 @@ public class PortraitMainEditor extends AbstractMainEditor {
         fileButtonImportImage = new com.sfc.sf2.core.gui.controls.FileButton();
         fileButtonImportMeta = new com.sfc.sf2.core.gui.controls.FileButton();
         jButtonImportImage = new javax.swing.JButton();
+        jCheckBoxKeepMeta = new javax.swing.JCheckBox();
+        infoButtonMeta = new com.sfc.sf2.core.gui.controls.InfoButton();
         jPanel5 = new javax.swing.JPanel();
         jTabbedPane2 = new javax.swing.JTabbedPane();
         jPanel11 = new javax.swing.JPanel();
@@ -218,7 +221,7 @@ public class PortraitMainEditor extends AbstractMainEditor {
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE)
+                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -310,6 +313,17 @@ public class PortraitMainEditor extends AbstractMainEditor {
             }
         });
 
+        jCheckBoxKeepMeta.setText("Keep current metadata");
+        jCheckBoxKeepMeta.setName("Grid Toggle"); // NOI18N
+        jCheckBoxKeepMeta.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCheckBoxKeepMetaItemStateChanged(evt);
+            }
+        });
+
+        infoButtonMeta.setMessageText("Will import the image but retain the current eye/mouth data.");
+        infoButtonMeta.setText("");
+
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
@@ -317,26 +331,36 @@ public class PortraitMainEditor extends AbstractMainEditor {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fileButtonImportImage, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE)
+                    .addComponent(fileButtonImportImage, javax.swing.GroupLayout.DEFAULT_SIZE, 366, Short.MAX_VALUE)
                     .addComponent(fileButtonImportMeta, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE)
-                    .addComponent(jLabel3)
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jCheckBoxKeepMeta)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(infoButtonMeta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(jButtonImportImage)))
                 .addContainerGap())
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+            .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(fileButtonImportImage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(fileButtonImportMeta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonImportImage)
-                .addContainerGap())
+                .addGap(5, 5, 5)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                        .addComponent(jCheckBoxKeepMeta)
+                        .addComponent(infoButtonMeta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonImportImage))
+                .addGap(7, 7, 7))
         );
 
         jTabbedPane1.addTab("Image", jPanel9);
@@ -352,7 +376,7 @@ public class PortraitMainEditor extends AbstractMainEditor {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
         );
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Export to :"));
@@ -468,7 +492,7 @@ public class PortraitMainEditor extends AbstractMainEditor {
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
+            .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
@@ -557,7 +581,8 @@ public class PortraitMainEditor extends AbstractMainEditor {
         Path imagePath = PathHelpers.getBasePath().resolve(fileButtonImportImage.getFilePath());
         Path metaPath = PathHelpers.replaceExtension(imagePath, fileButtonImportMeta.getFilePath());
         try {
-            portraitManager.importImage(imagePath, metaPath);
+            boolean keepMeta = jCheckBoxKeepMeta.isSelected();
+            portraitManager.importImage(imagePath, metaPath, keepMeta);
         } catch (Exception ex) {
             portraitManager.clearData();
             Console.logger().log(Level.SEVERE, null, ex);
@@ -577,6 +602,12 @@ public class PortraitMainEditor extends AbstractMainEditor {
         }
         onDataLoaded();
     }//GEN-LAST:event_jButtonImportPortraitActionPerformed
+
+    private void jCheckBoxKeepMetaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBoxKeepMetaItemStateChanged
+        if (!ActionManager.isActionTriggering()) {
+            ActionManager.setActionWithoutExecute(new ToggleAction(jCheckBoxKeepMeta, jCheckBoxKeepMeta.isSelected()));
+        }
+    }//GEN-LAST:event_jCheckBoxKeepMetaItemStateChanged
     
     private void eyesListDataChanged(TableModelEvent e) {
         if (e.getType() != TableModelEvent.DELETE && e.getType() != TableModelEvent.INSERT) return;
@@ -688,10 +719,12 @@ public class PortraitMainEditor extends AbstractMainEditor {
     private com.sfc.sf2.core.gui.controls.FileButton fileButtonImportImage;
     private com.sfc.sf2.core.gui.controls.FileButton fileButtonImportMeta;
     private com.sfc.sf2.core.gui.controls.FileButton fileButtonImportPortrait;
+    private com.sfc.sf2.core.gui.controls.InfoButton infoButtonMeta;
     private javax.swing.JButton jButtonExportImage;
     private javax.swing.JButton jButtonExportPortrait;
     private javax.swing.JButton jButtonImportImage;
     private javax.swing.JButton jButtonImportPortrait;
+    private javax.swing.JCheckBox jCheckBoxKeepMeta;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
