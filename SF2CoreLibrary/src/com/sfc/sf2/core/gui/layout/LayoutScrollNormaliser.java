@@ -36,7 +36,7 @@ public class LayoutScrollNormaliser extends BaseLayoutComponent implements Compo
         scrollPane.getVerticalScrollBar().removeAdjustmentListener(scrollChangedListener);
     }
     
-    private void findScrollPane(Container panel) {
+    private void findScrollPane(AbstractLayoutPanel panel) {
         try {
             Container parent = panel;
             for (int i = 0; i < 3; i++) {
@@ -52,6 +52,9 @@ public class LayoutScrollNormaliser extends BaseLayoutComponent implements Compo
             setEnabled(false);
         } else {
             panel.addComponentListener(this);
+            AdjustmentListener overlay = e -> panel.repaintPinnedOverlays();
+            scrollPane.getHorizontalScrollBar().addAdjustmentListener(overlay);
+            scrollPane.getVerticalScrollBar().addAdjustmentListener(overlay);
         }
     }
 

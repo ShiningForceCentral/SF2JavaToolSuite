@@ -12,6 +12,7 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 
@@ -66,13 +67,30 @@ public class LayoutCoordsGridDisplay extends BaseLayoutComponent {
     }
     
     public void paintCoordsImage(Graphics graphics, float displayScale) {
-        if (topSize > 0) {
+        paintCoordsImage(graphics, displayScale, null);
+    }
+
+    /**
+     * Draw coord bars pinned to the visible viewport so scrolling the map does
+     * not push the numbers off screen. Numbers stay aligned with the image.
+     */
+    public void paintCoordsImage(Graphics graphics, float displayScale, Rectangle visible) {
+        int visX = visible == null ? 0 : visible.x;
+        int visY = visible == null ? 0 : visible.y;
+        int visW = visible == null ? Integer.MAX_VALUE : visible.width;
+        int visH = visible == null ? Integer.MAX_VALUE : visible.height;
+        Color barBg = SettingsManager.getGlobalSettings().getIsDarkTheme() ? new Color(40, 40, 40, 220) : new Color(240, 240, 240, 220);
+        if (topSize > 0 && coordsImageTop != null) {
             int padding = (int)(leftSize <= 0 ? 0 : leftPadding+PADDING_LEFT+PADDING_SCALE*displayScale);
-            graphics.drawImage(coordsImageTop, padding, 0, null);
+            graphics.setColor(barBg);
+            graphics.fillRect(visX, visY, visW, coordsImageTop.getHeight());
+            graphics.drawImage(coordsImageTop, padding, visY, null);
         }
-        if (leftSize > 0) {
+        if (leftSize > 0 && coordsImageLeft != null) {
             int padding = (int)(topSize <= 0 ? 0 : topPadding+PADDING_LEFT+PADDING_SCALE*displayScale);
-            graphics.drawImage(coordsImageLeft, 0, padding, null);
+            graphics.setColor(barBg);
+            graphics.fillRect(visX, visY, coordsImageLeft.getWidth(), visH);
+            graphics.drawImage(coordsImageLeft, visX, padding, null);
         }
     }
     
