@@ -71,8 +71,7 @@ public class LayoutCoordsGridDisplay extends BaseLayoutComponent {
     }
 
     /**
-     * Draw coord bars pinned to the visible viewport so scrolling the map does
-     * not push the numbers off screen. Numbers stay aligned with the image.
+     * Draw coordinate bar images and keeps them pinned to the visible viewport
      */
     public void paintCoordsImage(Graphics graphics, float displayScale, Rectangle visible) {
         int visX = visible == null ? 0 : visible.x;
@@ -94,6 +93,10 @@ public class LayoutCoordsGridDisplay extends BaseLayoutComponent {
         }
     }
     
+    /**
+     * Prepare the coordinate bar images to be drawn later
+     * Drawn in paintCoordsImage()
+     */
     public void buildCoordsImage(Dimension displayArea, float displayScale) {
         if (topSize > 0) {
             coordsImageTop = paintCoordsAxis(true, displayArea.width, topSize, displayScale, fontIncrease, 1);
