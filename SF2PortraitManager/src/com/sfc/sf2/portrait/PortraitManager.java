@@ -56,17 +56,27 @@ public class PortraitManager extends AbstractManager {
         Console.logger().finest("EXITING exportDisassembly");
     }
     
-    public void importImage(Path portraitPath, Path metadataPath) throws IOException, MetadataException, RawImageException {
+    public void importImage(Path portraitPath, Path metadataPath, boolean keepCurrentMetadata) throws IOException, MetadataException, RawImageException {
         Console.logger().finest("ENTERING importImage");
+        if (keepCurrentMetadata && portrait == null) {
+            keepCurrentMetadata = false;
+        }
+        int[][] currentEyeTiles = keepCurrentMetadata ? portrait.getEyeTiles() : null;
+        int[][] currentMouthTiles = keepCurrentMetadata ? portrait.getMouthTiles(): null;
         Tileset tileset = new TilesetManager().importImage(portraitPath, true);
         int index = FileHelpers.getNumberFromFileName(portraitPath.toFile());
         portrait = new Portrait(index, tileset.getName(), tileset);
         Console.logger().info("Portrait successfully imported from : " + portraitPath);
-        try {
-            new PortraitMetadataProcessor().importMetadata(metadataPath, portrait);
-            Console.logger().info("Portrait metadata successfully imported from : " + metadataPath);
-        } catch (Exception e) {
-            Console.logger().info("ERROR Portrait metadata could not be imported : " + metadataPath + "\nImage still loaded.");
+        if (keepCurrentMetadata) {
+            portrait.setEyeTiles(currentEyeTiles);
+            portrait.setMouthTiles(currentMouthTiles);
+        } else {
+            try {
+                new PortraitMetadataProcessor().importMetadata(metadataPath, portrait);
+                Console.logger().info("Portrait metadata successfully imported from : " + metadataPath);
+            } catch (Exception e) {
+                Console.logger().info("ERROR Portrait metadata could not be imported : " + metadataPath + "\nImage still loaded.");
+            }
         }
         Console.logger().finest("EXITING importImage");
     }

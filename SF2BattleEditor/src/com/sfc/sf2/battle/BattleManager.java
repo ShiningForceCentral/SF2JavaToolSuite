@@ -48,6 +48,7 @@ public class BattleManager extends AbstractManager {
     private String sharedTerrainInfo;
     private LandEffectEnums landEffectEnums;
     private LandEffectMovementType[] landEffects;
+    private BattleMapCoords[] allCoords;
     private EnemyData[] enemyData;
     private EnemyEnums enemyEnums;
     private BattleEnums battleEnums;
@@ -61,6 +62,7 @@ public class BattleManager extends AbstractManager {
         sharedTerrainInfo = null;
         landEffectEnums = null;
         landEffects = null;
+        allCoords = null;
         enemyData = null;
         enemyEnums = null;
         battleEnums = null;
@@ -70,6 +72,7 @@ public class BattleManager extends AbstractManager {
         Console.logger().finest("ENTERING importDisassembly");
         BattleMapTerrainManager mapTerrainManager = new BattleMapTerrainManager();
         BattleMapTerrain terrain = mapTerrainManager.importDisassembly(paletteEntriesPath, tilesetEntriesPath, mapEntriesPath, terrainEntriesPath, battleMapCoordsPath, battleIndex);
+        allCoords = mapTerrainManager.getAllCoords();
         BattleMapCoords coords = mapTerrainManager.getCoords();
         
         EntriesAsmData spritesetEntries = new BattleSpritesetEntriesAsmProcessor().importAsmData(spritesetEntriesPath, null);
@@ -111,17 +114,16 @@ public class BattleManager extends AbstractManager {
     public void exportBattleCoords(Path mapcoordsPath, BattleMapCoords coords) throws IOException, AsmException, DisassemblyException {
         Console.logger().finest("ENTERING exportBattleCoords");
         this.battle.setMapCoords(coords);
-        BattleMapCoords[] allCoords = new BattleMapTerrainManager().getAllCoords();
         allCoords[battle.getIndex()] = battle.getBattleCoords();
         new BattleMapCoordsAsmProcessor().exportAsmData(mapcoordsPath, allCoords, null);
         Console.logger().info("Battle coords exported to : " + mapcoordsPath);
         Console.logger().finest("EXITING exportBattleCoords");
     }
     
-    public void exportLandEffects(Path landEffectPath, LandEffectMovementType[] landEffects) throws IOException, AsmException, DisassemblyException {
+    public void exportLandEffects(Path landEffectPath, LandEffectMovementType[] landEffects, LandEffectEnums landEffectEnums) throws IOException, AsmException, DisassemblyException {
         Console.logger().finest("ENTERING exportLandEffects");
         this.landEffects = landEffects;
-        new BattleMapTerrainManager().exportLandEffects(landEffectPath, landEffects);
+        new BattleMapTerrainManager().exportLandEffects(landEffectPath, landEffects, landEffectEnums);
         Console.logger().info("Battle land effects exported to : " + landEffectPath);
         Console.logger().finest("EXITING exportLandEffects");
     }
@@ -214,7 +216,11 @@ public class BattleManager extends AbstractManager {
 
     public EnemyData[] getEnemyData() {
         return enemyData;
-    }    
+    }
+
+    public BattleMapCoords[] getAllCoords() {
+        return allCoords;
+    }
 
     public EnemyEnums getEnemyEnums() {
         return enemyEnums;

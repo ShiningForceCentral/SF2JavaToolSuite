@@ -18,31 +18,31 @@ import java.nio.file.Path;
  *
  * @author TiMMy
  */
-public abstract class AbstractTextProcessor<TType extends Object> {
+public abstract class AbstractTextProcessor<TType extends Object, TPackage extends Object> {
     
-    public TType importTextData(Path filePath) throws IOException, TextFileException, FileNotFoundException {
+    public TType importTextData(Path filePath, TPackage pckg) throws IOException, TextFileException, FileNotFoundException {
         Console.logger().finest("ENTERING importTextData : " + filePath);
         File textFile = filePath.toFile();
         if (!textFile.exists()) {
             throw new FileNotFoundException("Text file not found : " + filePath);
         }
         BufferedReader reader = new BufferedReader(new FileReader(textFile));
-        TType item = parseTextData(reader);
+        TType item = parseTextData(reader, pckg);
         reader.close();
         Console.logger().finest("EXITING importTextData");
         return item;
     }
     
-    protected abstract TType parseTextData(BufferedReader reader) throws IOException, TextFileException;
+    protected abstract TType parseTextData(BufferedReader reader, TPackage pckg) throws IOException, TextFileException;
     
-    public void exportTextData(Path filePath, TType item) throws IOException, TextFileException {
+    public void exportTextData(Path filePath, TType item, TPackage pckg) throws IOException, TextFileException {
         Console.logger().finest("ENTERING exportTextData : " + filePath);
         File textFile = filePath.toFile();
         FileWriter writer = new FileWriter(textFile, false);
-        packageTextData(writer, item);
+        packageTextData(writer, item, pckg);
         writer.close();
         Console.logger().finest("EXITING exportTextData");
     }
     
-    protected abstract void packageTextData(FileWriter writer, TType item) throws IOException, TextFileException;
+    protected abstract void packageTextData(FileWriter writer, TType item, TPackage pckg) throws IOException, TextFileException;
 }

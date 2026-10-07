@@ -209,7 +209,7 @@
                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                   <Value id="BIN"/>
                                 </Property>
-                                <Property name="filePath" type="java.lang.String" value="../../graphics/tech/basepalette.bin" containsInvalidXMLChars="true"/>
+                                <Property name="filePath" type="java.lang.String" value="../../graphics/tech/basepalette.bin"/>
                                 <Property name="infoMessage" type="java.lang.String" value="The game&apos;s base palette."/>
                                 <Property name="labelText" type="java.lang.String" value="Base palette :"/>
                                 <Property name="name" type="java.lang.String" value="Import Base Palette" noResource="true"/>
@@ -220,7 +220,7 @@
                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                   <Value id="BIN"/>
                                 </Property>
-                                <Property name="filePath" type="java.lang.String" value="../../graphics/tech/basetiles.bin" containsInvalidXMLChars="true"/>
+                                <Property name="filePath" type="java.lang.String" value="../../graphics/tech/basetiles.bin"/>
                                 <Property name="infoMessage" type="java.lang.String" value="The tileset that contains the dialog box frame."/>
                                 <Property name="labelText" type="java.lang.String" value="Base tiles :"/>
                                 <Property name="name" type="java.lang.String" value="Import Base Tiles" noResource="true"/>
@@ -231,7 +231,7 @@
                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                   <Value id="BIN"/>
                                 </Property>
-                                <Property name="filePath" type="java.lang.String" value="../../graphics/tech/fonts/variablewidthfont.bin" containsInvalidXMLChars="true"/>
+                                <Property name="filePath" type="java.lang.String" value="../../graphics/tech/fonts/variablewidthfont.bin"/>
                                 <Property name="infoMessage" type="java.lang.String" value="&lt;html&gt;Loads in the games &lt;i&gt;variable width font&lt;/i&gt; for rendering in the preview&lt;/html&gt;"/>
                                 <Property name="labelText" type="java.lang.String" value="VW font :"/>
                                 <Property name="name" type="java.lang.String" value="Import VW Font" noResource="true"/>
@@ -242,7 +242,7 @@
                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                   <Value id="ASM"/>
                                 </Property>
-                                <Property name="filePath" type="java.lang.String" value="../../../code/common/scripting/text/textfunctions.asm" containsInvalidXMLChars="true"/>
+                                <Property name="filePath" type="java.lang.String" value="../../../code/common/scripting/text/textfunctions.asm"/>
                                 <Property name="infoMessage" type="java.lang.String" value="&lt;html&gt;Loads in &lt;i&gt;table_666E&lt;/i&gt; from &lt;i&gt;textfunctions.asm&lt;/i&gt;, so that ASCII characters (raw text) can be converted into VWFont symbols.&lt;/html&gt;"/>
                                 <Property name="labelText" type="java.lang.String" value="ASCII table :"/>
                                 <Property name="name" type="java.lang.String" value="Import ASCII Table" noResource="true"/>
@@ -253,7 +253,7 @@
                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                   <Value id="ASM"/>
                                 </Property>
-                                <Property name="filePath" type="java.lang.String" value="../../stats/allies/allynames.asm" containsInvalidXMLChars="true"/>
+                                <Property name="filePath" type="java.lang.String" value="../../stats/allies/allynames.asm"/>
                                 <Property name="infoMessage" type="java.lang.String" value="&lt;html&gt;Imports the namelist for allies to replace the {LEADER} and {NAME;x} tag in the preview.&lt;br&gt;Load &lt;i&gt;allynames.asm&lt;/i&gt; or &lt;i&gt;allynames-capitalized.asm&lt;/i&gt;&lt;/html&gt;"/>
                                 <Property name="labelText" type="java.lang.String" value="Ally names :"/>
                                 <Property name="name" type="java.lang.String" value="Import Ally Names" noResource="true"/>
@@ -264,7 +264,7 @@
                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                   <Value id="TXT"/>
                                 </Property>
-                                <Property name="filePath" type="java.lang.String" value="./ascii-replace.txt" containsInvalidXMLChars="true"/>
+                                <Property name="filePath" type="java.lang.String" value="./ascii-replace.txt"/>
                                 <Property name="infoMessage" type="java.lang.String" value="&lt;html&gt;The &lt;i&gt;ascii replace&lt;/i&gt; provides some support for non-ascii characters.&lt;br&gt;Refer to the file.&lt;/html&gt;"/>
                                 <Property name="labelText" type="java.lang.String" value="ASCII replace :"/>
                                 <Property name="name" type="java.lang.String" value="Import ASCII Replace" noResource="true"/>
@@ -338,7 +338,7 @@
                                 </Component>
                                 <Component class="com.sfc.sf2.core.gui.controls.DirectoryButton" name="directoryButtonImportBanks">
                                   <Properties>
-                                    <Property name="directoryPath" type="java.lang.String" value="./" containsInvalidXMLChars="true"/>
+                                    <Property name="directoryPath" type="java.lang.String" value="./"/>
                                     <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="Base path :"/>
                                     <Property name="name" type="java.lang.String" value="Import Textbanks" noResource="true"/>
@@ -419,7 +419,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="TXT"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value="./export/gamescript.txt" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="./export/gamescript.txt"/>
                                     <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="Txt game script :"/>
                                     <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -503,7 +503,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="ASM"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value="../map/cs_intro1.asm" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="../map/cs_intro1.asm"/>
                                     <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="ASM file :"/>
                                     <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -543,7 +543,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jTabbedPane2" max="32767" attributes="0"/>
+                                  <Component id="jTabbedPane2" pref="416" max="32767" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -551,7 +551,7 @@
                         <DimensionLayout dim="1">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jTabbedPane2" pref="132" max="32767" attributes="0"/>
+                                  <Component id="jTabbedPane2" pref="0" max="32767" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -624,7 +624,7 @@
                                 </Component>
                                 <Component class="com.sfc.sf2.core.gui.controls.DirectoryButton" name="directoryButtonExportBanks">
                                   <Properties>
-                                    <Property name="directoryPath" type="java.lang.String" value="./" containsInvalidXMLChars="true"/>
+                                    <Property name="directoryPath" type="java.lang.String" value="./"/>
                                     <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="Base path :"/>
                                     <Property name="name" type="java.lang.String" value="Export Textbanks" noResource="true"/>
@@ -655,9 +655,11 @@
                                       <Group type="102" attributes="0">
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="fileButtonExportText" pref="404" max="32767" attributes="0"/>
+                                              <Component id="fileButtonExportText" pref="0" max="32767" attributes="0"/>
                                               <Group type="102" alignment="1" attributes="0">
                                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                                  <Component id="jPanel12" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                                   <Component id="jButtonExportText" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                               <Group type="102" alignment="0" attributes="0">
@@ -682,7 +684,10 @@
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="fileButtonExportText" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jButtonExportText" min="-2" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="jButtonExportText" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jPanel12" min="-2" max="-2" attributes="0"/>
+                                          </Group>
                                           <EmptySpace max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
@@ -702,7 +707,11 @@
                                 </Component>
                                 <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButtonExportText">
                                   <Properties>
-                                    <Property name="filePath" type="java.lang.String" value="./export/gamescript.txt" containsInvalidXMLChars="true"/>
+                                    <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                      <Value id="TXT"/>
+                                    </Property>
+                                    <Property name="filePath" type="java.lang.String" value="./export/gamescript.txt"/>
+                                    <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="Txt game script :"/>
                                     <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                                       <Dimension value="[32859, 25]"/>
@@ -718,6 +727,89 @@
                                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonExportTextActionPerformed"/>
                                   </Events>
                                 </Component>
+                                <Container class="javax.swing.JPanel" name="jPanel12">
+                                  <Properties>
+                                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                                      <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                                        <TitledBorder/>
+                                      </Border>
+                                    </Property>
+                                  </Properties>
+
+                                  <Layout>
+                                    <DimensionLayout dim="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="jLabel31" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="jComboBoxIdsExport" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="jCheckBoxHeaderExport" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="infoButton8" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                    </DimensionLayout>
+                                    <DimensionLayout dim="1">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="2" attributes="0">
+                                                  <Component id="jLabel31" alignment="2" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="jCheckBoxHeaderExport" alignment="2" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="infoButton8" alignment="2" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="jComboBoxIdsExport" alignment="2" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                    </DimensionLayout>
+                                  </Layout>
+                                  <SubComponents>
+                                    <Component class="javax.swing.JLabel" name="jLabel31">
+                                      <Properties>
+                                        <Property name="text" type="java.lang.String" value="IDs :"/>
+                                      </Properties>
+                                    </Component>
+                                    <Component class="javax.swing.JComboBox" name="jComboBoxIdsExport">
+                                      <Properties>
+                                        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                                          <StringArray count="3">
+                                            <StringItem index="0" value="Decimal"/>
+                                            <StringItem index="1" value="Hex"/>
+                                            <StringItem index="2" value="Both"/>
+                                          </StringArray>
+                                        </Property>
+                                        <Property name="selectedIndex" type="int" value="2"/>
+                                        <Property name="name" type="java.lang.String" value="Import Compression" noResource="true"/>
+                                      </Properties>
+                                      <Events>
+                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBoxIdsExportActionPerformed"/>
+                                      </Events>
+                                      <AuxValues>
+                                        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                                      </AuxValues>
+                                    </Component>
+                                    <Component class="javax.swing.JCheckBox" name="jCheckBoxHeaderExport">
+                                      <Properties>
+                                        <Property name="selected" type="boolean" value="true"/>
+                                        <Property name="text" type="java.lang.String" value="Header"/>
+                                        <Property name="name" type="java.lang.String" value="Grid Toggle" noResource="true"/>
+                                      </Properties>
+                                      <Events>
+                                        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jCheckBoxHeaderExportItemStateChanged"/>
+                                      </Events>
+                                    </Component>
+                                    <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton8">
+                                      <Properties>
+                                        <Property name="messageText" type="java.lang.String" value="&lt;html&gt;&lt;b&gt;IDs: &lt;/b&gt;Each line of text is prefixed with the line ID. As decimal, hexidecimal, or both.&lt;br&gt;Header: &lt;/b&gt;Whether the first line of the text file will be filled with the &apos;column&apos; info.&lt;br&gt;&lt;br&gt;Example:&lt;br&gt;&lt;i&gt;;Dec| Hex| Lines&lt;br&gt;1114=045A=line 1114 (or 045A in hex){W1}&lt;br&gt;1115=045B=line 1115 (or 045B in hex){W1}&lt;/i&gt;&lt;/html&gt;"/>
+                                        <Property name="text" type="java.lang.String" value=""/>
+                                      </Properties>
+                                    </Component>
+                                  </SubComponents>
+                                </Container>
                               </SubComponents>
                             </Container>
                           </SubComponents>
@@ -745,7 +837,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jPanel1" max="32767" attributes="0"/>
-                                  <Component id="jPanel10" max="32767" attributes="0"/>
+                                  <Component id="jPanel10" pref="573" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
@@ -778,7 +870,7 @@
                         <DimensionLayout dim="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
-                                  <Component id="jPanel7" pref="477" max="32767" attributes="0"/>
+                                  <Component id="jPanel7" pref="493" max="32767" attributes="0"/>
                                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                                   <Component id="jPanel8" min="-2" max="-2" attributes="0"/>
                               </Group>
@@ -895,7 +987,7 @@
                           <SubComponents>
                             <Component class="javax.swing.JButton" name="jButtonDown1">
                               <Properties>
-                                <Property name="text" type="java.lang.String" value="//" containsInvalidXMLChars="true"/>
+                                <Property name="text" type="java.lang.String" value="//"/>
                                 <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
                                   <Insets value="[2, 2, 2, 2]"/>
                                 </Property>
@@ -909,7 +1001,7 @@
                             </Component>
                             <Component class="javax.swing.JButton" name="jButtonUp">
                               <Properties>
-                                <Property name="text" type="java.lang.String" value="//" containsInvalidXMLChars="true"/>
+                                <Property name="text" type="java.lang.String" value="//"/>
                                 <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
                                   <Insets value="[2, 2, 2, 2]"/>
                                 </Property>

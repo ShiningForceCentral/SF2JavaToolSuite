@@ -8,6 +8,7 @@ package com.sfc.sf2.battle.actions;
 import com.sfc.sf2.battle.Battle;
 import com.sfc.sf2.battle.EnemyData;
 import com.sfc.sf2.battle.EnemyEnums;
+import com.sfc.sf2.battle.mapcoords.BattleMapCoords;
 import com.sfc.sf2.battle.mapterrain.LandEffectEnums;
 import com.sfc.sf2.battle.mapterrain.LandEffectMovementType;
 import com.sfc.sf2.core.actions.IActionData;
@@ -22,14 +23,16 @@ public class BattleActionData implements IActionData<BattleActionData> {
     private final String sharedTerrainInfo;
     private final LandEffectEnums landEffectEnums;
     private final LandEffectMovementType[] landEffects;
+    private final BattleMapCoords[] allCoords;
     private final EnemyData[] enemyData;
     private final EnemyEnums enemyEnums;
 
-    public BattleActionData(Battle battle, String sharedTerrainInfo, LandEffectEnums landEffectEnums, LandEffectMovementType[] landEffects, EnemyData[] enemyData, EnemyEnums enemyEnums) {
+    public BattleActionData(Battle battle, String sharedTerrainInfo, LandEffectEnums landEffectEnums, LandEffectMovementType[] landEffects, BattleMapCoords[] allCoords, EnemyData[] enemyData, EnemyEnums enemyEnums) {
         this.battle = battle;
         this.sharedTerrainInfo = sharedTerrainInfo;
         this.landEffectEnums = landEffectEnums;
         this.landEffects = landEffects;
+        this.allCoords = allCoords;
         this.enemyData = enemyData;
         this.enemyEnums = enemyEnums;
     }
@@ -50,6 +53,10 @@ public class BattleActionData implements IActionData<BattleActionData> {
         return landEffects;
     }
 
+    public BattleMapCoords[] allCoords() {
+        return allCoords;
+    }
+
     public EnemyData[] enemyData() {
         return enemyData;
     }
@@ -64,6 +71,10 @@ public class BattleActionData implements IActionData<BattleActionData> {
         if (this.landEffects.length != other.landEffects.length) return false;
         for (int i = 0; i < landEffects.length; i++) {
             if (!this.landEffects[i].equals(other.landEffects[i])) return false;
+        }
+        if (this.allCoords.length != other.allCoords.length) return false;
+        for (int i = 0; i < allCoords.length; i++) {
+            if (!this.allCoords[i].equals(other.allCoords[i])) return false;
         }
         if (this.enemyData.length != other.enemyData.length) return false;
         for (int i = 0; i < enemyData.length; i++) {
@@ -87,7 +98,7 @@ public class BattleActionData implements IActionData<BattleActionData> {
         if (battle == null) {
             return "NULL";
         } else {
-            return String.format("Battle: %d. Land Effects: %d. Enemy Data: %d", battle.getIndex(), landEffects.length, enemyData.length);
+            return String.format("Battle: %d. Land Effects: %d. Battle Coords %d. Enemy Data: %d", battle.getIndex(), landEffects.length, allCoords.length, enemyData.length);
         }
     }
 }
