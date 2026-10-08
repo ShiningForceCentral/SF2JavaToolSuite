@@ -36,7 +36,7 @@ public record CliDefinition(CliCommandID id, String longCommand, String shortCom
     }
     
     public static void PrintHelpString() {
-        System.out.println(String.format("%s cli help:"));
+        System.out.println("cli help:");
         for (int i = 0; i < CLI_DEFINITIONS.length; i++) {
             CliDefinition def = CLI_DEFINITIONS[i];
             System.out.print(def.id());
