@@ -39,8 +39,6 @@ public final class ExampleMainEditor extends AbstractMainEditor {
     
     @Override
     protected void initEditor() {
-        super.initEditor();
-        
         viewPanelStacked1.setLayoutPanel(testLayoutPanel1, testSettings);
         viewPanelStacked1.getBackgroundColorPicker().addColorChangedListener(this::onViewPanelColorChange);
         
@@ -61,8 +59,6 @@ public final class ExampleMainEditor extends AbstractMainEditor {
     
     @Override
     protected void onDataLoaded() {
-        super.onDataLoaded();
-        
         //Set data that is updated when content is imported
     }
 
@@ -672,12 +668,32 @@ public final class ExampleMainEditor extends AbstractMainEditor {
         colorPicker1.setColor(viewPanelStacked1.getBackgroundColorPicker().getColor());
     }
     
+    @Override
+    protected boolean cliImportDisasm(String[] data) throws Exception {
+        throw new Exception("Example cannot process commandline");
+    }
+
+    @Override
+    protected boolean cliExportDisasm(String[] data) throws Exception {
+        throw new Exception("Example cannot process commandline");
+    }
+
+    @Override
+    protected boolean cliImportImage(String[] data) throws Exception {
+        throw new Exception("Example cannot process commandline");
+    }
+
+    @Override
+    protected boolean cliExportImage(String[] data) throws Exception {
+        throw new Exception("Example cannot process commandline");
+    }
+    
     /**
      * To create a new Main Editor, copy the below code
      * Don't forget to change the new main class (below)
      */
     public static void main(String args[]) {
-        AbstractMainEditor.programSetup();
+        AbstractMainEditor.programSetup(args);
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new ExampleMainEditor().setVisible(true);  // <------ Change this class to new Main Editor class
@@ -732,5 +748,4 @@ public final class ExampleMainEditor extends AbstractMainEditor {
     private com.sfc.sf2.core.gui.TestLayoutPanel testLayoutPanel1;
     private com.sfc.sf2.core.gui.controls.ViewPanelStacked viewPanelStacked1;
     // End of variables declaration//GEN-END:variables
-
 }

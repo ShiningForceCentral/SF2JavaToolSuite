@@ -57,9 +57,7 @@ public class TextMainEditor extends AbstractMainEditor {
     }
     
     @Override
-    protected void initEditor() {
-        super.initEditor();
-        
+    protected void initEditor() {        
         accordionPanel2.setExpanded(false);
         
         sorter = new TableRowSorter<>(textTableModel);
@@ -76,7 +74,6 @@ public class TextMainEditor extends AbstractMainEditor {
     
     @Override
     protected void onDataLoaded() {
-        super.onDataLoaded();
         textPreviewLayoutPanel.setBaseTiles(textManager.getBaseTiles());
         textPreviewLayoutPanel.setFontSymbols(textManager.getFontSymbols());
         textPreviewLayoutPanel.setAllyNames(textManager.getAllyNames());
@@ -1070,12 +1067,36 @@ public class TextMainEditor extends AbstractMainEditor {
         }
     }
     
+    @Override
+    protected boolean cliImportDisasm(String[] data) throws Exception {
+        Path disasmPath = Path.of(data[0]);
+        cliData = textManager.importDisassembly(disasmPath);
+        return true;
+    }
+
+    @Override
+    protected boolean cliExportDisasm(String[] data) throws Exception {
+        Path disasmPath = Path.of(data[0]);
+        textManager.exportDisassembly(disasmPath, (String[])cliData);
+        return true;
+    }
+
+    @Override
+    protected boolean cliImportImage(String[] data) throws Exception {
+        throw new Exception("SF2TextEditor cannot import or export images");
+    }
+
+    @Override
+    protected boolean cliExportImage(String[] data) throws Exception {
+        throw new Exception("SF2TextEditor cannot import or export images");
+    }
+    
     /**
      * To create a new Main Editor, copy the below code
      * Don't forget to change the new main class (below)
      */
     public static void main(String args[]) {
-        AbstractMainEditor.programSetup();
+        AbstractMainEditor.programSetup(args);
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new TextMainEditor().setVisible(true);  // <------ Change this class to new Main Editor class

@@ -9,6 +9,9 @@ import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.sfc.sf2.core.Manifest;
 import com.sfc.sf2.core.actions.ActionManager;
+import com.sfc.sf2.core.clicommand.CliCommand;
+import com.sfc.sf2.core.clicommand.CliDefinition;
+import com.sfc.sf2.core.clicommand.CliDefinition.CliCommandID;
 import com.sfc.sf2.core.settings.CoreSettings;
 import com.sfc.sf2.core.settings.GlobalSettings;
 import com.sfc.sf2.core.settings.SettingsManager;
@@ -16,6 +19,7 @@ import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.helpers.PathHelpers;
 import java.net.URI;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import javax.swing.UIManager;
 
 /**
@@ -23,11 +27,20 @@ import javax.swing.UIManager;
  * @author TiMMy
  */
 public abstract class AbstractMainEditor extends javax.swing.JFrame {
-        
+    
+    private static boolean isHeadless = true;
+    protected static boolean IsHeadless() { return isHeadless; }
+    private static ArrayList<CliCommand> cliCommands;
+    protected static Object cliData;
+    
     /**
      * Creates new form New Application
      */
     public AbstractMainEditor() {
+        if (isHeadless) {
+            processCliCommands();
+            return;
+        }
         CoreSettings.setAppClass(this.getClass());
         initComponents();
         java.awt.EventQueue.invokeLater(() -> {
@@ -67,15 +80,83 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
         }
     }
     
-    protected void initEditor() {
-        
+    protected abstract void initEditor();
+    
+    protected abstract void onDataLoaded();
+    
+    private static void processClArgs(String[] args) {
+        CliCommandID command;
+        String[] cmdArgs;
+        for (int i = 0; i < args.length; i++) {
+            cmdArgs = null;
+            if (args[i].charAt(0) == '-') {
+                command = CliDefinition.commandFromString(args[i]);
+            } else {
+                command = CliCommandID.UNKNOWN;
+            }
+            
+            if (command == CliCommandID.UNKNOWN) {
+                //Unknown command. Throw error and abort
+                System.err.println(String.format("CLI ABORTING. Unknown command or parameter: %s", args[i]));
+                System.exit(404);
+            } else if (command == CliCommandID.HELP) {
+                //Handle help differently. Print help info then abort
+                CliDefinition.PrintHelpString();
+                System.exit(0);
+            } else if (command == CliCommandID.HEADLESS) {
+                //Set as headless (cli app)
+                isHeadless = true;
+            } else {
+                //Command is valid so find params then add it to the list
+                ArrayList<String> argsList = new ArrayList<>();
+                for (int j = i+1; j < args.length; j++) {
+                    if (args[j].charAt(0) != '-') {
+                        argsList.add(args[j]);
+                        i = j;
+                    }
+                }
+                cmdArgs = (String[])argsList.toArray();
+                
+                if (cliCommands == null) {
+                    cliCommands = new ArrayList();
+                }
+                cliCommands.add(new CliCommand(command, cmdArgs));
+            }
+        }
     }
     
-    protected void onDataLoaded() {
-        
+    private void processCliCommands() {
+        if (cliCommands == null) return;
+        for (CliCommand command : cliCommands) {
+            try {
+                switch (command.id()) {
+                    case IMPORT: cliImportDisasm(command.data()); break;
+                    case EXPORT: cliExportDisasm(command.data()); break;
+                    case IMPORT_IMAGE: cliImportImage(command.data()); break;
+                    case EXPORT_IMAGE: cliExportImage(command.data()); break;
+                }
+            } catch (Exception e) {
+                int errorCode = 100 + CliCommandID.IMPORT.ordinal();
+                System.err.println(String.format("Command %s failed with exception %s.\nAborting with error %d", command, e.toString(), errorCode));
+                System.exit(errorCode);
+            }
+        }
+        cliCommands.clear();
+        cliCommands = null;
+        System.exit(0);
     }
     
-    public static void programSetup() {
+    protected abstract boolean cliImportDisasm(String[] data) throws Exception;
+    protected abstract boolean cliExportDisasm(String[] data) throws Exception;
+    protected abstract boolean cliImportImage(String[] data) throws Exception;
+    protected abstract boolean cliExportImage(String[] data) throws Exception;
+    
+    public static void programSetup(String[] args) {
+        processClArgs(args);
+        if (isHeadless) {
+            //If running as cli app then ignore all else
+            return;
+        }
         //Hack to determine if project is running from editor (IDE) or is a build. (property 'user.dir' is blank if in editor)
         String dir = System.getProperty("user.dir");
         boolean inEditor = dir == null || dir.length() == 0;
