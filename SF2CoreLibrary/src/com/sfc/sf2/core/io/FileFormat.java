@@ -108,6 +108,10 @@ public enum FileFormat {
         }
     }
     
+    public boolean isImage() {
+        return this == PNG || this == GIF;
+    }
+    
     public FileFormatFilter getFileFilter(String prefix) {
         return new FileFormatFilter(this, prefix);
     }

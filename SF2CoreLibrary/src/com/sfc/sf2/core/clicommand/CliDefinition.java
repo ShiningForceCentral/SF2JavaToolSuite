@@ -16,17 +16,13 @@ public record CliDefinition(CliCommandID id, String longCommand, String shortCom
         HELP,
         IMPORT,
         EXPORT,
-        IMPORT_IMAGE,
-        EXPORT_IMAGE,
     }
     
     private static CliDefinition[] CLI_DEFINITIONS = new CliDefinition[] {
         new CliDefinition(CliCommandID.HEADLESS, "--headless", "-c", "<> - Runs the app command-line only"),
         new CliDefinition(CliCommandID.HELP, "--help", "-h", "<> - Prints help info"),
-        new CliDefinition(CliCommandID.IMPORT, "--import", "-i", "<filePath> <optionalParams> - Imports the app's primary data type from disassembly (.asm, .bin, or .txt)"),
-        new CliDefinition(CliCommandID.EXPORT, "--export", "-e", "<filePath> <optionalParams> - Exports the app's primary data type from disassembly (.asm, .bin, or .txt). Must import data first"),
-        new CliDefinition(CliCommandID.IMPORT_IMAGE, "--import_image", null, "<imagePath> <optionalParams> - Imports the app's primary data type from image (.png or .gif)"),
-        new CliDefinition(CliCommandID.EXPORT_IMAGE, "--export_image", null, "<imagePath> <optionalParams> - Exports the app's primary data type from image (.png or .gif). Must import data first"),
+        new CliDefinition(CliCommandID.IMPORT, "--import", "-i", "<filePath> <optionalParams> - Imports the app's primary data type from the file or directory path (.asm, .bin, .txt, png, gif, etc)"),
+        new CliDefinition(CliCommandID.EXPORT, "--export", "-e", "<filePath> <optionalParams> - Exports the app's primary data type from the file or directory path (.asm, .bin, .txt, png, gif, etc). Must import data first"),
     };
     
     public static CliCommandID commandFromString(String cmd) {

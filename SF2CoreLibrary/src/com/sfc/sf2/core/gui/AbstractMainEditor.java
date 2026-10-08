@@ -16,8 +16,11 @@ import com.sfc.sf2.core.settings.CoreSettings;
 import com.sfc.sf2.core.settings.GlobalSettings;
 import com.sfc.sf2.core.settings.SettingsManager;
 import com.sfc.sf2.core.gui.controls.Console;
+import com.sfc.sf2.core.io.FileFormat;
 import com.sfc.sf2.helpers.PathHelpers;
 import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import javax.swing.UIManager;
@@ -38,7 +41,6 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
      */
     public AbstractMainEditor() {
         if (isHeadless) {
-            processCliCommands();
             return;
         }
         CoreSettings.setAppClass(this.getClass());
@@ -51,6 +53,10 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
     }
     
     protected void initCore(Console console) {
+        if (isHeadless) {
+            processCliCommands();
+            return;
+        }
         //Console
         if (console != null) {
             console.initLogger("SF2 Java Suite");
@@ -134,10 +140,18 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
         for (CliCommand command : cliCommands) {
             try {
                 switch (command.id()) {
-                    case IMPORT: cliImportDisasm(command.data()); break;
-                    case EXPORT: cliExportDisasm(command.data()); break;
-                    case IMPORT_IMAGE: cliImportImage(command.data()); break;
-                    case EXPORT_IMAGE: cliExportImage(command.data()); break;
+                    case IMPORT -> {
+                        Path path = command.data().length > 0 ? Path.of(command.data()[0]) : null;
+                        FileFormat format = path == null ? FileFormat.UNKNOWN : FileFormat.getFormat(path);
+                        boolean isDirectory = Files.isDirectory(path, LinkOption.NOFOLLOW_LINKS);
+                        cliImportData(command.data(), format, isDirectory);
+                    }
+                    case EXPORT -> {
+                        Path path = command.data().length > 0 ? Path.of(command.data()[0]) : null;
+                        FileFormat format = path == null ? FileFormat.UNKNOWN : FileFormat.getFormat(path);
+                        boolean isDirectory = Files.isDirectory(path, LinkOption.NOFOLLOW_LINKS);
+                        cliExportData(command.data(), format, isDirectory);
+                    }
                 }
             } catch (Exception e) {
                 int errorCode = 100 + CliCommandID.IMPORT.ordinal();
@@ -150,10 +164,8 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
         System.exit(0);
     }
     
-    protected abstract boolean cliImportDisasm(String[] data) throws Exception;
-    protected abstract boolean cliExportDisasm(String[] data) throws Exception;
-    protected abstract boolean cliImportImage(String[] data) throws Exception;
-    protected abstract boolean cliExportImage(String[] data) throws Exception;
+    protected abstract boolean cliImportData(String[] data, FileFormat format, boolean isDirectory) throws Exception;
+    protected abstract boolean cliExportData(String[] data, FileFormat format, boolean isDirectory) throws Exception;
     
     public static void programSetup(String[] args) {
         processClArgs(args);
