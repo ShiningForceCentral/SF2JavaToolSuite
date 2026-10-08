@@ -51,6 +51,9 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
         initComponents();
         initEditorComponents();
         
+        CoreSettings.setAppClass(this.getClass());
+        ActionManager.setupInputMaps(jPanel13);
+        
         //Settings
         registerSettings();
         SettingsManager.loadGlobalSettings();
@@ -76,12 +79,12 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
             });
         }
         
-        setupEditor();
-        
-        CoreSettings.setAppClass(this.getClass());
-        ActionManager.setupInputMaps(jPanel13);
-        
-        SettingsManager.setSavingAllowed(true); //Slight hack to prevent controls affecting settings on initialisation
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                setupEditor();
+                SettingsManager.setSavingAllowed(true); //Slight hack to prevent controls affecting settings on initialisation
+            }
+        });
     }
     
     protected abstract Console getConsole();
