@@ -156,7 +156,7 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
                 }
             } catch (Exception e) {
                 int errorCode = 100 + CliCommandID.IMPORT.ordinal();
-                System.err.println(String.format("Command %s failed with exception %s.\nAborting with error %d", command, e.toString(), errorCode));
+                System.err.println(String.format("ERROR: Command %s failed with exception %s.\nAborting with error %d", command, e.toString(), errorCode));
                 System.exit(errorCode);
             }
         }
