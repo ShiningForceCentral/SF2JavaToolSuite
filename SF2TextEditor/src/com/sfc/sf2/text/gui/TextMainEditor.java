@@ -11,16 +11,19 @@ import com.sfc.sf2.core.actions.NonCombinableAction;
 import com.sfc.sf2.core.actions.ToggleAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
+import com.sfc.sf2.core.io.FileFormat;
 import com.sfc.sf2.helpers.PathHelpers;
 import com.sfc.sf2.helpers.listeners.ListenersHelpers;
 import com.sfc.sf2.text.TextManager;
 import com.sfc.sf2.text.compression.Symbols;
 import com.sfc.sf2.text.io.TextProcessor;
+import com.sfc.sf2.text.io.TextProcessor.TextID;
 import java.awt.Rectangle;
 import java.beans.PropertyChangeEvent;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.logging.Level;
+import java.util.zip.DataFormatException;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JTextField;
 import javax.swing.RowFilter;
@@ -43,21 +46,23 @@ public class TextMainEditor extends AbstractMainEditor {
     private TableRowSorter<TableModel> sorter;
     
     private int actionExportIDs;
-    
-    public TextMainEditor() {
-        super();
-        initComponents();
-        initCore(console1);
-        
+
+    @Override
+    protected Console getConsole() { return console1; }
+    @Override
+    protected void initEditorComponents() { initComponents(); }
+    @Override
+    protected void registerSettings() { }
+
+    @Override
+    protected void setupEditor() {
         //Handle old Ascii map path and new path
         File file = PathHelpers.getBasePath().resolve("asciitotextsymbolmap.asm").toFile();
         if (file.exists()) {
             fileButtonImportAsciiTable.setFilePath(file.toString());
         }
-    }
-    
-    @Override
-    protected void initEditor() {        
+        
+        //Setup components
         accordionPanel2.setExpanded(false);
         
         sorter = new TableRowSorter<>(textTableModel);
@@ -82,6 +87,12 @@ public class TextMainEditor extends AbstractMainEditor {
     
     private void actionScriptLoaded(String[] script) {
         textTableModel.setTableData(script);
+    }
+    
+    //To create a new Main Editor, copy this method and change the new mainEditor class
+    public static void main(String args[]) {
+        programStart(args);
+        setupMainEditor(new TextMainEditor());   // <------ Change this class to new Main Editor class
     }
 
     /**
@@ -1068,44 +1079,30 @@ public class TextMainEditor extends AbstractMainEditor {
     }
     
     @Override
-    protected boolean cliImportDisasm(String[] data) throws Exception {
-        Path disasmPath = Path.of(data[0]);
-        cliData = textManager.importDisassembly(disasmPath);
+    protected boolean cliImportData(String[] data, FileFormat format, boolean isDirectory) throws Exception {
+        Path filePath = Path.of(data[0]);
+        if (isDirectory) {
+            cliData = textManager.importDisassembly(filePath);
+        } else if (format == FileFormat.TXT) {
+            cliData = textManager.importTxt(filePath);
+        } else {
+            throw new DataFormatException(String.format("Unknown format: %s", format));
+        }
         return true;
     }
 
     @Override
-    protected boolean cliExportDisasm(String[] data) throws Exception {
-        Path disasmPath = Path.of(data[0]);
-        textManager.exportDisassembly(disasmPath, (String[])cliData);
+    protected boolean cliExportData(String[] data, FileFormat format, boolean isDirectory) throws Exception {
+        Path filePath = Path.of(data[0]);
+        if (isDirectory) {
+            textManager.exportDisassembly(filePath, (String[])cliData);
+        } else if (format == FileFormat.TXT) {
+            textManager.exportTxt(filePath, (String[])cliData, TextID.BOTH, true);
+        } else {
+            throw new DataFormatException(String.format("Unknown format: %s", format));
+        }
         return true;
     }
-
-    @Override
-    protected boolean cliImportImage(String[] data) throws Exception {
-        throw new Exception("SF2TextEditor cannot import or export images");
-    }
-
-    @Override
-    protected boolean cliExportImage(String[] data) throws Exception {
-        throw new Exception("SF2TextEditor cannot import or export images");
-    }
-    
-    /**
-     * To create a new Main Editor, copy the below code
-     * Don't forget to change the new main class (below)
-     */
-    public static void main(String args[]) {
-        AbstractMainEditor.programSetup(args);
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new TextMainEditor().setVisible(true);  // <------ Change this class to new Main Editor class
-            }
-        });
-    }
-    /**
-     * To create a new Main Editor, copy the above code
-     */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.sfc.sf2.core.gui.controls.AccordionPanel accordionPanel2;

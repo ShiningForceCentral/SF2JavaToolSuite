@@ -11,6 +11,7 @@ import com.sfc.sf2.core.actions.NonCombinableAction;
 import com.sfc.sf2.core.actions.SpinnerAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
+import com.sfc.sf2.core.io.FileFormat;
 import com.sfc.sf2.core.settings.SettingsManager;
 import com.sfc.sf2.core.settings.ViewSettings;
 import com.sfc.sf2.graphics.TilesetManager;
@@ -20,12 +21,13 @@ import com.sfc.sf2.helpers.PathHelpers;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.logging.Level;
+import java.util.zip.DataFormatException;
 import javax.swing.JFileChooser;
 import jdk.jshell.spi.ExecutionControl;
 
 /**
  *
- * @author wiz
+ * @author TiMMy
  */
 public class GraphicsMainEditor extends AbstractMainEditor {
     
@@ -35,18 +37,19 @@ public class GraphicsMainEditor extends AbstractMainEditor {
     private int actionImportCompression;
     private int actionExportCompression;
     private int actionImportTileWidth;
+            
+    @Override
+    protected Console getConsole() { return console1; }
+    @Override
+    protected void initEditorComponents() { initComponents(); }
     
-    public GraphicsMainEditor() {
-        super();
+    @Override
+    protected void registerSettings() {
         SettingsManager.registerSettingsStore("view", settings);
-        initComponents();
-        initCore(console1);
     }
     
     @Override
-    protected void initEditor() {
-        super.initEditor();
-        
+    protected void setupEditor() {
         viewPanel1.setLayoutPanel(tilesetLayoutPanel, settings);
         actionImportCompression = jComboBoxCompressionImport.getSelectedIndex();
         actionExportCompression = jComboBoxCompressionExport.getSelectedIndex();
@@ -55,7 +58,6 @@ public class GraphicsMainEditor extends AbstractMainEditor {
     
     @Override
     protected void onDataLoaded() {
-        super.onDataLoaded();
         ActionManager.setAndExecuteAction(new NonCombinableAction<Tileset>(this, "Graphic Imported", this::actionTilesetLoaded, tilesetManager.getTileset(), tilesetLayoutPanel.getTileset()));
     }
     
@@ -65,6 +67,12 @@ public class GraphicsMainEditor extends AbstractMainEditor {
             viewPanel1.getItemsPerRowSpinner().setValue(tileset.getTilesPerRow());
             tilesetLayoutPanel.setItemsPerRow(tileset.getTilesPerRow());
         }
+    }
+    
+    //To create a new Main Editor, copy this method and change the new mainEditor class
+    public static void main(String args[]) {
+        programStart(args);
+        setupMainEditor(new GraphicsMainEditor());   // <------ Change this class to new Main Editor class
     }
     
     /**
@@ -1313,22 +1321,36 @@ public class GraphicsMainEditor extends AbstractMainEditor {
         }
         actionImportTileWidth = (int)jSpinnerTileWidthImport.getValue();
     }//GEN-LAST:event_jSpinnerTileWidthImportStateChanged
-
-    /**
-     * To create a new Main Editor, copy the below code
-     * Don't forget to change the new main class (below)
-     */
-    public static void main(String args[]) {
-        AbstractMainEditor.programSetup();
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GraphicsMainEditor().setVisible(true);  // <------ Change this class to new Main Editor class
-            }
-        });
+    
+    @Override
+    protected boolean cliImportData(String[] data, FileFormat format, boolean isDirectory) throws Exception {
+        Path filePath = Path.of(data[0]);
+        if (format == FileFormat.BIN) {
+            Path palettePath = Path.of(data[1]);
+            TilesetCompression compression = data.length > 1 ? TilesetCompression.valueOf(data[2].toUpperCase()) : TilesetCompression.STACK;
+            int tilesPerRow = data.length > 2 ? Integer.parseInt(data[2]) : 16;
+            cliData = tilesetManager.importDisassembly(palettePath, filePath, compression, tilesPerRow);
+        } else if (format.isImage()) {
+            cliData = tilesetManager.importImage(filePath, true);
+        } else {
+            throw new DataFormatException(String.format("Unknown format: %s", format));
+        }
+        return true;
     }
-    /**
-     * To create a new Main Editor, copy the above code
-     */
+
+    @Override
+    protected boolean cliExportData(String[] data, FileFormat format, boolean isDirectory) throws Exception {
+        Path filePath = Path.of(data[0]);
+        if (format == FileFormat.BIN) {
+            TilesetCompression compression = data.length >= 1 ? TilesetCompression.valueOf(data[1].toUpperCase()) : TilesetCompression.STACK;
+            tilesetManager.exportDisassembly(filePath, (Tileset)cliData, compression);
+        } else if (format.isImage()) {
+            tilesetManager.exportImage(filePath, (Tileset)cliData);
+        } else {
+            throw new DataFormatException(String.format("Unknown format: %s", format));
+        }
+        return true;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.sfc.sf2.core.gui.controls.Console console1;

@@ -13,6 +13,7 @@ import com.sfc.sf2.core.actions.SpinnerAction;
 import com.sfc.sf2.core.actions.ToggleAction;
 import com.sfc.sf2.core.settings.SettingsManager;
 import com.sfc.sf2.core.gui.controls.Console;
+import com.sfc.sf2.core.io.FileFormat;
 import com.sfc.sf2.core.models.combobox.ComboBoxTableEditor;
 import com.sfc.sf2.core.models.combobox.ComboBoxTableRenderer;
 import com.sfc.sf2.core.models.combobox.MultiComboBoxTableEditor;
@@ -30,19 +31,22 @@ public final class ExampleMainEditor extends AbstractMainEditor {
     
     private final ViewSettings testSettings = new ViewSettings();
     
-    public ExampleMainEditor() {
-        super();
-        SettingsManager.registerSettingsStore("test", testSettings);
-        initComponents();       //<--- This is required
-        initCore(console1);     //<--- This is required
-    }
-    
     @Override
-    protected void initEditor() {
+    protected Console getConsole() { return console1; }
+    @Override
+    protected void initEditorComponents() { initComponents(); }
+
+    @Override
+    protected void registerSettings() {
+        SettingsManager.registerSettingsStore("test", testSettings);
+    }
+
+    @Override
+    protected void setupEditor() {
+        //Setup components
         viewPanelStacked1.setLayoutPanel(testLayoutPanel1, testSettings);
         viewPanelStacked1.getBackgroundColorPicker().addColorChangedListener(this::onViewPanelColorChange);
         
-        //One-time setup
         colorPicker1.setColor(testSettings.getBGColor());
         TableColumnModel columns = table2.jTable.getColumnModel();
         columns.getColumn(0).setMaxWidth(50);
@@ -60,6 +64,12 @@ public final class ExampleMainEditor extends AbstractMainEditor {
     @Override
     protected void onDataLoaded() {
         //Set data that is updated when content is imported
+    }
+
+    //To create a new Main Editor, copy this method and change the new mainEditor class
+    public static void main(String args[]) {
+        programStart(args);
+        setupMainEditor(new ExampleMainEditor());   // <------ Change this class to new Main Editor class
     }
 
     /**
@@ -669,40 +679,14 @@ public final class ExampleMainEditor extends AbstractMainEditor {
     }
     
     @Override
-    protected boolean cliImportDisasm(String[] data) throws Exception {
+    protected boolean cliImportData(String[] data, FileFormat format, boolean isDirectory) throws Exception {
         throw new Exception("Example cannot process commandline");
     }
 
     @Override
-    protected boolean cliExportDisasm(String[] data) throws Exception {
+    protected boolean cliExportData(String[] data, FileFormat format, boolean isDirectory) throws Exception {
         throw new Exception("Example cannot process commandline");
     }
-
-    @Override
-    protected boolean cliImportImage(String[] data) throws Exception {
-        throw new Exception("Example cannot process commandline");
-    }
-
-    @Override
-    protected boolean cliExportImage(String[] data) throws Exception {
-        throw new Exception("Example cannot process commandline");
-    }
-    
-    /**
-     * To create a new Main Editor, copy the below code
-     * Don't forget to change the new main class (below)
-     */
-    public static void main(String args[]) {
-        AbstractMainEditor.programSetup(args);
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ExampleMainEditor().setVisible(true);  // <------ Change this class to new Main Editor class
-            }
-        });
-    }
-    /**
-     * To create a new Main Editor, copy the above code
-     */
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.sfc.sf2.core.gui.controls.AccordionPanel accordionPanel1;

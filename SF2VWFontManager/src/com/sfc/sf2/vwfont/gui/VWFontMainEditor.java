@@ -21,6 +21,7 @@ import com.sfc.sf2.vwfont.settings.FontSettings;
 import java.awt.Color;
 import java.nio.file.Path;
 import java.util.logging.Level;
+import java.util.zip.DataFormatException;
 import javax.swing.JRadioButton;
 
 /**
@@ -35,17 +36,20 @@ public class VWFontMainEditor extends AbstractMainEditor {
     
     private JRadioButton actionPreviousFormat = null;
     
-    public VWFontMainEditor() {
-        super();
+    @Override
+    protected Console getConsole() { return console1; }
+    @Override
+    protected void initEditorComponents() { initComponents(); }
+    
+    @Override
+    protected void registerSettings() {
         SettingsManager.registerSettingsStore("view", viewSettings);
         SettingsManager.registerSettingsStore("font", fontSettings);
-        initComponents();
-        initCore(console1);
     }
     
     @Override
-    protected void initEditor() {
-        super.initEditor();
+    protected void setupEditor() {
+        initComponents();
         
         viewPanel1.setLayoutPanel(fontSymbolLayoutPanel, viewSettings);
         
@@ -60,7 +64,6 @@ public class VWFontMainEditor extends AbstractMainEditor {
     
     @Override
     protected void onDataLoaded() {
-        super.onDataLoaded();
         ActionManager.setAndExecuteAction(new NonCombinableAction<FontSymbol[]>(this, "Font Symbols Imported", this::actionSymbolsLoaded, fontManager.getFontSymbols(), fontSymbolLayoutPanel.getFontSymbols()));
     }
     
@@ -68,6 +71,13 @@ public class VWFontMainEditor extends AbstractMainEditor {
         fontSymbolLayoutPanel.setFontSymbols(symbols);
     }
 
+    
+    //To create a new Main Editor, copy this method and change the new mainEditor class
+    public static void main(String args[]) {
+        programStart(args);
+        setupMainEditor(new VWFontMainEditor());   // <------ Change this class to new Main Editor class
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -576,21 +586,33 @@ public class VWFontMainEditor extends AbstractMainEditor {
         SettingsManager.saveSettingsFile();
     }//GEN-LAST:event_jRadioButtonFormatStateChanged
     
-    /**
-     * To create a new Main Editor, copy the below code
-     * Don't forget to change the new main class (below)
-     */
-    public static void main(String args[]) {
-        AbstractMainEditor.programSetup();
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new VWFontMainEditor().setVisible(true);  // <------ Change this class to new Main Editor class
-            }
-        });
+    @Override
+    protected boolean cliImportData(String[] data, FileFormat format, boolean isDirectory) throws Exception {
+        Path filePath = Path.of(data[0]);
+        if (format == FileFormat.BIN) {
+            cliData = fontManager.importDisassembly(filePath);
+        } else if (format.isImage()) {
+            FileFormat fileFormat = data.length > 1 ? FileFormat.valueOf(data[1].toUpperCase()) : FileFormat.PNG;
+            cliData = fontManager.importAllImages(filePath, fileFormat);
+        } else {
+            throw new DataFormatException(String.format("Unknown format: %s", format));
+        }
+        return true;
     }
-    /**
-     * To create a new Main Editor, copy the above code
-     */
+
+    @Override
+    protected boolean cliExportData(String[] data, FileFormat format, boolean isDirectory) throws Exception {
+        Path filePath = Path.of(data[0]);
+        if (format == FileFormat.BIN) {
+            fontManager.exportDisassembly(filePath, (FontSymbol[])cliData);
+        } else if (format.isImage()) {
+            FileFormat fileFormat = data.length > 1 ? FileFormat.valueOf(data[1].toUpperCase()) : FileFormat.PNG;
+            fontManager.exportAllImages(filePath, (FontSymbol[])cliData, fileFormat);
+        } else {
+            throw new DataFormatException(String.format("Unknown format: %s", format));
+        }
+        return true;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.sfc.sf2.core.gui.controls.NameableButtonGroup buttonGroupExport;

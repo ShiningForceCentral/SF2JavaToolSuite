@@ -31,35 +31,15 @@ import javax.swing.UIManager;
  */
 public abstract class AbstractMainEditor extends javax.swing.JFrame {
     
-    private static boolean isHeadless = true;
+    private static boolean isHeadless = false;
     protected static boolean IsHeadless() { return isHeadless; }
     private static ArrayList<CliCommand> cliCommands;
     protected static Object cliData;
     
-    /**
-     * Creates new form New Application
-     */
-    public AbstractMainEditor() {
-        if (isHeadless) {
-            return;
-        }
-        CoreSettings.setAppClass(this.getClass());
-        initComponents();
-        java.awt.EventQueue.invokeLater(() -> {
-            initEditor();
-            SettingsManager.setSavingAllowed(true); //Slight hack to prevent controls affecting settings on initialisation
-        });
-        ActionManager.setupInputMaps(jPanel13);
-    }
-    
-    protected void initCore(Console console) {
+    protected void initMainEditor() {
         if (isHeadless) {
             processCliCommands();
             return;
-        }
-        //Console
-        if (console != null) {
-            console.initLogger("SF2 Java Suite");
         }
         //Version
         if (!SettingsManager.isRunningInEditor()) {
@@ -67,12 +47,23 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
             if (version != null)
                 this.setTitle(this.getTitle() + " - v" + version);
         }
+        
+        initComponents();
+        initEditorComponents();
+        
         //Settings
+        registerSettings();
         SettingsManager.loadGlobalSettings();
         SettingsManager.loadSettingsFile();
+        //Console
+        Console console = getConsole();
+        if (console != null) {
+            console.initLogger("SF2 Java Suite");
+        }
         if (console != null) {
             console.setLogLevel(SettingsManager.getGlobalSettings().getLogLevel());
         }
+        
         CoreSettings core = SettingsManager.getSettingsStore("core");
         if (!SettingsManager.isRunningInEditor()) {
             //Check if settings panel should be shown
@@ -84,9 +75,19 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
                 }
             });
         }
+        
+        setupEditor();
+        
+        CoreSettings.setAppClass(this.getClass());
+        ActionManager.setupInputMaps(jPanel13);
+        
+        SettingsManager.setSavingAllowed(true); //Slight hack to prevent controls affecting settings on initialisation
     }
     
-    protected abstract void initEditor();
+    protected abstract Console getConsole();
+    protected abstract void initEditorComponents();
+    protected abstract void registerSettings();
+    protected abstract void setupEditor();
     
     protected abstract void onDataLoaded();
     
@@ -135,7 +136,7 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
         }
     }
     
-    private void processCliCommands() {
+    protected void processCliCommands() {
         if (cliCommands == null) return;
         for (CliCommand command : cliCommands) {
             try {
@@ -167,12 +168,13 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
     protected abstract boolean cliImportData(String[] data, FileFormat format, boolean isDirectory) throws Exception;
     protected abstract boolean cliExportData(String[] data, FileFormat format, boolean isDirectory) throws Exception;
     
-    public static void programSetup(String[] args) {
+    public static void programStart(String[] args) {
         processClArgs(args);
         if (isHeadless) {
             //If running as cli app then ignore all else
             return;
         }
+        
         //Hack to determine if project is running from editor (IDE) or is a build. (property 'user.dir' is blank if in editor)
         String dir = System.getProperty("user.dir");
         boolean inEditor = dir == null || dir.length() == 0;
@@ -206,6 +208,19 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
+    }
+    
+    public static <T extends AbstractMainEditor> void setupMainEditor(T mainEditor) {
+        if (isHeadless) {
+            mainEditor.processCliCommands();
+        } else {
+            java.awt.EventQueue.invokeLater(new Runnable() {
+                public void run() {
+                    mainEditor.initMainEditor();
+                    mainEditor.setVisible(true);
+                }
+            });
+        }
     }
 
     /**

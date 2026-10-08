@@ -5,7 +5,6 @@
  */
 package com.sfc.sf2.core.gui.controls;
 
-import com.sfc.sf2.core.settings.CoreSettings;
 import com.sfc.sf2.core.settings.SettingsManager;
 import com.sfc.sf2.core.gui.TextAreaOutputStream;
 import java.io.PrintStream;
