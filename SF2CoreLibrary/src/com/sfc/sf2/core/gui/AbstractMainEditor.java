@@ -106,6 +106,7 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
             } else if (command == CliCommandID.HEADLESS) {
                 //Set as headless (cli app)
                 isHeadless = true;
+                System.out.println("App set to cli Headless");
             } else {
                 //Command is valid so find params then add it to the list
                 ArrayList<String> argsList = new ArrayList<>();
@@ -113,9 +114,12 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
                     if (args[j].charAt(0) != '-') {
                         argsList.add(args[j]);
                         i = j;
+                    } else {
+                        break;  //A new command was found
                     }
                 }
-                cmdArgs = (String[])argsList.toArray();
+                cmdArgs = new String[argsList.size()];
+                argsList.toArray(cmdArgs);
                 
                 if (cliCommands == null) {
                     cliCommands = new ArrayList();

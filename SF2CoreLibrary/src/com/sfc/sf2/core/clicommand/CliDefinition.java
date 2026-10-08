@@ -23,18 +23,13 @@ public record CliDefinition(CliCommandID id, String longCommand, String shortCom
     private static CliDefinition[] CLI_DEFINITIONS = new CliDefinition[] {
         new CliDefinition(CliCommandID.HEADLESS, "--headless", "-c", "<> - Runs the app command-line only"),
         new CliDefinition(CliCommandID.HELP, "--help", "-h", "<> - Prints help info"),
-        new CliDefinition(CliCommandID.IMPORT, "--import", "-i", "<filePath> - Imports the app's primary data type from disassembly (.asm, .bin, or .txt)"),
-        new CliDefinition(CliCommandID.EXPORT, "--export", "-e", "<filePath> - Exports the app's primary data type from disassembly (.asm, .bin, or .txt). Must import data first"),
-        new CliDefinition(CliCommandID.IMPORT_IMAGE, "--import_image", null, "<imagePath> - Imports the app's primary data type from image (.png or .gif)"),
-        new CliDefinition(CliCommandID.EXPORT_IMAGE, "--export_image", null, "<imagePath> - Exports the app's primary data type from image (.png or .gif). Must import data first"),
+        new CliDefinition(CliCommandID.IMPORT, "--import", "-i", "<filePath> <optionalParams> - Imports the app's primary data type from disassembly (.asm, .bin, or .txt)"),
+        new CliDefinition(CliCommandID.EXPORT, "--export", "-e", "<filePath> <optionalParams> - Exports the app's primary data type from disassembly (.asm, .bin, or .txt). Must import data first"),
+        new CliDefinition(CliCommandID.IMPORT_IMAGE, "--import_image", null, "<imagePath> <optionalParams> - Imports the app's primary data type from image (.png or .gif)"),
+        new CliDefinition(CliCommandID.EXPORT_IMAGE, "--export_image", null, "<imagePath> <optionalParams> - Exports the app's primary data type from image (.png or .gif). Must import data first"),
     };
     
     public static CliCommandID commandFromString(String cmd) {
-        if (cmd.charAt(1) == '-') {
-            cmd = cmd.substring(2);
-        } else if (cmd.charAt(1) == '-') {
-            cmd = cmd.substring(1);
-        }
         cmd = cmd.toLowerCase();
         for (int i = 0; i < CLI_DEFINITIONS.length; i++) {
             if (cmd.equals(CLI_DEFINITIONS[i].longCommand()) || cmd.equals(CLI_DEFINITIONS[i].shortCommand())) {
