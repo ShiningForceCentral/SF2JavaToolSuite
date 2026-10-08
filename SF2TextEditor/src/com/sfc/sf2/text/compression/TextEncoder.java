@@ -104,7 +104,7 @@ public class TextEncoder {
             /*Console.logger().finest("Counters after character " + index + ":'" + Symbols.TABLE()[i&0xFF] 
                     + "' : "+((symbolCounters.get(i)!=null)?symbolCountersToString(symbolCounters.get(i)):"Unused symbol, no tree !"));*/
         }
-        //Console.logger().finest("sfc.segahr.BusinessLayer.countSymbols() - Symbols counted.");        
+        //Console.logger().finest("sfc.segahr.BusinessLayer.countSymbols() - Symbols counted.");
     }
     
     private LineData parseLine(String line, byte previousSymbol, byte[] symbols) {

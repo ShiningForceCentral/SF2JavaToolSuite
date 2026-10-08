@@ -57,9 +57,9 @@ public class TextMainEditor extends AbstractMainEditor {
     @Override
     protected void setupEditor() {
         //Handle old Ascii map path and new path
-        File file = PathHelpers.getBasePath().resolve("asciitotextsymbolmap.asm").toFile();
-        if (file.exists()) {
-            fileButtonImportAsciiTable.setFilePath(file.toString());
+        File file = PathHelpers.getBasePath().resolve(fileButtonImportAsciiTable.getFilePath()).toFile();
+        if (!file.exists()) {
+            fileButtonImportAsciiTable.setFilePath("../../../code/common/scripting/text/textfunctions.asm");
         }
         
         //Setup components
@@ -202,7 +202,7 @@ public class TextMainEditor extends AbstractMainEditor {
         fileButtonImportVWFont.setName("Import VW Font"); // NOI18N
 
         fileButtonImportAsciiTable.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
-        fileButtonImportAsciiTable.setFilePath("../../../code/common/scripting/text/textfunctions.asm");
+        fileButtonImportAsciiTable.setFilePath("./asciitotextsymbolmap.asm");
         fileButtonImportAsciiTable.setInfoMessage("<html>Loads in <i>table_666E</i> from <i>textfunctions.asm</i>, so that ASCII characters (raw text) can be converted into VWFont symbols.</html>");
         fileButtonImportAsciiTable.setLabelText("ASCII table :");
         fileButtonImportAsciiTable.setName("Import ASCII Table"); // NOI18N
@@ -598,13 +598,13 @@ public class TextMainEditor extends AbstractMainEditor {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE)
+                .addComponent(jTabbedPane2)
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 132, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1081,6 +1081,13 @@ public class TextMainEditor extends AbstractMainEditor {
     @Override
     protected boolean cliImportData(String[] data, FileFormat format, boolean isDirectory) throws Exception {
         Path filePath = Path.of(data[0]);
+        Path asciiTablePath = filePath.getParent().resolve("./asciitotextsymbolmap.asm");
+        Path asciiReplacePath = filePath.getParent().resolve("./ascii-replace.txt");
+        //Import metadata
+        textManager.importAsciiReplaceMap(asciiReplacePath);
+        Symbols.setReplaceMap(textManager.getAsciiReplaceMap());
+        textManager.importAsciiMap(asciiTablePath);
+        Symbols.setImportedTable(textManager.getAsciiToSymbolMap());        
         if (isDirectory) {
             cliData = textManager.importDisassembly(filePath);
         } else if (format == FileFormat.TXT) {

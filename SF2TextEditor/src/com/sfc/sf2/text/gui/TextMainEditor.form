@@ -242,7 +242,7 @@
                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                   <Value id="ASM"/>
                                 </Property>
-                                <Property name="filePath" type="java.lang.String" value="../../../code/common/scripting/text/textfunctions.asm"/>
+                                <Property name="filePath" type="java.lang.String" value="./asciitotextsymbolmap.asm"/>
                                 <Property name="infoMessage" type="java.lang.String" value="&lt;html&gt;Loads in &lt;i&gt;table_666E&lt;/i&gt; from &lt;i&gt;textfunctions.asm&lt;/i&gt;, so that ASCII characters (raw text) can be converted into VWFont symbols.&lt;/html&gt;"/>
                                 <Property name="labelText" type="java.lang.String" value="ASCII table :"/>
                                 <Property name="name" type="java.lang.String" value="Import ASCII Table" noResource="true"/>

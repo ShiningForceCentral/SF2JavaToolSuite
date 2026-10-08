@@ -40,7 +40,7 @@ public class Symbols {
     private static final int[] asciiToSymbolTable = new int[256];
     private static final int[] symbolToAsciiTable = new int[256];
     private static final String[] symbolToStringTable = new String[256];
-    private static final HashMap<String, Integer> stringToSymbolMap = new HashMap<>();
+    private static HashMap<String, Integer> stringToSymbolMap = null;
     
     private static HashMap<Character, Character> replaceMap;
     private static HashMap<Character, Character> reverseReplaceMap;
@@ -104,7 +104,7 @@ public class Symbols {
             symbolToAsciiTable[i] = -1;
             symbolToStringTable[i] = null;
         }
-        stringToSymbolMap.clear();
+        stringToSymbolMap = new HashMap<>();
         putSymbol(0, 0, "\\UNUSED");    //Hidden
         putSymbol(32, 1, " ");          //Space
         char c;
