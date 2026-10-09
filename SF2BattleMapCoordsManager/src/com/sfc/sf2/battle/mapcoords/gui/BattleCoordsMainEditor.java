@@ -13,6 +13,7 @@ import com.sfc.sf2.core.actions.CustomAction;
 import com.sfc.sf2.core.actions.NonCombinableAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
+import com.sfc.sf2.core.io.FileFormat;
 import com.sfc.sf2.core.settings.SettingsManager;
 import com.sfc.sf2.core.settings.ViewSettings;
 import com.sfc.sf2.helpers.PathHelpers;
@@ -35,17 +36,17 @@ public class BattleCoordsMainEditor extends AbstractMainEditor {
     int selectedCoords;
     int previousCoords = -1;
     
-    public BattleCoordsMainEditor() {
-        super();
+    @Override
+    protected Console getConsole() { return console1; }
+    @Override
+    protected void initEditorComponents() { initComponents(); }
+    @Override
+    protected void registerSettings() {
         SettingsManager.registerSettingsStore("view", viewSettings);
-        initComponents();
-        initCore(console1);
     }
     
     @Override
-    protected void initEditor() {
-        super.initEditor();
-        
+    protected void setupEditor() {
         battleMapViewPanel1.setLayoutPanel(battleMapCoordsLayoutPanel, viewSettings);
         accordionPanel1.setExpanded(false);
         battleMapCoordsLayoutPanel.setShowBattleCoords(true);
@@ -58,7 +59,6 @@ public class BattleCoordsMainEditor extends AbstractMainEditor {
     
     @Override
     protected void onDataLoaded() {
-        super.onDataLoaded();
         ActionManager.setAndExecuteAction(new NonCombinableAction<BattleMapCoords[]>(this, "Battle Map Coords Imported", this::actionBattleCoordsLoaded, battlemapcoordsManager.getCoords(), battleMapCoordsTableModel.getTableData(BattleMapCoords[].class)));
     }
     
@@ -88,6 +88,12 @@ public class BattleCoordsMainEditor extends AbstractMainEditor {
             battleMapCoordsLayoutPanel.setBattleCoords(coords[value.coordsIndex()]);
             tableCoords.jTable.setRowSelectionInterval(previousCoords, previousCoords);
         }
+    }
+
+    //To create a new Main Editor, copy this method and change the new mainEditor class
+    public static void main(String args[]) {
+        programStart(args);
+        setupMainEditor(new BattleCoordsMainEditor());   // <------ Change this class to new Main Editor class
     }
     
     /**
@@ -485,21 +491,19 @@ public class BattleCoordsMainEditor extends AbstractMainEditor {
         }
     }
     
-    /**
-     * To create a new Main Editor, copy the below code
-     * Don't forget to change the new main class (below)
-     */
-    public static void main(String args[]) {
-        AbstractMainEditor.programSetup();
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new BattleCoordsMainEditor().setVisible(true);  // <------ Change this class to new Main Editor class
-            }
-        });
+    @Override
+    protected boolean cliImportData(String[] data, FileFormat format, boolean isDirectory) throws Exception {
+        Path filePath = Path.of(data[0]);
+        cliData = battlemapcoordsManager.importDisassembly(filePath);
+        return true;
     }
-    /**
-     * To create a new Main Editor, copy the above code
-     */
+
+    @Override
+    protected boolean cliExportData(String[] data, FileFormat format, boolean isDirectory) throws Exception {
+        Path filePath = Path.of(data[0]);
+        battlemapcoordsManager.exportDisassembly(filePath, (BattleMapCoords[])cliData);
+        return true;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.sfc.sf2.core.gui.controls.AccordionPanel accordionPanel1;

@@ -10,6 +10,7 @@ import com.sfc.sf2.core.actions.CustomAction;
 import com.sfc.sf2.core.actions.SpinnerAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
+import com.sfc.sf2.core.io.FileFormat;
 import com.sfc.sf2.core.settings.SettingsManager;
 import com.sfc.sf2.core.settings.ViewSettings;
 import com.sfc.sf2.helpers.PathHelpers;
@@ -32,18 +33,19 @@ public class MapLayoutMainEditor extends AbstractMainEditor {
     
     private int actionImportMapNumber;
     
-    public MapLayoutMainEditor() {
-        super();
+    @Override
+    protected Console getConsole() { return console1; }
+    @Override
+    protected void initEditorComponents() { initComponents(); }
+    
+    @Override
+    protected void registerSettings() {
         SettingsManager.registerSettingsStore("mapBlockset", blockViewSettings);
         SettingsManager.registerSettingsStore("mapLayout", layoutViewSettings);
-        initComponents();
-        initCore(console1);
     }
     
     @Override
-    protected void initEditor() {
-        super.initEditor();
-        
+    protected void setupEditor() {
         blocksetViewPanel1.setLayoutPanel(mapBlocksetPanel, blockViewSettings);
         mapLayoutViewPanel1.setLayoutPanel(mapLayoutPanel, layoutViewSettings);
         
@@ -53,7 +55,6 @@ public class MapLayoutMainEditor extends AbstractMainEditor {
     
     @Override
     protected void onDataLoaded() {
-        super.onDataLoaded();
         MapLayoutActionData newValue = new MapLayoutActionData(maplayoutManager.getMapLayout(), maplayoutManager.getMapBlockset(), maplayoutManager.getSharedBlockInfo());
         MapLayoutActionData oldValue = new MapLayoutActionData(mapLayoutPanel.getMapLayout(), mapBlocksetPanel.getBlockset(), blocksetViewPanel1.getSharedBlockInfo());
         ActionManager.setAndExecuteAction(new CustomAction<MapLayoutActionData>(this, "Layout Imported", this::actionLayoutLoaded, newValue, oldValue));
@@ -64,6 +65,12 @@ public class MapLayoutMainEditor extends AbstractMainEditor {
         mapBlocksetPanel.setBlockset(data.blockset());
         mapBlocksetPanel.setTilesets(data.layout() == null ? null : data.layout().getTilesets());
         blocksetViewPanel1.setSharedBlockInfo(data.sharedBlockInfo());
+    }
+
+    //To create a new Main Editor, copy this method and change the new mainEditor class
+    public static void main(String args[]) {
+        programStart(args);
+        setupMainEditor(new MapLayoutMainEditor());   // <------ Change this class to new Main Editor class
     }
     
     /**
@@ -977,21 +984,15 @@ public class MapLayoutMainEditor extends AbstractMainEditor {
         jSpinnerExportMapNumber.setValue(newValue);
     }//GEN-LAST:event_jSpinnerImportMapNumberStateChanged
     
-    /*
-    * To create a new Main Editor, copy the below code
-    * Don't forget to change the new main class (below)
-    */
-    public static void main(String args[]) {
-        AbstractMainEditor.programSetup();
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MapLayoutMainEditor().setVisible(true);  // <------ Change this class to new Main Editor class
-            }
-        });
+    @Override
+    protected boolean cliImportData(String[] data, FileFormat format, boolean isDirectory) throws Exception {
+        throw new Exception("Not implemented");
     }
-    /**
-     * To create a new Main Editor, copy the above code
-     */
+
+    @Override
+    protected boolean cliExportData(String[] data, FileFormat format, boolean isDirectory) throws Exception {
+        throw new Exception("Not implemented");
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.sfc.sf2.core.gui.controls.AccordionPanel accordionPanel1;

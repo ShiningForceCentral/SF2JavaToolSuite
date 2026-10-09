@@ -11,6 +11,7 @@ import com.sfc.sf2.core.actions.RadioButtonAction;
 import com.sfc.sf2.core.actions.ToggleAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
+import com.sfc.sf2.core.io.FileFormat;
 import com.sfc.sf2.core.settings.SettingsManager;
 import com.sfc.sf2.core.settings.ViewSettings;
 import com.sfc.sf2.graphics.Tileset;
@@ -32,31 +33,36 @@ public class SpecialSpriteMainEditor extends AbstractMainEditor {
     
     private JRadioButton actionPreviousPreset;
     
-    public SpecialSpriteMainEditor() {
-        super();
+    @Override
+    protected Console getConsole() { return console1; }
+    @Override
+    protected void initEditorComponents() { initComponents(); }
+    
+    @Override
+    protected void registerSettings() {
         SettingsManager.registerSettingsStore("view", viewSettings);
-        initComponents();
-        initCore(console1);
     }
     
     @Override
-    protected void initEditor() {
-        super.initEditor();
-        
+    protected void setupEditor() {
         viewPanel1.setLayoutPanel(specialSpriteLayoutPanel, viewSettings);
         actionPreviousPreset = jRadio4x2Palette;
     }
     
     @Override
     protected void onDataLoaded() {
-        super.onDataLoaded();
-        
         ActionManager.setAndExecuteAction(new NonCombinableAction<Tileset>(this, "Special Sprite Imported", this::actionTilesetLoaded, specialSpriteManager.getTileset(), specialSpriteLayoutPanel.getTileset()));
     }
     
     private void actionTilesetLoaded(Tileset tileset) {
         specialSpriteLayoutPanel.setTileset(tileset);
     } 
+
+    //To create a new Main Editor, copy this method and change the new mainEditor class
+    public static void main(String args[]) {
+        programStart(args);
+        setupMainEditor(new SpecialSpriteMainEditor());   // <------ Change this class to new Main Editor class
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -705,22 +711,36 @@ public class SpecialSpriteMainEditor extends AbstractMainEditor {
             ActionManager.setActionWithoutExecute(new ToggleAction(jCheckBoxSavePalette, jCheckBoxSavePalette.isSelected()));
         }
     }//GEN-LAST:event_jCheckBoxSavePaletteItemStateChanged
-    
-    /**
-     * To create a new Main Editor, copy the below code
-     * Don't forget to change the new main class (below)
-     */
-    public static void main(String args[]) {
-        AbstractMainEditor.programSetup();
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new SpecialSpriteMainEditor().setVisible(true);  // <------ Change this class to new Main Editor class
-            }
-        });
+
+    @Override
+    protected boolean cliImportData(String[] data, FileFormat format, boolean isDirectory) throws Exception {
+        Path filePath = Path.of(data[0]);
+        if (format.isImage()) {
+            cliData = specialSpriteManager.importImage(filePath);
+        } else if (format == FileFormat.BIN) {
+            int blockRows = Integer.parseInt(data[1]);
+            int blockColumns = Integer.parseInt(data[2]);
+            int tilesPerRow = blockColumns * Integer.parseInt(data[3]);
+            Path palettePath = data.length > 4 ? Path.of(data[4]) : null;
+            cliData = specialSpriteManager.importDisassembly(filePath, blockRows, blockColumns, tilesPerRow, palettePath);
+        }
+        return true;
     }
-    /**
-     * To create a new Main Editor, copy the above code
-     */
+
+    @Override
+    protected boolean cliExportData(String[] data, FileFormat format, boolean isDirectory) throws Exception {
+        Path filePath = Path.of(data[0]);
+        if (format.isImage()) {
+            specialSpriteManager.exportImage(filePath, (Tileset)cliData, ((Tileset)cliData).getTilesPerRow());
+        } else if (format == FileFormat.BIN) {
+            int blockRows = Integer.parseInt(data[1]);
+            int blockColumns = Integer.parseInt(data[2]);
+            int tilesPerRow = blockColumns * Integer.parseInt(data[3]);
+            boolean savePalette = Boolean.parseBoolean(data[4]);
+            specialSpriteManager.exportDisassembly(filePath, (Tileset)cliData, blockRows, blockColumns, tilesPerRow, savePalette);
+        }
+        return true;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.sfc.sf2.core.gui.controls.NameableButtonGroup buttonGroupPresets;

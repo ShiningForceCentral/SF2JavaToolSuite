@@ -36,18 +36,18 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
     
     private boolean actionExportFormat = false;
     
-    public BattleSpriteMainEditor() {
-        super();
+    @Override
+    protected Console getConsole() { return console1; }
+    @Override
+    protected void initEditorComponents() { initComponents(); }
+    @Override
+    protected void registerSettings() {
         SettingsManager.registerSettingsStore("view", viewSettings);
         SettingsManager.registerSettingsStore("export", exportSettings);
-        initComponents();
-        initCore(console1);
     }
     
     @Override
-    protected void initEditor() {
-        super.initEditor();
-        
+    protected void setupEditor() {
         viewPanel1.setLayoutPanel(battleSpriteLayoutPanel, viewSettings);
         
         jRadioButtonFormatPNG.setSelected(exportSettings.getExportFileFormat() == FileFormat.PNG);
@@ -57,7 +57,6 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
     
     @Override
     protected void onDataLoaded() {
-        super.onDataLoaded();
         ActionManager.setAndExecuteAction(new NonCombinableAction<BattleSprite>(this, "Battlesprite Imported", this::actionBattlespriteLoaded, battleSpriteManager.getBattleSprite(), battleSpriteLayoutPanel.getBattleSprite()));
     }
     
@@ -71,6 +70,12 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
             jSpinnerStatusX.setValue(battleSprite.getStatusOffsetX());
             jSpinnerStatusY.setValue(battleSprite.getStatusOffsetY());
         }
+    }
+    
+    //To create a new Main Editor, copy this method and change the new mainEditor class
+    public static void main(String args[]) {
+        programStart(args);
+        setupMainEditor(new BattleSpriteMainEditor());   // <------ Change this class to new Main Editor class
     }
     
     /**
@@ -795,22 +800,28 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
         }
         battleSpriteLayoutPanel.setShowStatusMarker(jCheckBoxShowStatus.isSelected());
     }//GEN-LAST:event_jCheckBoxShowStatusItemStateChanged
-
-    /**
-     * To create a new Main Editor, copy the below code
-     * Don't forget to change the new main class (below)
-     */
-    public static void main(String args[]) {
-        AbstractMainEditor.programSetup();
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new BattleSpriteMainEditor().setVisible(true);  // <------ Change this class to new Main Editor class
-            }
-        });
+    
+    @Override
+    protected boolean cliImportData(String[] data, FileFormat format, boolean isDirectory) throws Exception {
+        Path filePath = Path.of(data[0]);
+        if (format.isImage()) {
+            cliData = battleSpriteManager.importImage(filePath, true);
+        } else if (format == FileFormat.BIN) {
+            cliData = battleSpriteManager.importDisassembly(filePath);
+        }
+        return true;
     }
-    /**
-     * To create a new Main Editor, copy the above code
-     */
+
+    @Override
+    protected boolean cliExportData(String[] data, FileFormat format, boolean isDirectory) throws Exception {
+        Path filePath = Path.of(data[0]);
+        if (format.isImage()) {
+            battleSpriteManager.exportImage(filePath, (BattleSprite)cliData, 0, format);
+        } else if (format == FileFormat.BIN) {
+            battleSpriteManager.exportDisassembly(filePath, (BattleSprite)cliData);
+        }
+        return true;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.sfc.sf2.battlesprite.gui.BattleSpriteLayoutPanel battleSpriteLayoutPanel;

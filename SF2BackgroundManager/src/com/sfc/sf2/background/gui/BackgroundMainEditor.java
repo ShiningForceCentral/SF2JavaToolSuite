@@ -33,18 +33,19 @@ public class BackgroundMainEditor extends AbstractMainEditor {
     
     private JRadioButton actionPreviousFormat = null;
     
-    public BackgroundMainEditor() {
-        super();
+    @Override
+    protected Console getConsole() { return console1; }
+    @Override
+    protected void initEditorComponents() { initComponents(); }
+    
+    @Override
+    protected void registerSettings() {
         SettingsManager.registerSettingsStore("view", viewSettings);
         SettingsManager.registerSettingsStore("background", backgroundSettings);
-        initComponents();
-        initCore(console1);
     }
     
     @Override
-    protected void initEditor() {
-        super.initEditor();
-        
+    protected void setupEditor() {
         backgroundsViewPanel1.setLayoutPanel(backgroundLayoutPanel, viewSettings);
         if (backgroundSettings.getExportFileFormat() == FileFormat.PNG) {
             actionPreviousFormat = jRadioButtonPNG;
@@ -57,12 +58,17 @@ public class BackgroundMainEditor extends AbstractMainEditor {
     
     @Override
     protected void onDataLoaded() {
-        super.onDataLoaded();
         ActionManager.setAndExecuteAction(new NonCombinableAction<Background[]>(this, "Backgrounds Imported", this::actionBackgroundLoaded, backgroundManager.getBackgrounds(), backgroundLayoutPanel.getBackgrounds()));
     }
     
     private void actionBackgroundLoaded(Background[] backgrounds) {
         backgroundLayoutPanel.setBackgrounds(backgrounds);
+    }
+
+    //To create a new Main Editor, copy this method and change the new mainEditor class
+    public static void main(String args[]) {
+        programStart(args);
+        setupMainEditor(new BackgroundMainEditor());   // <------ Change this class to new Main Editor class
     }
     
     /**
@@ -580,21 +586,32 @@ public class BackgroundMainEditor extends AbstractMainEditor {
         SettingsManager.saveSettingsFile();
     }//GEN-LAST:event_jRadioButtonFormatStateChanged
     
-    /**
-     * To create a new Main Editor, copy the below code
-     * Don't forget to change the new main class (below)
-     */
-    public static void main(String args[]) {
-        AbstractMainEditor.programSetup();
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new BackgroundMainEditor().setVisible(true);  // <------ Change this class to new Main Editor class
+    @Override
+    protected boolean cliImportData(String[] data, FileFormat format, boolean isDirectory) throws Exception {
+        Path filePath = Path.of(data[0]);
+        if (isDirectory) {
+            cliData = backgroundManager.importAllDisassemblies(filePath);
+        } else {
+            if (format.isImage()) {
+                throw new Exception("Not implemented");
+            } else if (format == FileFormat.BIN) {
+                cliData = backgroundManager.importDisassembly(filePath);
             }
-        });
+        }
+        return true;
     }
-    /**
-     * To create a new Main Editor, copy the above code
-     */
+
+    @Override
+    protected boolean cliExportData(String[] data, FileFormat format, boolean isDirectory) throws Exception {
+        Path filePath = Path.of(data[0]);
+        if (isDirectory) {
+            Background[] backgrounds = cliData.getClass().equals(Background.class) ? new Background[] { (Background)cliData } : (Background[])cliData;
+            backgroundManager.exportAllDisassemblies(filePath, backgrounds);
+        } else {
+            throw new Exception("Not implemented");
+        }
+        return true;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.sfc.sf2.background.gui.BackgroundLayoutPanel backgroundLayoutPanel;

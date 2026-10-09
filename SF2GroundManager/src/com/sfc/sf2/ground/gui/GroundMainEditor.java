@@ -9,6 +9,7 @@ import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.core.actions.NonCombinableAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
+import com.sfc.sf2.core.io.FileFormat;
 import com.sfc.sf2.core.settings.SettingsManager;
 import com.sfc.sf2.core.settings.ViewSettings;
 import com.sfc.sf2.ground.Ground;
@@ -27,29 +28,34 @@ public class GroundMainEditor extends AbstractMainEditor {
     private final ViewSettings viewSettings = new ViewSettings(RenderScaleHelpers.RENDER_SCALE_2X);
     GroundManager groundManager = new GroundManager();
     
-    public GroundMainEditor() {
-        super();
+    @Override
+    protected Console getConsole() { return console1; }
+    @Override
+    protected void initEditorComponents() { initComponents(); }
+    @Override
+    protected void registerSettings() {
         SettingsManager.registerSettingsStore("view", viewSettings);
-        initComponents();
-        initCore(console1);
     }
     
     @Override
-    protected void initEditor() {
-        super.initEditor();
-        
+    protected void setupEditor() {
         groundViewPanel1.setLayoutPanel(groundLayoutPanel, viewSettings);
         groundLayoutPanel.setItemsPerRow(Ground.GROUND_TILES_PER_ROW);
     }
     
     @Override
     protected void onDataLoaded() {
-        super.onDataLoaded();
         ActionManager.setAndExecuteAction(new NonCombinableAction<Ground>(this, "Ground Imported", this::actionGroundLoaded, groundManager.getGround(), groundLayoutPanel.getGround()));
     }
     
     private void actionGroundLoaded(Ground ground) {
         groundLayoutPanel.setGround(ground);
+    }
+
+    //To create a new Main Editor, copy this method and change the new mainEditor class
+    public static void main(String args[]) {
+        programStart(args);
+        setupMainEditor(new GroundMainEditor());   // <------ Change this class to new Main Editor class
     }
     
     /**
@@ -571,21 +577,30 @@ public class GroundMainEditor extends AbstractMainEditor {
         }
     }//GEN-LAST:event_jButtonExportPaletteDisassemblyActionPerformed
     
-    /**
-     * To create a new Main Editor, copy the below code
-     * Don't forget to change the new main class (below)
-     */
-    public static void main(String args[]) {
-        AbstractMainEditor.programSetup();
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GroundMainEditor().setVisible(true);  // <------ Change this class to new Main Editor class
-            }
-        });
+    @Override
+    protected boolean cliImportData(String[] data, FileFormat format, boolean isDirectory) throws Exception {
+        Path filePath = Path.of(data[0]);
+        Path basePalettePath = filePath.getParent().resolve("../battlescenebasepalette.bin");
+        if (format.isImage()) {
+            cliData = groundManager.importImage(basePalettePath, filePath);
+        } else if (format == FileFormat.BIN) {
+            Path palettePath = Path.of(data[1]);
+            cliData = groundManager.importDisassembly(basePalettePath, palettePath, filePath);
+        }
+        return true;
     }
-    /**
-     * To create a new Main Editor, copy the above code
-     */
+
+    @Override
+    protected boolean cliExportData(String[] data, FileFormat format, boolean isDirectory) throws Exception {
+        Path filePath = Path.of(data[0]);
+        if (format.isImage()) {
+            groundManager.exportImage(filePath, (Ground)cliData);
+        } else if (format == FileFormat.BIN) {
+            Path palettePath = Path.of(data[1]);
+            groundManager.exportDisassembly(filePath, (Ground)cliData);
+        }
+        return true;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.sfc.sf2.core.gui.controls.Console console1;

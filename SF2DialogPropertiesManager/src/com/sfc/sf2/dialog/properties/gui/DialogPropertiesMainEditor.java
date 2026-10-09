@@ -9,6 +9,7 @@ import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.core.actions.CustomAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
+import com.sfc.sf2.core.io.FileFormat;
 import com.sfc.sf2.dialog.properties.DialogPropertiesManager;
 import com.sfc.sf2.dialog.properties.DialogProperty;
 import com.sfc.sf2.dialog.properties.actions.DialogPropertiesActionData;
@@ -25,23 +26,22 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
     
     DialogPropertiesManager dialogpropertiesManager = new DialogPropertiesManager();
     
-    public DialogPropertiesMainEditor() {
-        super();
-        initComponents();
-        initCore(console1);
-        
+    @Override
+    protected Console getConsole() { return console1; }
+    @Override
+    protected void initEditorComponents() { initComponents(); }
+    @Override
+    protected void registerSettings() { }
+    
+    @Override
+    protected void setupEditor() {
         //Handle if standard dialog properties exists or not
         File file = PathHelpers.getBasePath().resolve(fileButtonImportDialog.getFilePath()).toFile();
         if (!file.exists()) {
             fileButtonImportDialog.setFilePath("./spritedialogproperties.asm");
             fileButtonExportDialog.setFilePath("./spritedialogproperties.asm");
         }
-    }
-    
-    @Override
-    protected void initEditor() {
-        super.initEditor();
-        
+                
         accordionPanel1.setExpanded(false);
         
         dialogPropertiesTable.jTable.getColumnModel().getColumn(0).setMaxWidth(30);
@@ -52,7 +52,6 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
     
     @Override
     protected void onDataLoaded() {
-        super.onDataLoaded();
         dialogPropertiesTableModel.setEnums(dialogpropertiesManager.getDialogEnums());
         DialogPropertiesActionData newValue = new DialogPropertiesActionData(dialogpropertiesManager.getDialogProperties());
         DialogPropertiesActionData oldValue = new DialogPropertiesActionData(dialogPropertiesTableModel.getTableData(DialogProperty[].class));
@@ -62,6 +61,13 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
     private void actionTilesetLoaded(DialogPropertiesActionData data) {
         dialogPropertiesTableModel.setTableData(data.properties());
     }
+
+    //To create a new Main Editor, copy this method and change the new mainEditor class
+    public static void main(String args[]) {
+        programStart(args);
+        setupMainEditor(new DialogPropertiesMainEditor());   // <------ Change this class to new Main Editor class
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -603,21 +609,27 @@ public class DialogPropertiesMainEditor extends AbstractMainEditor {
         onDataLoaded();
     }//GEN-LAST:event_jButtonImportAlliesActionPerformed
 
-    /**
-     * To create a new Main Editor, copy the below code
-     * Don't forget to change the new main class (below)
-     */
-    public static void main(String args[]) {
-        AbstractMainEditor.programSetup();
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new DialogPropertiesMainEditor().setVisible(true);  // <------ Change this class to new Main Editor class
-            }
-        });
+    @Override
+    protected boolean cliImportData(String[] data, FileFormat format, boolean isDirectory) throws Exception {
+        Path filePath = Path.of(data[0]);
+        if (data[0].contains("Ally")) {
+            cliData = dialogpropertiesManager.importAlliesDisassembly(filePath);
+        } else {
+            cliData = dialogpropertiesManager.importDisassembly(filePath);
+        }
+        return true;
     }
-    /**
-     * To create a new Main Editor, copy the above code
-     */
+
+    @Override
+    protected boolean cliExportData(String[] data, FileFormat format, boolean isDirectory) throws Exception {
+        Path filePath = Path.of(data[0]);
+        if (data[0].contains("Ally")) {
+            dialogpropertiesManager.exportAlliesDisassembly(filePath, (DialogProperty[])cliData);
+        } else {
+            dialogpropertiesManager.exportDisassembly(filePath, (DialogProperty[])cliData);
+        }
+        return true;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.sfc.sf2.core.gui.controls.AccordionPanel accordionPanel1;

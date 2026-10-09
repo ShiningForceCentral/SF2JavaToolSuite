@@ -9,11 +9,12 @@ import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.core.actions.CustomAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
+import com.sfc.sf2.core.io.FileFormat;
 import com.sfc.sf2.core.settings.SettingsManager;
 import com.sfc.sf2.core.settings.ViewSettings;
 import com.sfc.sf2.helpers.PathHelpers;
-import com.sfc.sf2.helpers.RenderScaleHelpers;
 import com.sfc.sf2.palette.Palette;
+import com.sfc.sf2.weaponsprite.WeaponSprite;
 import com.sfc.sf2.weaponsprite.WeaponSpriteManager;
 import com.sfc.sf2.weaponsprite.actions.WeaponSpriteActionData;
 import java.nio.file.Path;
@@ -29,23 +30,23 @@ public class WeaponSpriteMainEditor extends AbstractMainEditor {
     private final ViewSettings viewSettings = new ViewSettings();
     private final WeaponSpriteManager weaponspriteManager = new WeaponSpriteManager();
     
-    public WeaponSpriteMainEditor() {
-        super();
+    @Override
+    protected Console getConsole() { return console1; }
+    @Override
+    protected void initEditorComponents() { initComponents(); }
+    
+    @Override
+    protected void registerSettings() {
         SettingsManager.registerSettingsStore("view", viewSettings);
-        initComponents();
-        initCore(console1);
     }
     
     @Override
-    protected void initEditor() {
-        super.initEditor();
-        
+    protected void setupEditor() {
         viewPanel1.setLayoutPanel(weaponSpriteLayoutPanel, viewSettings);
     }
     
     @Override
     protected void onDataLoaded() {
-        super.onDataLoaded();
         WeaponSpriteActionData newValue = new WeaponSpriteActionData(weaponspriteManager.getWeaponsprite(), weaponspriteManager.getPalettes());
         WeaponSpriteActionData oldValue = new WeaponSpriteActionData(weaponSpriteLayoutPanel.getWeaponSprite(), weaponSpriteLayoutPanel.getPalettes());
         ActionManager.setAndExecuteAction(new CustomAction<WeaponSpriteActionData>(this, "Weapon Sprite Imported", this::actionWeaponLoaded, newValue, oldValue));
@@ -72,6 +73,12 @@ public class WeaponSpriteMainEditor extends AbstractMainEditor {
             weaponSpriteLayoutPanel.setPaletteIndex(viewPanel1.getjComboBoxPalette().getSelectedIndex());
             weaponSpriteLayoutPanel.setWeaponSprite(value.weaponSprite());
         }
+    }
+
+    //To create a new Main Editor, copy this method and change the new mainEditor class
+    public static void main(String args[]) {
+        programStart(args);
+        setupMainEditor(new WeaponSpriteMainEditor());   // <------ Change this class to new Main Editor class
     }
     
     /**
@@ -538,21 +545,30 @@ public class WeaponSpriteMainEditor extends AbstractMainEditor {
         onDataLoaded();
     }//GEN-LAST:event_jButton18ActionPerformed
     
-    /**
-     * To create a new Main Editor, copy the below code
-     * Don't forget to change the new main class (below)
-     */
-    public static void main(String args[]) {
-        AbstractMainEditor.programSetup();
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new WeaponSpriteMainEditor().setVisible(true);  // <------ Change this class to new Main Editor class
-            }
-        });
+    @Override
+    protected boolean cliImportData(String[] data, FileFormat format, boolean isDirectory) throws Exception {
+        Path filePath = Path.of(data[0]);
+        if (format.isImage()) {
+        Path paletteEntries = filePath.getParent().resolve("./palettes/entries.asm");
+            cliData = weaponspriteManager.importImage(paletteEntries, filePath);
+        } else if (format == FileFormat.BIN) {
+            Path palettePath = Path.of(data[1]);
+            cliData = weaponspriteManager.importDisassembly(palettePath, filePath);
+        }
+        return true;
     }
-    /**
-     * To create a new Main Editor, copy the above code
-     */
+
+    @Override
+    protected boolean cliExportData(String[] data, FileFormat format, boolean isDirectory) throws Exception {
+        Path filePath = Path.of(data[0]);
+        if (format.isImage()) {
+            weaponspriteManager.exportImage(filePath, (WeaponSprite)cliData);
+        } else if (format == FileFormat.BIN) {
+            Path palettePath = Path.of(data[1]);
+            weaponspriteManager.exportDisassembly(filePath, (WeaponSprite)cliData);
+        }
+        return true;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.sfc.sf2.core.gui.controls.Console console1;

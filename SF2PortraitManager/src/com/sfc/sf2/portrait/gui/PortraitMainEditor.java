@@ -12,6 +12,7 @@ import com.sfc.sf2.core.actions.ToggleAction;
 import com.sfc.sf2.core.settings.SettingsManager;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
+import com.sfc.sf2.core.io.FileFormat;
 import com.sfc.sf2.core.settings.ViewSettings;
 import com.sfc.sf2.helpers.PathHelpers;
 import com.sfc.sf2.helpers.RenderScaleHelpers;
@@ -40,17 +41,18 @@ public class PortraitMainEditor extends AbstractMainEditor {
     private int selectedEyesRow;
     private int selectedMouthsRow;
     
-    public PortraitMainEditor() {
-        super();
+    @Override
+    protected Console getConsole() { return console1; }
+    @Override
+    protected void initEditorComponents() { initComponents(); }
+    
+    @Override
+    protected void registerSettings() {
         SettingsManager.registerSettingsStore("view", viewSettings);
-        initComponents();
-        initCore(console1);
     }
     
     @Override
-    protected void initEditor() {
-        super.initEditor();
-        
+    protected void setupEditor() {
         portraitViewPanel1.setLayoutPanel(portraitLayoutPanel, viewSettings);
         
         eyeTable = (PortraitDataTableModel)tableEyes.getModel();
@@ -69,7 +71,6 @@ public class PortraitMainEditor extends AbstractMainEditor {
     
     @Override
     protected void onDataLoaded() {
-        super.onDataLoaded();
         ActionManager.setAndExecuteAction(new NonCombinableAction<Portrait>(this, "Portrait Imported", this::actionPortraitLoaded, portraitManager.getPortrait(), portraitLayoutPanel.getPortrait()));
     }
     
@@ -83,6 +84,12 @@ public class PortraitMainEditor extends AbstractMainEditor {
             eyeTable.setTableData(portrait.getEyeTiles());
             mouthTable.setTableData(portrait.getMouthTiles());
         }
+    }
+
+    //To create a new Main Editor, copy this method and change the new mainEditor class
+    public static void main(String args[]) {
+        programStart(args);
+        setupMainEditor(new PortraitMainEditor());   // <------ Change this class to new Main Editor class
     }
     
     /**
@@ -694,22 +701,30 @@ public class PortraitMainEditor extends AbstractMainEditor {
             selectedMouthsRow = row;
         }
     }
-    
-    /**
-     * To create a new Main Editor, copy the below code
-     * Don't forget to change the new main class (below)
-     */
-    public static void main(String args[]) {
-        AbstractMainEditor.programSetup();
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new PortraitMainEditor().setVisible(true);  // <------ Change this class to new Main Editor class
-            }
-        });
+
+    @Override
+    protected boolean cliImportData(String[] data, FileFormat format, boolean isDirectory) throws Exception {
+        Path filePath = Path.of(data[0]);
+        if (format.isImage()) {
+            Path metaPath = PathHelpers.replaceExtension(filePath, FileFormat.META.getExt());
+            cliData = portraitManager.importImage(filePath, metaPath, false);
+        } else if (format == FileFormat.BIN) {
+            cliData = portraitManager.importDisassembly(filePath);
+        }
+        return true;
     }
-    /**
-     * To create a new Main Editor, copy the above code
-     */
+
+    @Override
+    protected boolean cliExportData(String[] data, FileFormat format, boolean isDirectory) throws Exception {
+        Path filePath = Path.of(data[0]);
+        if (format.isImage()) {
+            Path metaPath = PathHelpers.replaceExtension(filePath, FileFormat.META.getExt());
+            portraitManager.exportImage(filePath, metaPath, (Portrait)cliData);
+        } else if (format == FileFormat.BIN) {
+            portraitManager.exportDisassembly(filePath, (Portrait)cliData);
+        }
+        return true;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.sfc.sf2.core.gui.controls.Console console1;

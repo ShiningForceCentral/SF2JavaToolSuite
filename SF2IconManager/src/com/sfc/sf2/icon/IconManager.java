@@ -48,7 +48,7 @@ public class IconManager extends AbstractManager {
         }
     }
        
-    public void importAllDisassemblies(Path paletteFilePath, Path basePath) throws IOException, DisassemblyException {
+    public Icon[] importAllDisassemblies(Path paletteFilePath, Path basePath) throws IOException, DisassemblyException {
         Console.logger().finest("ENTERING importAllDisassemblies");
         Palette palette = new PaletteManager().importDisassembly(paletteFilePath, true);
         File[] files = FileHelpers.findAllFilesInDirectory(basePath, "icon", FileFormat.BIN);
@@ -73,6 +73,7 @@ public class IconManager extends AbstractManager {
             Console.logger().severe(failedToLoad + " icons failed to import. See logs above");
         }
         Console.logger().finest("EXITING importAllDisassemblies");
+        return icons;
     }
     
     public void exportAllDisassemblies(Path basePath, Icon[] icons) throws IOException, DisassemblyException {
@@ -98,7 +99,7 @@ public class IconManager extends AbstractManager {
         Console.logger().finest("EXITING exportAllDisassemblies");    
     }
     
-    public void importAllImages(Path paletteFilePath, Path basePath, FileFormat format) throws IOException, DisassemblyException, RawImageException {
+    public Icon[] importAllImages(Path paletteFilePath, Path basePath, FileFormat format) throws IOException, DisassemblyException, RawImageException {
         Console.logger().finest("ENTERING importAllImages");
         Palette palette = new PaletteManager().importDisassembly(paletteFilePath, true);
         File singleFile = basePath.resolve("allIcons" + format.getExt()).toFile();
@@ -133,6 +134,7 @@ public class IconManager extends AbstractManager {
             }
         }
         Console.logger().finest("EXITING importAllImages");
+        return icons;
     }
     
     public void exportAllImages(Path basePath, Icon[] icons, IconExportMode exportMode, int iconsPerRow, FileFormat format) throws IOException, RawImageException {

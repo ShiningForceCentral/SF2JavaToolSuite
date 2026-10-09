@@ -41,18 +41,19 @@ public class MapspriteMainEditor extends AbstractMainEditor {
     private boolean actionExportFormat;
     private int actionExportMode;
     
-    public MapspriteMainEditor() {
-        super();
+    @Override
+    protected Console getConsole() { return console1; }
+    @Override
+    protected void initEditorComponents() { initComponents(); }
+    
+    @Override
+    protected void registerSettings() {
         SettingsManager.registerSettingsStore("view", viewSettings);
         SettingsManager.registerSettingsStore("mapsprite", mapspriteSettings);
-        initComponents();
-        initCore(console1);
     }
     
     @Override
-    protected void initEditor() {
-        super.initEditor();
-        
+    protected void setupEditor() {
         viewPanel1.setLayoutPanel(mapSpriteLayoutPanel, viewSettings);
         
         jComboBoxExportMode.removeAllItems();
@@ -76,7 +77,6 @@ public class MapspriteMainEditor extends AbstractMainEditor {
     
     @Override
     protected void onDataLoaded() {
-        super.onDataLoaded();
         ActionManager.setAndExecuteAction(new NonCombinableAction<MapSpriteEntries>(this, "Map Sprites Imported", this::actionMapSpritesLoaded, mapSpriteManager.getMapSprites(), mapSpriteLayoutPanel.getMapSprites()));
     }
     
@@ -92,6 +92,12 @@ public class MapspriteMainEditor extends AbstractMainEditor {
             jTabbedPaneSprites.setTitleAt(0, String.format("Map Sprites (%d)", mapSprites.countEntries()));
             jTabbedPaneSprites.setTitleAt(1, String.format("Unreferenced (%d)", mapSprites.countUnreferenced()));
         }
+    }
+
+    //To create a new Main Editor, copy this method and change the new mainEditor class
+    public static void main(String args[]) {
+        programStart(args);
+        setupMainEditor(new MapspriteMainEditor());   // <------ Change this class to new Main Editor class
     }
     
     /**
@@ -1028,22 +1034,34 @@ public class MapspriteMainEditor extends AbstractMainEditor {
             ActionManager.setAndExecuteAction(new BasicAction<MapSpriteEntries>(this, "Insert Unreferenced Map Sprites", this::actionMapSpritesLoaded, newValue, oldValue));
         }
     }//GEN-LAST:event_jButtonInsertMapspritesActionPerformed
-    
-    /**
-     * To create a new Main Editor, copy the below code
-     * Don't forget to change the new main class (below)
-     */
-    public static void main(String args[]) {
-        AbstractMainEditor.programSetup();
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MapspriteMainEditor().setVisible(true);  // <------ Change this class to new Main Editor class
+
+    @Override
+    protected boolean cliImportData(String[] data, FileFormat format, boolean isDirectory) throws Exception {
+        Path filePath = Path.of(data[0]);
+        if (isDirectory) {
+            Path palettePath = filePath.getParent().resolve("../tech/basepalette.bin");
+            Path entriesPath = filePath.getParent().resolve("./entries.asm");
+                cliData = mapSpriteManager.importAllDisassemblies(filePath, entriesPath, palettePath);
+        } else {
+            if (format.isImage()) {
+                throw new Exception("Not implemented");
+            } else if (format == FileFormat.BIN) {
+                Path palettePath = Path.of(data[1]);
+                cliData = mapSpriteManager.importDisassembly(filePath, palettePath);
             }
-        });
+        }
+        return true;
     }
-    /**
-     * To create a new Main Editor, copy the above code
-     */
+
+    @Override
+    protected boolean cliExportData(String[] data, FileFormat format, boolean isDirectory) throws Exception {
+        Path filePath = Path.of(data[0]);if (isDirectory) {
+            mapSpriteManager.exportAllDisassemblies(filePath, (MapSpriteEntries)cliData);
+        } else {
+            throw new Exception("Not implemented");
+        }
+        return true;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.sfc.sf2.core.gui.controls.NameableButtonGroup buttonGroupExport;

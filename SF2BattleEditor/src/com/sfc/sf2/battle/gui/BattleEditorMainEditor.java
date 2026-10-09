@@ -23,6 +23,7 @@ import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.core.actions.CustomAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
+import com.sfc.sf2.core.io.FileFormat;
 import com.sfc.sf2.core.models.combobox.MultiComboBoxTableEditor;
 import com.sfc.sf2.core.settings.SettingsManager;
 import com.sfc.sf2.core.settings.ViewSettings;
@@ -55,18 +56,19 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
     private boolean getDrawAiRegions() { return battleViewPanel1.getDrawRegions(); }
     private boolean getDrawAiPoints() { return battleViewPanel1.getDrawPoints(); }
     
-    public BattleEditorMainEditor() {
-        super();
+    @Override
+    protected Console getConsole() { return console1; }
+    @Override
+    protected void initEditorComponents() { initComponents(); }
+    
+    @Override
+    protected void registerSettings() {
         SettingsManager.registerSettingsStore("view", viewSettings);
         SettingsManager.registerSettingsStore("terrain", terrainSettings);
-        initComponents();
-        initCore(console1);
     }
     
     @Override
-    protected void initEditor() {
-        super.initEditor();
-        
+    protected void setupEditor() {
         battleViewPanel1.setLayoutPanel(battleLayoutPanel, viewSettings);
         accordionPanel1.setExpanded(false);
         accordionPanel2.setExpanded(false);
@@ -113,7 +115,6 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
     
     @Override
     protected void onDataLoaded() {
-        super.onDataLoaded();
         BattleActionData newValue = new BattleActionData(battleManager.getBattle(), battleManager.getSharedTerrainInfo(), battleManager.getLandEffectEnums(), battleManager.getLandEffects(), battleManager.getAllCoords(), battleManager.getEnemyData(), battleManager.getEnemyEnums());
         BattleActionData oldValue = new BattleActionData(battleLayoutPanel.getBattle(), actionSharedTerrainInfo, actionLandEffectEnums, landEffectTableModel.getTableData(LandEffectMovementType[].class), actionAllCoords, enemyPropertiesTableModel.getEnemyData(), enemyPropertiesTableModel.getEnemyEnums());
         ActionManager.setAndExecuteAction(new CustomAction<BattleActionData>(this, "Battle Imported", this::actionBattleLoaded, newValue, oldValue));
@@ -185,6 +186,12 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
             }
         }
         battleViewPanel1.checkForTooManyMapsprites();
+    }
+    
+    //To create a new Main Editor, copy this method and change the new mainEditor class
+    public static void main(String args[]) {
+        programStart(args);
+        setupMainEditor(new BattleEditorMainEditor());   // <------ Change this class to new Main Editor class
     }
     
     /**
@@ -1377,21 +1384,15 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
         jLabelBattleName.setText(text);
     }
     
-    /**
-     * To create a new Main Editor, copy the below code
-     * Don't forget to change the new main class (below)
-     */
-    public static void main(String args[]) {
-        AbstractMainEditor.programSetup();
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new BattleEditorMainEditor().setVisible(true);  // <------ Change this class to new Main Editor class
-            }
-        });
+    @Override
+    protected boolean cliImportData(String[] data, FileFormat format, boolean isDirectory) throws Exception {
+        throw new Exception("Not implemented");
     }
-    /**
-     * To create a new Main Editor, copy the above code
-     */
+
+    @Override
+    protected boolean cliExportData(String[] data, FileFormat format, boolean isDirectory) throws Exception {
+        throw new Exception("Not implemented");
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.sfc.sf2.battle.models.AIPointPropertiesTableModel aIPointPropertiesTableModel;

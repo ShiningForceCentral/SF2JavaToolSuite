@@ -13,6 +13,7 @@ import com.sfc.sf2.core.actions.SpinnerAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.core.gui.layout.LayoutAnimator;
+import com.sfc.sf2.core.io.FileFormat;
 import com.sfc.sf2.core.models.combobox.ComboBoxTableEditor;
 import com.sfc.sf2.core.models.combobox.ComboBoxTableRenderer;
 import com.sfc.sf2.core.settings.SettingsManager;
@@ -73,21 +74,22 @@ public class MapEditorMainEditor extends AbstractMainEditor {
     private MapEnums actionMapEnums;
     private int actionMapId;
     
-    public MapEditorMainEditor() {
-        super();
+    @Override
+    protected Console getConsole() { return console1; }
+    @Override
+    protected void initEditorComponents() { initComponents(); }
+    
+    @Override
+    protected void registerSettings() {
         SettingsManager.registerSettingsStore("mapBlockset", blockViewSettings);
         SettingsManager.registerSettingsStore("blockEdit", blockEditViewSettings);
         SettingsManager.registerSettingsStore("mapTileset", TilesetViewSettings);
         SettingsManager.registerSettingsStore("mapTilesetAnim", TilesetAnimViewSettings);
         SettingsManager.registerSettingsStore("mapLayout", layoutViewSettings);
-        initComponents();
-        initCore(console1);
     }
     
     @Override
-    protected void initEditor() {
-        super.initEditor();
-        
+    protected void setupEditor() {
         blocksetViewPanel1.setLayoutPanel(mapBlocksetLayoutPanel, blockViewSettings);
         blockEditViewPanel1.setLayoutPanel(editableBlockSlotPanel, blockEditViewSettings);
         tilesetViewPanel1.setLayoutPanel(tilesetsLayoutPanel, TilesetViewSettings);
@@ -194,7 +196,6 @@ public class MapEditorMainEditor extends AbstractMainEditor {
     
     @Override
     protected void onDataLoaded() {
-        super.onDataLoaded();
         MapActionData newValue = new MapActionData(mapManager.getMap(), mapManager.getMapEnums());
         MapActionData oldValue = new MapActionData(mapLayoutPanel.getMap(), actionMapEnums);
         ActionManager.setAndExecuteAction(new CustomAction<MapActionData>(this, "Map Imported", this::actionMapLoaded, newValue, oldValue));
@@ -285,6 +286,12 @@ public class MapEditorMainEditor extends AbstractMainEditor {
             
             infoButtonSharedAnimation.setVisible(false);
         }
+    }
+
+    //To create a new Main Editor, copy this method and change the new mainEditor class
+    public static void main(String args[]) {
+        programStart(args);
+        setupMainEditor(new MapEditorMainEditor());   // <------ Change this class to new Main Editor class
     }
     
     /**
@@ -3648,21 +3655,15 @@ public class MapEditorMainEditor extends AbstractMainEditor {
         }
     }
     
-    /**
-     * To create a new Main Editor, copy the below code
-     * Don't forget to change the new main class (below)
-     */
-    public static void main(String args[]) {
-        AbstractMainEditor.programSetup();
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MapEditorMainEditor().setVisible(true);  // <------ Change this class to new Main Editor class
-            }
-        });
+    @Override
+    protected boolean cliImportData(String[] data, FileFormat format, boolean isDirectory) throws Exception {
+        throw new Exception("Not implemented");
     }
-    /**
-     * To create a new Main Editor, copy the above code
-     */
+
+    @Override
+    protected boolean cliExportData(String[] data, FileFormat format, boolean isDirectory) throws Exception {
+        throw new Exception("Not implemented");
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.sfc.sf2.core.gui.controls.AccordionPanel accordionPanel1;

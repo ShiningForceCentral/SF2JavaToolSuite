@@ -10,6 +10,7 @@ import com.sfc.sf2.battlesprite.BattleSprite;
 import com.sfc.sf2.battlesprite.animation.BattleSpriteAnimation;
 import com.sfc.sf2.battlesprite.animation.BattleSpriteAnimationFrame;
 import com.sfc.sf2.battlesprite.animation.BattleSpriteAnimationManager;
+import com.sfc.sf2.battlesprite.gui.BattleSpriteMainEditor;
 import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.core.actions.ComboAction;
 import com.sfc.sf2.core.actions.CustomAction;
@@ -17,9 +18,12 @@ import com.sfc.sf2.core.actions.NonCombinableAction;
 import com.sfc.sf2.core.actions.SpinnerAction;
 import com.sfc.sf2.core.actions.ToggleAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
+import static com.sfc.sf2.core.gui.AbstractMainEditor.programStart;
+import static com.sfc.sf2.core.gui.AbstractMainEditor.setupMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.core.gui.layout.LayoutAnimator;
 import com.sfc.sf2.core.gui.layout.LayoutAnimator.AnimationListener.AnimationFrameEvent;
+import com.sfc.sf2.core.io.FileFormat;
 import com.sfc.sf2.core.settings.SettingsManager;
 import com.sfc.sf2.core.settings.ViewSettings;
 import com.sfc.sf2.helpers.PathHelpers;
@@ -47,17 +51,18 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
     private int actionWeaponPalette = -1;
     private boolean isTableSelectionChanging = false;
     
-    public BattleSpriteAnimationMainEditor() {
-        super();
+    @Override
+    protected Console getConsole() { return console1; }
+    @Override
+    protected void initEditorComponents() { initComponents(); }
+    
+    @Override
+    protected void registerSettings() {
         SettingsManager.registerSettingsStore("view", viewSettings);
-        initComponents();
-        initCore(console1);
     }
     
     @Override
-    protected void initEditor() {
-        super.initEditor();
-        
+    protected void setupEditor() {
         viewPanel1.setLayoutPanel(battleSpriteAnimationLayoutPanel, viewSettings);
         
         accordionPanelEnvironment.setExpanded(false);
@@ -72,7 +77,6 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
     
     @Override
     protected void onDataLoaded() {
-        super.onDataLoaded();
         ActionManager.setAndExecuteAction(new NonCombinableAction<BattleSpriteAnimation>(this, "Animation Imported", this::actionAnimationLoaded, battlespriteanimationManager.getBattleSpriteAnimation(), battleSpriteAnimationLayoutPanel.getAnimation()));
     }
     
@@ -128,6 +132,12 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
             }
             jComboBoxWeaponPalette.setSelectedIndex(0);
         }
+    }
+
+    //To create a new Main Editor, copy this method and change the new mainEditor class
+    public static void main(String args[]) {
+        programStart(args);
+        setupMainEditor(new BattleSpriteMainEditor());   // <------ Change this class to new Main Editor class
     }
     
     /**
@@ -993,22 +1003,16 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
         }
     }
     
-    /**
-     * To create a new Main Editor, copy the below code
-     * Don't forget to change the new main class (below)
-     */
-    public static void main(String args[]) {
-        AbstractMainEditor.programSetup();
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new BattleSpriteAnimationMainEditor().setVisible(true);  // <------ Change this class to new Main Editor class
-            }
-        });
+    @Override
+    protected boolean cliImportData(String[] data, FileFormat format, boolean isDirectory) throws Exception {
+        throw new Exception("Not implemented");
     }
-    /**
-     * To create a new Main Editor, copy the above code
-     */
 
+    @Override
+    protected boolean cliExportData(String[] data, FileFormat format, boolean isDirectory) throws Exception {
+        throw new Exception("Not implemented");
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.sfc.sf2.core.gui.controls.AccordionPanel accordionPanelEnvironment;
     private com.sfc.sf2.core.gui.controls.AccordionPanel accordionPanelWeapon;

@@ -39,12 +39,13 @@ public class PortraitManager extends AbstractManager {
         }
     }
     
-    public void importDisassembly(Path filePath) throws IOException, DisassemblyException {
+    public Portrait importDisassembly(Path filePath) throws IOException, DisassemblyException {
         Console.logger().finest("ENTERING importDisassembly");
         PortraitPackage pckg = new PortraitPackage(FileHelpers.getNumberFromFileName(filePath.toFile()), PathHelpers.filenameFromPath(filePath));
         portrait = new PortraitDisassemblyProcessor().importDisassembly(filePath, pckg);
         Console.logger().info("Portrait successfully imported from : " + filePath);
         Console.logger().finest("EXITING importDisassembly");
+        return portrait;
     }
     
     public void exportDisassembly(Path filePath, Portrait portrait) throws IOException, DisassemblyException {
@@ -56,7 +57,7 @@ public class PortraitManager extends AbstractManager {
         Console.logger().finest("EXITING exportDisassembly");
     }
     
-    public void importImage(Path portraitPath, Path metadataPath, boolean keepCurrentMetadata) throws IOException, MetadataException, RawImageException {
+    public Portrait importImage(Path portraitPath, Path metadataPath, boolean keepCurrentMetadata) throws IOException, MetadataException, RawImageException {
         Console.logger().finest("ENTERING importImage");
         if (keepCurrentMetadata && portrait == null) {
             keepCurrentMetadata = false;
@@ -79,6 +80,7 @@ public class PortraitManager extends AbstractManager {
             }
         }
         Console.logger().finest("EXITING importImage");
+        return portrait;
     }
     
     public void exportImage(Path portraitPath, Path metadataPath, Portrait portrait) throws IOException, MetadataException, RawImageException {

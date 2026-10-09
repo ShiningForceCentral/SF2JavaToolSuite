@@ -11,6 +11,7 @@ import com.sfc.sf2.core.actions.SpinnerAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.core.gui.layout.LayoutAnimator;
+import com.sfc.sf2.core.io.FileFormat;
 import com.sfc.sf2.core.settings.SettingsManager;
 import com.sfc.sf2.core.settings.ViewSettings;
 import com.sfc.sf2.graphics.Tileset;
@@ -38,18 +39,19 @@ public class MapAnimationMainEditor extends AbstractMainEditor {
     
     private MapAnimationActionData currentAnimData;
     
-    public MapAnimationMainEditor() {
-        super();
+    @Override
+    protected Console getConsole() { return console1; }
+    @Override
+    protected void initEditorComponents() { initComponents(); }
+    
+    @Override
+    protected void registerSettings() {
         SettingsManager.registerSettingsStore("mapTileset", TilesetViewSettings);
         SettingsManager.registerSettingsStore("mapLayout", layoutViewSettings);
-        initComponents();
-        initCore(console1);
     }
     
     @Override
-    protected void initEditor() {
-        super.initEditor();
-        
+    protected void setupEditor() {
         mapLayoutAnimViewPanel1.setLayoutPanel(mapAnimationLayoutPanel, this::animationActionPerformed, layoutViewSettings);
         tilesetAnimViewPanel1.setLayoutPanel(tilesetLayoutPanelAnim, tilesetLayoutPanelModified, this::animationActionPerformed, TilesetViewSettings);
         accordionPanel1.setExpanded(false);
@@ -66,7 +68,6 @@ public class MapAnimationMainEditor extends AbstractMainEditor {
     
     @Override
     protected void onDataLoaded() {
-        super.onDataLoaded();
         MapAnimationActionData newValue = new MapAnimationActionData(mapAnimationManager.getMapLayout(), mapAnimationManager.getMapBlockset(), mapAnimationManager.getSharedBlockInfo(), mapAnimationManager.getMapAnimation(), mapAnimationManager.getSharedAnimationInfo());
         MapAnimationActionData oldValue = currentAnimData;
         ActionManager.setAndExecuteAction(new CustomAction<MapAnimationActionData>(this, "Map Animation Imported", this::actionAnimationLoaded, newValue, oldValue));
@@ -113,6 +114,12 @@ public class MapAnimationMainEditor extends AbstractMainEditor {
         if (sharedAnimationInfo != null) {
             infoButtonSharedAnimation.setMessageText("This animation data is used by the following maps:\n" + sharedAnimationInfo + "\nAny changes will affect all of these maps.\n\nTo unlink the maps, you can export this animation for a specific map folder and then update \\maps\\entries.asm");
         }
+    }
+
+    //To create a new Main Editor, copy this method and change the new mainEditor class
+    public static void main(String args[]) {
+        programStart(args);
+        setupMainEditor(new MapAnimationMainEditor());   // <------ Change this class to new Main Editor class
     }
     
     /**
@@ -1192,21 +1199,15 @@ public class MapAnimationMainEditor extends AbstractMainEditor {
         tableAnimFrames.jTable.setRowSelectionInterval(e.getCurrentFrame(), e.getCurrentFrame());
     }
     
-    /**
-     * To create a new Main Editor, copy the below code
-     * Don't forget to change the new main class (below)
-     */
-    public static void main(String args[]) {
-        AbstractMainEditor.programSetup();
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MapAnimationMainEditor().setVisible(true);  // <------ Change this class to new Main Editor class
-            }
-        });
+    @Override
+    protected boolean cliImportData(String[] data, FileFormat format, boolean isDirectory) throws Exception {
+        throw new Exception("Not implemented");
     }
-    /**
-     * To create a new Main Editor, copy the above code
-     */
+
+    @Override
+    protected boolean cliExportData(String[] data, FileFormat format, boolean isDirectory) throws Exception {
+        throw new Exception("Not implemented");
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.sfc.sf2.core.gui.controls.AccordionPanel accordionPanel1;

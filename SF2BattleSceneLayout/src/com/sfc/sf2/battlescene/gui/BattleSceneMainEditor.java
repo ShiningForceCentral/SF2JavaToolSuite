@@ -11,6 +11,7 @@ import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.core.actions.CustomAction;
 import com.sfc.sf2.core.gui.AbstractMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
+import com.sfc.sf2.core.io.FileFormat;
 import com.sfc.sf2.core.settings.SettingsManager;
 import com.sfc.sf2.core.settings.ViewSettings;
 import com.sfc.sf2.helpers.PathHelpers;
@@ -27,18 +28,19 @@ public class BattleSceneMainEditor extends AbstractMainEditor {
     
     private final ViewSettings viewSettings = new ViewSettings(0, RenderScaleHelpers.RENDER_SCALE_2X, Color.BLACK);
     private final BattleSceneManager battleSceneManager = new BattleSceneManager();
-        
-    public BattleSceneMainEditor() {
-        super();
+    
+    @Override
+    protected Console getConsole() { return console1; }
+    @Override
+    protected void initEditorComponents() { initComponents(); }
+    
+    @Override
+    protected void registerSettings() {
         SettingsManager.registerSettingsStore("view", viewSettings);
-        initComponents();
-        initCore(console1);
     }
     
     @Override
-    protected void initEditor() {
-        super.initEditor();
-                           
+    protected void setupEditor() {
         viewPanel1.setLayoutPanel(battleSceneLayoutPanel, viewSettings);
         viewPanel1.getBackgroundColorPicker().setCheckerPattern(false);
         
@@ -47,7 +49,6 @@ public class BattleSceneMainEditor extends AbstractMainEditor {
     
     @Override
     protected void onDataLoaded() {
-        super.onDataLoaded();
         BattleSceneActionData newValue = new BattleSceneActionData(battleSceneManager.getBackground(), battleSceneManager.getGround());
         BattleSceneActionData oldValue = new BattleSceneActionData(battleSceneLayoutPanel.getBg(), battleSceneLayoutPanel.getGround());
         ActionManager.setAndExecuteAction(new CustomAction<BattleSceneActionData>(this, "Battle Scene Imported", this::actionBattleSceneLoaded, newValue, oldValue));
@@ -57,6 +58,12 @@ public class BattleSceneMainEditor extends AbstractMainEditor {
         
         battleSceneLayoutPanel.setBg(data.background());
         battleSceneLayoutPanel.setGround(data.ground());
+    }
+
+    //To create a new Main Editor, copy this method and change the new mainEditor class
+    public static void main(String args[]) {
+        programStart(args);
+        setupMainEditor(new BattleSceneMainEditor());   // <------ Change this class to new Main Editor class
     }
     
     /**
@@ -293,21 +300,15 @@ public class BattleSceneMainEditor extends AbstractMainEditor {
         battleSceneLayoutPanel.setShowPositions(jCheckBox1.isSelected());
     }//GEN-LAST:event_jCheckBox1ActionPerformed
         
-    /**
-     * To create a new Main Editor, copy the below code
-     * Don't forget to change the new main class (below)
-     */
-    public static void main(String args[]) {
-        AbstractMainEditor.programSetup();
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new BattleSceneMainEditor().setVisible(true);  // <------ Change this class to new Main Editor class
-            }
-        });
+    @Override
+    protected boolean cliImportData(String[] data, FileFormat format, boolean isDirectory) throws Exception {
+        throw new Exception("Not implemented");
     }
-    /**
-     * To create a new Main Editor, copy the above code
-     */
+
+    @Override
+    protected boolean cliExportData(String[] data, FileFormat format, boolean isDirectory) throws Exception {
+        throw new Exception("Not implemented");
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.sfc.sf2.battlescene.gui.BattleSceneLayoutPanel battleSceneLayoutPanel;
