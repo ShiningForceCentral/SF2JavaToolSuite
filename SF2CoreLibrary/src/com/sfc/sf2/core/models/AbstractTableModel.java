@@ -32,7 +32,6 @@ public abstract class AbstractTableModel<T> extends javax.swing.table.AbstractTa
     }
     
     /**
-     *
      * @param rowLimit set to -1 for no limit
      */
     public AbstractTableModel(String[] columns, int rowLimit) {
@@ -121,6 +120,9 @@ public abstract class AbstractTableModel<T> extends javax.swing.table.AbstractTa
         fireTableRowsUpdated(row, row);
     }
     
+    /**
+     * Gets the data at cell [row, col]
+     */
     @Override
     public Object getValueAt(int row, int col) {
         if (row < 0 || row >= tableItems.size() || col < 0 || col >= columns.length) {
@@ -129,6 +131,9 @@ public abstract class AbstractTableModel<T> extends javax.swing.table.AbstractTa
         return getValue(tableItems.get(row), row, col);
     }
     
+    /**
+     * Sets the data at cell [row, col]
+     */
     @Override
     public void setValueAt(Object value, int row, int col) {
         if (row < 0 || row >= tableItems.size() || col < 0 || col >= columns.length) return;
@@ -158,6 +163,20 @@ public abstract class AbstractTableModel<T> extends javax.swing.table.AbstractTa
         fireTableCellUpdated(row, col);
     }
     
+    /**
+     * Sets the data in cell [row, col] without triggering any events
+     */
+    public void silentlySetValueAt(Object value, int row, int col) {
+        if (row < 0 || row >= tableItems.size() || col < 0 || col >= columns.length) return;
+        if (value == null && getValueAt(row, col) == null) return;
+        if (value.equals(getValueAt(row, col))) return;
+        
+        tableItems.set(row, setValue(tableItems.get(row), row, col, value));
+    }
+    
+    /**
+     * Whether the table has reached its maximum row limit
+     */
     public boolean canAddMoreRows() {
         return rowLimit == -1 || tableItems.size() < rowLimit;
     }

@@ -7,6 +7,8 @@ package com.sfc.sf2.core.models.spinner;
 
 import com.sfc.sf2.core.models.AbstractTableModel;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.text.ParseException;
 import java.util.*;
 import javax.swing.*;
@@ -18,14 +20,37 @@ import javax.swing.table.TableCellEditor;
  *
  * @author TiMMy
  */
-public class SpinnerTableEditor extends AbstractCellEditor implements TableCellEditor {
+public class SpinnerTableEditor extends AbstractCellEditor implements TableCellEditor, MouseListener {
             
     private final JSpinner spinner = new JSpinner();
+    private AbstractTableModel activeModel;
+    private int activeRow;
+    private int activeColumn;
+    private boolean spinnerButtonHeld;
+    private boolean dataSilentlyChanged;
+    
+    @Override public void mouseClicked(MouseEvent e) { spinnerButtonHeld = false; }
+    @Override public void mousePressed(MouseEvent e) { setSpinnerHeld(true); }
+    @Override public void mouseReleased(MouseEvent e) { setSpinnerHeld(false); }
+    @Override public void mouseEntered(MouseEvent e) { }
+    @Override public void mouseExited(MouseEvent e) { setSpinnerHeld(false); }
     
     public SpinnerTableEditor(AbstractSpinnerModel model) {
         super();
         spinner.setModel(model);
         spinner.setUI(new LeftRightSpinnerUI());
+        
+        for (Component comp : spinner.getComponents()) {
+            if (comp instanceof JButton) {
+                String name = comp.getName();
+                
+                if ("Spinner.nextButton".equals(name)) {
+                    comp.addMouseListener(this);
+                } else if ("Spinner.previousButton".equals(name)) {
+                    comp.addMouseListener(this);
+                }
+            }
+        }
     }
 
     @Override
@@ -37,6 +62,9 @@ public class SpinnerTableEditor extends AbstractCellEditor implements TableCellE
             spinnerModel.setMaximum(model.getMaxValue(row, column));
             spinnerModel.setStepSize(model.getSpinnerStep(column));
         }
+        activeModel = model;
+        activeRow = row;
+        activeColumn = column;
         spinner.setValue(value);
         return spinner;
     }
@@ -71,7 +99,29 @@ public class SpinnerTableEditor extends AbstractCellEditor implements TableCellE
         spinner.removeChangeListener(this::spinnerStateChanged);
     }
     
+    private void setSpinnerHeld(boolean held) {
+        if (held) {
+            if (!spinnerButtonHeld) {
+                spinnerButtonHeld = true;
+            }
+        } else {
+            if (spinnerButtonHeld) {
+                spinnerButtonHeld = false;
+                spinnerStateChanged(null);
+            }
+        }
+    }
+    
     private void spinnerStateChanged(ChangeEvent evt) {
-        fireEditingStopped();
+        if (spinnerButtonHeld) {
+            dataSilentlyChanged = true;
+            activeModel.silentlySetValueAt(spinner.getValue(), activeRow, activeColumn);
+            activeModel.fireTableCellUpdated(activeRow, activeColumn);
+        } else if (dataSilentlyChanged){
+            dataSilentlyChanged = false;
+            activeModel.setValueAt(spinner.getValue(), activeRow, activeColumn);
+        } else {
+            fireEditingStopped();
+        }
     }
 }
