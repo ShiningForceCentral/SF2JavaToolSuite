@@ -434,7 +434,7 @@ public class GraphicsMainEditor extends AbstractMainEditor {
         jLabel27.setText("Palette 1 :");
 
         jTextField24.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        jTextField24.setText(".\\specialscreens\\titlescreen\\titlescreenpalettes.bin");
+        jTextField24.setText("./specialscreens/titlescreen/titlescreenpalettes.bin");
 
         jButton32.setText("File...");
         jButton32.addActionListener(new java.awt.event.ActionListener() {
@@ -446,7 +446,7 @@ public class GraphicsMainEditor extends AbstractMainEditor {
         jLabel38.setText("Base tileset :");
 
         jTextField25.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        jTextField25.setText(".\\tech\\basetiles.bin");
+        jTextField25.setText("./tech/basetiles.bin");
 
         jButton33.setText("File...");
         jButton33.addActionListener(new java.awt.event.ActionListener() {
@@ -463,7 +463,7 @@ public class GraphicsMainEditor extends AbstractMainEditor {
         jLabel40.setText("Palette 2 :");
 
         jTextField27.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        jTextField27.setText(".\\specialscreens\\titlescreen\\titlescreenpalettes.bin");
+        jTextField27.setText("./specialscreens/titlescreen/titlescreenpalettes.bin");
 
         jButton34.setText("File...");
         jButton34.addActionListener(new java.awt.event.ActionListener() {
@@ -480,7 +480,7 @@ public class GraphicsMainEditor extends AbstractMainEditor {
         jLabel42.setText("Palette 3 :");
 
         jTextField35.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        jTextField35.setText(".\\specialscreens\\titlescreen\\titlescreenpalettes.bin");
+        jTextField35.setText("./specialscreens/titlescreen/titlescreenpalettes.bin");
 
         jButton35.setText("File...");
         jButton35.addActionListener(new java.awt.event.ActionListener() {
@@ -497,7 +497,7 @@ public class GraphicsMainEditor extends AbstractMainEditor {
         jLabel44.setText("Palette 4 :");
 
         jTextField37.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        jTextField37.setText(".\\specialscreens\\titlescreen\\titlescreenpalettes.bin");
+        jTextField37.setText("./specialscreens/titlescreen/titlescreenpalettes.bin");
 
         jButton36.setText("File...");
         jButton36.addActionListener(new java.awt.event.ActionListener() {
@@ -519,7 +519,7 @@ public class GraphicsMainEditor extends AbstractMainEditor {
         jLabel47.setText("Tileset 2 :");
 
         jTextField14.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        jTextField14.setText(".\\tech\\fonts\\titlescreenfont.bin");
+        jTextField14.setText("./tech/fonts/titlescreenfont.bin");
 
         jLabel48.setText("VRAM 0x");
 
@@ -708,7 +708,7 @@ public class GraphicsMainEditor extends AbstractMainEditor {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE)
         );
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Export to :"));
@@ -858,7 +858,7 @@ public class GraphicsMainEditor extends AbstractMainEditor {
         jLabel19.setText("Tiles :");
 
         jTextField41.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        jTextField41.setText(".\\export\\newtiles.bin");
+        jTextField41.setText("./export/newtiles.bin");
 
         jButton37.setText("File...");
         jButton37.addActionListener(new java.awt.event.ActionListener() {
@@ -887,7 +887,7 @@ public class GraphicsMainEditor extends AbstractMainEditor {
         jLabel51.setText("Layout :");
 
         jTextField43.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        jTextField43.setText(".\\export\\newlayout.bin");
+        jTextField43.setText("./export/newlayout.bin");
 
         jButton39.setText("File...");
         jButton39.addActionListener(new java.awt.event.ActionListener() {
@@ -903,7 +903,7 @@ public class GraphicsMainEditor extends AbstractMainEditor {
         jLabel52.setText("Palette :");
 
         jTextField44.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        jTextField44.setText(".\\export\\newpalette.bin");
+        jTextField44.setText("./export/newpalette.bin");
 
         jButton40.setText("File...");
         jButton40.addActionListener(new java.awt.event.ActionListener() {
@@ -995,7 +995,7 @@ public class GraphicsMainEditor extends AbstractMainEditor {
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane2)
+            .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
@@ -1035,7 +1035,7 @@ public class GraphicsMainEditor extends AbstractMainEditor {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 465, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
