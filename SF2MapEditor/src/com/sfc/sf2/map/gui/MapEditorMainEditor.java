@@ -3599,7 +3599,6 @@ public class MapEditorMainEditor extends AbstractMainEditor {
     }
     
     private void OnTableSelectionChanged(ListSelectionEvent e) {
-        if (e.getValueIsAdjusting()) return;
         int index = ((ListSelectionModel)e.getSource()).getMaxSelectionIndex();
         mapLayoutPanel.setSelectedItemIndex(index);
     }

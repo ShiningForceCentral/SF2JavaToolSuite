@@ -1266,7 +1266,6 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
     }
 
     private void onTableAlliesSelectionChanged(ListSelectionEvent e) {
-        if (e.getValueIsAdjusting()) return;
         int row = tableAllies.jTable.getSelectedRow();
         if (row != battleLayoutPanel.getSelectedAlly()) {
             battleLayoutPanel.setSelectedAlly(row);
@@ -1286,7 +1285,6 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
     }
 
     private void onTableEnemiesSelectionChanged(ListSelectionEvent e) {
-        if (e.getValueIsAdjusting()) return;
         int row = tableEnemies.jTable.getSelectedRow();
         if (row != battleLayoutPanel.getSelectedEnemy()) {
             battleLayoutPanel.setSelectedEnemy(row);
@@ -1305,7 +1303,6 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
     }
 
     private void onTableAIRegionsSelectionChanged(ListSelectionEvent e) {
-        if (e.getValueIsAdjusting()) return;
         int row = tableAIRegions.jTable.getSelectedRow();
         if (row != battleLayoutPanel.getSelectedAIRegion()) {
             battleLayoutPanel.setDrawAiRegions(true);
@@ -1325,7 +1322,6 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
     }
 
     private void onTableAIPointsSelectionChanged(ListSelectionEvent e) {
-        if (e.getValueIsAdjusting()) return;
         int row = tableAIPoints.jTable.getSelectedRow();
         if (row != battleLayoutPanel.getSelectedAIPoint()) {
             battleLayoutPanel.setDrawAiPoints(true);

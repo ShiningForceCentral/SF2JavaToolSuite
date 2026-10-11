@@ -215,7 +215,7 @@
                                 </Component>
                                 <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButtonImportBattleCoords">
                                   <Properties>
-                                    <Property name="filePath" type="java.lang.String" value="./global/battlemapcoords.asm" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="./global/battlemapcoords.asm"/>
                                     <Property name="labelText" type="java.lang.String" value="Battle map coords :"/>
                                     <Property name="name" type="java.lang.String" value="Import Battle Coords" noResource="true"/>
                                   </Properties>
@@ -263,7 +263,7 @@
                                         <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                           <Value id="ASM"/>
                                         </Property>
-                                        <Property name="filePath" type="java.lang.String" value="../graphics/maps/mappalettes/entries.asm" containsInvalidXMLChars="true"/>
+                                        <Property name="filePath" type="java.lang.String" value="../graphics/maps/mappalettes/entries.asm"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Palette entries :"/>
                                         <Property name="name" type="java.lang.String" value="Import Palette Entries" noResource="true"/>
@@ -274,7 +274,7 @@
                                         <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                           <Value id="ASM"/>
                                         </Property>
-                                        <Property name="filePath" type="java.lang.String" value="../graphics/maps/maptilesets/entries.asm" containsInvalidXMLChars="true"/>
+                                        <Property name="filePath" type="java.lang.String" value="../graphics/maps/maptilesets/entries.asm"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Tilesets entries :"/>
                                         <Property name="name" type="java.lang.String" value="Import Tilesets Entries" noResource="true"/>
@@ -285,7 +285,7 @@
                                         <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                           <Value id="ASM"/>
                                         </Property>
-                                        <Property name="filePath" type="java.lang.String" value="../maps/entries.asm" containsInvalidXMLChars="true"/>
+                                        <Property name="filePath" type="java.lang.String" value="../maps/entries.asm"/>
                                         <Property name="infoMessage" type="java.lang.String" value=""/>
                                         <Property name="labelText" type="java.lang.String" value="Map entries :"/>
                                         <Property name="name" type="java.lang.String" value="Import Map Entries" noResource="true"/>
@@ -359,7 +359,7 @@
                                     <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                       <Value id="ASM"/>
                                     </Property>
-                                    <Property name="filePath" type="java.lang.String" value="./global/battlemapcoords.asm" containsInvalidXMLChars="true"/>
+                                    <Property name="filePath" type="java.lang.String" value="./global/battlemapcoords.asm"/>
                                     <Property name="infoMessage" type="java.lang.String" value=""/>
                                     <Property name="labelText" type="java.lang.String" value="Battle map coords :"/>
                                     <Property name="name" type="java.lang.String" value="Export Map Coords" noResource="true"/>
@@ -403,7 +403,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jPanel1" pref="667" max="32767" attributes="0"/>
+                                      <Component id="jPanel1" pref="683" max="32767" attributes="0"/>
                                       <Component id="battleMapViewPanel1" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
@@ -414,7 +414,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jPanel1" pref="629" max="32767" attributes="0"/>
+                                  <Component id="jPanel1" pref="631" max="32767" attributes="0"/>
                                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                                   <Component id="battleMapViewPanel1" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>

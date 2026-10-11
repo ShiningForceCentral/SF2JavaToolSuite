@@ -982,7 +982,7 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
     }
     
     private void onTableFrameSelectionChanged(ListSelectionEvent evt) {
-        if (evt.getValueIsAdjusting() || evt.getSource() == null) return;
+        if (evt.getSource() == null) return;
         int selection = ((ListSelectionModel)evt.getSource()).getAnchorSelectionIndex();
         if (selection != (int)jSpinnerAnimFrame.getValue()) {
             isTableSelectionChanging = true;

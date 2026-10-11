@@ -486,7 +486,7 @@ public class BattleCoordsMainEditor extends AbstractMainEditor {
         int row = tableCoords.jTable.getSelectedRow();
         if (row == -1) {
             actionMapLoaded(null);
-        } else if (!e.getValueIsAdjusting()) {
+        } else {
             loadMap(row);
         }
     }
