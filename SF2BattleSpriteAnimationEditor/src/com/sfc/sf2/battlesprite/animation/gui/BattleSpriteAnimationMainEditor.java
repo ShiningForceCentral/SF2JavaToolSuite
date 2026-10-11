@@ -10,7 +10,6 @@ import com.sfc.sf2.battlesprite.BattleSprite;
 import com.sfc.sf2.battlesprite.animation.BattleSpriteAnimation;
 import com.sfc.sf2.battlesprite.animation.BattleSpriteAnimationFrame;
 import com.sfc.sf2.battlesprite.animation.BattleSpriteAnimationManager;
-import com.sfc.sf2.battlesprite.gui.BattleSpriteMainEditor;
 import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.core.actions.ComboAction;
 import com.sfc.sf2.core.actions.CustomAction;
@@ -137,7 +136,7 @@ public class BattleSpriteAnimationMainEditor extends AbstractMainEditor {
     //To create a new Main Editor, copy this method and change the new mainEditor class
     public static void main(String args[]) {
         programStart(args);
-        setupMainEditor(new BattleSpriteMainEditor());   // <------ Change this class to new Main Editor class
+        setupMainEditor(new BattleSpriteAnimationMainEditor());   // <------ Change this class to new Main Editor class
     }
     
     /**
