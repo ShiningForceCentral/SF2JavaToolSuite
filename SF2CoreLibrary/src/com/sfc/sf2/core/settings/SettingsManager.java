@@ -16,6 +16,7 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
+import javax.swing.Timer;
 
 /**
  *
@@ -30,6 +31,7 @@ public class SettingsManager {
     
     private static boolean isRunningInEditor = true;
     private static boolean allowSaving = false;
+    private static Timer saveDelayTimer = null; //Reduces spamming of save data
 
     static {
         globalSettings = new GlobalSettings();
@@ -207,20 +209,28 @@ public class SettingsManager {
     
     public static void saveSettingsFile() {
         if (!allowSaving) return;
-        Console.logger().finest("ENTERING saveSettingsFile");
-        try {
-            StringBuilder sb = new StringBuilder();
-            for (Map.Entry<String, AbstractSettings> entry : settingsStores.entrySet()) {
-                sb.append("Store_" + entry.getKey() + "\n");
-                writeStoreData(sb, entry.getValue());
-            }
-            Path filepath = getSettingsFilePath();
-            checkSettingsFolderExists(filepath);
-            Files.write(filepath, sb.toString().getBytes());
-        } catch (Exception ex) {
-            Console.logger().log(Level.SEVERE, "Could not save settings file to : " + getSettingsFilePath(), ex);
+        if (saveDelayTimer == null) {
+            //Delay saving settings file to reduce IO spam
+            saveDelayTimer = new Timer(1000, (e) -> {
+                Console.logger().finest("ENTERING saveSettingsFile");
+                try {
+                    StringBuilder sb = new StringBuilder();
+                    for (Map.Entry<String, AbstractSettings> entry : settingsStores.entrySet()) {
+                        sb.append("Store_" + entry.getKey() + "\n");
+                        writeStoreData(sb, entry.getValue());
+                    }
+                    Path filepath = getSettingsFilePath();
+                    checkSettingsFolderExists(filepath);
+                    Files.write(filepath, sb.toString().getBytes());
+                } catch (Exception ex) {
+                    Console.logger().log(Level.SEVERE, "Could not save settings file to : " + getSettingsFilePath(), ex);
+                }
+                Console.logger().finest("EXITING saveSettingsFile");
+            });
+            saveDelayTimer.setRepeats(false);
+        } else {
+            saveDelayTimer.restart();
         }
-        Console.logger().finest("EXITING saveSettingsFile");
     }
     
     private static void writeStoreData(StringBuilder sb, AbstractSettings store) {
