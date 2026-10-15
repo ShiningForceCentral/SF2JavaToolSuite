@@ -300,7 +300,7 @@ public class MapCoordsPanel extends javax.swing.JPanel {
         if (!ActionManager.isActionTriggering()) {
             ActionManager.setActionWithoutExecute(new SpinnerAction(jSpinnerHeight, jSpinnerHeight.getValue(), coords.getHeight()));
         }
-        coords.setWidth((int)jSpinnerHeight.getModel().getValue());
+        coords.setHeight((int)jSpinnerHeight.getModel().getValue());
         layoutPanel.redraw();
     }//GEN-LAST:event_jSpinnerHeightStateChanged
 
