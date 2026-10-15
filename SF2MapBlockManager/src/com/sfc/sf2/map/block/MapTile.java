@@ -17,7 +17,7 @@ import java.awt.image.BufferedImage;
  */
 public class MapTile {
     private byte tilesetIndex;
-    private byte tileIndex;
+    private int tileIndex;
     private TileFlags tileFlags;
     
     public MapTile(int tileData) {
@@ -27,10 +27,10 @@ public class MapTile {
         if ((tileData&0x1000) != 0) tileFlags.addFlag(TileFlags.TILE_FLAG_VFLIP);
         tileData = tileData&0x3FF;
         this.tilesetIndex = (byte)(tileData/TILESET_TILES);
-        this.tileIndex = (byte)(tileData%TILESET_TILES);
+        this.tileIndex = tileData%TILESET_TILES;
     }
 
-    public MapTile(byte tilesetIndex, byte tileIndex, TileFlags tileFlags) {
+    public MapTile(byte tilesetIndex, int tileIndex, TileFlags tileFlags) {
         this.tilesetIndex = tilesetIndex;
         this.tileIndex = tileIndex;
         this.tileFlags = tileFlags;
@@ -56,11 +56,11 @@ public class MapTile {
         this.tilesetIndex = tilesetIndex;
     }
 
-    public byte getTileIndex() {
+    public int getTileIndex() {
         return tileIndex;
     }
 
-    public void setTileIndex(byte tileIndex) {
+    public void setTileIndex(int tileIndex) {
         this.tileIndex = tileIndex;
     }
 
@@ -104,6 +104,6 @@ public class MapTile {
     }
     
     public static MapTile EmptyMapTile() {
-        return new MapTile((byte)-1, (byte)-1, new TileFlags(TileFlags.TILE_FLAG_NONE));
+        return new MapTile((byte)-1, -1, new TileFlags(TileFlags.TILE_FLAG_NONE));
     }
 }

@@ -91,12 +91,15 @@ public class MapBlocksetManager extends AbstractManager {
         return mapBlockset;
     }
     
-    public void importImage(Path filepath, Path hpFilePath) throws IOException, RawImageException, MetadataException {
+    public MapBlockset importImage(Path filepath, Path hpFilePath) throws IOException, RawImageException, MetadataException {
         Console.logger().finest("ENTERING importImage");
-        mapBlockset = new MapBlocksetRawImageProcessor().importRawImage(filepath, null);
+        MapBlocksetRawImageProcessor blocksetProcessor = new MapBlocksetRawImageProcessor();
+        mapBlockset = blocksetProcessor.importRawImage(filepath, null);
+        tilesets = new Tileset[] { blocksetProcessor.getTileset() };
         new MapBlocksetMetaProcessor().importMetadata(hpFilePath, mapBlockset);
         Console.logger().info("Map blocks successfully imported from image : " + filepath + " and hpTiles : " + hpFilePath);
         Console.logger().finest("EXITING importImage");
+        return mapBlockset;
     }
     
     public void exportDisassembly(Path tilesetsFilePath, Path blocksetPath, MapBlockset mapBlockset, Tileset[] mapTilesets) throws IOException, DisassemblyException, AsmException {
@@ -114,14 +117,14 @@ public class MapBlocksetManager extends AbstractManager {
         Console.logger().finest("EXITING exportDisassembly");
     }
     
-    public void exportImage(Path filepath, Path hpFilePath, int blocksPerRow, MapBlockset mapBlockset, Tileset[] tilesets) throws IOException, RawImageException, MetadataException {
+    public void exportImage(Path filePath, Path hpFilePath, int blocksPerRow, MapBlockset mapBlockset, Tileset[] tilesets) throws IOException, RawImageException, MetadataException {
         Console.logger().finest("ENTERING exportImage");
         mapBlockset.setBlocksPerRow(blocksPerRow);
         this.mapBlockset = mapBlockset;
         MapBlockPackage pckg = new MapBlockPackage(mapBlockset.getName(), tilesets, tilesets[0].getPalette());
-        new MapBlocksetRawImageProcessor().exportRawImage(filepath, mapBlockset, pckg);
+        new MapBlocksetRawImageProcessor().exportRawImage(filePath, mapBlockset, pckg);
         new MapBlocksetMetaProcessor().exportMetadata(hpFilePath, mapBlockset);
-        Console.logger().info("Map blocks successfully exported to image : " + filepath + " and hpTiles : " + hpFilePath);
+        Console.logger().info("Map blocks successfully exported to image : " + filePath + " and hpTiles : " + hpFilePath);
         Console.logger().finest("EXITING exportImage");
     }
 

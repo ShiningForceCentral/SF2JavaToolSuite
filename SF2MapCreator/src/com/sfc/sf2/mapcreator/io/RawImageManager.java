@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sfc.sf2.map.io;
+package com.sfc.sf2.mapcreator.io;
 
-import com.sfc.sf2.map.Map;
+import com.sfc.sf2.mapcreator.ProtoMap;
 import com.sfc.sf2.map.layout.MapLayout;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -22,7 +22,7 @@ public class RawImageManager {
     
     public static final int MAP_PIXEL_WIDTH = 64*3*8;
     public static final int MAP_PIXEL_HEIGHT = 64*3*8;
-    
+    /*
     public static Map importMapFromRawImage(String filepath, String flagsPath, String hptilesPath) {
         System.out.println("com.sfc.sf2.map.io.RawImageManager.importImage() - Importing Image files ...");
         Map map = null;
@@ -65,4 +65,5 @@ public class RawImageManager {
             }
         }
     }
+    */
 }

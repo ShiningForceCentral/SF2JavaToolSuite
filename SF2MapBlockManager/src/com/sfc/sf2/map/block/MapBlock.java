@@ -6,8 +6,10 @@
 package com.sfc.sf2.map.block;
 
 import com.sfc.sf2.graphics.Block;
+import com.sfc.sf2.graphics.Tile;
 import static com.sfc.sf2.graphics.Tile.PIXEL_HEIGHT;
 import static com.sfc.sf2.graphics.Tile.PIXEL_WIDTH;
+import com.sfc.sf2.graphics.TileFlags;
 import com.sfc.sf2.graphics.Tileset;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -115,5 +117,22 @@ public class MapBlock {
     
     public static MapBlock EmptyMapBlock(int index) {
         return new MapBlock(index);
+    }
+    
+    public MapBlock createChestMapBlock(boolean isOpen) {
+        byte tileset = 4;
+        int openOffset = isOpen ? 2 : 0;
+        MapTile[] tiles = new MapTile[9];
+        tiles[0] = new MapTile(tileset, (byte)(46+openOffset), new TileFlags(TileFlags.TILE_FLAG_NONE));
+        tiles[1] = new MapTile(tileset, (byte)(47+openOffset), new TileFlags(TileFlags.TILE_FLAG_NONE));
+        tiles[2] = new MapTile(tileset, (byte)(46+openOffset), new TileFlags(TileFlags.TILE_FLAG_HFLIP));
+        tiles[3] = new MapTile(tileset, (byte)(62+openOffset), new TileFlags(TileFlags.TILE_FLAG_NONE));
+        tiles[4] = new MapTile(tileset, (byte)(63+openOffset), new TileFlags(TileFlags.TILE_FLAG_NONE));
+        tiles[5] = new MapTile(tileset, (byte)(62+openOffset), new TileFlags(TileFlags.TILE_FLAG_HFLIP));
+        tiles[6] = new MapTile(tileset, (byte)78, new TileFlags(TileFlags.TILE_FLAG_NONE));
+        tiles[7] = new MapTile(tileset, (byte)79, new TileFlags(TileFlags.TILE_FLAG_NONE));
+        tiles[8] = new MapTile(tileset, (byte)78, new TileFlags(TileFlags.TILE_FLAG_HFLIP));
+        MapBlock block = new MapBlock(1, tiles);
+        return block;
     }
 }
