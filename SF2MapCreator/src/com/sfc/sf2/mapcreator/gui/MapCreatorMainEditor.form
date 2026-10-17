@@ -57,7 +57,7 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="jSplitPane1" alignment="0" pref="1344" max="32767" attributes="0"/>
+              <Component id="jSplitPane1" alignment="0" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -128,7 +128,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                  <Component id="jPanel9" pref="831" max="32767" attributes="0"/>
+                                  <Component id="jPanel9" pref="801" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -179,8 +179,8 @@
                                   </Properties>
                                   <Constraints>
                                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                                      <JTabbedPaneConstraints tabName="1. Import map">
-                                        <Property name="tabTitle" type="java.lang.String" value="1. Import map"/>
+                                      <JTabbedPaneConstraints tabName="1. Import Map">
+                                        <Property name="tabTitle" type="java.lang.String" value="1. Import Map"/>
                                       </JTabbedPaneConstraints>
                                     </Constraint>
                                   </Constraints>
@@ -222,7 +222,7 @@
                                                   <Component id="jPanel31" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
                                                   <Component id="jLabel56" min="-2" pref="62" max="-2" attributes="0"/>
-                                                  <EmptySpace pref="527" max="32767" attributes="0"/>
+                                                  <EmptySpace pref="497" max="32767" attributes="0"/>
                                               </Group>
                                           </Group>
                                         </DimensionLayout>
@@ -292,6 +292,9 @@
                                             </Component>
                                             <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButtonImportImage">
                                               <Properties>
+                                                <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                                  <Value id="ANY_IMAGE"/>
+                                                </Property>
                                                 <Property name="filePath" type="java.lang.String" value="./export/layout.png"/>
                                                 <Property name="infoMessage" type="java.lang.String" value="&lt;html&gt;An image of the map to import.&lt;br&gt;&lt;b&gt;Image requirements :&lt;/b&gt;&lt;br&gt;- Dimensions: 64x64 map blocks = 1536x1536 pixels&lt;br&gt;- Image format: 16-color indexed (4bpp) - 256-color indexed tolerated if only first 16 colors are used.&lt;br&gt;&lt;br&gt;Note: Color at index 0 should be transparent. All used colors from the palette should have distinct values, to avoid color index ambiguity.&lt;/html&gt;"/>
                                                 <Property name="labelText" type="java.lang.String" value="Map image :"/>
@@ -299,6 +302,9 @@
                                             </Component>
                                             <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButtonImportLayout">
                                               <Properties>
+                                                <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                                  <Value id="TXT"/>
+                                                </Property>
                                                 <Property name="filePath" type="java.lang.String" value="./export/layout_flags.txt"/>
                                                 <Property name="infoMessage" type="java.lang.String" value="&lt;html&gt;(Optional) Layout flags indicates the map flags on each map block - i.e. to identify search points, stairs, warp points, etc.&lt;br&gt;&lt;br&gt;Generally, this data would be exported from an existing map in the MapEditor.&lt;br&gt;This data can be modified in the MapEditor once this map is created.&lt;/hml&gt;"/>
                                                 <Property name="labelText" type="java.lang.String" value="Layout flags :"/>
@@ -306,6 +312,9 @@
                                             </Component>
                                             <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButtonImportHp">
                                               <Properties>
+                                                <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                                  <Value id="TXT"/>
+                                                </Property>
                                                 <Property name="filePath" type="java.lang.String" value="./export/layout_hptiles.txt"/>
                                                 <Property name="infoMessage" type="java.lang.String" value="&lt;html&gt;(Optional) HP tiles indicates which tiles are drawn on the &apos;high priority&apos; layer - i.e. drawn over the top of mapsprites.&lt;br&gt;&lt;br&gt;Generally, this data would be exported from an existing map in the MapEditor.&lt;br&gt;This data can be modified in the MapEditor once this map is created.&lt;/hml&gt;"/>
                                                 <Property name="labelText" type="java.lang.String" value="HP tiles :"/>
@@ -365,23 +374,15 @@
                                               <Layout>
                                                 <DimensionLayout dim="0">
                                                   <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Group type="102" alignment="0" attributes="0">
-                                                          <Group type="103" groupAlignment="0" attributes="0">
-                                                              <Component id="jPanel7" alignment="1" max="32767" attributes="0"/>
-                                                              <Group type="102" alignment="0" attributes="0">
-                                                                  <EmptySpace max="-2" attributes="0"/>
-                                                                  <Component id="blocksetViewPanel1" max="32767" attributes="0"/>
-                                                              </Group>
-                                                          </Group>
-                                                          <EmptySpace max="-2" attributes="0"/>
-                                                      </Group>
+                                                      <Component id="jScrollPane3" alignment="0" pref="0" max="32767" attributes="0"/>
+                                                      <Component id="blocksetViewPanel1" alignment="0" pref="325" max="32767" attributes="0"/>
                                                   </Group>
                                                 </DimensionLayout>
                                                 <DimensionLayout dim="1">
                                                   <Group type="103" groupAlignment="0" attributes="0">
                                                       <Group type="102" alignment="0" attributes="0">
-                                                          <Component id="jPanel7" max="32767" attributes="0"/>
-                                                          <EmptySpace max="-2" attributes="0"/>
+                                                          <Component id="jScrollPane3" pref="629" max="32767" attributes="0"/>
+                                                          <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                                                           <Component id="blocksetViewPanel1" min="-2" max="-2" attributes="0"/>
                                                           <EmptySpace max="-2" attributes="0"/>
                                                       </Group>
@@ -389,52 +390,33 @@
                                                 </DimensionLayout>
                                               </Layout>
                                               <SubComponents>
-                                                <Container class="javax.swing.JPanel" name="jPanel7">
+                                                <Container class="javax.swing.JScrollPane" name="jScrollPane3">
                                                   <Properties>
-                                                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                                                    <Property name="horizontalScrollBarPolicy" type="int" value="32"/>
+                                                    <Property name="verticalScrollBarPolicy" type="int" value="22"/>
+                                                    <Property name="viewportBorder" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                                                       <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
                                                         <TitledBorder title="Blockset"/>
                                                       </Border>
                                                     </Property>
                                                   </Properties>
 
-                                                  <Layout>
-                                                    <DimensionLayout dim="0">
-                                                      <Group type="103" groupAlignment="0" attributes="0">
-                                                          <Component id="jScrollPane3" alignment="0" pref="309" max="32767" attributes="0"/>
-                                                      </Group>
-                                                    </DimensionLayout>
-                                                    <DimensionLayout dim="1">
-                                                      <Group type="103" groupAlignment="0" attributes="0">
-                                                          <Component id="jScrollPane3" alignment="0" max="32767" attributes="0"/>
-                                                      </Group>
-                                                    </DimensionLayout>
-                                                  </Layout>
+                                                  <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                                                   <SubComponents>
-                                                    <Container class="javax.swing.JScrollPane" name="jScrollPane3">
-                                                      <Properties>
-                                                        <Property name="horizontalScrollBarPolicy" type="int" value="32"/>
-                                                        <Property name="verticalScrollBarPolicy" type="int" value="22"/>
-                                                      </Properties>
+                                                    <Container class="com.sfc.sf2.map.block.gui.MapBlocksetLayoutPanel" name="mapImportBlocksetPanel">
 
-                                                      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-                                                      <SubComponents>
-                                                        <Container class="com.sfc.sf2.map.block.gui.MapBlocksetLayoutPanel" name="mapImportBlocksetPanel">
-
-                                                          <Layout>
-                                                            <DimensionLayout dim="0">
-                                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                                  <EmptySpace min="0" pref="441" max="32767" attributes="0"/>
-                                                              </Group>
-                                                            </DimensionLayout>
-                                                            <DimensionLayout dim="1">
-                                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                                  <EmptySpace min="0" pref="618" max="32767" attributes="0"/>
-                                                              </Group>
-                                                            </DimensionLayout>
-                                                          </Layout>
-                                                        </Container>
-                                                      </SubComponents>
+                                                      <Layout>
+                                                        <DimensionLayout dim="0">
+                                                          <Group type="103" groupAlignment="0" attributes="0">
+                                                              <EmptySpace min="0" pref="441" max="32767" attributes="0"/>
+                                                          </Group>
+                                                        </DimensionLayout>
+                                                        <DimensionLayout dim="1">
+                                                          <Group type="103" groupAlignment="0" attributes="0">
+                                                              <EmptySpace min="0" pref="708" max="32767" attributes="0"/>
+                                                          </Group>
+                                                        </DimensionLayout>
+                                                      </Layout>
                                                     </Container>
                                                   </SubComponents>
                                                 </Container>
@@ -459,19 +441,15 @@
                                               <Layout>
                                                 <DimensionLayout dim="0">
                                                   <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Component id="jScrollPane4" alignment="0" pref="0" max="32767" attributes="0"/>
-                                                      <Group type="102" alignment="0" attributes="0">
-                                                          <EmptySpace max="-2" attributes="0"/>
-                                                          <Component id="viewPanelTilesetImport" max="32767" attributes="0"/>
-                                                          <EmptySpace max="-2" attributes="0"/>
-                                                      </Group>
+                                                      <Component id="jScrollPane4" pref="325" max="32767" attributes="0"/>
+                                                      <Component id="viewPanelTilesetImport" max="32767" attributes="0"/>
                                                   </Group>
                                                 </DimensionLayout>
                                                 <DimensionLayout dim="1">
                                                   <Group type="103" groupAlignment="0" attributes="0">
                                                       <Group type="102" alignment="0" attributes="0">
-                                                          <Component id="jScrollPane4" max="32767" attributes="0"/>
-                                                          <EmptySpace max="-2" attributes="0"/>
+                                                          <Component id="jScrollPane4" pref="630" max="32767" attributes="0"/>
+                                                          <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                                                           <Component id="viewPanelTilesetImport" min="-2" max="-2" attributes="0"/>
                                                           <EmptySpace max="-2" attributes="0"/>
                                                       </Group>
@@ -500,7 +478,7 @@
                                                         </DimensionLayout>
                                                         <DimensionLayout dim="1">
                                                           <Group type="103" groupAlignment="0" attributes="0">
-                                                              <EmptySpace min="0" pref="629" max="32767" attributes="0"/>
+                                                              <EmptySpace min="0" pref="709" max="32767" attributes="0"/>
                                                           </Group>
                                                         </DimensionLayout>
                                                       </Layout>
@@ -519,12 +497,12 @@
                                 </Container>
                                 <Container class="javax.swing.JSplitPane" name="jSplitPane5">
                                   <Properties>
-                                    <Property name="dividerLocation" type="int" value="400"/>
+                                    <Property name="dividerLocation" type="int" value="300"/>
                                   </Properties>
                                   <Constraints>
                                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                                      <JTabbedPaneConstraints tabName="2. Import tilesets">
-                                        <Property name="tabTitle" type="java.lang.String" value="2. Import tilesets"/>
+                                      <JTabbedPaneConstraints tabName="2. Import Tilesets">
+                                        <Property name="tabTitle" type="java.lang.String" value="2. Import Tilesets"/>
                                       </JTabbedPaneConstraints>
                                     </Constraint>
                                   </Constraints>
@@ -544,9 +522,8 @@
                                               <Group type="102" alignment="0" attributes="0">
                                                   <EmptySpace max="-2" attributes="0"/>
                                                   <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Component id="jLabel53" max="32767" attributes="0"/>
-                                                      <Component id="jLabel47" alignment="1" pref="0" max="32767" attributes="0"/>
-                                                      <Component id="jPanel52" alignment="1" pref="388" max="32767" attributes="0"/>
+                                                      <Component id="jLabel53" pref="288" max="32767" attributes="0"/>
+                                                      <Component id="jPanel52" alignment="1" pref="288" max="32767" attributes="0"/>
                                                       <Component id="jPanel50" max="32767" attributes="0"/>
                                                   </Group>
                                                   <EmptySpace max="-2" attributes="0"/>
@@ -557,25 +534,17 @@
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Group type="102" alignment="1" attributes="0">
                                                   <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="jLabel53" max="32767" attributes="0"/>
+                                                  <Component id="jLabel53" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
                                                   <Component id="jPanel50" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="jPanel52" min="-2" pref="260" max="-2" attributes="0"/>
-                                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                                  <Component id="jLabel47" pref="322" max="32767" attributes="0"/>
-                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="jPanel52" min="-2" pref="313" max="-2" attributes="0"/>
+                                                  <EmptySpace pref="135" max="32767" attributes="0"/>
                                               </Group>
                                           </Group>
                                         </DimensionLayout>
                                       </Layout>
                                       <SubComponents>
-                                        <Component class="javax.swing.JLabel" name="jLabel47">
-                                          <Properties>
-                                            <Property name="text" type="java.lang.String" value="&lt;html&gt;Load existing tilesets, or keep free tileset slots to fill with new tiles.&lt;br/&gt;Managed constraints : &lt;br/&gt;- Empty tile at tileset 0 index 0&lt;br/&gt;- Open/closed chest tiles expected at fixed position in last tileset&lt;br/&gt;&lt;br/&gt;To manage manually :&lt;br/&gt;Map animation tiles have to be grouped in a pre-created tileset for the map animation data to point to it. (eg : for map 03, first 32 tiles of tileset 066).&lt;/html&gt;"/>
-                                            <Property name="verticalAlignment" type="int" value="1"/>
-                                          </Properties>
-                                        </Component>
                                         <Container class="javax.swing.JPanel" name="jPanel50">
                                           <Properties>
                                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -589,37 +558,20 @@
                                             <DimensionLayout dim="0">
                                               <Group type="103" groupAlignment="0" attributes="0">
                                                   <Group type="102" attributes="0">
+                                                      <EmptySpace max="-2" attributes="0"/>
                                                       <Group type="103" groupAlignment="0" attributes="0">
-                                                          <Group type="102" attributes="0">
+                                                          <Component id="accordionPanel1" max="32767" attributes="0"/>
+                                                          <Component id="jLabel41" alignment="0" max="32767" attributes="0"/>
+                                                          <Group type="102" alignment="1" attributes="0">
+                                                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                                              <Component id="jLabel51" min="-2" max="-2" attributes="0"/>
                                                               <EmptySpace max="-2" attributes="0"/>
-                                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                                  <Group type="102" alignment="1" attributes="0">
-                                                                      <Component id="jLabel40" min="-2" max="-2" attributes="0"/>
-                                                                      <EmptySpace max="-2" attributes="0"/>
-                                                                      <Component id="jTextField37" max="32767" attributes="0"/>
-                                                                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                                                                      <Component id="jButton44" max="-2" attributes="0"/>
-                                                                  </Group>
-                                                                  <Group type="102" alignment="0" attributes="0">
-                                                                      <Component id="jLabel49" min="-2" max="-2" attributes="0"/>
-                                                                      <EmptySpace max="-2" attributes="0"/>
-                                                                      <Component id="jTextField43" pref="0" max="32767" attributes="0"/>
-                                                                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                                                                      <Component id="jButton50" max="-2" attributes="0"/>
-                                                                  </Group>
-                                                                  <Group type="102" alignment="0" attributes="0">
-                                                                      <Component id="jLabel50" min="-2" max="-2" attributes="0"/>
-                                                                      <EmptySpace max="-2" attributes="0"/>
-                                                                      <Component id="jTextField44" pref="0" max="32767" attributes="0"/>
-                                                                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                                                                      <Component id="jButton51" max="-2" attributes="0"/>
-                                                                  </Group>
-                                                              </Group>
+                                                              <Component id="jSpinnerExistingMapIndex" min="-2" max="-2" attributes="0"/>
                                                           </Group>
                                                           <Group type="102" alignment="1" attributes="0">
-                                                              <Component id="jLabel41" pref="290" max="32767" attributes="0"/>
-                                                              <EmptySpace max="-2" attributes="0"/>
-                                                              <Component id="jButton8" min="-2" max="-2" attributes="0"/>
+                                                              <Component id="jButtonExistingMapCopy" min="-2" pref="99" max="-2" attributes="0"/>
+                                                              <EmptySpace max="32767" attributes="0"/>
+                                                              <Component id="jButtonExistingMapImport" min="-2" max="-2" attributes="0"/>
                                                           </Group>
                                                       </Group>
                                                       <EmptySpace max="-2" attributes="0"/>
@@ -630,114 +582,130 @@
                                               <Group type="103" groupAlignment="0" attributes="0">
                                                   <Group type="102" alignment="0" attributes="0">
                                                       <EmptySpace max="-2" attributes="0"/>
-                                                      <Group type="103" groupAlignment="2" attributes="0">
-                                                          <Component id="jLabel40" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                          <Component id="jTextField37" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                          <Component id="jButton44" alignment="2" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="jLabel41" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace max="-2" attributes="0"/>
+                                                      <Component id="accordionPanel1" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace max="-2" attributes="0"/>
+                                                      <Group type="103" groupAlignment="3" attributes="0">
+                                                          <Component id="jSpinnerExistingMapIndex" alignment="3" min="-2" max="-2" attributes="0"/>
+                                                          <Component id="jLabel51" alignment="3" min="-2" max="-2" attributes="0"/>
                                                       </Group>
                                                       <EmptySpace max="-2" attributes="0"/>
                                                       <Group type="103" groupAlignment="2" attributes="0">
-                                                          <Component id="jLabel49" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                          <Component id="jTextField43" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                          <Component id="jButton50" alignment="2" min="-2" max="-2" attributes="0"/>
+                                                          <Component id="jButtonExistingMapImport" alignment="2" min="-2" max="-2" attributes="0"/>
+                                                          <Component id="jButtonExistingMapCopy" alignment="2" min="-2" max="-2" attributes="0"/>
                                                       </Group>
-                                                      <EmptySpace max="-2" attributes="0"/>
-                                                      <Group type="103" groupAlignment="2" attributes="0">
-                                                          <Component id="jLabel50" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                          <Component id="jTextField44" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                          <Component id="jButton51" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                      </Group>
-                                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                                      <Group type="103" groupAlignment="2" attributes="0">
-                                                          <Component id="jButton8" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                          <Component id="jLabel41" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                      </Group>
-                                                      <EmptySpace max="-2" attributes="0"/>
+                                                      <EmptySpace max="32767" attributes="0"/>
                                                   </Group>
                                               </Group>
                                             </DimensionLayout>
                                           </Layout>
                                           <SubComponents>
-                                            <Component class="javax.swing.JButton" name="jButton44">
-                                              <Properties>
-                                                <Property name="text" type="java.lang.String" value="File..."/>
-                                              </Properties>
-                                              <Events>
-                                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton44ActionPerformed"/>
-                                              </Events>
-                                            </Component>
-                                            <Component class="javax.swing.JTextField" name="jTextField37">
-                                              <Properties>
-                                                <Property name="horizontalAlignment" type="int" value="11"/>
-                                                <Property name="text" type="java.lang.String" value="00-tilesets.asm"/>
-                                                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                                                  <Dimension value="[30, 26]"/>
-                                                </Property>
-                                              </Properties>
-                                            </Component>
-                                            <Component class="javax.swing.JLabel" name="jLabel40">
-                                              <Properties>
-                                                <Property name="text" type="java.lang.String" value="Tileset data :"/>
-                                              </Properties>
-                                            </Component>
-                                            <Component class="javax.swing.JButton" name="jButton8">
+                                            <Component class="javax.swing.JButton" name="jButtonExistingMapImport">
                                               <Properties>
                                                 <Property name="text" type="java.lang.String" value="Import"/>
                                               </Properties>
                                               <Events>
-                                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton8ActionPerformed"/>
+                                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonExistingMapImportActionPerformed"/>
                                               </Events>
                                             </Component>
                                             <Component class="javax.swing.JLabel" name="jLabel41">
                                               <Properties>
-                                                <Property name="text" type="java.lang.String" value="Import palette and tilesets from map"/>
+                                                <Property name="text" type="java.lang.String" value="Import palette and tilesets from existing map"/>
                                               </Properties>
                                             </Component>
-                                            <Component class="javax.swing.JLabel" name="jLabel49">
+                                            <Container class="com.sfc.sf2.core.gui.controls.AccordionPanel" name="accordionPanel1">
                                               <Properties>
-                                                <Property name="text" type="java.lang.String" value="Palettes path :"/>
-                                              </Properties>
-                                            </Component>
-                                            <Component class="javax.swing.JTextField" name="jTextField43">
-                                              <Properties>
-                                                <Property name="horizontalAlignment" type="int" value="11"/>
-                                                <Property name="text" type="java.lang.String" value="../../../graphics/maps/mappalettes/mappalette"/>
-                                                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                                                  <Dimension value="[30, 26]"/>
+                                                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                                                  <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                                                    <TitledBorder title="Map Paths"/>
+                                                  </Border>
                                                 </Property>
                                               </Properties>
-                                              <Events>
-                                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField43ActionPerformed"/>
-                                              </Events>
-                                            </Component>
-                                            <Component class="javax.swing.JButton" name="jButton50">
+
+                                              <Layout>
+                                                <DimensionLayout dim="0">
+                                                  <Group type="103" groupAlignment="0" attributes="0">
+                                                      <Group type="102" attributes="0">
+                                                          <EmptySpace max="-2" attributes="0"/>
+                                                          <Group type="103" groupAlignment="0" attributes="0">
+                                                              <Component id="fileButtonExistingMapData" pref="0" max="32767" attributes="0"/>
+                                                              <Component id="directoryButtonExistingMapPalette" pref="0" max="32767" attributes="0"/>
+                                                              <Component id="directoryButtonExistingMapTilesets" alignment="0" pref="0" max="32767" attributes="0"/>
+                                                              <Component id="directoryButtonExistingMapDir" alignment="1" pref="0" max="32767" attributes="0"/>
+                                                          </Group>
+                                                          <EmptySpace max="-2" attributes="0"/>
+                                                      </Group>
+                                                  </Group>
+                                                </DimensionLayout>
+                                                <DimensionLayout dim="1">
+                                                  <Group type="103" groupAlignment="0" attributes="0">
+                                                      <Group type="102" alignment="0" attributes="0">
+                                                          <EmptySpace max="-2" attributes="0"/>
+                                                          <Component id="directoryButtonExistingMapPalette" min="-2" max="-2" attributes="0"/>
+                                                          <EmptySpace max="-2" attributes="0"/>
+                                                          <Component id="directoryButtonExistingMapTilesets" min="-2" max="-2" attributes="0"/>
+                                                          <EmptySpace max="-2" attributes="0"/>
+                                                          <Component id="fileButtonExistingMapData" min="-2" max="-2" attributes="0"/>
+                                                          <EmptySpace max="-2" attributes="0"/>
+                                                          <Component id="directoryButtonExistingMapDir" min="-2" max="-2" attributes="0"/>
+                                                          <EmptySpace max="-2" attributes="0"/>
+                                                      </Group>
+                                                  </Group>
+                                                </DimensionLayout>
+                                              </Layout>
+                                              <SubComponents>
+                                                <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButtonExistingMapData">
+                                                  <Properties>
+                                                    <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                                      <Value id="ASM"/>
+                                                    </Property>
+                                                    <Property name="filePath" type="java.lang.String" value="00-tilesets.asm"/>
+                                                    <Property name="infoMessage" type="java.lang.String" value=""/>
+                                                    <Property name="labelText" type="java.lang.String" value="Map tileset data :"/>
+                                                  </Properties>
+                                                </Component>
+                                                <Component class="com.sfc.sf2.core.gui.controls.DirectoryButton" name="directoryButtonExistingMapPalette">
+                                                  <Properties>
+                                                    <Property name="directoryPath" type="java.lang.String" value="../graphics/maps/mappalettes/"/>
+                                                    <Property name="infoMessage" type="java.lang.String" value="The path where all map palettes are stored."/>
+                                                    <Property name="labelText" type="java.lang.String" value="Map palette path :"/>
+                                                  </Properties>
+                                                </Component>
+                                                <Component class="com.sfc.sf2.core.gui.controls.DirectoryButton" name="directoryButtonExistingMapTilesets">
+                                                  <Properties>
+                                                    <Property name="directoryPath" type="java.lang.String" value="../graphics/maps/maptilesets/"/>
+                                                    <Property name="infoMessage" type="java.lang.String" value="The path where all map tilesets are stored."/>
+                                                    <Property name="labelText" type="java.lang.String" value="Map tilesets path :"/>
+                                                  </Properties>
+                                                </Component>
+                                                <Component class="com.sfc.sf2.core.gui.controls.DirectoryButton" name="directoryButtonExistingMapDir">
+                                                  <Properties>
+                                                    <Property name="directoryPath" type="java.lang.String" value="./entries/"/>
+                                                    <Property name="infoMessage" type="java.lang.String" value=""/>
+                                                    <Property name="labelText" type="java.lang.String" value="Maps dir :"/>
+                                                  </Properties>
+                                                </Component>
+                                              </SubComponents>
+                                            </Container>
+                                            <Component class="javax.swing.JSpinner" name="jSpinnerExistingMapIndex">
                                               <Properties>
-                                                <Property name="text" type="java.lang.String" value="File..."/>
-                                              </Properties>
-                                              <Events>
-                                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton50ActionPerformed"/>
-                                              </Events>
-                                            </Component>
-                                            <Component class="javax.swing.JLabel" name="jLabel50">
-                                              <Properties>
-                                                <Property name="text" type="java.lang.String" value="Tilesets path :"/>
-                                              </Properties>
-                                            </Component>
-                                            <Component class="javax.swing.JTextField" name="jTextField44">
-                                              <Properties>
-                                                <Property name="horizontalAlignment" type="int" value="11"/>
-                                                <Property name="text" type="java.lang.String" value="../../../graphics/maps/maptilesets/maptileset"/>
-                                                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                                                  <Dimension value="[30, 26]"/>
+                                                <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+                                                  <SpinnerModel initial="3" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
                                                 </Property>
                                               </Properties>
                                             </Component>
-                                            <Component class="javax.swing.JButton" name="jButton51">
+                                            <Component class="javax.swing.JLabel" name="jLabel51">
                                               <Properties>
-                                                <Property name="text" type="java.lang.String" value="File..."/>
+                                                <Property name="text" type="java.lang.String" value="Map index :"/>
+                                              </Properties>
+                                            </Component>
+                                            <Component class="javax.swing.JButton" name="jButtonExistingMapCopy">
+                                              <Properties>
+                                                <Property name="text" type="java.lang.String" value="Copy below"/>
                                               </Properties>
                                               <Events>
-                                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton51ActionPerformed"/>
+                                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonExistingMapCopyActionPerformed"/>
                                               </Events>
                                             </Component>
                                           </SubComponents>
@@ -746,7 +714,7 @@
                                           <Properties>
                                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                                               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                                                <TitledBorder title="Import custom :"/>
+                                                <TitledBorder title="Import Custom :"/>
                                               </Border>
                                             </Property>
                                             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -757,64 +725,20 @@
                                           <Layout>
                                             <DimensionLayout dim="0">
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Group type="102" attributes="0">
-                                                      <Group type="103" groupAlignment="0" attributes="0">
-                                                          <Group type="102" attributes="0">
-                                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                                  <Group type="102" alignment="0" attributes="0">
-                                                                      <Component id="jLabel46" min="-2" max="-2" attributes="0"/>
-                                                                      <EmptySpace max="-2" attributes="0"/>
-                                                                      <Component id="jTextField41" pref="0" max="32767" attributes="0"/>
-                                                                  </Group>
-                                                                  <Group type="102" alignment="0" attributes="0">
-                                                                      <Component id="jCheckBox3" min="-2" max="-2" attributes="0"/>
-                                                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                                                  </Group>
-                                                                  <Group type="102" alignment="0" attributes="0">
-                                                                      <Component id="jLabel43" min="-2" max="-2" attributes="0"/>
-                                                                      <EmptySpace max="-2" attributes="0"/>
-                                                                      <Component id="jTextField38" pref="0" max="32767" attributes="0"/>
-                                                                  </Group>
-                                                                  <Group type="102" alignment="0" attributes="0">
-                                                                      <Component id="jLabel42" min="-2" max="-2" attributes="0"/>
-                                                                      <EmptySpace max="-2" attributes="0"/>
-                                                                      <Component id="jTextField35" pref="0" max="32767" attributes="0"/>
-                                                                  </Group>
-                                                                  <Group type="102" alignment="0" attributes="0">
-                                                                      <Component id="jLabel45" min="-2" max="-2" attributes="0"/>
-                                                                      <EmptySpace max="-2" attributes="0"/>
-                                                                      <Component id="jTextField40" pref="0" max="32767" attributes="0"/>
-                                                                  </Group>
-                                                                  <Group type="102" alignment="0" attributes="0">
-                                                                      <Component id="jLabel44" min="-2" max="-2" attributes="0"/>
-                                                                      <EmptySpace max="-2" attributes="0"/>
-                                                                      <Component id="jTextField39" pref="0" max="32767" attributes="0"/>
-                                                                  </Group>
-                                                              </Group>
-                                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                                  <Group type="102" alignment="0" attributes="0">
-                                                                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                                                                      <Component id="jButton9" min="-2" max="-2" attributes="0"/>
-                                                                  </Group>
-                                                                  <Group type="102" alignment="1" attributes="0">
-                                                                      <EmptySpace max="-2" attributes="0"/>
-                                                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                                          <Component id="jButton42" alignment="1" max="32767" attributes="0"/>
-                                                                          <Component id="jButton45" alignment="1" max="32767" attributes="0"/>
-                                                                          <Component id="jButton46" alignment="1" max="32767" attributes="0"/>
-                                                                          <Component id="jButton47" alignment="1" max="32767" attributes="0"/>
-                                                                          <Component id="jButton48" alignment="1" max="-2" attributes="0"/>
-                                                                      </Group>
-                                                                  </Group>
-                                                              </Group>
+                                                  <Group type="102" alignment="1" attributes="0">
+                                                      <EmptySpace max="-2" attributes="0"/>
+                                                      <Group type="103" groupAlignment="1" attributes="0">
+                                                          <Component id="jLabel4" pref="0" max="32767" attributes="0"/>
+                                                          <Component id="fileButtonCustomPalette" alignment="0" pref="0" max="32767" attributes="0"/>
+                                                          <Group type="102" alignment="0" attributes="0">
+                                                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                                              <Component id="jButtonCustomMapImport" min="-2" max="-2" attributes="0"/>
                                                           </Group>
-                                                          <Group type="102" attributes="0">
-                                                              <Component id="jLabel48" min="-2" max="-2" attributes="0"/>
-                                                              <EmptySpace max="-2" attributes="0"/>
-                                                              <Component id="jTextField42" pref="0" max="32767" attributes="0"/>
-                                                              <EmptySpace max="-2" attributes="0"/>
-                                                              <Component id="jButton49" min="-2" max="-2" attributes="0"/>
-                                                          </Group>
+                                                          <Component id="fileButtonCustomTileset1" alignment="0" pref="0" max="32767" attributes="0"/>
+                                                          <Component id="fileButtonCustomTileset2" alignment="0" pref="0" max="32767" attributes="0"/>
+                                                          <Component id="fileButtonCustomTileset3" alignment="0" pref="0" max="32767" attributes="0"/>
+                                                          <Component id="fileButtonCustomTileset4" alignment="0" pref="0" max="32767" attributes="0"/>
+                                                          <Component id="fileButtonCustomTileset5" alignment="0" pref="0" max="32767" attributes="0"/>
                                                       </Group>
                                                       <EmptySpace max="-2" attributes="0"/>
                                                   </Group>
@@ -823,185 +747,107 @@
                                             <DimensionLayout dim="1">
                                               <Group type="103" groupAlignment="0" attributes="0">
                                                   <Group type="102" alignment="1" attributes="0">
-                                                      <Group type="103" groupAlignment="3" attributes="0">
-                                                          <Component id="jTextField42" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                          <Component id="jLabel48" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                          <Component id="jButton49" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                      </Group>
                                                       <EmptySpace max="-2" attributes="0"/>
-                                                      <Group type="103" groupAlignment="3" attributes="0">
-                                                          <Component id="jTextField35" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                          <Component id="jLabel42" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                          <Component id="jButton42" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                      </Group>
+                                                      <Component id="jLabel4" min="-2" pref="58" max="-2" attributes="0"/>
                                                       <EmptySpace max="-2" attributes="0"/>
-                                                      <Group type="103" groupAlignment="3" attributes="0">
-                                                          <Component id="jTextField38" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                          <Component id="jLabel43" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                          <Component id="jButton45" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                      </Group>
+                                                      <Component id="fileButtonCustomPalette" min="-2" max="-2" attributes="0"/>
                                                       <EmptySpace max="-2" attributes="0"/>
-                                                      <Group type="103" groupAlignment="3" attributes="0">
-                                                          <Component id="jTextField39" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                          <Component id="jLabel44" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                          <Component id="jButton46" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                      </Group>
+                                                      <Component id="fileButtonCustomTileset1" min="-2" max="-2" attributes="0"/>
                                                       <EmptySpace max="-2" attributes="0"/>
-                                                      <Group type="103" groupAlignment="3" attributes="0">
-                                                          <Component id="jTextField40" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                          <Component id="jLabel45" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                          <Component id="jButton47" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                      </Group>
+                                                      <Component id="fileButtonCustomTileset2" min="-2" max="-2" attributes="0"/>
                                                       <EmptySpace max="-2" attributes="0"/>
-                                                      <Group type="103" groupAlignment="3" attributes="0">
-                                                          <Component id="jTextField41" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                          <Component id="jLabel46" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                          <Component id="jButton48" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                      </Group>
-                                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                                      <Group type="103" groupAlignment="3" attributes="0">
-                                                          <Component id="jButton9" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                          <Component id="jCheckBox3" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                      </Group>
-                                                      <EmptySpace pref="41" max="32767" attributes="0"/>
+                                                      <Component id="fileButtonCustomTileset3" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace max="-2" attributes="0"/>
+                                                      <Component id="fileButtonCustomTileset4" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace max="-2" attributes="0"/>
+                                                      <Component id="fileButtonCustomTileset5" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace max="-2" attributes="0"/>
+                                                      <Component id="jButtonCustomMapImport" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace max="-2" attributes="0"/>
                                                   </Group>
                                               </Group>
                                             </DimensionLayout>
                                           </Layout>
                                           <SubComponents>
-                                            <Component class="javax.swing.JButton" name="jButton9">
+                                            <Component class="javax.swing.JButton" name="jButtonCustomMapImport">
                                               <Properties>
                                                 <Property name="text" type="java.lang.String" value="Import"/>
                                               </Properties>
                                               <Events>
-                                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton9ActionPerformed"/>
+                                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonCustomMapImportActionPerformed"/>
                                               </Events>
                                             </Component>
-                                            <Component class="javax.swing.JLabel" name="jLabel42">
+                                            <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButtonCustomPalette">
                                               <Properties>
-                                                <Property name="text" type="java.lang.String" value="Base Tileset 1 :"/>
+                                                <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                                  <Value id="BIN"/>
+                                                </Property>
+                                                <Property name="filePath" type="java.lang.String" value="../../../graphics/maps/mappalettes/mappalette00.bin"/>
+                                                <Property name="infoMessage" type="java.lang.String" value=""/>
+                                                <Property name="labelText" type="java.lang.String" value="Palette :"/>
                                               </Properties>
                                             </Component>
-                                            <Component class="javax.swing.JTextField" name="jTextField35">
+                                            <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButtonCustomTileset1">
                                               <Properties>
-                                                <Property name="horizontalAlignment" type="int" value="11"/>
-                                                <Property name="text" type="java.lang.String" value="../../../graphics/maps/maptilesets/maptileset001.bin"/>
+                                                <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                                  <Value id="BIN"/>
+                                                </Property>
+                                                <Property name="filePath" type="java.lang.String" value="../../../graphics/maps/maptilesets/maptileset000.bin"/>
+                                                <Property name="infoMessage" type="java.lang.String" value="&lt;html&gt;Tileset 0, index 0 should always be left empty&lt;/html&gt;"/>
+                                                <Property name="labelText" type="java.lang.String" value="Tileset 1 :"/>
                                               </Properties>
                                             </Component>
-                                            <Component class="javax.swing.JButton" name="jButton42">
+                                            <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButtonCustomTileset2">
                                               <Properties>
-                                                <Property name="text" type="java.lang.String" value="File..."/>
-                                              </Properties>
-                                              <Events>
-                                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton42ActionPerformed"/>
-                                              </Events>
-                                            </Component>
-                                            <Component class="javax.swing.JButton" name="jButton45">
-                                              <Properties>
-                                                <Property name="text" type="java.lang.String" value="File..."/>
-                                              </Properties>
-                                              <Events>
-                                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton45ActionPerformed"/>
-                                              </Events>
-                                            </Component>
-                                            <Component class="javax.swing.JLabel" name="jLabel43">
-                                              <Properties>
-                                                <Property name="text" type="java.lang.String" value="Base Tileset 2 :"/>
+                                                <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                                  <Value id="BIN"/>
+                                                </Property>
+                                                <Property name="filePath" type="java.lang.String" value="../../../graphics/maps/maptilesets/maptileset037.bin"/>
+                                                <Property name="infoMessage" type="java.lang.String" value=""/>
+                                                <Property name="labelText" type="java.lang.String" value="Tileset 2 :"/>
                                               </Properties>
                                             </Component>
-                                            <Component class="javax.swing.JTextField" name="jTextField38">
+                                            <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButtonCustomTileset3">
                                               <Properties>
-                                                <Property name="horizontalAlignment" type="int" value="11"/>
-                                                <Property name="text" type="java.lang.String" value="../../../graphics/maps/maptilesets/maptileset002.bin"/>
+                                                <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                                  <Value id="BIN"/>
+                                                </Property>
+                                                <Property name="filePath" type="java.lang.String" value="../../../graphics/maps/maptilesets/maptileset043.bin"/>
+                                                <Property name="infoMessage" type="java.lang.String" value=""/>
+                                                <Property name="labelText" type="java.lang.String" value="Tileset 3 :"/>
                                               </Properties>
                                             </Component>
-                                            <Component class="javax.swing.JButton" name="jButton46">
+                                            <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButtonCustomTileset4">
                                               <Properties>
-                                                <Property name="text" type="java.lang.String" value="File..."/>
-                                              </Properties>
-                                              <Events>
-                                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton46ActionPerformed"/>
-                                              </Events>
-                                            </Component>
-                                            <Component class="javax.swing.JLabel" name="jLabel44">
-                                              <Properties>
-                                                <Property name="text" type="java.lang.String" value="Base Tileset 3 :"/>
+                                                <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                                  <Value id="BIN"/>
+                                                </Property>
+                                                <Property name="filePath" type="java.lang.String" value="../../../graphics/maps/maptilesets/maptileset053.bin"/>
+                                                <Property name="infoMessage" type="java.lang.String" value=""/>
+                                                <Property name="labelText" type="java.lang.String" value="Tileset 4 :"/>
                                               </Properties>
                                             </Component>
-                                            <Component class="javax.swing.JTextField" name="jTextField39">
+                                            <Component class="com.sfc.sf2.core.gui.controls.FileButton" name="fileButtonCustomTileset5">
                                               <Properties>
-                                                <Property name="horizontalAlignment" type="int" value="11"/>
-                                                <Property name="text" type="java.lang.String" value="../../../graphics/maps/maptilesets/maptileset003.bin"/>
+                                                <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                                  <Value id="BIN"/>
+                                                </Property>
+                                                <Property name="filePath" type="java.lang.String" value="../../../graphics/maps/maptilesets/maptileset066.bin"/>
+                                                <Property name="infoMessage" type="java.lang.String" value="&lt;html&gt;Open/closed chest tiles are expected at fixed positions in tileset 5 (if &apos;chest graphics&apos; is ticked). See e.g. &lt;i&gt;maptileset066.bin&lt;/i&gt;.&lt;/html&gt;"/>
+                                                <Property name="labelText" type="java.lang.String" value="Tileset 5 :"/>
                                               </Properties>
                                             </Component>
-                                            <Component class="javax.swing.JButton" name="jButton47">
+                                            <Component class="javax.swing.JLabel" name="jLabel4">
                                               <Properties>
-                                                <Property name="text" type="java.lang.String" value="File..."/>
+                                                <Property name="text" type="java.lang.String" value="&lt;html&gt;Load individual palette and tilesets.&lt;br&gt;&lt;b&gt;NOTE:&lt;/b&gt; Set a tileset slot to empty to allow space for new tiles from imported map.&lt;/html&gt;"/>
+                                                <Property name="verticalAlignment" type="int" value="1"/>
                                               </Properties>
-                                              <Events>
-                                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton47ActionPerformed"/>
-                                              </Events>
-                                            </Component>
-                                            <Component class="javax.swing.JLabel" name="jLabel45">
-                                              <Properties>
-                                                <Property name="text" type="java.lang.String" value="Base Tileset 4 :"/>
-                                              </Properties>
-                                            </Component>
-                                            <Component class="javax.swing.JTextField" name="jTextField40">
-                                              <Properties>
-                                                <Property name="horizontalAlignment" type="int" value="11"/>
-                                                <Property name="text" type="java.lang.String" value="../../../graphics/maps/maptilesets/maptileset004.bin"/>
-                                              </Properties>
-                                            </Component>
-                                            <Component class="javax.swing.JButton" name="jButton48">
-                                              <Properties>
-                                                <Property name="text" type="java.lang.String" value="File..."/>
-                                              </Properties>
-                                              <Events>
-                                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton48ActionPerformed"/>
-                                              </Events>
-                                            </Component>
-                                            <Component class="javax.swing.JLabel" name="jLabel46">
-                                              <Properties>
-                                                <Property name="text" type="java.lang.String" value="Base Tileset 5 :"/>
-                                              </Properties>
-                                            </Component>
-                                            <Component class="javax.swing.JTextField" name="jTextField41">
-                                              <Properties>
-                                                <Property name="horizontalAlignment" type="int" value="11"/>
-                                                <Property name="text" type="java.lang.String" value="../../../graphics/maps/maptilesets/maptileset005.bin"/>
-                                              </Properties>
-                                            </Component>
-                                            <Component class="javax.swing.JCheckBox" name="jCheckBox3">
-                                              <Properties>
-                                                <Property name="selected" type="boolean" value="true"/>
-                                                <Property name="text" type="java.lang.String" value="Chest graphics"/>
-                                              </Properties>
-                                            </Component>
-                                            <Component class="javax.swing.JLabel" name="jLabel48">
-                                              <Properties>
-                                                <Property name="text" type="java.lang.String" value="Palette :"/>
-                                              </Properties>
-                                            </Component>
-                                            <Component class="javax.swing.JTextField" name="jTextField42">
-                                              <Properties>
-                                                <Property name="horizontalAlignment" type="int" value="11"/>
-                                                <Property name="text" type="java.lang.String" value="../../../graphics/maps/mappalettes/mappalette00.bin"/>
-                                              </Properties>
-                                            </Component>
-                                            <Component class="javax.swing.JButton" name="jButton49">
-                                              <Properties>
-                                                <Property name="text" type="java.lang.String" value="File..."/>
-                                              </Properties>
-                                              <Events>
-                                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton49ActionPerformed"/>
-                                              </Events>
                                             </Component>
                                           </SubComponents>
                                         </Container>
                                         <Component class="javax.swing.JLabel" name="jLabel53">
                                           <Properties>
-                                            <Property name="text" type="java.lang.String" value="&lt;html&gt;Step 2 : Load tilesets from mapdata or individually.&lt;/html&gt;"/>
+                                            <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;b&gt;Step 2:&lt;/b&gt; Load tilesets from mapdata or individually.&lt;/html&gt;"/>
                                             <Property name="verticalAlignment" type="int" value="1"/>
                                           </Properties>
                                         </Component>
@@ -1017,286 +863,53 @@
                                       <Layout>
                                         <DimensionLayout dim="0">
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="jScrollPane7" max="32767" attributes="0"/>
-                                              <Component id="jScrollPane8" alignment="0" pref="0" max="32767" attributes="0"/>
-                                              <Component id="jScrollPane11" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="jScrollPane12" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="jScrollPane13" alignment="0" max="32767" attributes="0"/>
-                                          </Group>
-                                        </DimensionLayout>
-                                        <DimensionLayout dim="1">
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Group type="102" alignment="1" attributes="0">
-                                                  <Component id="jScrollPane7" min="-2" pref="130" max="-2" attributes="0"/>
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="jScrollPane8" min="-2" pref="130" max="-2" attributes="0"/>
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="jScrollPane11" min="-2" pref="130" max="-2" attributes="0"/>
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="jScrollPane12" min="-2" pref="130" max="-2" attributes="0"/>
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="jScrollPane13" min="-2" pref="143" max="-2" attributes="0"/>
-                                              </Group>
-                                          </Group>
-                                        </DimensionLayout>
-                                      </Layout>
-                                      <SubComponents>
-                                        <Container class="javax.swing.JScrollPane" name="jScrollPane7">
-                                          <Properties>
-                                            <Property name="horizontalScrollBarPolicy" type="int" value="31"/>
-                                            <Property name="verticalScrollBarPolicy" type="int" value="21"/>
-                                          </Properties>
-
-                                          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-                                          <SubComponents>
-                                            <Container class="javax.swing.JPanel" name="jPanel30">
-
-                                              <Layout>
-                                                <DimensionLayout dim="0">
-                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                                  </Group>
-                                                </DimensionLayout>
-                                                <DimensionLayout dim="1">
-                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                                  </Group>
-                                                </DimensionLayout>
-                                              </Layout>
-                                            </Container>
-                                          </SubComponents>
-                                        </Container>
-                                        <Container class="javax.swing.JScrollPane" name="jScrollPane8">
-                                          <Properties>
-                                            <Property name="horizontalScrollBarPolicy" type="int" value="31"/>
-                                            <Property name="verticalScrollBarPolicy" type="int" value="21"/>
-                                          </Properties>
-
-                                          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-                                          <SubComponents>
-                                            <Container class="javax.swing.JPanel" name="jPanel33">
-                                              <Properties>
-                                                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                                                  <Dimension value="[276, 130]"/>
-                                                </Property>
-                                              </Properties>
-
-                                              <Layout>
-                                                <DimensionLayout dim="0">
-                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                      <EmptySpace min="0" pref="276" max="32767" attributes="0"/>
-                                                  </Group>
-                                                </DimensionLayout>
-                                                <DimensionLayout dim="1">
-                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                      <EmptySpace min="0" pref="130" max="32767" attributes="0"/>
-                                                  </Group>
-                                                </DimensionLayout>
-                                              </Layout>
-                                            </Container>
-                                          </SubComponents>
-                                        </Container>
-                                        <Container class="javax.swing.JScrollPane" name="jScrollPane11">
-                                          <Properties>
-                                            <Property name="horizontalScrollBarPolicy" type="int" value="31"/>
-                                            <Property name="verticalScrollBarPolicy" type="int" value="21"/>
-                                          </Properties>
-
-                                          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-                                          <SubComponents>
-                                            <Container class="javax.swing.JPanel" name="jPanel36">
-
-                                              <Layout>
-                                                <DimensionLayout dim="0">
-                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                                  </Group>
-                                                </DimensionLayout>
-                                                <DimensionLayout dim="1">
-                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                                  </Group>
-                                                </DimensionLayout>
-                                              </Layout>
-                                            </Container>
-                                          </SubComponents>
-                                        </Container>
-                                        <Container class="javax.swing.JScrollPane" name="jScrollPane12">
-                                          <Properties>
-                                            <Property name="horizontalScrollBarPolicy" type="int" value="31"/>
-                                            <Property name="verticalScrollBarPolicy" type="int" value="21"/>
-                                          </Properties>
-
-                                          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-                                          <SubComponents>
-                                            <Container class="javax.swing.JPanel" name="jPanel37">
-
-                                              <Layout>
-                                                <DimensionLayout dim="0">
-                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                                  </Group>
-                                                </DimensionLayout>
-                                                <DimensionLayout dim="1">
-                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                                  </Group>
-                                                </DimensionLayout>
-                                              </Layout>
-                                            </Container>
-                                          </SubComponents>
-                                        </Container>
-                                        <Container class="javax.swing.JScrollPane" name="jScrollPane13">
-                                          <Properties>
-                                            <Property name="horizontalScrollBarPolicy" type="int" value="31"/>
-                                            <Property name="toolTipText" type="java.lang.String" value=""/>
-                                            <Property name="verticalScrollBarPolicy" type="int" value="21"/>
-                                          </Properties>
-
-                                          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-                                          <SubComponents>
-                                            <Container class="javax.swing.JPanel" name="jPanel38">
-
-                                              <Layout>
-                                                <DimensionLayout dim="0">
-                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                                  </Group>
-                                                </DimensionLayout>
-                                                <DimensionLayout dim="1">
-                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                                  </Group>
-                                                </DimensionLayout>
-                                              </Layout>
-                                            </Container>
-                                          </SubComponents>
-                                        </Container>
-                                      </SubComponents>
-                                    </Container>
-                                  </SubComponents>
-                                </Container>
-                                <Container class="javax.swing.JPanel" name="jPanel16">
-                                  <Constraints>
-                                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                                      <JTabbedPaneConstraints tabName="3. Edit">
-                                        <Property name="tabTitle" type="java.lang.String" value="3. Edit"/>
-                                      </JTabbedPaneConstraints>
-                                    </Constraint>
-                                  </Constraints>
-
-                                  <Layout>
-                                    <DimensionLayout dim="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="1" attributes="0">
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="1" attributes="0">
-                                                  <Component id="jPanel17" max="32767" attributes="0"/>
-                                                  <Component id="jLabel7" max="32767" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                    </DimensionLayout>
-                                    <DimensionLayout dim="1">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                                              <Component id="jPanel17" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace pref="512" max="32767" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                    </DimensionLayout>
-                                  </Layout>
-                                  <SubComponents>
-                                    <Component class="javax.swing.JLabel" name="jLabel7">
-                                      <Properties>
-                                        <Property name="text" type="java.lang.String" value="&lt;html&gt;Step 3 (Optional) : Edit map.&lt;br&gt;&lt;br&gt;&#xa;&#xa;Imported map layout flags not editable here.&lt;br/&gt;Use SF2MapEditor on exported data.&lt;br/&gt;&lt;br/&gt;Tile priority edit :&lt;br/&gt;Use the &quot;Tile Priority&quot; display checkbox&lt;br/&gt;to edit tile display priorities.&lt;br&gt;&lt;br&gt;&#xa;TODO: More edit options&lt;/html&gt;"/>
-                                      </Properties>
-                                    </Component>
-                                    <Container class="javax.swing.JPanel" name="jPanel17">
-                                      <Properties>
-                                        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                                          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                                            <TitledBorder title="Export"/>
-                                          </Border>
-                                        </Property>
-                                      </Properties>
-
-                                      <Layout>
-                                        <DimensionLayout dim="0">
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Group type="102" alignment="1" attributes="0">
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Group type="102" alignment="0" attributes="0">
-                                                          <Component id="jLabel24" min="-2" max="-2" attributes="0"/>
-                                                          <EmptySpace max="-2" attributes="0"/>
-                                                          <Component id="jTextField19" pref="449" max="32767" attributes="0"/>
-                                                      </Group>
-                                                      <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                                                  </Group>
-                                                  <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                      <Component id="jButton29" max="32767" attributes="0"/>
-                                                      <Component id="jButton3" max="32767" attributes="0"/>
-                                                  </Group>
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                              </Group>
+                                              <Component id="jScrollPane5" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="viewPanelTilesets" alignment="0" pref="325" max="32767" attributes="0"/>
                                           </Group>
                                         </DimensionLayout>
                                         <DimensionLayout dim="1">
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Group type="102" alignment="0" attributes="0">
-                                                  <Group type="103" groupAlignment="3" attributes="0">
-                                                      <Component id="jTextField19" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="jLabel24" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="jButton29" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                  </Group>
-                                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="3" attributes="0">
-                                                      <Component id="jLabel3" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
-                                                      <Component id="jButton3" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                  </Group>
-                                                  <EmptySpace max="32767" attributes="0"/>
+                                                  <Component id="jScrollPane5" pref="665" max="32767" attributes="0"/>
+                                                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                                                  <Component id="viewPanelTilesets" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
                                         </DimensionLayout>
                                       </Layout>
                                       <SubComponents>
-                                        <Component class="javax.swing.JLabel" name="jLabel24">
+                                        <Container class="javax.swing.JScrollPane" name="jScrollPane5">
                                           <Properties>
-                                            <Property name="text" type="java.lang.String" value="HP Tiles :"/>
+                                            <Property name="horizontalScrollBarPolicy" type="int" value="32"/>
+                                            <Property name="verticalScrollBarPolicy" type="int" value="22"/>
+                                            <Property name="viewportBorder" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                                              <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                                                <TitledBorder title="Tilesets : "/>
+                                              </Border>
+                                            </Property>
                                           </Properties>
-                                        </Component>
-                                        <Component class="javax.swing.JTextField" name="jTextField19">
-                                          <Properties>
-                                            <Property name="horizontalAlignment" type="int" value="11"/>
-                                            <Property name="text" type="java.lang.String" value="maphptiles.txt"/>
-                                          </Properties>
-                                        </Component>
-                                        <Component class="javax.swing.JButton" name="jButton29">
-                                          <Properties>
-                                            <Property name="text" type="java.lang.String" value="File..."/>
-                                          </Properties>
-                                          <Events>
-                                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton29ActionPerformed"/>
-                                          </Events>
-                                        </Component>
-                                        <Component class="javax.swing.JLabel" name="jLabel3">
-                                          <Properties>
-                                            <Property name="text" type="java.lang.String" value="&lt;html&gt;Save current state of tile priority map.&lt;/html&gt;"/>
-                                          </Properties>
-                                        </Component>
-                                        <Component class="javax.swing.JButton" name="jButton3">
-                                          <Properties>
-                                            <Property name="text" type="java.lang.String" value="Export"/>
-                                          </Properties>
-                                          <Events>
-                                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
-                                          </Events>
+
+                                          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+                                          <SubComponents>
+                                            <Container class="com.sfc.sf2.mapcreator.gui.MapTilesetLayoutPanel" name="mapTilesetLayoutPanel1">
+
+                                              <Layout>
+                                                <DimensionLayout dim="0">
+                                                  <Group type="103" groupAlignment="0" attributes="0">
+                                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                                  </Group>
+                                                </DimensionLayout>
+                                                <DimensionLayout dim="1">
+                                                  <Group type="103" groupAlignment="0" attributes="0">
+                                                      <EmptySpace min="0" pref="653" max="32767" attributes="0"/>
+                                                  </Group>
+                                                </DimensionLayout>
+                                              </Layout>
+                                            </Container>
+                                          </SubComponents>
+                                        </Container>
+                                        <Component class="com.sfc.sf2.core.gui.controls.ViewPanelStacked" name="viewPanelTilesets">
                                         </Component>
                                       </SubComponents>
                                     </Container>
@@ -1308,8 +921,8 @@
                                   </Properties>
                                   <Constraints>
                                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                                      <JTabbedPaneConstraints tabName="4. Generate">
-                                        <Property name="tabTitle" type="java.lang.String" value="4. Generate"/>
+                                      <JTabbedPaneConstraints tabName="3. Optimise">
+                                        <Property name="tabTitle" type="java.lang.String" value="3. Optimise"/>
                                       </JTabbedPaneConstraints>
                                     </Constraint>
                                   </Constraints>
@@ -1329,10 +942,22 @@
                                               <Group type="102" attributes="0">
                                                   <EmptySpace max="-2" attributes="0"/>
                                                   <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Component id="jLabel54" alignment="0" max="32767" attributes="0"/>
+                                                      <Component id="jLabel54" alignment="0" pref="288" max="32767" attributes="0"/>
                                                       <Component id="jLabel38" alignment="0" pref="288" max="32767" attributes="0"/>
-                                                      <Group type="102" alignment="0" attributes="0">
-                                                          <Component id="jButton5" min="-2" max="-2" attributes="0"/>
+                                                      <Group type="102" attributes="0">
+                                                          <Group type="103" groupAlignment="0" attributes="0">
+                                                              <Group type="102" alignment="0" attributes="0">
+                                                                  <Component id="jCheckBoxChestGraphic" min="-2" max="-2" attributes="0"/>
+                                                                  <EmptySpace max="-2" attributes="0"/>
+                                                                  <Component id="infoButton1" min="-2" max="-2" attributes="0"/>
+                                                              </Group>
+                                                              <Group type="102" alignment="0" attributes="0">
+                                                                  <Component id="jCheckBoxModifyTilesets" min="-2" max="-2" attributes="0"/>
+                                                                  <EmptySpace max="-2" attributes="0"/>
+                                                                  <Component id="infoButton2" min="-2" max="-2" attributes="0"/>
+                                                              </Group>
+                                                              <Component id="jButtonOptimise" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                          </Group>
                                                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                                       </Group>
                                                   </Group>
@@ -1344,11 +969,21 @@
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Group type="102" alignment="0" attributes="0">
                                                   <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="jLabel54" pref="36" max="32767" attributes="0"/>
+                                                  <Component id="jLabel54" min="-2" pref="40" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Group type="103" groupAlignment="2" attributes="0">
+                                                      <Component id="infoButton1" alignment="2" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="jCheckBoxChestGraphic" alignment="2" min="-2" max="-2" attributes="0"/>
+                                                  </Group>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Group type="103" groupAlignment="2" attributes="0">
+                                                      <Component id="infoButton2" alignment="2" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="jCheckBoxModifyTilesets" alignment="2" min="-2" max="-2" attributes="0"/>
+                                                  </Group>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="jButtonOptimise" min="-2" pref="45" max="-2" attributes="0"/>
                                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                                  <Component id="jButton5" min="-2" pref="45" max="-2" attributes="0"/>
-                                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                                  <Component id="jLabel38" pref="665" max="32767" attributes="0"/>
+                                                  <Component id="jLabel38" pref="573" max="32767" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
@@ -1357,22 +992,52 @@
                                       <SubComponents>
                                         <Component class="javax.swing.JLabel" name="jLabel54">
                                           <Properties>
-                                            <Property name="text" type="java.lang.String" value="&lt;html&gt;Step 4 : Generate new blocksets and tilesets.&lt;/html&gt;"/>
+                                            <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;b&gt;Step 3:&lt;/b&gt; Optimise blocks/tiles and generate new blocksets and tilesets.&lt;/html&gt;"/>
                                             <Property name="verticalAlignment" type="int" value="1"/>
                                           </Properties>
                                         </Component>
-                                        <Component class="javax.swing.JButton" name="jButton5">
+                                        <Component class="javax.swing.JButton" name="jButtonOptimise">
                                           <Properties>
-                                            <Property name="text" type="java.lang.String" value="Generate Data"/>
+                                            <Property name="text" type="java.lang.String" value="Optimise and Generate Data"/>
                                           </Properties>
                                           <Events>
-                                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton5ActionPerformed"/>
+                                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonOptimiseActionPerformed"/>
                                           </Events>
                                         </Component>
                                         <Component class="javax.swing.JLabel" name="jLabel38">
                                           <Properties>
-                                            <Property name="text" type="java.lang.String" value="&lt;html&gt;*Loads base tilesets declared in step 2, if not already done.&lt;br&gt;&lt;br&gt;&#xa;- Orphaned Tiles : Any tiles that do not fit in the original tilesets.&lt;br&gt;Use the checkbox to see where the orphaned tiles are on the map.&lt;br&gt;&lt;br&gt;&#xa;- Optimized Blockset : Identifies all unique blocks on the map in order of appearance (i.e. duplicates are combined).&lt;br&gt;&lt;br&gt;&#xa;- New Tileset : Any orphaned tiles will be inserted into blank tiles spaces in the new tilesets.&lt;br&gt;Empty tilesets will be filled to create new tilesets.&lt;/html&gt;"/>
+                                            <Property name="text" type="java.lang.String" value="&lt;html&gt;- Orphaned Tiles: Any tiles that do not fit in the original tilesets.&lt;br&gt;Use the checkbox to see where the orphaned tiles are on the map.&lt;br&gt;&lt;br&gt;&#xa;- Optimized Blockset: Identifies all unique blocks on the map in order of appearance (i.e. duplicates are combined).&lt;br&gt;&lt;br&gt;&#xa;- New Tileset: Any orphaned tiles will be inserted into blank tiles spaces in the new tilesets.&lt;br&gt;Empty tilesets will be filled to create new tilesets.&lt;/html&gt;"/>
                                             <Property name="verticalAlignment" type="int" value="1"/>
+                                          </Properties>
+                                        </Component>
+                                        <Component class="javax.swing.JCheckBox" name="jCheckBoxChestGraphic">
+                                          <Properties>
+                                            <Property name="selected" type="boolean" value="true"/>
+                                            <Property name="text" type="java.lang.String" value="Chest graphics"/>
+                                          </Properties>
+                                          <Events>
+                                            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jCheckBoxChestGraphicItemStateChanged"/>
+                                          </Events>
+                                        </Component>
+                                        <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton1">
+                                          <Properties>
+                                            <Property name="messageText" type="java.lang.String" value="&lt;html&gt;Tileset 5 will have chest open/closed graphics injected into it.&lt;br&gt;Chest graphics will be placed in blocks index 1 &amp; 2.&lt;/html&gt;"/>
+                                            <Property name="text" type="java.lang.String" value=""/>
+                                          </Properties>
+                                        </Component>
+                                        <Component class="javax.swing.JCheckBox" name="jCheckBoxModifyTilesets">
+                                          <Properties>
+                                            <Property name="selected" type="boolean" value="true"/>
+                                            <Property name="text" type="java.lang.String" value="Modify tilesets"/>
+                                          </Properties>
+                                          <Events>
+                                            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jCheckBoxModifyTilesetsItemStateChanged"/>
+                                          </Events>
+                                        </Component>
+                                        <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton2">
+                                          <Properties>
+                                            <Property name="messageText" type="java.lang.String" value="&lt;html&gt;If ticked, new tiles can be inserted into empty spaces in imported tilesets. Otherwise, new tiles can only be placed in new tilesets (if space exists).&lt;/html&gt;"/>
+                                            <Property name="text" type="java.lang.String" value=""/>
                                           </Properties>
                                         </Component>
                                       </SubComponents>
@@ -1395,15 +1060,18 @@
                                         </DimensionLayout>
                                         <DimensionLayout dim="1">
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <EmptySpace min="0" pref="782" max="32767" attributes="0"/>
+                                              <EmptySpace min="0" pref="752" max="32767" attributes="0"/>
                                               <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                                                  <Component id="jTabbedPane2" alignment="1" pref="782" max="32767" attributes="0"/>
+                                                  <Component id="jTabbedPane2" alignment="1" max="32767" attributes="0"/>
                                               </Group>
                                           </Group>
                                         </DimensionLayout>
                                       </Layout>
                                       <SubComponents>
                                         <Container class="javax.swing.JTabbedPane" name="jTabbedPane2">
+                                          <AccessibilityProperties>
+                                            <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Orphaned Tiles"/>
+                                          </AccessibilityProperties>
 
                                           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
                                           <SubComponents>
@@ -1578,7 +1246,7 @@
                                                 </DimensionLayout>
                                                 <DimensionLayout dim="1">
                                                   <Group type="103" groupAlignment="0" attributes="0">
-                                                      <EmptySpace min="0" pref="747" max="32767" attributes="0"/>
+                                                      <EmptySpace min="0" pref="687" max="32767" attributes="0"/>
                                                       <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                                                           <Component id="jPanel44" alignment="0" max="32767" attributes="0"/>
                                                       </Group>
@@ -1598,7 +1266,7 @@
                                                     <DimensionLayout dim="1">
                                                       <Group type="103" groupAlignment="0" attributes="0">
                                                           <Group type="102" alignment="0" attributes="0">
-                                                              <Component id="jScrollPane17" pref="696" max="32767" attributes="0"/>
+                                                              <Component id="jScrollPane17" pref="636" max="32767" attributes="0"/>
                                                               <EmptySpace max="-2" attributes="0"/>
                                                               <Component id="jPanel46" min="-2" max="-2" attributes="0"/>
                                                           </Group>
@@ -1899,8 +1567,8 @@
                                   </Properties>
                                   <Constraints>
                                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                                      <JTabbedPaneConstraints tabName="5. Export">
-                                        <Property name="tabTitle" type="java.lang.String" value="5. Export"/>
+                                      <JTabbedPaneConstraints tabName="4. Export">
+                                        <Property name="tabTitle" type="java.lang.String" value="4. Export"/>
                                       </JTabbedPaneConstraints>
                                     </Constraint>
                                   </Constraints>
@@ -1922,14 +1590,14 @@
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" alignment="0" attributes="0">
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jLabel55" pref="59" max="32767" attributes="0"/>
+                                              <Component id="jLabel55" pref="44" max="32767" attributes="0"/>
                                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                               <Component id="jPanel47" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="jPanel48" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="jPanel49" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace pref="215" max="32767" attributes="0"/>
+                                              <EmptySpace pref="200" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
                                     </DimensionLayout>
@@ -2452,18 +2120,14 @@
                                   <Component id="jPanel1" max="32767" attributes="0"/>
                                   <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="viewPanelMap" max="32767" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="viewPanelMap" alignment="0" max="32767" attributes="0"/>
                           </Group>
                         </DimensionLayout>
                         <DimensionLayout dim="1">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jPanel1" max="32767" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
+                                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                                   <Component id="viewPanelMap" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                               </Group>
@@ -2488,7 +2152,7 @@
                             </DimensionLayout>
                             <DimensionLayout dim="1">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jScrollPane2" alignment="0" pref="713" max="32767" attributes="0"/>
+                                  <Component id="jScrollPane2" alignment="0" pref="689" max="32767" attributes="0"/>
                               </Group>
                             </DimensionLayout>
                           </Layout>

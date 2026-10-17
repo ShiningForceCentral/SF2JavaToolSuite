@@ -23,7 +23,7 @@ public abstract class BaseMouseCoordsComponent extends BaseLayoutComponent imple
     
     private static final Dimension NO_OFFSET = new Dimension();
     
-    private final Dimension mouseCoordsGrid;
+    private Dimension mouseCoordsGrid;
     private AbstractLayoutPanel panel;
     private GridMousePressedListener buttonListener;
     private GridMouseMoveListener motionListener;
@@ -63,6 +63,10 @@ public abstract class BaseMouseCoordsComponent extends BaseLayoutComponent imple
     
     public void setMouseMotionListener(GridMouseMoveListener motionListener) {
         this.motionListener = motionListener;
+    }
+    
+    public void setGrid(int gridX, int gridY) {
+        this.mouseCoordsGrid = new Dimension(gridX, gridY);
     }
     
     public void updateDisplayParameters(float displayScale, Dimension bounds, Dimension coordsOffset) {

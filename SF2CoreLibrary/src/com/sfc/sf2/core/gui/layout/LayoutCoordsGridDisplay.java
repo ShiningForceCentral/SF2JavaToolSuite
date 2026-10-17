@@ -60,6 +60,11 @@ public class LayoutCoordsGridDisplay extends BaseLayoutComponent {
         this.fontIncrease = fontIncrease;
     }
     
+    public void setDisplaySizes(int topSize, int leftSize) {
+        this.topSize = topSize;
+        this.leftSize = leftSize;
+    }
+    
     public Dimension getOffset(float displayScale) {
         int h = topSize <= 0 ? 0 : (int)(topPadding+PADDING_TOP+displayScale*PADDING_SCALE);
         int w = leftSize <= 0 ? 0 : (int)(leftPadding+PADDING_LEFT+displayScale*PADDING_SCALE);

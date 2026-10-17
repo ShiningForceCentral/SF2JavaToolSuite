@@ -119,7 +119,7 @@ public class MapBlock {
         return new MapBlock(index);
     }
     
-    public MapBlock createChestMapBlock(boolean isOpen) {
+    public static MapBlock createChestMapBlock(boolean isOpen) {
         byte tileset = 4;
         int openOffset = isOpen ? 2 : 0;
         MapTile[] tiles = new MapTile[9];

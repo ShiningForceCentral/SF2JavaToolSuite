@@ -122,4 +122,8 @@ public class MapLayout {
         if (!Arrays.equals(this.blocks, layout.blocks)) return false;
         return true;
     }
+    
+    public MapLayout clone() {
+        return new MapLayout(this.index, this.tilesets.clone(), this.blocks.clone());
+    }
 }

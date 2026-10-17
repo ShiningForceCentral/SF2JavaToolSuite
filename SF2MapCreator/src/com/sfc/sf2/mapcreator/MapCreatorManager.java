@@ -19,11 +19,14 @@ import com.sfc.sf2.map.block.MapBlockset;
 import com.sfc.sf2.map.block.io.MapBlockPackage;
 import com.sfc.sf2.map.block.io.MapBlocksetMetaProcessor;
 import com.sfc.sf2.map.block.io.MapBlocksetRawImageProcessor;
+import com.sfc.sf2.map.block.io.MapTilesetData;
+import com.sfc.sf2.map.block.io.MapTilesetsAsmProcessor;
 import com.sfc.sf2.map.layout.BlockFlags;
 import com.sfc.sf2.map.layout.MapLayout;
 import com.sfc.sf2.map.layout.MapLayoutBlock;
 import com.sfc.sf2.map.layout.MapLayoutManager;
 import com.sfc.sf2.map.layout.io.MapLayoutMetaProcessor;
+import com.sfc.sf2.mapcreator.io.MapTilesetsData;
 import com.sfc.sf2.palette.Palette;
 import com.sfc.sf2.palette.PaletteManager;
 import java.io.IOException;
@@ -36,8 +39,7 @@ import java.nio.file.Path;
 public class MapCreatorManager extends AbstractManager {
 
     private ProtoMap protoMap;
-    private Path lastImportedPalettePath;
-    private Path[] lastImportedTilesetsPaths;
+    private Tileset[] importedTilesets;
 
     @Override
     public void clearData() {
@@ -45,11 +47,17 @@ public class MapCreatorManager extends AbstractManager {
             protoMap.getLayout().clearIndexedColorImage(true);
             protoMap = null;
         }
-        lastImportedPalettePath = null;
-        lastImportedTilesetsPaths = null;
+        if (importedTilesets != null) {
+            for (int i = 0; i < importedTilesets.length; i++) {
+                if (importedTilesets[i] != null) {
+                    importedTilesets[i].clearIndexedColorImage(true);
+                }
+            }
+            importedTilesets = null;
+        }
     }
     
-    public void importImage(Path filePath, Path flagsPath, Path hptilesPath) throws IOException, RawImageException, MetadataException {
+    public ProtoMap importImage(Path filePath, Path flagsPath, Path hptilesPath) throws IOException, RawImageException, MetadataException {
         Console.logger().finest("ENTERING importImage");
         String name = PathHelpers.filenameFromPath(filePath);
         MapBlocksetRawImageProcessor blocksetProcessor = new MapBlocksetRawImageProcessor();
@@ -74,37 +82,43 @@ public class MapCreatorManager extends AbstractManager {
         protoMap = new ProtoMap(name, blockset, layout);
         Console.logger().info("Map image successfully imported from: " + filePath);
         Console.logger().finest("EXITING importImage");
+        return protoMap;
     }
     
-    public void importMapPaletteAndTilesets(Path palettesPath, Path tilesetsPath, Path tilesetsFilePath) {
-        Console.logger().finest("ENTERING importMapPaletteAndTilesets");
-        /*try {
-            String[] paths = layoutDisasm.importTilesetsFile(palettesPath, tilesetsPath, tilesetsFilePath);
-            Palette palette = com.sfc.sf2.palette.io.DisassemblyManager.importDisassembly(paths[0]);
-            
-            String[] tilesetPaths = new String[paths.length-1];
-            System.arraycopy(paths, 1, tilesetPaths, 0, tilesetPaths.length);
-            Tileset[] tilesets = new Tileset[tilesetPaths.length];
-            for (int i = 0; i < tilesets.length; i++) {
-                Tile[] tiles = com.sfc.sf2.graphics.io.DisassemblyManager.importDisassembly(tilesetPaths[i], palette, GraphicsManager.COMPRESSION_STACK);
-                if (tiles == null) {
-                    tilesets[i] = Tileset.EmptyTilset(palette);
-                } else {
-                    tilesets[i] = new Tileset();
-                    tilesets[i].setName(tilesetPaths[i].substring(tilesetPaths[i].lastIndexOf("\\"), tilesetPaths[i].lastIndexOf(".")));
-                    tilesets[i].setTiles(tiles);
-                }
+    public MapTilesetsData importMapData(Path mapFile, Path palettePath, Path tilesetsPath) throws IOException, AsmException {
+        Console.logger().finest("ENTERING importMapData");
+        MapTilesetData mapData = new MapTilesetsAsmProcessor().importAsmData(mapFile, null);
+        String paletteName = String.format("mappalette%02d.bin", mapData.paletteIndex());
+        palettePath = palettePath.resolve(paletteName);
+        Path[] tilesetPaths = new Path[mapData.tilesetIndices().length];
+        for (int i = 0; i < tilesetPaths.length; i++) {
+            if (mapData.tilesetIndices()[i] == -1) {
+                tilesetPaths[i] = null;
+            } else {
+                tilesetPaths[i] = tilesetsPath.resolve(String.format("maptileset%03d.bin", mapData.tilesetIndices()[i]));
             }
-            map.setPalette(palette);
-            map.setTilesets(tilesets);
-            
-            lastImportedPalettePath = paths[0];
-            lastImportedTilesetsPaths = tilesetPaths;
         }
-        catch (Exception e) {
-             System.err.println("com.sfc.sf2.map.MapManager.importMapPaletteAndTilesets() - Error while parsing tileset data : "+e);
-        }*/
+        Console.logger().finest("EXITING importMapData");
+        return new MapTilesetsData(palettePath, tilesetPaths);
+    }
+    
+    public Tileset[] importMapPaletteAndTilesets(Path palettePath, Path[] tilesetPaths) throws IOException, DisassemblyException {
+        Console.logger().finest("ENTERING importMapPaletteAndTilesets");
+        if (tilesetPaths.length != 5) {
+            throw new IOException("importMapPaletteAndTilesets expects exactly 5 tileset paths. Any/all of the paths can be null");
+        }
+        Palette palette = new PaletteManager().importDisassembly(palettePath, true);
+        TilesetManager tilesetManager = new TilesetManager();
+        importedTilesets = new Tileset[tilesetPaths.length];
+        for (int i = 0; i < tilesetPaths.length; i++) {
+            if (tilesetPaths[i] == null) {
+                importedTilesets[i] = null;
+            } else {
+                importedTilesets[i] = tilesetManager.importDisassembly(tilesetPaths[i], palette, TilesetCompression.STACK, 16);
+            }
+        }
         Console.logger().finest("EXITING importMapPaletteAndTilesets");
+        return importedTilesets;
     }
     
     public void importBaseTilesets(Path[] tilesetPaths, boolean chestGraphics, Path targetPaletteFilepath) {
@@ -179,7 +193,7 @@ public class MapCreatorManager extends AbstractManager {
     
     public void exportDisassembly(Path tilesetsPath, Path blocksPath, Path layoutPath, ProtoMap map) throws IOException, DisassemblyException, AsmException {
         Console.logger().finest("ENTERING exportDisassembly");
-        new MapLayoutManager().exportDisassembly(tilesetsPath, blocksPath, layoutPath, map.getOptimizedBlockset(), map.getLayout());
+        //new MapLayoutManager().exportDisassembly(tilesetsPath, blocksPath, layoutPath, map.getOptimizedBlockset(), map.getLayout());
         Console.logger().info("Map tilesets, blockset, and layout successfully exported.");
         Console.logger().finest("EXITING exportDisassembly");
     }
@@ -202,12 +216,8 @@ public class MapCreatorManager extends AbstractManager {
     public ProtoMap getProtoMap() {
         return protoMap;
     }
-    
-    public Path getLastImportedPalettePath() {
-        return lastImportedPalettePath;
-    }
-    
-    public Path[] getLastImportedTilesetsPaths() {
-        return lastImportedTilesetsPaths;
+
+    public Tileset[] getImportedTilesets() {
+        return importedTilesets;
     }
 }
