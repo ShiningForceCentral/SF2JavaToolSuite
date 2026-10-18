@@ -60,7 +60,7 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
         viewPanelTilesetImport.setLayoutPanel(tilesetImportPanel, tilesetViewSettings);
         blocksetViewPanelOptimised.setLayoutPanel(mapBlocksetPanelOptimised, blockViewSettings);
         blocksetViewPanelImported.setLayoutPanel(mapBlocksetPanelImported, blockViewSettings);
-        viewPanelMap.setLayoutPanel(mapImportLayoutPanel, layoutViewSettings);
+        mapLayoutViewPanel.setLayoutPanel(mapImportLayoutPanel, layoutViewSettings);
     }
     
     @Override
@@ -97,10 +97,13 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
         actionOptimisedMap = map;
         if (map == null) {
             mapBlocksetPanelOptimised.setBlockset(null);
+            mapBlocksetPanelOptimised.setTilesets(null);
             mapTilesetLayoutPanelOptimised.setTileset(null);
         } else {
             mapBlocksetPanelOptimised.setBlockset(map.getOptimizedBlockset());
-            mapTilesetLayoutPanelOptimised.setTileset(map.getNewTilesets());
+            mapBlocksetPanelOptimised.setTilesets(map.getOptimisedTilesets());
+            mapTilesetLayoutPanelOptimised.setTileset(map.getOptimisedTilesets());
+            mapImportLayoutPanel.setMapLayout(map.getOptimisedLayout());
         }
     }
     /*
@@ -373,7 +376,7 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         mapImportLayoutPanel = new com.sfc.sf2.mapcreator.gui.ProtoMapLayoutPanel();
-        viewPanelMap = new com.sfc.sf2.core.gui.controls.ViewPanelStacked();
+        mapLayoutViewPanel = new com.sfc.sf2.map.layout.gui.MapLayoutViewPanel();
         console1 = new com.sfc.sf2.core.gui.controls.Console();
 
         jFileChooser2.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
@@ -789,7 +792,7 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
                 .addComponent(jPanel50, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel52, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(122, Short.MAX_VALUE))
+                .addContainerGap(106, Short.MAX_VALUE))
         );
 
         jSplitPane5.setLeftComponent(jPanel51);
@@ -1466,7 +1469,7 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 776, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1512,11 +1515,13 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 675, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 676, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 676, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
@@ -1524,17 +1529,17 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(mapLayoutViewPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(4, 4, 4))
-            .addComponent(viewPanelMap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
-                .addComponent(viewPanelMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(8, 8, 8))
+                .addComponent(mapLayoutViewPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jSplitPane2.setRightComponent(jPanel10);
@@ -2080,10 +2085,10 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
     private com.sfc.sf2.map.block.gui.MapBlocksetLayoutPanel mapBlocksetPanelImported;
     private com.sfc.sf2.map.block.gui.MapBlocksetLayoutPanel mapBlocksetPanelOptimised;
     private com.sfc.sf2.mapcreator.gui.ProtoMapLayoutPanel mapImportLayoutPanel;
+    private com.sfc.sf2.map.layout.gui.MapLayoutViewPanel mapLayoutViewPanel;
     private com.sfc.sf2.mapcreator.gui.MapTilesetLayoutPanel mapTilesetLayoutPanelImported;
     private com.sfc.sf2.mapcreator.gui.MapTilesetLayoutPanel mapTilesetLayoutPanelOptimised;
     private com.sfc.sf2.graphics.gui.TilesetLayoutPanel tilesetImportPanel;
-    private com.sfc.sf2.core.gui.controls.ViewPanelStacked viewPanelMap;
     private com.sfc.sf2.core.gui.controls.ViewPanelStacked viewPanelTilesetImport;
     private com.sfc.sf2.core.gui.controls.ViewPanelStacked viewPanelTilesetsImported;
     private com.sfc.sf2.core.gui.controls.ViewPanelStacked viewPanelTilesetsOptimised;

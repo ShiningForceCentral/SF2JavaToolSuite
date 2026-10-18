@@ -154,7 +154,7 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jTabbedPane1" max="32767" attributes="0"/>
+                                      <Component id="jTabbedPane1" pref="776" max="32767" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                   </Group>
                               </Group>
@@ -539,7 +539,7 @@
                                                   <Component id="jPanel50" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
                                                   <Component id="jPanel52" min="-2" pref="313" max="-2" attributes="0"/>
-                                                  <EmptySpace pref="122" max="32767" attributes="0"/>
+                                                  <EmptySpace pref="106" max="32767" attributes="0"/>
                                               </Group>
                                           </Group>
                                         </DimensionLayout>
@@ -1924,10 +1924,12 @@
                         <DimensionLayout dim="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
-                                  <Component id="jPanel1" max="32767" attributes="0"/>
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Component id="mapLayoutViewPanel" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="jPanel1" max="32767" attributes="0"/>
+                                  </Group>
                                   <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="viewPanelMap" alignment="0" max="32767" attributes="0"/>
                           </Group>
                         </DimensionLayout>
                         <DimensionLayout dim="1">
@@ -1935,8 +1937,7 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jPanel1" max="32767" attributes="0"/>
                                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                                  <Component id="viewPanelMap" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+                                  <Component id="mapLayoutViewPanel" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -1954,12 +1955,15 @@
                           <Layout>
                             <DimensionLayout dim="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jScrollPane2" alignment="0" pref="675" max="32767" attributes="0"/>
+                                  <Component id="jScrollPane2" alignment="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                             </DimensionLayout>
                             <DimensionLayout dim="1">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jScrollPane2" alignment="0" pref="676" max="32767" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jScrollPane2" pref="676" max="32767" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                             </DimensionLayout>
                           </Layout>
@@ -1996,7 +2000,7 @@
                             </Container>
                           </SubComponents>
                         </Container>
-                        <Component class="com.sfc.sf2.core.gui.controls.ViewPanelStacked" name="viewPanelMap">
+                        <Component class="com.sfc.sf2.map.layout.gui.MapLayoutViewPanel" name="mapLayoutViewPanel">
                         </Component>
                       </SubComponents>
                     </Container>

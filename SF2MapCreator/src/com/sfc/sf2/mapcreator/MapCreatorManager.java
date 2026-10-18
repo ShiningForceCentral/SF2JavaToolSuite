@@ -69,7 +69,7 @@ public class MapCreatorManager extends AbstractManager {
         }
         MapLayout layout = new MapLayout(0, tilesets, layoutBlocks);
         try {
-            new MapLayoutMetaProcessor().importMetadata(hptilesPath, layout);
+            new MapLayoutMetaProcessor().importMetadata(flagsPath, layout);
         } catch (Exception ex) {
             Console.logger().warning("Map flags could not be imported from: " + flagsPath);
         }
