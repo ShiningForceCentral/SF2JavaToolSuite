@@ -24,7 +24,6 @@ import com.sfc.sf2.map.block.io.MapTilesetsAsmProcessor;
 import com.sfc.sf2.map.layout.BlockFlags;
 import com.sfc.sf2.map.layout.MapLayout;
 import com.sfc.sf2.map.layout.MapLayoutBlock;
-import com.sfc.sf2.map.layout.MapLayoutManager;
 import com.sfc.sf2.map.layout.io.MapLayoutMetaProcessor;
 import com.sfc.sf2.mapcreator.io.MapTilesetsData;
 import com.sfc.sf2.palette.Palette;

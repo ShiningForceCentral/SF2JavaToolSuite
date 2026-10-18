@@ -8,7 +8,6 @@ package com.sfc.sf2.mapcreator;
 import com.sfc.sf2.core.INameable;
 import com.sfc.sf2.map.block.MapBlockset;
 import com.sfc.sf2.map.layout.MapLayout;
-import java.util.Arrays;
 
 /**
  *

@@ -10,6 +10,7 @@ import com.sfc.sf2.graphics.TileFlags;
 import com.sfc.sf2.graphics.Tileset;
 import static com.sfc.sf2.helpers.MapBlockHelpers.TILESET_TILES;
 import java.awt.image.BufferedImage;
+import java.util.Arrays;
 
 /**
  *
@@ -104,6 +105,30 @@ public class MapTile {
     }
     
     public static MapTile EmptyMapTile() {
-        return new MapTile((byte)-1, -1, new TileFlags(TileFlags.TILE_FLAG_NONE));
+        return new MapTile((byte)0, 0, new TileFlags(TileFlags.TILE_FLAG_NONE));
+    }
+    
+    /**
+     * 
+     * Tries to match the tile against a test tile by comparing with all flip states of that tile
+     * @return TileFlag value indicating the match state. -1 indicates that no match was found
+     */
+    public byte tryMatchTile(Tileset[] tilesets, Tile testTile) {
+        int[] pixels = getTile(tilesets).getRenderPixels(tileFlags);
+        return tryMatchTile(pixels, testTile);
+    }
+    
+    public static byte tryMatchTile(int[] pixels, Tile testTile) {
+        if (Arrays.equals(pixels, testTile.getRenderPixels(TileFlags.TILE_FLAG_NONE))) {
+            return TileFlags.TILE_FLAG_NONE;
+        } else if (Arrays.equals(pixels, testTile.getRenderPixels(TileFlags.TILE_FLAG_HFLIP))) {
+            return TileFlags.TILE_FLAG_HFLIP;
+        } else if (Arrays.equals(pixels, testTile.getRenderPixels(TileFlags.TILE_FLAG_VFLIP))) {
+            return TileFlags.TILE_FLAG_VFLIP;
+        } else if (Arrays.equals(pixels, testTile.getRenderPixels(TileFlags.TILE_FLAG_BOTHFLIP))) {
+            return TileFlags.TILE_FLAG_BOTHFLIP;
+        } else {
+            return -1;
+        }
     }
 }

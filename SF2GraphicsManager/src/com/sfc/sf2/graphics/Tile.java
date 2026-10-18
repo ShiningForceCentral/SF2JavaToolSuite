@@ -134,16 +134,16 @@ public class Tile implements IPaletteGraphic {
     }
     
     public int[] getRenderPixels() {
-        return getRenderPixels(0);
+        return getRenderPixels((byte)0);
     }
 
     public int[] getRenderPixels(TileFlags tileFlags) {
-        return getRenderPixels(tileFlags.value()&0x3);
+        return getRenderPixels((byte)(tileFlags.value()&0x3));
     }
     
-    private int[] getRenderPixels(int flagValue) {
+    public int[] getRenderPixels(byte flagValue) {
         int[] renderPixels = new int[PIXEL_COUNT];
-        switch ((byte)flagValue) {
+        switch (flagValue) {
             case TileFlags.TILE_FLAG_NONE:
                 for (int j=0; j < PIXEL_HEIGHT; j++) {
                     for (int i=0; i < PIXEL_WIDTH; i++) {
