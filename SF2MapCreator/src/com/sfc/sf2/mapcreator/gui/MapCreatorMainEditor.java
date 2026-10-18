@@ -75,9 +75,15 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
             mapBlocksetPanelImported.setTilesets(null);
             tilesetImportPanel.setTileset(null);
         } else {
-            mapBlocksetPanelImported.setBlockset(map.getBlockset());
-            mapBlocksetPanelImported.setTilesets(map.getLayout().getTilesets());
-            tilesetImportPanel.setTileset(map.getLayout().getTilesets()[0]);
+            if (jCheckBoxShowOptimised.isSelected()) {
+                mapBlocksetPanelImported.setBlockset(map.getOptimisedBlockset());
+                mapBlocksetPanelImported.setTilesets(new Tileset[] { map.getOptimisedTileset() });
+                tilesetImportPanel.setTileset(map.getOptimisedTileset());
+            } else {
+                mapBlocksetPanelImported.setBlockset(map.getRawBlockset());
+                mapBlocksetPanelImported.setTilesets(new Tileset[] { map.getRawTileset()});
+                tilesetImportPanel.setTileset(map.getRawTileset());
+            }
         }
     }
     
@@ -100,10 +106,10 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
             mapBlocksetPanelOptimised.setTilesets(null);
             mapTilesetLayoutPanelOptimised.setTileset(null);
         } else {
-            mapBlocksetPanelOptimised.setBlockset(map.getOptimizedBlockset());
-            mapBlocksetPanelOptimised.setTilesets(map.getOptimisedTilesets());
-            mapTilesetLayoutPanelOptimised.setTileset(map.getOptimisedTilesets());
-            mapImportLayoutPanel.setMapLayout(map.getOptimisedLayout());
+            //mapBlocksetPanelOptimised.setBlockset(map.getOptimizedBlockset());
+            //mapBlocksetPanelOptimised.setTilesets(map.getOptimisedTilesets());
+            //mapTilesetLayoutPanelOptimised.setTileset(map.getOptimisedTilesets());
+            //mapImportLayoutPanel.setMapLayout(map.getOptimisedLayout());
         }
     }
     /*
@@ -279,6 +285,7 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
         jScrollPane4 = new javax.swing.JScrollPane();
         tilesetImportPanel = new com.sfc.sf2.graphics.gui.TilesetLayoutPanel();
         viewPanelTilesetImport = new com.sfc.sf2.core.gui.controls.ViewPanelStacked();
+        jCheckBoxShowOptimised = new javax.swing.JCheckBox();
         jSplitPane5 = new javax.swing.JSplitPane();
         jPanel51 = new javax.swing.JPanel();
         jPanel50 = new javax.swing.JPanel();
@@ -520,7 +527,7 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
         jPanel21Layout.setVerticalGroup(
             jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel21Layout.createSequentialGroup()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 616, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 590, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
                 .addComponent(blocksetViewPanelImported, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -553,7 +560,7 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
         jPanel19Layout.setVerticalGroup(
             jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel19Layout.createSequentialGroup()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 617, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 591, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
                 .addComponent(viewPanelTilesetImport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -561,15 +568,31 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
 
         jTabbedPane3.addTab("Tiles", jPanel19);
 
+        jCheckBoxShowOptimised.setSelected(true);
+        jCheckBoxShowOptimised.setText("Show Optimised");
+        jCheckBoxShowOptimised.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCheckBoxShowOptimisedItemStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jTabbedPane3)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jCheckBoxShowOptimised)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane3)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jCheckBoxShowOptimised)
+                .addGap(0, 0, 0)
+                .addComponent(jTabbedPane3))
         );
 
         jSplitPane4.setRightComponent(jPanel4);
@@ -792,7 +815,7 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
                 .addComponent(jPanel50, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel52, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(106, Short.MAX_VALUE))
+                .addContainerGap(122, Short.MAX_VALUE))
         );
 
         jSplitPane5.setLeftComponent(jPanel51);
@@ -1469,7 +1492,7 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 776, Short.MAX_VALUE)
+                .addComponent(jTabbedPane1)
                 .addContainerGap())
         );
 
@@ -1701,7 +1724,7 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
         if (protoMap == null || protoMap.getLayout() == null || newTilesets == null) {
             return;
         }
-        OptimisedMap optimisedMap = new OptimisedMap(protoMap, newTilesets, jCheckBoxChestGraphic.isSelected(), jCheckBoxModifyTilesets.isSelected());
+        OptimisedMap optimisedMap = new OptimisedMap(protoMap, jCheckBoxChestGraphic.isSelected(), jCheckBoxModifyTilesets.isSelected());
         onMapOptimised(optimisedMap);
     }//GEN-LAST:event_jButtonOptimiseActionPerformed
 
@@ -1945,12 +1968,23 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
     }//GEN-LAST:event_jButtonExistingMapCopyActionPerformed
 
     private void jCheckBoxChestGraphicItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBoxChestGraphicItemStateChanged
-        ActionManager.setActionWithoutExecute(new ToggleAction(jCheckBoxChestGraphic, !jCheckBoxChestGraphic.isSelected()));
+        if (!ActionManager.isActionTriggering()) {
+            ActionManager.setActionWithoutExecute(new ToggleAction(jCheckBoxChestGraphic, jCheckBoxChestGraphic.isSelected()));
+        }
     }//GEN-LAST:event_jCheckBoxChestGraphicItemStateChanged
 
     private void jCheckBoxModifyTilesetsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBoxModifyTilesetsItemStateChanged
-        ActionManager.setActionWithoutExecute(new ToggleAction(jCheckBoxModifyTilesets, !jCheckBoxModifyTilesets.isSelected()));
+        if (!ActionManager.isActionTriggering()) {
+            ActionManager.setActionWithoutExecute(new ToggleAction(jCheckBoxModifyTilesets, jCheckBoxModifyTilesets.isSelected()));
+        }
     }//GEN-LAST:event_jCheckBoxModifyTilesetsItemStateChanged
+
+    private void jCheckBoxShowOptimisedItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBoxShowOptimisedItemStateChanged
+        if (!ActionManager.isActionTriggering()) {
+            ActionManager.setActionWithoutExecute(new ToggleAction(jCheckBoxShowOptimised, jCheckBoxShowOptimised.isSelected()));
+        }
+        actionMapImageLoaded(mapImportLayoutPanel.getProtoMap());
+    }//GEN-LAST:event_jCheckBoxShowOptimisedItemStateChanged
     
     @Override
     protected boolean cliImportData(String[] data, FileFormat format, boolean isDirectory) throws Exception {
@@ -2004,6 +2038,7 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
     private javax.swing.JCheckBox jCheckBox5;
     private javax.swing.JCheckBox jCheckBoxChestGraphic;
     private javax.swing.JCheckBox jCheckBoxModifyTilesets;
+    private javax.swing.JCheckBox jCheckBoxShowOptimised;
     private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JFileChooser jFileChooser2;

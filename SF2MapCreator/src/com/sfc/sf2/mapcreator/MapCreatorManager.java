@@ -78,7 +78,7 @@ public class MapCreatorManager extends AbstractManager {
         } catch (Exception ex) {
             Console.logger().warning("HP tiles data could not be imported from: " + flagsPath);
         }
-        protoMap = new ProtoMap(name, blockset, layout);
+        protoMap = new ProtoMap(name, blocksetProcessor.getTileset(), blockset, layout);
         Console.logger().info("Map image successfully imported from: " + filePath);
         Console.logger().finest("EXITING importImage");
         return protoMap;

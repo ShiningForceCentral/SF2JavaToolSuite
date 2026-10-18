@@ -154,7 +154,7 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jTabbedPane1" pref="776" max="32767" attributes="0"/>
+                                      <Component id="jTabbedPane1" max="32767" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                   </Group>
                               </Group>
@@ -349,11 +349,21 @@
                                         <DimensionLayout dim="0">
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Component id="jTabbedPane3" alignment="0" max="32767" attributes="0"/>
+                                              <Group type="102" alignment="1" attributes="0">
+                                                  <EmptySpace max="32767" attributes="0"/>
+                                                  <Component id="jCheckBoxShowOptimised" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace max="32767" attributes="0"/>
+                                              </Group>
                                           </Group>
                                         </DimensionLayout>
                                         <DimensionLayout dim="1">
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="jTabbedPane3" alignment="0" max="32767" attributes="0"/>
+                                              <Group type="102" alignment="1" attributes="0">
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="jCheckBoxShowOptimised" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                                                  <Component id="jTabbedPane3" max="32767" attributes="0"/>
+                                              </Group>
                                           </Group>
                                         </DimensionLayout>
                                       </Layout>
@@ -381,7 +391,7 @@
                                                 <DimensionLayout dim="1">
                                                   <Group type="103" groupAlignment="0" attributes="0">
                                                       <Group type="102" alignment="0" attributes="0">
-                                                          <Component id="jScrollPane3" pref="616" max="32767" attributes="0"/>
+                                                          <Component id="jScrollPane3" pref="590" max="32767" attributes="0"/>
                                                           <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                                                           <Component id="blocksetViewPanelImported" min="-2" max="-2" attributes="0"/>
                                                           <EmptySpace max="-2" attributes="0"/>
@@ -448,7 +458,7 @@
                                                 <DimensionLayout dim="1">
                                                   <Group type="103" groupAlignment="0" attributes="0">
                                                       <Group type="102" alignment="0" attributes="0">
-                                                          <Component id="jScrollPane4" pref="617" max="32767" attributes="0"/>
+                                                          <Component id="jScrollPane4" pref="591" max="32767" attributes="0"/>
                                                           <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                                                           <Component id="viewPanelTilesetImport" min="-2" max="-2" attributes="0"/>
                                                           <EmptySpace max="-2" attributes="0"/>
@@ -491,6 +501,15 @@
                                             </Container>
                                           </SubComponents>
                                         </Container>
+                                        <Component class="javax.swing.JCheckBox" name="jCheckBoxShowOptimised">
+                                          <Properties>
+                                            <Property name="selected" type="boolean" value="true"/>
+                                            <Property name="text" type="java.lang.String" value="Show Optimised"/>
+                                          </Properties>
+                                          <Events>
+                                            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jCheckBoxShowOptimisedItemStateChanged"/>
+                                          </Events>
+                                        </Component>
                                       </SubComponents>
                                     </Container>
                                   </SubComponents>
@@ -539,7 +558,7 @@
                                                   <Component id="jPanel50" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
                                                   <Component id="jPanel52" min="-2" pref="313" max="-2" attributes="0"/>
-                                                  <EmptySpace pref="106" max="32767" attributes="0"/>
+                                                  <EmptySpace pref="122" max="32767" attributes="0"/>
                                               </Group>
                                           </Group>
                                         </DimensionLayout>
