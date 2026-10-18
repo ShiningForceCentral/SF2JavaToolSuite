@@ -27,7 +27,7 @@ public class NonCombinableAction<T extends Object> extends BasicAction<T> {
         NonCombinableAction otherA = (NonCombinableAction)other;
         if (newValue == null) {
             return otherA.newValue == null;
-        } else if (newValue instanceof Object[]) {
+        } else if (newValue instanceof Object[] && otherA.newValue instanceof Object[]) {
             return Arrays.equals((Object[])this.newValue, (Object[])otherA.newValue);
         } else {
             return this.newValue.equals(otherA.newValue);
