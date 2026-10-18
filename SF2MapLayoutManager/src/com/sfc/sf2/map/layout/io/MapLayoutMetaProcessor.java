@@ -32,7 +32,7 @@ public class MapLayoutMetaProcessor extends AbstractMetadataProcessor<MapLayout>
                 int blockIndex = lineIndex*BLOCK_WIDTH + cursor/2;
                 int value = Integer.parseInt(line.substring(cursor, cursor+2), 16);
                 blocks[blockIndex].setFlags(new BlockFlags(value<<8));
-                cursor++;
+                cursor += 2;
             }
             cursor = 0;
             lineIndex++;
