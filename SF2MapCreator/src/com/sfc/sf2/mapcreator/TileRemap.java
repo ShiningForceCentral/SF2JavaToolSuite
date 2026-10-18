@@ -9,4 +9,4 @@ package com.sfc.sf2.mapcreator;
  *
  * @author TiMMy
  */
-public record TileRemap(int tileset, int index) {};
+public record TileRemap(byte tileset, int index) {};

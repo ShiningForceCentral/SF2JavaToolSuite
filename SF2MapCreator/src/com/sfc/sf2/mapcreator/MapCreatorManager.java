@@ -56,7 +56,7 @@ public class MapCreatorManager extends AbstractManager {
         }
     }
     
-    public ProtoMap importImage(Path filePath, Path flagsPath, Path hptilesPath) throws IOException, RawImageException, MetadataException {
+    public ProtoMap importImage(Path filePath, Path flagsPath, Path hptilesPath, boolean createChestGraphics) throws IOException, RawImageException, MetadataException {
         Console.logger().finest("ENTERING importImage");
         String name = PathHelpers.filenameFromPath(filePath);
         MapBlocksetRawImageProcessor blocksetProcessor = new MapBlocksetRawImageProcessor();
@@ -78,7 +78,7 @@ public class MapCreatorManager extends AbstractManager {
         } catch (Exception ex) {
             Console.logger().warning("HP tiles data could not be imported from: " + flagsPath);
         }
-        protoMap = new ProtoMap(name, blocksetProcessor.getTileset(), blockset, layout);
+        protoMap = new ProtoMap(name, blocksetProcessor.getTileset(), blockset, layout, createChestGraphics);
         Console.logger().info("Map image successfully imported from: " + filePath);
         Console.logger().finest("EXITING importImage");
         return protoMap;

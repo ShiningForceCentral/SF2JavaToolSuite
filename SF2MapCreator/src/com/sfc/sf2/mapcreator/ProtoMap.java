@@ -32,13 +32,13 @@ public class ProtoMap implements INameable {
     private MapBlockset optimisedBlockset;
     private MapLayout layout;
 
-    public ProtoMap(String name, Tileset tileset, MapBlockset blockset, MapLayout layout) {
+    public ProtoMap(String name, Tileset tileset, MapBlockset blockset, MapLayout layout, boolean chestBlocks) {
         this.name = name;
         this.rawTileset = tileset;
         this.rawBlockset = blockset;
         this.layout = layout;
-        optimiseTileset(tileset, blockset, true);
-        optimiseLayout(blockset, layout, true);
+        optimiseTileset(tileset, blockset, chestBlocks);
+        optimiseLayout(blockset, layout, chestBlocks);
     }
 
     private ProtoMap(String name, Tileset rawTileset, MapBlockset rawBlockset, MapLayout layout, Tileset optimisedTileset, MapBlockset optimisedBlockset) {
@@ -112,6 +112,7 @@ public class ProtoMap implements INameable {
     public void optimiseTileset(Tileset tileset, MapBlockset blockset, boolean chestBlocks) {
         Console.logger().finest("ENTERING generateOptimisedTileset");
         Tile[] origTiles = tileset.getTiles();
+        
         //Remove duplicate tiles and remap tiles
         HashMap<Integer, Integer> tilesRemap = new HashMap<>();
         List<Tile> optimisedTilesList = new ArrayList();
@@ -133,8 +134,11 @@ public class ProtoMap implements INameable {
                 }
             }
             if (!found) {
-                optimisedTilesList.add(origTiles[i].clone());
-                tilesRemap.put(i, optimisedTilesList.size()-1);
+                int index = optimisedTilesList.size()-1;
+                Tile optimisedTile = origTiles[i].clone();
+                optimisedTile.setId(index);
+                optimisedTilesList.add(optimisedTile);
+                tilesRemap.put(i, index);
             }
         }
         Tile[] optimisedTileset = new Tile[optimisedTilesList.size()];
@@ -169,6 +173,7 @@ public class ProtoMap implements INameable {
     public void optimiseLayout(MapBlockset blockset, MapLayout mapLayout, boolean chestBlocks) {
         Console.logger().finest("ENTERING generateOptimisedBlockset");
         MapBlock[] blocks = blockset.getBlocks();
+        
         //Add default blocks
         HashMap<Integer, Integer> blocksRemap = new HashMap<>();
         List<MapBlock> optimisedBlockList = new ArrayList();

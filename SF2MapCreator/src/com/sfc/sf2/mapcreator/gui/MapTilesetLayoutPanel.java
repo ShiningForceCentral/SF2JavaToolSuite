@@ -64,7 +64,7 @@ public class MapTilesetLayoutPanel extends AbstractLayoutPanel {
         return tilesets;
     }
 
-    public void setTileset(Tileset[] tilesets) {
+    public void setTilesets(Tileset[] tilesets) {
         this.tilesets = tilesets;
         redraw();
     }
