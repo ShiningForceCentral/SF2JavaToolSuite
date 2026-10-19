@@ -13,6 +13,7 @@ import static com.sfc.sf2.helpers.MapBlockHelpers.TILESET_TILES;
 import com.sfc.sf2.map.block.MapBlock;
 import com.sfc.sf2.map.block.MapBlockset;
 import com.sfc.sf2.map.block.MapTile;
+import com.sfc.sf2.map.layout.MapLayout;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -34,9 +35,11 @@ public final class OptimisedMap {
     private Tileset addedTiles;
     private Tileset orphanTiles;
     private Tileset[] newTilesets;
+    private MapBlockset newBlockset;
+    private MapLayout newLayout;
 
     public OptimisedMap(ProtoMap protoMap, Tileset[] tilesets, boolean chestBlocks, TilesetFillMode fillMode, boolean[] modifyTilesets) {
-        generateTilesets(protoMap.getOptimisedTileset(), tilesets, protoMap.getOptimisedBlockset(), chestBlocks, fillMode, modifyTilesets);
+        generateTilesets(protoMap.getOptimisedTileset(), tilesets, protoMap.getOptimisedBlockset(), protoMap.getOptimisedLayout(), chestBlocks, fillMode, modifyTilesets);
     }
 
     public Tileset getAddedTiles() {
@@ -51,7 +54,15 @@ public final class OptimisedMap {
         return newTilesets;
     }
 
-    public void generateTilesets(Tileset optimisedTileset, Tileset[] tilesets, MapBlockset blockset, boolean chestBlocks, TilesetFillMode fillMode, boolean[] modifyTilesets) {
+    public MapBlockset getNewBlockset() {
+        return newBlockset;
+    }
+
+    public MapLayout getNewLayout() {
+        return newLayout;
+    }
+
+    public void generateTilesets(Tileset optimisedTileset, Tileset[] tilesets, MapBlockset blockset, MapLayout layout, boolean chestBlocks, TilesetFillMode fillMode, boolean[] modifyTilesets) {
         Console.logger().finest("ENTERING generateTilesets");
         List<Tile> addedTilesList = new ArrayList<>();
         Queue<Tile> orphanTilesList = new LinkedList<>();
@@ -133,9 +144,11 @@ public final class OptimisedMap {
         }
         
         //Remap blocks a final time
+        MapBlockset newBlockset = blockset.clone();
         if (!tileRemap.isEmpty()) {
             MapBlock[] blocks = blockset.getBlocks();
             for (int i=0; i < blocks.length; i++) {
+                blocks[i].setIndex(i);
                 MapTile[] tiles = blocks[i].getMapTiles();
                 for (int t=0; t < tiles.length; t++) {
                     MapTile tile = tiles[t];
@@ -157,6 +170,8 @@ public final class OptimisedMap {
         Tile[] orphanTiles = new Tile[orphanTilesList.size()];
         orphanTilesList.toArray(orphanTiles);
         this.orphanTiles = new Tileset("Orphaned", orphanTiles, 10);
+        this.newBlockset = newBlockset;
+        this.newLayout = new MapLayout(0, newTilesets, layout.getBlocks());
         Console.logger().finest("EXITING generateTilesets");
     }
     

@@ -84,7 +84,7 @@ public class MapCreatorLayoutPanel extends MapLayoutPanel {
         if (protoMap == null) {
             setMapLayout(null);
         } else {
-            setMapLayout(protoMap.getLayout());
+            setMapLayout(protoMap.getOptimisedLayout());
         }
         this.redraw();
     }

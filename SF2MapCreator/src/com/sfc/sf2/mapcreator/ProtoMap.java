@@ -28,26 +28,29 @@ public class ProtoMap implements INameable {
     private String name;
     private Tileset rawTileset;
     private MapBlockset rawBlockset;
+    private MapLayout rawLayout;
+    //Optimised data
     private Tileset optimisedTileset;
     private MapBlockset optimisedBlockset;
-    private MapLayout layout;
+    private MapLayout optimisedLayout;
 
     public ProtoMap(String name, Tileset tileset, MapBlockset blockset, MapLayout layout, boolean chestBlocks) {
         this.name = name;
         this.rawTileset = tileset;
         this.rawBlockset = blockset;
-        this.layout = layout;
+        this.rawLayout = layout;
         optimiseTileset(tileset, blockset, chestBlocks);
         optimiseLayout(blockset, layout, chestBlocks);
     }
 
-    private ProtoMap(String name, Tileset rawTileset, MapBlockset rawBlockset, MapLayout layout, Tileset optimisedTileset, MapBlockset optimisedBlockset) {
+    private ProtoMap(String name, Tileset rawTileset, MapBlockset rawBlockset, MapLayout layout, Tileset optimisedTileset, MapBlockset optimisedBlockset, MapLayout optimisedLayout) {
         this.name = name;
         this.rawTileset = rawTileset;
         this.rawBlockset = rawBlockset;
-        this.layout = layout;
+        this.rawLayout = layout;
         this.optimisedTileset = optimisedTileset;
         this.optimisedBlockset = optimisedBlockset;
+        this.optimisedLayout = optimisedLayout;
     }
 
     @Override
@@ -59,40 +62,24 @@ public class ProtoMap implements INameable {
         return rawTileset;
     }
 
-    public void setRawTileset(Tileset rawTileset) {
-        this.rawTileset = rawTileset;
-    }
-
     public MapBlockset getRawBlockset() {
         return rawBlockset;
     }
 
-    public void setRawBlockset(MapBlockset rawBlockset) {
-        this.rawBlockset = rawBlockset;
+    public MapLayout getRawLayout() {
+        return rawLayout;
     }
 
     public Tileset getOptimisedTileset() {
         return optimisedTileset;
     }
 
-    public void setOptimisedTileset(Tileset optimisedTileset) {
-        this.optimisedTileset = optimisedTileset;
-    }
-
     public MapBlockset getOptimisedBlockset() {
         return optimisedBlockset;
     }
 
-    public void setOptimisedBlockset(MapBlockset optimisedBlockset) {
-        this.optimisedBlockset = optimisedBlockset;
-    }
-
-    public MapLayout getLayout() {
-        return layout;
-    }
-
-    public void setLayout(MapLayout layout) {
-        this.layout = layout;
+    public MapLayout getOptimisedLayout() {
+        return optimisedLayout;
     }
     
     @Override
@@ -101,12 +88,12 @@ public class ProtoMap implements INameable {
         ProtoMap protoMap = (ProtoMap)obj;
         if (!this.name.equals(protoMap.name)) return false;
         if (!rawBlockset.equals(protoMap.rawBlockset)) return false;
-        if (!layout.equals(protoMap.layout)) return false;
+        if (!rawLayout.equals(protoMap.rawLayout)) return false;
         return true;
     }
     
     public ProtoMap clone() {
-        return new ProtoMap(name, rawTileset.clone(), rawBlockset.clone(), layout.clone(), optimisedTileset.clone(), optimisedBlockset.clone());
+        return new ProtoMap(name, rawTileset.clone(), rawBlockset.clone(), rawLayout.clone(), optimisedTileset.clone(), optimisedBlockset.clone(), optimisedLayout.clone());
     }
     
     public void optimiseTileset(Tileset tileset, MapBlockset blockset, boolean chestBlocks) {
@@ -208,7 +195,7 @@ public class ProtoMap implements INameable {
             bi = blocksRemap.get(bi);
             layoutBlocks[b].getMapBlock().setIndex(bi);
         }
-        layout = new MapLayout(0, new Tileset[] { optimisedTileset }, layoutBlocks);
+        optimisedLayout = new MapLayout(0, new Tileset[] { optimisedTileset }, layoutBlocks);
         Console.logger().finest("EXITING generateOptimisedBlockset");
     }
     

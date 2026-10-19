@@ -20,16 +20,13 @@ import com.sfc.sf2.core.settings.ViewSettings;
 import com.sfc.sf2.graphics.Tileset;
 import com.sfc.sf2.helpers.PathHelpers;
 import com.sfc.sf2.helpers.RenderScaleHelpers;
-import com.sfc.sf2.map.layout.gui.MapLayoutViewPanel;
 import com.sfc.sf2.mapcreator.ProtoMap;
 import com.sfc.sf2.mapcreator.MapCreatorManager;
 import com.sfc.sf2.mapcreator.OptimisedMap;
 import com.sfc.sf2.mapcreator.MapTilesetsData;
 import com.sfc.sf2.mapcreator.OptimisedMap.TilesetFillMode;
-import java.io.File;
 import java.nio.file.Path;
 import java.util.logging.Level;
-import javax.swing.JFileChooser;
 
 /**
  *
@@ -60,6 +57,7 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
     protected void setupEditor() {
         accordionPanelMapsPaths.setExpanded(false);
         accordionPanelModifyTilesets.setExpanded(false);
+        accordionPanelExportMaps.setExpanded(false);
         
         viewPanelTilesetOrphan.setLayoutPanel(tilesetPanelOrphan, tilesetViewSettings);
         viewPanelTilesetAdded.setLayoutPanel(tilesetPanelAdded, tilesetViewSettings);
@@ -111,12 +109,15 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
     private void actionMapOptimised(OptimisedMap map) {
         actionOptimisedMap = map;
         if (map == null) {
+            mapCreatorLayoutPanel.setProtoMap(mapCreatorLayoutPanel.getProtoMap());
             mapTilesetLayoutPanelNew.setTilesets(null);
             tilesetPanelAdded.setTileset(null);
             tilesetPanelOrphan.setTileset(null);
             mapCreatorLayoutPanel.setAddedTiles(null);
             mapCreatorLayoutPanel.setOrphanTiles(null);
         } else {
+            mapCreatorLayoutPanel.setProtoMap(null);
+            mapCreatorLayoutPanel.setMapLayout(map.getNewLayout());
             mapTilesetLayoutPanelNew.setTilesets(map.getNewTilesets());
             tilesetPanelAdded.setTileset(map.getAddedTiles());
             tilesetPanelOrphan.setTileset(map.getOrphanTiles());
@@ -231,43 +232,29 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
         tilesetPanelOrphan = new com.sfc.sf2.graphics.gui.TilesetLayoutPanel();
         viewPanelTilesetOrphan = new com.sfc.sf2.core.gui.controls.ViewPanelStacked();
         jPanel5 = new javax.swing.JPanel();
-        jPanel47 = new javax.swing.JPanel();
-        jLabel20 = new javax.swing.JLabel();
-        jTextField32 = new javax.swing.JTextField();
-        jButton25 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        jPanel48 = new javax.swing.JPanel();
-        jLabel17 = new javax.swing.JLabel();
-        jTextField16 = new javax.swing.JTextField();
-        jButton22 = new javax.swing.JButton();
-        jButton23 = new javax.swing.JButton();
-        jTextField17 = new javax.swing.JTextField();
-        jLabel18 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
-        jTextField18 = new javax.swing.JTextField();
-        jButton24 = new javax.swing.JButton();
-        jButton32 = new javax.swing.JButton();
-        jTextField25 = new javax.swing.JTextField();
-        jLabel27 = new javax.swing.JLabel();
-        jLabel28 = new javax.swing.JLabel();
-        jTextField26 = new javax.swing.JTextField();
-        jButton33 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jLabel8 = new javax.swing.JLabel();
-        jPanel49 = new javax.swing.JPanel();
-        jTextField14 = new javax.swing.JTextField();
-        jButton21 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        jLabel22 = new javax.swing.JLabel();
-        jTextField15 = new javax.swing.JTextField();
-        jButton27 = new javax.swing.JButton();
-        jLabel16 = new javax.swing.JLabel();
-        jLabel39 = new javax.swing.JLabel();
-        jTextField36 = new javax.swing.JTextField();
-        jButton43 = new javax.swing.JButton();
         jLabel55 = new javax.swing.JLabel();
+        jPanel47 = new javax.swing.JPanel();
+        fileButtonExportPalette = new com.sfc.sf2.core.gui.controls.FileButton();
+        jLabel2 = new javax.swing.JLabel();
+        jButtonExportPalette = new javax.swing.JButton();
+        jPanel48 = new javax.swing.JPanel();
+        fileButtonExportTileset1 = new com.sfc.sf2.core.gui.controls.FileButton();
+        fileButtonExportTileset2 = new com.sfc.sf2.core.gui.controls.FileButton();
+        fileButtonExportTileset3 = new com.sfc.sf2.core.gui.controls.FileButton();
+        fileButtonExportTileset4 = new com.sfc.sf2.core.gui.controls.FileButton();
+        fileButtonExportTileset5 = new com.sfc.sf2.core.gui.controls.FileButton();
+        jLabel8 = new javax.swing.JLabel();
+        jButtonExportTilesets = new javax.swing.JButton();
+        jPanel53 = new javax.swing.JPanel();
+        jButtonExportMap = new javax.swing.JButton();
+        jLabel42 = new javax.swing.JLabel();
+        accordionPanelExportMaps = new com.sfc.sf2.core.gui.controls.AccordionPanel();
+        fileButtonExportBlocks = new com.sfc.sf2.core.gui.controls.FileButton();
+        directoryButtonExportMapDir = new com.sfc.sf2.core.gui.controls.DirectoryButton();
+        fileButtonExportLayout = new com.sfc.sf2.core.gui.controls.FileButton();
+        fileButtonExportTilesets = new com.sfc.sf2.core.gui.controls.FileButton();
+        jSpinnerExportMapIndex = new javax.swing.JSpinner();
+        jLabel57 = new javax.swing.JLabel();
         jPanel10 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -570,6 +557,7 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
         );
 
         jSpinnerExistingMapIndex.setModel(new javax.swing.SpinnerNumberModel(3, 0, null, 1));
+        jSpinnerExistingMapIndex.setName("Import Map Index Spinner"); // NOI18N
 
         jLabel51.setText("Map index :");
 
@@ -780,7 +768,7 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
             }
         });
 
-        jLabel38.setText("<html>- Orphaned Tiles: Any tiles that do not fit in the original tilesets.<br>Use the checkbox to see where the orphaned tiles are on the map.<br><br>\n- Optimized Blockset: Identifies all unique blocks on the map in order of appearance (i.e. duplicates are combined).<br><br>\n- New Tileset: Any orphaned tiles will be inserted into blank tiles spaces in the new tilesets.<br>Empty tilesets will be filled to create new tilesets.</html>");
+        jLabel38.setText("<html>- <b>New Tileset:</b> The final tilesets, created from existing tilesets and new tiles (based on 'Fill mode' settings).<br><br>\n- <b>Added Tiles:</b> Tiles that weren't in the imported tilesets that have been added into new or existing tilesets.<br>Use the checkbox in the map view controls to see where the new tiles are on the map.<br><br>\n- <b>Orphan Tiles:</b> Any tiles that do not fit in the original tilesets.<br>Use the checkbox in the map view controls to see where the orphaned tiles are on the map.<br><br>\n</html>");
         jLabel38.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         jComboBoxFillMode.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "New Only", "New First", "Existing First" }));
@@ -887,25 +875,26 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
                     .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(jPanel18Layout.createSequentialGroup()
                         .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel18Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBoxFillMode, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(infoButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jButtonOptimise)
                             .addGroup(jPanel18Layout.createSequentialGroup()
-                                .addComponent(accordionPanelModifyTilesets, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel18Layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jComboBoxFillMode, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(accordionPanelModifyTilesets, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(infoButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(infoButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(infoButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 88, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel18Layout.setVerticalGroup(
             jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel18Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel54, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel54, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -918,9 +907,9 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
                     .addComponent(infoButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonOptimise, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jSplitPane6.setLeftComponent(jPanel18);
@@ -1047,32 +1036,26 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
 
         jTabbedPaneMain.addTab("3. Optimise", jSplitPane6);
 
-        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Export to :"));
         jPanel5.setPreferredSize(new java.awt.Dimension(32, 135));
+
+        jLabel55.setText("<html><b>Step 5:</b> Export map data.</html>");
+        jLabel55.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         jPanel47.setBorder(javax.swing.BorderFactory.createTitledBorder("Palette :"));
 
-        jLabel20.setText("Palette :");
-
-        jTextField32.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        jTextField32.setText("../../../graphics/maps/mappalettes/mappalette16.bin");
-        jTextField32.setMinimumSize(new java.awt.Dimension(30, 26));
-
-        jButton25.setText("File...");
-        jButton25.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton25ActionPerformed(evt);
-            }
-        });
-
-        jButton6.setText("Export");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
-            }
-        });
+        fileButtonExportPalette.setFilePath("../graphics/maps/mappalettes/mappalette16.bin");
+        fileButtonExportPalette.setInfoMessage("");
+        fileButtonExportPalette.setLabelText("Palette :");
+        fileButtonExportPalette.setName("Palette Export Button"); // NOI18N
 
         jLabel2.setText("<html>Export current palette.</html>");
+
+        jButtonExportPalette.setText("Export");
+        jButtonExportPalette.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonExportPaletteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel47Layout = new javax.swing.GroupLayout(jPanel47);
         jPanel47.setLayout(jPanel47Layout);
@@ -1081,109 +1064,61 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
             .addGroup(jPanel47Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel47Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel47Layout.createSequentialGroup()
-                        .addComponent(jLabel20)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField32, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
-                        .addGap(6, 6, 6)
-                        .addComponent(jButton25))
+                    .addComponent(fileButtonExportPalette, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel47Layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton6)))
+                        .addComponent(jButtonExportPalette)))
                 .addContainerGap())
         );
         jPanel47Layout.setVerticalGroup(
             jPanel47Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel47Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel47Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel47Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jButton25)
-                    .addComponent(jTextField32, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel20))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(fileButtonExportPalette, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel47Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton6))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButtonExportPalette))
+                .addContainerGap())
         );
 
         jPanel48.setBorder(javax.swing.BorderFactory.createTitledBorder("Tilesets :"));
 
-        jLabel17.setText("Tileset1 :");
+        fileButtonExportTileset1.setFilePath("../graphics/maps/maptilesets/maptileset115.bin");
+        fileButtonExportTileset1.setInfoMessage("");
+        fileButtonExportTileset1.setLabelText("Tileset1 :");
+        fileButtonExportTileset1.setName("Tileset1 Export Button"); // NOI18N
 
-        jTextField16.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        jTextField16.setText("../../../graphics/maps/maptilesets/maptileset115.bin");
-        jTextField16.setMinimumSize(new java.awt.Dimension(30, 26));
+        fileButtonExportTileset2.setFilePath("../graphics/maps/maptilesets/maptileset116.bin");
+        fileButtonExportTileset2.setInfoMessage("");
+        fileButtonExportTileset2.setLabelText("Tileset2 :");
+        fileButtonExportTileset2.setName("Tileset2 Export Button"); // NOI18N
 
-        jButton22.setText("File...");
-        jButton22.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton22ActionPerformed(evt);
-            }
-        });
+        fileButtonExportTileset3.setFilePath("../graphics/maps/maptilesets/maptileset117.bin");
+        fileButtonExportTileset3.setInfoMessage("");
+        fileButtonExportTileset3.setLabelText("Tileset3 :");
+        fileButtonExportTileset3.setName("Tileset3 Export Button"); // NOI18N
 
-        jButton23.setText("File...");
-        jButton23.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton23ActionPerformed(evt);
-            }
-        });
+        fileButtonExportTileset4.setFilePath("../graphics/maps/maptilesets/maptileset118.bin");
+        fileButtonExportTileset4.setInfoMessage("");
+        fileButtonExportTileset4.setLabelText("Tileset4 :");
+        fileButtonExportTileset4.setName("Tileset4 Export Button"); // NOI18N
 
-        jTextField17.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        jTextField17.setText("../../../graphics/maps/maptilesets/maptileset116.bin");
-        jTextField17.setMinimumSize(new java.awt.Dimension(30, 26));
+        fileButtonExportTileset5.setFilePath("../graphics/maps/maptilesets/maptileset119.bin");
+        fileButtonExportTileset5.setInfoMessage("");
+        fileButtonExportTileset5.setLabelText("Tileset5 :");
+        fileButtonExportTileset5.setName("Tileset5 Export Button"); // NOI18N
 
-        jLabel18.setText("Tileset2 :");
-
-        jLabel19.setText("Tileset3 :");
-
-        jTextField18.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        jTextField18.setText("../../../graphics/maps/maptilesets/maptileset117.bin");
-        jTextField18.setMinimumSize(new java.awt.Dimension(30, 26));
-
-        jButton24.setText("File...");
-        jButton24.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton24ActionPerformed(evt);
-            }
-        });
-
-        jButton32.setText("File...");
-        jButton32.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton32ActionPerformed(evt);
-            }
-        });
-
-        jTextField25.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        jTextField25.setText("../../../graphics/maps/maptilesets/maptileset118.bin");
-        jTextField25.setMinimumSize(new java.awt.Dimension(30, 26));
-
-        jLabel27.setText("Tileset4 :");
-
-        jLabel28.setText("Tileset5 :");
-
-        jTextField26.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        jTextField26.setText("../../../graphics/maps/maptilesets/maptileset119.bin");
-        jTextField26.setMinimumSize(new java.awt.Dimension(30, 26));
-
-        jButton33.setText("File...");
-        jButton33.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton33ActionPerformed(evt);
-            }
-        });
-
-        jButton7.setText("Export");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
-            }
-        });
-
-        jLabel8.setText("<html>Export new tilesets.<br>\n*Leave a slot blank to have it ignored.</html>");
+        jLabel8.setText("<html>Export new tilesets.<br>\nLeave a slot blank to have it ignored.</html>");
         jLabel8.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+
+        jButtonExportTilesets.setText("Export");
+        jButtonExportTilesets.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonExportTilesetsActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel48Layout = new javax.swing.GroupLayout(jPanel48);
         jPanel48.setLayout(jPanel48Layout);
@@ -1192,188 +1127,137 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
             .addGroup(jPanel48Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel48Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel48Layout.createSequentialGroup()
-                        .addGroup(jPanel48Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel48Layout.createSequentialGroup()
-                                .addComponent(jLabel17)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField16, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                            .addGroup(jPanel48Layout.createSequentialGroup()
-                                .addComponent(jLabel18)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField17, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                            .addGroup(jPanel48Layout.createSequentialGroup()
-                                .addComponent(jLabel19)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField18, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                            .addGroup(jPanel48Layout.createSequentialGroup()
-                                .addComponent(jLabel27)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField25, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                            .addGroup(jPanel48Layout.createSequentialGroup()
-                                .addComponent(jLabel28)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField26, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
-                        .addGap(6, 6, 6)
-                        .addGroup(jPanel48Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton22, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton23, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton24, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton32, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton33, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addComponent(fileButtonExportTileset1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel48Layout.createSequentialGroup()
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton7)))
+                        .addComponent(jButtonExportTilesets))
+                    .addComponent(fileButtonExportTileset2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(fileButtonExportTileset3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(fileButtonExportTileset4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(fileButtonExportTileset5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel48Layout.setVerticalGroup(
             jPanel48Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel48Layout.createSequentialGroup()
-                .addGroup(jPanel48Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel17)
-                    .addComponent(jTextField16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton22))
+                .addContainerGap()
+                .addComponent(fileButtonExportTileset1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel48Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel18)
-                    .addComponent(jTextField17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton23))
+                .addComponent(fileButtonExportTileset2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel48Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jButton24)
-                    .addComponent(jTextField18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel19))
+                .addComponent(fileButtonExportTileset3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel48Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel27)
-                    .addComponent(jTextField25, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton32))
+                .addComponent(fileButtonExportTileset4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel48Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel28)
-                    .addComponent(jTextField26, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton33))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(fileButtonExportTileset5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel48Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel48Layout.createSequentialGroup()
-                        .addComponent(jButton7)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jButtonExportTilesets)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
-        jPanel49.setBorder(javax.swing.BorderFactory.createTitledBorder("Map data :"));
+        jPanel53.setBorder(javax.swing.BorderFactory.createTitledBorder("Map data :"));
 
-        jTextField14.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        jTextField14.setText("0-blocks.bin");
-        jTextField14.setMinimumSize(new java.awt.Dimension(30, 26));
-
-        jButton21.setText("File...");
-        jButton21.addActionListener(new java.awt.event.ActionListener() {
+        jButtonExportMap.setText("Export");
+        jButtonExportMap.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton21ActionPerformed(evt);
+                jButtonExportMapActionPerformed(evt);
             }
         });
 
-        jLabel1.setText("<html>Select new target files.<br>\n*Uses the tileset filenames above as fallback, if loaded tilesets are not named.</html>");
-        jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jLabel42.setText("Import palette and tilesets from existing map");
 
-        jButton2.setText("Export");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
+        accordionPanelExportMaps.setBorder(javax.swing.BorderFactory.createTitledBorder("Map Paths"));
 
-        jLabel22.setText("Layout :");
+        fileButtonExportBlocks.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
+        fileButtonExportBlocks.setFilePath("0-blocks.bin");
+        fileButtonExportBlocks.setInfoMessage("");
+        fileButtonExportBlocks.setLabelText("Blocks :");
+        fileButtonExportBlocks.setName("Export Blocks Button"); // NOI18N
 
-        jTextField15.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        jTextField15.setText("1-layout.bin");
-        jTextField15.setMinimumSize(new java.awt.Dimension(30, 26));
+        directoryButtonExportMapDir.setDirectoryPath("./entries/");
+        directoryButtonExportMapDir.setInfoMessage("");
+        directoryButtonExportMapDir.setLabelText("Maps dir :");
+        directoryButtonExportMapDir.setName("Export MapDir Button"); // NOI18N
 
-        jButton27.setText("File...");
-        jButton27.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton27ActionPerformed(evt);
-            }
-        });
+        fileButtonExportLayout.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
+        fileButtonExportLayout.setFilePath("1-layout.bin");
+        fileButtonExportLayout.setInfoMessage("");
+        fileButtonExportLayout.setLabelText("Layout :");
+        fileButtonExportLayout.setName("Export Layout Button"); // NOI18N
 
-        jLabel16.setText("Blocks :");
+        fileButtonExportTilesets.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.ASM);
+        fileButtonExportTilesets.setFilePath("00-tilesets.asm");
+        fileButtonExportTilesets.setInfoMessage("");
+        fileButtonExportTilesets.setLabelText("Tilesets :");
+        fileButtonExportTilesets.setName("Export Tilesets Button"); // NOI18N
 
-        jLabel39.setText("Tileset data :");
-
-        jTextField36.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        jTextField36.setText("00-tilesets.asm");
-        jTextField36.setMinimumSize(new java.awt.Dimension(30, 26));
-
-        jButton43.setText("File...");
-        jButton43.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton43ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel49Layout = new javax.swing.GroupLayout(jPanel49);
-        jPanel49.setLayout(jPanel49Layout);
-        jPanel49Layout.setHorizontalGroup(
-            jPanel49Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel49Layout.createSequentialGroup()
+        javax.swing.GroupLayout accordionPanelExportMapsLayout = new javax.swing.GroupLayout(accordionPanelExportMaps);
+        accordionPanelExportMaps.setLayout(accordionPanelExportMapsLayout);
+        accordionPanelExportMapsLayout.setHorizontalGroup(
+            accordionPanelExportMapsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(accordionPanelExportMapsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel49Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel49Layout.createSequentialGroup()
-                        .addGroup(jPanel49Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel49Layout.createSequentialGroup()
-                                .addComponent(jLabel22)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                            .addGroup(jPanel49Layout.createSequentialGroup()
-                                .addComponent(jLabel16)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                        .addGroup(jPanel49Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel49Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addGroup(jPanel49Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jButton27, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jButton21, javax.swing.GroupLayout.Alignment.TRAILING)))))
-                    .addGroup(jPanel49Layout.createSequentialGroup()
-                        .addComponent(jLabel39)
+                .addGroup(accordionPanelExportMapsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(fileButtonExportBlocks, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(directoryButtonExportMapDir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 586, Short.MAX_VALUE)
+                    .addComponent(fileButtonExportLayout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(fileButtonExportTilesets, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        accordionPanelExportMapsLayout.setVerticalGroup(
+            accordionPanelExportMapsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(accordionPanelExportMapsLayout.createSequentialGroup()
+                .addComponent(directoryButtonExportMapDir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(fileButtonExportTilesets, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(fileButtonExportBlocks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(fileButtonExportLayout, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        jSpinnerExportMapIndex.setModel(new javax.swing.SpinnerNumberModel(3, 0, null, 1));
+        jSpinnerExportMapIndex.setName("Export Map Index Spinner"); // NOI18N
+
+        jLabel57.setText("Map index :");
+
+        javax.swing.GroupLayout jPanel53Layout = new javax.swing.GroupLayout(jPanel53);
+        jPanel53.setLayout(jPanel53Layout);
+        jPanel53Layout.setHorizontalGroup(
+            jPanel53Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel53Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel53Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(accordionPanelExportMaps, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel42, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel53Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel57)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField36, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
-                        .addGap(6, 6, 6)
-                        .addComponent(jButton43)))
+                        .addComponent(jSpinnerExportMapIndex, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonExportMap)))
                 .addContainerGap())
         );
-        jPanel49Layout.setVerticalGroup(
-            jPanel49Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel49Layout.createSequentialGroup()
+        jPanel53Layout.setVerticalGroup(
+            jPanel53Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel53Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel49Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel39)
-                    .addComponent(jTextField36, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton43))
+                .addComponent(jLabel42)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel49Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel16)
-                    .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton21))
+                .addComponent(accordionPanelExportMaps, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel49Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel22)
-                    .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton27))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel49Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2)
-                    .addComponent(jLabel1))
-                .addGap(15, 15, 15))
+                .addGroup(jPanel53Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonExportMap)
+                    .addGroup(jPanel53Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jSpinnerExportMapIndex, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel57)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        jLabel55.setText("<html>Step 5 : Export map data.</html>");
-        jLabel55.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -1381,24 +1265,23 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel47, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel48, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel49, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel55)
                 .addContainerGap())
+            .addComponent(jPanel53, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel55)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel55, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel47, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel48, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel49, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(174, Short.MAX_VALUE))
+                .addComponent(jPanel53, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jTabbedPaneMain.addTab("4. Export", jPanel5);
@@ -1531,45 +1414,6 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        /*String toolDir = System.getProperty("user.dir");
-        Path toolPath = Paths.get(toolDir);
-        
-        String mapPath = jTextField24.getText();
-        if(!mapPath.endsWith("\\")){
-            mapPath = mapPath+"\\";
-        }
-        //Path basePath = Paths.get(mapPath).toAbsolutePath();
-        System.out.println(toolPath.toString());
-        Path basePath = toolPath.resolve(Paths.get(mapPath)).normalize();
-        System.out.println(basePath.toString());
-        
-        Path tPath = Paths.get(jTextField36.getText());
-        Path tilesetsPath;
-        if(!tPath.isAbsolute()){
-           tilesetsPath = basePath.resolve(tPath).normalize();
-        }else{
-            tilesetsPath = tPath;
-        }
-        Path bPath = Paths.get(jTextField14.getText());
-        Path blocksetPath;
-        if(!bPath.isAbsolute()){
-           blocksetPath = basePath.resolve(bPath).normalize();
-        }else{
-            blocksetPath = bPath;
-        }
-        System.out.println(blocksetPath.toString());
-        Path lPath = Paths.get(jTextField15.getText());
-        Path layoutPath;
-        if(!lPath.isAbsolute()){
-           layoutPath = basePath.resolve(lPath).normalize();
-        }else{
-            layoutPath = lPath;
-        }        
-        System.out.println(layoutPath.toString());
-        mapManager.exportDisassembly(tilesetsPath.toString(), blocksetPath.toString(), layoutPath.toString());*/
-    }//GEN-LAST:event_jButton2ActionPerformed
-
     private void jButtonImportMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportMapActionPerformed
         Path imagePath = PathHelpers.getBasePath().resolve(fileButtonImportImage.getFilePath());
         Path flagsPath = PathHelpers.getBasePath().resolve(fileButtonImportLayout.getFilePath());
@@ -1584,66 +1428,10 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
         onDataLoaded();
     }//GEN-LAST:event_jButtonImportMapActionPerformed
 
-    private void jButton21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton21ActionPerformed
-        int returnVal = jFileChooser1.showOpenDialog(this);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            File file = jFileChooser1.getSelectedFile();
-            jTextField14.setText(file.getAbsolutePath());
-        }
-    }//GEN-LAST:event_jButton21ActionPerformed
-
-    private void jButton27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton27ActionPerformed
-        int returnVal = jFileChooser1.showOpenDialog(this);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            File file = jFileChooser1.getSelectedFile();
-            jTextField15.setText(file.getAbsolutePath());
-        }
-    }//GEN-LAST:event_jButton27ActionPerformed
-
-    private void jButton22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton22ActionPerformed
-        int returnVal = jFileChooser1.showOpenDialog(this);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            File file = jFileChooser1.getSelectedFile();
-            jTextField16.setText(file.getAbsolutePath());
-        }
-    }//GEN-LAST:event_jButton22ActionPerformed
-
-    private void jButton23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton23ActionPerformed
-        int returnVal = jFileChooser1.showOpenDialog(this);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            File file = jFileChooser1.getSelectedFile();
-            jTextField17.setText(file.getAbsolutePath());
-        }
-    }//GEN-LAST:event_jButton23ActionPerformed
-
-    private void jButton24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton24ActionPerformed
-        int returnVal = jFileChooser1.showOpenDialog(this);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            File file = jFileChooser1.getSelectedFile();
-            jTextField18.setText(file.getAbsolutePath());
-        }
-    }//GEN-LAST:event_jButton24ActionPerformed
-
-    private void jButton32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton32ActionPerformed
-        int returnVal = jFileChooser1.showOpenDialog(this);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            File file = jFileChooser1.getSelectedFile();
-            jTextField25.setText(file.getAbsolutePath());
-        }
-    }//GEN-LAST:event_jButton32ActionPerformed
-
-    private void jButton33ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton33ActionPerformed
-        int returnVal = jFileChooser1.showOpenDialog(this);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            File file = jFileChooser1.getSelectedFile();
-            jTextField26.setText(file.getAbsolutePath());
-        }
-    }//GEN-LAST:event_jButton33ActionPerformed
-
     private void jButtonOptimiseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOptimiseActionPerformed
         ProtoMap protoMap = mapCreatorLayoutPanel.getProtoMap();
         Tileset[] tilesets = mapTilesetLayoutPanelImported.getTilesets();
-        if (protoMap == null || protoMap.getLayout() == null || tilesets == null) {
+        if (protoMap == null || protoMap.getRawLayout() == null || tilesets == null) {
             return;
         }
         try {
@@ -1657,94 +1445,31 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
         }
     }//GEN-LAST:event_jButtonOptimiseActionPerformed
 
-    private void jButton25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton25ActionPerformed
-        int returnVal = jFileChooser1.showOpenDialog(this);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            File file = jFileChooser1.getSelectedFile();
-            jTextField32.setText(file.getAbsolutePath());
+    private void jButtonExportPaletteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExportPaletteActionPerformed
+        Path palettePath = PathHelpers.getBasePath().resolve(fileButtonExportPalette.getFilePath());
+        try {
+            mapCreatorManager.exportPalette(palettePath, mapCreatorLayoutPanel.getProtoMap().getRawLayout().getPalette());
+        } catch (Exception ex) {
+            Console.logger().log(Level.SEVERE, null, ex);
+            Console.logger().severe("ERROR Map palette could not be exported to : " + palettePath);
         }
-    }//GEN-LAST:event_jButton25ActionPerformed
+    }//GEN-LAST:event_jButtonExportPaletteActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        /*String toolDir = System.getProperty("user.dir");
-        Path toolPath = Paths.get(toolDir);
-        
-        String mapPath = jTextField24.getText();
-        if(!mapPath.endsWith("\\")){
-            mapPath = mapPath+"\\";
+    private void jButtonExportTilesetsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExportTilesetsActionPerformed
+        Tileset[] tilesets = mapTilesetLayoutPanelNew.getTilesets();
+        FileButton[] fileButtons = new FileButton[] { fileButtonExportTileset1, fileButtonExportTileset2, fileButtonExportTileset3, fileButtonExportTileset4, fileButtonExportTileset5 };
+        try {
+            Path[] tilesetPaths = new Path[fileButtons.length];
+            for (int i = 0; i < tilesetPaths.length; i++) {
+                String path = fileButtons[i].getFilePath();
+                tilesetPaths[i] = path.isBlank() ? null : PathHelpers.getBasePath().resolve(path);
+            }
+            mapCreatorManager.exportTilesets(tilesetPaths, tilesets);
+        } catch (Exception ex) {
+            Console.logger().log(Level.SEVERE, null, ex);
+            Console.logger().severe("ERROR Map image could not be copied");
         }
-        //Path basePath = Paths.get(mapPath).toAbsolutePath();
-        System.out.println(toolPath.toString());
-        Path basePath = toolPath.resolve(Paths.get(mapPath)).normalize();
-        System.out.println(basePath.toString());
-        
-        Path pPath = Paths.get(jTextField32.getText());
-        Path palettePath;
-        if(!pPath.isAbsolute()){
-           palettePath = basePath.resolve(pPath).normalize();
-        }else{
-            palettePath = pPath;
-        }
-        
-        mapManager.exportPalette(palettePath.toString());*/
-    }//GEN-LAST:event_jButton6ActionPerformed
-
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        /*String toolDir = System.getProperty("user.dir");
-        Path toolPath = Paths.get(toolDir);
-        
-        String mapPath = jTextField24.getText();
-        if(!mapPath.endsWith("\\")){
-            mapPath = mapPath+"\\";
-        }
-        //Path basePath = Paths.get(mapPath).toAbsolutePath();
-        System.out.println(toolPath.toString());
-        Path basePath = toolPath.resolve(Paths.get(mapPath)).normalize();
-        System.out.println(basePath.toString());
-        
-        Path t1Path = Paths.get(jTextField16.getText());
-        Path tileset1Path;
-        if(!t1Path.isAbsolute()){
-           tileset1Path = basePath.resolve(t1Path).normalize();
-        }else{
-            tileset1Path = t1Path;
-        }
-        Path t2Path = Paths.get(jTextField17.getText());
-        Path tileset2Path;
-        if(!t2Path.isAbsolute()){
-           tileset2Path = basePath.resolve(t2Path).normalize();
-        }else{
-            tileset2Path = t2Path;
-        }
-        Path t3Path = Paths.get(jTextField18.getText());
-        Path tileset3Path;
-        if(!t3Path.isAbsolute()){
-           tileset3Path = basePath.resolve(t3Path).normalize();
-        }else{
-            tileset3Path = t3Path;
-        }
-        Path t4Path = Paths.get(jTextField25.getText());
-        Path tileset4Path;
-        if(!t4Path.isAbsolute()){
-           tileset4Path = basePath.resolve(t4Path).normalize();
-        }else{
-            tileset4Path = t4Path;
-        }
-        Path t5Path = Paths.get(jTextField26.getText());
-        Path tileset5Path;
-        if(!t5Path.isAbsolute()){
-           tileset5Path = basePath.resolve(t5Path).normalize();
-        }else{
-            tileset5Path = t5Path;
-        }
-        
-        mapManager.exportTilesets(new String[] {tileset1Path.toString(), tileset2Path.toString(), tileset3Path.toString(), tileset4Path.toString(), tileset5Path.toString()});
-        */
-    }//GEN-LAST:event_jButton7ActionPerformed
-
-    private void jButton43ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton43ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton43ActionPerformed
+    }//GEN-LAST:event_jButtonExportTilesetsActionPerformed
 
     private void jButtonExistingMapImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExistingMapImportActionPerformed
         Path dataPath = PathHelpers.getBasePath().resolve(directoryButtonExistingMapDir.getDirectoryPath());
@@ -1877,6 +1602,21 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
         actionFillMode = jComboBoxFillMode.getSelectedIndex();
         jTabbedPaneMain.setSelectedIndex(2);
     }//GEN-LAST:event_jComboBoxFillModeActionPerformed
+
+    private void jButtonExportMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExportMapActionPerformed
+        Path mapDirPath = PathHelpers.getBasePath().resolve(directoryButtonExportMapDir.getDirectoryPath());
+        mapDirPath = mapDirPath.resolve(String.format("map%02d", (int)jSpinnerExportMapIndex.getValue()));
+        Path tilesetsPath = mapDirPath.resolve(fileButtonExportTilesets.getFilePath());
+        Path blocksPath = mapDirPath.resolve(fileButtonExportBlocks.getFilePath());
+        Path layoutPath = mapDirPath.resolve(fileButtonExportLayout.getFilePath());
+        try {
+            PathHelpers.createPathIfRequred(mapDirPath);
+            mapCreatorManager.exportDisassembly(tilesetsPath, blocksPath, layoutPath, actionOptimisedMap.getNewBlockset(), actionOptimisedMap.getNewLayout());
+        } catch (Exception ex) {
+            Console.logger().log(Level.SEVERE, null, ex);
+            Console.logger().severe("ERROR Map image could not be imported from : " + mapDirPath);
+        }
+    }//GEN-LAST:event_jButtonExportMapActionPerformed
     
     @Override
     protected boolean cliImportData(String[] data, FileFormat format, boolean isDirectory) throws Exception {
@@ -1889,6 +1629,7 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.sfc.sf2.core.gui.controls.AccordionPanel accordionPanelExportMaps;
     private com.sfc.sf2.core.gui.controls.AccordionPanel accordionPanelMapsPaths;
     private com.sfc.sf2.core.gui.controls.AccordionPanel accordionPanelModifyTilesets;
     private com.sfc.sf2.map.block.gui.BlocksetViewPanel blocksetViewPanelImported;
@@ -1898,6 +1639,7 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
     private com.sfc.sf2.core.gui.controls.DirectoryButton directoryButtonExistingMapDir;
     private com.sfc.sf2.core.gui.controls.DirectoryButton directoryButtonExistingMapPalette;
     private com.sfc.sf2.core.gui.controls.DirectoryButton directoryButtonExistingMapTilesets;
+    private com.sfc.sf2.core.gui.controls.DirectoryButton directoryButtonExportMapDir;
     private com.sfc.sf2.core.gui.controls.FileButton fileButtonCustomPalette;
     private com.sfc.sf2.core.gui.controls.FileButton fileButtonCustomTileset1;
     private com.sfc.sf2.core.gui.controls.FileButton fileButtonCustomTileset2;
@@ -1905,27 +1647,27 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
     private com.sfc.sf2.core.gui.controls.FileButton fileButtonCustomTileset4;
     private com.sfc.sf2.core.gui.controls.FileButton fileButtonCustomTileset5;
     private com.sfc.sf2.core.gui.controls.FileButton fileButtonExistingMapData;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonExportBlocks;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonExportLayout;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonExportPalette;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonExportTileset1;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonExportTileset2;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonExportTileset3;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonExportTileset4;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonExportTileset5;
+    private com.sfc.sf2.core.gui.controls.FileButton fileButtonExportTilesets;
     private com.sfc.sf2.core.gui.controls.FileButton fileButtonImportHp;
     private com.sfc.sf2.core.gui.controls.FileButton fileButtonImportImage;
     private com.sfc.sf2.core.gui.controls.FileButton fileButtonImportLayout;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton2;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton3;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton4;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton21;
-    private javax.swing.JButton jButton22;
-    private javax.swing.JButton jButton23;
-    private javax.swing.JButton jButton24;
-    private javax.swing.JButton jButton25;
-    private javax.swing.JButton jButton27;
-    private javax.swing.JButton jButton32;
-    private javax.swing.JButton jButton33;
-    private javax.swing.JButton jButton43;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JButton jButtonCustomMapImport;
     private javax.swing.JButton jButtonExistingMapCopy;
     private javax.swing.JButton jButtonExistingMapImport;
+    private javax.swing.JButton jButtonExportMap;
+    private javax.swing.JButton jButtonExportPalette;
+    private javax.swing.JButton jButtonExportTilesets;
     private javax.swing.JButton jButtonImportMap;
     private javax.swing.JButton jButtonOptimise;
     private javax.swing.JCheckBox jCheckBoxChestGraphic;
@@ -1938,27 +1680,19 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
     private javax.swing.JComboBox<String> jComboBoxFillMode;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JFileChooser jFileChooser2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel27;
-    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel38;
-    private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel41;
+    private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel51;
     private javax.swing.JLabel jLabel52;
     private javax.swing.JLabel jLabel53;
     private javax.swing.JLabel jLabel54;
     private javax.swing.JLabel jLabel55;
     private javax.swing.JLabel jLabel56;
+    private javax.swing.JLabel jLabel57;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
@@ -1977,11 +1711,11 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel47;
     private javax.swing.JPanel jPanel48;
-    private javax.swing.JPanel jPanel49;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel50;
     private javax.swing.JPanel jPanel51;
     private javax.swing.JPanel jPanel52;
+    private javax.swing.JPanel jPanel53;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane2;
@@ -1992,6 +1726,7 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JSpinner jSpinnerExistingMapIndex;
+    private javax.swing.JSpinner jSpinnerExportMapIndex;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JSplitPane jSplitPane2;
     private javax.swing.JSplitPane jSplitPane4;
@@ -2000,15 +1735,6 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
     private javax.swing.JTabbedPane jTabbedPane3;
     private javax.swing.JTabbedPane jTabbedPane4;
     private javax.swing.JTabbedPane jTabbedPaneMain;
-    private javax.swing.JTextField jTextField14;
-    private javax.swing.JTextField jTextField15;
-    private javax.swing.JTextField jTextField16;
-    private javax.swing.JTextField jTextField17;
-    private javax.swing.JTextField jTextField18;
-    private javax.swing.JTextField jTextField25;
-    private javax.swing.JTextField jTextField26;
-    private javax.swing.JTextField jTextField32;
-    private javax.swing.JTextField jTextField36;
     private com.sfc.sf2.map.block.gui.MapBlocksetLayoutPanel mapBlocksetPanelImported;
     private com.sfc.sf2.mapcreator.gui.MapCreatorLayoutPanel mapCreatorLayoutPanel;
     private com.sfc.sf2.mapcreator.gui.MapCreatorViewPanel mapCreatorViewPanel;

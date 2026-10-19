@@ -24,6 +24,7 @@ import com.sfc.sf2.map.block.io.MapTilesetsAsmProcessor;
 import com.sfc.sf2.map.layout.BlockFlags;
 import com.sfc.sf2.map.layout.MapLayout;
 import com.sfc.sf2.map.layout.MapLayoutBlock;
+import com.sfc.sf2.map.layout.MapLayoutManager;
 import com.sfc.sf2.map.layout.io.MapLayoutMetaProcessor;
 import com.sfc.sf2.palette.Palette;
 import com.sfc.sf2.palette.PaletteManager;
@@ -42,7 +43,7 @@ public class MapCreatorManager extends AbstractManager {
     @Override
     public void clearData() {
         if (protoMap != null) {
-            protoMap.getLayout().clearIndexedColorImage(true);
+            protoMap.getRawLayout().clearIndexedColorImage(true);
             protoMap = null;
         }
         if (importedTilesets != null) {
@@ -96,6 +97,7 @@ public class MapCreatorManager extends AbstractManager {
                 tilesetPaths[i] = tilesetsPath.resolve(String.format("maptileset%03d.bin", mapData.tilesetIndices()[i]));
             }
         }
+        Console.logger().info("Map data successfully imported from: " + mapFile);
         Console.logger().finest("EXITING importMapData");
         return new MapTilesetsData(palettePath, tilesetPaths);
     }
@@ -119,59 +121,10 @@ public class MapCreatorManager extends AbstractManager {
         return importedTilesets;
     }
     
-    public void importBaseTilesets(Path[] tilesetPaths, boolean chestGraphics, Path targetPaletteFilepath) {
-        Console.logger().finest("ENTERING importBaseTilesets");
-        /*Palette palette = null;
-        Path palettepath = Paths.get(targetPaletteFilepath);
-        if(palettepath.toFile().exists() && palettepath.toFile().isFile()){
-            palette = com.sfc.sf2.palette.io.DisassemblyManager.importDisassembly(targetPaletteFilepath);
-        }else{
-            palette = map.getTiles()[0].getPalette();
-        }
-        
-        Tile[] tiles;
-        Tileset[] tilesets = new Tileset[5];
-        for(int i=0;i<tilesets.length;i++) {
-            String tpath = tilesetPaths[i];
-            Path path = Paths.get(tpath);
-            if (path.toFile().exists()&&!path.toFile().isDirectory()) {
-                tiles = com.sfc.sf2.graphics.io.DisassemblyManager.importDisassembly(tpath, palette, GraphicsManager.COMPRESSION_STACK);
-                tilesets[i] = new Tileset();
-                tilesets[i].setName(tilesetPaths[i].substring(tilesetPaths[i].lastIndexOf("\\"), tilesetPaths[i].lastIndexOf(".")));
-                tilesets[i].setTiles(tiles);
-            } else {
-                if (i!=4 || !chestGraphics) {
-                    tilesets[i] = Tileset.EmptyTilset(palette);
-                } else {
-                    try {
-                        InputStream is = ClassLoader.class.getResourceAsStream("basemaptileset5.bin");
-                        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-                        int nRead;
-                        byte[] data = new byte[424];
-                        while ((nRead = is.read(data, 0, data.length)) != -1) {
-                            buffer.write(data, 0, nRead);
-                        }
-                        byte[] bm5 = buffer.toByteArray();
-                        tiles =  new StackGraphicsDecoder().decodeStackGraphics(bm5, palette);
-                        tilesets[i] = new Tileset();
-                        tilesets[i].setName("basemaptileset5");
-                        tilesets[i].setTiles(tiles);
-                    } catch (IOException ex) {
-                        Logger.getLogger(MapCreatorManager.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-            }
-        }
-        map.setPalette(palette);
-        map.setTilesets(tilesets);
-        lastImportedPalettePath = targetPaletteFilepath;
-        lastImportedTilesetsPaths = tilesetPaths;*/
-        Console.logger().finest("EXITING importBaseTilesets");
-    }
-    
     public void exportPalette(Path filePath, Palette palette) throws IOException, DisassemblyException {
         Console.logger().finest("ENTERING exportPalette");
         new PaletteManager().exportDisassembly(filePath, palette);
+        Console.logger().info("Map palette successfully exported.");
         Console.logger().finest("EXITING exportPalette");     
     }
     
@@ -179,36 +132,22 @@ public class MapCreatorManager extends AbstractManager {
         Console.logger().finest("ENTERING exportTilesets");
         TilesetManager tilesetManager = new TilesetManager();
         for (int i = 0; i < tilesets.length; i++) {
+            if (tilesetPaths[i] == null) continue;
             if (tilesets[i] == null || tilesets[i].isTilesetEmpty()) {
-                System.out.println("Tilset " + (i+1) + " is blank so will not be exported.");
+                Console.logger().warning("Tilset " + (i+1) + " is blank so will not be exported.");
             } else {
                 tilesetManager.exportDisassembly(tilesetPaths[i], tilesets[i], TilesetCompression.STACK);
             }
         }
         Console.logger().info("Map tilesets successfully exported.");
-        Console.logger().finest("EXITING exportTilesets");     
+        Console.logger().finest("EXITING exportTilesets");
     }
     
-    public void exportDisassembly(Path tilesetsPath, Path blocksPath, Path layoutPath, ProtoMap map) throws IOException, DisassemblyException, AsmException {
+    public void exportDisassembly(Path tilesetsPath, Path blocksPath, Path layoutPath, MapBlockset blockset, MapLayout layout) throws IOException, DisassemblyException, AsmException {
         Console.logger().finest("ENTERING exportDisassembly");
-        //new MapLayoutManager().exportDisassembly(tilesetsPath, blocksPath, layoutPath, map.getOptimizedBlockset(), map.getLayout());
+        new MapLayoutManager().exportDisassembly(tilesetsPath, blocksPath, layoutPath, blockset, layout);
         Console.logger().info("Map tilesets, blockset, and layout successfully exported.");
         Console.logger().finest("EXITING exportDisassembly");
-    }
-
-    public void exportHPTiles(Path hpFilePath, MapLayout layout) throws IOException, MetadataException {
-        Console.logger().finest("ENTERING exportHPTiles");
-        new MapBlocksetMetaProcessor().exportMetadata(hpFilePath, layout.layoutToBlockset());
-        Console.logger().info("Map layout successfully exported to image : " + hpFilePath);
-        Console.logger().finest("EXITING exportHPTiles");
-    }
-    
-    public void exportPng(Path filePath, MapLayout layout) throws IOException, RawImageException {
-        Console.logger().finest("ENTERING exportPng");
-        MapBlockPackage pckg = new MapBlockPackage(Integer.toString(layout.getIndex()), layout.getTilesets(), layout.getTilesets()[0].getPalette());
-        new MapBlocksetRawImageProcessor().exportRawImage(filePath, layout.layoutToBlockset(), pckg);
-        Console.logger().info("Map layout successfully exported to image : " + filePath);
-        Console.logger().finest("EXITING exportPng");
     }
 
     public ProtoMap getProtoMap() {
