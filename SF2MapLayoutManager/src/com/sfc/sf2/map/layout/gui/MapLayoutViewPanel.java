@@ -29,7 +29,7 @@ public class MapLayoutViewPanel extends AbstractViewPanel<MapLayoutPanel> {
     public void setLayoutPanel(MapLayoutPanel layoutPanel, IViewSettings viewPanelSettings) {
         super.setLayoutPanel(layoutPanel, viewPanelSettings);
         
-        layoutPanel.setShowExplorationFlags(jCheckBoxExportationFlags.isSelected());
+        layoutPanel.setShowExplorationFlags(jCheckBoxExplorationFlags.isSelected());
         layoutPanel.setShowInteractionFlags(jCheckBoxInteractionFlags.isSelected());
     }
 
@@ -47,7 +47,7 @@ public class MapLayoutViewPanel extends AbstractViewPanel<MapLayoutPanel> {
         jLabelScale = new javax.swing.JLabel();
         jComboBoxScale = new javax.swing.JComboBox<>();
         jCheckBoxPriority = new javax.swing.JCheckBox();
-        jCheckBoxExportationFlags = new javax.swing.JCheckBox();
+        jCheckBoxExplorationFlags = new javax.swing.JCheckBox();
         jCheckBoxInteractionFlags = new javax.swing.JCheckBox();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder("Map View"));
@@ -98,12 +98,12 @@ public class MapLayoutViewPanel extends AbstractViewPanel<MapLayoutPanel> {
             }
         });
 
-        jCheckBoxExportationFlags.setText("Exploration Flags");
-        jCheckBoxExportationFlags.setActionCommand("Show Exploration Flags");
-        jCheckBoxExportationFlags.setName("Exploration Flags Toggle"); // NOI18N
-        jCheckBoxExportationFlags.addItemListener(new java.awt.event.ItemListener() {
+        jCheckBoxExplorationFlags.setText("Exploration Flags");
+        jCheckBoxExplorationFlags.setActionCommand("Show Exploration Flags");
+        jCheckBoxExplorationFlags.setName("Exploration Flags Toggle"); // NOI18N
+        jCheckBoxExplorationFlags.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jCheckBoxExportationFlagsItemStateChanged(evt);
+                jCheckBoxExplorationFlagsItemStateChanged(evt);
             }
         });
 
@@ -123,7 +123,7 @@ public class MapLayoutViewPanel extends AbstractViewPanel<MapLayoutPanel> {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jCheckBoxExportationFlags)
+                        .addComponent(jCheckBoxExplorationFlags)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jCheckBoxGrid)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -148,7 +148,7 @@ public class MapLayoutViewPanel extends AbstractViewPanel<MapLayoutPanel> {
                     .addComponent(jLabelBG)
                     .addComponent(colorPickerBG, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jCheckBoxGrid)
-                    .addComponent(jCheckBoxExportationFlags))
+                    .addComponent(jCheckBoxExplorationFlags))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jComboBoxScale, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -182,14 +182,14 @@ public class MapLayoutViewPanel extends AbstractViewPanel<MapLayoutPanel> {
         }
     }//GEN-LAST:event_jCheckBoxPriorityItemStateChanged
 
-    protected void jCheckBoxExportationFlagsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBoxExportationFlagsItemStateChanged
+    protected void jCheckBoxExplorationFlagsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBoxExplorationFlagsItemStateChanged
         if (!ActionManager.isActionTriggering()) {
-            ActionManager.setActionWithoutExecute(new ToggleAction(jCheckBoxExportationFlags, jCheckBoxExportationFlags.isSelected()));
+            ActionManager.setActionWithoutExecute(new ToggleAction(jCheckBoxExplorationFlags, jCheckBoxExplorationFlags.isSelected()));
         }
         if (layoutPanel != null) {
-            layoutPanel.setShowExplorationFlags(jCheckBoxExportationFlags.isSelected());
+            layoutPanel.setShowExplorationFlags(jCheckBoxExplorationFlags.isSelected());
         }
-    }//GEN-LAST:event_jCheckBoxExportationFlagsItemStateChanged
+    }//GEN-LAST:event_jCheckBoxExplorationFlagsItemStateChanged
 
     protected void jCheckBoxInteractionFlagsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBoxInteractionFlagsItemStateChanged
         if (!ActionManager.isActionTriggering()) {
@@ -203,7 +203,7 @@ public class MapLayoutViewPanel extends AbstractViewPanel<MapLayoutPanel> {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.sfc.sf2.core.gui.controls.ColorPicker colorPickerBG;
     private com.formdev.flatlaf.icons.FlatOptionPaneWarningIcon flatOptionPaneWarningIcon1;
-    private javax.swing.JCheckBox jCheckBoxExportationFlags;
+    private javax.swing.JCheckBox jCheckBoxExplorationFlags;
     private javax.swing.JCheckBox jCheckBoxGrid;
     private javax.swing.JCheckBox jCheckBoxInteractionFlags;
     private javax.swing.JCheckBox jCheckBoxPriority;

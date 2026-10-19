@@ -25,7 +25,6 @@ import com.sfc.sf2.map.layout.BlockFlags;
 import com.sfc.sf2.map.layout.MapLayout;
 import com.sfc.sf2.map.layout.MapLayoutBlock;
 import com.sfc.sf2.map.layout.io.MapLayoutMetaProcessor;
-import com.sfc.sf2.mapcreator.io.MapTilesetsData;
 import com.sfc.sf2.palette.Palette;
 import com.sfc.sf2.palette.PaletteManager;
 import java.io.IOException;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sfc.sf2.mapcreator.io;
+package com.sfc.sf2.mapcreator;
 
 import java.nio.file.Path;
 

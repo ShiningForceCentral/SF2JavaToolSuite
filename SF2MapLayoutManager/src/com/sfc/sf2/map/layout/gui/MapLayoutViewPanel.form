@@ -34,7 +34,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <Component id="jCheckBoxExportationFlags" min="-2" max="-2" attributes="0"/>
+                      <Component id="jCheckBoxExplorationFlags" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="jCheckBoxGrid" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -64,7 +64,7 @@
                   <Component id="jLabelBG" alignment="2" min="-2" max="-2" attributes="0"/>
                   <Component id="colorPickerBG" alignment="2" min="-2" max="-2" attributes="0"/>
                   <Component id="jCheckBoxGrid" alignment="2" min="-2" max="-2" attributes="0"/>
-                  <Component id="jCheckBoxExportationFlags" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Component id="jCheckBoxExplorationFlags" alignment="2" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="2" attributes="0">
@@ -144,14 +144,14 @@
         <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jCheckBoxPriorityItemStateChanged"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JCheckBox" name="jCheckBoxExportationFlags">
+    <Component class="javax.swing.JCheckBox" name="jCheckBoxExplorationFlags">
       <Properties>
         <Property name="text" type="java.lang.String" value="Exploration Flags"/>
         <Property name="actionCommand" type="java.lang.String" value="Show Exploration Flags"/>
         <Property name="name" type="java.lang.String" value="Exploration Flags Toggle" noResource="true"/>
       </Properties>
       <Events>
-        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jCheckBoxExportationFlagsItemStateChanged"/>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jCheckBoxExplorationFlagsItemStateChanged"/>
       </Events>
     </Component>
     <Component class="javax.swing.JCheckBox" name="jCheckBoxInteractionFlags">

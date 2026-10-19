@@ -22,8 +22,8 @@ public class MapBlockHelpers {
     public static final int TILESET_TILES = 128;
     public static final int MAP_TILESETS_TILES = TILESET_TILES*5;
     
-    public static final Color PRIORITY_COLOR = new Color(255, 255, 0, 100);
-    public static final Color PRIORITY_DARKEN_COLOR = new Color(0, 0, 0, 100);
+    public static final Color PRIORITY_COLOR = new Color(1f, 1f, 0, 0.5f);
+    public static final Color PRIORITY_DARKEN_COLOR = new Color(0, 0, 0, 0.5f);
     
     public static void drawTilePriorities(Graphics graphics, MapBlock[] blocks, Tileset[] tilesets, int blocksPerRow) {
         for (int b=0; b < blocks.length; b++) {

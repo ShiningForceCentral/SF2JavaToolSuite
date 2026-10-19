@@ -39,7 +39,12 @@ public class MapTilesetLayoutPanel extends AbstractLayoutPanel {
         if (tilesets == null) {
             return new Dimension();
         } else {
-            Dimension d = tilesets[0].getDimensions(getItemsPerRow());
+            Dimension d;
+            if (tilesets[0] == null) {
+                d = tilesets[4].getDimensions(getItemsPerRow());
+            } else {
+                d = tilesets[0].getDimensions(getItemsPerRow());
+            }
             d.height *= tilesets.length;
             return d;
         }
@@ -47,7 +52,8 @@ public class MapTilesetLayoutPanel extends AbstractLayoutPanel {
 
     @Override
     protected boolean hasData() {
-        return tilesets != null && tilesets[0] != null && tilesets[0].getTiles().length > 0;
+        //Also check last tileset, because it contains chest graphics
+        return tilesets != null && ((tilesets[0] != null && tilesets[0].getTiles().length > 0) || (tilesets[4] != null && tilesets[4].getTiles().length > 0));
     }
 
     @Override

@@ -24,20 +24,25 @@ import java.util.Queue;
  * @author TiMMy
  */
 public final class OptimisedMap {
+    public enum TilesetFillMode {
+        NewOnly,
+        NewFirst,
+        ExistingFirst,
+    }
     
-    ProtoMap map;
-    private Tile[] addedTiles;
-    private Tile[] orphanTiles;
+    private Tileset addedTiles;
+    private Tileset orphanTiles;
     private Tileset[] newTilesets;
-    
-    private HashMap<Integer, Integer> occurences;
 
-    public OptimisedMap(ProtoMap protoMap, Tileset[] tilesets, boolean chestBlocks, boolean canModifyTilesets) {
-        map = protoMap.clone();
-        generateTilesets(protoMap.getOptimisedTileset(), tilesets, protoMap.getOptimisedBlockset(), chestBlocks, canModifyTilesets);
+    public OptimisedMap(ProtoMap protoMap, Tileset[] tilesets, boolean chestBlocks, TilesetFillMode fillMode, boolean[] modifyTilesets) {
+        generateTilesets(protoMap.getOptimisedTileset(), tilesets, protoMap.getOptimisedBlockset(), chestBlocks, fillMode, modifyTilesets);
     }
 
-    public Tile[] getOrphanTiles() {
+    public Tileset getAddedTiles() {
+        return addedTiles;
+    }
+
+    public Tileset getOrphanTiles() {
         return orphanTiles;
     }
 
@@ -45,18 +50,25 @@ public final class OptimisedMap {
         return newTilesets;
     }
 
-    public void generateTilesets(Tileset optimisedTileset, Tileset[] tilesets, MapBlockset blockset, boolean chestBlocks, boolean canModifyTilesets) {
+    public void generateTilesets(Tileset optimisedTileset, Tileset[] tilesets, MapBlockset blockset, boolean chestBlocks, TilesetFillMode fillMode, boolean[] modifyTilesets) {
         Console.logger().finest("ENTERING generateTilesets");
-        Queue<Tile> orphanTileList = new LinkedList<>();
+        List<Tile> addedTilesList = new ArrayList<>();
+        Queue<Tile> orphanTilesList = new LinkedList<>();
         HashMap<Integer, TileRemap> tileRemap = new HashMap<>();
         
         Tileset[] newTilesets = new Tileset[tilesets.length];
+        boolean[] tilesetWasEmpty = new boolean[tilesets.length];
+        for (int i = 0; i < tilesets.length; i++) {
+            tilesetWasEmpty[i] = tilesets[i] == null;
+            if (!tilesetWasEmpty[i]) {
+                newTilesets[i] = tilesets[i].clone();
+            }
+        }
+        
         //Remap chest tiles
         if (chestBlocks) {
-            if (tilesets[4] == null) {
+            if (newTilesets[4] == null) {
                 newTilesets[4] = Tileset.EmptyTilset(optimisedTileset.getPalette(), TILESET_TILES, optimisedTileset.getTilesPerRow());
-            } else {
-                newTilesets[4] = tilesets[4].clone();
             }
             Tile[] opTiles = optimisedTileset.getTiles();
             Tile[] tiles = newTilesets[4].getTiles();
@@ -99,52 +111,23 @@ public final class OptimisedMap {
                 }
             }
             if (!tileFound) {
-                orphanTileList.add(opTile);
+                orphanTilesList.add(opTile);
             }
         }
         
-        //Add new tiles to empty tilesets
-        List<Tile> addedTilesList = new ArrayList<>();
-        for (int i=0; i < tilesets.length; i++) {
-            if (orphanTileList.isEmpty()) break;
-            if (tilesets[i] != null) continue;
-            if (newTilesets[i] == null) {
-                newTilesets[i] = Tileset.EmptyTilset(optimisedTileset.getPalette(), TILESET_TILES, optimisedTileset.getTilesPerRow());
-            }
-            Tile[] tiles = newTilesets[i].getTiles();
-            for (int t=0; t < tiles.length; t++) {
-                if (orphanTileList.isEmpty()) {
-                    break;
-                }
-                if (!tiles[t].isTileEmpty()) continue;
-                Tile orphan = orphanTileList.remove();
-                tiles[t] = orphan;
-                tileRemap.put(orphan.getId(), new TileRemap((byte)i, t));
-                orphan.setId(t);
-                addedTilesList.add(orphan);
-            }
-        }
-        
-        //Add new tiles to esisting tilesets (if enabled)
-        for (int i=0; i < tilesets.length; i++) {
-            if (tilesets[i] == null) continue;
-            if (newTilesets[i] == null) {
-                newTilesets[i] = tilesets[i].clone();
-            }
-            if (!canModifyTilesets) continue;
-            if (orphanTileList.isEmpty()) continue;
-            Tile[] tiles = newTilesets[i].getTiles();
-            for (int t=0; t < tiles.length; t++) {
-                if (!orphanTileList.isEmpty()) {
-                    Tile orphan = orphanTileList.remove();
-                    tiles[t] = orphan;
-                    tileRemap.put(orphan.getId(), new TileRemap((byte)i, t));
-                    orphan.setId(t);
-                    addedTilesList.add(orphan);
-                } else {
-                    break;
-                }
-            }
+        //Fill existing and/or new tilesets
+        switch (fillMode) {
+            case NewOnly:
+                fillNewTilesets(optimisedTileset, newTilesets, tilesets, orphanTilesList, addedTilesList, tileRemap, tilesetWasEmpty);
+                break;
+            case NewFirst:
+                fillNewTilesets(optimisedTileset, newTilesets, tilesets, orphanTilesList, addedTilesList, tileRemap, tilesetWasEmpty);
+                addToExistingTilesets(newTilesets, tilesets, orphanTilesList, addedTilesList, tileRemap, modifyTilesets, tilesetWasEmpty);
+                break;
+            case ExistingFirst:
+                addToExistingTilesets(newTilesets, tilesets, orphanTilesList, addedTilesList, tileRemap, modifyTilesets, tilesetWasEmpty);
+                fillNewTilesets(optimisedTileset, newTilesets, tilesets, orphanTilesList, addedTilesList, tileRemap, tilesetWasEmpty);
+                break;
         }
         
         //Remap blocks a final time
@@ -167,13 +150,58 @@ public final class OptimisedMap {
         this.newTilesets = newTilesets;
         Tile[] addedTiles = new Tile[addedTilesList.size()];
         addedTilesList.toArray(addedTiles);
-        this.addedTiles = addedTiles;
-        Tile[] orphanTiles = new Tile[orphanTileList.size()];
-        orphanTileList.toArray(orphanTiles);
-        this.orphanTiles = orphanTiles;
+        this.addedTiles = new Tileset("Added", addedTiles, 10);
+        Tile[] orphanTiles = new Tile[orphanTilesList.size()];
+        orphanTilesList.toArray(orphanTiles);
+        this.orphanTiles = new Tileset("Orphaned", orphanTiles, 10);
         Console.logger().finest("EXITING generateTilesets");
     }
     
+    private void fillNewTilesets(Tileset optimisedTileset, Tileset[] newTilesets, Tileset[] tilesets, Queue<Tile> orphanTilesList, List<Tile> addedTilesList, HashMap<Integer, TileRemap> tileRemap, boolean[] tilesetWasEmpty) {
+        for (int i=0; i < tilesets.length; i++) {
+            if (orphanTilesList.isEmpty()) break;
+            if (!tilesetWasEmpty[i]) continue;
+            if (newTilesets[i] == null) {
+                newTilesets[i] = Tileset.EmptyTilset(optimisedTileset.getPalette(), TILESET_TILES, optimisedTileset.getTilesPerRow());
+            }
+            Tile[] tiles = newTilesets[i].getTiles();
+            for (int t=0; t < tiles.length; t++) {
+                if (orphanTilesList.isEmpty()) {
+                    break;
+                }
+                if (!tiles[t].isTileEmpty()) continue;
+                Tile orphan = orphanTilesList.remove();
+                addedTilesList.add(orphan.clone());
+                tiles[t] = orphan;
+                tileRemap.put(orphan.getId(), new TileRemap((byte)i, t));
+                orphan.setId(t);
+            }
+        }
+    }
+    
+    private void addToExistingTilesets(Tileset[] newTilesets, Tileset[] tilesets, Queue<Tile> orphanTilesList, List<Tile> addedTilesList, HashMap<Integer, TileRemap> tileRemap, boolean[] modifyTilesets, boolean[] tilesetWasEmpty) {
+        for (int i=0; i < tilesets.length; i++) {
+            if (tilesetWasEmpty[i]) continue;
+            if (newTilesets[i] == null) {
+                newTilesets[i] = tilesets[i].clone();
+            }
+            if (!modifyTilesets[i]) continue;
+            if (orphanTilesList.isEmpty()) continue;
+            Tile[] tiles = newTilesets[i].getTiles();
+            for (int t=0; t < tiles.length; t++) {
+                if (!orphanTilesList.isEmpty()) {
+                    Tile orphan = orphanTilesList.remove();
+                    addedTilesList.add(orphan.clone());
+                    tiles[t] = orphan;
+                    tileRemap.put(orphan.getId(), new TileRemap((byte)i, t));
+                    orphan.setId(t);
+                } else {
+                    break;
+                }
+            }
+        }
+    }
+    
     //Raw pixel data for chest tiles (open and closed)
-    static int[] CHEST_TILE_REMAPS = new int[] { -1,44,45,60,61,46,47,62,63,87,88 };
+    static int[] CHEST_TILE_REMAPS = new int[] { -1,44,45,60,61,46,47,62,63,78,79 };
 }
