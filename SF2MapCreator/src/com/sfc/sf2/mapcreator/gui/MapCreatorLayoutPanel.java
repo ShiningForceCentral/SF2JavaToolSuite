@@ -26,8 +26,8 @@ import java.awt.Graphics;
  * @author TiMMy
  */
 public class MapCreatorLayoutPanel extends MapLayoutPanel {
-    private static final Color NEW_COLOR = new Color(0f, 0f, 1f, 0.5f);
-    private static final Color ORPHAN_COLOR = new Color(1f, 0f, 0f, 0.5f);
+    private static final Color NEW_COLOR = new Color(0f, 1f, 1f, 0.5f);
+    private static final Color ORPHAN_COLOR = new Color(1f, 0f, 1f, 0.5f);
     
     private ProtoMap protoMap;
     private Tileset addedTiles;
