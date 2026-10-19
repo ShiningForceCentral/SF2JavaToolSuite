@@ -60,7 +60,7 @@ public class MapTilesetLayoutPanel extends AbstractLayoutPanel {
     protected void drawImage(Graphics graphics) {
         for (int i = 0; i < tilesets.length; i++) {
             if (tilesets[i] != null) {
-                tilesets[i].clearIndexedColorImage(false);
+                tilesets[i].setTilesPerRow(getItemsPerRow());
                 graphics.drawImage(tilesets[i].getIndexedColorImage(), 0, renderHeight*i, null);
             }
         }
