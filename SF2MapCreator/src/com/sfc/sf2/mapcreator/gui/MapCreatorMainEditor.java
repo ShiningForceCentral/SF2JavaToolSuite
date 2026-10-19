@@ -12,6 +12,7 @@ import com.sfc.sf2.core.gui.AbstractMainEditor;
 import static com.sfc.sf2.core.gui.AbstractMainEditor.programStart;
 import static com.sfc.sf2.core.gui.AbstractMainEditor.setupMainEditor;
 import com.sfc.sf2.core.gui.controls.Console;
+import com.sfc.sf2.core.gui.controls.FileButton;
 import com.sfc.sf2.core.io.FileFormat;
 import com.sfc.sf2.core.settings.SettingsManager;
 import com.sfc.sf2.core.settings.ViewSettings;
@@ -872,7 +873,6 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
         jLabel38.setText("<html>- Orphaned Tiles: Any tiles that do not fit in the original tilesets.<br>Use the checkbox to see where the orphaned tiles are on the map.<br><br>\n- Optimized Blockset: Identifies all unique blocks on the map in order of appearance (i.e. duplicates are combined).<br><br>\n- New Tileset: Any orphaned tiles will be inserted into blank tiles spaces in the new tilesets.<br>Empty tilesets will be filled to create new tilesets.</html>");
         jLabel38.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
-        jCheckBoxModifyTilesets.setSelected(true);
         jCheckBoxModifyTilesets.setText("Allow modify tilesets");
         jCheckBoxModifyTilesets.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -956,7 +956,7 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
             .addComponent(jScrollPane7)
             .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
-                    .addContainerGap(55, Short.MAX_VALUE)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel35, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap()))
         );
@@ -1688,83 +1688,20 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
     }//GEN-LAST:event_jButtonExistingMapImportActionPerformed
 
     private void jButtonCustomMapImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCustomMapImportActionPerformed
-        /*
-        String toolDir = System.getProperty("user.dir");
-        Path toolPath = Paths.get(toolDir);
-        
-        String mapPath = jTextField24.getText();
-        if(!mapPath.endsWith("\\")){
-            mapPath = mapPath+"\\";
+        Path palettePath = PathHelpers.getBasePath().resolve(fileButtonCustomPalette.getFilePath());
+        FileButton[] fileButtons = new FileButton[] { fileButtonCustomTileset1, fileButtonCustomTileset2, fileButtonCustomTileset3, fileButtonCustomTileset4, fileButtonCustomTileset5 };
+        try {
+            Path[] tilesetPaths = new Path[fileButtons.length];
+            for (int i = 0; i < tilesetPaths.length; i++) {
+                String path = fileButtons[i].getFilePath();
+                tilesetPaths[i] = path.isBlank() ? null : PathHelpers.getBasePath().resolve(path);
+            }
+            mapCreatorManager.importMapPaletteAndTilesets(palettePath, tilesetPaths);
+        } catch (Exception ex) {
+            Console.logger().log(Level.SEVERE, null, ex);
+            Console.logger().severe("ERROR Map data could not be imported from custom paths");
         }
-        //Path basePath = Paths.get(mapPath).toAbsolutePath();
-        System.out.println(toolPath.toString());
-        Path basePath = toolPath.resolve(Paths.get(mapPath)).normalize();
-        
-        Path pPath = Paths.get(jTextField42.getText());
-        Path palettePath;
-        if(!pPath.isAbsolute()){
-           palettePath = basePath.resolve(pPath).normalize();
-        }else{
-            palettePath = pPath;
-        }        
-        System.out.println(palettePath.toString());
-
-        Path t1Path = Paths.get(jTextField35.getText());
-        Path tileset1Path;
-        if(!t1Path.isAbsolute()){
-           tileset1Path = basePath.resolve(t1Path).normalize();
-        }else{
-            tileset1Path = t1Path;
-        }        
-        System.out.println(tileset1Path.toString());
-
-        Path t2Path = Paths.get(jTextField38.getText());
-        Path tileset2Path;
-        if(!t2Path.isAbsolute()){
-           tileset2Path = basePath.resolve(t2Path).normalize();
-        }else{
-            tileset2Path = t2Path;
-        }        
-        System.out.println(tileset2Path.toString());
-
-        Path t3Path = Paths.get(jTextField39.getText());
-        Path tileset3Path;
-        if(!t3Path.isAbsolute()){
-           tileset3Path = basePath.resolve(t3Path).normalize();
-        }else{
-            tileset3Path = t3Path;
-        }        
-        System.out.println(tileset3Path.toString());
-
-        Path t4Path = Paths.get(jTextField40.getText());
-        Path tileset4Path;
-        if(!t4Path.isAbsolute()){
-           tileset4Path = basePath.resolve(t4Path).normalize();
-        }else{
-            tileset4Path = t4Path;
-        }        
-        System.out.println(tileset4Path.toString());
-
-        Path t5Path = Paths.get(jTextField41.getText());
-        Path tileset5Path;
-        if(!t5Path.isAbsolute()){
-           tileset5Path = basePath.resolve(t5Path).normalize();
-        }else{
-            tileset5Path = t5Path;
-        }        
-        System.out.println(tileset5Path.toString());
-        
-        String[] tilesetPaths = new String[5];        
-        tilesetPaths[0] = tileset1Path.toString();
-        tilesetPaths[1] = tileset2Path.toString();
-        tilesetPaths[2] = tileset3Path.toString();
-        tilesetPaths[3] = tileset4Path.toString();
-        tilesetPaths[4] = tileset5Path.toString();
-
-        mapManager.importBaseTilesets(tilesetPaths, jCheckBox3.isSelected(), palettePath.toString());
-        UpdateBaseTilesetsInterface();
-        UpdateMiscInterfaces();
-        updateExportPaths();*/
+        onTilesetsLoaded();
     }//GEN-LAST:event_jButtonCustomMapImportActionPerformed
 
     private void jButtonExistingMapCopyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExistingMapCopyActionPerformed

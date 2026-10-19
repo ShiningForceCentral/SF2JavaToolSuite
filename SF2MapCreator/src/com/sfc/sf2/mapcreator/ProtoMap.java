@@ -134,7 +134,7 @@ public class ProtoMap implements INameable {
                 }
             }
             if (!found) {
-                int index = optimisedTilesList.size()-1;
+                int index = optimisedTilesList.size();
                 Tile optimisedTile = origTiles[i].clone();
                 optimisedTile.setId(index);
                 optimisedTilesList.add(optimisedTile);

@@ -1048,7 +1048,6 @@
                                         </Component>
                                         <Component class="javax.swing.JCheckBox" name="jCheckBoxModifyTilesets">
                                           <Properties>
-                                            <Property name="selected" type="boolean" value="true"/>
                                             <Property name="text" type="java.lang.String" value="Allow modify tilesets"/>
                                           </Properties>
                                           <Events>
@@ -1077,7 +1076,7 @@
                                               <Component id="jScrollPane7" alignment="0" max="32767" attributes="0"/>
                                               <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                                                   <Group type="102" alignment="1" attributes="0">
-                                                      <EmptySpace pref="55" max="32767" attributes="0"/>
+                                                      <EmptySpace max="32767" attributes="0"/>
                                                       <Component id="jPanel35" min="-2" max="-2" attributes="0"/>
                                                       <EmptySpace max="-2" attributes="0"/>
                                                   </Group>
