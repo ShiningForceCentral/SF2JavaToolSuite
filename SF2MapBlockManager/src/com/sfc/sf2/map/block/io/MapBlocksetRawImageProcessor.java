@@ -64,7 +64,7 @@ public class MapBlocksetRawImageProcessor extends AbstractTilesetRawImageProcess
     protected BufferedImage packageImageData(MapBlockset item, MapBlockPackage pckg) throws RawImageException {
         MapBlock[] blocks = item.getBlocks();
         int blocksPerRow = item.getBlocksPerRow();
-        BufferedImage image = setupImage(blocks.length, blocksPerRow, PIXEL_WIDTH, PIXEL_HEIGHT, pckg.palette().getIcm());
+        BufferedImage image = setupImage(blocks.length, blocksPerRow, 3, 3, pckg.palette().getIcm());
         WritableRaster raster = image.getRaster();
         
         for (int b = 0; b < blocks.length; b++) {

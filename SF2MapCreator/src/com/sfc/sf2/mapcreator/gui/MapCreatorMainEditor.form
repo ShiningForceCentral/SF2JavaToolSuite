@@ -283,8 +283,8 @@
                                                       <Component id="fileButtonImportHp" min="-2" max="-2" attributes="0"/>
                                                       <EmptySpace max="-2" attributes="0"/>
                                                       <Group type="103" groupAlignment="2" attributes="0">
-                                                          <Component id="infoButton3" alignment="2" min="-2" max="-2" attributes="0"/>
                                                           <Component id="jCheckBoxChestGraphic" alignment="2" min="-2" max="-2" attributes="0"/>
+                                                          <Component id="infoButton3" alignment="2" min="-2" max="-2" attributes="0"/>
                                                       </Group>
                                                       <EmptySpace max="-2" attributes="0"/>
                                                       <Component id="jButtonImportMap" min="-2" max="-2" attributes="0"/>
@@ -1083,7 +1083,7 @@
                                         </Component>
                                         <Component class="com.sfc.sf2.core.gui.controls.InfoButton" name="infoButton4">
                                           <Properties>
-                                            <Property name="messageText" type="java.lang.String" value="&lt;html&gt;- &lt;b&gt;Fill new only:&lt;/b&gt; Will only create new tilesets. Will not modifiy any existing tilesets. Left over tilesets will be &apos;orphaned&apos;.&lt;br&gt;&lt;br&gt;- &lt;b&gt;New first:&lt;/b&gt; Will create and fill new tilesets first, then will fill empty spaces in existing tilesets.&lt;br&gt;&lt;br&gt;- &lt;b&gt;Existing first:&lt;/b&gt; Will fill spaces in existing tilesets first, then will create and fill new tilesets.&#xa;&lt;/html&gt;"/>
+                                            <Property name="messageText" type="java.lang.String" value="&lt;html&gt;- &lt;b&gt;Fill new only:&lt;/b&gt; Will only create new tilesets. Will not modifiy any existing tilesets. Left over tilesets will be &apos;orphaned&apos;.&lt;br&gt;&lt;br&gt;- &lt;b&gt;New first:&lt;/b&gt; Will create and fill new tilesets first, then will fill empty spaces in existing tilesets.&lt;br&gt;&lt;br&gt;- &lt;b&gt;Existing first:&lt;/b&gt; Will fill spaces in existing tilesets first, then will create and fill new tilesets.&lt;/html&gt;"/>
                                             <Property name="text" type="java.lang.String" value=""/>
                                           </Properties>
                                         </Component>

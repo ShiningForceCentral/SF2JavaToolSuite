@@ -56,7 +56,6 @@ public class MapCreatorLayoutPanel extends MapLayoutPanel {
     }
     
     private void drawMatchingTile(Graphics graphics, Tile[] tiles) {
-        Tileset[] tilesets = layout.getTilesets();
         MapLayoutBlock[] blocks = layout.getBlocks();
         for (int y=0; y < BLOCK_HEIGHT; y++) {
             for (int x=0; x < BLOCK_WIDTH; x++) {

@@ -7,6 +7,7 @@ package com.sfc.sf2.mapcreator;
 
 import com.sfc.sf2.core.gui.controls.Console;
 import com.sfc.sf2.graphics.Tile;
+import com.sfc.sf2.graphics.TileFlags;
 import com.sfc.sf2.graphics.Tileset;
 import static com.sfc.sf2.helpers.MapBlockHelpers.TILESET_TILES;
 import com.sfc.sf2.map.block.MapBlock;
@@ -85,7 +86,7 @@ public final class OptimisedMap {
             //Remap placeholder chest tiles to final chest tiles
             for (int i = 0; i < CHEST_TILE_REMAPS.length; i++) {
                 if (CHEST_TILE_REMAPS[i] >= 0) {
-                    tileRemap.put(i, new TileRemap((byte)4, CHEST_TILE_REMAPS[i]));
+                    tileRemap.put(i, new TileRemap((byte)4, CHEST_TILE_REMAPS[i], TileFlags.TILE_FLAG_NONE));
                 }
             }
         }
@@ -100,8 +101,9 @@ public final class OptimisedMap {
                 if (tilesets[t] == null) continue;
                 Tile[] tiles = tilesets[t].getTiles();
                 for (int tt = 0; tt < tiles.length; tt++) {
-                    if (opTile.equals(tiles[tt])) {
-                        tileRemap.put(i, new TileRemap((byte)t, tt));
+                    byte match = MapTile.tryMatchTile(opTile.getRenderPixels(), tiles[tt]);
+                    if (match >= 0) {
+                        tileRemap.put(i, new TileRemap((byte)t, tt, match));
                         tileFound = true;
                         break;
                     }
@@ -141,6 +143,7 @@ public final class OptimisedMap {
                         TileRemap remap = tileRemap.get(tile.getTileIndex());
                         tile.setTilesetIndex(remap.tileset());
                         tile.setTileIndex(remap.index());
+                        tile.getTileFlags().toggleFlag(remap.flag());
                     }
                 }
             }
@@ -173,7 +176,7 @@ public final class OptimisedMap {
                 Tile orphan = orphanTilesList.remove();
                 addedTilesList.add(orphan.clone());
                 tiles[t] = orphan;
-                tileRemap.put(orphan.getId(), new TileRemap((byte)i, t));
+                tileRemap.put(orphan.getId(), new TileRemap((byte)i, t, TileFlags.TILE_FLAG_NONE));
                 orphan.setId(t);
             }
         }
@@ -189,14 +192,15 @@ public final class OptimisedMap {
             if (orphanTilesList.isEmpty()) continue;
             Tile[] tiles = newTilesets[i].getTiles();
             for (int t=0; t < tiles.length; t++) {
-                if (!orphanTilesList.isEmpty()) {
+                if (orphanTilesList.isEmpty()) {
+                    break;
+                }
+                if (tiles[t].isTileEmpty()) {
                     Tile orphan = orphanTilesList.remove();
                     addedTilesList.add(orphan.clone());
                     tiles[t] = orphan;
-                    tileRemap.put(orphan.getId(), new TileRemap((byte)i, t));
+                    tileRemap.put(orphan.getId(), new TileRemap((byte)i, t, TileFlags.TILE_FLAG_NONE));
                     orphan.setId(t);
-                } else {
-                    break;
                 }
             }
         }

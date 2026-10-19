@@ -369,8 +369,8 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
                 .addComponent(fileButtonImportHp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel31Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(infoButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jCheckBoxChestGraphic))
+                    .addComponent(jCheckBoxChestGraphic)
+                    .addComponent(infoButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonImportMap)
                 .addContainerGap())
@@ -791,7 +791,7 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
             }
         });
 
-        infoButton4.setMessageText("<html>- <b>Fill new only:</b> Will only create new tilesets. Will not modifiy any existing tilesets. Left over tilesets will be 'orphaned'.<br><br>- <b>New first:</b> Will create and fill new tilesets first, then will fill empty spaces in existing tilesets.<br><br>- <b>Existing first:</b> Will fill spaces in existing tilesets first, then will create and fill new tilesets.\n</html>");
+        infoButton4.setMessageText("<html>- <b>Fill new only:</b> Will only create new tilesets. Will not modifiy any existing tilesets. Left over tilesets will be 'orphaned'.<br><br>- <b>New first:</b> Will create and fill new tilesets first, then will fill empty spaces in existing tilesets.<br><br>- <b>Existing first:</b> Will fill spaces in existing tilesets first, then will create and fill new tilesets.</html>");
         infoButton4.setText("");
 
         jLabel3.setText("Fill mode :");
