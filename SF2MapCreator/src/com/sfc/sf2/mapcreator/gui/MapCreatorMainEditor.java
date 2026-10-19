@@ -116,7 +116,6 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
             mapCreatorLayoutPanel.setAddedTiles(null);
             mapCreatorLayoutPanel.setOrphanTiles(null);
         } else {
-            mapCreatorLayoutPanel.setProtoMap(null);
             mapCreatorLayoutPanel.setMapLayout(map.getNewLayout());
             mapTilesetLayoutPanelNew.setTilesets(map.getNewTilesets());
             tilesetPanelAdded.setTileset(map.getAddedTiles());
