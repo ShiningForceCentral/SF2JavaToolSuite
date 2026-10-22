@@ -41,15 +41,16 @@ public abstract class AbstractMainEditor extends javax.swing.JFrame {
             processCliCommands();
             return;
         }
+        
+        initComponents();
+        initEditorComponents();
+        
         //Version
         if (!SettingsManager.isRunningInEditor()) {
             String version = Manifest.getProjectVersion();
             if (version != null)
                 this.setTitle(this.getTitle() + " - v" + version);
         }
-        
-        initComponents();
-        initEditorComponents();
         
         CoreSettings.setAppClass(this.getClass());
         ActionManager.setupInputMaps(jPanel13);
