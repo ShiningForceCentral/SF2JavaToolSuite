@@ -756,7 +756,7 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
 
         jSplitPane6.setDividerLocation(300);
 
-        jLabel54.setText("<html><b>Step 3:</b> Fill existing tilesets or create new tilesets.</html>");
+        jLabel54.setText("<html><b>Step 3:</b> Prepare the map by filling existing tilesets and/or creating new tilesets.</html>");
         jLabel54.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         jButtonOptimise.setText("Optimise and Generate Data");
@@ -892,7 +892,7 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
             jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel18Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel54, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel54, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1032,7 +1032,7 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
 
         jSplitPane6.setRightComponent(jPanel11);
 
-        jTabbedPaneMain.addTab("3. Optimise", jSplitPane6);
+        jTabbedPaneMain.addTab("3. Consolidate", jSplitPane6);
 
         jPanel5.setPreferredSize(new java.awt.Dimension(32, 135));
 

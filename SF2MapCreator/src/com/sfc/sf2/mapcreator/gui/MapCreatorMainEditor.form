@@ -970,8 +970,8 @@
                                   </Properties>
                                   <Constraints>
                                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                                      <JTabbedPaneConstraints tabName="3. Optimise">
-                                        <Property name="tabTitle" type="java.lang.String" value="3. Optimise"/>
+                                      <JTabbedPaneConstraints tabName="3. Consolidate">
+                                        <Property name="tabTitle" type="java.lang.String" value="3. Consolidate"/>
                                       </JTabbedPaneConstraints>
                                     </Constraint>
                                   </Constraints>
@@ -1023,7 +1023,7 @@
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Group type="102" alignment="0" attributes="0">
                                                   <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="jLabel54" min="-2" pref="32" max="-2" attributes="0"/>
+                                                  <Component id="jLabel54" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
                                                   <Group type="103" groupAlignment="1" attributes="0">
                                                       <Group type="103" groupAlignment="3" attributes="0">
@@ -1049,7 +1049,7 @@
                                       <SubComponents>
                                         <Component class="javax.swing.JLabel" name="jLabel54">
                                           <Properties>
-                                            <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;b&gt;Step 3:&lt;/b&gt; Fill existing tilesets or create new tilesets.&lt;/html&gt;"/>
+                                            <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;b&gt;Step 3:&lt;/b&gt; Prepare the map by filling existing tilesets and/or creating new tilesets.&lt;/html&gt;"/>
                                             <Property name="verticalAlignment" type="int" value="1"/>
                                           </Properties>
                                         </Component>
