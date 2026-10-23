@@ -25,10 +25,10 @@ import java.util.List;
  */
 public class ProtoMap implements INameable {
     //Core data
-    private String name;
-    private Tileset rawTileset;
-    private MapBlockset rawBlockset;
-    private MapLayout rawLayout;
+    private final String name;
+    private final Tileset rawTileset;
+    private final MapBlockset rawBlockset;
+    private final MapLayout rawLayout;
     //Optimised data
     private Tileset optimisedTileset;
     private MapBlockset optimisedBlockset;

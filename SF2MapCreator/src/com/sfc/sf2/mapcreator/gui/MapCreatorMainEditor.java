@@ -20,6 +20,7 @@ import com.sfc.sf2.core.settings.ViewSettings;
 import com.sfc.sf2.graphics.Tileset;
 import com.sfc.sf2.helpers.PathHelpers;
 import com.sfc.sf2.helpers.RenderScaleHelpers;
+import com.sfc.sf2.map.block.MapBlockset;
 import com.sfc.sf2.mapcreator.ProtoMap;
 import com.sfc.sf2.mapcreator.MapCreatorManager;
 import com.sfc.sf2.mapcreator.OptimisedMap;
@@ -114,15 +115,13 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
             tilesetPanelAdded.setTileset(null);
             tilesetPanelOrphan.setTileset(null);
             mapCreatorLayoutPanel.setAddedTiles(null);
-            mapCreatorLayoutPanel.setOrphanTiles(null);
         } else {
             mapCreatorLayoutPanel.setMapLayout(map.getNewLayout());
-            mapTilesetLayoutPanelNew.setTilesets(map.getNewTilesets());
+            mapTilesetLayoutPanelNew.setTilesets(map.getNewTilesetsWithOrphans());
             tilesetPanelAdded.setTileset(map.getAddedTiles());
             tilesetPanelOrphan.setTileset(map.getOrphanTiles());
             jTabbedPaneMain.setSelectedIndex(2);
             mapCreatorLayoutPanel.setAddedTiles(map.getAddedTiles());
-            mapCreatorLayoutPanel.setOrphanTiles(map.getOrphanTiles());
         }
     }
     
@@ -1250,11 +1249,11 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(accordionPanelExportMaps, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel53Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonExportMap)
+                .addGroup(jPanel53Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel53Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jSpinnerExportMapIndex, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel57)))
+                        .addComponent(jLabel57))
+                    .addComponent(jButtonExportMap))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1610,7 +1609,8 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
         Path layoutPath = mapDirPath.resolve(fileButtonExportLayout.getFilePath());
         try {
             PathHelpers.createPathIfRequred(mapDirPath);
-            mapCreatorManager.exportDisassembly(tilesetsPath, blocksPath, layoutPath, actionOptimisedMap.getNewBlockset(), actionOptimisedMap.getNewLayout());
+            MapBlockset cleanedBlockset = actionOptimisedMap.getCleanedBlockset();
+            mapCreatorManager.exportDisassembly(tilesetsPath, blocksPath, layoutPath, cleanedBlockset, actionOptimisedMap.getNewLayout());
         } catch (Exception ex) {
             Console.logger().log(Level.SEVERE, null, ex);
             Console.logger().severe("ERROR Map image could not be imported from : " + mapDirPath);

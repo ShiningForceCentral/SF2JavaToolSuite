@@ -26,6 +26,10 @@ import java.util.Queue;
  * @author TiMMy
  */
 public final class OptimisedMap {
+    private static final int TILESETS_COUNT = 5;        //5 for map tilesets and 1 orphan placeholder
+    public static final byte CHEST_TILESET_INDEX = 4;   //Chest graphics go in the 5th tileset
+    public static final byte ORPHAN_TILESET_INDEX = 5;  //The 6th tileset is placeholder for orphaned tiles (does not get exported)
+    
     public enum TilesetFillMode {
         NewOnly,
         NewFirst,
@@ -35,6 +39,7 @@ public final class OptimisedMap {
     private Tileset addedTiles;
     private Tileset orphanTiles;
     private Tileset[] newTilesets;
+    private Tileset[] newTilesetsWithOrphans;
     private MapBlockset newBlockset;
     private MapLayout newLayout;
 
@@ -54,6 +59,14 @@ public final class OptimisedMap {
         return newTilesets;
     }
 
+    public Tileset[] getNewTilesetsWithOrphans() {
+        return newTilesetsWithOrphans;
+    }
+
+    public void setNewTilesetsWithOrphans(Tileset[] newTilesetsWithOrphans) {
+        this.newTilesetsWithOrphans = newTilesetsWithOrphans;
+    }
+
     public MapBlockset getNewBlockset() {
         return newBlockset;
     }
@@ -68,7 +81,7 @@ public final class OptimisedMap {
         Queue<Tile> orphanTilesList = new LinkedList<>();
         HashMap<Integer, TileRemap> tileRemap = new HashMap<>();
         
-        Tileset[] newTilesets = new Tileset[tilesets.length];
+        Tileset[] newTilesets = new Tileset[TILESETS_COUNT];
         boolean[] tilesetWasEmpty = new boolean[tilesets.length];
         for (int i = 0; i < tilesets.length; i++) {
             tilesetWasEmpty[i] = tilesets[i] == null;
@@ -79,11 +92,11 @@ public final class OptimisedMap {
         
         //Remap chest tiles
         if (chestBlocks) {
-            if (newTilesets[4] == null) {
-                newTilesets[4] = Tileset.EmptyTilset(optimisedTileset.getPalette(), TILESET_TILES, optimisedTileset.getTilesPerRow());
+            if (newTilesets[CHEST_TILESET_INDEX] == null) {
+                newTilesets[CHEST_TILESET_INDEX] = Tileset.EmptyTilset(optimisedTileset.getPalette(), TILESET_TILES, optimisedTileset.getTilesPerRow());
             }
             Tile[] opTiles = optimisedTileset.getTiles();
-            Tile[] tiles = newTilesets[4].getTiles();
+            Tile[] tiles = newTilesets[CHEST_TILESET_INDEX].getTiles();
             if (!Arrays.equals(tiles[CHEST_TILE_REMAPS[1]].getPixels(), opTiles[1].getPixels())) {
                 //Tileset 5 is missing chest graphics
                 for (int i = 0; i < CHEST_TILE_REMAPS.length; i++) {
@@ -97,7 +110,7 @@ public final class OptimisedMap {
             //Remap placeholder chest tiles to final chest tiles
             for (int i = 0; i < CHEST_TILE_REMAPS.length; i++) {
                 if (CHEST_TILE_REMAPS[i] >= 0) {
-                    tileRemap.put(i, new TileRemap((byte)4, CHEST_TILE_REMAPS[i], TileFlags.TILE_FLAG_NONE));
+                    tileRemap.put(i, new TileRemap(CHEST_TILESET_INDEX, CHEST_TILE_REMAPS[i], TileFlags.TILE_FLAG_NONE));
                 }
             }
         }
@@ -106,13 +119,14 @@ public final class OptimisedMap {
         Tile[] opTiles = optimisedTileset.getTiles();
         for (int i=0; i < opTiles.length; i++) {
             if (chestBlocks && i < CHEST_TILE_REMAPS.length) continue;
-            boolean tileFound = false;
             Tile opTile = opTiles[i];
+            int[] pixels = opTile.getRenderPixels();
+            boolean tileFound = false;
             for (int t=0; t < tilesets.length; t++) {
                 if (tilesets[t] == null) continue;
                 Tile[] tiles = tilesets[t].getTiles();
                 for (int tt = 0; tt < tiles.length; tt++) {
-                    byte match = MapTile.tryMatchTile(opTile.getRenderPixels(), tiles[tt]);
+                    byte match = MapTile.tryMatchTile(pixels, tiles[tt]);
                     if (match >= 0) {
                         tileRemap.put(i, new TileRemap((byte)t, tt, match));
                         tileFound = true;
@@ -124,7 +138,9 @@ public final class OptimisedMap {
                 }
             }
             if (!tileFound) {
+                //Add to orphaned tiles and also remap orphaned tiles to placeholder 6th tileset
                 orphanTilesList.add(opTile);
+                tileRemap.put(i, new TileRemap(ORPHAN_TILESET_INDEX, i, TileFlags.TILE_FLAG_NONE));
             }
         }
         
@@ -163,15 +179,21 @@ public final class OptimisedMap {
         }
         
         //Finalise
-        this.newTilesets = newTilesets;
         Tile[] addedTiles = new Tile[addedTilesList.size()];
         addedTilesList.toArray(addedTiles);
         this.addedTiles = new Tileset("Added", addedTiles, 10);
         Tile[] orphanTiles = new Tile[orphanTilesList.size()];
         orphanTilesList.toArray(orphanTiles);
         this.orphanTiles = new Tileset("Orphaned", orphanTiles, 10);
+        newTilesetsWithOrphans = new Tileset[TILESETS_COUNT+1];
+        newTilesetsWithOrphans[ORPHAN_TILESET_INDEX] = this.orphanTiles;
+        for (int i = 0; i < TILESETS_COUNT; i++) {
+            newTilesetsWithOrphans[i] = newTilesets[i];
+        }
+        
         this.newBlockset = newBlockset;
         this.newLayout = new MapLayout(0, newTilesets, layout.getBlocks());
+        this.newTilesets = newTilesets;
         Console.logger().finest("EXITING generateTilesets");
     }
     
@@ -219,6 +241,24 @@ public final class OptimisedMap {
                 }
             }
         }
+    }
+    
+    /**
+     * Returns a blockset that no longer points to tileset 6 (for orphan tiles). Required to export map data without an invalid 6 tilesets
+     */
+    public MapBlockset getCleanedBlockset() {
+        MapBlock[] oldBlocks = newBlockset.getBlocks();
+        MapBlock[] cleanedBlocks = new MapBlock[oldBlocks.length];
+        for (int i = 0; i < cleanedBlocks.length; i++) {
+            cleanedBlocks[i] = oldBlocks[i].clone();
+            MapTile[] tiles = cleanedBlocks[i].getMapTiles();
+            for (int t = 0; t < tiles.length; t++) {
+                if (tiles[t].getTilesetIndex() == ORPHAN_TILESET_INDEX) {
+                    tiles[t] = MapTile.EmptyMapTile();
+                }
+            }
+        }
+        return new MapBlockset(newBlockset.getName(), cleanedBlocks, newBlockset.getBlocksPerRow());
     }
     
     //Raw pixel data for chest tiles (open and closed)

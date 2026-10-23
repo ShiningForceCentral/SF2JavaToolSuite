@@ -17,6 +17,7 @@ import static com.sfc.sf2.map.layout.MapLayout.BLOCK_HEIGHT;
 import static com.sfc.sf2.map.layout.MapLayout.BLOCK_WIDTH;
 import com.sfc.sf2.map.layout.MapLayoutBlock;
 import com.sfc.sf2.map.layout.gui.MapLayoutPanel;
+import static com.sfc.sf2.mapcreator.OptimisedMap.ORPHAN_TILESET_INDEX;
 import com.sfc.sf2.mapcreator.ProtoMap;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -31,7 +32,6 @@ public class MapCreatorLayoutPanel extends MapLayoutPanel {
     
     private ProtoMap protoMap;
     private Tileset addedTiles;
-    private Tileset orphanTiles;
     
     private boolean showAddedTiles;
     private boolean showOrphanTiles;
@@ -47,15 +47,15 @@ public class MapCreatorLayoutPanel extends MapLayoutPanel {
         
         if (showAddedTiles && addedTiles != null) {
             graphics.setColor(NEW_COLOR);
-            drawMatchingTile(graphics, addedTiles.getTiles());
+            drawAddedTiles(graphics, addedTiles.getTiles());
         }
-        if (showOrphanTiles && orphanTiles != null) {
+        if (showOrphanTiles) {
             graphics.setColor(ORPHAN_COLOR);
-            drawMatchingTile(graphics, orphanTiles.getTiles());
+            drawOrphanTiles(graphics);
         }
     }
     
-    private void drawMatchingTile(Graphics graphics, Tile[] tiles) {
+    private void drawAddedTiles(Graphics graphics, Tile[] tiles) {
         MapLayoutBlock[] blocks = layout.getBlocks();
         for (int y=0; y < BLOCK_HEIGHT; y++) {
             for (int x=0; x < BLOCK_WIDTH; x++) {
@@ -68,6 +68,24 @@ public class MapCreatorLayoutPanel extends MapLayoutPanel {
                                 graphics.fillRect(x*PIXEL_WIDTH+tx*Tile.PIXEL_WIDTH, y*PIXEL_HEIGHT+ty*Tile.PIXEL_HEIGHT, Tile.PIXEL_WIDTH, Tile.PIXEL_HEIGHT);
                                 break;
                             }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    private void drawOrphanTiles(Graphics graphics) {
+        MapLayoutBlock[] blocks = layout.getBlocks();
+        for (int y=0; y < BLOCK_HEIGHT; y++) {
+            for (int x=0; x < BLOCK_WIDTH; x++) {
+                MapTile[] mapTiles = blocks[x+y*BLOCK_WIDTH].getMapBlock().getMapTiles();
+                for (int ty = 0; ty < TILE_HEIGHT; ty++) {
+                    for (int tx = 0; tx < TILE_WIDTH; tx++) {
+                        MapTile tile = mapTiles[tx+ty*TILE_WIDTH];
+                        if (tile.getTilesetIndex() == ORPHAN_TILESET_INDEX) {
+                            graphics.fillRect(x*PIXEL_WIDTH+tx*Tile.PIXEL_WIDTH, y*PIXEL_HEIGHT+ty*Tile.PIXEL_HEIGHT, Tile.PIXEL_WIDTH, Tile.PIXEL_HEIGHT);
+                            break;
                         }
                     }
                 }
@@ -91,10 +109,6 @@ public class MapCreatorLayoutPanel extends MapLayoutPanel {
 
     public void setAddedTiles(Tileset addedTiles) {
         this.addedTiles = addedTiles;
-    }
-
-    public void setOrphanTiles(Tileset orphanTiles) {
-        this.orphanTiles = orphanTiles;
     }
 
     public void setShowAddedTiles(boolean drawAddedTiles) {
