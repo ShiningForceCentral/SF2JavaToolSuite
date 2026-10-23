@@ -615,32 +615,32 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
         });
 
         fileButtonCustomPalette.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButtonCustomPalette.setFilePath("../../../graphics/maps/mappalettes/mappalette00.bin");
+        fileButtonCustomPalette.setFilePath("../graphics/maps/mappalettes/mappalette00.bin");
         fileButtonCustomPalette.setInfoMessage("");
         fileButtonCustomPalette.setLabelText("Palette :");
 
         fileButtonCustomTileset1.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButtonCustomTileset1.setFilePath("../../../graphics/maps/maptilesets/maptileset000.bin");
+        fileButtonCustomTileset1.setFilePath("../graphics/maps/maptilesets/maptileset000.bin");
         fileButtonCustomTileset1.setInfoMessage("<html>Tileset 0, index 0 should always be left empty</html>");
         fileButtonCustomTileset1.setLabelText("Tileset 1 :");
 
         fileButtonCustomTileset2.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButtonCustomTileset2.setFilePath("../../../graphics/maps/maptilesets/maptileset037.bin");
+        fileButtonCustomTileset2.setFilePath("../graphics/maps/maptilesets/maptileset037.bin");
         fileButtonCustomTileset2.setInfoMessage("");
         fileButtonCustomTileset2.setLabelText("Tileset 2 :");
 
         fileButtonCustomTileset3.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButtonCustomTileset3.setFilePath("../../../graphics/maps/maptilesets/maptileset043.bin");
+        fileButtonCustomTileset3.setFilePath("../graphics/maps/maptilesets/maptileset043.bin");
         fileButtonCustomTileset3.setInfoMessage("");
         fileButtonCustomTileset3.setLabelText("Tileset 3 :");
 
         fileButtonCustomTileset4.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButtonCustomTileset4.setFilePath("../../../graphics/maps/maptilesets/maptileset053.bin");
+        fileButtonCustomTileset4.setFilePath("../graphics/maps/maptilesets/maptileset053.bin");
         fileButtonCustomTileset4.setInfoMessage("");
         fileButtonCustomTileset4.setLabelText("Tileset 4 :");
 
         fileButtonCustomTileset5.setFileFormatFilter(com.sfc.sf2.core.io.FileFormat.BIN);
-        fileButtonCustomTileset5.setFilePath("../../../graphics/maps/maptilesets/maptileset066.bin");
+        fileButtonCustomTileset5.setFilePath("../graphics/maps/maptilesets/maptileset066.bin");
         fileButtonCustomTileset5.setInfoMessage("<html>Open/closed chest tiles are expected at fixed positions in tileset 5 (if 'chest graphics' is ticked). See e.g. <i>maptileset066.bin</i>.</html>");
         fileButtonCustomTileset5.setLabelText("Tileset 5 :");
 

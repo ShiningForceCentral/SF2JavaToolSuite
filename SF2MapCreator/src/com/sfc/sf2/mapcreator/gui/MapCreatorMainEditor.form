@@ -831,7 +831,7 @@
                                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                                   <Value id="BIN"/>
                                                 </Property>
-                                                <Property name="filePath" type="java.lang.String" value="../../../graphics/maps/mappalettes/mappalette00.bin"/>
+                                                <Property name="filePath" type="java.lang.String" value="../graphics/maps/mappalettes/mappalette00.bin"/>
                                                 <Property name="infoMessage" type="java.lang.String" value=""/>
                                                 <Property name="labelText" type="java.lang.String" value="Palette :"/>
                                               </Properties>
@@ -841,7 +841,7 @@
                                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                                   <Value id="BIN"/>
                                                 </Property>
-                                                <Property name="filePath" type="java.lang.String" value="../../../graphics/maps/maptilesets/maptileset000.bin"/>
+                                                <Property name="filePath" type="java.lang.String" value="../graphics/maps/maptilesets/maptileset000.bin"/>
                                                 <Property name="infoMessage" type="java.lang.String" value="&lt;html&gt;Tileset 0, index 0 should always be left empty&lt;/html&gt;"/>
                                                 <Property name="labelText" type="java.lang.String" value="Tileset 1 :"/>
                                               </Properties>
@@ -851,7 +851,7 @@
                                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                                   <Value id="BIN"/>
                                                 </Property>
-                                                <Property name="filePath" type="java.lang.String" value="../../../graphics/maps/maptilesets/maptileset037.bin"/>
+                                                <Property name="filePath" type="java.lang.String" value="../graphics/maps/maptilesets/maptileset037.bin"/>
                                                 <Property name="infoMessage" type="java.lang.String" value=""/>
                                                 <Property name="labelText" type="java.lang.String" value="Tileset 2 :"/>
                                               </Properties>
@@ -861,7 +861,7 @@
                                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                                   <Value id="BIN"/>
                                                 </Property>
-                                                <Property name="filePath" type="java.lang.String" value="../../../graphics/maps/maptilesets/maptileset043.bin"/>
+                                                <Property name="filePath" type="java.lang.String" value="../graphics/maps/maptilesets/maptileset043.bin"/>
                                                 <Property name="infoMessage" type="java.lang.String" value=""/>
                                                 <Property name="labelText" type="java.lang.String" value="Tileset 3 :"/>
                                               </Properties>
@@ -871,7 +871,7 @@
                                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                                   <Value id="BIN"/>
                                                 </Property>
-                                                <Property name="filePath" type="java.lang.String" value="../../../graphics/maps/maptilesets/maptileset053.bin"/>
+                                                <Property name="filePath" type="java.lang.String" value="../graphics/maps/maptilesets/maptileset053.bin"/>
                                                 <Property name="infoMessage" type="java.lang.String" value=""/>
                                                 <Property name="labelText" type="java.lang.String" value="Tileset 4 :"/>
                                               </Properties>
@@ -881,7 +881,7 @@
                                                 <Property name="fileFormatFilter" type="com.sfc.sf2.core.io.FileFormat" editor="org.netbeans.modules.form.editors.EnumEditor">
                                                   <Value id="BIN"/>
                                                 </Property>
-                                                <Property name="filePath" type="java.lang.String" value="../../../graphics/maps/maptilesets/maptileset066.bin"/>
+                                                <Property name="filePath" type="java.lang.String" value="../graphics/maps/maptilesets/maptileset066.bin"/>
                                                 <Property name="infoMessage" type="java.lang.String" value="&lt;html&gt;Open/closed chest tiles are expected at fixed positions in tileset 5 (if &apos;chest graphics&apos; is ticked). See e.g. &lt;i&gt;maptileset066.bin&lt;/i&gt;.&lt;/html&gt;"/>
                                                 <Property name="labelText" type="java.lang.String" value="Tileset 5 :"/>
                                               </Properties>
