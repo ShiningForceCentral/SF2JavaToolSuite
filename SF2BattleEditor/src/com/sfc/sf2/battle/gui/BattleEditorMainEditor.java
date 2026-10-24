@@ -73,8 +73,7 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
         accordionPanel1.setExpanded(false);
         accordionPanel2.setExpanded(false);
         
-        terrainKeyPanel1.setActionListener(this::onTerrainSelectionChanged);
-        terrainKeyPanel1.setModeChangedListener(this::onTerrainModeChanged);
+        terrainKeyPanel1.setTerrainPanel(battleLayoutPanel);
         TerrainDrawMode terrainDrawMode = terrainSettings.getTerrainDrawMode();
         battleLayoutPanel.setTerrainDrawMode(terrainDrawMode);
         terrainKeyPanel1.setDrawMode(terrainDrawMode);
@@ -1349,17 +1348,6 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
             }
         }
         battleLayoutPanel.setPaintMode(BattlePaintMode.Spriteset);
-    }
-    
-    private void onTerrainSelectionChanged(ActionEvent e) {
-        int terrain = Integer.parseInt(e.getActionCommand());
-        battleLayoutPanel.setSelectedTerrainType(terrain);
-        battleLayoutPanel.setPaintMode(BattlePaintMode.Terrain);
-    }
-    
-    private void onTerrainModeChanged(ActionEvent e) {
-        TerrainDrawMode drawMode = (TerrainDrawMode)e.getSource();
-        battleLayoutPanel.setTerrainDrawMode(drawMode);
     }
     
     private void updateBattleName() {
