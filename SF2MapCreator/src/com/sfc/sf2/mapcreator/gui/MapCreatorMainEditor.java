@@ -1454,7 +1454,7 @@ public class MapCreatorMainEditor extends AbstractMainEditor {
     }//GEN-LAST:event_jButtonExportPaletteActionPerformed
 
     private void jButtonExportTilesetsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExportTilesetsActionPerformed
-        Tileset[] tilesets = mapTilesetLayoutPanelNew.getTilesets();
+        Tileset[] tilesets = actionOptimisedMap.getNewTilesets();
         FileButton[] fileButtons = new FileButton[] { fileButtonExportTileset1, fileButtonExportTileset2, fileButtonExportTileset3, fileButtonExportTileset4, fileButtonExportTileset5 };
         try {
             Path[] tilesetPaths = new Path[fileButtons.length];
