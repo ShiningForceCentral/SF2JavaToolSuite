@@ -14,7 +14,7 @@ import com.sfc.sf2.core.gui.controls.Console;
 public class StringHelpers {
     
     public static String trimAndRemoveComments(String line) {
-        int commentIndex = line.lastIndexOf(';');
+        int commentIndex = line.indexOf(';');
         if (commentIndex < 0) {
             return line.trim();
         } else {
@@ -22,7 +22,7 @@ public class StringHelpers {
         }
     }
     public static String extractComment(String line) {
-        int commentIndex = line.lastIndexOf(';');
+        int commentIndex = line.indexOf(';');
         if (commentIndex < 0) {
             return null;
         } else {
