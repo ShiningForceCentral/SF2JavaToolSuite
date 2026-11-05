@@ -53,7 +53,7 @@ public class BlockTileActionData implements ICumulativeActionData<BlockTileActio
 
     @Override
     public String toCumulativeString(int number) {
-        return String.format("Block(%d) set to Tile(%d) - Indices: %d", block.getIndex(), tile.getTileIndex(), number);
+        return String.format("Block(%d) set to Tile(%d) - Indices: %d", block.getIndex(), tile == null ? -1 : tile.getTileIndex(), number);
     }
     
     @Override
