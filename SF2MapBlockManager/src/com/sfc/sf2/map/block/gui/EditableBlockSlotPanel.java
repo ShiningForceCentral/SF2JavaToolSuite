@@ -126,7 +126,7 @@ public class EditableBlockSlotPanel extends BlockSlotPanel {
                 newTile = rightTileSlotPanel.getTile();
             }
             
-            if (newTile != null && tile.getTileIndex() != newTile.getTileIndex()) {
+            if (tile == null ? newTile != null : newTile != null && tile.getTileIndex() != newTile.getTileIndex()) {
                 BlockTileActionData newValue = new BlockTileActionData(block, newTile.clone(), index);
                 BlockTileActionData oldValue = new BlockTileActionData(block, tile, index);
                 ActionManager.setAndExecuteAction(new CumulativeAction<BlockTileActionData>(this, "Set Block Tile", this::actionChangeTile, newValue, oldValue));
