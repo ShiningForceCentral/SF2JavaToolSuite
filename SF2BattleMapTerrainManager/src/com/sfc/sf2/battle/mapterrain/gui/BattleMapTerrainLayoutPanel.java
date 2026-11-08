@@ -69,7 +69,7 @@ public class BattleMapTerrainLayoutPanel extends BattleMapCoordsLayoutPanel {
             for (int i=0; i<width; i++) {
                 int x = (coordsX+i)*PIXEL_WIDTH;
                 int y = (coordsY+j)*PIXEL_HEIGHT;
-                int value = data[i+j*48];
+                int value = data[i+j*BATTLE_SIZE];
                 graphics.setColor(BattleTerrainIcons.getBGColor(value));
                 graphics.fillRect(x+6, y+6, PIXEL_WIDTH-12, PIXEL_HEIGHT-12);
                 graphics.drawImage(BattleTerrainIcons.getTerrainIcon(value).getImage(), x+8, y+8, null);
@@ -83,7 +83,7 @@ public class BattleMapTerrainLayoutPanel extends BattleMapCoordsLayoutPanel {
             for (int i=0; i<width; i++) {
                 int x = (coordsX+i)*PIXEL_WIDTH;
                 int y = (coordsY+j)*PIXEL_HEIGHT;
-                int value = data[i+j*48];
+                int value = data[i+j*BATTLE_SIZE];
                 graphics.setColor(BattleTerrainIcons.getBGColor(value));
                 graphics.fillRect(x+6, y+6, PIXEL_WIDTH-12, PIXEL_HEIGHT-12);
                 graphics.setColor(BattleTerrainIcons.getTerrainTextColor(value));

@@ -52,4 +52,9 @@ public class BattleMapTerrain {
         }
         return true;
     }
+
+    @Override
+    public BattleMapTerrain clone() {
+        return new BattleMapTerrain(data.clone());
+    }
 }
