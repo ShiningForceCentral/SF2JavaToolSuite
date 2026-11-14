@@ -8,6 +8,7 @@ package com.sfc.sf2.battle.gui;
 import com.sfc.sf2.battle.AIPoint;
 import com.sfc.sf2.battle.AIRegion;
 import com.sfc.sf2.battle.Ally;
+import com.sfc.sf2.battle.Battle;
 import com.sfc.sf2.battle.BattleEnums;
 import com.sfc.sf2.battle.BattleManager;
 import com.sfc.sf2.battle.BattleSpriteset;
@@ -1090,6 +1091,8 @@ public class BattleEditorMainEditor extends AbstractMainEditor {
         if (!PathHelpers.createPathIfRequred(terrainPath)) return;
         if (!PathHelpers.createPathIfRequred(spritesetPath)) return;
         try {
+            Battle battle = battleLayoutPanel.getBattle();
+            battle.setTerrain(battleLayoutPanel.getTerrain());
             battleManager.exportDisassembly(terrainPath, spritesetPath, battleLayoutPanel.getBattle());
         } catch (Exception ex) {
             Console.logger().log(Level.SEVERE, null, ex);
