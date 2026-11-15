@@ -243,7 +243,7 @@ public class BattleSpritesetAsmProcessor extends AbstractAsmProcessor<BattleSpri
             String moveOrder1 = enemy.getMoveOrder();
             if (!moveOrder1.equals("NONE")) moveOrder1 = moveOrder1+"|"+enemy.getMoveOrderTarget();
             String moveOrder2 = enemy.getBackupMoveOrder();
-            if (!moveOrder2.equals("NONE")) moveOrder2 = moveOrder1+"|"+enemy.getBackupMoveOrderTarget();
+            if (!moveOrder2.equals("NONE")) moveOrder2 = moveOrder2+"|"+enemy.getBackupMoveOrderTarget();
             String spawnParams = enemy.getSpawnParams();
 
             writer.write(String.format("\t\t\t\t%s %s, %d, %d\n", MACRO_ENEMIES, name, enemy.getX(), enemy.getY()));
