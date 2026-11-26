@@ -81,6 +81,7 @@ public class MapspriteMainEditor extends AbstractMainEditor {
     }
     
     private void actionMapSpritesLoaded(MapSpriteEntries mapSprites) {
+        viewPanel1.getCheckBoxAnimate().setSelected(false);
         if (mapSprites == null) {
             mapSpriteLayoutPanel.setMapSprites(null);
             mapSpriteTableModel.setTableData(null);

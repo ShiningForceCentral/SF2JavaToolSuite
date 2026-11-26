@@ -7,6 +7,7 @@ package com.sfc.sf2.mapsprite.gui;
 
 import com.sfc.sf2.core.gui.AbstractLayoutPanel;
 import com.sfc.sf2.core.gui.layout.*;
+import com.sfc.sf2.core.gui.layout.LayoutAnimator.AnimationController;
 import static com.sfc.sf2.graphics.Block.PIXEL_HEIGHT;
 import static com.sfc.sf2.graphics.Block.PIXEL_WIDTH;
 import com.sfc.sf2.graphics.Tile;
@@ -16,14 +17,16 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 /**
  *
  * @author wiz
  */
-public class MapSpriteLayoutPanel extends AbstractLayoutPanel {
+public class MapSpriteLayoutPanel extends AbstractLayoutPanel implements AnimationController {
     private static Color LABEL_BG = Color.YELLOW;
     private static Font LABEL_FONT = new Font(Font.DIALOG, 0, 9);
+    private static int ANIM_SPEED = 24;
         
     private MapSpriteEntries mapsprites;
     private boolean drawReferenceLabels;
@@ -37,6 +40,7 @@ public class MapSpriteLayoutPanel extends AbstractLayoutPanel {
         coordsHeader = new LayoutCoordsHeader(this, PIXEL_WIDTH*2, PIXEL_HEIGHT, false);
         mouseInput = null;
         scroller = new LayoutScrollNormaliser(this);
+        animator = new LayoutAnimator(this);
         setItemsPerRow(3);
     }
 
@@ -64,6 +68,30 @@ public class MapSpriteLayoutPanel extends AbstractLayoutPanel {
 
     @Override
     protected void drawImage(Graphics graphics) {
+        if (animator.isAnimating()) {
+            drawAnimPreview(graphics);
+        } else {
+            drawMapSprites(graphics);
+        }
+        drawLabels(graphics);
+    }
+    
+    private void drawAnimPreview(Graphics graphics) {
+        int[] entries = mapsprites.getEntriesArray();
+        int stepIndex = animator.getFrame();
+        Rectangle spriteRect = new Rectangle(stepIndex*PIXEL_WIDTH, 0, PIXEL_WIDTH, PIXEL_HEIGHT);
+        for (int i = 0; i < entries.length; i++) {
+            if (entries[i] >= 0) {
+                MapSprite sprite = mapsprites.getMapSprite(i);
+                if (sprite != null) {
+                    graphics.drawImage(sprite.getIndexedColorImage(), (i%3)*2*PIXEL_WIDTH, (i/3)*PIXEL_HEIGHT, (i%3*2+1)*PIXEL_WIDTH, (i/3+1)*PIXEL_HEIGHT,
+                            spriteRect.x, spriteRect.y, spriteRect.x+spriteRect.width, spriteRect.y+spriteRect.height, null);
+                }
+            }
+        }
+    }
+    
+    private void drawMapSprites(Graphics graphics) {
         if (drawReferenceLabels) {
             graphics.setFont(LABEL_FONT);
         }
@@ -84,6 +112,25 @@ public class MapSpriteLayoutPanel extends AbstractLayoutPanel {
             }
         }
     }
+    
+    private void drawLabels(Graphics graphics) {
+        if (!drawReferenceLabels)
+            return;
+        
+        graphics.setFont(LABEL_FONT);
+        int[] entries = mapsprites.getEntriesArray();
+        for (int i = 0; i < entries.length; i++) {
+            if (entries[i] >= 0) {
+                if (drawReferenceLabels && mapsprites.isDuplicateEntry(i)) {
+                    graphics.setColor(LABEL_BG);
+                    graphics.drawRect(((i%3)*2)*PIXEL_WIDTH, (i/3)*PIXEL_HEIGHT, 2*PIXEL_WIDTH-1, PIXEL_HEIGHT-1);
+                    graphics.fillRect(((i%3)*2+1)*PIXEL_WIDTH, (i/3)*PIXEL_HEIGHT+14, PIXEL_WIDTH+1, 9);
+                    graphics.setColor(Color.BLACK);
+                    graphics.drawString(String.format("%03d-%01d", entries[i]/3, entries[i]%3), ((i%3)*2+1)*PIXEL_WIDTH+1, (i/3)*PIXEL_HEIGHT+22);
+                }
+            }
+        }
+    }
 
     public MapSpriteEntries getMapSprites() {
         return mapsprites;
@@ -97,5 +144,19 @@ public class MapSpriteLayoutPanel extends AbstractLayoutPanel {
     public void setDrawReferenceLabels(boolean drawReferenceLabels) {
         this.drawReferenceLabels = drawReferenceLabels;
         redraw();
+    }
+    
+    public void setAnimPreview(boolean animating) {
+        if (animating) {
+            getAnimator().startAnimation(ANIM_SPEED, 1, true);
+        } else {
+            getAnimator().stopAnimation();
+            redraw();
+        }
+    }
+
+    @Override
+    public int getAnimationFrameSpeed(int currentAnimFrame) {
+        return ANIM_SPEED;
     }
 }

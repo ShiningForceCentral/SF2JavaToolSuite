@@ -9,6 +9,7 @@ import com.sfc.sf2.core.actions.ActionManager;
 import com.sfc.sf2.core.actions.ToggleAction;
 import com.sfc.sf2.core.gui.controls.AbstractViewPanel;
 import com.sfc.sf2.core.settings.IViewSettings;
+import javax.swing.JCheckBox;
 
 /**
  *
@@ -16,6 +17,8 @@ import com.sfc.sf2.core.settings.IViewSettings;
  */
 public class MapspriteViewPanel extends AbstractViewPanel<MapSpriteLayoutPanel> {
 
+    public JCheckBox getCheckBoxAnimate() { return jCheckBoxAnimate; }
+    
     /**
      * Creates new form ViewPanel
      */
@@ -45,6 +48,7 @@ public class MapspriteViewPanel extends AbstractViewPanel<MapSpriteLayoutPanel> 
         jComboBoxScale = new javax.swing.JComboBox<>();
         infoButton3 = new com.sfc.sf2.core.gui.controls.InfoButton();
         jCheckBoxShowReferences = new javax.swing.JCheckBox();
+        jCheckBoxAnimate = new javax.swing.JCheckBox();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder("View"));
 
@@ -97,35 +101,50 @@ public class MapspriteViewPanel extends AbstractViewPanel<MapSpriteLayoutPanel> 
             }
         });
 
+        jCheckBoxAnimate.setText("Animate");
+        jCheckBoxAnimate.setName("Grid Toggle"); // NOI18N
+        jCheckBoxAnimate.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCheckBoxAnimateItemStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jCheckBoxShowReferences)
-                .addGap(0, 0, 0)
-                .addComponent(infoButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14)
-                .addComponent(jLabelBG)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(colorPickerBG, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                .addComponent(jCheckBoxGrid)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabelScale)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBoxScale, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jCheckBoxAnimate)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabelBG)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(colorPickerBG, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jCheckBoxGrid))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jCheckBoxShowReferences)
+                        .addGap(0, 0, 0)
+                        .addComponent(infoButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
+                        .addComponent(jLabelScale)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBoxScale, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, 0)
+                .addGap(1, 1, 1)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jCheckBoxGrid)
                     .addComponent(jLabelBG)
                     .addComponent(colorPickerBG, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jCheckBoxGrid)
+                    .addComponent(jCheckBoxAnimate))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jComboBoxScale, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelScale)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
@@ -156,9 +175,19 @@ public class MapspriteViewPanel extends AbstractViewPanel<MapSpriteLayoutPanel> 
         }
     }//GEN-LAST:event_jCheckBoxShowReferencesActionPerformed
 
+    private void jCheckBoxAnimateItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBoxAnimateItemStateChanged
+        if (!ActionManager.isActionTriggering()) {
+            ActionManager.setActionWithoutExecute(new ToggleAction(jCheckBoxAnimate, jCheckBoxAnimate.isSelected()));
+        }
+        if (layoutPanel != null) {
+            layoutPanel.setAnimPreview(jCheckBoxAnimate.isSelected());
+        }
+    }//GEN-LAST:event_jCheckBoxAnimateItemStateChanged
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.sfc.sf2.core.gui.controls.ColorPicker colorPickerBG;
     private com.sfc.sf2.core.gui.controls.InfoButton infoButton3;
+    private javax.swing.JCheckBox jCheckBoxAnimate;
     private javax.swing.JCheckBox jCheckBoxGrid;
     private javax.swing.JCheckBox jCheckBoxShowReferences;
     private javax.swing.JComboBox<String> jComboBoxScale;
