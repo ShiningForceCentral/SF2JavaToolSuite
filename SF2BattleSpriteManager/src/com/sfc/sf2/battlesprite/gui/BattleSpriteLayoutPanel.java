@@ -121,6 +121,14 @@ public class BattleSpriteLayoutPanel extends AbstractLayoutPanel implements Anim
         this.showStatusMarker = showStatusMarker;
         redraw();
     }
+    
+    public void setAnimPreview(boolean animating) {
+        if (animating && battleSprite != null) {
+            getAnimator().startAnimation(battleSprite.getAnimSpeed(), 1, true);
+        } else {
+            getAnimator().stopAnimation();
+        }
+    }
 
     // <editor-fold defaultstate="collapsed" desc="Input">  
     private void onMouseButtonInput(BaseMouseCoordsComponent.GridMousePressedEvent evt) {

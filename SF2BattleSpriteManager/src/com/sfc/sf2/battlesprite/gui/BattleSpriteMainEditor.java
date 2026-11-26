@@ -62,7 +62,7 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
     
     private void actionBattlespriteLoaded(BattleSprite battleSprite) {
         battleSpriteLayoutPanel.setBattleSprite(battleSprite);
-        battleSpriteLayoutPanel.getAnimator().stopAnimation();
+        battleSpriteLayoutPanel.setAnimPreview(false);
         jCheckBoxPreviewIdle.setSelected(false);
         viewPanel1.setPalettesList(battleSprite);
         if (battleSprite != null) {
@@ -286,7 +286,7 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
         );
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Export to :"));
@@ -737,8 +737,8 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
         }
         battleSprite.setAnimSpeed((int)jSpinnerIdleSpeed.getValue());
         if (battleSpriteLayoutPanel.getAnimator().isAnimating()) {
-            battleSpriteLayoutPanel.getAnimator().stopAnimation();
-            battleSpriteLayoutPanel.getAnimator().startAnimation(battleSprite.getAnimSpeed(), 1, true);
+            battleSpriteLayoutPanel.setAnimPreview(false);
+            battleSpriteLayoutPanel.setAnimPreview(true);
         }
     }//GEN-LAST:event_jSpinnerIdleSpeedStateChanged
 
@@ -785,12 +785,8 @@ public class BattleSpriteMainEditor extends AbstractMainEditor {
         }
         BattleSprite battleSprite = battleSpriteLayoutPanel.getBattleSprite();
         if (battleSprite != null) {
-            if (jCheckBoxPreviewIdle.isSelected()) {
-                battleSpriteLayoutPanel.getAnimator().startAnimation(battleSprite.getAnimSpeed(), 1, true);
-            } else {
-                battleSpriteLayoutPanel.getAnimator().stopAnimation();
-                battleSpriteLayoutPanel.redraw();
-            }
+            battleSpriteLayoutPanel.setAnimPreview(jCheckBoxPreviewIdle.isSelected());
+            battleSpriteLayoutPanel.redraw();
         }
     }//GEN-LAST:event_jCheckBoxPreviewIdleItemStateChanged
 
